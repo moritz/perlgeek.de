@@ -1,0 +1,49 @@
+		<!-- begin: main navigation #nav -->
+		<div id="nav"> <a id="navigation" name="navigation"></a>
+			<!-- skiplink anchor: navigation -->
+			<div id="nav_main">
+                    <ul>
+                        [% item home     <li{{ id="current"}}><a href="/en/">Home</a></li>             %]
+                        [% item artikel  <li{{ id="current"}}><a href="/en/article/">Articles</a></li> %]
+                        [% item service  <li{{ id="current"}}><a href="/en/service/">Services</a></li> %]
+<!--                    [% item blog     <li{{ id="current"}}><a href="#">Blog</a></li>     %] -->
+                        [% item software <li{{ id="current"}}><a href="/en/software/">Software</a></li> %]
+                    </ul>
+                </div>
+            </div>
+            <!-- end: main navigation -->
+            <!-- begin: main content area #main -->
+            <div id="main">
+
+            [% item software {{
+                <!-- begin: #col1 - first float column -->
+                <div id="col1">
+                    <div id="col1_content" class="clearfix">
+					<h3>Software</h3>
+                    <ul>
+                        [% item mowyw <li><a {{class="selected"}}href="/en/software/mowyw">mowyw</a></li> %]
+                        [% item yasss <li><a {{class="selected"}}href="http://moritz.faui2k3.org/en/yasss">YasSS</a> %]
+                    </ul>
+                    </div>
+                </div>
+            }} %]
+            [% item service {{
+            <!-- begin: #col1 - first float column -->
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+					<h3>Services</h3>
+                    <ul>
+                        <li><a href="http://irclog.perlgeek.de/">IRC logs</a></li>
+                        <li><a href="http://moritz.faui2k3.org/svn-search/search.pl">Search SVN commit logs</a></li>
+                    </ul>
+				</div>
+			</div>
+            }} %]
+			<!-- end: #col1 -->
+			<!-- begin: #col3 static column -->
+			<div id="col3">
+				<div id="col3_content" class="clearfix"> <a id="content" name="content"></a>
+					<!-- skiplink anchor: Content -->
+[% comment
+    vim: tw=0
+%]

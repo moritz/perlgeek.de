@@ -1,0 +1,20 @@
+[% setvar title Software %]
+[% setvar section software %]
+[% menu main software %]
+
+<h1>[% readvar title %]</h1>
+
+<p>You can find some open source software here, not all of written in Perl.</p>
+
+<p>
+    <a href="/en/software/mowyw">Mowyw</a> is an offline CMS, a bit like 
+    a macro processor specifically designed for creating web pages. It is
+    written in pure Perl.
+</p>
+
+<p>
+    <a href="http://moritz.faui2k3.org/en/yasss">YasSS</a>, "Yet another
+    (simple|stupid) Sudoku Solver" is a command line Sudoku solver and
+    generator with some additionaly features. It is written in C++ and is
+    quite fast.
+</p>

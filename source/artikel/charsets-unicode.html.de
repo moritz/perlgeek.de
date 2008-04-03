@@ -1,0 +1,348 @@
+[%setvar section Artikel%]
+[%setvar title Charsets oder „Warum funktionieren meine Umlaute nicht?”%]
+[%menu main artikel%]
+<!-- INDEX BEGIN -->
+
+    <h1><a name="charsets_oder_warum_funktionieren_meine_umlaute_nicht"></a>
+    [%readvar title%]</h1>
+
+    <p>Dieser Artikel beschreibt die verschiedenen Zeichenkodierungen, wie sie
+    zu Problemen führen können, und wie man sie in Perl-Programmen korrekt
+    berücksichtigt.</p>
+
+    <h3>Inhaltsverzeichnis</h3>
+    <ul>
+		<li><a href="#einf__hrung">Einführung</a></li>
+		<li><a href="#ascii">ASCII</a></li>
+		<li><a href="#andere_zeichenkodierungen">Andere Zeichenkodierungen</a></li>
+		<li><a href="#unicode">Unicode</a>
+		<ul>
+
+			<li><a href="#unicode_transformation_formats">Unicode Transformation Formats</a></li>
+		</ul></li>
+
+		<li><a href="#perl_und_zeichenkodierungen">Perl und Zeichenkodierungen</a></li>
+		<li><a href="#die_arbeitsumgebung_testen">Die Arbeitsumgebung testen</a></li>
+		<li><a href="#troubleshooting">Troubleshooting</a></li>
+		<li><a href="#kodierungen_im_www">Kodierungen im WWW</a></li>
+		<li><a href="#weiterf__hrende_themen">Weiterführende Themen</a></li>
+    </ul>
+<!-- INDEX END -->
+
+    <h2><a name="einf__hrung"></a>Einführung</h2>
+    <p>Jeder hat es schon mindestens einmal erlebt: Ein Programm, das mit Text
+    arbeitet, funktioniert wunderbar, solange man keine Umlaute eingibt. Sonst
+    kommt nur noch Zeichenmüll heraus und ein bis zwei nicht korrekt 
+    dargestellte Zeichen pro Umlaut.</p>
+
+    <h2><a name="ascii"></a>ASCII</h2>
+    <p>Um zu verstehen, warum es dazu kommt, muss man sich anschauen, wie 
+    „normaler” Text und wie Umlaute binär abgespeichert werden.</p>
+    <p>Angefangen hat es 1963 mit ASCII, einem Standard, der 128 Zeichen 
+    je eine Zahl von 0 bis 127 zuweist, die mit 7 bit kodiert werden können.</p>
+    <p>Festgelegt sind die Zahlenwerte für lateinische Buchstaben, Ziffern, Satzzeichen
+    und Kontrollzeichen wie „Carriage Return” und „Line Feed”, also
+    Zeilenumbrüche.</p>
+    <p>Zeichen, die im Alltag eines Amerikaners nicht vorkommen, wie die deutschen
+    Umlaute, kyrillische Zeichen und vieles mehr, wurden ausser Acht gelassen.</p>
+    <p>Da ein Byte aus 8 Bits besteht, ist bei ASCII das erste, „most significant” Bit
+    immer 0.</p>
+
+    <h2><a name="andere_zeichenkodierungen"></a>Andere Zeichenkodierungen</h2>
+    <p>Als man in Europa anfing Computer zu benutzen, mussten die benötigten Zeichen
+    irgendwie im Computer gespeichert werden und dazu benutzte man die
+    verbleibenden 128 Zeichen pro Byte. So entstanden die Kodierungen Latin-1 für
+    den westeuropäischen Raum, Latin-2 für Mitteleuropa und so weiter, auch
+    bekannt als ISO-8859-1 und ISO-8859-2.</p>
+    <p>Diese Zeichensätze stimmen in den ersten 128 Zeichen mit ASCII 
+    überein, die zweiten 128 Zeichen, also die mit 1 als erstem Bit, 
+    unterscheiden sich untereinander.</p>
+    <p>Die Grenzen dieser Zeichensätze werden einem schnell anhand eines gar nicht so
+    alten Beispieles klar: Mit der Einführung des Euros hatten viele Länder eine
+    neue Währung und damit ein Währungssymbol, das sich nicht in den traditionellen
+    Zeichensätzen ausdrücken ließ! (Dieses Problem wurde durch das Einführen des
+    Zeichensatzes ISO-8859-15 behoben, der sich nur wenig von Latin-1
+    unterscheidet und das <code>€</code>-Zeichen enthält).</p>
+
+    <h2><a name="unicode"></a>Unicode</h2>
+    <p>Die bisherigen Zeichenkodierungen konnten jeweils nur einen kleinen, lokal
+    sinnvollen Bereich aller möglicher Zeichen darstellen - sobald man Texte mit
+    gemischten Zeichensätzen verfassen wollte, ging das heillose Chaos los.</p>
+    <p>Um etwas Ordnung in das Chaos zu bekommen, hat das Unicode-Konsortium damit
+    angefangen, jedem Zeichen, das in irgend einer Schrift in irgend einer Sprache
+    vorkommt, eine eindeutige, ganze Zahl und einen Namen zuzuordnen.</p>
+    <p>Die Zahl heißt „Codepoint” und wird üblicherweise als vier- oder 
+    sechsstellige, hexadezimale Zahl in der Form <code>U+0041</code> notiert; der 
+    dazugehörige Name wäre <code>LATIN SMALL LETTER A</code>.</p>
+    <p>Neben Buchstaben und anderen „Basiszeichen” gibt es auch Akzentuierungen wie
+    den z.&nbsp;B. <code>ACCENT, COMBINING ACUTE</code>, die auf den vorherigen Buchstaben einen
+    Akzent setzen.</p>
+    <p>Wenn auf ein Basiszeichen eine Akzentuierung oder andere kombinierende
+    Zeichen folgen, bilden mehrer Codepoints ein logischen Buchstaben, ein
+    sogenanntes Grapheme.</p>
+
+    <h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
+    <p>Die bisher vorgestellten Unicode-Konzepte stehen vollständig unabhängig davon,
+    wie die Unicode-Zeichen kodiert werden.</p>
+    <p>Dafür wurden die „Unicode Transformation Formats” definiert,
+    Zeichenkodierungen, die alle möglichen Unicode-Zeichen darstellen können. Der
+    bekannteste Vertreter ist UTF-8, das für die bisher vergebenen Codepoints
+    1 bis 4 Bytes benötigt.</p>
+    <p>Auch in UTF-8 stimmen die ersten 128 Zeichen mit denen von ASCII überein.</p>
+    <p>Von UTF-8 gibt es auch eine laxe Variante, UTF8 (ohne Bindestrich
+    geschrieben), die mehrere mögliche Kodierungen für ein Zeichen zulässt. Das
+    Perl-Modul <em>Encode</em> unterscheidet diese Varianten.</p>
+    <p>UTF-16 dagegen benutzt für jedes Zeichen mindestens zwei Byte, für sehr hohe
+    Unicode-Codepoints werden auch hier mehr Bytes benötigt.</p>
+    <p>UTF-32 kodiert jedes mögliche Zeichen mit vier Bytes.</p>
+
+    <table summary="Beispiele für Zeichenkodierungen">
+    <tr>
+        <th>Codepoint</th><th>Zeichen</th><th>ASCII</th><th>UTF-8</th><th>Latin-1</th><th>ISO-8859-15</th><th>UTF-16</th>
+    </tr>
+    <tr>
+        <td>U+0041</td><td>A</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x00 0x41</td> 
+    </tr>
+    <tr>
+        <td>U+00c4    </td><td> Ä       </td><td>  -    </td><td> 0xc4 0x84
+        </td><td> 0xc4    </td><td> 0xc4        </td><td> 0x00 0xc4</td>
+    </tr>
+    <tr>
+        <td>U+20AC    </td><td> €       </td><td>  -    </td><td> 0xe3 0x82 0xac
+        </td><td> -       </td><td> 0xa4        </td><td> 0x20 0xac</td>
+    </tr>
+    <tr>
+        <td>U+c218    </td><td> 수      </td><td> -     </td><td> 0xec 0x88 0x98
+        </td><td> -       </td>td> -           </td><td> 0xc2 0x18</td>
+    </tr>
+    </table>
+
+<p>
+    (Das Zeichen in der letzten Zeile ist das Hangul-Zeichen für die Silbe
+    SU, und wird von Ihrem Browser nur dargestellt, wenn Sie entsprechende
+    asiatische Schriftarten installiert haben.)
+</p>
+
+
+
+    <h2><a name="perl_und_zeichenkodierungen"></a>Perl und Zeichenkodierungen</h2>
+    <p>Strings können in Perl entweder als Bytestrings oder als Textstrings vorliegen.
+    Wenn man z.&nbsp;B. eine Zeile aus <code>STDIN</code> liest, ist sie per Default ein
+    Bytestring.</p>
+    <p>Mit der Funktion <code>decode</code> des Moduls <em>Encode</em> kann man sie in einen
+    Textstring umwandeln, wenn man die Zeichenkodierung kennt. In Gegenrichtung,
+    also von Textstring nach Bytestring konvertiert man mit <code>encode</code> aus dem
+    gleichen Modul.</p>
+    <p>Alle Textoperationen sollte man auf Textstrings durchführen, weil so auch
+    Nicht-ASCII-Zeichen korrekt behandelt werden: <code>lc</code> und <code>uc</code> funktionieren
+    wie erwartet, und <code>\w</code> in regulären Ausdrücken passt auf jeden Buchstaben,
+    auch auf Umlaute, <code>ß</code> und allen möglichen Zeichen in allen möglichen
+    Sprachen, die dort als Bestandteil eines Wortes angesehen werden.</p>
+    <p><code>cmp</code> vergleicht Nicht-ASCII-Zeichen allerdings nur dann so, wie man das
+    erwartet (also <code>&quot;ä&quot; lt &quot;b&quot;</code>), wenn <code>use locale</code> aktiv ist. Da das Verhalten
+    von <code>sort</code> durch <code>cmp</code> definiert ist, gilt dies auch für das Sortieren von
+    Listen.</p>
+
+    <pre>[%syntax perl%]
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Encode qw(encode decode);
+
+my $enc = 'utf-8'; # in dieser Kodierung ist das Script gespeichert
+my $byte_str = "Ä\n";
+
+# Bytestrings:
+print lc $byte_str; # gibt 'Ä' aus, lc hat nichts verändert
+
+# Textstrings:
+my $text_str = decode($enc, $byte_str);
+$text_str = lc $text_str;
+print encode($enc, $text_str); # gibt 'ä' aus, lc hat gewirkt
+[%endsyntax%]</pre>
+    <p>Es empfiehlt sich, alle Eingaben direkt in Textstrings umzuwandeln, dann mit
+    den Textstrings zu arbeiten, und sie erst bei der Ausgabe (oder beim
+    Speichern) wieder in Bytestrings umzuwandeln. Wenn man sich nicht an diese
+    Regel hält, verliert man im Programm schnell den Überblick welcher String ein
+    Textstring und welcher ein Bytestring ist.</p>
+    <p>Perl bietet mit den IO-Layern Mechanismen, mit denen man die Kodierungen per
+    Dateihandle oder global automatisch umwandeln lassen kann:</p>
+    <pre>[%syntax perl%]
+# IO-Layer: $handle liefert beim Lesen jetzt Textstrings:
+open my $handle, '<:encoding(UTF-8)', $datei;
+
+# das gleiche:
+open my $handle, '<', $datei;
+binmode $handle, ':encoding(UTF-8)';
+
+# Jedes open() soll automatich :encoding(iso-8859-1) benutzen:
+use open ':encoding(iso-8859-1)';
+
+# Alle Stringkonstanten werden als utf-8 interpretiert
+# und in Textstrings umgewandelt:
+use utf8;
+
+# Schreibe Text mit der aktuellen locale nach STDOUT:
+use PerlIO::locale;
+binmode STDOUT, ':locale';
+# alle Lese-/Schreibeoperation mit aktueller locale:
+use open ':locale';
+[%endsyntax%]</pre>
+
+    <p>Mit Vorsicht sollte man den Input Layer <code>:utf8</code> genießen, der annimmt, dass
+    die Eingabedatei gültiges UTF-8 ist. Sollte sie das nicht sein, ist das eine
+    potentielle Quelle für Sichheitslücken (siehe
+            <!-- TODO: link-text -->
+    <a href="http://www.perlmonks.org/?node_id=644786">http://www.perlmonks.org/</a> für Details).</p>
+    <p>Als Output Layer dagegen ist <code>:utf8</code> anstelle von <code>:encoding(UTF-8)</code>
+    problemlos verwendebar.</p>
+    <p>Das Modul und Pragma <em>utf8</em> erlaubt es auch, Nicht-ASCII-Zeichen in
+    Variablennamen zu verwenden. Da das jedoch kaum getestet ist und zum Teil mit
+    Modulenamen und Namespaces nicht gut funktioniert, sollte man Variablennamen
+    weiterhin nur aus lateinischen Buchstaben, dem Unterstrich <code>_</code> und Ziffern
+    zusammensetzen.</p>
+
+    <h2><a name="die_arbeitsumgebung_testen"></a>Die Arbeitsumgebung testen</h2>
+    <p>Ausgestattet mit diesem Wissen kann man testen, ob das Terminal und locales
+    auf die gleiche Kodierung eingestellt sind, und auf welche:</p>
+    <pre>[%syntax perl%]
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Encode;
+
+my @charsets = qw(utf-8 latin1 iso-8859-15 utf-16);
+
+my $test = 'Ue: ' . chr(220) .'; Euro: '. chr(8364) . "\n";
+
+for (@charsets){
+    print "$_: " . encode($_, $test);
+}
+[%endsyntax%]</pre>
+    <p>Wenn man dieses Programm in einem Terminal ausführt, wird nur eine Textzeile
+    korrekt angezeigt werden, die erste Spalte darin ist dann die Zeichenkodierung
+    des Terminals.</p>
+    <p>Wie vorher gesagt ist das Eurozeichen <code>€</code> nicht in Latin-1 vorhanden, das <code>Ü</code>
+    sollte in einem Latin-1-Terminal trotzdem richtig angezeigt werden.</p>
+
+    <h2><a name="troubleshooting"></a>Troubleshooting</h2>
+    <p>Die Art, wie perl Textstrings intern speichert, führt zu etwas ungewöhnlichem
+    Verhalten wenn diese ausgegeben werden. Wenn alle Codepoints in dem String
+    kleiner als 256 sind, wird der String intern als Latin-1 gespeichert, und als
+    solcher ausgegeben.</p>
+    <p>Sind Codepoints größer gleich 256 in einem String vorhanden, speichert perl
+    den String als UTF-8, und wenn man sie mit <code>print</code> ausgiebt (und wenn
+    <code>warnings</code> aktiv sind), kommt die Warnung <code>Wide character in print</code>.</p>
+    <p>Daher empfiehlt es sich, eigene Scripte mit Zeichen zu testen, die nicht in
+    Latin-1 vorhanden sind, z.&nbsp;B. das Euro-Zeichen <code>€</code>. Dann sieht man 
+    immer, wenn man ein <code>Encode::encode</code> an enstprechender Stelle vergessen 
+    hat, die oben genannte Warnung.</p>
+    <p>Wenn Daten aus externen Module kommen, z.&nbsp;B. aus <code>DBI</code>, kann man mit
+    <code>utf8::is_utf8(STRING)</code> überprüfen, ob ein String als Textstring
+    abgespeichert ist. Diese Abfrage liefert aber nur ein sinnvolles Ergebnis,
+    wenn Zeichen außerhalb des ASCII-Zeichensatzes in dem String enthalten sind.</p>
+    <!-- TODO: fix link-->
+    <p>Auch <a href="/Devel/Peek.html">Devel::Peek</a> zeigt an, ob ein String intern als Textstring oder als
+    Bytestring vorliegt:</p>
+    <pre>[%syntax perl%]
+use Devel::Peek;
+use Encode;
+my $str = "ä";
+Dump $str;
+$str = decode("utf-8", $str);
+Dump $str;
+Dump encode('latin1', $str);[%endsyntax%]
+__END__
+SV = PV(0x814fb00) at 0x814f678
+REFCNT = 1
+FLAGS = (PADBUSY,PADMY,POK,pPOK)
+PV = 0x81654f8 "\303\244"\0
+CUR = 2
+LEN = 4
+SV = PV(0x814fb00) at 0x814f678
+REFCNT = 1
+FLAGS = (PADBUSY,PADMY,POK,pPOK,UTF8)
+PV = 0x817fcf8 "\303\244"\0 [UTF8 "\x{e4}"]
+CUR = 2
+LEN = 4
+SV = PV(0x814fb00) at 0x81b7f94
+REFCNT = 1
+FLAGS = (TEMP,POK,pPOK)
+PV = 0x8203868 "\344"\0
+CUR = 1
+LEN = 4</pre>
+    <p>Der String <code>UTF8</code> in der Zeile <code>FLAGS =</code> zeigt, dass der String als
+    Texttring vorliegt. In der Zeile <code>PV =</code> sieht man bei Textstrings die
+    Bytes und in Klammer eckigen Klammern die Codepoints.</p>
+    <p>Weitere Probleme können durch fehlerhafte Module entstehen. So ist die
+    Funktionalität des Pragmas <em>encode</em> sehr verlockend:</p>
+    <pre>[%syntax perl%]
+# automatische Konvertierungen:
+use encoding ':locale';[%endsyntax%]</pre>
+    <p>Allerdings funktionieren unter dem Einfluss von <code>use encoding</code>
+    AUTOLOAD-Funktionen nicht mehr, und das Modul funktioniert nicht im
+    Zusammenspiel mit Threads.</p>
+
+    <h2><a name="kodierungen_im_www"></a>Kodierungen im WWW</h2>
+    <p>Beim Schreiben von CGI-Scripten muss man sich überlegen in welcher Kodierung
+    die Daten ausgegeben werden sollen und das enstprechend im HTTP-Header
+    vermerken.</p>
+    <p>Für die meisten Anwendungen empfiehlt sich UTF-8, da man damit einerseits
+    beliebge Unicode-Zeichen kodieren kann, andererseits auch deutschen Text 
+    platzsparend darstellen kann.</p>
+    <p>HTTP bietet zwar mit dem <code>Accept-Charset</code>-Header eine Möglichkeit
+    herauszufinden, ob ein Browser mit einer Zeichenkodierung etwas anfangen kann,
+    aber wenn man sich an die gängigen Kodierungen hält, ist es in der Praxis
+    nicht nötig, diesen Header zu prüfen.</p>
+    <p>Für HTML-Dateien sieht ein Header typtischerweise so aus: 
+    <code>Content-Type: text/html; charset=UTF-8</code>. Wenn man einen solchen Header
+    sendet, muss man im HTML-Code nur die Zeichen escapen, die in HTML eine
+    Sonderbedeutung haben (<code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> und innerhalb von Attributen
+    auch <code>&quot;</code>).</p>
+    <p>Beim Einlesen von POST- oder GET-Parametern mit dem Modul <em>CGI</em> muss man
+    darauf achten, welche Version man benutzt: In älteren Versionen liefert die
+    <code>param</code>-Methode immer Bytestrings zurück, in neueren Versionen (ab 3.29) 
+    werden Textstrings zurückgegeben, wenn vorher mit <code>charset</code> die 
+    Zeichenkodierung UTF-8 eingestellt wurde - andere Kodierungen werden von
+    <em>CGI</em> nicht unterstützt.</p>
+    <p>Damit Formularinhalte vom Browser mit bekanntem Zeichensatz abgeschickt
+    werden, gibt man im Formular das <code>accept-charset</code>-Attribut mit an:</p>
+    <pre>[%syntax html%]
+<form method="post" accept-charset="utf-8" action="/script.pl">[%endsyntax%]</pre>
+    <!-- TODO: fix link-->
+    <p>Bei Verwendung eines Template-Systems sollte man darauf achten, dass es mit
+    charsets umgehen kann. Beispiel sind <a href="/Template/Alloy.html">Template::Alloy</a>,
+    <a href="/HTML/Template/Compiled.html">HTML::Template::Compiled</a> 
+    (seit Version 0.90 mit der Option <code>open_mode</code>) oder 
+    Template Toolkit in Verbindung mit 
+    <a href="/Template/Provider/Encoding.html">Template::Provider::Encoding</a>.</p>
+
+    <h2><a name="weiterf__hrende_themen"></a>Weiterführende Themen</h2>
+    <p>Mit den Grundlagen zu den Themen Zeichenkodierungen und Perl kommt man schon
+    sehr weit, zum Beispiel kann man Webanwendunen „Unicode-Safe” machen, also
+    dafür sorgen, dass alle möglichen Zeichen vom Benutzer eingegeben und
+    dargestellt werden können.</p>
+    <p>Damit ist aber noch längst nicht alles auf diesem Gebiet gesagt.
+    Der Unicode-Standard erlaubt es beispielsweise, bestimmte Zeichen auf
+    verschiedene Arten zu kodieren. Um Strings korrekt miteinander zu vergleichen,
+    muss man sie vorher „normalisieren”. Mehr dazu gibt es in der
+    <a
+    href="http://unicode.org/faq/normalization.html">Unicode-Normalisierungs-FAQ</a>.</p>
+    <p>Um landesspezifisches Verhalten für Programme zu implementieren, lohnt es, die
+    locales genauer anzusehen. 
+    Im Türkischen z.B. wird <code>lc 'I'</code> zu
+    <code>ı, U+0131 LATIN SMALL LETTER DOTLESS I</code>, 
+    während <code>uc 'i'</code> zu <code>İ,
+    U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE</code> wird..
+    Ein guter Einstiegspunkt in die Locales ist das Dokument
+    <!-- TODO: link-->
+    <em>perllocale</em>.</p>
+    
+</p>
+    </p>
+
+    <hr />
+
+    <p>Dieser Artikel wurde für das <a
+    href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben und in der 5.
+    Ausgabe (Anfang 2008) veröffentlicht.</p>

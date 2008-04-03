@@ -1,0 +1,156 @@
+[%setvar title Mowyw writes your Websites %]
+[%setvar section Software %]
+[%menu main software mowyw %]
+
+<h1>[%readvar title%]</h1>
+
+<p>
+    <strong>Bitte beachten Sie, dass die <a href="/en/software/mowyw">englische 
+    Webseite</a> die offizielle, und meistens auch neuere ist.</strong>
+</p>
+
+<h2 id="what-is">Was ist mowyw?</h2>
+
+<p>
+    Mowys ist ein offline-CMS für die Kommandozeile, das
+    html-Dateien mit ein paar speziellen Syntax-Erweiterungen
+    bearbeitet.
+</p>
+
+<p>
+    Es ist also eine Art Präprozesser, der speziell für Webseiten 
+    geschrieben wurde.
+</p>
+
+<p>
+    Es benutzt sehr einfache <a href="#syntax-example">Syntax</a>, an 
+    die man sich schnell gewöhnt.
+</p>
+
+<p>
+    mowyw ist in Perl geschrieben für Linux und andere
+    POSIX-Kompatible Systeme geschrieben, sollte aber auch auf anderen
+    Plattformen laufen, auf denen Perl läuft.
+</p>
+
+<p>
+    mowyw ist Open Source (unter der GPL veröffentlicht) und
+    komplett kostenlos zu benutzen.
+</p>
+
+<h2 id="what-not">Was ist es nicht?</h2>
+
+<p>
+    mowyw ist <strong>kein</strong> online-CMS mit einem Web-Frontend,
+    SQL-Backend, Gästebuch und anderen Dingen, die typisch für Portale 
+    sind.
+</p>
+
+<h2 id="syntax-example">Syntax-Beispiel</h2>
+
+[% comment syntax examples without verbatim blocks around it all are 
+            a pain :( %]
+
+[% verbatim syn %]
+<p>
+    Ganze Dateien können mit <code>[%include dateiname%]</code> 
+    eingebunden werden.
+</p>
+
+<p>
+    Ein Menü <code>foo</code> kann mit der Anweisung 
+    <code>[%menu foo bar%]</code> eingebunden werden, wobei dann der 
+    Menüpunkt <code>bar</code> als aktive markiert wird.
+</p>
+      <p>Die entsprechende Menü-Datei könnte so aussehen:</p>
+
+[% endverbatim syn %]
+
+<pre>[%syntax html%]
+<h3>Navigation</h3>
+<ul>
+    [%item bar <li><a href="bar" {{class="active"}}>Bar</a></li>%]
+    [%item baz <li><a href="baz" {{class="active"}}>BaZ</a></li>%]
+</ul>[%endsyntax%]</pre>
+
+[%verbatim syn%]
+<p>
+    Die Textelemente zwischen doppelten geschweiften Klammern 
+    <code>{{ ... }}</code> tauchen in der Ausgabe-Datei nur auf, wenn 
+    der Menüpunt als aktiv markiert wird, d.h. wenn label (hier 
+    <code>bar</code> oder <code>baz</code>) mit dem Namen beim Aufruf 
+    übereinstimmt.
+</p>
+
+<p>
+    Mit diesem Mechanismus kann man auch verschachtelte Menüs erstellen.
+</p>
+[%endverbatim syn%]
+
+<h2 id="doc">Dokumentation</h2>
+
+<p>
+    Die aktuellste Dokumentation findet sich auf Englisch in der <a
+    href="http://moritz.faui2k3.org/files/mowyw-README">README</a>.
+</p>
+
+<p>
+    Sie können mowyw auch <a href="#download">herunterladen</a> und
+    sich die Beispiel-Dateien ansehen.
+</p>
+
+
+<h2 id="warning">Warnung</h2>
+
+<p>
+    mowyw wird, ausser von seinem Entwickler, bisher kaum eingesetzt. 
+    Daher kann das System z.B. auf anderen Plattformen nicht so 
+    zuverlässig funktionieren - Bugreports sind immer willkommen.
+</p>
+      
+<p>
+    Vor dem ersten Ausführen sollten Sie unbedingt die <a
+    href="http://moritz.faui2k3.org/files/mowyw-README">README</a>-Datei 
+    lesen.
+</p>
+
+<h2 id="download">Download</h2>
+    <p>Sie können die aktuelle Version von <a
+      href="http://moritz.faui2k3.org/files/mowyw-current.tar.gz">mowyw 
+      hier herunterladen</a> (empfohlen).
+</p>
+
+<p>Ältere Versionen sind ebenfalls verfügbar:</p>
+<ul>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.4.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.3.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.2.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.1.0.tar.gz">mowyw-0.1.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.3.tar.gz">mowyw-0.0.3</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.2.tar.gz">mowyw-0.0.2</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.1.tar.gz">mowyw-0.0.1</a></li>
+</ul>
+
+<h2 id="history">Release History/Changelog</h2>
+
+[% verbatim changelog %]
+<ul>
+    <li>
+        2007-06-06, mowyw-0.4.0: Optionale [% ...  %]-Syntax hinzugefügt.
+        Inzwischen kann mowyw auch Syntax-Hilighting.
+     </li>
+    <li>2007-01-10, mowyw-0.1.0: Syntax von [[...]] nach 
+        [[[...]]] geändert, um Kollisionen mit CDATA-Deklarationen zu
+        vermeiden.
+     </li>
+    <li>
+        2007-01-04, mowyw-0.0.3: Unterstützung für die Option,
+        header/footer auszulassen
+    </li>
+    <li>2006-12-31, mowyw-0.0.2: Verschachtelte Menüs</li>
+    <li>2006-12-28, mowyw-0.0.1: Ersters Release</li>
+</ul>
+[% endverbatim changelog %]
+[% comment
+    vim: syn=html expandtab
+%]

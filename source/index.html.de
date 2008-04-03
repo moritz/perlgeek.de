@@ -1,0 +1,68 @@
+[%setvar title Perlgeek.de - Moritz Lenz %]
+[%setvar section Home %]
+[%menu main home%]
+
+<h1>Willkommen auf Perlgeek.de</h1>
+
+<p>
+    <strong>Diese Seite befindet sich noch im Aufbau.</strong> 
+    Zum Teil sind daher die Inhalte und auch die Navigation noch nicht
+    vollständig, und einige der zukünftigen Bestandteile liegen bisher auf
+    externen Seiten.
+</p>
+
+<p>
+    Ich heiße Moritz Lenz, und hier finden Sie alles, was mit Perl und
+    Programmierung im allgemeinen zu tun hat. Meine <a title="Homepage von
+    Moritz Lenz"
+    href="http://moritz.faui2k3.org/">persönliche Homepage finden Sie 
+    hier</a>.
+</p>
+
+<p>
+    Ausserdem gibt es hier <a href="/de/service/">Services</a>, die ich hier
+    kostenlos zur Verfügung stelle, wie z.B. <a
+    href="http://irclog.perlgeek.de/">öffentliche IRC Logs</a>, sowie <a
+    href="/de/software/">Open-Source-Software</a> zum Download.
+</p>
+
+
+<h2>Links</h2>
+
+<p>
+    Das Internet besteht aus mehr als einer Seite, daher gibts hier noch Links
+    zu anderen interessanten Seiten, die auch etwas mit dem Thema Perl zu tun
+    haben.
+</p>
+
+<ul>
+    <li>
+        Bei den <a href="http://www.perlmonks.org/">Perl-Mönchen</a> bekommt 
+        man Hilfe zu allen Perl-Themen, und kann sich auch sonst sehr gut 
+        mit gleichgesinnten unterhalten. Ich bin dort <a
+        href="http://www.perlmonks.org/?node=moritz">auch sehr aktiv</a>.
+    </li>
+    <li>
+        Die Seiten der <a href="http://de.perl.org/">deutschen
+        Perl-Community</a> sind die erste Anlaufstelle für Perlprogrammierer,
+        die lieber auf Deutsch lesen und diskutieren wollen.
+    </li>
+    <li>
+        In Deutschland gibt es einige lokale Gruppen von Perl-begeisterten
+        Programmierern. Diese Organisieren sich über <a
+        href="http://perlmongers.de/">perlmongers.de</a>, ich besuche ab und
+        zu <a href="http://perlmongers.de/?ErlangenPM">Erlangen.pm</a>.
+    </li>
+    <li>
+        Diese Seite befasst sich mit Perl 5. Die nächste große Version ist 
+        Perl 6, ihr habe ich <a href="http://perl-6.de/">die bisher einzige 
+        ernsthafte deutsche Perl 6-Seite</a> gewidmet. Dort gibt es
+        Informationen zum Entwicklungs- und Designprozess, Tutorials und
+        akturelle Nachrichten.
+
+    </li>
+</ul>
+
+[% comment
+    vim: syn=html ts=4 sw=4 expandtab
+%]

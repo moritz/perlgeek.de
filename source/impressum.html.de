@@ -1,0 +1,82 @@
+[%setvar title Impressum für perlgeek.de %]
+[%setvar section Home %]
+[%menu main %] [% comment no section atm %]
+
+<h1>[%readvar title%]</h1>
+
+<p>
+    Verantwortlich für den Inhalt dieser Seiten ist
+</p>
+
+<p>
+    Moritz Lenz<br />
+    Otto-Hahn-Str. 51<br />
+    97218 Gerbrunn
+</p>
+
+<p>
+    E-Mail: mlenz [at] physik [punkt] uni-wuerzburg [punkt] de<br />
+    Telefon: 0931 329 1943
+</p>
+
+<h2>Disclaimer</h2>
+<p>
+    Ich bemühe mich, keine Uhrheberrechte zu verletzen, auf illegale Inhalt zu
+    verlinken und auch sonst keinen Unfug zu bauen. Sollten Sie der Ansicht
+    sein, dass ich damit keinen Erfolg hatte, teilen Sie mir das bitte per
+    E-Mail mit - ich werden dann Abhilfe schaffen.
+</p>
+
+<h2>Datenschutz</h2>
+<p>
+    Auf dieser Seite werden keine Personenbezogenen Daten von Besuchern
+    gespeichert.
+</p>
+<p>
+    Im Rahmen des üblichen Serverseitigen Loggings wird Zeitpunkt des Besuchs
+    sowie IP-Adresse oder Hostname des Besuchers gespeichert, zusammen mit ein
+    paar Metadaten aus dem HTTP-Request-Header.
+</p>
+<p>
+    Sollten Sie weitere Fragen zum Datenschutz haben, zögern Sie bitte nicht,
+    mich per E-Mail zu kontaktieren und zu fragen.
+</p>
+
+<h2>Uhrheberrechte</h2>
+
+<p>
+   Die Texte auf diesen Seiten stammen, soweit nicht anders augeführt, von
+   Moritz Lenz, und dürfen unter einer Creative-Commons-Lizenz weiterverwendet
+   werden, sofern die Ergebnisse dieser Weiterverwendung
+</p>
+
+<ol>
+    <li>unter der selben Lizenz veröffentlicht werden</li>
+    <li>die Quelle angegeben wird</li>
+</ol>
+
+<p>
+    Sollten Sie die Inhalte gerne unter einer anderen Lizenz verwenden wollen,
+    fragen Sie bitte den Autor unter der oben angegeben E-Mail-Adresse.
+</p>
+
+<h2>Danksagung</h2>
+
+<p>
+    Das Layout dieser Seite benutzt das <a
+    href="http://yaml.de/">YAML</a>-Framework für das Layout. Vielen Dank an
+    Dirk Jesse dafür, dass er dieses Layout kostenlos zur Verfügung stellt.
+</p>
+
+<p>
+    Diese Seite dreht sich um das Thema Perl. Perl gäbe es nicht ohne Larry
+    Wall, und hätte nicht seine heutige Gestalt ohne den Einsatz von Tom
+    Christiansen, Damian Conway, den heutigen "Pumpkins" Rafael Garcia-Suarez,
+    Nicholas Clark und unzäliger anderer Perl-Hacker. Ihnen allen gilt mein
+    Dank.
+</p>
+
+<p>
+    Dank geht auch an meine Freundin Signe für Hilfe beim Layout und
+    moralischer Unterstützung.
+</p>

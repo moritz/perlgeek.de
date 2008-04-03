@@ -1,0 +1,16 @@
+[%setvar section Service%]
+[%setvar title Services%]
+[%menu main service%]
+
+<h1>[%readvar title%]</h1>
+
+<p>
+    I offer some services here for free, for example <a
+    href="http://irclog.perlgeek.de/">IRC logs</a>, mostly of Perl or 
+    Perl 6 related channels.
+</p>
+
+<p>
+    You can also search in the commit logs of the <a
+    href="http://www.pugscode.org/">pugs</a> subversion repository.
+</p>

@@ -1,0 +1,72 @@
+[%setvar title Imprint for perlgeek.de %]
+[%setvar section Home %]
+[%menu main %] [% comment no section atm %]
+
+<h1>[%readvar title%]</h1>
+
+<p>
+    Responsible for this site's content is
+</p>
+
+<p>
+    Moritz Lenz<br />
+    Otto-Hahn-Str. 51<br />
+    97218 Gerbrunn<br />
+    Germany
+</p>
+
+<p>
+    email: mlenz [at] physik [dot] uni-wuerzburg [dot] de<br />
+    Telefon: +49 931 329 1943
+</p>
+
+<h2>Disclaimer</h2>
+<p>
+    I try not to infringe any copyrights on this page and not to link to
+    illegal content. If I should have failed in my efforts, please let me know
+    by email, and I'll try to fix it.
+</p>
+
+<h2>Privacy</h2>
+<p>
+    I don't store any personal data on this site.
+</p>
+<p>
+    Note that accesses to this page are logged as usual, with request URI,
+    timestamp, source IP address and other HTTP header fields.
+</p>
+<p>
+    If you have any questions about privacy concerns on this page, don't
+    hesitate to ask them via email.
+</p>
+
+<h2>Copyright</h2>
+
+<p>
+    All content on this page is copyright by Moritz Lenz, unless specified
+    otherwise.
+    However you may use them under the terms of a Creative Commons license.
+</p>
+
+<p>
+    If you wish to use some contents on this page under a different license,
+    please contact me to negotiate the terms.
+</p>
+
+<h2>Credits</h2>
+
+<p>
+    The layout of this site uses the <a href="http://yaml.de/">YAML 
+    framework</a>. Many thanks to Dirk Jesse, the main yaml author.
+</p>
+
+<p>
+    This site is all about Perl, and we wouldn't have perl without Larry 
+    Wall and many other perl Hackers, like Tom Christiansen, Damian Conway, 
+    the current "pumpkin" Rafael Garcia-Suarez, Nicholas Clark and countless
+    others. Thank you all!
+</p>
+
+<p>
+    I want to thank my girlfriend Signe for help with the layout.
+</p>

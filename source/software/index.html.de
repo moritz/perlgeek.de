@@ -1,0 +1,22 @@
+[%setvar title Software auf perlgeek.de %]
+[%setvar section Home %]
+[%menu main software%]
+
+<h1>[%readvar title%]</h1>
+
+<p>
+    Hier biete ich Open-Source-Software zum Download an - nicht nur in Perl
+    geschrieben.
+</p>
+
+<ul>
+    <li><a href="/de/software/mowyw">Mowyw</a>, "Mowyw writes your webpages",
+    ist ein Offline-CMS, das vollständig in Perl geschrieben.
+    <li><a href="http://moritz.faui2k3.org/de/yasss">YasSS, "Yet another
+    (simple|stupid) Sudoku Solver</a> ist ein in C++ geschriebener Sudoku
+    Löser und Generator.</li>
+</ul>
+
+[% comment
+    vim: syn=html expandtab
+%]

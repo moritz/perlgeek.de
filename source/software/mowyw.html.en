@@ -1,0 +1,156 @@
+[% setvar title mowyw - Mowyw Writes Your Websites %]
+[% setvar section Software %]
+[% menu main software mowyw %]
+
+<h1 id="introduction">[% readvar title %]</h1>
+
+<p>
+    Welcome to the project page of mowyw, an offline Content Management
+    System (CMS).
+</p>
+
+<h2 id="what-is">What is mowyw?</h2>
+
+<p>
+    Mowyw is a command line driven offline CMS that processes html files
+    with a few special syntax elements.
+</p>
+
+<p>
+    Think of it as a kind of preprocessor system specifically designed
+    for web pages.
+</p>
+
+<p>
+    It uses a <a href="#syntax-example">simple syntax</a>  
+    and needs very little time to get used to.
+</p>
+
+<p>
+    mowyw is written in Perl for Linux and other POSIX compliant systems,
+    but it should work on all platforms that perl runs on, perhaps with
+    slight modifications. It is Open Source Software (GPL) and free of any
+    charge.
+</p>
+
+<h2 id="what-not">What is it not?</h2>
+
+<p>
+    mowyw is <strong>not</strong> an online CMS with a web frontend, sql
+    backend, guestbook and other "fancy" whiz bang features.
+</p>
+
+<h2 id="syntax-example">Syntax Example</h2>
+
+[% verbatim syn %]
+<p>
+    Entire files can be included via the <code>[[[include name]]]</code>
+    or <code>[% include name %]</code> directive.</p>
+    <p>A menu <code>foo</code> can be included with the item
+    <code>bar</code> as the active item via <code>[%menu foo bar%]</code>. 
+    The corresponding menu file might look like this:
+</p>
+[% endverbatim syn%]
+
+<pre>[%syntax html%]
+<h2>Navigation</h2>
+<ul>
+    [%item bar <li><a href="bar" {{class="active"}}>Bar</a></li>%]
+    [%item baz <li><a href="baz" {{class="active"}}>BaZ</a></li>%]
+</ul>[%endsyntax%]</pre>
+
+[% verbatim syn %]
+<p>
+    Where the parts between double braces {{ ... }} only appear in the
+    final file if the menu was called with the matching label.
+</p>
+
+<p>
+    Please note that previous versions only used double square
+    brackets, which collided with the closing CDATA-declaration from
+    standards compliant xhtml and xml documents.
+</p>
+
+<p>
+    In Versions 0.4.0 (and higher) you can use either 
+    <code>[[[ ... ]]]</code> or <code>[% ... %]</code> to delimit tags.
+</p>
+
+<p>
+    Starting from Version 0.3.0, mowyw can perform syntax hilighting
+    for you, if you have installed <a href="http://www.vim.org/">vim</a>
+    and the perl module <a
+    href="http://search.cpan.org/~geoffr/Text-VimColor-0.11/lib/Text/VimColor.pm">Text::VimColor</a>.
+    Simply put <code>[%syntax html%] HTML-Code here [%endsyntax%]</code> 
+    in your source file, and any HTML code between the start and 
+    end tag will automatically be escaped and syntax hilighted.
+</p>
+[%endverbatim syn%]
+
+<p>
+    All languages and configuration files that vim supports are
+    accessible from mowyw, currently that are over <em>480</em> different
+    formats, including prominent examples as C, C++, Java, HTML, CSS,
+    Javascript, Perl, Python, PHP, eiffel, matlab, Ada, awk, haskell,
+    Lisp, and many more.
+</p>
+
+
+<h2 id="doc">Documentation</h2>
+<p>
+    You can read the <a href="http://moritz.faui2k3.org/files/mowyw-README">README 
+    file</a> online, and you can download the tar ball and take a look at the
+    distributed examples.
+</p>
+
+
+<h2 id="warning">Warning</h2>
+<p>
+    mowyw is in an early stage of development, so don't expect too much.
+    Use this program at your own risk, and read the accompanied README file
+    before running it.
+</p>
+
+
+<h2 id="download">Download</h2>
+<p>
+    You can get the <a href="http://moritz.faui2k3.org/files/mowyw-current.tar.gz">latest
+    version</a> here (recommended).
+</p>
+
+<p>Older versions are/will be available as well:</p>
+<ul>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.4.0.tar.gz">mowyw-0.4.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.3.0.tar.gz">mowyw-0.3.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.2.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.1.0.tar.gz">mowyw-0.1.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.3.tar.gz">mowyw-0.0.3</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.2.tar.gz">mowyw-0.0.2</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.1.tar.gz">mowyw-0.0.1</a></li>
+</ul>
+
+<h2 id="history">Release History/Changelog</h2>
+
+<p>
+    This is not reliable or complete, in case of doubt consider the Changelog
+    file.
+</p>
+
+[% verbatim changelog %]
+<ul>
+    <li>2007-06-06, mowyw-0.4.0: Optional [% .. %] syntax.</li>
+    <li>2007-03-28, mowyw-0.2.0: nearly complete rewrite using a lexer and
+a recursive-descending parser; introduced the [[[verbatim $marker]]]
+construct</li>
+    <li>2007-01-10, mowyw-0.1.0: syntax change from [[...]] to
+[[[...]]]</li>
+    <li>2007-01-04, mowyw-0.0.3: support for options to omit header/footer
+inclusion</li>
+    <li>2006-12-31, mowyw-0.0.2: nested menu items work</li>
+    <li>2006-12-28, mowyw-0.0.1: Initial Release</li>
+</ul>
+[% endverbatim changelog %]
+
+[% comment
+    vim: sw=4 ts=4 expandtab syn=html
+%]

@@ -1,0 +1,488 @@
+[%setvar section article%]
+[%setvar title Character Encodings in Perl %]
+[%menu main artikel%]
+<!-- INDEX BEGIN -->
+
+    <h1>[%readvar title%]</h1>
+
+<p>
+    This article describes the different character encodings, how they may
+    lead to problems, and how they can be handled in Perl programs.
+</p>
+
+<h2><a name="intro"></a>Introduction</h2>
+
+<p>
+    It happens far too often: a program works fine with latin characters, but
+    it produces weird, unreadable characters as soon as it has to process 
+    other characters like Chinese or Japanese characters or modified latin 
+    characters like the German Umlauts Ä, Ö etc. or the Scandinavian
+    characters å and Ø.
+</p>
+
+    <h2 id="ascii">ASCII</h2>
+<p>
+    To understand the root of the problem you have to understand how "normal"
+    latin characters and other characters (the ones that cause problems) are 
+    stored.
+</p>
+
+<p>
+    It all began in the yaar 1963 with ASCII, the "American Standard for
+    Information Interchange". It maps 128 charcters to the number from 0 to
+    127, which can be encoded with 7 bit.
+</p>
+
+<p>
+    Since a byte contains 8 bit, the first, "most significant" bit in ASCII
+    characters is always zero.
+</p>
+
+<p>
+    The standard defines the latin letters <code>a</code> to <code>z</code> in
+    both upper and lower case, the arabic digits <code>0</code> to
+    <code>9</code>, whitespace like "blank" and "carriage return", a few
+    control characters and a few special signs like <code>%</code>,
+    <code>$</code> and so on.
+</p>
+
+<p>
+    Characters that aren't essential in the day to day life of an American
+    citizen are not defined, like cyrillic signs, "decorated" latin characters
+    etc. weren't defined at all.
+</p>
+
+    <h2 id="other_charsets">Other Character Encodings</h2>
+
+<p>
+    When people started to use computers in other countries, other
+    characters needed to be encoded. In the european countries ASCII was
+    reused, and the 128 unused numbers per bytes were used for the locally
+    needed characters.
+</p>
+
+<p>
+    In western Europe the character encoding was called "Latin 1", and later
+    standardized as ISO-8859-1. Latin 2 was used in central europe and so on.
+</p>
+
+<p>
+    In each of the Latin-* charsets the first 128 characters are identical to
+    ASCII, so they can be viewed as ASCII extensions.
+</p>
+
+[% comment TODO: check the Shift-JIS part %]
+<p>
+    In other parts of world other character encodings were developped, like
+    Big5 in China and Shift-JIS in Japan.
+</p>
+
+<p>
+    These local charsets are very limited. When the Euro was introduced in
+    2001, many european countries had a currencies whos symbols couldn't be
+    expressed in the traditional character encodings.
+</p>
+
+<h2><a name="unicode"></a>Unicode</h2>
+
+<p>
+    The charsets mentioned so far can encode only a small part of all possible
+    characters, which makes it nearly impossible to create documents that
+    contain letters from different scripts.
+</p>
+
+<p>
+    In an attempt to unify all scripts into a single writing system, the
+    Unicode consortium was created, and it started to collect all known
+    characters, and assign a unique number to each, called "codepoint".
+</p>
+
+<p>
+    The codepoint is usually written as a four or six digit hex number, like
+    <code>U+0041</code>. The corresponding name is <code>LATIN SMALL LETTER A</code>.
+</p>
+
+<p>
+    Apart from letters and other "base characters" there are also accents
+    and decorations like <code>ACCENT, COMBINING ACUTE</code>, which can be
+    added to a base character.
+</p>
+    
+<p>
+    If a base char is followed by one or more of these marking characters, 
+    this compound forms a logical character called "grapheme".
+</p>
+    
+
+<h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
+
+<p>
+    The concept of Unicode codepoints and graphemes is completely independant
+    of the encoding.
+</p>
+
+<p>
+    There are different ways to encode these codepoints, and these mappings
+    from codepoints to bytes are called "Unicode Transformation Formats". 
+    The most weel known is UTF-8, which is a byte based format that uses all
+    possible byte values from 0 to 255. There is also a lax version called
+    UTF8 (without the hyphen). The Perl module <em>Encode</em> distinguishes
+    these versions.
+</p>
+
+<p>
+    Windows uses mostly UTF-16 which uses at least two bytes per codepoint,
+    for very high codepoints it uses 4 bytes.
+ </p>
+
+<p>
+    UTF-32 encodes every codepoint in 4 bytes. It is the only fixed width
+    encoding that can implement the whole Unicode range.
+</p>
+
+    <table summary="Examples for character encodings">
+    <tr>
+        <th>Codepoint</th><th>Char</th><th>ASCII</th><th>UTF-8</th><th>Latin-1</th><th>ISO-8859-15</th><th>UTF-16</th>
+    </tr>
+    <tr>
+        <td>U+0041</td><td>A</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x00 0x41</td> 
+    </tr>
+    <tr>
+        <td>U+00c4    </td><td> Ä       </td><td>  -    </td><td> 0xc4 0x84
+        </td><td> 0xc4    </td><td> 0xc4        </td><td> 0x00 0xc4</td>
+    </tr>
+    <tr>
+        <td>U+20AC    </td><td> €       </td><td>  -    </td><td> 0xe3 0x82 0xac
+        </td><td> -       </td><td> 0xa4        </td><td> 0x20 0xac</td>
+    </tr>
+    <tr>
+        <td>U+c218    </td><td> 수      </td><td> -     </td><td> 0xec 0x88 0x98
+        </td><td> -       </td><td> -           </td><td> 0xc2 0x18</td>
+    </tr>
+    </table>
+
+<p>
+    (The letter in the last line is the Hangul syllable SU, and your browser
+    will only display it correctly if you have the appropriate Asian fonts
+    installed.)
+</p>
+
+
+<h2><a name="perl_and_character_encodings"></a>Perl and Character Encodings</h2>
+<p>
+    Perl Strings are either byte strings or text strings.
+</p>
+
+<p>
+    If you read a line from <code>STDIN</code>, it is a byte string by
+    default.
+</p>
+
+<p>
+    With the function <code>decode</code> in the module <em>Encode</em> it can
+    be transformed into a text string, assuming you know its encoding. The
+    function <code>encode</code> in the same module does the opposite job, it
+    transforms a text string into a byte string.
+</p>
+
+<p>
+    All text operations should work on text strings, because only then are
+    non-ASCII characters handled correctly. For example <code>lc</code> and
+    <code>uc</code> work on text strings as expected, and <code>\w</code> in a
+    regular expression matches any letter character, not just
+    <code>[a-zA-Z]</code>.
+</p>
+
+<p>
+    But note that <code>cmp</code> only compares non-ASCII chars as expected
+    (i.e. <code>&quot;ä&quot; lt &quot;b&quot;</code>), if 
+    <code>use locale</code> is in effect. Since the behaviour of 
+    <code>sort</code> is defined in terms of <code>cmp</code>, the same
+    applies for sorting. </p>
+    <pre>[%syntax perl%]
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Encode qw(encode decode);
+
+my $enc = 'utf-8'; # This script is stored as UTF-8
+my $byte_str = "Ä\n";
+
+# Byte strings:
+print lc $byte_str; # prints 'Ä', lc didn't have any effect
+
+# text strings::
+my $text_str = decode($enc, $byte_str);
+$text_str = lc $text_str;
+print encode($enc, $text_str); # prints 'ä', lc worked as expected
+[%endsyntax%]</pre>
+
+<p>
+    It is highly recommended to convert all input to text strings, then work
+    with the text strings, and only covert them back to byte strings on ouput
+    or storing.
+</p>
+
+<p>
+    Otherwise you can get confused very fast, and lose track of which strings
+    are byte strings, and which ones are text strings.
+</p>
+
+<p>
+    Perl offers IO layers, which are easy mechanisms to make these conversions
+    automatically, either global or per file handle.
+</p>
+
+    <pre>[%syntax perl%]
+# IO layer: $handle now returns text strings on reading
+open my $handle, '<:encoding(UTF-8)', $file;
+
+# same
+open my $handle, '<', $datei;
+binmode $handle, ':encoding(UTF-8)';
+
+# each open() automatically uses :encoding(iso-8859-1)
+use open ':encoding(iso-8859-1)';
+
+# All string literals in the script are interpreted as text strings:
+use utf8;
+# (assumes the script to be stored in UTF-8
+
+# Get the current locale from the environment, and let STDOUT
+# convert to that encoding:
+use PerlIO::locale;
+binmode STDOUT, ':locale';
+
+# all I/O with current locale:
+use open ':locale';
+[%endsyntax%]</pre>
+
+<p>
+    Care should be taken with the input layer <code>:utf8</code>: it assume
+    the input to be in valid UTF-8. If that's not the case, it's a source of
+    subtle security holes, see 
+    <a href="http://www.perlmonks.org/?node_id=644786">this article on
+    perlmonks.org</a> for details. Use <code>:encoding(UTF-8)</code> instead.
+</p>
+
+<p>
+    As an output layer <code>:utf8</code> works just fine.
+</p>
+
+<p>
+    The module and prgma <code>utf8</code> also allows you to use non-ASCII
+    chars in variable names and module names. But beware, this feature isn't
+    tested all that much, and doesn't work very well. So you should stick to
+    variable names matching <code>[a-zA-Z_][a-zA-Z0-9_]*</code>.
+</p>
+
+    <h2><a name="testing_your_environment"></a>Testing your Environment</h2>
+<p>
+    You can use the following short script to your terminal, locales and
+    fonts. It is very europe centric, but you should be able to modify it to
+    use the charsets that are normally used where you live.
+</p>
+
+    <pre>[%syntax perl%]
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Encode;
+
+my @charsets = qw(utf-8 latin1 iso-8859-15 utf-16);
+
+# some non-ASCII codepoints:
+my $test = 'Ue: ' . chr(220) .'; Euro: '. chr(8364) . "\n";
+
+for (@charsets){
+    print "$_: " . encode($_, $test);
+}
+[%endsyntax%]</pre>
+<p>
+    If you run this program in a terminal, only one line will be displayed
+    correctly, and its first column is the charset of your terminal.
+</p>
+
+<p>
+    The Euro sign <code>€</code> isn't in latin1, so if your termnal has that
+    encoding, the Euro sign won't be displayed correctly.
+</p>
+
+
+<h2><a name="troubleshooting"></a>Troubleshooting</h2>
+
+<p>
+    The way perl stores text strings internally leads to unusual behaviour if
+    you try to print them without encoding  them.
+</p>
+
+<p>
+    If all codepoints are smaller than 256, the string is internally stored
+    as Latin-1, and will be printed that way.
+</p>
+    
+<p>
+    Otherwise the string is stored as UTF-8, and printing it will result in
+    the warning <code>Wide character in print</code> (assuming you have
+    <code>warnings</code> enabled).
+</p>
+
+<p>
+    So if you test your scripts for unicode safety, use chars that are not in
+    Latin-1, for example the Euro sign <code>€</code>. If you forget to encode
+    some output, you'll see the warning mentioned above on printing the string.
+</p>
+
+<p>
+    If you obtain data from external modules, like <code>DBI</code> or some
+    parser, you can test with <code>utf8::is_utf8(STRING)</code> if the string
+    is a text string. This function will only return a useful result if
+    non-ASCII chars are in the string.
+</p>
+
+    <!-- TODO: fix link-->
+    <p>Another way to inspect a string is the module <a href="/Devel/Peek.html">Devel::Peek</a></p>
+    <pre>[%syntax perl%]
+use Devel::Peek;
+use Encode;
+my $str = "ä";
+Dump $str;
+$str = decode("utf-8", $str);
+Dump $str;
+Dump encode('latin1', $str);[%endsyntax%]
+__END__
+SV = PV(0x814fb00) at 0x814f678
+REFCNT = 1
+FLAGS = (PADBUSY,PADMY,POK,pPOK)
+PV = 0x81654f8 "\303\244"\0
+CUR = 2
+LEN = 4
+
+SV = PV(0x814fb00) at 0x814f678
+REFCNT = 1
+FLAGS = (PADBUSY,PADMY,POK,pPOK,UTF8)
+PV = 0x817fcf8 "\303\244"\0 [UTF8 "\x{e4}"]
+CUR = 2
+LEN = 4
+
+SV = PV(0x814fb00) at 0x81b7f94
+REFCNT = 1
+FLAGS = (TEMP,POK,pPOK)
+PV = 0x8203868 "\344"\0
+CUR = 1
+LEN = 4</pre>
+<p>
+    The string <code>UTF8</code> in the line starting with <code>FLAGS
+    =</code> shows that the string is a text string. If it is a text string,
+    the line starting with <code>PV =</code> holds the bytes, and in brackets
+    the codepoints.
+</p>
+
+<p>
+    A common source of errors are buggy modules. The pragma
+    <code>encode</code> (with lower case e)  looks very tempting:
+</p>
+
+<pre>[%syntax perl%]
+# automatic conversion to and from the current locale
+use encoding ':locale';[%endsyntax%]</pre>
+
+<p>
+    But under the effect of <code>use encoding</code> some AUTOLOAD
+    functions stop working, and the module isn't thread safe.
+</p>
+
+<h2><a name="charsets_in_the_www"></a>Charsets in the WWW</h2>
+<p>
+    When you write a CGI script you have to decide for a character encoding,
+    print all your data in that encoding, and write it in the HTTP headers.
+</p>
+<p>
+    For most applications UTF-8 is a good choice, since you can code arbitrary
+    Unicode codepoints with it, and on the other hand english text (and of
+    most other european languages) is encoded very efficiently.
+</p>
+
+<p>
+    HTTP offers the <code>Accept-Charset</code>-Header in which the client can
+    tell the server which character encodings it can handle. But if you stick
+    to the common encodings like UTF-8 or Latin-1, next to all user agents
+    will understand it, so it isn't really necessary to check that header.
+</p>
+
+<p>
+    For HTML files the header typically looks like this:
+    <code>Content-Type: text/html; charset=UTF-8</code>. If you send such a
+    header, you only have to escape those characters that have a special
+    meaninig in HTML: <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>
+    and, in attributes, <code>"</code>.
+</p>
+    
+<p>
+    Special care must be taken when reading POST or GET parameters with the
+    function <code>param</code> in the module <code>CGI</code>. Older 
+    versions (prior to 3.29) always returned byte strings, newer version 
+    return text strings if <code>charset("UTF-8")</code> has been called
+    before, and byte strings otherwise.
+</p>
+
+<p>
+    CGI.pm doesn't support character encodings other than UTF-8.
+</p>
+
+<p>
+    To ensure that form contents in the browser are sent with a known charset,
+    you can add the <code>accept-cahrset</code> attribute to the
+    <code>&lt;form&gt;</code> tag.
+<p>
+    <pre>[%syntax html%]
+<form method="post" accept-charset="utf-8" action="/script.pl">[%endsyntax%]</pre>
+
+    <!-- TODO: fix link-->
+<p>
+    If you use a template system, you should take care to choose one that
+    knows how to handle character encodings. Good examples are 
+    <a href="/Template/Alloy.html">Template::Alloy</a>,
+    <a href="/HTML/Template/Compiled.html">HTML::Template::Compiled</a> 
+    (since version 0.90 with the <code>open_mode</code> option), or 
+    Template Toolkit together with
+    <a href="/Template/Provider/Encoding.html">Template::Provider::Encoding</a>.</p>
+
+    <h2><a name="advanced_topics"></a>Advanced Topics</h2>
+<p>
+    With the basic charset &amp; Perl knowledge you can get quite far, for
+    example you make a web application "Unicode safe", i.e. you can take care
+    that all possible user inputs are displayed correctly, in any script the
+    user happens to use.
+</p>
+
+<p>
+    But that's not all there is to know on the topic. For example the Unicode
+    standard allows different ways to compose some characters, so you need to
+    "normalize" them before you can compare two strings. You can read more
+    about that in the <a
+    href="http://unicode.org/faq/normalization.html">Unicode normalization FAQ</a>.
+</p>
+
+<p>
+    To implement country specific behaviour in programs, you should take a
+    look at the locales system. For example in Turkey <code>lc 'I'</code>, the
+    lower case of the capital letter I is <code>ı, U+0131 LATIN SMALL LETTER
+    DOTLESS I</code>, while the upper case of <code>i</code> is <code>İ,
+    U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE</code>.
+</p>
+
+<!-- TODO: link-->
+<p>
+    A good place to start reading about locales is <code>perldoc
+    perllocale</code>.
+</p>
+
+    <hr />
+
+<p>
+    This article is a translation of a <a
+    href="/de/artikel/charsets-unicode">German article of mine</a> written 
+    for <a href="http://foo-magazin.de/">$foo-Magazin 01/2008</a>, a German 
+    Perl magazine. It was slightly enhanced later on.
+</p>

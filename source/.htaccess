@@ -1,0 +1,27 @@
+#AddType application/xhtml+xml .html
+AddType text/html .html 
+#AddType type-map .html
+#AddHandler type-map .html
+Options +Includes +MultiViews
+DirectoryIndex index
+#AddOutputFilter INCLUDES .html
+AddLanguage en .en
+AddLanguage de .de
+
+RewriteEngine on
+SetEnvIf Request_URI ^(de|en) prefer-language=$1
+
+# top level
+RewriteRule ^(de|en)/?$         /index.html.$1    [L]
+
+# first level
+RewriteRule ^(de|en)/(.*[^/])$  /$2.html.$1       [L]
+RewriteRule ^(de|en)/(.*/)$     /$2/index.html.$1 [L]
+
+#
+## first level
+#RewriteRule ^(de|en)/(.*)/$     /$2/index.html.$1 [L]
+#RewriteRule ^(de|en)/(.*)/(.*)$ /$2/$3.html.$1 [L]
+
+LanguagePriority de en
+ForceLanguagePriority Prefer Fallback

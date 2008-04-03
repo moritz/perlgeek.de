@@ -1,0 +1,23 @@
+[%setvar title Perlgeek.de - Moritz Lenz %]
+[%setvar section Home %]
+[%menu main home%]
+
+<h1>Welcome to Perlgeek.de</h1>
+
+<p>
+    <strong>This page is under construction</strong>, so please be patient if
+    some links don't work, content is sparse or some resources are still on
+    external sites.
+</p>
+
+<p>
+    My name is Moritz Lenz, and here you can find my contributions 
+    to and about perl. If you're looking for my <a 
+    href="http://moritz.faui2k3.org/">personal homepage, look here</a>.
+</p>
+
+
+
+[% comment
+    vim: syn=html ts=4 sw=4 expandtab
+%]

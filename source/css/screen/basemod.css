@@ -1,0 +1,186 @@
+@charset "UTF-8";
+/**
+ * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
+ *
+ *  Screen layout for YAML examples
+ *
+ * @copyright       Copyright 2005-2007, Dirk Jesse
+ * @license         CC-A 2.0 (http://creativecommons.org/licenses/by/2.0/),
+ *                  YAML-C (http://www.yaml.de/en/license/license-conditions.html)
+ * @link            http://www.yaml.de
+ * @package         yaml
+ * @version         3.0.3
+ * @revision        $Revision: 118 $
+ * @lastmodified    $Date: 2007-08-18 16:03:42 +0200 (Sa, 18 Aug 2007) $
+ */
+
+@media all
+{
+    /**
+     *  Formatting YAML's  basic layout elements
+     */
+
+    /*  Marginal areas & page background */
+    body {
+        background: #00ff00 url("/images/bg_green.png") repeat-x top left fixed;
+        padding: 10px 0;
+    }
+
+    /*  Layout: width, background, borders */
+    #page_margins {
+/*        min-width: 740px; */
+        max-width: 65em;
+        margin: 0 auto;
+        border: 0px #889 solid;
+    }
+
+    #page{
+        background: #fff;
+        border: 10px #fff solid;
+    }
+
+    /*  Centering layou in old IE-versions */
+    body {
+        text-align: center
+    }
+
+    #page_margins { text-align:left }
+
+    /* (de) Gestaltung der Hauptelemente des Layouts */
+    #header {
+        color: #000;
+        background: #fff repeat-x top left;
+        padding: 3ex 2em 1em 2ex;
+    }
+
+    #topnav {
+        color: #aaa;
+        background: transparent;
+    }
+
+    /* TODO: auf #header einschränken */
+/*    h1 {
+        font-family: 'Arial' !important;
+    }
+    */
+
+  /*  adjustment of main navigation */
+    #nav {
+        padding-bottom: 2em;
+
+    }
+    #nav ul {
+        margin-left: 20px;
+    }
+
+    #nav_main {
+       background-color: #336;
+    }
+
+    #main {
+        background: #fff;
+        padding-top: 3ex;
+/*        padding:10px 0; */
+    }
+
+    #footer {
+        color:#666;
+        background: #f9f9f9;
+        padding: 15px;
+        border-top: 5px #efefef solid;
+        margin-top: 1.5ex;
+    }
+
+  /**
+   *  Formatting content container
+   *
+   * |-------------------------------|
+   * | #header                       |
+   * |-------------------------------|
+   * | #col1   | #col3               |
+   * | 25%     | flexible            |
+   * |-------------------------------|
+   * | #footer                       |
+   * |-------------------------------|
+   */
+
+
+    #col1 { width: 20% }
+    #col1_content { 
+        padding: 10px 10px 10px 20px; 
+        border: solid #9eff9e 4px;
+
+    }
+
+    #col1_content ul li {
+        margin-left: 0px;
+    }
+
+    #col1 ul {
+       list-style-type: none !important;
+    }
+    #col1 ul {
+        margin-left:  1ex;
+    }
+
+    #col3 { 
+        margin: 0 20% 
+    }
+    #col3_content { 
+        padding-left: 2ex;
+        padding-right: 1ex;
+/*        padding: 10px */
+    }
+
+    /**
+    *  Modifying "shiny buttons" navigation
+    */
+
+    #nav * {
+        border: 0px none !important
+    }
+    #nav_main {
+        background: #9eff9e
+    }
+    #nav_main ul {
+        margin-left: 10px
+    }
+    #nav_main ul li {
+        line-height: 1.2em
+    }
+
+    #nav_main ul li a,
+    #nav_main ul li strong {
+        color: #666;
+        font-weight: normal;
+        padding: 0.5em 0.8em 0.5em 0.8em;
+    }
+
+    #nav_main ul li a:focus,
+    #nav_main ul li a:hover,
+    #nav_main ul li a:active  {
+/*        background: #85ff85; */
+        background: #00e200; 
+/*        color: #830000  */
+        color: #ffffff 
+    }
+
+    #nav_main ul li#current {
+        background: transparent
+    }
+
+    #nav_main ul li#current strong,
+    #nav_main ul li#current a,
+    #nav_main ul li#current a:focus,
+    #nav_main ul li#current a:hover,
+    #nav_main ul li#current a:active {
+/*        color: #4D87C7; font-weight: bold */
+        color: #008300; font-weight: bold
+    }
+
+    ul li .selected {
+        font-weight: bold;
+
+    }
+
+}
