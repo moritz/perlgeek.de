@@ -72,7 +72,7 @@
   /* (en) new standard values for lists, blockquote and cite */
   /* (de) Neue Standardwerte für Listen & Zitate */
   ul, ol, dl { margin: 0 0 1em 1em }
-  li { margin-left: 1.5em; line-height: 1.5em; }
+  li { margin-left: 1.5em; line-height: 1.5em; margin-bottom: 1ex; }
 
   dt { font-weight: bold; }
   dd { margin: 0 0 1em 2em; }
