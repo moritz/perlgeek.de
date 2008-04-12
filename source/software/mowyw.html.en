@@ -140,6 +140,9 @@
 
 [% verbatim changelog %]
 <ul>
+    <li>2008-04-12, mowyw-0.5.0 Data sources, bind and for statements. Major
+    internal overhaul, which allows for much easier testing. Many more
+    tests.</li>
     <li>2007-06-06, mowyw-0.4.0: Optional [% .. %] syntax.</li>
     <li>2007-03-28, mowyw-0.2.0: nearly complete rewrite using a lexer and
 a recursive-descending parser; introduced the [[[verbatim $marker]]]
