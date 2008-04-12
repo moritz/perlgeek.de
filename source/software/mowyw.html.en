@@ -1,6 +1,7 @@
 [% setvar title mowyw - Mowyw Writes Your Websites %]
 [% setvar section Software %]
 [% menu main software mowyw %]
+[% setvar de /de/software/mowyw %]
 
 <h1 id="introduction">[% readvar title %]</h1>
 
@@ -44,7 +45,7 @@
 
 [% verbatim syn %]
 <p>
-    Entire files can be included via the <code>[[[include name]]]</code>
+    Entire files can be included via the <code>[%include name%]</code>
     or <code>[% include name %]</code> directive.</p>
     <p>A menu <code>foo</code> can be included with the item
     <code>bar</code> as the active item via <code>[%menu foo bar%]</code>. 
@@ -98,9 +99,10 @@
 
 <h2 id="doc">Documentation</h2>
 <p>
-    You can read the <a href="http://moritz.faui2k3.org/files/mowyw-README">README 
-    file</a> online, and you can download the tar ball and take a look at the
-    distributed examples.
+    You can read the <a href="https://faui2k3.org.org/svn/moritz/mowyw/README">README 
+    file</a> and the <a href="/software/mowyw.1">mowyw manual page</a> online, 
+    and you can download the tar ball and take a look at the distributed 
+    examples.
 </p>
 
 

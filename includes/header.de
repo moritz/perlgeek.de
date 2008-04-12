@@ -21,4 +21,5 @@
 				<!-- end: skip link navigation -->
 				<span><a href="/impressum">Kontakt und Impressum</a></span> </div>
 <!--			<h1>[%readvar section%]</h1> -->
-			<span>perlgeek.de | [%readvar section%]</span></div>
+			<span>perlgeek.de | [%readvar section%][% ifvar en %] -- <a
+            href="[% readvar en %]">This page in English</a>[% endifvar %]</span></div>

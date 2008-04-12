@@ -1,6 +1,7 @@
 [%setvar title Perlgeek.de - Moritz Lenz %]
 [%setvar section Home %]
 [%menu main home%]
+[%setvar de /de/ %]
 
 <h1>Welcome to Perlgeek.de</h1>
 

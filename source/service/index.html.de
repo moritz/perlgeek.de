@@ -1,6 +1,7 @@
 [%setvar title Services auf perlgeek.de %]
 [%setvar section service %]
 [%menu main service%]
+[%setvar en /en/service/ %]
 
 <h1>[%readvar title%]</h1>
 

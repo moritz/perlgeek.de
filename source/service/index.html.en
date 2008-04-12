@@ -1,6 +1,7 @@
 [%setvar section Service%]
 [%setvar title Services%]
 [%menu main service%]
+[%setvar de /de/service/ %]
 
 <h1>[%readvar title%]</h1>
 

@@ -1,6 +1,7 @@
 [%setvar title Impressum für perlgeek.de %]
 [%setvar section Home %]
 [%menu main %] [% comment no section atm %]
+[%setvar en /en/imprint%]
 
 <h1>[%readvar title%]</h1>
 

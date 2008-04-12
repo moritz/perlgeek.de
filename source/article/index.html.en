@@ -1,0 +1,4 @@
+[% setvar de /artikel/ %]
+[% setvar title Index of Articles %]
+[% setvar section Article %]
+[% menu main article %]

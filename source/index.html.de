@@ -1,6 +1,7 @@
 [%setvar title Perlgeek.de - Moritz Lenz %]
 [%setvar section Home %]
-[%menu main home%]
+[%menu main home %]
+[% setvar en /en/ %]
 
 <h1>Willkommen auf Perlgeek.de</h1>
 
@@ -40,7 +41,8 @@
         Bei den <a href="http://www.perlmonks.org/">Perl-Mönchen</a> bekommt 
         man Hilfe zu allen Perl-Themen, und kann sich auch sonst sehr gut 
         mit gleichgesinnten unterhalten. Ich bin dort <a
-        href="http://www.perlmonks.org/?node=moritz">auch sehr aktiv</a>.
+        href="http://www.perlmonks.org/?node_id=6364;user=moritz">auch 
+        sehr aktiv</a>.
     </li>
     <li>
         Die Seiten der <a href="http://de.perl.org/">deutschen

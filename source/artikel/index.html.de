@@ -1,6 +1,7 @@
 [%setvar title Artikel auf perlgeek.de %]
 [%setvar section Artikel %]
 [%menu main artikel%]
+[%setvar en /en/article/ %]
 <h1>[%readvar title%]</h1>
 
 [% comment

@@ -1,6 +1,7 @@
 [%setvar title Imprint for perlgeek.de %]
 [%setvar section Home %]
 [%menu main %] [% comment no section atm %]
+[%setvar de /de/impressum %]
 
 <h1>[%readvar title%]</h1>
 

@@ -1,6 +1,7 @@
 [%setvar title Mowyw writes your Websites %]
 [%setvar section Software %]
 [%menu main software mowyw %]
+[%setvar en /en/software/mowyw %]
 
 <h1>[%readvar title%]</h1>
 
@@ -43,7 +44,7 @@
 <p>
     mowyw ist <strong>kein</strong> online-CMS mit einem Web-Frontend,
     SQL-Backend, Gästebuch und anderen Dingen, die typisch für Portale 
-    sind.
+    sind. Es eignet sich nicht für dynamische Seiten.
 </p>
 
 <h2 id="syntax-example">Syntax-Beispiel</h2>
@@ -91,7 +92,9 @@
 
 <p>
     Die aktuellste Dokumentation findet sich auf Englisch in der <a
-    href="http://moritz.faui2k3.org/files/mowyw-README">README</a>.
+    href="https://faui2k3.org.org/svn/moritz/mowyw/README">README</a>
+    (Einführung) und in der <a href="/software/mowyw.1">Manual Page</a>
+    (formeller und vollständiger).
 </p>
 
 <p>
@@ -110,7 +113,7 @@
       
 <p>
     Vor dem ersten Ausführen sollten Sie unbedingt die <a
-    href="http://moritz.faui2k3.org/files/mowyw-README">README</a>-Datei 
+    href="https://faui2k3.org.org/svn/moritz/mowyw/README">README</a>-Datei 
     lesen.
 </p>
 
@@ -122,8 +125,8 @@
 
 <p>Ältere Versionen sind ebenfalls verfügbar:</p>
 <ul>
-    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.4.0</a></li>
-    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.3.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.4.0.tar.gz">mowyw-0.4.0</a></li>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw-0.3.0.tar.gz">mowyw-0.3.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.2.0.tar.gz">mowyw-0.2.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.1.0.tar.gz">mowyw-0.1.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.3.tar.gz">mowyw-0.0.3</a></li>

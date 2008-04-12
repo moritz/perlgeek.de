@@ -1,6 +1,7 @@
 [%setvar section article%]
 [%setvar title Character Encodings in Perl %]
 [%menu main artikel%]
+[%setvar de /de/artikel/charsets-unicode %]
 <!-- INDEX BEGIN -->
 
     <h1>[%readvar title%]</h1>

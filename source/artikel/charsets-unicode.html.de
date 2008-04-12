@@ -1,6 +1,7 @@
 [%setvar section Artikel%]
 [%setvar title Charsets oder „Warum funktionieren meine Umlaute nicht?”%]
 [%menu main artikel%]
+[%setvar en /en/article/encodings-and-unicode %]
 <!-- INDEX BEGIN -->
 
     <h1><a name="charsets_oder_warum_funktionieren_meine_umlaute_nicht"></a>
@@ -113,7 +114,7 @@
     </tr>
     <tr>
         <td>U+c218    </td><td> 수      </td><td> -     </td><td> 0xec 0x88 0x98
-        </td><td> -       </td>td> -           </td><td> 0xc2 0x18</td>
+        </td><td> -       </td><td> -           </td><td> 0xc2 0x18</td>
     </tr>
     </table>
 
@@ -338,9 +339,6 @@ use encoding ':locale';[%endsyntax%]</pre>
     <!-- TODO: link-->
     <em>perllocale</em>.</p>
     
-</p>
-    </p>
-
     <hr />
 
     <p>Dieser Artikel wurde für das <a

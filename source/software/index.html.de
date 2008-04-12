@@ -1,6 +1,7 @@
 [%setvar title Software auf perlgeek.de %]
 [%setvar section Home %]
 [%menu main software%]
+[%setvar en /en/software/ %]
 
 <h1>[%readvar title%]</h1>
 

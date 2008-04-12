@@ -1,6 +1,7 @@
 [% setvar title Software %]
 [% setvar section software %]
 [% menu main software %]
+[% setvar de /de/software/ %]
 
 <h1>[% readvar title %]</h1>
 
