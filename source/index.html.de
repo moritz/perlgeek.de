@@ -2,6 +2,7 @@
 [%setvar section Home %]
 [%menu main home %]
 [% setvar en /en/ %]
+[% setvar more_header <meta name="verify-v1" content="C7A9XlZl4p3+BhzykrL6QhcngxVKE+lt6wMoWhmppj0=" /> %]
 
 <h1>Willkommen auf Perlgeek.de</h1>
 
