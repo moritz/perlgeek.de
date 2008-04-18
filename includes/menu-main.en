@@ -4,7 +4,7 @@
 			<div id="nav_main">
                     <ul>
                         [% item home     <li{{ id="current"}}><a href="/en/">Home</a></li>             %]
-                        [% item artikel  <li{{ id="current"}}><a href="/en/article/">Articles</a></li> %]
+                        [% item article  <li{{ id="current"}}><a href="/en/article/">Articles</a></li> %]
                         [% item service  <li{{ id="current"}}><a href="/en/service/">Services</a></li> %]
 <!--                    [% item blog     <li{{ id="current"}}><a href="#">Blog</a></li>     %] -->
                         [% item software <li{{ id="current"}}><a href="/en/software/">Software</a></li> %]
@@ -35,6 +35,17 @@
                     <ul>
                         <li><a href="http://irclog.perlgeek.de/">IRC logs</a></li>
                         <li><a href="http://moritz.faui2k3.org/svn-search/search.pl">Search SVN commit logs</a></li>
+                    </ul>
+				</div>
+			</div>
+            }} %]
+            [% item article {{
+            <!-- begin: #col1 - first float column -->
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+					<h3>Articles</h3>
+                    <ul>
+                        <li><a href="/en/article/encodings-and-unicode">Encodings and Unicode</a></li>
                     </ul>
 				</div>
 			</div>
