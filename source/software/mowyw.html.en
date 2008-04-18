@@ -1,4 +1,4 @@
-[% setvar title mowyw - Mowyw Writes Your Websites %]
+[% setvar title mowyw - Mowyw Writes Your Websites (Offline CMS) %]
 [% setvar section Software %]
 [% menu main software mowyw %]
 [% setvar de /de/software/mowyw %]
