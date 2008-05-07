@@ -243,7 +243,7 @@ for (@charsets){
     abgespeichert ist. Diese Abfrage liefert aber nur ein sinnvolles Ergebnis,
     wenn Zeichen außerhalb des ASCII-Zeichensatzes in dem String enthalten sind.</p>
     <!-- TODO: fix link-->
-    <p>Auch <a href="/Devel/Peek.html">Devel::Peek</a> zeigt an, ob ein String intern als Textstring oder als
+    <p>Auch <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a> zeigt an, ob ein String intern als Textstring oder als
     Bytestring vorliegt:</p>
     <pre>[%syntax perl%]
 use Devel::Peek;
@@ -312,11 +312,12 @@ use encoding ':locale';[%endsyntax%]</pre>
 <form method="post" accept-charset="utf-8" action="/script.pl">[%endsyntax%]</pre>
     <!-- TODO: fix link-->
     <p>Bei Verwendung eines Template-Systems sollte man darauf achten, dass es mit
-    charsets umgehen kann. Beispiel sind <a href="/Template/Alloy.html">Template::Alloy</a>,
-    <a href="/HTML/Template/Compiled.html">HTML::Template::Compiled</a> 
+    charsets umgehen kann. Beispiel sind <a
+    href="http://search.cpan.org/perldoc?Template::Alloy">Template::Alloy</a>,
+    <a href="http://search.cpan.org/perldoc?HTML::Template::Compiled">HTML::Template::Compiled</a> 
     (seit Version 0.90 mit der Option <code>open_mode</code>) oder 
     Template Toolkit in Verbindung mit 
-    <a href="/Template/Provider/Encoding.html">Template::Provider::Encoding</a>.</p>
+    <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.</p>
 
     <h2><a name="weiterf__hrende_themen"></a>Weiterführende Themen</h2>
     <p>Mit den Grundlagen zu den Themen Zeichenkodierungen und Perl kommt man schon
