@@ -342,7 +342,7 @@ for (@charsets){
 </p>
 
     <!-- TODO: fix link-->
-    <p>Another way to inspect a string is the module <a href="/Devel/Peek.html">Devel::Peek</a></p>
+    <p>Another way to inspect a string is the module <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a></p>
     <pre>[%syntax perl%]
 use Devel::Peek;
 use Encode;
@@ -443,11 +443,11 @@ use encoding ':locale';[%endsyntax%]</pre>
 <p>
     If you use a template system, you should take care to choose one that
     knows how to handle character encodings. Good examples are 
-    <a href="/Template/Alloy.html">Template::Alloy</a>,
-    <a href="/HTML/Template/Compiled.html">HTML::Template::Compiled</a> 
+    <a href="http://search.cpan.org/perldoc?Template::Alloy">Template::Alloy</a>,
+    <a href="http://search.cpan.org/perldoc?HTML::Template::Compiled">HTML::Template::Compiled</a> 
     (since version 0.90 with the <code>open_mode</code> option), or 
     Template Toolkit together with
-    <a href="/Template/Provider/Encoding.html">Template::Provider::Encoding</a>.</p>
+    <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.</p>
 
     <h2><a name="advanced_topics"></a>Advanced Topics</h2>
 <p>
