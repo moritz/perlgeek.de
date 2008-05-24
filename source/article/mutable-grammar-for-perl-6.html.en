@@ -168,7 +168,7 @@ token sigil:sym<::> { <sym> }
 second one matches <code>@</code> etc. Now if you call the rule
 <code>&lt;sigil&gt;</code>,
 you get the "or"-associated list of all those five rules. So it still matches
-<code>'$' | '@' | '%' | '&' | '::'</code>, but it is easier to extend.</p>
+<code>'$' | '@' | '%' | '&amp;' | '::'</code>, but it is easier to extend.</p>
 
 <p>If you want to add a new sigil, the only change in the grammar is another
 <code>sigil:</code> rule:</p>
