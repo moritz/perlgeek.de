@@ -94,6 +94,10 @@ grammar Perl6 {
 [% endsyntax %]
 </pre>
 
+<p>(You'll notice that the grammar for parsing Perl 6 is written in Perl 6
+itself - which is very neat for extensibility, it just requires an extra
+boot-strapping step.)</p>
+
 <h3>Grammars</h3>
 
 <p>A grammar is very much the same as a class, with rules instead of methods.
