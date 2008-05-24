@@ -144,8 +144,8 @@ value of the matched text, and won't know what to do with <code>¢</code>.</p>
 <p>A proto regex is a set of regexes/rules with the same name, that can be
 distinguished nontheless.</p>
 
-<p>The current [http://svn.pugscode.org/pugs/src/perl6/STD.pm|Perl 6 grammar]
-uses this construct:</p>
+<p>The current <a href="http://svn.pugscode.org/pugs/src/perl6/STD.pm">Perl 6
+grammar</a> uses this construct:</p>
 
 <pre>[% syntax perl6 %]
 token category:sigil { <sym> }
