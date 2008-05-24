@@ -46,6 +46,7 @@
 					<h3>Articles</h3>
                     <ul>
                         <li><a href="/en/article/encodings-and-unicode">Encodings and Unicode</a></li>
+                        <li><a href="/en/article/mutable-grammar-for-perl-6">A Mutable Grammar for Perl 6</a></li>
                     </ul>
 				</div>
 			</div>
