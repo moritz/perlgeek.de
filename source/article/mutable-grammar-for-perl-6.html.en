@@ -254,7 +254,7 @@ token infix:<bla> is tighter:<+> { 'bla' }
 <h2>Longest Token Matching</h2>
 
 <p>We're mostly there now, small changes and enhancements work like a charm.
-The example syntax changes too great care not to conflict with existing Perl 6
+The example syntax changes took great care not to conflict with existing Perl 6
 syntax. For larger changes you can't avoid that.</p>
 
 <p>It seems you have to define an order in which the rules from the original
