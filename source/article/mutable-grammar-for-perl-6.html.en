@@ -277,7 +277,9 @@ match, but since the latter matches more text, it wins.</p>
 all this stuff about mutable grammars, they want a nice syntax that hides all
 that.</p>
 
-<p>Being foremost practical, Perl 6 provide that of course:</p>
+<p>Being foremost practical, Perl 6 provide that of course. You can add the
+following lines in your normal Perl 6 code, and immediately afterwards you
+have the newly defined operators in place.</p>
 
 <pre>[% syntax perl6 %]
 # previous example
@@ -289,6 +291,13 @@ multi sub postfix:<+++> is equiv:<++> { Num $x is rw }
 multi sub postfix:<!> is equiv:<++> { Num $x }
     return [*] 1 .. $x;
 }
+
+# test the thing:
+my $x = 2;
+$x+++;
+say $x!; # prints 24
+
+
 [% endsyntax %]</pre>
 
 <h2>Summary</h2>
