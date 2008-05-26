@@ -175,7 +175,7 @@ you get the "or"-associated list of all those five rules. So it still matches
 
 <pre>[% syntax perl6 %]
 grammar SigilRichP6 is Perl6 {
-	token sigil:sym<ł> { <sym> }
+	token sigil:sym<ħ> { <sym> } # physicists will love you
 }
 [%endsyntax%]</pre>
 
@@ -273,7 +273,7 @@ match, but since the latter matches more text, it wins.</p>
 
 <h2>A nice syntax for grammar changes</h2>
 
-<p>Now the ordinary Perl hacker who wants a new operator shouldn't have to now
+<p>Now the ordinary Perl hacker who wants a new operator shouldn't have to know
 all this stuff about mutable grammars, they want a nice syntax that hides all
 that.</p>
 
@@ -287,7 +287,7 @@ multi sub postfix:<+++> is equiv:<++> { Num $x is rw }
 
 # define the factorial operator
 multi sub postfix:<!> is equiv:<++> { Num $x }
-    return [+] 1 .. $x;
+    return [*] 1 .. $x;
 }
 [% endsyntax %]</pre>
 
