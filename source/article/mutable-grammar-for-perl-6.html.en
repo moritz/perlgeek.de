@@ -2,6 +2,9 @@
 [%setvar title A Mutable Grammar For Perl 6 %]
 [%menu main article %]
 
+<p>Published 2008-05-29, preview for <a
+href="http://irclog.perlgeek.de/perl6/today">#perl6</a> on 2008-05-24</p>
+
 <h1>[% readvar title %]</h1>
 
 <p>Did you ever wonder why modifying perl 5 is so hard? Do you want to know
@@ -238,7 +241,7 @@ and that's boring.</p>
 
 <p>What we really want is a list of operators and their precedence (and
 associativity), and that the parser figures out the rest for us. The pattern is
-just <code>&lt;term&gt; [ &lt;operator&gt; &lt;term&gt;</code>, and once we were able to parse that
+just <code>&lt;term&gt; [ &lt;operator&gt; &lt;term&gt;]+</code>, and once we were able to parse that
 we just have to make a tree out of it.</p>
 
 <p>That's called bottom-up parsing, and Perl 6 uses it a lot. You can add new
