@@ -301,11 +301,11 @@ for (@charsets){
 [%endsyntax%]</pre>
 <p>
     If you run this program in a terminal, only one line will be displayed
-    correctly, and its first column is the charset of your terminal.
+    correctly, and its first column is the character encoding of your terminal.
 </p>
 
 <p>
-    The Euro sign <code>€</code> isn't in latin1, so if your termnal has that
+    The Euro sign <code>€</code> isn't in latin1, so if your terminal has that
     encoding, the Euro sign won't be displayed correctly.
 </p>
 
