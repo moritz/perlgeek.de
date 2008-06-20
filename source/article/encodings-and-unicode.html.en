@@ -534,7 +534,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 
 <p>The second point is really important. You'd guess "Ah, that's no problem,
 the preamble is just ASCII" - but many encodings are ASCII-incompatible in the
-first 127 characters (for example UTF-7, UCS-2 and UTF-16).</p>
+first 127 bytes (for example UTF-7, UCS-2 and UTF-16).</p>
 
 <p>So although the encoding information is available, the parser first has to
 guess nearly correctly to extract it.</p>
