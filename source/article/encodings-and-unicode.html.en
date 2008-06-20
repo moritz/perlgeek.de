@@ -542,14 +542,17 @@ guess nearly correctly to extract it.</p>
 <h3>How to Do it Right: Out-of-band Signalling</h3>
 
 <p>The XML example above demonstrates that a file format can't carry encoding
-information in the file itself, unless it is specified exactly in which
-encoding the encoding information is written.</p>
+information in the file itself, unless you specify a way to carry that encoding
+information on the byte level, independently of the encoding of the rest of
+the file.</p>
 
 <p>A possible workaround could have been to specific that the first line of
 any XML file has to be ASCII encoded, and the rest of the file is in the
 encoding that is specified in that first line. But it's an ugly workaround: a
 normal text editor would display the first line completely wrong if the file
-is in an ASCII-incompatible encoding.</p>
+is in an ASCII-incompatible encoding. Of course it's also incompatible with
+current XML specification, and would require a new, incompatible
+specification, which would in turn break all existing applications.</p>
 
 <p>So how to do it right, then?</p>
 
