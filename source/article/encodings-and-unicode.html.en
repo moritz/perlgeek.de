@@ -433,9 +433,9 @@ use encoding ':locale';[%endsyntax%]</pre>
 
 <p>
     To ensure that form contents in the browser are sent with a known charset,
-    you can add the <code>accept-cahrset</code> attribute to the
+    you can add the <code>accept-charset</code> attribute to the
     <code>&lt;form&gt;</code> tag.
-<p>
+</p>
     <pre>[%syntax html%]
 <form method="post" accept-charset="utf-8" action="/script.pl">[%endsyntax%]</pre>
 
@@ -479,11 +479,104 @@ use encoding ':locale';[%endsyntax%]</pre>
     perllocale</code>.
 </p>
 
+<h2 id="philosophy">Philosophy</h2>
+
+<p>
+    Many programmers how are confronted with encoding issues first react with
+    <i>"But shouldn't it just work?"</i>. Yes, it should just work. Bot too
+    many systems are broken by design regarding character sets and encodings.
+</p>
+
+<h3>Broken by Design</h3>
+
+<p>
+    "Broken by Design" most of the time means that a document format, and API
+    or a protocol allows multiple encodings, without a normative way on how
+    that encoding information is transported and stored out of band.
+</p>
+
+<p>
+    A classical example is the <a
+    href="http://en.wikipedia.org/wiki/Internet_Relay_Chat">Internet Relay
+    Chat (IRC)</a>, which specifies that a character is one Byte, but not
+    which character encoding is used. This worked well in the Latin-1 days,
+    but was bound to fail as soon as people from different continents started
+    to use it.
+</p>
+
+<p>
+    Currently many IRC clients try to autodetect character encodings, and
+    recode it to what the user configured. This works quite well in some
+    cases, but produces really ugly results where it doesn't work.
+</p>
+
+<h3>Another Broken Example: XML</h3>
+
+<p>
+    The <a href="http://en.wikipedia.org/wiki/XML">Extensible Markup
+    Language</a>, commonly known by its abbreviation XML, lets you specific
+    the character encoding inside the file:
+</p>
+
+<pre>[% syntax xml %]
+<?xml version="1.0" encoding="UTF-8" ?>
+[% endsyntax %]</pre>
+
+<p>
+    There are two reasons why this is insufficient:
+</p>
+
+<ol>
+    <li>The encoding information is optional</li>
+    <li>Any XML parser first has to autodetect the encoding to be able to
+    parse the encoding information</li>
+</ol>
+
+<p>The second point is really important. You'd guess "Ah, that's no problem,
+the preamble is just ASCII" - but many encodings are ASCII-incompatible in the
+first 127 characters (for example UTF-7, UCS-2 and UTF-16).</p>
+
+<p>So although the encoding information is available, the parser first has to
+guess nearly correctly to extract it.</p>
+
+<h3>How to Do it Right: Out-of-band Signalling</h3>
+
+<p>The XML example above demonstrates that a file format can't carry encoding
+information in the file itself, unless it is specified exactly in which
+encoding the encoding information is written.</p>
+
+<p>A possible workaround could have been to specific that the first line of
+any XML file has to be ASCII encoded, and the rest of the file is in the
+encoding that is specified in that first line. But it's an ugly workaround: a
+normal text editor would display the first line completely wrong if the file
+is in an ASCII-incompatible encoding.</p>
+
+<p>So how to do it right, then?</p>
+
+<p>The answer is quite simple: any  system that works with text data has to
+either store meta data separately, or store everything in a uniform
+encoding.</p>
+
+<p>It is tempting to store everything in the same encoding, and it works quite
+well on a local machine, but you can't expect everyone to agree on one single
+encoding, so all data exchange still has to carry encoding information. And
+usually you want to store original files (for fear of data loss), so you have
+to keep that encoding information somewhere.</p>
+
+<p>This observation should have a huge impact on the computing world: all file
+systems should allow you to store encoding information as meta data, and
+easily retrieve that meta data. The same should hold true for file names, and
+programming languages (at least those who want to take the pain away from
+their users) should transparently transport that meta information, and take
+care of all encoding issues.</p>
+
+<p>Then it could just work.</p>
+
     <hr />
 
 <p>
     This article is a translation of a <a
     href="/de/artikel/charsets-unicode">German article of mine</a> written 
     for <a href="http://foo-magazin.de/">$foo-Magazin 01/2008</a>, a German 
-    Perl magazine. It was slightly enhanced later on.
+    Perl magazine. It was enhanced and corrected since then.
 </p>
