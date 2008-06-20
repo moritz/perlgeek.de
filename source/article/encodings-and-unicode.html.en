@@ -556,7 +556,7 @@ specification, which would in turn break all existing applications.</p>
 
 <p>So how to do it right, then?</p>
 
-<p>The answer is quite simple: any  system that works with text data has to
+<p>The answer is quite simple: Every system that works with text data has to
 either store meta data separately, or store everything in a uniform
 encoding.</p>
 
