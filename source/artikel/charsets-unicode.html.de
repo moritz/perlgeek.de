@@ -13,7 +13,7 @@
 
     <h3>Inhaltsverzeichnis</h3>
     <ul>
-		<li><a href="#einf__hrung">Einführung</a></li>
+		<li><a href="#einfuehrung">Einführung</a></li>
 		<li><a href="#ascii">ASCII</a></li>
 		<li><a href="#andere_zeichenkodierungen">Andere Zeichenkodierungen</a></li>
 		<li><a href="#unicode">Unicode</a>
@@ -26,11 +26,11 @@
 		<li><a href="#die_arbeitsumgebung_testen">Die Arbeitsumgebung testen</a></li>
 		<li><a href="#troubleshooting">Troubleshooting</a></li>
 		<li><a href="#kodierungen_im_www">Kodierungen im WWW</a></li>
-		<li><a href="#weiterf__hrende_themen">Weiterführende Themen</a></li>
+		<li><a href="#weiterfuehrende_themen">Weiterführende Themen</a></li>
     </ul>
 <!-- INDEX END -->
 
-    <h2><a name="einf__hrung"></a>Einführung</h2>
+    <h2><a name="einfuehrung"></a>Einführung</h2>
     <p>Jeder hat es schon mindestens einmal erlebt: Ein Programm, das mit Text
     arbeitet, funktioniert wunderbar, solange man keine Umlaute eingibt. Sonst
     kommt nur noch Zeichenmüll heraus und ein bis zwei nicht korrekt 
@@ -57,18 +57,24 @@
     bekannt als ISO-8859-1 und ISO-8859-2.</p>
     <p>Diese Zeichensätze stimmen in den ersten 128 Zeichen mit ASCII 
     überein, die zweiten 128 Zeichen, also die mit 1 als erstem Bit, 
-    unterscheiden sich untereinander.</p>
-    <p>Die Grenzen dieser Zeichensätze werden einem schnell anhand eines gar nicht so
-    alten Beispieles klar: Mit der Einführung des Euros hatten viele Länder eine
-    neue Währung und damit ein Währungssymbol, das sich nicht in den traditionellen
-    Zeichensätzen ausdrücken ließ! (Dieses Problem wurde durch das Einführen des
-    Zeichensatzes ISO-8859-15 behoben, der sich nur wenig von Latin-1
-    unterscheidet und das <code>€</code>-Zeichen enthält).</p>
+    unterscheiden sich jeweils untereinander.</p>
 
-    <h2><a name="unicode"></a>Unicode</h2>
-    <p>Die bisherigen Zeichenkodierungen konnten jeweils nur einen kleinen, lokal
+<p>
+    Die Grenzen dieser Zeichensätze werden einem schnell anhand eines gar
+    nicht so alten Beispieles klar: Mit der Einführung des Euros hatten viele
+    Länder eine neue Währung und damit ein Währungssymbol, das sich nicht in
+    den traditionellen Zeichensätzen ausdrücken ließ! (Dieses Problem wurde 
+    durch das Einführen des Zeichensatzes ISO-8859-15 behoben, der sich nur 
+    wenig von Latin-1 unterscheidet und das <code>€</code>-Zeichen
+    enthält).
+</p>
+
+<h2><a name="unicode"></a>Unicode</h2>
+<p>
+    Die bisherigen Zeichenkodierungen konnten jeweils nur einen kleinen, lokal
     sinnvollen Bereich aller möglicher Zeichen darstellen - sobald man Texte mit
-    gemischten Zeichensätzen verfassen wollte, ging das heillose Chaos los.</p>
+    gemischten Zeichensätzen verfassen wollte, ging das heillose Chaos los.
+</p>
     <p>Um etwas Ordnung in das Chaos zu bekommen, hat das Unicode-Konsortium damit
     angefangen, jedem Zeichen, das in irgend einer Schrift in irgend einer Sprache
     vorkommt, eine eindeutige, ganze Zahl und einen Namen zuzuordnen.</p>
@@ -127,22 +133,45 @@
 
 
     <h2><a name="perl_und_zeichenkodierungen"></a>Perl und Zeichenkodierungen</h2>
-    <p>Strings können in Perl entweder als Bytestrings oder als Textstrings vorliegen.
-    Wenn man z.&nbsp;B. eine Zeile aus <code>STDIN</code> liest, ist sie per Default ein
-    Bytestring.</p>
-    <p>Mit der Funktion <code>decode</code> des Moduls <em>Encode</em> kann man sie in einen
-    Textstring umwandeln, wenn man die Zeichenkodierung kennt. In Gegenrichtung,
-    also von Textstring nach Bytestring konvertiert man mit <code>encode</code> aus dem
-    gleichen Modul.</p>
-    <p>Alle Textoperationen sollte man auf Textstrings durchführen, weil so auch
-    Nicht-ASCII-Zeichen korrekt behandelt werden: <code>lc</code> und <code>uc</code> funktionieren
-    wie erwartet, und <code>\w</code> in regulären Ausdrücken passt auf jeden Buchstaben,
-    auch auf Umlaute, <code>ß</code> und allen möglichen Zeichen in allen möglichen
-    Sprachen, die dort als Bestandteil eines Wortes angesehen werden.</p>
-    <p><code>cmp</code> vergleicht Nicht-ASCII-Zeichen allerdings nur dann so, wie man das
-    erwartet (also <code>&quot;ä&quot; lt &quot;b&quot;</code>), wenn <code>use locale</code> aktiv ist. Da das Verhalten
-    von <code>sort</code> durch <code>cmp</code> definiert ist, gilt dies auch für das Sortieren von
-    Listen.</p>
+<p>
+    Perl unterscheidet bei Operationen auf Strings zwischen solchen, die
+    die Strings als Text betrachten (wie z.B. <code>uc</code>, 
+    <code>lc</code> und <code>substr</code> sowie reguläre Ausdrücke),
+    und solche, die Strings als Binärdaten betrachen, wie etwa
+    <code>print</code> und das lesen aus Dateihandles.
+</p>
+
+<p>
+    Damit Perl für die Textoperationen die Strings richtig interpretieren
+    kann, muss man sie dekodieren. Das kann man mit dem der Funktion
+    <code>decode</code> in dem Core-Modul <a
+    href="http://search.cpan.org/perldoc?Encode">Encode</a> machen, oder
+    mit den unten beschriebenen IO-Layern.
+</p>
+
+<p>
+    Umgekehrt muss man Strings mit <code>Encode::encode</code> kodieren, um binäre
+    Operationen wie <code>print</code> auszuführen.
+</p>
+
+<p>
+    Alle Textoperationen sollte man auf nur auf Strings ausführen, die vorher
+    dekodiert wurden, weil dann auch
+    Nicht-ASCII-Zeichen korrekt behandelt werden: <code>lc</code> und
+    <code>uc</code> funktionieren wie erwartet, und <code>\w</code> in
+    regulären Ausdrücken passt auf jeden Buchstaben, auch auf Umlaute,
+    <code>ß</code> und allen möglichen Zeichen in allen möglichen
+    Sprachen, die dort als Bestandteil eines Wortes angesehen werden.
+</p>
+
+<p>
+    <code>cmp</code> vergleicht Nicht-ASCII-Zeichen allerdings 
+    nach Unicode-Codepoint, was nicht immer das ist, was man z.B. in
+    deutschem Text erwartet. Nur wenn <code>use locale</code> aktiv ist,
+    werden sprachspezifische Vergleichsregeln benutzt.
+    Da das Verhalten von <code>sort</code> durch <code>cmp</code> definiert 
+    ist, gilt dies auch für das Sortieren von Listen.
+</p>
 
     <pre>[%syntax perl%]
 #!/usr/bin/perl
@@ -161,18 +190,25 @@ my $text_str = decode($enc, $byte_str);
 $text_str = lc $text_str;
 print encode($enc, $text_str); # gibt 'ä' aus, lc hat gewirkt
 [%endsyntax%]</pre>
-    <p>Es empfiehlt sich, alle Eingaben direkt in Textstrings umzuwandeln, dann mit
-    den Textstrings zu arbeiten, und sie erst bei der Ausgabe (oder beim
-    Speichern) wieder in Bytestrings umzuwandeln. Wenn man sich nicht an diese
-    Regel hält, verliert man im Programm schnell den Überblick welcher String ein
-    Textstring und welcher ein Bytestring ist.</p>
-    <p>Perl bietet mit den IO-Layern Mechanismen, mit denen man die Kodierungen per
-    Dateihandle oder global automatisch umwandeln lassen kann:</p>
-    <pre>[%syntax perl%]
+
+    <p>Es empfiehlt sich, alle Eingaben direkt zu dekodieren, dann mit
+    diesen Strings zu arbeiten, und sie erst bei der Ausgabe (oder beim
+    Speichern) wieder in Bytestrings zu kodieren. Wenn man sich nicht an 
+    diese Regel hält, verliert man im Programm schnell den Überblick
+    welcher String ein bereits dekodiert wurde und welcher nicht.
+</p>
+
+<p>
+    Perl bietet mit den IO-Layern Mechanismen, mit denen man das kodieruen und
+    dekodieren an Dateihandles oder global an allen Handles durchführen lassen
+    kann.
+</p>
+
+<pre>[%syntax perl%]
 # IO-Layer: $handle liefert beim Lesen jetzt Textstrings:
 open my $handle, '<:encoding(UTF-8)', $datei;
 
-# das gleiche:
+# das Gleiche:
 open my $handle, '<', $datei;
 binmode $handle, ':encoding(UTF-8)';
 
@@ -180,7 +216,7 @@ binmode $handle, ':encoding(UTF-8)';
 use open ':encoding(iso-8859-1)';
 
 # Alle Stringkonstanten werden als utf-8 interpretiert
-# und in Textstrings umgewandelt:
+# und automatisch dekodiert
 use utf8;
 
 # Schreibe Text mit der aktuellen locale nach STDOUT:
@@ -190,19 +226,23 @@ binmode STDOUT, ':locale';
 use open ':locale';
 [%endsyntax%]</pre>
 
-    <p>Mit Vorsicht sollte man den Input Layer <code>:utf8</code> genießen, der annimmt, dass
-    die Eingabedatei gültiges UTF-8 ist. Sollte sie das nicht sein, ist das eine
-    potentielle Quelle für Sichheitslücken (siehe
-            <!-- TODO: link-text -->
-    <a href="http://www.perlmonks.org/?node_id=644786">http://www.perlmonks.org/</a> für Details).</p>
-    <p>Als Output Layer dagegen ist <code>:utf8</code> anstelle von <code>:encoding(UTF-8)</code>
-    problemlos verwendebar.</p>
-    <p>Das Modul und Pragma <em>utf8</em> erlaubt es auch, Nicht-ASCII-Zeichen in
-    Variablennamen zu verwenden. Da das jedoch kaum getestet ist und zum Teil mit
-    Modulenamen und Namespaces nicht gut funktioniert, sollte man Variablennamen
-    weiterhin nur aus lateinischen Buchstaben, dem Unterstrich <code>_</code> und Ziffern
-    zusammensetzen.</p>
+<p>
+    Mit Vorsicht sollte man den Input Layer <code>:utf8</code> genießen,
+    der annimmt, dass die Eingabedatei gültiges UTF-8 ist.
+    Sollte sie das nicht sein (und man hat keine Möglichkeit, das zu
+    überprüfen), ist das eine potentielle Quelle für Sichheitslücken (siehe
+    <a href="http://www.perlmonks.org/?node_id=644786">diesen Artikel auf
+    Perlmonks</a> für Details).
+</p>
 
+<p>
+    Das Modul und Pragma <em>utf8</em> erlaubt es auch, Nicht-ASCII-Zeichen in
+    Variablennamen zu verwenden. In Namespaces und Modulenamen sollte man
+    davon absehen, da es dort nicht zuverlässig funktioniert. Auch sollte man
+    immer beachten, dass nicht jeder die Möglichkeit hat, beliebige
+    Unicode-Zeichen mit der Tastatur einzugeben.
+</p>
+    
     <h2><a name="die_arbeitsumgebung_testen"></a>Die Arbeitsumgebung testen</h2>
     <p>Ausgestattet mit diesem Wissen kann man testen, ob das Terminal und locales
     auf die gleiche Kodierung eingestellt sind, und auf welche:</p>
@@ -226,26 +266,39 @@ for (@charsets){
     <p>Wie vorher gesagt ist das Eurozeichen <code>€</code> nicht in Latin-1 vorhanden, das <code>Ü</code>
     sollte in einem Latin-1-Terminal trotzdem richtig angezeigt werden.</p>
 
-    <h2><a name="troubleshooting"></a>Troubleshooting</h2>
-    <p>Die Art, wie perl Textstrings intern speichert, führt zu etwas ungewöhnlichem
-    Verhalten wenn diese ausgegeben werden. Wenn alle Codepoints in dem String
-    kleiner als 256 sind, wird der String intern als Latin-1 gespeichert, und als
-    solcher ausgegeben.</p>
-    <p>Sind Codepoints größer gleich 256 in einem String vorhanden, speichert perl
-    den String als UTF-8, und wenn man sie mit <code>print</code> ausgiebt (und wenn
-    <code>warnings</code> aktiv sind), kommt die Warnung <code>Wide character in print</code>.</p>
-    <p>Daher empfiehlt es sich, eigene Scripte mit Zeichen zu testen, die nicht in
-    Latin-1 vorhanden sind, z.&nbsp;B. das Euro-Zeichen <code>€</code>. Dann sieht man 
-    immer, wenn man ein <code>Encode::encode</code> an enstprechender Stelle vergessen 
-    hat, die oben genannte Warnung.</p>
-    <p>Wenn Daten aus externen Module kommen, z.&nbsp;B. aus <code>DBI</code>, kann man mit
-    <code>utf8::is_utf8(STRING)</code> überprüfen, ob ein String als Textstring
-    abgespeichert ist. Diese Abfrage liefert aber nur ein sinnvolles Ergebnis,
-    wenn Zeichen außerhalb des ASCII-Zeichensatzes in dem String enthalten sind.</p>
-    <!-- TODO: fix link-->
-    <p>Auch <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a> zeigt an, ob ein String intern als Textstring oder als
-    Bytestring vorliegt:</p>
-    <pre>[%syntax perl%]
+<h2><a name="troubleshooting"></a>Troubleshooting</h2>
+
+    <h3 id="wide_character">"Wide Character" - Warnungen</h3>
+
+    <p>Manchmal stolpert man über <code>"Wide character in print"</code> und
+    ähnliche Warnungen. Sie bedeuten, dass ein vorher dekodierter String, der
+    intern als UTF-8 gespeichert wurde, für eine Operation benutzt wurde,
+    in der nur binäre Daten sinnvoll sind.</p>
+
+    <p>Abhilfe schafft es, den String vorher mit <code>Encode::encode</code> 
+    oder
+    einem entsprechenden Output-Layer zu kodieren.</p>
+
+<h3>Sttrings Untersuchen</h3>
+
+<p>
+    Leider dokumentieren viele Module nicht, welche Art von Daten sie
+    zurückliefert, also ob sie bereits dekodiert wurden oder nicht.
+</p>
+
+<p>
+    Im Allgemeinen ist das auch nicht durch eine Analyse der Strings
+    herauszufinden, da Perl 5 keine getrennten Datentypen für dekodierte und
+    für binäre Strings hat.
+</p>
+
+<p>
+    Es gibt aber eine Heuristik, die manchmal hilft. Dazu benötigt man das
+    Modul
+    <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a>:
+</p>
+
+<pre>[%syntax perl%]
 use Devel::Peek;
 use Encode;
 my $str = "ä";
@@ -272,11 +325,24 @@ FLAGS = (TEMP,POK,pPOK)
 PV = 0x8203868 "\344"\0
 CUR = 1
 LEN = 4</pre>
-    <p>Der String <code>UTF8</code> in der Zeile <code>FLAGS =</code> zeigt, dass der String als
-    Texttring vorliegt. In der Zeile <code>PV =</code> sieht man bei Textstrings die
-    Bytes und in Klammer eckigen Klammern die Codepoints.</p>
+
+<p>
+    Der String <code>UTF8</code> in der Zeile <code>FLAGS =</code> zeigt, 
+    dass der String intern als UTF-8 gespeichert wird und bereits dekodiert
+    wurde.  In der Zeile <code>PV =</code> sieht man bei solchen Strings die
+    Bytes und in Klammer eckigen Klammern die Codepoints.
+</p>
+
+<p>
+    Allerdings ist der Umkehrschluss nicht zulässig: das Fehlen des UTF8
+    Flags bedeutet keineswegs, dass der String vorher nicht dekodiert wurde.
+    Es bedeutet lediglich, dass perl für Textoperationen die Kodierung Latin-1
+    annimmt.
+</p>
+
+<h3>Fehlerhafte Module</h3>
     <p>Weitere Probleme können durch fehlerhafte Module entstehen. So ist die
-    Funktionalität des Pragmas <em>encode</em> sehr verlockend:</p>
+    Funktionalität des Pragmas <em>encoding</em> sehr verlockend:</p>
     <pre>[%syntax perl%]
 # automatische Konvertierungen:
 use encoding ':locale';[%endsyntax%]</pre>
@@ -284,7 +350,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     AUTOLOAD-Funktionen nicht mehr, und das Modul funktioniert nicht im
     Zusammenspiel mit Threads.</p>
 
-    <h2><a name="kodierungen_im_www"></a>Kodierungen im WWW</h2>
+<h2><a name="kodierungen_im_www"></a>Kodierungen im WWW</h2>
     <p>Beim Schreiben von CGI-Scripten muss man sich überlegen in welcher Kodierung
     die Daten ausgegeben werden sollen und das enstprechend im HTTP-Header
     vermerken.</p>
@@ -300,10 +366,22 @@ use encoding ':locale';[%endsyntax%]</pre>
     sendet, muss man im HTML-Code nur die Zeichen escapen, die in HTML eine
     Sonderbedeutung haben (<code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> und innerhalb von Attributen
     auch <code>&quot;</code>).</p>
+
+<p>
+    Zu beachten ist auch, dass der HTTP-Header (und damit auch URLs) nur
+    ASCII-Zeichen enthalten darf, d.h. URLs und Cookies müssen nach ASCII
+    kodiert werden. Üblich ist es, die Daten in UTF-8 umzuwandeln, und alle
+    Bytewerte größer als 127 (und solche die dort nicht erlaubt sind, z.B.
+    Leerzeichen in URLs) als Prozentzeichen gefolgt vom zweistelligen
+    Hexadezimalwert des Bytes zu kodieren. Aus einem Leerzeichen wird dabei
+    <code>%20</code>, aus einem Ä wird <code>%c4%84</code>.
+</p>
+
     <p>Beim Einlesen von POST- oder GET-Parametern mit dem Modul <em>CGI</em> muss man
     darauf achten, welche Version man benutzt: In älteren Versionen liefert die
     <code>param</code>-Methode immer Bytestrings zurück, in neueren Versionen (ab 3.29) 
-    werden Textstrings zurückgegeben, wenn vorher mit <code>charset</code> die 
+    werden die Strings dekodiert zurückgegeben, wenn vorher mit 
+    <code>charset</code> die 
     Zeichenkodierung UTF-8 eingestellt wurde - andere Kodierungen werden von
     <em>CGI</em> nicht unterstützt.</p>
     <p>Damit Formularinhalte vom Browser mit bekanntem Zeichensatz abgeschickt
@@ -311,15 +389,17 @@ use encoding ':locale';[%endsyntax%]</pre>
     <pre>[%syntax html%]
 <form method="post" accept-charset="utf-8" action="/script.pl">[%endsyntax%]</pre>
     <!-- TODO: fix link-->
-    <p>Bei Verwendung eines Template-Systems sollte man darauf achten, dass es mit
-    charsets umgehen kann. Beispiel sind <a
+<p>
+    Bei Verwendung eines Template-Systems sollte man darauf achten, dass es 
+    mit Zeichenkodierungen umgehen kann. Beispiele sind <a
     href="http://search.cpan.org/perldoc?Template::Alloy">Template::Alloy</a>,
     <a href="http://search.cpan.org/perldoc?HTML::Template::Compiled">HTML::Template::Compiled</a> 
     (seit Version 0.90 mit der Option <code>open_mode</code>) oder 
     Template Toolkit in Verbindung mit 
-    <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.</p>
+    <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.
+ </p>
 
-    <h2><a name="weiterf__hrende_themen"></a>Weiterführende Themen</h2>
+    <h2><a name="weiterfuehrende_themen"></a>Weiterführende Themen</h2>
     <p>Mit den Grundlagen zu den Themen Zeichenkodierungen und Perl kommt man schon
     sehr weit, zum Beispiel kann man Webanwendunen „Unicode-Safe” machen, also
     dafür sorgen, dass alle möglichen Zeichen vom Benutzer eingegeben und

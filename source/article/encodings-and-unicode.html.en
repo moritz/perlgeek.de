@@ -29,7 +29,7 @@
 </p>
 
 <p>
-    It all began in the yaar 1963 with ASCII, the "American Standard for
+    It all began in the year 1963 with ASCII, the "American Standard for
     Information Interchange". It maps 128 charcters to the number from 0 to
     127, which can be encoded with 7 bit.
 </p>
@@ -58,7 +58,7 @@
 <p>
     When people started to use computers in other countries, other
     characters needed to be encoded. In the european countries ASCII was
-    reused, and the 128 unused numbers per bytes were used for the locally
+    reused, and the 128 unused numbers per byte were used for the locally
     needed characters.
 </p>
 
@@ -71,6 +71,16 @@
     In each of the Latin-* charsets the first 128 characters are identical to
     ASCII, so they can be viewed as ASCII extensions.
 </p>
+
+[% comment more stuff here, and check it
+<p>
+    Other commonly used character encodings are the IBM code pages like <a
+    href="http://en.wikipedia.org/wiki/Code_page_850">Code Page 850</a>
+    (similar to Latin-1), some of which were later superceeded by Microsoft
+    Windows specific encodings like <a
+    href="http://en.wikipedia.org/wiki/Windows-1252">Windows-1252</a>.
+%]
+
 
 [% comment TODO: check the Shift-JIS part %]
 <p>
@@ -113,6 +123,12 @@
     If a base char is followed by one or more of these marking characters, 
     this compound forms a logical character called "grapheme".
 </p>
+
+<p>
+    Note that many pre-composed graphemes exist for characters that are
+    defined in other character sets, and these pre-composed are typically
+    better supported by current software than the composed equivalent.
+</p>
     
 
 <h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
@@ -125,10 +141,10 @@
 <p>
     There are different ways to encode these codepoints, and these mappings
     from codepoints to bytes are called "Unicode Transformation Formats". 
-    The most weel known is UTF-8, which is a byte based format that uses all
-    possible byte values from 0 to 255. There is also a lax version called
-    UTF8 (without the hyphen). The Perl module <em>Encode</em> distinguishes
-    these versions.
+    The most well known is UTF-8, which is a byte based format that uses all
+    possible byte values from 0 to 255. In Perl land there is also a lax 
+    version called UTF8 (without the hyphen). The Perl module <em>Encode</em>
+    distinguishes these versions.
 </p>
 
 <p>
@@ -171,46 +187,59 @@
 
 <h2><a name="perl_and_character_encodings"></a>Perl and Character Encodings</h2>
 <p>
-    Perl Strings are either byte strings or text strings.
+    Perl Strings can either be used as text strings or as binary data.
 </p>
 
 <p>
-    If you read a line from <code>STDIN</code>, it is a byte string by
-    default.
+    Interaction with the environment (like reading data from
+    <code>STDIN</code> or a file, or printing it) treats strings as binary
+    data.
+    The same holds true for the return value of many builtin functions (like
+    <code>gethostbyname</code>) and special variables that
+    carry information to your program (<code>%ENC</code> and <code>@ARGV</code>).
 </p>
 
 <p>
-    With the function <code>decode</code> in the module <em>Encode</em> it can
-    be transformed into a text string, assuming you know its encoding. The
-    function <code>encode</code> in the same module does the opposite job, it
-    transforms a text string into a byte string.
+    Other builtin functions that deal with text (like <code>uc</code> 
+    and <code>lc</code> and regular expressions) treat strings as text, 
+    or more accurately as a list of
+    Codepoints.
 </p>
 
 <p>
-    All text operations should work on text strings, because only then are
-    non-ASCII characters handled correctly. For example <code>lc</code> and
-    <code>uc</code> work on text strings as expected, and <code>\w</code> in a
-    regular expression matches any letter character, not just
-    <code>[a-zA-Z]</code>.
+    With the function <code>decode</code> in the module <a
+    href="http://search.cpan.org/perldoc?Encode">Encode</a> you decode binary
+    strings to make sure that the text handling functions work correctly.
 </p>
 
 <p>
-    But note that <code>cmp</code> only compares non-ASCII chars as expected
-    (i.e. <code>&quot;ä&quot; lt &quot;b&quot;</code>), if 
-    <code>use locale</code> is in effect. Since the behaviour of 
-    <code>sort</code> is defined in terms of <code>cmp</code>, the same
-    applies for sorting. </p>
-    <pre>[%syntax perl%]
+    All text operations should work on strings that have been decoded by
+    <code>Encode::decode</code> (or in other ways described below).
+
+    Otherwise the text processing functions assume that the string is stored
+    as Latin-1, which will yield incorrect results for any other encoding.
+</p>
+
+<p>
+    Note that <code>cmp</code> only compares non-ASCII chars by codepoint
+    number, which might give unexpected results. In general the ordering
+    is language dependent, so that you need <code>use locale</code> in effect to
+    sort strings according the rules of a natural language. For example in
+    German the desired ordering is <code>'a' lt 'ä' and 'ä' lt 'b'</code>,
+    whereas comparison by codepoint number gives <code>'ä' gt ''b'</code>.
+</p>
+
+<pre>[%syntax perl%]
 #!/usr/bin/perl
 use warnings;
 use strict;
 use Encode qw(encode decode);
 
 my $enc = 'utf-8'; # This script is stored as UTF-8
-my $byte_str = "Ä\n";
+my $str = "Ä\n";
 
 # Byte strings:
-print lc $byte_str; # prints 'Ä', lc didn't have any effect
+print lc $str; # prints 'Ä', lc didn't have any effect
 
 # text strings::
 my $text_str = decode($enc, $byte_str);
@@ -235,7 +264,7 @@ print encode($enc, $text_str); # prints 'ä', lc worked as expected
 </p>
 
     <pre>[%syntax perl%]
-# IO layer: $handle now returns text strings on reading
+# IO layer: $handle now decodes all strings upon reading
 open my $handle, '<:encoding(UTF-8)', $file;
 
 # same
@@ -259,29 +288,31 @@ use open ':locale';
 [%endsyntax%]</pre>
 
 <p>
-    Care should be taken with the input layer <code>:utf8</code>: it assume
-    the input to be in valid UTF-8. If that's not the case, it's a source of
+    Care should be taken with the input layer <code>:utf8</code>, which often
+    pops up in example code and old documentation: it assume
+    the input to be in valid UTF-8, and you have know way of knowing in your
+    program if that was actually the case.
+    If not, it's a source of
     subtle security holes, see 
     <a href="http://www.perlmonks.org/?node_id=644786">this article on
-    perlmonks.org</a> for details. Use <code>:encoding(UTF-8)</code> instead.
+    perlmonks.org</a> for details. Don't ever use it as an input layer,
+    use <code>:encoding(UTF-8)</code> instead.
 </p>
 
 <p>
-    As an output layer <code>:utf8</code> works just fine.
-</p>
-
-<p>
-    The module and prgma <code>utf8</code> also allows you to use non-ASCII
-    chars in variable names and module names. But beware, this feature isn't
-    tested all that much, and doesn't work very well. So you should stick to
-    variable names matching <code>[a-zA-Z_][a-zA-Z0-9_]*</code>.
+    The module and pragma <code>utf8</code> also allows you to use non-ASCII
+    chars in variable names and module names. But beware, don't do this for
+    package and module names, it might not work well.
+    Also consider that not everybody has a keyboard that allows easy typing of
+    non-ASCII characters, so you make maintenance of your code much harder of
+    you use them in your code.
 </p>
 
     <h2><a name="testing_your_environment"></a>Testing your Environment</h2>
 <p>
     You can use the following short script to your terminal, locales and
     fonts. It is very europe centric, but you should be able to modify it to
-    use the charsets that are normally used where you live.
+    use the character encodings that are normally used where you live.
 </p>
 
     <pre>[%syntax perl%]
@@ -305,44 +336,37 @@ for (@charsets){
 </p>
 
 <p>
-    The Euro sign <code>€</code> isn't in latin1, so if your terminal has that
+    The Euro sign <code>€</code> isn't in Latin-1, so if your terminal has that
     encoding, the Euro sign won't be displayed correctly.
 </p>
 
 
 <h2><a name="troubleshooting"></a>Troubleshooting</h2>
 
+<h3>"Wide Character in print"</h3>
+
 <p>
-    The way perl stores text strings internally leads to unusual behaviour if
-    you try to print them without encoding  them.
+    Somtimes you might see the <code>Wide character in print</code> warning.
 </p>
 
 <p>
-    If all codepoints are smaller than 256, the string is internally stored
-    as Latin-1, and will be printed that way.
+    This means that you tried to use decoded string data in a context where it
+    only makes sense to have binary data, in this case printing it.  You can
+    make the warning go away by using an appropriate output layer, or by
+    piping the offending string through <code>Encode::encode</code> first.
 </p>
-    
+
+<h3>Inspecting Strings</h3>
+
 <p>
-    Otherwise the string is stored as UTF-8, and printing it will result in
-    the warning <code>Wide character in print</code> (assuming you have
-    <code>warnings</code> enabled).
+    Sometimes you want to inspect if a string from an unknown source has
+    already been decoded. Since per has no separate data types for binary
+    strings and decoded strings, you can't do that reliably.
 </p>
 
 <p>
-    So if you test your scripts for unicode safety, use chars that are not in
-    Latin-1, for example the Euro sign <code>€</code>. If you forget to encode
-    some output, you'll see the warning mentioned above on printing the string.
-</p>
-
-<p>
-    If you obtain data from external modules, like <code>DBI</code> or some
-    parser, you can test with <code>utf8::is_utf8(STRING)</code> if the string
-    is a text string. This function will only return a useful result if
-    non-ASCII chars are in the string.
-</p>
-
-    <!-- TODO: fix link-->
-    <p>Another way to inspect a string is the module <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a></p>
+    But there is a way to guess the answer by using the module 
+    <a href="http://search.cpan.org/perldoc?Devel::Peek">Devel::Peek</a></p>
     <pre>[%syntax perl%]
 use Devel::Peek;
 use Encode;
@@ -374,14 +398,30 @@ CUR = 1
 LEN = 4</pre>
 <p>
     The string <code>UTF8</code> in the line starting with <code>FLAGS
-    =</code> shows that the string is a text string. If it is a text string,
-    the line starting with <code>PV =</code> holds the bytes, and in brackets
+    =</code> shows that the string has been decoded already.
+    The line starting with <code>PV =</code> holds the bytes, and in brackets
     the codepoints.
 </p>
 
 <p>
+    But there is a big caveat: Just because the <code>UTF8</code> flag isn't present
+    doesn't mean that the text string hasn't been decoded. Perl uses either
+    Latin-1 or UTF-8 internally to store strings, and the precense of this
+    flag indicates which one is used.
+</p>
+
+<p>
+    That also implies that if your program is written in Perl only (and has no
+    XS components) it's almost certainly an error to rely on the presence or
+    absence of that flag. You shouldn't care how perl stores its strings
+    already.
+</p>
+
+<h3>Buggy Modules</h3>
+
+<p>
     A common source of errors are buggy modules. The pragma
-    <code>encode</code> (with lower case e)  looks very tempting:
+    <code>encoding</code> looks very tempting:
 </p>
 
 <pre>[%syntax perl%]
@@ -409,6 +449,12 @@ use encoding ':locale';[%endsyntax%]</pre>
     tell the server which character encodings it can handle. But if you stick
     to the common encodings like UTF-8 or Latin-1, next to all user agents
     will understand it, so it isn't really necessary to check that header.
+</p>
+
+<p>
+    HTTP headers themselves are strictly ASCII only, so all information that
+    is sent in the HTTP header (including cookies and URLs) need to be encoded
+    to ASCII if non-ASCII characters are used.
 </p>
 
 <p>
@@ -451,8 +497,9 @@ use encoding ':locale';[%endsyntax%]</pre>
 
     <h2><a name="advanced_topics"></a>Advanced Topics</h2>
 <p>
-    With the basic charset &amp; Perl knowledge you can get quite far, for
-    example you make a web application "Unicode safe", i.e. you can take care
+    With the basic charset and Perl knowledge you can get quite far, for
+    example you can make a web application "Unicode safe", i.e. you can 
+    take care
     that all possible user inputs are displayed correctly, in any script the
     user happens to use.
 </p>
@@ -482,7 +529,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 <h2 id="philosophy">Philosophy</h2>
 
 <p>
-    Many programmers how are confronted with encoding issues first react with
+    Many programmers who are confronted with encoding issues first react with
     <i>"But shouldn't it just work?"</i>. Yes, it should just work. Bot too
     many systems are broken by design regarding character sets and encodings.
 </p>
@@ -582,4 +629,12 @@ care of all encoding issues.</p>
     href="/de/artikel/charsets-unicode">German article of mine</a> written 
     for <a href="http://foo-magazin.de/">$foo-Magazin 01/2008</a>, a German 
     Perl magazine. It was enhanced and corrected since then.
+</p>
+
+<!-- TODO: proper attribution -->
+<p>
+    Many thanks go to <a href="http://juerd.nl">Juerd Waalboer</a>, who 
+    pointed out many smaller and a few
+    not-so-small errors in earlier versions of this article, and contributed
+    greatly to my understanding of perl's string handling. 
 </p>
