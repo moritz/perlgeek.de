@@ -340,6 +340,14 @@ for (@charsets){
     encoding, the Euro sign won't be displayed correctly.
 </p>
 
+<p>
+    Windows uses mostly <code>cp*</code> encodings, for example
+    <code>cp850</code> or <code>cp858</code> (only available in new versions
+    of Encode) for German windows installations. Use
+    <code>Encode->encodings(":all");</code> as the list of encodings to check
+    all available ones.
+</p>
+
 
 <h2><a name="troubleshooting"></a>Troubleshooting</h2>
 

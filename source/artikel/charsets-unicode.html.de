@@ -266,6 +266,14 @@ for (@charsets){
     <p>Wie vorher gesagt ist das Eurozeichen <code>€</code> nicht in Latin-1 vorhanden, das <code>Ü</code>
     sollte in einem Latin-1-Terminal trotzdem richtig angezeigt werden.</p>
 
+    <p>Unter Windows sind auch die Zeichenkodierungen <code>cp850</code> und
+    <code>cp858</code> (die nur von neuen Encode-Versionen unterstütz wird)
+    üblich.</p>
+
+    <p>Um den obigen Test auf alle in Perl verfügbaren Zeichenkodierungen
+    auszuweiten, kann man die Liste der Kodierungen durch
+    <code>Encode->encodings(':all')</code> ersetzen.</p>
+
 <h2><a name="troubleshooting"></a>Troubleshooting</h2>
 
     <h3 id="wide_character">"Wide Character" - Warnungen</h3>
