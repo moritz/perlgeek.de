@@ -1,0 +1,36 @@
+Dumping UTF-8 Data
+
+<p>The other day I wrote <a
+href="http://search.cpan.org/perldoc?Perl6::Str">Perl6::Str</a>, and 
+a small script that I called <code>utf8-dump</code> helped a lot during 
+debugging:</p>
+
+<pre>
+$ echo Überhacker | utf8-dump
+\N{LATIN CAPITAL LETTER U WITH DIAERESIS}berhacker
+</pre>
+
+<p>It replaces all non-ASCII-characters with their Unicode name, in a form
+that can be used in Perl 5 double quoted strings if <code>use charnames
+qw(:full)</code> is loaded first.</p>
+
+<p>And this is how the script looks:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/perl
+use strict;
+use warnings;
+use charnames ();
+use Encode qw(decode_utf8);
+
+while (<>){
+    $_ = decode_utf8($_);
+    s{([^\0-\177])}{N_escape($1)}eg;
+    print;
+}
+
+sub N_escape {
+    return '\N{' . charnames::viacode(ord($_[0])) . '}';
+}
+[%endsyntax%]</pre>
+[% option no-header %][% option no-footer %]

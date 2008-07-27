@@ -2,3 +2,8 @@
 [% setvar title Index of Articles %]
 [% setvar section Article %]
 [% menu main article %]
+
+<h1>[%readvar title%]</h1>
+
+<p>Here is a small (but growing) collection of articles I wrote. Pick one from
+the coloumn on the left hand side, and enjoy reading.</p>

@@ -8,6 +8,9 @@ DirectoryIndex index
 AddLanguage en .en
 AddLanguage de .de
 
+AddType cgi-script .cgi
+AddHandler cgi-script .cgi
+
 RewriteEngine on
 SetEnvIf Request_URI ^(de|en) prefer-language=$1
 

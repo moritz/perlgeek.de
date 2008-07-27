@@ -9,7 +9,10 @@
 		<div id="footer">Copyright 2008: Moritz Lenz<br />
         This page my be used under the terms of a Creative Commons license.
         <br />
-        Layout based on <a href="http://www.yaml.de/">YAML</a></div>
+        Layout based on <a href="http://www.yaml.de/">YAML</a>, powered by <a
+        href="/en/software/mowyw">mowyw</a>[% ifvar is_blog %] and <a
+        href="http://www.blosxcom.com/">blosxom</a>[% endifvar %]
+        </div>
 		<!-- end: #footer -->
 	</div>
 </div>

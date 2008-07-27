@@ -30,7 +30,7 @@ that one implementation.</p>
 yacc/bison code and recompile perl, or write a <a
 href="http://perldoc.perl.org/perlfilter.html">source filter</a>. But if
 you want to write a correct source filter, you have to parse
-perl - which is impossible, as just discussed.</p>
+perl - which you can't really, as just discussed.</p>
 
 <p>But that's not the only reason why source filters are frowned upon. The
 second reason is that you can't really combine two ore more source filters,
@@ -55,10 +55,10 @@ for Perl 6 syntax:</p>
 	etc.) should get access to the parse tree</li>
 </ol>
 
-<h2>How to achieve it?</h2>
+<h2>How to achieve it</h2>
 
 <p>The Perl 6 syntax isn't very easy either, but now there are tools in
-place that can handle it. And these tools are gramars, rules, bottom-up
+place that can handle it. And these tools are grammars, rules, bottom-up
 parsing, proto regexes and longest token matching (LTM).</p>
 
 <h3>Rules</h3>
@@ -72,26 +72,26 @@ techniques for handling whitespaces and backtracking control.</p>
 
 <pre>[% syntax perl6 %]
 grammar Perl6 {
-  	# among other stuff:
+    # among other stuff:
 
-	token identifier {
-		<alpha> \w+
-	}
+    token identifier {
+        <alpha> \w+
+    }
 
-	# like a full-qualified identifier
-	token name {
-		<identifier> 
-		[ '::' <identifier> ] * 
+    # like a full-qualified identifier
+    token name {
+        <identifier> 
+        [ '::' <identifier> ] * 
 
-	}
+    }
 
-	token sigil {
-		'$' | '@' | '&' | '%' | '::'
-	}
+    token sigil {
+        '$' | '@' | '&' | '%' | '::'
+    }
 
-	token variable {
-		<sigil> <name>
-	}
+    token variable {
+        <sigil> <name>
+    }
 
 }
 [% endsyntax %]
@@ -127,9 +127,9 @@ grammar PERL6 is Perl6 {
 of our default grammar. Every call to the subrule <code>identifier</code> is handled
 by our custom rule, so we're done.</p>
 
-<p>However there's a pitfall. Suppose you want to change a sigil, for exampel
-<code>$</code> to <code>¢</code> (because you don't have enought $$$ for all these
-variables, right?). Seems simple:</p>
+<p>However there's a pitfall. Suppose you want to change a sigil, for example
+<code>$</code> to <code>¢</code> (because you don't have enought $$$ for all 
+these variables, right?). Seems simple:</p>
 
 <pre>[% syntax perl6 %]
 grammar LowBudgetPerl6 is Perl 6 {
@@ -165,10 +165,11 @@ token sigil:sym<&>  { <sym> }
 token sigil:sym<::> { <sym> }
 [%endsyntax%]</pre>
 
-<p>This creates five rules with the name <code>sigil</code>. The first one sets
+<p>This creates five rules with the name <code>sigil</code> which are
+parameterized with the the <code>sym</code> identifier. The first one sets
 <code>sym</code> to <code>$</code> and then matches this symbol (with
-        <code>&lt;sym&gt;</code>). The
-second one matches <code>@</code> etc. Now if you call the rule
+<code>&lt;sym&gt;</code>). The second one matches <code>@</code> etc. 
+Now if you call the rule
 <code>&lt;sigil&gt;</code>,
 you get the "or"-associated list of all those five rules. So it still matches
 <code>'$' | '@' | '%' | '&amp;' | '::'</code>, but it is easier to extend.</p>
@@ -192,8 +193,8 @@ grammar LowBudgetPerl6 is Perl 6 {
 [%endsyntax%]</pre>
 
 <p>Now that's a grammar that uses a different sigil for scalars, but since
-it's the same rule (<code>sigil:sym<$></code>) als in the original grammar, the
-compiler still knows what to do with it.</p>
+it's the same rule with the same parameter (<code>sigil:sym<$></code>) 
+as in the original grammar, the compiler still knows what to do with it.</p>
 
 <p>So with proto regexes in place we can extend and modify grammars quite
 easily.</p>
@@ -233,16 +234,16 @@ token mul_op:sym<%>  { <sym> }
 
 <p>Now if we want a derived grammar with a precedence level inbetween <code>+</code>
 and <code>*</code>, we have to modify two rules (<code>expression</code> and <code>term</code>),
-which breaks any other changes made to these rules. (Rember, we're ambitous
+which breaks any other changes made to these rules. (Remember, we're ambitous
 and what to allow multiple local grammar changes).</p>
 
-<p>Also notice that we produce very similar code for each precedence level,
+<p>Also notice that we produced very similar code for each precedence level,
 and that's boring.</p>
 
 <p>What we really want is a list of operators and their precedence (and
 associativity), and that the parser figures out the rest for us. The pattern is
-just <code>&lt;term&gt; [ &lt;operator&gt; &lt;term&gt;]+</code>, and once we were able to parse that
-we just have to make a tree out of it.</p>
+just <code>&lt;term&gt; [ &lt;operator&gt; &lt;term&gt;]+</code>, and once we 
+are able to parse that we just have to make a tree out of it.</p>
 
 <p>That's called bottom-up parsing, and Perl 6 uses it a lot. You can add new
 operators and precedence levels without altering other rules:</p>
@@ -251,8 +252,8 @@ operators and precedence levels without altering other rules:</p>
 token infix:<bla> is tighter:<+> { 'bla' }
 [% endsyntax %]</pre>
 
-<p>This introduces the <code>bla</code> operator, which has tigher precedence than
-<code>+</code>, but looser than <code>*</code>.</p>
+<p>This introduces the <code>bla</code> operator, which has tigher precedence 
+than <code>+</code>, but looser than <code>*</code>.</p>
 
 <h2>Longest Token Matching</h2>
 
@@ -291,17 +292,32 @@ multi sub postfix:<+++> is equiv:<++> { Num $x is rw }
 }
 
 # define the factorial operator
-multi sub postfix:<!> is equiv:<++> { Num $x }
+multi sub postfix:<!> is equiv:<++> { Int $x }
     return [*] 1 .. $x;
 }
 
 # test the thing:
 my $x = 2;
 $x+++;
+say $x;  # prints 4
 say $x!; # prints 24
-
-
 [% endsyntax %]</pre>
+
+<h2>And It Really Works</h2>
+
+<p>You might think this is all fine and cool, but you don't believe it's
+actually implementable.</p>
+
+<p>Larry Wall put quite some effort into writing both the standard Perl 6
+grammar and some programs that translate it into Perl 5 code. As of Juli 2008
+this translated grammar can parse both itself and more than 95% of the files
+of the official test suite.</p>
+
+<p>Internally it modifies copies of itself to parse various DSLs (Domain
+Specific Languages) such as regexes and quoted constructs.</p>
+
+<p>It is quite slow at the time of writing, but that's not really surprising
+because it's not optimized for speed yet.</p>
 
 <h2>Summary</h2>
 
@@ -309,3 +325,6 @@ say $x!; # prints 24
 can be easily modified with understanding only a small subset of the grammar,
 or in simple cases without it.</p>
 
+[% comment
+    vim: ft=html
+%]

@@ -81,7 +81,7 @@
     Starting from Version 0.3.0, mowyw can perform syntax hilighting
     for you, if you have installed <a href="http://www.vim.org/">vim</a>
     and the perl module <a
-    href="http://search.cpan.org/~geoffr/Text-VimColor-0.11/lib/Text/VimColor.pm">Text::VimColor</a>.
+    href="http://search.cpan.org/perldoc?Text::VimColor">Text::VimColor</a>.
     Simply put <code>[%syntax html%] HTML-Code here [%endsyntax%]</code> 
     in your source file, and any HTML code between the start and 
     end tag will automatically be escaped and syntax hilighted.
@@ -92,7 +92,7 @@
     All languages and configuration files that vim supports are
     accessible from mowyw, currently that are over <em>480</em> different
     formats, including prominent examples as C, C++, Java, HTML, CSS,
-    Javascript, Perl, Python, PHP, eiffel, matlab, Ada, awk, haskell,
+    Javascript, Perl, Python, Ruby, PHP, Eiffel, matlab, Ada, awk, haskell,
     Lisp, and many more.
 </p>
 
@@ -100,7 +100,7 @@
 <h2 id="doc">Documentation</h2>
 <p>
     You can read the <a href="https://faui2k3.org.org/svn/moritz/mowyw/README">README 
-    file</a> and the <a href="http://moritz.faui2k3.org/mowyw.1">mowyw manual page</a> online, 
+    file</a> and the <a href="/software/mowyw.1">mowyw manual page</a> online, 
     and you can download the tar ball and take a look at the distributed 
     examples.
 </p>

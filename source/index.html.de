@@ -6,12 +6,6 @@
 
 <h1>Willkommen auf Perlgeek.de</h1>
 
-<p>
-    <strong>Diese Seite befindet sich noch im Aufbau.</strong> 
-    Zum Teil sind daher die Inhalte und auch die Navigation noch nicht
-    vollständig, und einige der zukünftigen Bestandteile liegen bisher auf
-    externen Seiten.
-</p>
 
 <p>
     Ich heiße Moritz Lenz, und hier finden Sie alles, was mit Perl und
@@ -26,6 +20,16 @@
     kostenlos zur Verfügung stelle, wie z.B. <a
     href="http://irclog.perlgeek.de/">öffentliche IRC Logs</a>, sowie <a
     href="/de/software/">Open-Source-Software</a> zum Download.
+</p>
+
+<h2>Themen</h2>
+
+<p>
+    Mich interessiert das meiste, was mit Perl und Programmieren
+    zusammenhängt. Besonders interessant finde <a
+    href="http://perl-6.de/">Perl 6</a>, <a
+    href="/de/artikel/charsets-unicode">Unicode und Zeichenkodierungen</a>
+    sowie Sicherheitsaspekte von Webanwendungen.
 </p>
 
 

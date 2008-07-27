@@ -1,0 +1,75 @@
+Building a Huffman Tree With Rakudo
+
+<p>15 months ago I wrote a blog post about <a
+href="http://moritz.faui2k3.org/blog/huffman-codierung-mit-perl-6">Building a
+Huffman Tree with Perl 6 (German)</a>. Back then I used pugs to test it.</p>
+
+<p>Now I tried it with <a href="http://www.rakudo.org/">Rakudo Perl</a>
+revision 29736, and to my delight I
+discovered that it worked nearly without modification.</p>
+
+<p>(Actually it needed a small modification because I made a mistake in the
+testing originally, I compared hashes with string semantics. That works in
+pugs even though it is not specified; in rakudo it doesn't).</p>
+
+<p>I updated my script a bit to do the testing correctly, and used a few more
+typical Perl 6 idioms:</p>
+
+<pre>[% syntax perl6 %]
+use Test;
+plan 6;
+
+# number of occurences
+my @fr = (
+    ['a', 45],
+    ['b', 13],
+    ['c', 12],
+    ['d', 16],
+    ['e', 9 ],
+    ['f', 5 ],
+);
+
+# That's what we expect
+my %expected = (
+    a => '0',
+    b => '101',
+    c => '100',
+    d => '111',
+    e => '1101',
+    f => '1100'
+);
+
+my @c = @fr;
+
+# build the huffman tree
+while @c > 1 {
+    @c = sort { $^a[1] <=> $^b[1] }, @c;
+    my $a = shift @c;
+    my $b = shift @c;
+    unshift @c, [[$a[0], $b[0]], $a[1] + $b[1]];
+}
+
+my %res;
+
+# recursively traverse the tree to build the code
+sub traverse ($a, Str $code = ""){
+    if $a ~~ Str {
+        %res{$a} = $code;
+    } else {
+        traverse($a[0], $code ~ '0');
+        traverse($a[1], $code ~ '1');
+    }
+}
+
+traverse(@c[0][0]);
+
+# now compare with the expected code:
+
+#say %res;
+#say %expected;
+for %res.keys -> $k {
+    is %res{$k}, %expected{$k}, "Huffman code for letter $k";
+}
+[%endsyntax%]</pre>
+[% option no-header %][% option no-footer %]
+

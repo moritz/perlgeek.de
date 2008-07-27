@@ -1,0 +1,148 @@
+[% setvar title Schwächen von Perl 5 %]
+[% setvar section Artikel %]
+[% menu main aritkel %]
+
+<h1>[% readvar title %]</h1>
+
+<p>Perl 5 ist eine tolle Programmiersprache, und ich benutze sie für die
+meisten Programme die ich schreibe. Doch bei aller Begeisterung komme ich
+nicht umhin ein paar Schwächen zu bemerken.</p>
+
+<p>Dies soll keine <acronym title="Fear, Uncertainty and 
+Doubt">FUD</acronym>-Sammlung á la "Perl ist langsam, 
+Perl Code ist
+unlesbar" sein, sondern soll einige Schwächen wohlbegründet darlegen.</p>
+
+<h2>Zu viele globale Variablen</h2>
+
+<p>In Perl Version 1 gab es nur globale Variablen, später kamen dann Variablen
+mit dynamischem Scope (<a
+href="http://perldoc.org/functions/local.html">local</a>) und lexikalische
+Variablen (<a href="http://perldoc.org/functions/my.html">my</a>) dazu.</p>
+
+<p>Viele der eingebauten, speziellen Variablen wie <code>$_</code>,
+<code>$!</code> (Fehlermeldungen), <code>$@</code>
+(<code>eval</code>-Fehler) und <code>$/</code> (Input Record Separator) sind
+jedoch globale Variablen geblieben.</p>
+
+<p>Das kann zu subtilen, sehr schwer zu findenden Bugs führen. Zum Beispiel
+führen Objekte, wenn sie nirgendwo mehr referenziert sind, ihre
+<code>DESTROY</code>-Methode aus, und dabei kann aus Versehen eine
+Fehlervariable zurückgesetzt werden:</p>
+
+<pre>[% syntax perl %]
+use strict;
+use warnings;
+
+sub DESTROY { eval { 1 }; }
+
+eval {
+    my $x = bless {};
+    die "Death\n";
+};
+print $@ if $@; # keine Ausgabe hier
+[% endsyntax %]</pre>
+
+<p>Obwohl in dem <code>eval</code>-Block einmal <code>die</code> ausgeführt
+wurde, gibt die folgende Zeile nichts aus. Das liegt daran, dass das
+<code>eval</code> in der  <code>DESTROY</code>-Methode keinen Fehler
+produziert hat und damit <code>$@</code> zurückgesetzt wurde.</p>
+
+<p>Im allgemeinen können viele Objekte aus dem Scope gehen, und wenn es ein
+Objekt aus einem fremden Modul ist, fällt es sehr schwer herauszufinden was
+passiert ist.</p>
+
+<p>Die korrekte Lösung wäre, <code>local $@</code> im
+<code>DESTROY</code>-Block zu verwenden. Das Problem ist, dass die wenigsten
+Entwickler an so etwas denken, und eigentlich sollten sie auch gar nicht daran
+denken müssen. Ein besseres Scoping der eingebauten Variablen würde dieses
+Problem vermeiden.</p>
+
+<p>Ein weiteres Problem der globalen Variablen ist, dass man als Modul-Autor
+genau wissen muss, welche Variablen man implizit verwendet. So benutzt zum
+Beispiel <code>print</code> implizt <code>$\</code>, and bei mehr als einem 
+Argument auch noch <code>$,</code>. Wenn man ein Array in einen String
+interpoliert benutzt man implizit <code>$"</code>.</p>
+
+<p>Als Modul-Autor muss man alle diese Variablen <code>local</code>isieren
+um immer das Ergebnis zu bekommen das man will, auch wenn der Benutzer diese
+Variablen vorher auf andere Werte gesetzt hat.</p>
+
+<p>Das impliziert auch, dass man beim Schreiben der Module sehr aufmerksam
+sein muss und sich beliebige Listen von Variablen merken muss.</p>
+
+<h2>Objektorientierung</h2>
+
+<p>Perls Objektorientierungssystem ist recht allgemein und flexibel (auch wenn
+es nicht immer so wahrgenommen wird), aber es hat auch einige Probleme.</p>
+
+<p>So kennt perl keinen Unterschied zwischen Subroutinen und Methoden, was es
+quasi unmöglich macht eine Liste aller Methoden zu ermitteln, die man auf
+einem Objekt aufrufen kann. (Ausser man benutzt ein extra
+Objektorientierungsframework wie <a
+href="http://search.cpan.org/perldoc?Moose">Moose</a>).</p>
+
+<p>Auch wünscht man sich heute eine kürzere Syntax für Methodenaufrufe,
+<code>-&gt;</code> ist suboptimal im Vergleich zu einem einzelnen Zeichen.</p>
+
+<h2>Regexes</h2>
+
+<p>Reguläre Ausdrücke, kurz Regexes, gehörten traditionell zu perls
+Stärken.</p>
+
+<p>Allerdings gibt es auch hier einige Schwächen. So sollten verschiedene
+Dinge verschieden aussehen, was jedoch nicht der Fall ist:</p>
+
+<pre>
+    (?:  )      # non-capturing group
+    (?=  )      # positive look-ahead
+    (?!  )      # negative look-ahead
+    (?&lt;= )      # positive look-behind
+    (?&lt;! )      # negative look-behind
+    (?&gt;  )      # non-backtracking pattern
+</pre>
+
+<p>Diese Gruppierungen machen zum Teil fundamental verschiedene Dinge, sehen
+aber sehr ähnlich aus, und sind relativ schwer zu lesen.</p>
+
+<p>Auch wird die <code>(?: ... )</code>-Gruppe relativ häufig gebraucht, und
+dafür recht lange und schwer zu tippen.</p>
+
+<p>Der Zugriff auf die Matchvariablen <code>$1, $2, $3, ...</code> ist nicht
+ohne Umwege über ein Array möglich (auch wenn man sich mit <code>@+</code>,
+<code>@-</code> und <code>substr</code> so etwas basteln kann), und es ist
+nicht möglich, die Nummern der capturing groups dynamisch in der Regex
+festzulegen.</p>
+
+<p>Die ungewöhnliche Handhabung von Unicode-Strings erschwert die Arbeit an
+der Regex-Engine und führt regelmäßig zu Bugs.</p>
+
+<h2>Unicode-Handling</h2>
+
+<p>Wenn man das Unicode-Modell von perl verstanden hat ist es dafür, dass es
+erst im Nachhinein in die Sprache integriert wurde sehr gut. Es versucht, die
+Art der internen Speicherung zu verbergen (perl speichert strings intern als
+Latin-1 oder UTF-8 ab, je nach Kontext).</p>
+
+<p>Allerdings wendet perl auf intern als Latin-1 gespeicherte Strings
+ASCII-Semantik und nicht Unicode-Semantik an. Das bedeutet, dass sogar
+Strings, die durch <a
+href="http://search.cpan.org/perldoc?Encode">Encode</a><code>::decode</code> 
+gejagt wurden, nicht korrekt als Textstrings behandelt werden.</p>
+
+<p>Um das zu umgehen, muss man den String mit <code>utf8::upgrade</code> zum
+UTF-8-String befördern - was entgegen der Philosophie läuft, das interne
+Speicherformat als Implementierungsdetail vor dem Programmierer zu
+verbergen.</p>
+
+<p>Es würde auch sehr helfen, getrennte Datentypen für Text- und Bytestrings
+zu haben, sodass man z.B. beim Konkatenieren von verschiedenartigen Strings
+eine Warnung ausgeben könnte.</p>
+
+<p>Als weiterer Kritikpunkt des Unicode-Modells lässt sich aufführen, dass es
+keine Möglichkeit gibt, Textstrings in Titlecase umzuwandeln.</p>
+
+
+[% comment 
+    vim: ft=html
+%]

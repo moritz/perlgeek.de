@@ -7,16 +7,22 @@
 <h1>Welcome to Perlgeek.de</h1>
 
 <p>
-    <strong>This page is under construction</strong>, so please be patient if
-    some links don't work, content is sparse or some resources are still on
-    external sites.
-</p>
-
-<p>
     My name is Moritz Lenz, and here you can find my contributions 
     to and about perl. If you're looking for my <a 
     href="http://moritz.faui2k3.org/">personal homepage, look here</a>.
 </p>
+
+<p>
+    On this site you can find articles about various perl and programming
+    topics, free open source software, and some services like <a
+    href="http://irclog.perlgeek.de/">public IRC logs</a>.
+</p>
+
+<h2>Topics</h2>
+
+<p>The topics in which I am interested the most are Perl 6, <a
+href="en/article/encodings-and-unicode">Unicode and character encodings</a>,
+and security aspects of web applications.</p>
 
 
 
