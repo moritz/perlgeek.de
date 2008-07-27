@@ -2,7 +2,7 @@
 AddType 'text/html; charset=UTF-8' .html 
 #AddType type-map .html
 #AddHandler type-map .html
-Options +Includes +MultiViews
+Options +Includes +MultiViews +FollowSymLinks
 DirectoryIndex index
 #AddOutputFilter INCLUDES .html
 AddLanguage en .en
