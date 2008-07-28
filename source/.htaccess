@@ -8,7 +8,7 @@ DirectoryIndex index
 AddLanguage en .en
 AddLanguage de .de
 
-AddType cgi-script .cgi
+AddType text/html cgi-script .cgi
 AddHandler cgi-script .cgi
 
 RewriteEngine on

@@ -309,7 +309,7 @@ say $x!; # prints 24
 actually implementable.</p>
 
 <p>Larry Wall put quite some effort into writing both the standard Perl 6
-grammar and some programs that translate it into Perl 5 code. As of Juli 2008
+grammar and some programs that translate it into Perl 5 code. As of July 2008
 this translated grammar can parse both itself and more than 95% of the files
 of the official test suite.</p>
 
@@ -318,6 +318,23 @@ Specific Languages) such as regexes and quoted constructs.</p>
 
 <p>It is quite slow at the time of writing, but that's not really surprising
 because it's not optimized for speed yet.</p>
+
+<h2>Open Problems</h2>
+
+<p>As far as I can tell there are still open problems with the parser. For
+example how exactly macros will work. For example it's not yet clear (at least
+to me) how macros can be bound to a particular precedence level, or to a
+particular grammar rule.</p>
+
+<p>Also it would be nice to make macros work on the AST level rather than on
+the source code directly. <a
+href="http://perlcabal.org/syn/S06.html#Quasiquoting">Quasiquotes</a> seem to
+tackle that problem, but so far I don't see how it actually solves it.</p>
+
+<p>The biggest open problem is, of course, that you have to actually execute
+compile time statements (like <code>use</code>, <code>BEGIN</code>, and
+macros), so you need a real Perl 6 compiler. That's what many people are
+working on, but it's not an easy task.</p>
 
 <h2>Summary</h2>
 
