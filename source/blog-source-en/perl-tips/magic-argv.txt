@@ -1,0 +1,46 @@
+Magic ARGV (considered harmful)
+
+<p>A <a
+href="http://www.nntp.perl.org/group/perl.perl5.porters/2008/07.html">bunch of
+threads</a> on the perl5-porters mailing list made me aware of a rather
+obscure perl 5 feature.</p>
+
+<p>I was quite familiar with the basic form, which goes like this:</p>
+
+<pre>[% syntax perl %]
+while ( <> ) {
+    print;
+}
+[% endsyntax %]</pre>
+
+<p>This either reads from all files in turn that were given on the command
+line, or from <code>STDIN</code> if no file name was provided.</p>
+
+<p>Now <code>&lt;&gt;</code> actually uses <a
+href="http://perldoc.perl.org/functions/open.html">open</a> internally,
+specifically the 2 argument form. Which means that anything that is valid as
+the second argument to <code>open</code> also works in <code>@ARGV</code>:</p>
+
+<pre>[% syntax perl %]
+local @ARGV = ('fortune |');
+priint while <>;
+[% endsyntax %]</pre>
+
+<p>Instead of trying to open a file called <code>fortune |</code>, it actually
+executes the command <code>fortune</code> and uses it output for the
+<code>&lt;&gt;</code> "diamond operator".</p>
+
+<p>This feature can be used for quite some tricky and shiny stuff, but it's
+also dangerous. If your perl program uses <code>&lt;&gt;</code>, it is
+vulnerable to the command line argument <code>rm -rf * |</code> and similar
+things, also known as "arbitrary code execution".</p>
+
+<p>Therefore the perl porters are discussing about disabling this feature, and
+making the old, magic behaviour available with a command line switch or a
+pragma.</p>
+
+<p>For me the consequence is "don't use <code>&lt;&gt;</code> with possibly
+untrusted input".</p>
+
+[% option no-header %] [% option no-footer %]
+
