@@ -1,0 +1,17 @@
+Parrot and llvm-gcc
+
+<p>Yesterday I <a
+href="http://www.nntp.perl.org/group/perl.perl6.internals/2008/07/msg47425.html">built
+parrot</a> with llvm-gcc 4.2 and  <a href="http://llvm.org/">llvm 2.2</a>. It
+was nice to see all tests passing, which IMHO is a good sign for both parrot
+and llvm.</p>
+
+<p>It gave no speed benefit over the ordinary gcc 4.2, but I'll try again with
+later versions of llvm and see how it evolves.</p>
+
+<p>I also tried to compile parrot with <a
+href="http://clang.llvm.org/">clang</a>, but couldn't figure out how not to
+pass linker options to <code>llvm-ld</code> that it doesn't understand, and I
+gave up rather quickly.</p>
+
+[% option no-header %] [% option no-footer %]
