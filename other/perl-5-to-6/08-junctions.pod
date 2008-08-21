@@ -1,6 +1,6 @@
 =head1 NAME
 
-"Perl 5 to 6" Lesson 07 - Rules (formerly Regexes)
+"Perl 5 to 6" Lesson 07 - Junctions
 
 =head1 SYNOPSIS
 
@@ -111,4 +111,4 @@ In Perl 6 that is short and sweet:
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Junctive_operators|S03>
+L<http://perlcabal.org/syn/S03.html#Junctive_operators>

@@ -81,4 +81,4 @@ The C-style for-loop is now called C<loop>:
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S04.html#Conditional_statements|S04>
+L<http://perlcabal.org/syn/S04.html#Conditional_statements>

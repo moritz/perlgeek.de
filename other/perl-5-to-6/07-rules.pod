@@ -191,4 +191,4 @@ not changable at parse time.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S05.html|S05>
+L<http://perlcabal.org/syn/S05.html>

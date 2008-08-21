@@ -49,4 +49,4 @@ operator.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Item_assignment_precedence|S03>
+L<http://perlcabal.org/syn/S03.html#Item_assignment_precedence>

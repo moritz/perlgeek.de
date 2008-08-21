@@ -115,5 +115,5 @@ create objects that can act as arrays, hashes and subs at the same time.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S02.html|S02>, 
-L<http://perlcabal.org/syn/S29.html|S29> 
+L<http://perlcabal.org/syn/S02.html>, 
+L<http://perlcabal.org/syn/S29.html> 

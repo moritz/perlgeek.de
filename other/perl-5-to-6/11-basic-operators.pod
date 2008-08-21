@@ -63,4 +63,4 @@ notation.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators|S03>
+L<http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators>

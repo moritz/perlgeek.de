@@ -66,4 +66,4 @@ their usefulness and beauty.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S02.html#Context|S02>
+L<http://perlcabal.org/syn/S02.html#Context>

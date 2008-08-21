@@ -197,4 +197,4 @@ Since operators are also subs, that refinement works for operators too.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S06.html|S06>
+L<http://perlcabal.org/syn/S06.html>
