@@ -1,16 +1,16 @@
 [%setvar section article%]
 [%setvar title A Mutable Grammar For Perl 6 %]
-[%menu main article %]
+[%menu main article mutable %]
 
 <p>Published 2008-05-29, preview for <a
 href="http://irclog.perlgeek.de/perl6/today">#perl6</a> on 2008-05-24</p>
 
 <h1>[% readvar title %]</h1>
 
-<p>Did you ever wonder why modifying perl 5 is so hard? Do you want to know
-what Perl 6 will do to make it easier?</p>
+<p>Did you ever wonder why modifying perl 5 syntax is so hard? Do you want to 
+know what Perl 6 will do to make it easier?</p>
 
-<h2>The Perl 5 parsing problem</h2>
+<h2 id="parsing-perl5">The Perl 5 parsing problem</h2>
 
 <p>Parsing Perl 5 code is hard. The part of perl that parses Perl is large, and
 most hackers don't really want to touch it.</p>
@@ -40,7 +40,7 @@ unless they are explicitly written for it.</p>
 designed to be easy to write, whereas most other programming languages are
 designed with ease of parsing in mind.</p>
 
-<h2>Goals for Perl 6</h2>
+<h2 id="goals">Goals for Perl 6</h2>
 
 <p>Learning from perl 5's problems, there were additionaly design goals set
 for Perl 6 syntax:</p>
@@ -50,18 +50,18 @@ for Perl 6 syntax:</p>
     <li>It should be easy to transform the syntax, especially without writing
     a hand-rolled parser</li>
     <li>Multiple syntax mutations should be compatible (unless they change the
-	same syntactical element, of course)</li>
-	<li>Perl 6 programs and external tools (IDEs, syntax hilighting engines
-	etc.) should get access to the parse tree</li>
+    same syntactical element, of course)</li>
+    <li>Perl 6 programs and external tools (IDEs, syntax hilighting engines
+    etc.) should get access to the parse tree</li>
 </ol>
 
-<h2>How to achieve it</h2>
+<h2 id="how-to">How to achieve it</h2>
 
 <p>The Perl 6 syntax isn't very easy either, but now there are tools in
 place that can handle it. And these tools are grammars, rules, bottom-up
 parsing, proto regexes and longest token matching (LTM).</p>
 
-<h3>Rules</h3>
+<h3 id="rules">Rules</h3>
 
 <p>Rules are just like perl 5's regexes, only better. They are declared like
 subs or methods, and they can call other rules (and of course recurse directly
@@ -74,21 +74,26 @@ techniques for handling whitespaces and backtracking control.</p>
 grammar Perl6 {
     # among other stuff:
 
+    # token alpha is a pre-defined rule
     token identifier {
         <alpha> \w+
     }
 
-    # like a full-qualified identifier
+    # match a full-qualified identifier
+    # [ ... ] are non-capturing groups
     token name {
         <identifier> 
         [ '::' <identifier> ] * 
 
     }
 
+    # .. | .. are alternations. The longest match wins.
     token sigil {
         '$' | '@' | '&' | '%' | '::'
     }
 
+    # <rule> calls the named rule, implicit anchored
+    # at the current position
     token variable {
         <sigil> <name>
     }
@@ -101,7 +106,7 @@ grammar Perl6 {
 itself - which is very neat for extensibility, it just requires an extra
 boot-strapping step.)</p>
 
-<h3>Grammars</h3>
+<h3 id="grammars">Grammars</h3>
 
 <p>A grammar is very much the same as a class, with rules instead of methods.
 Or to put it another way, grammars are collections of rules that support
@@ -114,12 +119,12 @@ Perl 6 should only allow upper case variable names:</p>
 <pre>[% syntax perl6 %]
 # we inherit from the original grammar...
 grammar PERL6 is Perl6 {
-	
-	# ... and override that parsing rule that we want to change
-	token identifier {
-		# char classes are <[ ... ]> in Perl 6
-		<[A..Z]> <[A..Z0..9_]>* 
-	}
+    
+    # ... and override that parsing rule that we want to change
+    token identifier {
+        # char classes are <[ ... ]> in Perl 6
+        <[A..Z]> <[A..Z0..9_]>* 
+    }
 }
 [%endsyntax%]</pre>
 
@@ -128,14 +133,14 @@ of our default grammar. Every call to the subrule <code>identifier</code> is han
 by our custom rule, so we're done.</p>
 
 <p>However there's a pitfall. Suppose you want to change a sigil, for example
-<code>$</code> to <code>¢</code> (because you don't have enought $$$ for all 
+<code>$</code> to <code>¢</code> (because you don't have enough $$$ for all 
 these variables, right?). Seems simple:</p>
 
 <pre>[% syntax perl6 %]
 grammar LowBudgetPerl6 is Perl 6 {
-	token sigil {
-		'¢' | '@' | '&' | '%' | '::'
-	}
+    token sigil {
+        '¢' | '@' | '&' | '%' | '::'
+    }
 }
 [%endsyntax%]</pre>
 
@@ -146,7 +151,7 @@ value of the matched text, and won't know what to do with <code>¢</code>.</p>
 
 <p>So we need even more technologies...</p>
 
-<h2>Proto Regexes</h2>
+<h2 id="proto">Proto Regexes</h2>
 
 <p>A proto regex is a set of regexes/rules with the same name, that can be
 distinguished nontheless.</p>
@@ -155,7 +160,6 @@ distinguished nontheless.</p>
 grammar</a> uses this construct:</p>
 
 <pre>[% syntax perl6 %]
-token category:sigil { <sym> }
 proto token sigil {...}
 # ...
 token sigil:sym<$>  { <sym> }
@@ -165,21 +169,24 @@ token sigil:sym<&>  { <sym> }
 token sigil:sym<::> { <sym> }
 [%endsyntax%]</pre>
 
-<p>This creates five rules with the name <code>sigil</code> which are
+<p>This creates a group (<code>proto</code>) named <code>sigil</code>,
+and five rules in that group (they belong to the group because they have the
+same name as the group) that are
 parameterized with the the <code>sym</code> identifier. The first one sets
 <code>sym</code> to <code>$</code> and then matches this symbol (with
 <code>&lt;sym&gt;</code>). The second one matches <code>@</code> etc. 
 Now if you call the rule
 <code>&lt;sigil&gt;</code>,
 you get the "or"-associated list of all those five rules. So it still matches
-<code>'$' | '@' | '%' | '&amp;' | '::'</code>, but it is easier to extend.</p>
+the same as the regex
+<code>'$' | '@' | '%' | '&amp;' | '::'</code>, but is easier to extend.</p>
 
 <p>If you want to add a new sigil, the only change in the grammar is another
 <code>sigil:</code> rule:</p>
 
 <pre>[% syntax perl6 %]
 grammar SigilRichP6 is Perl6 {
-	token sigil:sym<ħ> { <sym> } # physicists will love you
+    token sigil:sym<ħ> { <sym> } # physicists will love you
 }
 [%endsyntax%]</pre>
 
@@ -188,7 +195,7 @@ rules:</p>
 
 <pre>[% syntax perl6 %]
 grammar LowBudgetPerl6 is Perl 6 {
-	token sigil:sym<$> { '¢' }
+    token sigil:sym<$> { '¢' }
 }
 [%endsyntax%]</pre>
 
@@ -199,7 +206,7 @@ as in the original grammar, the compiler still knows what to do with it.</p>
 <p>So with proto regexes in place we can extend and modify grammars quite
 easily.</p>
 
-<h2>Bottom-up parsing</h2>
+<h2 id="bottom-up">Bottom-up parsing</h2>
 
 <p>There's one thing left to ultimate extensibilty: introducing new precedence
 levels.</p>
@@ -214,14 +221,14 @@ token category:mul_op { <sym> }
 proto token mul_op {...}
 
 rule expression {
-	<term> [<add_op> <term>]*
+    <term> [<add_op> <term>]*
 }
-rule term>{
-	<factor> [<mul_op> <factor>]*
+rule term {
+    <factor> [<mul_op> <factor>]*
 }
 rule factor {
-	| ['(' <expression> ')' ]
-	| <value>
+    | ['(' <expression> ')' ]
+    | <value>
 }
 
 token add_op:sym<+>  { <sym> }
@@ -249,13 +256,13 @@ are able to parse that we just have to make a tree out of it.</p>
 operators and precedence levels without altering other rules:</p>
 
 <pre>[% syntax perl6 %]
-token infix:<bla> is tighter:<+> { 'bla' }
+token infix:sym<bla> is tighter:<+> { <sym> }
 [% endsyntax %]</pre>
 
 <p>This introduces the <code>bla</code> operator, which has tigher precedence 
 than <code>+</code>, but looser than <code>*</code>.</p>
 
-<h2>Longest Token Matching</h2>
+<h2 id="ltm">Longest Token Matching</h2>
 
 <p>We're mostly there now, small changes and enhancements work like a charm.
 The example syntax changes took great care not to conflict with existing Perl 6
@@ -275,13 +282,13 @@ inrements a variable by two, you'd just introduce a new rule for it, and when
 the parser expects a <code>postfix</code> token, both <code>++</code> and <code>+++</code>
 match, but since the latter matches more text, it wins.</p>
 
-<h2>A nice syntax for grammar changes</h2>
+<h2 id="nice-syntax">A nice syntax for grammar changes</h2>
 
 <p>Now the ordinary Perl hacker who wants a new operator shouldn't have to know
 all this stuff about mutable grammars, they want a nice syntax that hides all
 that.</p>
 
-<p>Being foremost practical, Perl 6 provide that of course. You can add the
+<p>Being foremost practical, Perl 6 provides that of course. You can add the
 following lines in your normal Perl 6 code, and immediately afterwards you
 have the newly defined operators in place.</p>
 
@@ -303,23 +310,25 @@ say $x;  # prints 4
 say $x!; # prints 24
 [% endsyntax %]</pre>
 
-<h2>And It Really Works</h2>
+<h2 id="it_works">And It Really Works</h2>
 
 <p>You might think this is all fine and cool, but you don't believe it's
 actually implementable.</p>
 
 <p>Larry Wall put quite some effort into writing both the standard Perl 6
-grammar and some programs that translate it into Perl 5 code. As of July 2008
-this translated grammar can parse both itself and more than 95% of the files
-of the official test suite.</p>
+grammar and some programs that translate it into Perl 5 code. As of August
+2008 this translated grammar can parse both itself and nearly all files
+of the official test suite. (The one file that it fails to parse actually adds
+an operator at compile time, which needs a real compiler backend to be
+implemented).</p>
 
-<p>Internally it modifies copies of itself to parse various DSLs (Domain
-Specific Languages) such as regexes and quoted constructs.</p>
+<p>Internally it modifies copies of itself to parse various <acronym
+title="Domain Specific Languages">DSL</acronym>s  such as regexes and quoted constructs.</p>
 
 <p>It is quite slow at the time of writing, but that's not really surprising
 because it's not optimized for speed yet.</p>
 
-<h2>Open Problems</h2>
+<h2 id="problems">Open Problems</h2>
 
 <p>As far as I can tell there are still open problems with the parser. For
 example how exactly macros will work. For example it's not yet clear (at least
@@ -336,12 +345,12 @@ compile time statements (like <code>use</code>, <code>BEGIN</code>, and
 macros), so you need a real Perl 6 compiler. That's what many people are
 working on, but it's not an easy task.</p>
 
-<h2>Summary</h2>
+<h2 id="summary">Summary</h2>
 
 <p>With lots of new ideas grammars become easier to write and maintain, and
 can be easily modified with understanding only a small subset of the grammar,
 or in simple cases without it.</p>
 
 [% comment
-    vim: ft=html
+    vim: ft=html expandtab
 %]
