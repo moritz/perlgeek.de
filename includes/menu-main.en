@@ -28,6 +28,15 @@
                     </div>
                 </div>
             }} %]
+            [% item blog {{
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                $categories::categories
+                </div>
+            </div>
+            }} %]
+
+
             [% item service {{
             <!-- begin: #col1 - first float column -->
             <div id="col1">
@@ -46,8 +55,8 @@
                 <div id="col1_content" class="clearfix">
 					<h3>Articles</h3>
                     <ul>
-                        <li><a href="/en/article/encodings-and-unicode">Encodings and Unicode</a></li>
-                        <li><a href="/en/article/mutable-grammar-for-perl-6">A Mutable Grammar for Perl 6</a></li>
+                        [% item unicode <li><a {{class="selected" }}href="/en/article/encodings-and-unicode">Encodings and Unicode</a></li> %]
+                        [% item mutable <li><a {{class="selected" }}href="/en/article/mutable-grammar-for-perl-6">A Mutable Grammar for Perl 6</a></li>%]
                     </ul>
 				</div>
 			</div>
