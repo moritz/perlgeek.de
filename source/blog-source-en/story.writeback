@@ -12,9 +12,6 @@ $body
 <a href="$url$path/$fn.html">Permanent link</a>
 </em>
 </p>
-<p>
-<a href="$url$path/$fn.writeback">$writeback::count comments / trackbacks</a>
-</p>
 <!-- TrackBack auto-discovery bits -->
 
 <!--
@@ -30,5 +27,16 @@ $body
 
 </rdf:RDF>
 -->
+
+
+<h2>Comments / Trackbacks:</h2>
+<p>Trackback URL:
+<code>$url$writeback::trackback_path_and_filename.trackback</code></p>
+
+<!-- WriteBacks for this story -->
+
+<font color="red">$writeback::writeback_response</font>
+
+$writeback::writebacks
 
 </div>

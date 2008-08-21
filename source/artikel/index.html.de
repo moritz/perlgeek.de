@@ -4,7 +4,7 @@
 [%setvar en /en/article/ %]
 <h1>[%readvar title%]</h1>
 
-<p>Bisher gibt es erst einen, aber bald wird es hier eine kleine Sammlung von
+<p>Bisher gibt es erst zwei, aber bald wird es hier eine kleine Sammlung von
 Artikeln über Programmierung und Perl geben.</p>
 
 [% comment

@@ -2,56 +2,56 @@
 		<div id="nav"> <a id="navigation" name="navigation"></a>
 			<!-- skiplink anchor: navigation -->
 			<div id="nav_main">
-                    <ul>
-                        [% item home     <li{{ id="current"}}><a href="/de/">Home</a></li>           %]
-                        [% item artikel  <li{{ id="current"}}><a href="/de/artikel/">Artikel</a></li>   %]
-                        [% item software <li{{ id="current"}}><a href="/de/software/">Software</a></li> %]
-                        [% item service  <li{{ id="current"}}><a href="/de/service/">Services</a></li>  %]
-<!--                    [% item blog     <li{{ id="current"}}><a href="#">Blog</a></li>     %] -->
-                    </ul>
+                <ul>
+                    [% item home     <li{{ id="current"}}><a href="/de/">Home</a></li>              %]
+                    [% item artikel  <li{{ id="current"}}><a href="/de/artikel/">Artikel</a></li>   %]
+                    [% item software <li{{ id="current"}}><a href="/de/software/">Software</a></li> %]
+                    [% item service  <li{{ id="current"}}><a href="/de/service/">Services</a></li>  %]
+                </ul>
+            </div>
+        </div>
+        <!-- end: main navigation -->
+        <!-- begin: main content area #main -->
+        <div id="main">
+            <!-- begin: #col1 - first float column -->
+            [% item artikel {{
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                <h3>Artikel</h3>
+                <ul>
+                    [% item unicode    <li><a {{class="selected" }}href="/de/artikel/charsets-unicode">Charsets und Unicode</a></li> %]
+                    [% item schwaechen <li><a {{class="selected" }}href="/de/artikel/schwaechen-von-perl-5">Perls Schwächen</a></li> %]
+                </ul>
                 </div>
             </div>
-            <!-- end: main navigation -->
-            <!-- begin: main content area #main -->
-            <div id="main">
-                <!-- begin: #col1 - first float column -->
-                [% item artikel {{
-                <div id="col1">
-                    <div id="col1_content" class="clearfix">
-					<h3>Artikel</h3>
-                    <ul>
-                        <li><a href="/de/artikel/charsets-unicode">Charsets und Unicode</a></li>
-                    </ul>
-                    </div>
+            }} %]
+            [% item software {{
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                <h3>Software</h3>
+                <ul>
+                    [% item mowyw <li><a {{class="selected" }}href="/de/software/mowyw">Mowyw</a></li> %]
+                    [% item yasss <li><a {{class="selected" }}href="http://moritz.faui2k3.org/de/yasss">YasSS</a></li> %]
+                </ul>
                 </div>
-                }} %]
-                [% item software {{
-                <div id="col1">
-                    <div id="col1_content" class="clearfix">
-					<h3>Software</h3>
-                    <ul>
-                        [% item mowyw <li><a {{class="selected" }}href="/de/software/mowyw">Mowyw</a></li> %]
-                        [% item yasss <li><a {{class="selected" }}href="http://moritz.faui2k3.org/de/yasss">YasSS</a></li> %]
-                    </ul>
-                    </div>
+            </div>
+            }} %]
+            [% item service {{
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="http://irclog.perlgeek.de/">IRC-Logs</a></li>
+                    <li><a href="http://moritz.faui2k3.org/svn-search/search.pl">SVN search</a></li>
+                </ul>
                 </div>
-                }} %]
-                [% item service {{
-                <div id="col1">
-                    <div id="col1_content" class="clearfix">
-					<h3>Services</h3>
-                    <ul>
-                        <li><a href="http://irclog.perlgeek.de/">IRC-Logs</a></li>
-                        <li><a href="http://moritz.faui2k3.org/svn-search/search.pl">SVN search</a></li>
-                    </ul>
-                    </div>
-                </div>
-                }} %]
-			<!-- end: #col1 -->
-			<!-- begin: #col3 static column -->
-			<div id="col3">
-				<div id="col3_content" class="clearfix"> <a id="content" name="content"></a>
-					<!-- skiplink anchor: Content -->
+            </div>
+            }} %]
+        <!-- end: #col1 -->
+        <!-- begin: #col3 static column -->
+        <div id="col3">
+            <div id="col3_content" class="clearfix"> <a id="content" name="content"></a>
+                <!-- skiplink anchor: Content -->
 [% comment
-    vim: tw=0
+    vim: tw=0 ft=html
 %]

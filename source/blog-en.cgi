@@ -5,7 +5,10 @@
 # Version: 2.0
 # Home/Docs/Licensing: http://www.raelity.org/apps/blosxom/
 
+
 package blosxom;
+use Cwd;
+my $cwd =  getcwd();
 
 # --- Configurable variables -----
 
@@ -20,7 +23,7 @@ $blog_language = "en";
 
 # Where are this blog's entries kept?
 $datadir = "blog-source-en/";
-$datadir = '/home/moritz/svn/perlgeek.de/online/blog-source-en/';
+$datadir = "$cwd/blog-source-en/";
 
 # What's my preferred base URL for this blog (leave blank for automatic)?
 $url = "/blog-en/";
@@ -45,7 +48,7 @@ $show_future_entries = 0;
 # --- Plugins (Optional) -----
 
 # Where are my plugins kept?
-$plugin_dir = "blosxom-plugins/";
+$plugin_dir = "$cwd/blosxom-plugins/";
 
 # Where should my modules keep their state information?
 $plugin_state_dir = "$plugin_dir/state";

@@ -1,6 +1,6 @@
 [%setvar section Artikel%]
 [%setvar title Charsets oder „Warum funktionieren meine Umlaute nicht?”%]
-[%menu main artikel%]
+[%menu main artikel unicode %]
 [%setvar en /en/article/encodings-and-unicode %]
 <!-- INDEX BEGIN -->
 

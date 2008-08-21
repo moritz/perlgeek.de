@@ -1,0 +1,21 @@
+package categories;
+use strict;
+use warnings;
+
+our $categories;
+
+sub start {
+$categories = <<END;
+<h3>Categories</h3>
+<ul>
+END
+    for (map m{([^/]+)$}, sort grep -d, glob("$blosxom::datadir/*")){
+        $categories .= qq{\t<li><a href="$blosxom::url/$_/">\u$_</a>\n};
+    }
+
+    $categories .= "<ul>\n";
+}
+
+1;
+
+# vim: ft=perl

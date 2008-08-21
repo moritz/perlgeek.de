@@ -1,6 +1,6 @@
 [% setvar title Schwächen von Perl 5 %]
 [% setvar section Artikel %]
-[% menu main aritkel %]
+[% menu main artikel schwaechen %]
 
 <h1>[% readvar title %]</h1>
 
@@ -55,7 +55,7 @@ passiert ist.</p>
 <p>Die korrekte Lösung wäre, <code>local $@</code> im
 <code>DESTROY</code>-Block zu verwenden. Das Problem ist, dass die wenigsten
 Entwickler an so etwas denken, und eigentlich sollten sie auch gar nicht daran
-denken müssen. Ein besseres Scoping der eingebauten Variablen würde dieses
+denken müssen. Ein besseres Scoping der eingebauten Variablen könnte dieses
 Problem vermeiden.</p>
 
 <p>Ein weiteres Problem der globalen Variablen ist, dass man als Modul-Autor
@@ -109,10 +109,10 @@ aber sehr ähnlich aus, und sind relativ schwer zu lesen.</p>
 dafür recht lange und schwer zu tippen.</p>
 
 <p>Der Zugriff auf die Matchvariablen <code>$1, $2, $3, ...</code> ist nicht
-ohne Umwege über ein Array möglich (auch wenn man sich mit <code>@+</code>,
-<code>@-</code> und <code>substr</code> so etwas basteln kann), und es ist
-nicht möglich, die Nummern der capturing groups dynamisch in der Regex
-festzulegen.</p>
+ohne Umwege über mit Array-Semantik möglich (auch wenn man sich mit
+<code>@+</code>, <code>@-</code> und <code>substr</code> so etwas basteln
+kann), und es ist nicht möglich, die Nummern der capturing groups dynamisch 
+in der Regex festzulegen.</p>
 
 <p>Die ungewöhnliche Handhabung von Unicode-Strings erschwert die Arbeit an
 der Regex-Engine und führt regelmäßig zu Bugs.</p>
@@ -138,9 +138,6 @@ verbergen.</p>
 <p>Es würde auch sehr helfen, getrennte Datentypen für Text- und Bytestrings
 zu haben, sodass man z.B. beim Konkatenieren von verschiedenartigen Strings
 eine Warnung ausgeben könnte.</p>
-
-<p>Als weiterer Kritikpunkt des Unicode-Modells lässt sich aufführen, dass es
-keine Möglichkeit gibt, Textstrings in Titlecase umzuwandeln.</p>
 
 
 [% comment 
