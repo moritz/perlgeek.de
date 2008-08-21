@@ -1,0 +1,17 @@
+Recent Perl 6 Developments August 2008
+
+<p>There are two major, recent improvements in Perl 6 development:</p>
+
+<p>Patrick Michaud implemented pre-compiled modules for Rakudo. Precompiling
+<code>Test.pm</code> greatly reduced the time for running the test suite.
+The time for <code>make spectest_regression</code> was reduced from 8 minutes
+20 seconds to 2 minutes 40 seconds on my PC.</p>
+
+<p>Larry Wall has been working on his Parser for Perl 6 (called STD.pm). It
+can now parse all of the test suite, and even can add operators on the fly.
+This week Larry added symbol tables, which means that STD.pm now detects
+undeclared subs and variables as well as constructs that were missing, and
+were errornously parsed as sub calls.</p>
+
+<p>This already helped to fix quite some tests in the test suite.</p>
+[% option no-header %] [% option no-footer %]
