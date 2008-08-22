@@ -243,4 +243,12 @@
     height: auto;
     width: auto;
   }
+
+  .blog_index {
+      font-size: 85%;
+  }
+  .blog_index ul li {
+      line-height: 1em;
+
+  }
 }

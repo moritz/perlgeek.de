@@ -1,0 +1,47 @@
+package cat_index;
+use strict;
+use warnings;
+our $cat_index = '';
+use HTML::Entities qw(encode_entities);
+use Data::Dumper;
+
+sub start {
+    my $data_dir = $blosxom::datadir . '/' . $blosxom::path_info;
+    return unless $blosxom::path_info;
+    return unless -d $data_dir;
+    my @files = sort glob "$data_dir/*.$blosxom::file_extension";
+    return unless @files > 1;
+
+    $cat_index = '<div class="blog_index"><h3>Posts in this category</h3>';
+    $cat_index .= "\n<ul>\n";
+    for (@files){
+        my $fn = $_;
+        $fn =~ s{^.*/}{};
+        $cat_index .= qq{<li><a href="$blosxom::url/$blosxom::path_info/$fn">};
+        $cat_index .= get_title($_) . qq{</a></li>\n};
+    }
+    $cat_index .= "</ul>\n";
+#    $cat_index .= '<pre>';
+#    for (keys %blosxom::){
+#        next if m/[A-Z]/;
+#        no strict 'refs';
+#        my $val = ${"blosxom::$_"};
+#        next unless $val;
+#        $cat_index .= "$_\t=&gt;$val\n";
+#    }
+#    $cat_index .= '</pre>';
+    $cat_index .= '</div>';
+
+}
+
+sub get_title {
+    my $fn = shift;
+    open my $h, '<', $fn or die "Can't open file $fn for reading: $!";
+    my $first_line = <$h>;
+    close $h;
+    return encode_entities($first_line, q{"<>&});
+}
+
+1;
+
+# vim: ft=perl
