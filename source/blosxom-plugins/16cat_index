@@ -17,7 +17,9 @@ sub start {
     for (@files){
         my $fn = $_;
         $fn =~ s{^.*/}{};
-        $cat_index .= qq{<li><a href="$blosxom::url/$blosxom::path_info/$fn">};
+        my $path = "$blosxom::url/$blosxom::path_info/$fn";
+        $path =~ s/\Q$blosxom::file_extension\E$/$blosxom::flavour/;
+        $cat_index .= qq{<li><a href="$path">};
         $cat_index .= get_title($_) . qq{</a></li>\n};
     }
     $cat_index .= "</ul>\n";
