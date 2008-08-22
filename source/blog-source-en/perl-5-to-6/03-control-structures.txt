@@ -1,0 +1,96 @@
+Basic Control Structures
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 03 - Basic Control Structures</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    if $percent &#62; 100  {
+        say &#34;weird mathematics&#34;;
+    }
+    for 1..3 {
+        # using $_ as loop variable
+        say 2 * $_;
+    }
+    for 1..3 -&#62; $x {
+        # with explicit loop variable
+        say 2 * $x;
+    }
+
+    while $stuff.is_wrong {
+        $stuff.try_to_make_right;
+    }
+
+    die &#34;Access denied&#34; unless $password eq &#34;Secret&#34;;</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Most Perl 5 control structures are quite similar in Perl 6. The biggest visual difference is that you don&#39;t need a pair of parenthesis after <code>if</code>, <code>while</code>, <code>for</code> etc.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Branches"
+>Branches</a></h4>
+
+<p><code>if</code> is mostly unchanged, you can still add <code>elsif</code> and <code>else</code> branches. <code>unless</code> is still there, but no <code>else</code> branch is allowed after <code>unless</code>.</p>
+
+<pre>    if $sheep == 0 {
+        say &#34;How boring&#34;;
+    } elsif $sheep == 1 {
+        say &#34;One lonely sheep;
+    } else {
+        say &#34;A herd, how lovely!&#34;;
+    }</pre>
+
+<p>You can also use <code>if</code> and <code>unless</code> as a statement modifier, i.e. after a statements:</p>
+
+<pre>    say &#34;you won&#34; if $answer == 42;</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Loops"
+>Loops</a></h4>
+
+<p>You can manipulate loops with <code>next</code> and <code>last</code> just like in Perl 5.</p>
+
+<p>The <code>for</code>-Loop is now only used to iterate over lists. By default the standard variable <code>$_</code> is used, unless an explicit loop variable is given.</p>
+
+<pre>    for 1..10 -&#62; $x {
+        say $x;
+    }</pre>
+
+<p>The <code>-&#62; $x { ... }</code> thing is called a &#34;pointy block&#34; and is something like an anonymous sub, or a lambda in lisp.</p>
+
+<p>You can also use more than one loop variable:</p>
+
+<pre>    for 0..5 -&#62; $even, $odd {
+        say &#34;Even: $even \t Odd: $odd&#34;;
+    }</pre>
+
+<p>This is also how you iterate over hashes:</p>
+
+<pre>    my %h = a =&#62; 1, b =&#62; 2, c =&#62; 3;
+    for %h.kv -&#62; $key, $value {
+        say &#34;$key: $value&#34;;
+    }</pre>
+
+<p>The C-style for-loop is now called <code>loop</code>:</p>
+
+<pre>    loop (my $x = 1; $x &#60; 100; $x = $x**2) {
+        say $x;
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S04.html#Conditional_statements" class="podlinkurl"
+>http://perlcabal.org/syn/S04.html#Conditional_statements</a></p>
+
+[% option no-header %] [% option no-footer %]
