@@ -1,0 +1,197 @@
+Subroutines and Signatures
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 04 - Subroutines and Signatures</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    # sub without a signature - perl 5 like
+    sub print_arguments {
+        say &#34;Arguments:&#34;;
+        for @_ {
+            say &#34;\t$_&#34;;
+        }
+    }
+
+    # Signature with fixed arity and type:
+    sub distance(Num $x1, Num $y1, Num $x2, Num $y2) {
+        return sqrt ($x2-$x1)**2 + ($y2-$y1)**2;
+    }
+    say distances(3, 5, 0, 1); 
+
+    # Default arguments
+    sub logarithm($num, $base = 2.7183) {
+        return log($num) / log($base)
+    }
+    say logarithm(4);       # uses default second argument
+    say logarithm(4, 2);    # explicit second argument
+
+    # named arguments
+
+    sub doit(:$when, :$what) {
+        say &#34;doing $what at $when&#34;;
+    }
+    doit(what =&#62; &#39;stuff&#39;, when =&#62; &#39;once&#39;);  # &#39;doing stuff at once&#39;
+    doit(:when&#60;noon&#62;, :what(&#39;more stuff&#39;)); # &#39;doing more stuff at noon&#39;
+    # illegal: doit(&#34;stuff&#34;, &#34;now&#34;)</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Subroutines are declared with the <code>sub</code> key word, and can have a list of formal parameters, just like in C, Java and most other languages. Optionally these parameters can have type constraints.</p>
+
+<p>Parameters are read-only by default. That can be changed with so-called &#34;traits&#34;:</p>
+
+<pre>    sub foo($bar) {
+        $bar = 2;       # forbidden
+    }
+
+    my $x = 2;
+    sub baz($bar is rw) {
+        $x = 0;         # allowed
+    }
+    baz($x); say $x;    # 0
+
+    sub quox($bar is copy){
+        $bar = 3;
+    }
+    quox($x); say $x    # 0</pre>
+
+<p>Parameters can be made optional by adding a question mark <code>?</code> after them, or by supplying a default value.</p>
+
+<pre>    sub foo($x, $y?) {
+        if $y.defined {
+            say &#34;WE CAN HAZ $y&#34;
+        }
+    }
+
+    sub bar($x, $y = 2 * $x) { 
+        ...
+    }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Named_Parameters"
+>Named Parameters</a></h4>
+
+<p>When you invoke a subroutine like this: <code>my_sub($first, $second)</code> the <code>$first</code> argument is bound to the first formal parameter, the <code>$second</code> argument to the second parameter etc., which is why they are called &#34;positional&#34;.</p>
+
+<p>Sometimes it&#39;s easier to remeber names than numbers, which is why Perl 6 also has named parameters:</p>
+
+<pre>    my $r = Rectangle.new( 
+            x       =&#62; 100, 
+            y       =&#62; 200, 
+            height =&#62; 23,
+            width  =&#62; 42,
+            color  =&#62; &#39;black&#39;
+    );</pre>
+
+<p>When you see something like this, you immediately know what the specific arguments mean.</p>
+
+<p>To define a named parameter, you simply put a colon <code>:</code> before the parameter in the signature list:</p>
+
+<pre>    sub area(:$width, :$height) {
+        return $width * $height;
+    }
+    area(width =&#62; 2,  height =&#62; 3);
+    area(height =&#62; 3, width =&#62; 2 ); # the same
+    area(:height&#60;3&#62;, :width&#60;2&#62;);    # the same</pre>
+
+<p>In these the variable name is used as the name. You can use a different name, though:</p>
+
+<pre>    sub area(:width($w), :height($h)){
+        return $w * $h;
+    }
+    area(width =&#62; 2,  height =&#62; 3);</pre>
+
+<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name by default.</p>
+
+<pre>    sub sqrt($number) { ... };
+    sqrt(3);
+    sqrt(number =&#62; 3); # also works</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Slurpy_Arguments"
+>Slurpy Arguments</a></h4>
+
+<p>Just because you give your sub a signature doesn&#39;t mean you have to know the number of arguments in advance. You can define so-called slurpy parameters (after all the regular ones) which use up any remaining arguments:</p>
+
+<pre>    sub tail ($first, *@rest){
+        say &#34;First: $first&#34;;
+        say &#34;Rest: @rest[]&#34;;
+    }
+    tail(1, 2, 3, 4);           # &#34;First: 1\nRest: 2 3 4\n&#34;</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Interpolation"
+>Interpolation</a></h4>
+
+<p>By default arrays aren&#39;t interpolated in argument lists, so unlike in Perl 5 you can write something like this:</p>
+
+<pre>    sub a($scalar1, @list, $scalar2){
+        say $scalar2;
+    }
+
+    my @list = &#34;foo&#34;, &#34;bar&#34;;
+    a(1, @list, 2);                  # 2</pre>
+
+<p>That also means that by default you can&#39;t use a list as an argument list:</p>
+
+<pre>    my @indexes = 1, 4;
+    say &#34;abc&#34;.substr(@indexes)       # error!</pre>
+
+<p>You can achieve the desired behaviour with a prefix <code>|</code></p>
+
+<pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Multi_Subs"
+>Multi Subs</a></h4>
+
+<p>You can actually define multiple subs with the same name but with different parameter lists:</p>
+
+<pre>    multi sub my_substr($str) { ... }                          # 1
+    multi sub my_substr($str, $start) { ... }                  # 2
+    multi sub my_substr($str, $start, $end) { ... }            # 3
+    multi sub my_substr($str, $start, $end, $subst) { ... }    # 4</pre>
+
+<p>Now whenever you call such a sub, the one with the matching parameter list will be chosen.</p>
+
+<p>The multis don&#39;t have to differ in the arity (ie number of arguments), they can also differ in the type of the parameters:</p>
+
+<pre>    multi sub frob(Str $s) { say &#34;Frobbing String $s&#34;  }
+    multi sub frob(Int $i) { say &#34;Frobbing Integer $i&#34; }
+
+    frob(&#34;x&#34;)       # Frobbing String x
+    frob(2)         # Frobbing Inteteger 2</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Nobody will doubt the usefulness of explicit sub signatures: less typing, less duplicate argument checks, and more self-documenting code. The value of named parameters has also been discussed already.</p>
+
+<p>Multi subs are very useful because they allow builtins to be overridden for new types. Let&#39;s assume you want a version of Perl 6 which is localized to handle turkish strings correctly, which have unsual rules for case conversions.</p>
+
+<p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>
+
+<pre>    sub uc(TurkishStr $s) { ... }</pre>
+
+<p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
+
+<p>Since operators are also subs, that refinement works for operators too.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S06.html" class="podlinkurl"
+>http://perlcabal.org/syn/S06.html</a></p>
+
+[% option no-header %] [% option no-footer %]
