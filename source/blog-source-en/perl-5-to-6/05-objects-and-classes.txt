@@ -1,0 +1,171 @@
+Objects and Classes
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 06 - Objects and Classes</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    class Shape {
+        method area { ... }    # literal &#39;...&#39;
+        has $.color is rw;
+
+    }
+
+    class Rectangle is Shape {
+        has Num $.width;
+        has Num $.height;
+
+        method area {
+            $!width * $!height;
+        }
+    }
+
+    my $x = Rectangle.new(
+            width   =&#62; 30,
+            height  =&#62; 20,
+            colour  =&#62; &#39;black&#39;,
+        );
+    say $x.area;                # 600
+    say $x.colour;              # black
+    $x.colour = &#39;blue&#39;;</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Perl 6 has an object model that is much more fleshed out than the Perl 5 one. It has keywords for creating classes, roles, attributes and methods, and has encapsulated private attributes and methods.</p>
+
+<p>There are two ways to declare classes</p>
+
+<pre>    class ClassName;
+    # class definition goes here</pre>
+
+<p>The first one begins with <code>class ClassName;</code> and stretches to the end of the file. In the second one the class name is followed by a block, and all that is inside the blocks is considered to be the class definition.</p>
+
+<pre>    class YourClass {
+        # class definition goes here
+    }
+    # more classes or other code here</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Methods"
+>Methods</a></h4>
+
+<p>Methods are declared with the <code>method</code> key word. Inside the the method you can use the <code>self</code> keyword to refer to the object on which the method is called (the invocant).</p>
+
+<p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
+
+<p>Public methods can be called with the syntax <code>$object.method</code> if it takes no arguments, and <code>$object.method(@args)</code> or <code>$object.method: @args</code> if it takes arguments.</p>
+
+<pre>    class SomeClass {
+        # these two methods do nothing but return the invocant
+        method foo {
+            return self;
+        }
+        method bar($s: ) {
+            return $s;
+        }
+    }
+    my SomeClass $x .= new;
+    $x.foo.bar                      # same as $x</pre>
+
+<p>Methods can also take additional arguments just like subs.</p>
+
+<p>Private methods can be declared with <code>my method</code>, and called with <code>self!method_name</code>.</p>
+
+<pre>    class Foo {
+        my method private($frob) {
+            return &#34;Frobbed $frob&#34;;
+        }
+
+        method public {
+            say self!private(&#34;foo&#34;);
+        }
+    }</pre>
+
+<p>Private methods can&#39;t be called from outside the class.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Attributes"
+>Attributes</a></h4>
+
+<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor.</p>
+
+<pre>    class SomeClass {
+        has $!a;
+        has $.b;
+        has $.c is rw;
+
+        method do_stuff {
+            # you can use the private name instead of the public one
+            # $!b and $.b are really the same thing
+            return $!a + $!b + $!c;
+        }
+    }
+    my $x = SomeClass.new;
+    say $x.a;       # ERROR!
+    say $x.b;       # ok
+    $x.b = 2;       # ERROR!
+    $x.c = 3;       # ok</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Inheritance"
+>Inheritance</a></h4>
+
+<p>Inheritance is done through an <code>is</code> trait.</p>
+
+<pre>    class Foo is Bar { 
+        # class Foo inherits from class Bar
+        ...
+    }</pre>
+
+<p>All the usual inheritance rules apply - methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conformant to that of a parent class:</p>
+
+<pre>        class Bar { }
+        class Foo is Bar { }
+        my Bar $x = Foo.new();</pre>
+
+<p>In this example the type of <code>$x</code> is <code>Bar</code>, and it is allowed to assign an object of type <code>Foo</code> to it, because &#34;every <code>Foo</code> is a <code>Bar</code>&#34;.</p>
+
+<p>Classes can inherit from multiple other classes:</p>
+
+<pre>    class ArrayHash is Hash is Array { 
+        ...
+    }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Roles_and_Composition"
+>Roles and Composition</a></h4>
+
+<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them. While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
+
+<pre>    role Paintable {
+        has $.color is rw;
+        method paint { ... }
+    }
+    class Shape {
+        method area { ... }
+    }
+
+    class Rectangle is Shape does Paintable {
+        has $.width;
+        has $.height;
+        method area {
+            $!width * $!height;
+        }
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
+>http://perlcabal.org/syn/S12.html</a></p>
+
+[% option no-header %] [% option no-footer %]
