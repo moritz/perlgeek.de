@@ -5,7 +5,7 @@
 =head1 SYNOPSIS
 
     Learn Perl 6 (if you already know Perl 5)
-    Learn to to love Perl 6
+    Learn to love Perl 6
     Understand why
 
 =head1 DESCRIPTION
