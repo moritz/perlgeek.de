@@ -26,7 +26,7 @@ There are some basic types that you should know about:
     (1, 2, 3)       # List
 
 All "normal" builtin types begin with an upper case letter. All "normal" types
-inherit from C<Any>, and absultely everything inherits from C<Object>.
+inherit from C<Any>, and absolutely everything inherits from C<Object>.
 
 You can restrict the type of values that a variable can hold by adding the
 type name to the declaration.
@@ -34,7 +34,7 @@ type name to the declaration.
     my Num $x = 3.4;
     my Int @a = 1, 2, 3;
 
-It is an error to try to but a value into a variable that is of a "wrong" type
+It is an error to try to put a value into a variable that is of a "wrong" type
 (ie neither the specified type nor a subtype).
 
 A type declaration on an Arrray is used for its contents, so C<my Str @s> is
@@ -74,7 +74,7 @@ optimizations. Perl 6 doesn't have to be slower than C, in principle.
 =item Extensibility
 
 With type informations and multiple dispatch you can easily refine operators
-for particular types
+for particular types.
 
 =back
 

@@ -33,14 +33,14 @@ name="DESCRIPTION"
     3.14            # Num
     (1, 2, 3)       # List</pre>
 
-<p>All &#34;normal&#34; builtin types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absultely everything inherits from <code>Object</code>.</p>
+<p>All &#34;normal&#34; builtin types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Object</code>.</p>
 
 <p>You can restrict the type of values that a variable can hold by adding the type name to the declaration.</p>
 
 <pre>    my Num $x = 3.4;
     my Int @a = 1, 2, 3;</pre>
 
-<p>It is an error to try to but a value into a variable that is of a &#34;wrong&#34; type (ie neither the specified type nor a subtype).</p>
+<p>It is an error to try to put a value into a variable that is of a &#34;wrong&#34; type (ie neither the specified type nor a subtype).</p>
 
 <p>A type declaration on an Arrray is used for its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
 
@@ -81,7 +81,7 @@ name="MOTIVATION"
 >Extensibility</a></dt>
 
 <dd>
-<p>With type informations and multiple dispatch you can easily refine operators for particular types</p>
+<p>With type informations and multiple dispatch you can easily refine operators for particular types.</p>
 </dd>
 </dl>
 
