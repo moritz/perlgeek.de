@@ -112,7 +112,7 @@ default, i.e. white spaces are ignored.
     :i      :ignorecase     ignore case (formerly /i)
     :a      :ignoreaccents  ignore accents
     :g      :global         match as often as possible (/g)
-    :s      :sigspacce      Every white space in the regex matches
+    :s      :sigspace       Every white space in the regex matches
                             (optional) white space
     :P5     :Perl5          Fall back to Perl 5 compatible regex syntax
     :4x     :x(4)           Match four times (works for other numbers as well)
@@ -186,7 +186,7 @@ than they were before.
 
 Finally grammars are so powerful that you can parse about every programming
 language with them, including Perl 6 itself. That makes the Perl 6 grammar
-easier to maintain and to change thn the perl 5 one, which is written in C and
+easier to maintain and to change than the perl 5 one, which is written in C and
 not changable at parse time.
 
 =head1 SEE ALSO

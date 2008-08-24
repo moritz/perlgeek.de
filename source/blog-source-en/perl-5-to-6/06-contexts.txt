@@ -28,7 +28,7 @@ name="DESCRIPTION"
 
 <p>in Perl 5, <code>$x</code> contains less information than <code>@a</code> - it contains only the number of items in <code>@a</code>. To preserve all information, you have to explicitly take a reference: <code>$x = \@a</code>.</p>
 
-<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t loose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called &#34;scalar&#34; in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
+<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called &#34;scalar&#34; in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
 
 <p>You can force contexts with special syntax.</p>
 

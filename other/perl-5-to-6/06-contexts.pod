@@ -21,7 +21,7 @@ in Perl 5, C<$x> contains less information than C<@a> - it contains only the
 number of items in C<@a>. To preserve all information, you have to explicitly
 take a reference: C<$x = \@a>.
 
-In Perl 6 it's the other way round: by default you don't loose anything, the
+In Perl 6 it's the other way round: by default you don't lose anything, the
 scalar just stores the array. This was made possible by introducing a generic
 item context (called "scalar" in Perl 5) and more specialized numeric, integer
 and string contexts. Void and List context remain unchanged.
