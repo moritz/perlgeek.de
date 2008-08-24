@@ -6,7 +6,7 @@
 
     class Shape {
         method area { ... }    # literal '...'
-        has $.color is rw;
+        has $.colour is rw;
 
     }
 
@@ -149,7 +149,7 @@ objects directly from them. While classes are intended primarily for type
 conformance, roles are the primary means for code reuse in Perl 6.
 
     role Paintable {
-        has $.color is rw;
+        has $.colour is rw;
         method paint { ... }
     }
     class Shape {

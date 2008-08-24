@@ -23,7 +23,7 @@ name="SYNOPSIS"
     sub distance(Num $x1, Num $y1, Num $x2, Num $y2) {
         return sqrt ($x2-$x1)**2 + ($y2-$y1)**2;
     }
-    say distances(3, 5, 0, 1); 
+    say distance(3, 5, 0, 1); 
 
     # Default arguments
     sub logarithm($num, $base = 2.7183) {
@@ -55,7 +55,7 @@ name="DESCRIPTION"
 
     my $x = 2;
     sub baz($bar is rw) {
-        $x = 0;         # allowed
+        $bar = 0;         # allowed
     }
     baz($x); say $x;    # 0
 

@@ -62,8 +62,10 @@ name="ROADMAP"
 <p>Planned:</p>
 
 <pre>    14 the MAIN sub
-    15 Unicode
-    16 Scoping</pre>
+    15 Twigils
+    16 Enums
+    17 Unicode
+    18 Scoping</pre>
 
 <p>Things that I want to write about, but which I don&#39;t know well enough yet:</p>
 

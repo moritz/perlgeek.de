@@ -13,7 +13,7 @@ name="SYNOPSIS"
 
 <pre>    class Shape {
         method area { ... }    # literal &#39;...&#39;
-        has $.color is rw;
+        has $.colour is rw;
 
     }
 
@@ -146,7 +146,7 @@ name="Roles_and_Composition"
 <p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them. While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
 
 <pre>    role Paintable {
-        has $.color is rw;
+        has $.colour is rw;
         method paint { ... }
     }
     class Shape {
