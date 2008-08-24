@@ -1,0 +1,171 @@
+Rules (formerly Regexes)
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 07 - Rules (formerly Regexes)</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    grammar URL {
+        token TOP {
+            &#60;schema&#62; &#39;://&#39; 
+            [&#60;hostname&#62; | &#60;ip&#62; ]
+            [ &#39;:&#39; &#60;port&#62;]?
+            &#39;/&#39; &#60;path&#62;?
+        }
+        token byte {
+            (\d**{1..3}) &#60;?{ $0 &#60;= 256 }&#62;
+
+        }
+        token ip {
+            &#60;byte&#62; [\. &#60;byte&#62; ] ** 3
+        }
+        token schema {
+            \w+
+        }
+        token host {
+            (\w+) ( \. \w+ )+
+        }
+        token port {
+            \d+
+        }
+        token path {
+            &#60;[a..zA..Z0..9-_.!~*&#39;():@&#38;=+$,/]&#62;+
+
+        }
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Regexes are one of the areas that has been improved and revamped most in Perl 6. To honour that, an because they aren&#39;t &#34;regular expressions&#34; any more, they are now called &#34;rules&#34;.</p>
+
+<p>There are three large changes and enhancements to the regexes</p>
+
+<dl>
+<dt><a name="Syntax_clean_up"
+>Syntax clean up</a></dt>
+
+<dd>
+<p>Many small changes make rules easier to write. For example the dot <code>.</code> matches any character now, the old semantics (anything but newlines) can be achieved with <code>\N</code>.</p>
+
+<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[..]</code>, which are a lot easier to write than the old <code>(?:...)</code>.</p>
+
+<dt><a name="Nested_caputures_and_match_object"
+>Nested caputures and match object</a></dt>
+
+<dd>
+<p>In perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
+
+<dt><a name="Named_Rules_and_Grammars"
+>Named Rules and Grammars</a></dt>
+
+<dd>
+<p>You can declare regexes with names just like you can with subs and methods. You can refer to these inside other rules with <code>&#60;name&#62;</code>. And you can put multiple rules into grammars, which are just like classes and support inheritance and composition</p>
+</dd>
+</dl>
+
+<p>These changes make rules much easier to write and maintain than Perl 5 regexes.</p>
+
+<p>All of these changes go quite deep, and only the surface can be scratched here.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Syntax_clean_up"
+>Syntax clean up</a></h4>
+
+<p>Letter characters (ie underscore, digits and all Unicode letters) match literally, and have a special meaning (they are &#34;metasyntactic&#34;) when escaped with a backslash. For all other characters it&#39;s the other way round - they are metasyntactic unless escaped.</p>
+
+<pre>    literal         metasyntactic
+    a  b  1  2      \a \b \1 \2
+    \* \: \. \?     *  :  .  ? </pre>
+
+<p>Not all metasyntactic tokens have a meaning (yet). It is illegal to use those without a defined meaning.</p>
+
+<p>There is another way to escape strings in regexes: with quotes.</p>
+
+<pre>    m/&#39;a literal text: $#@!!&#39;/</pre>
+
+<p>The changed semantics of <code>.</code> has already been mentioned, and that <code>[...]</code> are now non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
+
+<p>This means that that the <code>/s</code> and <code>/m</code> modifers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
+
+<pre>    if &#34;abc&#34; ~~ m:i/B/ {
+        say &#34;Match&#34;;
+    }</pre>
+
+<p>Modifiers have a short and a long form. The old <code>/x</code> modifier is now the default, i.e. white spaces are ignored.</p>
+
+<pre>    short   long            meaning
+    -------------------------------
+    :i      :ignorecase     ignore case (formerly /i)
+    :a      :ignoreaccents  ignore accents
+    :g      :global         match as often as possible (/g)
+    :s      :sigspacce      Every white space in the regex matches
+                            (optional) white space
+    :P5     :Perl5          Fall back to Perl 5 compatible regex syntax
+    :4x     :x(4)           Match four times (works for other numbers as well)
+    :3rd    :nth(3)         Third match
+    :ov     :overlap        Like :g, but also consider overlapping matches
+    :ex     :exhaustive     Match in all possible ways
+            :ratchet        Don&#39;t backtrack</pre>
+
+<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespaces in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
+
+<p>(There are more new modifiers, but probably not as important as the listed ones).</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="The_Match_Object"
+>The Match Object</a></h4>
+
+<p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contains the first and last string positions of the match.</p>
+
+<pre>    if &#39;abcdefg&#39; ~~ m/(.(.)) (e | bla ) $&#60;foo&#62; = (.) / {
+        say $/[0][0];           # c
+        say $/[0];              # bc
+        say $/[1];              # e
+        say $/&#60;foo&#62;             # f
+    }</pre>
+
+<p><code>$0</code>, <code>$1</code> etc are just aliases for <code>$/[0]</code>, <code>$/[1]</code> etc. Likewise <code>$/&#60;x&#62;</code> and <code>$/{&#39;x&#39;}</code> are aliased to <code>$&#60;x&#62;</code>.</p>
+
+<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object again. This allows you to build real parse trees with rules.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Named_Rules_and_Grammars"
+>Named Rules and Grammars</a></h4>
+
+<p>Rules can either be used with the old style <code>m/.../</code>, or be declared like subs and methods.</p>
+
+<pre>    regex a { ... }
+    token b { ... }
+    rule  c { ... }</pre>
+
+<p>The difference is that <code>token</code> implies the <code>:ratchet</code> modifier (which means no backtracking, like a <code>(?&#62; ... )</code> group around each part of the regex in perl 5), and <code>rule</code> implies both <code>:ratchet</code> and <code>:sigspace</code>.</p>
+
+<p>To call such a rule (we&#39;ll call them all rules, independently with which keyword they were declared) you put the name in angle brackets: <code>&#60;a&#62;</code>. This implicitly anchors the sub rule to its current position in the string, and stores the result in the match object in <code>$/&#60;a&#62;</code>, ie it&#39;s a named capture. You can also call a rule without capturing its result by prefixing its name with a dot: <code>&#60;.a&#62;</code>.</p>
+
+<p>A grammar is a group of rules, just like a class (see the SYNOPSIS for an example). Grammars can inherit, override rules and so on.</p>
+
+<pre>    grammar URL::HTTP is URL {
+        token schema { &#39;http&#39; }
+    }
+=head3 MOTIVATION</pre>
+
+<p>Perl 5 regexes are often rather unreadable, the grammars encourage you to split a large regex into more readable, short fragments. Named captures make the rules more self-documenting, and many things are now much more consistent than they were before.</p>
+
+<p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change thn the perl 5 one, which is written in C and not changable at parse time.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
+>http://perlcabal.org/syn/S05.html</a></p>
+
+[% option no-header %] [% option no-footer %]
