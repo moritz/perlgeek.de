@@ -13,6 +13,12 @@ Doubt">FUD</acronym>-Sammlung á la "Perl ist langsam,
 Perl Code ist
 unlesbar" sein, sondern soll einige Schwächen wohlbegründet darlegen.</p>
 
+<p>Ansonsten bleibt mir noch auf Jonathan Rockways Blog zu verweisen, der
+schreibt <a
+href="http://blog.jrock.us/articles/You%20are%20missing%20the%20point%20of%20Perl.pod">warum
+er bei Perl bleibt, obwohl er dessen Nachteile kennt (Englisch)</a>, dem kann
+ich nur zustimmen.</p>
+
 <h2>Zu viele globale Variablen</h2>
 
 <p>In Perl Version 1 gab es nur globale Variablen, später kamen dann Variablen
@@ -138,6 +144,43 @@ verbergen.</p>
 <p>Es würde auch sehr helfen, getrennte Datentypen für Text- und Bytestrings
 zu haben, sodass man z.B. beim Konkatenieren von verschiedenartigen Strings
 eine Warnung ausgeben könnte.</p>
+
+<h2>Spooky Action at a Distance</h2>
+
+<p>... nennt man Programmteile, die sich gegenseitig beeinflussen, obwohl man
+es nicht erwartet.</p>
+
+<p>Ein Beispiel sind die impliziten Iteratoren über Hashes, die
+<code>each</code> benutzt. So führt der folgende Code zu einer
+Endlosschleife:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/perl 
+use strict;
+use warnings;
+
+my %h = (a => 1, b => 2, c => 3);
+
+while (my ($k, $v) = each %h){
+    find($v);
+}
+
+sub find {
+    while (my ($k, $v) = each %h){
+        if ($v eq $_[0]){
+            print "Found $v wth key $k\n";
+            return;
+        }
+    }
+}
+[% endsyntax %]</pre>
+
+<p>Dadurch, dass der Iterator an den Hash gebunden ist, benutzen beide
+Programmteile den gleichen Iterator. D.h. nach dem lesen des ersten Paares
+wird <code>find()</code> aufgerufen, was den Rest des Hashes aufbraucht
+(anstatt von Vorne anzufangen), kehrt zurück, und die äußere while-Schleife
+fängt wieder von vorne an, weil der Iterator ja einmal ganz durchgelaufen
+war.</p>
 
 
 [% comment 
