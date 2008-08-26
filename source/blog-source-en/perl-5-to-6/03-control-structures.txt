@@ -44,7 +44,7 @@ name="Branches"
 <pre>    if $sheep == 0 {
         say &#34;How boring&#34;;
     } elsif $sheep == 1 {
-        say &#34;One lonely sheep;
+        say &#34;One lonely sheep&#34;;
     } else {
         say &#34;A herd, how lovely!&#34;;
     }</pre>

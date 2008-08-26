@@ -36,7 +36,7 @@ C<unless> is still there, but no C<else> branch is allowed after C<unless>.
     if $sheep == 0 {
         say "How boring";
     } elsif $sheep == 1 {
-        say "One lonely sheep;
+        say "One lonely sheep";
     } else {
         say "A herd, how lovely!";
     }
