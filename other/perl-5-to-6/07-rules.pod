@@ -12,7 +12,7 @@
             '/' <path>?
         }
         token byte {
-            (\d**{1..3}) <?{ $0 <= 256 }>
+            (\d**{1..3}) <?{ $0 < 256 }>
 
         }
         token ip {
@@ -22,7 +22,7 @@
             \w+
         }
         token host {
-            (\w+) ( \. \w+ )+
+            (\w+) ( \. \w+ )*
         }
         token port {
             \d+
@@ -177,6 +177,7 @@ example). Grammars can inherit, override rules and so on.
     grammar URL::HTTP is URL {
         token schema { 'http' }
     }
+
 =head1 MOTIVATION
 
 Perl 5 regexes are often rather unreadable, the grammars encourage you to

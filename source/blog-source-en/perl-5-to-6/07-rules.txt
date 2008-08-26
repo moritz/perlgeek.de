@@ -19,7 +19,7 @@ name="SYNOPSIS"
             &#39;/&#39; &#60;path&#62;?
         }
         token byte {
-            (\d**{1..3}) &#60;?{ $0 &#60;= 256 }&#62;
+            (\d**{1..3}) &#60;?{ $0 &#60; 256 }&#62;
 
         }
         token ip {
@@ -29,7 +29,7 @@ name="SYNOPSIS"
             \w+
         }
         token host {
-            (\w+) ( \. \w+ )+
+            (\w+) ( \. \w+ )*
         }
         token port {
             \d+
@@ -154,8 +154,11 @@ name="Named_Rules_and_Grammars"
 
 <pre>    grammar URL::HTTP is URL {
         token schema { &#39;http&#39; }
-    }
-=head3 MOTIVATION</pre>
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
 
 <p>Perl 5 regexes are often rather unreadable, the grammars encourage you to split a large regex into more readable, short fragments. Named captures make the rules more self-documenting, and many things are now much more consistent than they were before.</p>
 
