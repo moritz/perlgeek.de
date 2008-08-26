@@ -1,0 +1,28 @@
+package title;
+use strict;
+use warnings;
+our $t = '';
+use HTML::Entities qw(encode_entities);
+
+sub start {
+    my $path = $blosxom::datadir . '/' . $blosxom::path_info;
+    if (-d $path) {
+        if ($blosxom::path_info) {
+            $blosxom::path_info =~ m{([^/]+)/?$} or die "Weird things";
+            $t = 'Category ' . ucfirst $1;
+        } else {
+            $t = 'Home';
+        }
+    } else {
+        if ($blosxom::title){
+            $t = $blosxom::title;
+        } else {
+            $path =~ s/\Q$blosxom::flavour\E/$blosxom::file_extension/;
+            $t = cat_index::get_title($path);
+        }
+    }
+}
+
+1;
+
+# vim: ft=perl
