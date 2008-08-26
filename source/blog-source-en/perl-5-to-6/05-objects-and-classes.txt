@@ -75,6 +75,8 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;proto object&#34; of <code>SomeClass</code>, which is an object representation of the the type.)</p>
+
 <p>Methods can also take additional arguments just like subs.</p>
 
 <p>Private methods can be declared with <code>my method</code>, and called with <code>self!method_name</code>.</p>

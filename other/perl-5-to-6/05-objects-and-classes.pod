@@ -73,6 +73,11 @@ takes arguments.
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x
 
+(The C<my SomeClass $x .= new> is actually a shorthand for 
+C<my SomeClass $x .= SomeClass.new>. It works because the type declaration
+fills the variable with a "proto object" of C<SomeClass>, which is an object
+representation of the the type.)
+
 Methods can also take additional arguments just like subs.
 
 Private methods can be declared with C<my method>, and called with
