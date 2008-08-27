@@ -1,6 +1,6 @@
 =head1 NAME
 
-"Perl 5 to 6" Lesson 06 - Objects and Classes
+"Perl 5 to 6" Lesson 05 - Objects and Classes
 
 =head1 SYNOPSIS
 

@@ -1,0 +1,68 @@
+Why you don't need the Y combinator in Perl 6
+
+<p>The other day on IRC we discussed the book "Higher Order Perl" and the <a
+href="http://en.wikipedia.org/wiki/Y_combinator">Y combinator</a>. <a
+href="http://plasmasturm.org/">Aristotle</a> wrote an <a
+href="http://use.perl.org/~Aristotle/journal/30896">excellent article</a>
+about the Y combinator in Perl.</p>
+
+<p>In short it's a rather involved construction that allows you to write
+anonymous recursive subs that truely have no name.</p>
+
+<p>If you read about it the first time, you might become scared by its
+complexity, and ask yourself "do I have to understand such things to become a
+good programmer?". The good answer is, with Perl 6 you don't, because there's
+an easy way to avoid the complexity:</p>
+
+<pre>[% syntax perl6 %]
+my $factorial = sub (Int $x) {
+    if ($x < 2) {
+        return 1;
+    } else {
+        return $x * &?ROUTINE($x - 1);
+    }
+}[% endsyntax %]</pre>
+
+<p>You see that Perl 6 cheats: although you never gave the sub a name (except
+<code>$factorial</code>, but you wouldn't even need that, for example when
+passing it as a parameter to another function), you can still access it
+through the <code>&amp;?ROUTINE</code> variable.
+
+<p>It contains the innermost routine definition (sub, method, regex,
+submethod or whatever) in the current lexical scope. The <code>&amp;</code>
+sigil stands for a <code>Callable</code> object, and the <code>?</code> twigil
+for a variable or constant that is known at compile time (<em>"Compiler hint
+variable"</em>).</p>
+
+<p>So let's golf a bit. Just for the fun of it. First the <code>if ...
+else</code> can be replaced by the ternary operator <code>?? !!</code>, and we
+don't need explicit <code>return</code>'s:</p>
+
+<pre>[% syntax perl6 %]
+my $factorial = sub (Int $x) {
+    $x < 2 ?? 1 !!  $x * &?ROUTINE($x - 1);
+}[% endsyntax %]</pre>
+
+<p>For a golfed version you clearly don't need a type signature, and the
+<code>&?ROUTINE</code> thing has too long a name. We can circumvent it by
+using a block instead of a sub:</p>
+
+<pre>[% syntax perl6 %]
+my $factorial = -> $x {
+    $x < 2 ?? 1 !! $x * &?BLOCK($x - 1);
+}[% endsyntax %]</pre>
+
+<p>Actually we don't even need that <code>-&gt; $x</code> declaration (a
+<em>"pointy block"</em> that other programming languages call
+<em>"Lambda"</em>), we can use a self-declared positional argument:</p>
+
+<pre>[% syntax perl6 %]
+my $factorial = {
+    $^x < 2 ?? 1 !! $^x * &?BLOCK($^x - 1);
+}[% endsyntax %]</pre>
+
+<p>Of course there's a much shorter version, but it's not recursive so it
+doesn't really fit the current topic: <code>my $factorial = { [*] 1 .. $^x
+};</code>, which uses the <code>[ ]</code> reduction meta operator.</p>
+
+[% option no-header %] [% option no-footer %]
