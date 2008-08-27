@@ -1,0 +1,59 @@
+Containers and Values
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 10 - Containers and Values</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="Synopsis"
+>Synopsis</a></h3>
+
+<pre>    my ($x, $y);
+    $x := $y;
+    $y = 4;
+    say $x;             # 4
+    if $x =:= $y {
+        say &#39;$x and $y are different names for the same thing&#39;
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Perl 6 distinguishes between containers, and values that can be stored in containers.</p>
+
+<p>A normal scalar variable is a container, and can have some properties like type constraints, access constraints (for example it can be read only), and finally it can be aliased to other containers.</p>
+
+<p>Putting a value into a container is called <i>assignment</i>, and aliasing two containers is called <code>binding</code>.</p>
+
+<pre>    my @a = 1, 2, 3;
+    my Int $x = 4;
+    @a[0] := $x;     # now @a[0] and $x are the same variable
+    @a[0] = &#39;Foo&#39;;   # Error &#39;Type check failed&#39;</pre>
+
+<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of that type can&#39;t be changed; but you can stilll change the variables (the containers, that is) which hold these values:</p>
+
+<pre>    my $a = 1;
+    $a = 2;     # no surprise here</pre>
+
+<p>Binding can also be done at compile time with the <code>::=</code> operator.</p>
+
+<p>You can check if two things are bound together the the <code>=:=</code> comparison operator.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Exporting and importing subs, types and variables is done via aliasing. Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple operator.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S03.html#Item_assignment_precedence" class="podlinkurl"
+>http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a></p>
+
+[% option no-header %] [% option no-footer %]
