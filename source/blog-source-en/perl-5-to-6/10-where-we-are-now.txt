@@ -1,0 +1,66 @@
+Where we are now - an update
+
+<p>(This is an update on this blog series, not on Perl 6 in general).</p>
+
+<p>After publishing ten blog posts, not counting the intro, I think it's time
+for a status update and some numbers.</p>
+
+<h2>Technical stuff - sorting</h2>
+
+<p>First of all I had more technical difficulties than expected. I made some
+stupid typos and other mistakes, and when I corrected those, the timestamps of
+the source files got updated. Now blosxom, the blog engine that runs this
+blog, sorts them at the very beginning. After a few days the posts seemd
+randomly ordered, so I decided to order them chronologically, and I'll later
+try to find a way to display the correct date, even after a small update.</p>
+
+<h2>Acknowledgements and Numbers</h2>
+
+<p>This was both necessary and possible because of the many people who
+reported errors. Thanks to you all, and thanks to all my trustry readers. This
+blog has about 500 visitors per day, nearly all of them following this
+blog. After publishing on <a href="http://use.perl.org/">use.perl.org</a> and
+being recommended by <a href="http://perlbuzz.com/">perlbuzz.com</a> I had a
+day with about 1200 visitors. My record so far ;-)</p>
+
+<p>I never imagined to reach such a broad audience with such a special
+topic.</p>
+
+<h2>The Future</h2>
+
+<p>The next topic is not very exiting, but good to know anyway: how some
+operators changed from perl 5 to 6.</p>
+
+<p>After that it gets really interesting: I'll write about lazy list, and then
+custom operators, one of the coolest features of Perl 6 in my humble
+opinion.</p>
+
+<p>Further topics:</p>
+
+<ul>
+    <li>The MAIN sub - why you won't need Getopt::Long in most cases</li>
+    <li>Twigils (not much code, but a bit of background)</li>
+    <li>Enums and Mixins (why you can write <code>$0 but True</code></li>
+    <li>Unicode - in preparation; partly the syntax isn't specced yet :/</li>
+    <li>Scoping - in preparation; how it avoids some pitfalls of perl 5</li>
+</ul>
+
+<p>After that I'm really running out of ideas what to write; I could digress
+from the current path of following the specs and give an overview of the
+current compilers, their strengths, weaknesses and progress.</p>
+
+<p>Another possible digression would be the introduction to November, a Perl 6
+wiki, and so far the only real program that runs on Rakudo. I contributed the
+grammar for a HTML::Template-like templating system, and I could write a bit
+about its development.</p>
+
+<p>If there's more interest I could also revisit some earlier topics, and
+write more about them; for example there's a lot to say about rules or about
+object orientation.</p>
+
+<p>I want to leave that choice mostly to you, to the readers: what would you
+like to read about? After working on Perl 6 for more than a year I have seem
+to lost a sense for what's normal and what's exicting, which is why I need
+your feedback.</p>
+
+[% option no-header %] [% option no-footer %]
