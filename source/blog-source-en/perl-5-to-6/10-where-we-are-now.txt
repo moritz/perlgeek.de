@@ -21,7 +21,10 @@ reported errors. Thanks to you all, and thanks to all my trustry readers. This
 blog has about 500 visitors per day, nearly all of them following this
 blog. After publishing on <a href="http://use.perl.org/">use.perl.org</a> and
 being recommended by <a href="http://perlbuzz.com/">perlbuzz.com</a> I had a
-day with about 1200 visitors. My record so far ;-)</p>
+day with about 1200 visitors. My record so far ;-).</p>
+
+<p>Google says it knows about 59 subscribers to the RSS feed, and more than
+55% of all visitors use Firefox, less than 12% use Internet Explorer.</p>
 
 <p>I never imagined to reach such a broad audience with such a special
 topic.</p>
