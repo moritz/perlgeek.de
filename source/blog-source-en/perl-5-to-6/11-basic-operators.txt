@@ -1,0 +1,69 @@
+Changes to Perl 5 Operators
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 11 - Changes to Perl 5 Operators</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    # bit wise operators
+    5   +| 3;       # 7
+    6   +^ 3        # 6
+    5   +&#38; 3;       # 1
+    &#34;b&#34; ~| &#34;d&#34;      # &#39;f&#39;
+ 
+    # string concatenation
+    &#39;a&#39; ~ &#39;b&#39;       # &#39;ab&#39;
+
+    # file tests
+    if &#39;/etc/passwd/ ~~ :e { say &#34;exists&#34; }
+
+    # repetition
+    &#39;a&#39; x 3         # &#39;aaa&#39;
+    &#39;a&#39; xx 3        # &#39;a&#39;, &#39;a&#39;, &#39;a&#39;
+
+    # ternary op
+    $a == $b ?? 2 * $a !! $b - $a
+
+    # chained comparisons
+    if 0 &#60;= $angle &#60; 2 * pi { ... }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>All the numeric operators (<code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>**</code>, <code>%</code>) remain unchanged.</p>
+
+<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bit wise operators have a changed syntax. They now contain a data prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
+
+<p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
+
+<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename ~~ :e</code>.</p>
+
+<p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
+
+<p>The ternary operator, formerly <code>$condition ? $true : $false</code>, is now spelled <code>$condition ?? $true !! $false</code>.</p>
+
+<p>Comparison operators can now be changed, so you can write <code>$a &#60; $b &#60; $c</code> and it does what you mean.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Many changes to the operators aim at a better Huffman coding, ie give often use things short names (like <code>.</code> for method calls) and seldomly used operators a longer name (like <code>~&#38;</code> for string bit-wise AND).</p>
+
+<p>The chaining comparison operators are another step towards making the language more natural, and allowing things that are commonly used in mathematical notation.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
+>http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a></p>
+
+[% option no-header %] [% option no-footer %]
