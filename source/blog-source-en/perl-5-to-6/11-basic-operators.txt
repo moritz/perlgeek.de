@@ -21,7 +21,7 @@ name="SYNOPSIS"
     &#39;a&#39; ~ &#39;b&#39;       # &#39;ab&#39;
 
     # file tests
-    if &#39;/etc/passwd/ ~~ :e { say &#34;exists&#34; }
+    if &#39;/etc/passwd&#39; ~~ :e { say &#34;exists&#34; }
 
     # repetition
     &#39;a&#39; x 3         # &#39;aaa&#39;

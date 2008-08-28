@@ -14,7 +14,7 @@
     'a' ~ 'b'       # 'ab'
 
     # file tests
-    if '/etc/passwd/ ~~ :e { say "exists" }
+    if '/etc/passwd' ~~ :e { say "exists" }
 
     # repetition
     'a' x 3         # 'aaa'
