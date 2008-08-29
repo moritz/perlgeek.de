@@ -1,0 +1,122 @@
+Custom Operators
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 13 - Custom Operators</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    multi sub postfix:&#60;!&#62;(Int $x) {
+        my $factorial = 1;
+        $factorial *= $_ for 2..$x;
+        return $factorial;
+    }
+    
+    say 5!;                     # 120</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Operators are functions with unusual names, and a few addtional properties like precedence and associativity. Perl 6 usually follows the pattern <code>term infix term</code>, where <code>term</code> can be optionally preceeded by prefix operators and followed by postfix or postcircumfix operators.</p>
+
+<pre>    1 + 1               infix
+    +1                  prefix
+    $x++                postfix
+    &#60;a b c&#62;             circumfix
+    @a[1]               postcircumfix</pre>
+
+<p>Operator names are not limited to &#34;special&#34; characters, they can contain anything except whitespaces.</p>
+
+<p>The long name of an operator is its type, followed by a colon and a string literal or list of the symbol or symbols, for example <code>infix:&#60;+&#62;</code> is the same as <code>infix:&#39;+&#39;</code>, and it&#39;s the operator in <code>1+2</code>. Another example is <code>postcircumfix:&#60;[ ]&#62;</code>, which is the same as <code>postcircumfix:(&#39;[&#39;, &#39;]&#39;)</code>.</p>
+
+<p>With this knowledge you can already define new operators:</p>
+
+<pre>    multi sub prefix:&#60;&#226;&#130;&#172;&#62; (Str $x) {
+        2 *  $x;
+    }
+    say &#226;&#130;&#172;4;                         # 8</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Precedence"
+>Precedence</a></h4>
+
+<p>In an expression like <code>$a + $b * $c</code> the <code>infix:&#60;*&#62;</code> operator has tighter precedence than <code>infix:&#60;+&#62;</code>, which is why the expression is evaluated as <code>$a + ($b * $c)</code>.</p>
+
+<p>The precedence of a new operator can be specified in comparison to to existing operators:</p>
+
+<pre>    multi sub infix:&#60;foo&#62; is equiv(&#38;infix:&#60;+&#62;) { ...  }
+    mutli sub infix:&#60;bar&#62; is tighter(&#38;infix:&#60;+&#62;) { ... }
+    mutli sub infix:&#60;baz&#62; is looser(&#38;infix:&#60;+&#62;) { ... }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Associativity"
+>Associativity</a></h4>
+
+<p>Most infix operators take only two arguments. In an expression like <code>1 / 2 / 4</code> the <i>associativity</i> of the operator decides the order of evaluation. The <code>infix:&#60;/&#62;</code> operator is left associative, so this expression is parsed as <code>(1 / 2) / 4</code>. for a right associative operator like <code>infix:&#60;**&#62;</code> (exponentation) <code>2 ** 2 ** 4</code> is parsed as <code>2 ** (2 ** 4)</code>.</p>
+
+<p>Perl 6 has more associativities: <code>non</code> forbids chaining of operators of the same precedence (for example <code>2 &#60;=&#62; 3 &#60;=&#62; 4</code> is forbidden), and <code>infix:&#60;,&#62;</code> has <code>list</code> associativity. <code>1, 2, 3</code> is translated to <code>infix:&#60;,&#62;(1; 2; 3)</code>. Finally there&#39;s the <code>chain</code> associativity: <code>$a &#60; $b &#60; $c</code> translates to <code>($a &#60; $b) &#38;&#38; ($b &#60; $c)</code>.</p>
+
+<pre>    multi sub infix:&#60;foo&#62; is tighter(&#38;infix:&#60;+&#62;)
+                          is assoc(&#39;left&#39;)
+                          ($a, $b) {
+        ...
+    }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Postfcircumfix_and_Circumfix"
+>Postfcircumfix and Circumfix</a></h4>
+
+<p>Postfcircumfix operators are method calls:</p>
+
+<pre>    class OrderedHash is Hash {
+        method postcircumfix:&#60;{ }&#62;(Str $key) {
+            ...
+        }
+    }</pre>
+
+<p>If you call that as <code>$object[$stuff]</code>, <code>$stuff</code> will be passed as an argument to the method, and <code>$object</code> is available as <code>self</code>.</p>
+
+<p>Circumfix operators usually imply a different syntax (like in <code>my @list = &#60;a b c&#62;;</code>), and are thus implemented as macros:</p>
+
+<pre>    macro circumfix:&#194;&#171;&#60; &#62;&#194;&#187;($text) is parsed / &#60;-[&#62;]&#62;+ / {
+        return $text.comb(rx/\S+/);
+    }</pre>
+
+<p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurences of a regex and returns a list of the text of all matches.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="&#34;Overload&#34;_existing_operators"
+>&#34;Overload&#34; existing operators</a></h4>
+
+<p>Most (if not all) existing operators are multi subs or methods, and can therefore be customized for new types. Adding a multi sub is the way of &#34;overloading&#34; operators.</p>
+
+<pre>    class MyStr { ... }
+    multi sub infix:&#60;~&#62;(MyStr $this, Str $other) { ... }</pre>
+
+<p>This means that you can write objects that behave just like the built in &#34;special&#34; objects like <code>Str</code>, <code>Int</code> etc.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Allowing the user to declare new operators and &#34;overload&#34; existing ones makes user defined types just as powerful and useful as built in types. If the built in ones turn out to be insufficient, you can replace them with new ones that better fit your situation, without changing anything in the compiler.</p>
+
+<p>It also removes the gap between using a language and modifying the language.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S06.html#Operator_overloading" class="podlinkurl"
+>http://perlcabal.org/syn/S06.html#Operator_overloading</a></p>
+
+<p>If you are interested in the technical background, ie how Perl 6 can implement such operator changes and other grammar changes, read <a href="http://perlgeek/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
+>http://perlgeek/en/article/mutable-grammar-for-perl-6</a>.</p>
+
+[% option no-header %] [% option no-footer %]
