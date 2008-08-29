@@ -1,0 +1,108 @@
+Lazyness
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 12 - Lazyness</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    my @integers = 0..*;
+    for @integers -&#62; $i {
+        say $i;
+        last if $i % 17 == 0;
+    }
+
+    my @even = map { 2 * $_ }, 0..*;
+    my @stuff = gather {
+        for 0 .. Inf {
+            take 2 ** $_;
+        }
+    }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Perl programmers tend to be lazy. And so are their lists.</p>
+
+<p>In this case <i>lazy</i> means, that the evaluation is delayed as much as possible. When you write something like <code>@a = map BLOCK, @b</code>, the block isn&#39;t executed at all. Only when you start to access items from <code>@a</code> the <code>map</code> actually executes the block and fills <code>@a</code> as much as needed.</p>
+
+<p>Lazyness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
+
+<p>There are pitfalls, though: determining the length of a list or sorting it kills lazyness - if the list is infinite, it will likely loop infinitly.</p>
+
+<p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
+
+<p>Lazyness prevents unnecessary computations, and can therefor boost performance while keeping code simple.</p>
+
+<p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With lazyness that&#39;s not an issue:</p>
+
+<pre>    my $file = open &#39;/etc/passwd&#39;, :r;
+    for =$file -&#62; $line {
+        say $line;
+    }</pre>
+
+<p>Since <code>=$file</code> is an iterator or a lazy list (it doesn&#39;t really matter which), the lines are only physically read from disk as needed (besides buffering, of course).</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="gather/take"
+>gather/take</a></h4>
+
+<p>A very useful construct for creating lazy lists is <code>gather { take }</code>. It is used like this:</p>
+
+<pre>    my @list = gather {
+        while 1 {
+            # some computations;
+            take $result;
+        }
+    }</pre>
+
+<p><code>gather BLOCK</code> returns a lazy list. When items from <code>@list</code> are needed, the <code>BLOCK</code> is run until <code>take</code> is executed. <code>take</code> is just like return, and all <code>take</code>n items are used to construct <code>@list</code>. When more items from <code>@list</code> are needed, the execution of the block is resumed after <code>take</code>.</p>
+
+<p><code>gather/take</code> is dynamically scoped, so this is allowed:</p>
+
+<pre>    my @list = gather {
+        for 1..10 {
+            do_some_computation($_);
+        }
+    }
+
+    sub do_some_computation($x) {
+        take $x * ($x + 1);
+    }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Controlling_Lazyness"
+>Controlling Lazyness</a></h4>
+
+<p>Lazyness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <code>eager</code>.</p>
+
+<pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
+
+<p>On the other hand only lists are lazy by default. But you can also make lazy scalars:</p>
+
+<pre>    my $ls = lazy { $expansive_computation };</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>In computer science most problems can be described with a tree of possible combinations, in which a solution is being searched for. The key to efficient algorithms is not only to find an efficient way to search, but also to construct only the interesting parts of the tree.</p>
+
+<p>With lazy lists you can recursively define this tree and search in it, and it automatically constructs only these parts of the tree that you&#39;re actually using.</p>
+
+<p>In general lazyness makes programming easier because you don&#39;t have to know if the result of a computation will be used at all - you just make it lazy, and if it&#39;s not used the computation isn&#39;t executed at all. If it&#39;s used, you lost nothing.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S02.html#Lists" class="podlinkurl"
+>http://perlcabal.org/syn/S02.html#Lists</a></p>
+
+[% option no-header %] [% option no-footer %]
