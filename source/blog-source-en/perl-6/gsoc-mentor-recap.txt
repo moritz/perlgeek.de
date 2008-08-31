@@ -1,0 +1,43 @@
+Google Summer of Code Mentor Recap
+
+<p>Eric Wilhelm <a
+href="http://perlbuzz.com/2008/08/great-results-for-five-perl-projects-in-google-summer-of-code-2008.html">asked
+the mentors</a> of the Google Summer of Code projects 2008 to share their
+thoughts on the program and their project, so here is my blah.</p>
+
+<p>I mentored Adrian Kreher's project <a
+href="http://auzon.blogspot.com/search/label/gsoc2008">Flesh Out the Perl 6
+Test Suite</a>, and overall I'm very pleased.</p>
+
+<p>After being talked into becoming a mentor by Jerry "particle" Gay I was a a
+little nervous and not really sure if I was up to the task. So I did what my
+student would be doing later on: write new tests, review old ones, move them
+to the "official" part of the test suite, and adapt them so that Rakudo can
+run them (which basically means selectively disabling tests).</p>
+
+<p>On The perl soc mentor's list I found a few links to guides on how to
+be a good mentor, which I read and which boil down to "communicate with your
+student, run his code and give him some feedback".</p>
+
+<p>So we (my student and I) made contact, scheduled regular meetings on IRC, I
+answered a few questions of his, and thus the project began.</p>
+
+<p>Adrian's work was very good in terms of quality, and after a few minor
+corrections and nits from my part I made myself mostly superfluous, he worked
+on his own. I continued to monitor his commits, filled out the mid term and
+end of term surveys, and thusly passed the project for me.</p>
+
+<p>Assessing the work on the test suite is a bit harder than with other
+project, because most projects had rather clear goals, whereas in this project
+the goal was "clean up the test suite as much as possible". It was clear from
+the beginning that Adrian wouldn't be able to make it through the whole test
+suite (roughly 900 files, 20k+ tests), so the quantitative goal was to create
+and mofify 1000 tests, which was met, as far as measurable.</p>
+
+<p>As stated before I am very pleased both with Adrian's work (which actually
+helped the Rakudo developers a lot), and with the whole infrastructure; there
+was very little administrative work to do and everybody I dealt with was
+friendly and helpful.</p>
+
+<p>So if all works well (enough free time, and proposals which fit my
+abilities) I'll surely offer to mentor again.</p>
