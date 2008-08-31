@@ -41,3 +41,5 @@ friendly and helpful.</p>
 
 <p>So if all works well (enough free time, and proposals which fit my
 abilities) I'll surely offer to mentor again.</p>
+
+[% option no-header %] [% option no-footer %]
