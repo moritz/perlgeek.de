@@ -49,7 +49,7 @@ name="DESCRIPTION"
 
 <p>The ternary operator, formerly <code>$condition ? $true : $false</code>, is now spelled <code>$condition ?? $true !! $false</code>.</p>
 
-<p>Comparison operators can now be changed, so you can write <code>$a &#60; $b &#60; $c</code> and it does what you mean.</p>
+<p>Comparison operators can now be chained, so you can write <code>$a &#60; $b &#60; $c</code> and it does what you mean.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"

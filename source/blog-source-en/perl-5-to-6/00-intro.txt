@@ -57,15 +57,17 @@ name="ROADMAP"
     10 Containers and Binding
     11 Basic Operators
     12 Lazyness
-    13 Custom Operators</pre>
-
-<p>Planned:</p>
-
-<pre>    14 the MAIN sub
+    13 Custom Operators
+    14 the MAIN sub
     15 Twigils
     16 Enums
     17 Unicode
     18 Scoping</pre>
+
+<p>Planned:</p>
+
+<pre>    19 More Regexes
+    20 More Objects</pre>
 
 <p>Things that I want to write about, but which I don&#39;t know well enough yet:</p>
 

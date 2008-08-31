@@ -4,18 +4,18 @@
 
 =head1 SYNOPSIS
 
-    class Foo {
-        has $.bar;
-        has $!baz;
-    }
+  class Foo {
+      has $.bar;
+      has $!baz;
+  }
 
-    my @stuff = sort { $^b[1] <=> $^a[1]}, [1, 2], [0, 3], [4, 8];
-    my $block = { say "This is the named 'foo' parameter: $:foo" };
-    $block(:foo<bar>);
+  my @stuff = sort { $^b[1] <=> $^a[1]}, [1, 2], [0, 3], [4, 8];
+  my $block = { say "This is the named 'foo' parameter: $:foo" };
+  $block(:foo<bar>);
 
-    say "This is file $?FILE on line $?LINE"
+  say "This is file $?FILE on line $?LINE"
 
-    say "A CGI script" if %*ENV.exists('DOCUMENT_ROOT');
+  say "A CGI script" if %*ENV.exists('DOCUMENT_ROOT');
 
 =head1 DESCRIPTION
 
@@ -29,8 +29,8 @@ C<self>.
 
 The C<^> twigil removes a special case from perl 5. To be able to write 
 
-    # beware: perl 5 code
-    sort { $a <=> $b } @array
+  # beware: perl 5 code
+  sort { $a <=> $b } @array
 
 the variables C<$a> and C<$b> are special cased by the C<strict> pragma. In
 Perl 6, there's a concept named I<seld-declared positional parameter>, and
@@ -38,22 +38,22 @@ these parameters have the C<^> twigil. It means that they are positional
 parameters of the current block, without being listed in a signature. The
 variables are filled in lexicographic (alphabetic) order:
 
-    my $block = { say "$c $a $b" };
-    $block(1, 2, 3);                # 3 1 2
+  my $block = { say "$c $a $b" };
+  $block(1, 2, 3);                # 3 1 2
 
 So now you can write
     
-    @list = sort { $^b <=> $^a }, @list;
-    # or:
-    @list = sort { $^foo <=> $^bar }, @list;
+  @list = sort { $^b <=> $^a }, @list;
+  # or:
+  @list = sort { $^foo <=> $^bar }, @list;
 
 Without any special cases.
 
 And to keep the symetry between positional and named arguments, the C<:> sigil
 does the same for named parameters, so these lines are roughly equivalent:
 
-    my $block = { say $:stuff }
-    my $sub   = sub (:$stuff) { say $stuff }
+  my $block = { say $:stuff }
+  my $sub   = sub (:$stuff) { say $stuff }
 
 The C<?> sigil stands for variables and constants that are known at compile
 time, like C<$?LINE> for the current line number (formerly C<__LINE__>), and
@@ -78,3 +78,7 @@ attributes they shorten C<self.var> to C<$.var> (or C<@.var> or whatever).
 
 So all in all the increased "punctuation noise" actually makes the programs
 much more consistent and readable.
+
+=cut
+
+# vim: sw=2

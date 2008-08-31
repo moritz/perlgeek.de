@@ -48,7 +48,7 @@ strings, C<xx> lists.
 The ternary operator, formerly C<$condition ? $true : $false>, is now spelled
 C<$condition ?? $true !! $false>.
 
-Comparison operators can now be changed, so you can write C<< $a < $b < $c >>
+Comparison operators can now be chained, so you can write C<< $a < $b < $c >>
 and it does what you mean.
 
 =head1 MOTIVATION

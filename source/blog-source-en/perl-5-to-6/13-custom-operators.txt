@@ -37,10 +37,10 @@ name="DESCRIPTION"
 
 <p>With this knowledge you can already define new operators:</p>
 
-<pre>    multi sub prefix:&#60;&#226;&#130;&#172;&#62; (Str $x) {
+<pre>    multi sub prefix:&#60;&#8364;&#62; (Str $x) {
         2 *  $x;
     }
-    say &#226;&#130;&#172;4;                         # 8</pre>
+    say &#8364;4;                         # 8</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Precedence"
@@ -84,7 +84,7 @@ name="Postfcircumfix_and_Circumfix"
 
 <p>Circumfix operators usually imply a different syntax (like in <code>my @list = &#60;a b c&#62;;</code>), and are thus implemented as macros:</p>
 
-<pre>    macro circumfix:&#194;&#171;&#60; &#62;&#194;&#187;($text) is parsed / &#60;-[&#62;]&#62;+ / {
+<pre>    macro circumfix:&#171;&#60; &#62;&#187;($text) is parsed / &#60;-[&#62;]&#62;+ / {
         return $text.comb(rx/\S+/);
     }</pre>
 
@@ -116,7 +116,7 @@ name="SEE_ALSO"
 <p><a href="http://perlcabal.org/syn/S06.html#Operator_overloading" class="podlinkurl"
 >http://perlcabal.org/syn/S06.html#Operator_overloading</a></p>
 
-<p>If you are interested in the technical background, ie how Perl 6 can implement such operator changes and other grammar changes, read <a href="http://perlgeek/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
->http://perlgeek/en/article/mutable-grammar-for-perl-6</a>.</p>
+<p>If you are interested in the technical background, ie how Perl 6 can implement such operator changes and other grammar changes, read <a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
+>http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a>.</p>
 
 [% option no-header %] [% option no-footer %]

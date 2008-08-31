@@ -59,14 +59,16 @@ Already written or in preparation:
     11 Basic Operators
     12 Lazyness
     13 Custom Operators
-
-Planned:
-
     14 the MAIN sub
     15 Twigils
     16 Enums
     17 Unicode
     18 Scoping
+
+Planned:
+
+    19 More Regexes
+    20 More Objects
 
 Things that I want to write about, but which I don't know well enough yet:
     

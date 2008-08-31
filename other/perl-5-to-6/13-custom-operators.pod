@@ -128,4 +128,4 @@ L<http://perlcabal.org/syn/S06.html#Operator_overloading>
 
 If you are interested in the technical background, ie how Perl 6 can implement
 such operator changes and other grammar changes, read
-L<http://perlgeek/en/article/mutable-grammar-for-perl-6>.
+L<http://perlgeek.de/en/article/mutable-grammar-for-perl-6>.
