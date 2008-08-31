@@ -1,0 +1,66 @@
+The MAIN sub
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 14 - The MAIN sub</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>  # file doit.pl
+
+  #!/usr/bin/perl6
+  sub MAIN($path, :$force, :$recursive, :$home = glob(&#34;~/&#34;)) {
+      # do stuff here
+  }
+
+  # command line
+  $ ./doit.pl --force --home=/home/someoneelse file_to_process</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Calling subs and running a typical unix program from the command line is visually very similar: you can have positional, optional and named arguments.</p>
+
+<p>You can benefit from it, because Perl 6 can process the command line for you, and turn it into a sub call. Your script is normally executed (at which time it can munge the command line arguments stored in <code>@*ARGS</code>), and then the sub <code>MAIN</code> is called, if it exists.</p>
+
+<p>If the sub can&#39;t be called because the command line arguments don&#39;t match the formal parameters of the <code>MAIN</code> sub, an automatically generated usage message is printed.</p>
+
+<p>Command line options map to subroutine arguments like this:</p>
+
+<pre>  -name                   :name
+  -name=value             :name&#60;value&#62;
+
+  # remember, &#60;...&#62; is like qw(...)
+  -hackers=Larry,Damian   :hackers&#60;Larry Damian&#62;  
+
+  --good_language         :good_language
+  --good_lang=Perl        :good_lang&#60;Perl&#62;
+  --bad_lang PHP          :bad_lang&#60;PHP&#62;
+
+  +stuff                  :!stuff
+  +stuff=healty           :stuff&#60;healthy&#62; but False</pre>
+
+<p>The <code>$x = $obj but False</code> means that <code>$x</code> is a copy of <code>$obj</code>, but gives <code>Bool::False</code> in boolean context.</p>
+
+<p>So for simple (and some not quite simple) cases you don&#39;t need an external command line processor, but you can just use sub <code>MAIN</code> for that.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>The motivation behind this should be quite obvious: it makes simple things easier, similar things similar, and in many cases reduces command line processing to a single line of code: the signature of <code>MAIN</code>.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine" class="podlinkurl"
+>http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine</a> contains the specification.</p>
+
+[% option no-header %] [% option no-footer %]
