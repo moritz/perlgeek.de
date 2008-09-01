@@ -1,11 +1,11 @@
-Lazyness
+Laziness
 
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
 >NAME</a></h3>
 
-<p>&#34;Perl 5 to 6&#34; Lesson 12 - Lazyness</p>
+<p>&#34;Perl 5 to 6&#34; Lesson 12 - Laziness</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SYNOPSIS"
@@ -32,15 +32,15 @@ name="DESCRIPTION"
 
 <p>In this case <i>lazy</i> means, that the evaluation is delayed as much as possible. When you write something like <code>@a = map BLOCK, @b</code>, the block isn&#39;t executed at all. Only when you start to access items from <code>@a</code> the <code>map</code> actually executes the block and fills <code>@a</code> as much as needed.</p>
 
-<p>Lazyness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
+<p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
-<p>There are pitfalls, though: determining the length of a list or sorting it kills lazyness - if the list is infinite, it will likely loop infinitly.</p>
+<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitly.</p>
 
 <p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
-<p>Lazyness prevents unnecessary computations, and can therefor boost performance while keeping code simple.</p>
+<p>Laziness prevents unnecessary computations, and can therefor boost performance while keeping code simple.</p>
 
-<p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With lazyness that&#39;s not an issue:</p>
+<p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
 <pre>    my $file = open &#39;/etc/passwd&#39;, :r;
     for =$file -&#62; $line {
@@ -77,10 +77,10 @@ name="gather/take"
     }</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
-name="Controlling_Lazyness"
->Controlling Lazyness</a></h4>
+name="Controlling_Laziness"
+>Controlling Laziness</a></h4>
 
-<p>Lazyness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <code>eager</code>.</p>
+<p>Laziness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <code>eager</code>.</p>
 
 <pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
 
@@ -96,7 +96,7 @@ name="MOTIVATION"
 
 <p>With lazy lists you can recursively define this tree and search in it, and it automatically constructs only these parts of the tree that you&#39;re actually using.</p>
 
-<p>In general lazyness makes programming easier because you don&#39;t have to know if the result of a computation will be used at all - you just make it lazy, and if it&#39;s not used the computation isn&#39;t executed at all. If it&#39;s used, you lost nothing.</p>
+<p>In general laziness makes programming easier because you don&#39;t have to know if the result of a computation will be used at all - you just make it lazy, and if it&#39;s not used the computation isn&#39;t executed at all. If it&#39;s used, you lost nothing.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

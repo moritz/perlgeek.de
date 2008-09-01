@@ -1,6 +1,6 @@
 =head1 NAME
 
-"Perl 5 to 6" Lesson 12 - Lazyness
+"Perl 5 to 6" Lesson 12 - Laziness
 
 =head1 SYNOPSIS
 
@@ -26,22 +26,22 @@ possible. When you write something like C<@a = map BLOCK, @b>, the
 block isn't executed at all. Only when you start to access items from C<@a>
 the C<map> actually executes the block and fills C<@a> as much as needed.
 
-Lazyness allows you to deal with infinite lists: as long as you don't do
+Laziness allows you to deal with infinite lists: as long as you don't do
 anything to all of its arguments, they take up only as much space as the items
 need that have already been evaluated.
 
 There are pitfalls, though: determining the length of a list or sorting it
-kills lazyness - if the list is infinite, it will likely loop infinitly.
+kills laziness - if the list is infinite, it will likely loop infinitly.
 
 In general all conversions to a scalar (like C<List.join>) are I<eager>, i.e.
 non-lazy.
 
-Lazyness prevents unnecessary computations, and can therefor boost performance
+Laziness prevents unnecessary computations, and can therefor boost performance
 while keeping code simple. 
 
 When you read a file line by line in Perl 5, you don't use 
 C<< for (<HANDLE>) >> because it reads all the file into memory, and only then
-starts iterating. With lazyness that's not an issue:
+starts iterating. With laziness that's not an issue:
 
     my $file = open '/etc/passwd', :r;
     for =$file -> $line {
@@ -81,9 +81,9 @@ C<gather/take> is dynamically scoped, so this is allowed:
         take $x * ($x + 1);
     }
 
-=head2 Controlling Lazyness
+=head2 Controlling Laziness
 
-Lazyness has its problems (and when you try to learn Haskell you'll notice how
+Laziness has its problems (and when you try to learn Haskell you'll notice how
 weird their IO system is because Haskell is both lazy and free of side
 effects), and sometimes you don't want stuff to be lazy. In this case you can
 just prefix it with C<eager>.
@@ -106,7 +106,7 @@ With lazy lists you can recursively define this tree and search in it, and it
 automatically constructs only these parts of the tree that you're actually
 using.
 
-In general lazyness makes programming easier because you don't have to know if
+In general laziness makes programming easier because you don't have to know if
 the result of a computation will be used at all - you just make it lazy, and
 if it's not used the computation isn't executed at all. If it's used, you lost
 nothing.
