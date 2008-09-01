@@ -37,9 +37,9 @@ name="DESCRIPTION"
 <pre>  # beware: perl 5 code
   sort { $a &#60;=&#62; $b } @array</pre>
 
-<p>the variables <code>$a</code> and <code>$b</code> are special cased by the <code>strict</code> pragma. In Perl 6, there&#39;s a concept named <i>seld-declared positional parameter</i>, and these parameters have the <code>^</code> twigil. It means that they are positional parameters of the current block, without being listed in a signature. The variables are filled in lexicographic (alphabetic) order:</p>
+<p>the variables <code>$a</code> and <code>$b</code> are special cased by the <code>strict</code> pragma. In Perl 6, there&#39;s a concept named <i>self-declared positional parameter</i>, and these parameters have the <code>^</code> twigil. It means that they are positional parameters of the current block, without being listed in a signature. The variables are filled in lexicographic (alphabetic) order:</p>
 
-<pre>  my $block = { say &#34;$c $a $b&#34; };
+<pre>  my $block = { say &#34;$^c $a $^b&#34; };
   $block(1, 2, 3);                # 3 1 2</pre>
 
 <p>So now you can write</p>
@@ -50,14 +50,14 @@ name="DESCRIPTION"
 
 <p>Without any special cases.</p>
 
-<p>And to keep the symetry between positional and named arguments, the <code>:</code> sigil does the same for named parameters, so these lines are roughly equivalent:</p>
+<p>And to keep the symetry between positional and named arguments, the <code>:</code> twigil does the same for named parameters, so these lines are roughly equivalent:</p>
 
 <pre>  my $block = { say $:stuff }
   my $sub   = sub (:$stuff) { say $stuff }</pre>
 
-<p>The <code>?</code> sigil stands for variables and constants that are known at compile time, like <code>$?LINE</code> for the current line number (formerly <code>__LINE__</code>), and <code>$?DATA</code> is the file handle to the <code>DATA</code> section.</p>
+<p>The <code>?</code> twigil stands for variables and constants that are known at compile time, like <code>$?LINE</code> for the current line number (formerly <code>__LINE__</code>), and <code>$?DATA</code> is the file handle to the <code>DATA</code> section.</p>
 
-<p>Global variables can be accessed with the <code>*</code> sigil, so <code>%GLOBAL::ENV</code> can be abbreviated to <code>%*ENV</code>, the command line arguments are stored in <code>@*ARGS</code>, the current process number is in <code>$*PID</code> and so on.</p>
+<p>Global variables can be accessed with the <code>*</code> twigil, so <code>%GLOBAL::ENV</code> can be abbreviated to <code>%*ENV</code>, the command line arguments are stored in <code>@*ARGS</code>, the current process number is in <code>$*PID</code> and so on.</p>
 
 <p>A pseudo twigil is <code>&#60;</code>, which is used in a construct like <code>$&#60;capture&#62;</code>, where it is a shorthand for <code>$/&#60;capture&#62;</code>, which accesses the Match object after a regex match.</p>
 
@@ -67,7 +67,7 @@ name="MOTIVATION"
 
 <p>When you read Perl 5&#39;s <code>perlvar</code> document, you can see that it has far too many variables, most of them global, that affect your program in various ways.</p>
 
-<p>The twigils try to bring some order in these special variables, and at the other hand they remove the need for specical cases. In the case of object attributes they shorten <code>self.var</code> to <code>$.var</code> (or <code>@.var</code> or whatever).</p>
+<p>The twigils try to bring some order in these special variables, and at the other hand they remove the need for special cases. In the case of object attributes they shorten <code>self.var</code> to <code>$.var</code> (or <code>@.var</code> or whatever).</p>
 
 <p>So all in all the increased &#34;punctuation noise&#34; actually makes the programs much more consistent and readable.</p>
 
