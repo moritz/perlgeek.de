@@ -139,8 +139,8 @@ as a hash it contains the named captures. The C<.from> and C<.to> methods
 contains the first and last string positions of the match.
 
     if 'abcdefg' ~~ m/(.(.)) (e | bla ) $<foo> = (.) / {
-        say $/[0][0];           # c
-        say $/[0];              # bc
+        say $/[0][0];           # d
+        say $/[0];              # cd
         say $/[1];              # e
         say $/<foo>             # f
     }

@@ -1,0 +1,71 @@
+Enums
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lessen 16 - Enums</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>  enum bit Bool &#60;True False&#62;;
+  my $value = $arbitrary_value but True;
+  if $value {
+      say &#34;Yes, it&#39;s true&#34;;       # will be printed
+  }
+
+  enum Day (&#39;Mon&#39;, &#39;Tue&#39;, &#39;Wed&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;, &#39;Sun&#39;);
+  if custom_get_date().Day == Day::Sat | Day::Sun {
+      say &#34;Weekend&#34;;
+  }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Enums are versatile beasts. They are low-level classes that consist of an enummeration of constants, typically integers or strings (but can be arbitrary).</p>
+
+<p>These constants can act as subtypes, methods or normal values. They can be attached to an object with the <code>but</code> operator, which &#34;mixes&#34; the enum into the value:</p>
+
+<pre>  my $x = $today but Day::Tue;</pre>
+
+<p>You can also use the type name of the Enum as a function, and supply the value as an argument:</p>
+
+<pre>  $x = $today but Day($weekday);</pre>
+
+<p>Afterwards that object has a method with the name of the enum type, here <code>Day</code>:</p>
+
+<pre>  say $x.Day;             # 1</pre>
+
+<p>The value of first constant is 0, the next 1 and so on, unless you explicitly provide another value with pair notation:</p>
+
+<pre>  Enum Hackers (:Larry&#60;Perl&#62;, :Guido&#60;Python&#62;, :Paul&#60;Lisp&#62;);</pre>
+
+<p>You can check if a specific value was mixed in by using the versatile smart match operator, or with <code>.does</code>:</p>
+
+<pre>  if $today ~~ Day::Fri {
+      say &#34;Thank Christ it&#39;s Friday&#34;
+  }
+  if $today.does(Fri) { ... }</pre>
+
+<p>Note that you can specify the name of the value only (like <code>Fri</code>) if that&#39;s unambigous, if it&#39;s ambigous you have to provide the full name <code>Day::Fri</code>.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Enums replace both the &#34;magic&#34; that is involved with tainted variables in Perl 5 and the <code>return &#34;0 but True&#34;</code> hack (a special case for which no warning is emitted if used as a number). Plus they give a <code>Bool</code> type.</p>
+
+<p>Enums also provide the power and flexibility of attaching arbitrary meta data for debugging or tracing.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
+>http://perlcabal.org/syn/S12.html#Enums</a></p>
+
+[% option no-header %] [% option no-footer %]
