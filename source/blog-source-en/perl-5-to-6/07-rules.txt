@@ -126,8 +126,8 @@ name="The_Match_Object"
 <p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contains the first and last string positions of the match.</p>
 
 <pre>    if &#39;abcdefg&#39; ~~ m/(.(.)) (e | bla ) $&#60;foo&#62; = (.) / {
-        say $/[0][0];           # c
-        say $/[0];              # bc
+        say $/[0][0];           # d
+        say $/[0];              # cd
         say $/[1];              # e
         say $/&#60;foo&#62;             # f
     }</pre>
