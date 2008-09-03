@@ -4,6 +4,7 @@
 # Documentation: See the bottom of this file or type: perldoc writeback
 
 package writeback;
+umask 002;
 
 # --- Configurable variables -----
 
@@ -91,7 +92,8 @@ sub start {
   # the $writeback_dir does not yet exist, so Blosxom will create it
   if ( !-e  $writeback_dir )  {
 
-    my $mkdir_r = mkdir("$writeback_dir", 0755);
+    my $mkdir_r = mkdir("$writeback_dir", 0775);
+    chown $UID, 1011, $writeback_dir;
 
     warn $mkdir_r 
       ? "blosxom : writeback plugin > \$writeback_dir, $writeback_dir, created.\n"
@@ -125,10 +127,15 @@ sub start {
     }
 
     if ( $fh->open(">> $writeback_dir$path/$fn.$file_extension") ) {
+      chown $UID, 1011, "$writeback_dir$path/$fn.$file_extension";
       foreach ( @fields ) {
         my $p = param($_);
-        $p =~ s/<.*?>//mg; # a gross way to prevent tomfoolery, to be redone
-        $p =~ s/\r?\n\r?/\r/mg;
+#        $p =~ s/<.*?>//mg; # a gross way to prevent tomfoolery, to be redone
+        $p =~ s/&/&amp;/g;
+        $p =~ s/</&lt;/g;
+        $p =~ s/>/&gt;/g;
+
+        $p =~ s/\r?\n\r?/<br \/>\r/mg;
         print $fh "$_: $p\n";
       }
       print $fh "-----\n";
