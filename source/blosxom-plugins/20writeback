@@ -93,7 +93,7 @@ sub start {
   if ( !-e  $writeback_dir )  {
 
     my $mkdir_r = mkdir("$writeback_dir", 0775);
-    chown $UID, 1011, $writeback_dir;
+    chown $<, 1011, $writeback_dir;
 
     warn $mkdir_r 
       ? "blosxom : writeback plugin > \$writeback_dir, $writeback_dir, created.\n"
@@ -127,10 +127,9 @@ sub start {
     }
 
     if ( $fh->open(">> $writeback_dir$path/$fn.$file_extension") ) {
-      chown $UID, 1011, "$writeback_dir$path/$fn.$file_extension";
+      chown $<, 1011, "$writeback_dir$path/$fn.$file_extension";
       foreach ( @fields ) {
         my $p = param($_);
-#        $p =~ s/<.*?>//mg; # a gross way to prevent tomfoolery, to be redone
         $p =~ s/&/&amp;/g;
         $p =~ s/</&lt;/g;
         $p =~ s/>/&gt;/g;
