@@ -1,0 +1,131 @@
+Scoping
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 18 - Scoping</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>  for 1 .. 10 -&#62; $a {
+      # $a visible here
+  }
+  # $a not visible here
+
+  while my $b = get_stuff() {
+      # $b visible here
+  }
+  # $b still visible here
+
+  my $c = 5;
+  {
+      my $c = $c;
+      # $c is undef here
+  }
+  # $c is 5 here
+
+  my $y;
+  my $x = $y + 2 while $y = calc();
+  # $x still visible</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Lexical_Scoping"
+>Lexical Scoping</a></h4>
+
+<p>Scoping in Perl 6 is quite similar to that of Perl 5. A Block introduces a new lexical scope. A variable name is searched in the innermost lexical scope first, if it&#39;s not found it is then searched for in the next outer scope and so on. Just like in Perl 5 a <code>my</code> variable is a proper lexical variable, and an <code>our</code> declaration introduces a lexical alias for a package variable.</p>
+
+<p>But there are subtle differences: variables are exactly visisble in the rest of the block where they are declared, variables declared in block headers (for example in the condition of a <code>while</code> loop) are not limited to the block afterwards.</p>
+
+<p>If you want to limit the scope, you can use formal parameters to the block:</p>
+
+<pre>  if calc() -&#62; $result {
+      # you can use $result here
+  }
+  # $result not visible here</pre>
+
+<p>Variables are visisble immediately after they are declared, not at the end of the statement as in Perl 5.</p>
+
+<pre>  my $x = .... ;
+          ^^^^^
+          $x visisble here in Perl 6
+              but not in Perl 5</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Dynamic_scoping"
+>Dynamic scoping</a></h4>
+
+<p>The <code>local</code> adjective is now called <code>temp</code>, and if it&#39;s not followed by an initialization the previous value of that variable is used (not <code>undef</code>).</p>
+
+<p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception, then the previous value of the variable is restored. If not, it is kept.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Context_variables"
+>Context variables</a></h4>
+
+<p>Some variables that are global in Perl 5 (<code>$!</code>, <code>$_</code>) are <i>context</i> variables in Perl 6, that is they are passed between dynamic scopes.</p>
+
+<p>This solves an old Problem in Perl 5. In Perl 5 an <code>DESTROY</code> sub can be called at a block exit, and accidentially change the value of a global variable, for example one of the error variables:</p>
+
+<pre>  # Broken Perl 5 code here:
+  sub DESTROY { eval { 1 }; }
+
+  eval {
+      my $x = bless {};
+      die &#34;Death\n&#34;;
+  };
+  print $@ if $@;         # No output here</pre>
+
+<p>In Perl 6 this problem is avoided by not implicitly using global variables.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Pseudo-packages"
+>Pseudo-packages</a></h4>
+
+<p>If a variable is hidden by another lexical variable of the same name, it can be accessed with the <code>OUTER</code> pseudo package</p>
+
+<pre>    my $x = 3;
+    {
+        my $x = 10;
+        say $x;             # 10
+        say $OUTER::x;      # 3
+        say OUTER::&#60;$x&#62;     # 3
+    }</pre>
+
+<p>Likewise a function can access variables from its caller with the <code>CALLER</code> and <code>CONTEXT</code> pseudo packages. The difference is that <code>CALLER</code> only accesses the scope of the immediate caller, <code>CONTEXT</code> works like UNIX environment variables (and should only be used internally by the compiler for handling <code>$_</code>, <code>$!</code> and the like). To access variables from the outer dynamic scope they must be declared with <code>is context</code>.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>It is now common knowledge that global variables are really bad, and cause lots of problems. We also have the resources to implement better scoping mechanism. Therefor global variables are only used for inherently global data (like <code>%*ENV</code> or <code>$*PID</code>).</p>
+
+<p>The block scoping rules haven been greatly simplified.</p>
+
+<p>Here&#39;s a quote from Perl 5&#39;s <code>perlsyn</code> document; we don&#39;t want similar things in Perl 6:</p>
+
+<pre> NOTE: The behaviour of a &#34;my&#34; statement modified with a statement
+ modifier conditional or loop construct (e.g. &#34;my $x if ...&#34;) is
+ undefined.  The value of the &#34;my&#34; variable may be &#34;undef&#34;, any
+ previously assigned value, or possibly anything else.  Don&#8217;t rely on
+ it.  Future versions of perl might do something different from the
+ version of perl you try it out on.  Here be dragons.</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p>S04 discusses block scoping: <a href="http://perlcabal.org/syn/S04.html" class="podlinkurl"
+>http://perlcabal.org/syn/S04.html</a>.</p>
+
+<p>S02 lists all pseudo packages and explains context scoping: <a href="http://perlcabal.org/syn/S02.html#Names" class="podlinkurl"
+>http://perlcabal.org/syn/S02.html#Names</a>.</p>
+
+[% option no-header %] [% option no-footer %]
