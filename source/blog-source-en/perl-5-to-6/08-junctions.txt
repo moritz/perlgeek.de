@@ -73,7 +73,7 @@ name="DESCRIPTION"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Perl aims to be ratther close to natural languages, and in natural language you often say things like &#34;if the result is $this or $that&#34; instead of saying &#34;if the result is $this or the result $that&#34;. Most programming languages only allow (a translation of) the latter, which feels a bit clumsy. With junctions Perl 6 allows the former as well.</p>
+<p>Perl aims to be rather close to natural languages, and in natural language you often say things like &#34;if the result is $this or $that&#34; instead of saying &#34;if the result is $this or the result $that&#34;. Most programming languages only allow (a translation of) the latter, which feels a bit clumsy. With junctions Perl 6 allows the former as well.</p>
 
 <p>It also allows you to write many comparisons very easily that otherwise require loops.</p>
 

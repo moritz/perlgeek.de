@@ -30,7 +30,7 @@ containers is called C<binding>.
     @a[0] = 'Foo';   # Error 'Type check failed'
 
 Types like C<Int> and C<Str> are immutable, ie the objects of that type can't
-be changed; but you can stilll change the variables (the containers, that is)
+be changed; but you can still change the variables (the containers, that is)
 which hold these values:
 
     my $a = 1;
