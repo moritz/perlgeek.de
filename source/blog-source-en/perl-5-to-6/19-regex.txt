@@ -1,0 +1,124 @@
+Regexes strike back
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 19 - Regexes strike back</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    # normal matching:
+    if &#39;abc&#39; ~~ m/../ {
+        say $/;                 # ab
+    }
+
+    # match with implicit :sigspace modifier
+    if &#39;ab cd ef&#39;  ~~ mm/ (..) ** 2 / {
+        say $2;                 # cd
+    }
+
+    # substitute with the :sigspace modifier
+    my $x = &#34;abc     defg&#34;;
+    $x ~~ ss/c d/x y/;
+    say $x;                     # abx     yefg</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Since the basics of regexes are already covered in lesson 07, here are some useful (but not very structured) additional facts about Regexes.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Matching"
+>Matching</a></h4>
+
+<p>You don&#39;t need to write grammars to match regexes, the traditional form <code>m/.../</code> still works, and has a new brother, the <code>mm/.../</code> form, which implies the the <code>:sigspace</code> modifier. Remember, that means that whitespaces in the regex are substituted by the <code>&#60;.ws&#62;</code> rule.</p>
+
+<p>The default for the rule is to match <code>\s+</code> if it is surrounded by two word-characters (ie those matching those <code>\w</code>), and <code>\s*</code> otherwise.</p>
+
+<p>In substitutions the <code>:samespace</code> modifier takes care that whitespaces matched with the <code>ws</code> rule are preserved. Likewise the <code>:samecase</code> modifier, short <code>:ii</code> (since it&#39;s a variant of <code>:i</code>) preserve case.</p>
+
+<pre>    my $x = &#39;Abcd&#39;;
+    $x ~~ s:ii/^../foo/;
+    say $x;                     # Foocd
+    $x = &#39;ABC&#39;
+    $x ~~ s:ii/^../foo/;
+    say $x                      # FOO</pre>
+
+<p>This is very useful if you want to globally rename your module <code>Foo</code>, to <code>Bar</code>, but for example in environment variables it is written as all uppercase. With the <code>:ii</code> modifier the case is automatically preserved.</p>
+
+<p>It copies case information on a character by character. But there&#39;s also a more intelligent version; when combined with the <code>:sigspace</code> (short <code>:s</code>) modifier, it tries to find a pattern in the case information of the souce string. Recognized are <code>.lc</code>, <code>.uc</code>, <code>.lc.ucfirst</code>, <code>.uc.lcfirst</code> and <code>.lc.capitaliz</code> (<code>Str.capitalize</code> uppercases the first character of each word). If such a pattern is found, it is also applied to the substitution string.</p>
+
+<pre>    my $x = &#39;The Quick Brown Fox&#39;;
+    $x ~~ s :s :ii /brown.*/perl 6 developer/;
+    # $x is now &#39;The Quick Perl 6 Developer&#39;</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Alternations"
+>Alternations</a></h4>
+
+<p>Alternations are still formed with the single bar <code>|</code>, but it means something else than in Perl 5. Instead of sequentially matching the alternatives and taking the first match, it now matches all alternatives in parallel, and takes the longest one.</p>
+
+<pre>    &#39;aaaa&#39; ~~ m/ a | aaa | aa /;
+    say $/                          # aaa</pre>
+
+<p>While this might seem like a trivial change, it has far reaching conseqeunces, and is crucial for extensible grammars. Since Perl 6 is parsed using a Perl 6 grammar, it is responsible for the fact that in <code>++$a</code> the <code>++</code> is parsed as a single token, not as two <code>prefix:&#60;+&#62;</code> tokens.</p>
+
+<p>The old, sequential style is still available with <code>||</code>:</p>
+
+<pre>    grammar Math::Expression {
+        token value {
+            | &#60;number&#62;
+            | &#39;(&#39; 
+              &#60;expression&#62; 
+              [ &#39;)&#39; || { fail(&#34;Parenthesis not closed&#34;) } ]
+        }
+
+        ...
+    }</pre>
+
+<p>The <code>{ ... }</code> execute a closure, and calling <code>fail</code> in that closure makes the expression fail. That branch is guaranteed to be executed only if the previous (here the <code>&#39;)&#39;</code>) fails, so it can be used to emit useful error messages while parsing.</p>
+
+<p>There are other ways to write alternations, for example if you &#34;interpolate&#34; an array, it will match as an alternation of its values:</p>
+
+<pre>    $_ = &#39;12 oranges&#39;;
+    my @fruits = &#60;apple organge banana kiwi&#62;;
+    if m:i:s/ (\d+) (@fruits)s? / {
+        say &#34;You&#39;ve got $0 $1, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
+    }</pre>
+
+<p>There is yet another construct that automatically matches the longest alternation: mutli regexes. They can be either written as <code>multi token name</code> or with a <code>proto</code>:</p>
+
+<pre>    grammar Perl {
+        ...
+        proto token sigil { ... }
+        token sigil:sym&#60;$&#62; { &#60;sym&#62; }
+        token sigil:sym&#60;@&#62; { &#60;sym&#62; }
+        token sigil:sym&#60;%&#62; { &#60;sym&#62; }
+        ...
+
+       token variable { &#60;sigil&#62; &#60;twigil&#62;? &#60;identifier&#62; }
+   }</pre>
+
+<p>This example shows multiple tokens called <code>sigil</code>, which are parameterized by <code>sym</code>. When the short name, ie <code>sigil</code> is used, all of these tokens are matched in an alternation. You may think that this is a very inconvenient way to write an alternation, but it has a huge advantage over writing <code>&#39;$&#39;|&#39;@&#39;|&#39;%&#39;</code>: it is easily extensible:</p>
+
+<pre>    grammar AddASigil is Perl {
+        token sigil:sym&#60;!&#62; { &#60;sym&#62; }
+    }
+    # wow, we have a Perl 6 grammar with an additional sigil!</pre>
+
+<p>Likewise you can override existing alternatives:</p>
+
+<pre>    grammar WeirdSigil is Perl {
+        token sigil:sym&#60;$&#62; { &#39;&#176;&#39; }
+    }</pre>
+
+<p>In this grammar the sigil for scalar variables is <code>&#176;</code>, but the compiler will stll know that it was the regex <code>sigil:sym&#60;$&#62;</code> that matched it.</p>
+
+<p>In the next lesson you&#39;ll see the development of a real, working grammar with Rakudo.</p>
+
+[% option no-header %] [% option no-footer %]
