@@ -11,7 +11,7 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>  enum bit Bool &#60;True False&#62;;
+<pre>  enum bit Bool &#60;False True&#62;;
   my $value = $arbitrary_value but True;
   if $value {
       say &#34;Yes, it&#39;s true&#34;;       # will be printed

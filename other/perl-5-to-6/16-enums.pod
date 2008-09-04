@@ -4,7 +4,7 @@
 
 =head1 SYNOPSIS
 
-  enum bit Bool <True False>;
+  enum bit Bool <False True>;
   my $value = $arbitrary_value but True;
   if $value {
       say "Yes, it's true";       # will be printed

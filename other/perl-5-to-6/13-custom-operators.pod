@@ -30,9 +30,8 @@ anything except whitespaces.
 
 The long name of an operator is its type, followed by a colon and a string
 literal or list of the symbol or symbols, for example C<< infix:<+> >> is the
-same as C<< infix:'+' >>, and it's the operator in C<1+2>. Another example is
-C<< postcircumfix:<[ ]> >>, which is the same as 
-C<< postcircumfix:('[', ']') >>.
+the operator in C<1+2>. Another example is
+C<< postcircumfix:<[ ]> >>, which is the operator in C<@a[0]>.
 
 With this knowledge you can already define new operators:
 
