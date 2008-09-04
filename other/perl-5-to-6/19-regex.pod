@@ -135,8 +135,10 @@ Likewise you can override existing alternatives:
         token sigil:sym<$> { '°' }
     }
 
-In this grammar the sigil for scalar variables is C<°>, but the compiler will
-stll know that it was the regex C<< sigil:sym<$> >> that matched it.
+In this grammar the sigil for scalar variables is C<°>, so whenever the
+grammar looks for a sigil it searches for a C<°> instead of a C<$>, but the
+compiler will still know that it was the regex C<< sigil:sym<$> >> that
+matched it.
 
 In the next lesson you'll see the development of a real, working grammar with
 Rakudo.

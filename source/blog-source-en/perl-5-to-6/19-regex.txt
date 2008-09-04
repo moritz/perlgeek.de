@@ -117,7 +117,7 @@ name="Alternations"
         token sigil:sym&#60;$&#62; { &#39;&#176;&#39; }
     }</pre>
 
-<p>In this grammar the sigil for scalar variables is <code>&#176;</code>, but the compiler will stll know that it was the regex <code>sigil:sym&#60;$&#62;</code> that matched it.</p>
+<p>In this grammar the sigil for scalar variables is <code>&#176;</code>, so whenever the grammar looks for a sigil it searches for a <code>&#176;</code> instead of a <code>$</code>, but the compiler will still know that it was the regex <code>sigil:sym&#60;$&#62;</code> that matched it.</p>
 
 <p>In the next lesson you&#39;ll see the development of a real, working grammar with Rakudo.</p>
 
