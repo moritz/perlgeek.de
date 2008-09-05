@@ -1,0 +1,269 @@
+A grammar for (pseudo) XML
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 20 - A grammar for (pseudo) XML</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    grammar XML {
+        token TOP   { ^ &#60;xml&#62; $ };
+        token xml   { &#60;plain&#62; [ &#60;tag&#62; &#60;plain&#62; ]* };
+        token plain {  &#60;-[&#60;&#62;&#38;]&#62;* };
+        rule tag   {
+            &#39;&#60;&#39;(\w+) &#60;attributes&#62;*
+            [
+                | &#39;/&#62;&#39;                 # a single tag
+                | &#39;&#62;&#39;&#60;xml&#62;&#39;&#60;/&#39; $0 &#39;&#62;&#39;  # an opening and a closing tag
+            ]
+        };
+        token attributes { \w+ &#39;=&#34;&#39; &#60;-[&#34;&#60;&#62;]&#62;* &#39;&#34;&#39; };
+    };</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with rakudo todo. I used revision 30633 for this, so in order to reproduce it reliably, you should check out the same revision.</p>
+
+<p>On a Unix like OS, this might look like this:</p>
+
+<pre>    svn co -r 30633 https://svn.perl.org/parrot/trunk parrot
+    cd parrot
+    perl Configure.pl &#38;&#38; make
+    cd languages/perl6/ &#38;&#38; make perl6</pre>
+
+<p>Windows users have to build <code>perl6.exe</code> in the last step instead.</p>
+
+<p>Now run <code>make spectest_regression</code>, and if you get any failures, please send a mail to <code>rakudobug@perl.org</code>.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Our_idea_of_XML"
+>Our idea of XML</a></h4>
+
+<p>For our purposes XML is quite simple: it consists of plain text and nested tags that can optionally have attributes. So here are few tests for what we want to parse as valid &#34;XML&#34;, and what not:</p>
+
+<pre>    my @tests = (
+        [1, &#39;abc&#39;                       ],      # 1
+        [1, &#39;&#60;a&#62;&#60;/a&#62;&#39;                   ],      # 2
+        [1, &#39;..&#60;ab&#62;foo&#60;/ab&#62;dd&#39;          ],      # 3
+        [1, &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;           ],      # 4
+        [1, &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;],      # 5
+        [1, &#39;&#60;a empty=&#34;&#34; &#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39; ],      # 6
+        [1, &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;c&#62;&#60;/c&#62;&#60;/a&#62;&#39;    ],      # 7
+        [0, &#39;&#60;&#39;                         ],      # 8
+        [0, &#39;&#60;a&#62;b&#60;/b&#62;&#39;                  ],      # 9
+        [0, &#39;&#60;a&#62;b&#60;/a&#39;                   ],      # 10
+        [0, &#39;&#60;a&#62;b&#60;/a href=&#34;&#34;&#62;&#39;          ],      # 11
+        [1, &#39;&#60;a/&#62;&#39;                      ],      # 12
+        [1, &#39;&#60;a /&#62;&#39;                     ],      # 13
+    );
+
+    my $count = 1;
+    for @tests -&#62; $t {
+        my $s = $t[1];
+        my $M := $s ~~ XML::TOP;
+        if !($M  xor $t[0]) {
+            say &#34;ok $count - &#39;$s&#39;&#34;;
+        } else {
+            say &#34;not ok $count - &#39;$s&#39;&#34;;
+        }
+        $count++;
+    }</pre>
+
+<p>This is a list of both &#34;good&#34; and &#34;bad&#34; XML, and a small test script that runs these tests by matching against <code>XML::TOP</code>. By convention the rule that matches what the grammar should match is named <code>TOP</code>.</p>
+
+<p>(As you can see from test 1 we don&#39;t require a single root tag, but it would be trivial to add this restriction).</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Developing_the_grammar"
+>Developing the grammar</a></h4>
+
+<p>The examples can be downloaded from <a href="http://perlgeek.de/static/xml-grammar-01.tar.gz" class="podlinkurl"
+>http://perlgeek.de/static/xml-grammar-01.tar.gz</a></p>
+
+<p>The essential of XML is surely the nesting of tags, so we&#39;ll focus on the second test first. Place this at the top of the test script:</p>
+
+<pre>    grammar XML {
+        token TOP   { ^ &#60;tag&#62; $ };
+        token tag   {
+            &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
+            &#39;&#60;/&#39; $0   &#39;&#62;&#39;
+        };
+    };</pre>
+
+<p>(All tokens end with a <code>;</code>. This is not required in Perl 6, but a limitation of Rakudo).</p>
+
+<p>Now run the script:</p>
+
+<pre>    $ ./perl6 xml-01.pl
+    not ok 1 - &#39;abc&#39;
+    ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
+    not ok 3 - &#39;..&#60;ab&#62;foo&#60;/ab&#62;dd&#39;
+    not ok 4 - &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    not ok 5 - &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    not ok 6 - &#39;&#60;a empty=&#34;&#34; &#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    not ok 7 - &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;c&#62;&#60;/c&#62;&#60;/a&#62;&#39;
+    ok 8 - &#39;&#60;&#39;
+    ok 9 - &#39;&#60;a&#62;b&#60;/b&#62;&#39;
+    ok 10 - &#39;&#60;a&#62;b&#60;/a&#39;
+    ok 11 - &#39;&#60;a&#62;b&#60;/a href=&#34;&#34;&#62;&#39;
+    not ok 12 - &#39;&#60;a/&#62;&#39;
+    not ok 13 - &#39;&#60;a /&#62;&#39;</pre>
+
+<p>So this simple rule parses one pair of start tag and end tag, and correctly rejects all four examples of invalid xml.</p>
+
+<p>The first test should be easy to pass as well, so let&#39;s try this:</p>
+
+<pre>   grammar XML {
+       token TOP   { ^ &#60;xml&#62; $ };
+       token xml   { &#60;text&#62; | &#60;tag&#62; };
+       token text  { &#60;-[&#60;&#62;&#38;]&#62;*  };
+       token tag   {
+           &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
+           &#39;&#60;/&#39; $0   &#39;&#62;&#39;
+       }
+    };</pre>
+
+<p>(Remember, <code>&#60;-[...]&#62;</code> is a negated character class.)</p>
+
+<p>And run it:</p>
+
+<pre>    $ ./perl6 xml-02.pl
+    Null PMC access in type()
+    current instr.: &#39;parrot;XML;xml&#39; pc 975 (EVAL_17:282)
+    called from Sub &#39;parrot;XML;TOP&#39; pc 778 (EVAL_17:202)
+    called from Sub &#39;parrot;Code;ACCEPTS&#39; pc 5559 (src/gen_builtins.pir:3700)
+    called from Sub &#39;_block87&#39; pc 1621 (EVAL_17:535)
+    ...</pre>
+
+<p>Bad surprise, it dies. Let&#39;s try to find out where and why.</p>
+
+<p>The stack trace shows that it was in an anonymous block, which doesn&#39;t really help, because we don&#39;t know which. <code>Code;ACCEPTS</code> points us to the regex match: the smartmatch <code>~~</code> internally calls <code>ACCEPTS</code>, and regexes are compiled down to Code object. It calls <code>XML::TOP</code>, then <code>XML::xml</code>, and then dies. Since we haven&#39;t changed the <code>tag</code> token, it must be <code>text</code> that&#39;s causing the problem.</p>
+
+<p>Playing around a bit, asking on <code>#perl6</code> on <code>irc.freenode.org</code> or digging through the bug tracker reveals that, due to some weird limitation, you can&#39;t call a regex <code>text</code> in Rakudo. So changing the name from <code>text</code> to <code>plain</code> makes it work again, with this result:</p>
+
+<pre>    $ ./perl6 xml-03.pl
+    ok 1 - &#39;abc&#39;
+    not ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
+    (rest unchanged)</pre>
+
+<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t to longest token matching yet, but matches sequentially. <code>&#60;plain&#62;</code> matches the empty string (and thus always), so <code>&#60;plain&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>.</p>
+
+<p>But we don&#39;t just want to match either plain text or a tag anyway, but random combinations of both of them:</p>
+
+<pre>    token xml   { &#60;plain&#62; [ &#60;tag&#62; &#60;plain&#62; ]*  };</pre>
+
+<p>(<code>[...]</code> are non-capturing groups, like <code>(?: ... )</code> is in Perl 5).</p>
+
+<p>And low and behold, the first two tests pass both.</p>
+
+<p>The third test, <code>.&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary xml, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
+
+<pre>    token tag   {
+        &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
+        &#60;xml&#62;
+        &#39;&#60;/&#39; $0   &#39;&#62;&#39;
+    }
+
+    ./perl6 xml-05.pl
+    ok 1 - &#39;abc&#39;
+    ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
+    ok 3 - &#39;..&#60;ab&#62;foo&#60;/ab&#62;dd&#39;
+    ok 4 - &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    not ok 5 - &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    (rest unchanged)</pre>
+
+<p>We can now focus attributes (the <code>href=&#34;foo&#34;</code> stuff):</p>
+
+<pre>    token tag   {
+        &#39;&#60;&#39; (\w+) &#60;attribute&#62;* &#39;&#62;&#39;
+        &#60;xml&#62;
+        &#39;&#60;/&#39; $0   &#39;&#62;&#39;
+    };
+    token attribute {
+        \w+ &#39;=&#34;&#39; &#60;-[&#34;&#60;&#62;]&#62;* \&#34;
+    };</pre>
+
+<p>But this doesn&#39;t make any new tests pass. The reason is the blank between the tag name and the attribute. Instead of adding <code>\s+</code> or <code>\s*</code> in many places we&#39;ll switch from <code>token</code> to <code>rule</code>, which implies the <code>:sigspace</code> modifier:</p>
+
+<pre>    rule tag   {
+        &#39;&#60;&#39;(\w+) &#60;attribute&#62;* &#39;&#62;&#39;
+        &#60;xml&#62;
+        &#39;&#60;/&#39;$0&#39;&#62;&#39;
+    };
+    token attribute {
+        \w+ &#39;=&#34;&#39; &#60;-[&#34;&#60;&#62;]&#62;* \&#34;
+    };</pre>
+
+<p>Now all tests pass, except the last two:</p>
+
+<pre>    ok 1 - &#39;abc&#39;
+    ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
+    ok 3 - &#39;..&#60;ab&#62;foo&#60;/ab&#62;dd&#39;
+    ok 4 - &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    ok 5 - &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    ok 6 - &#39;&#60;a empty=&#34;&#34; &#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
+    ok 7 - &#39;&#60;a&#62;&#60;b&#62;c&#60;/b&#62;&#60;c&#62;&#60;/c&#62;&#60;/a&#62;&#39;
+    ok 8 - &#39;&#60;&#39;
+    ok 9 - &#39;&#60;a&#62;b&#60;/b&#62;&#39;
+    ok 10 - &#39;&#60;a&#62;b&#60;/a&#39;
+    ok 11 - &#39;&#60;a&#62;b&#60;/a href=&#34;&#34;&#62;&#39;
+    not ok 12 - &#39;&#60;a/&#62;&#39;
+    not ok 13 - &#39;&#60;a /&#62;&#39;</pre>
+
+<p>These contain un-nested tags that are closed with a single slash <code>/</code>. No problem to add that to rule <code>tag</code>:</p>
+
+<pre>    rule tag   {
+        &#39;&#60;&#39;(\w+) &#60;attribute&#62;* [
+            | &#39;/&#62;&#39;
+            | &#39;&#62;&#39; &#60;xml&#62; &#39;&#60;/&#39;$0&#39;&#62;&#39;
+        ]
+    };</pre>
+
+<p>All tests pass, we&#39;re happy, our first grammar works well.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="More_hacking"
+>More hacking</a></h4>
+
+<p>Playing with grammars is much more fun that reading about playing, so here&#39;s what you could implement:</p>
+
+<ul>
+<li>plain text can contain entities like <code>&#38;amp;</code></li>
+
+<li>I don&#39;t know if xml tag names are allowed to begin with a number, but the current grammar allows that. You might look it up in the XML specification, and adapt the grammar if needed.</li>
+
+<li>plain text can contain <code>&#60;![CDATA[ ... ]]&#62;</code> blocks, in which xml-like tags are ignored and <code>&#60;</code> and the like don&#39;t need to be escaped</li>
+
+<li>Real xml allows a preample like <code>&#60;?xml version=&#34;0.9&#34; encoding=&#34;utf-8&#34;?&#62;</code> and requires one root tag which contains the rest (You&#39;d have to change some of the existing test cases)</li>
+
+<li>You could try to implement a pretty-printer for XML by recursively walking through the match object <code>$/</code>. (This is non-trivial; you might have to work around a few Rakudo bugs, and maybe also introduce some new captures).</li>
+</ul>
+
+<p>(Please don&#39;t post solutions to this as comments in this blog; let others have the same fun as you had ;-).</p>
+
+<p>Have fun hacking.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>It&#39;s powerful and fun</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p>Regexes are specified in great detail in S05: <a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
+>http://perlcabal.org/syn/S05.html</a>.</p>
+
+<p>More working (!) examples of regexes and grammars can be found in the <i>November</i> project, a wiki engine written in Perl 6. See <a href="http://github.com/viklund/november/" class="podlinkurl"
+>http://github.com/viklund/november/</a>.</p>
+
+[% option no-header %] [% option no-footer %]
