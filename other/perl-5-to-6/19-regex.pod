@@ -11,7 +11,7 @@
 
     # match with implicit :sigspace modifier
     if 'ab cd ef'  ~~ mm/ (..) ** 2 / {
-        say $2;                 # cd
+        say $1;                 # cd
     }
 
     # substitute with the :sigspace modifier
@@ -51,7 +51,7 @@ uppercase. With the C<:ii> modifier the case is automatically preserved.
 
 It copies case information on a character by character. But there's also a
 more intelligent version; when combined with the C<:sigspace> (short C<:s>)
-modifier, it tries to find a pattern in the case information of the souce
+modifier, it tries to find a pattern in the case information of the source
 string. Recognized are C<.lc>, C<.uc>, C<.lc.ucfirst>, C<.uc.lcfirst> and
 C<.lc.capitaliz> (C<Str.capitalize> uppercases the first character of each
 word). If such a pattern is found, it is also applied to the substitution
