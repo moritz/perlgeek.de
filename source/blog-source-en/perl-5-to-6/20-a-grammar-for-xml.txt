@@ -153,7 +153,7 @@ name="Developing_the_grammar"
     not ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
     (rest unchanged)</pre>
 
-<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t to longest token matching yet, but matches sequentially. <code>&#60;plain&#62;</code> matches the empty string (and thus always), so <code>&#60;plain&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>.</p>
+<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t do longest token matching yet, but matches sequentially. <code>&#60;plain&#62;</code> matches the empty string (and thus always), so <code>&#60;plain&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>.</p>
 
 <p>But we don&#39;t just want to match either plain text or a tag anyway, but random combinations of both of them:</p>
 

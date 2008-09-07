@@ -18,7 +18,7 @@ name="SYNOPSIS"
 
     # match with implicit :sigspace modifier
     if &#39;ab cd ef&#39;  ~~ mm/ (..) ** 2 / {
-        say $2;                 # cd
+        say $1;                 # cd
     }
 
     # substitute with the :sigspace modifier
@@ -51,7 +51,7 @@ name="Matching"
 
 <p>This is very useful if you want to globally rename your module <code>Foo</code>, to <code>Bar</code>, but for example in environment variables it is written as all uppercase. With the <code>:ii</code> modifier the case is automatically preserved.</p>
 
-<p>It copies case information on a character by character. But there&#39;s also a more intelligent version; when combined with the <code>:sigspace</code> (short <code>:s</code>) modifier, it tries to find a pattern in the case information of the souce string. Recognized are <code>.lc</code>, <code>.uc</code>, <code>.lc.ucfirst</code>, <code>.uc.lcfirst</code> and <code>.lc.capitaliz</code> (<code>Str.capitalize</code> uppercases the first character of each word). If such a pattern is found, it is also applied to the substitution string.</p>
+<p>It copies case information on a character by character. But there&#39;s also a more intelligent version; when combined with the <code>:sigspace</code> (short <code>:s</code>) modifier, it tries to find a pattern in the case information of the source string. Recognized are <code>.lc</code>, <code>.uc</code>, <code>.lc.ucfirst</code>, <code>.uc.lcfirst</code> and <code>.lc.capitaliz</code> (<code>Str.capitalize</code> uppercases the first character of each word). If such a pattern is found, it is also applied to the substitution string.</p>
 
 <pre>    my $x = &#39;The Quick Brown Fox&#39;;
     $x ~~ s :s :ii /brown.*/perl 6 developer/;

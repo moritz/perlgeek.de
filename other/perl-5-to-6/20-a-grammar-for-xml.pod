@@ -163,7 +163,7 @@ makes it work again, with this result:
     (rest unchanged)
 
 Why in the seven hells did the second test stop working? The answer is that
-Rakudo doesn't to longest token matching yet, but matches sequentially.
+Rakudo doesn't do longest token matching yet, but matches sequentially.
 C<< <plain> >> matches the empty string (and thus always), so
 C<< <plain> | <tag> >> never even tries to match C<< <tag> >>.
 
