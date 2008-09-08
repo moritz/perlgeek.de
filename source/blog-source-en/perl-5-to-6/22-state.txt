@@ -1,0 +1,150 @@
+The State of the implementations
+
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 22 - The State of the implementations</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    (none)</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Pugs"
+>Pugs</a></h4>
+
+<p>Pugs is a Perl 6 compiler written in Haskell. It was started by Audrey Tang, and she also did most of the work. In terms of implemented features it is certainly the most advanced implementation today (September 2008).</p>
+
+<p>To build and test pugs, you have to install GHC 6.8 first, and then run</p>
+
+<pre>    svn co http://svn.pugscode.org/pugs
+    cd pugs
+    perl Makefile.PL
+    make
+    make test</pre>
+
+<p>That will install some Haskell dependencies locally and then build pugs. For <code>make test</code> you might need to install some Perl 5 modules, which you can do with <code>cpan Task::Smoke</code>.</p>
+
+<p>Pugs hasn&#39;t been developed during the last year, but Audrey announced that she would continue its development once GHC 6.10 is released, and already cleaned up the build system a lot.</p>
+
+<p>Pugs can parse most common constructs, implements object orientation, basic regexes, nearly(?) all control structures, basic user defined operators and macros, many builtins, contexts (except slice context), junctions, basic multi dispatch and the reduction meta operator. It passes about 16000 tests from the Perl 6 test suite.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Rakudo"
+>Rakudo</a></h4>
+
+<p>Rakudo is a parrot based compiler for Perl 6. The main architect is Patrick Michaud, many features were implemented by Jonathan Worthington.</p>
+
+<p>It is hosted in the parrot svn repository, to build it run</p>
+
+<pre>    svn co https://svn.perl.org/parrot/trunk parrot
+    perl Configure.pl &#38;&#38; make
+    cd languages/perl6/
+    make perl6</pre>
+
+<p>Rakudo development is very active. At the time of writing it passes about 2300 test from the official test suite. Its progress in the test suite is monitored on <a href="http://rakudo.de/" class="podlinkurl"
+>http://rakudo.de/</a>.</p>
+
+<p>It implements most control structures, most syntaxes for number literals, interpolation of scalars and closures, chained operators, <code>BEGIN</code>- and <code>END</code> blocks, pointy subs, named, optional and slurpy arguments, basic junctions and grammars.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Elf"
+>Elf</a></h4>
+
+<p>Mitchell Charity started <i>elf</i>, a bootstrapping compiler written in Perl 6, with a grammar written in Ruby. Currently it has a Perl 5 backend, others are in planning.</p>
+
+<p>It lives in the pugs repositry, once you&#39;ve checked it out you can go to <code>misc/elf/</code> and run <code>./elf_f $filename</code>. You&#39;ll need ruby-1.9 and some perl modules, about which elf will complain bitterly when they are not present.</p>
+
+<p><code>elf</code> is developed in bursts of activity followed by weeks of low activity, or even none at all.</p>
+
+<p>It parses more than 70% of the test suite, but implements mostly features that are easy to emulate with Perl 5, and passes about 700 tests from the test suite.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="KindaPerl6"
+>KindaPerl6</a></h4>
+
+<p>Flavio Glock started KindaPerl6 (short kp6), a mostly bootstapped Perl 6 compiler. Since the bootstrapped version is much too slow to be fun to develop with, it is now waiting for a faster backend.</p>
+
+<p>Kp6 implements object orientation, grammars and a few distinct features like lazy gather/take. It also implements <code>BEGIN</code> blocks, which was one of the design goals.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="v6.pm"
+>v6.pm</a></h4>
+
+<p><code>v6</code> is a source filter for Perl 5. It was written by Flavio Glock, and supports basic Perl 6 plus grammars. It is fairly stable and fast, and is occasionally enhanced. It lives on the CPAN and in the pugs repository in <code>perl5/*/</code>.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="SMOP"
+>SMOP</a></h4>
+
+<p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implements it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
+
+<p>It is implemented in C and various domain specific languages. It was designed and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and Pavel Murias (implementation, DSLs). A grant from The Perl Foundation supports its development, and it currently approaches the stage where one could begin to emit code for it from another compiler.</p>
+
+<p>It will then be used as a backend for either elf or kp6, and perhaps also for pugs.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="STD.pm"
+>STD.pm</a></h4>
+
+<p>Larry Wall wrote a grammar for Perl 6 in Perl 6. He also wrote a cheating script named <code>gimme5</code>, which translates that grammar to Perl 5. It can parse about every written and valid piece of Perl 6 that we know of, including the whole test suite (apart from a few failures now and then when Larry accidentially broke something).</p>
+
+<p>STD.pm lives in the pugs repository, and can be run and tested with perl-5.10.0 installed in <code>/usr/local/bin/perl</code> and a few perl modules (like <code>YAML::XS</code> and <code>Moose</code>):</p>
+
+<pre>    cd src/perl6/
+    make
+    make testt      # warning: takes about 80 minutes,
+                    # and generats 3GB of files in lex/
+    ./tryfile $your_file
+    perl STD5_dump_match $your_file</pre>
+
+<p>It correctly parses custom operators and warns about non-existant subs.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Many people ask why we need so many different implementations, and if it wouldn&#39;t be better to focus on one instead.</p>
+
+<p>There are basically three answers to that.</p>
+
+<p>Firstly that&#39;s not how programming by volunteers work. People sometimes either want to start something with the tools they like, or they think that one aspect of Perl 6 is not sufficiently honoured by the design of the existing implementations. Then they start a new project.</p>
+
+<p>The second possible answer is that the projects explore different areas of the vast Perl 6 language: SMOP explores meta object programming, rakudo and parrot care a lot about efficient language interoperability and platform independence, kp6 explored BEGIN blocks, and pugs was the first implementation to explore the syntax, and many parts of the language for the first time.</p>
+
+<p>The third answer is that we don&#39;t want a single point of failure. If we had just one implementation, and had severe problems with one of them for unforseeable reasons (technical, legal, personal, ...) we have possible fallbacks.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p>Pugs: <a href="http://www.pugscode.org/" class="podlinkurl"
+>http://www.pugscode.org/</a>, <a href="http://pugs.blogs.com/pugs/2008/07/pugshs-is-back.html" class="podlinkurl"
+>http://pugs.blogs.com/pugs/2008/07/pugshs-is-back.html</a>, <a href="http://pugs.blogspot.com" class="podlinkurl"
+>http://pugs.blogspot.com</a>, source: <a href="http://svn.pugscode.org/pugs" class="podlinkurl"
+>http://svn.pugscode.org/pugs</a>.</p>
+
+<p>Rakudo: <a href="http://www.parrotcode.org/" class="podlinkurl"
+>http://www.parrotcode.org/</a>, <a href="http://www.rakudo.org/" class="podlinkurl"
+>http://www.rakudo.org/</a>, source: <a href="https://svn.perl.org/parrot/trunk" class="podlinkurl"
+>https://svn.perl.org/parrot/trunk</a>.</p>
+
+<p>Elf: source: see pugs, <code>misc/elf/</code>.</p>
+
+<p>KindaPerl6: source: see pugs, <code>v6/v6-KindaPerl6</code>.</p>
+
+<p>v6.pm: source: see pugs, <code>perl5/</code>.</p>
+
+<p>STD.pm: source: see pugs, <code>src/perl6/</code>.</p>
+
+[% option no-header %] [% option no-footer %]
