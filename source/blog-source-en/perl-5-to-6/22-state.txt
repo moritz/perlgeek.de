@@ -89,7 +89,7 @@ name="SMOP"
 
 <p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implements it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
 
-<p>It is implemented in C and various domain specific languages. It was designed and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and Pavel Murias (implementation, DSLs). A grant from The Perl Foundation supports its development, and it currently approaches the stage where one could begin to emit code for it from another compiler.</p>
+<p>It is implemented in C and various domain specific languages. It was designed and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and Pawe&#322; Murias (implementation, DSLs). A grant from The Perl Foundation supports its development, and it currently approaches the stage where one could begin to emit code for it from another compiler.</p>
 
 <p>It will then be used as a backend for either elf or kp6, and perhaps also for pugs.</p>
 

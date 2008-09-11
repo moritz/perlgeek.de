@@ -104,7 +104,7 @@ programming facilities, ie the ability to plug in different object systems.
 
 It is implemented in C and various domain specific languages. It was designed
 and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and
-Pavel Murias (implementation, DSLs). A grant from The Perl Foundation supports
+Paweł Murias (implementation, DSLs). A grant from The Perl Foundation supports
 its development, and it currently approaches the stage where one could begin
 to emit code for it from another compiler.
 
