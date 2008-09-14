@@ -197,5 +197,10 @@
     border:0;
     border-bottom: 1px #eee solid;
   }
+
+  .svn-keywords {
+      font-size: 80%;
+      font-style: italic;
+  }
 }
 

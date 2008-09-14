@@ -36,6 +36,8 @@
         rel="dc:source">perlgeek.de</a>.
 </p>
 
+<p class="svn-keywords">$Id$</p>
+
 [% comment
     vim: syn=html ts=4 sw=4 expandtab
 %]

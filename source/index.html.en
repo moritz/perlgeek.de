@@ -26,6 +26,8 @@ and security aspects of web applications.</p>
 
 
 
+<p class="svn-keywords">$Id$</p>
+
 [% comment
     vim: syn=html ts=4 sw=4 expandtab
 %]

@@ -20,6 +20,7 @@
                 <h3>Artikel</h3>
                 <ul>
                     [% item unicode    <li><a {{class="selected" }}href="/de/artikel/charsets-unicode">Charsets und Unicode</a></li> %]
+                    [% item hop        <li><a {{class="selected" }}href="/de/artikel/rezension-higher-order-perl">Rezension "Higher Order Perl"</a></li> %]
                     [% item schwaechen <li><a {{class="selected" }}href="/de/artikel/schwaechen-von-perl-5">Perls Schwächen</a></li> %]
                 </ul>
                 </div>

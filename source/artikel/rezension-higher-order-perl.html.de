@@ -1,0 +1,58 @@
+[% setvar title Rezension "Higher Order Perl" von Mark Jason Dominus %]
+[% setvar section Artikel %]
+[% menu main artikel hop %]
+
+<h1>[% readvar title %]</h1>
+
+<p>ISBN 1-55860-701-3, erschienen 2005 bei Morgan Kaufmann.</p>
+
+<p>Um funktional programmieren zu lernen, muss man nicht Lisp lernen und sich mit
+zig Klammern herumschlagen. Perl hat fast alles unter der Haube, was man für
+funktionale Programmierung braucht. Doch wenige Programmierer benutzen diese
+mächtigen Werkzeuge, größtenteils weil sie in den bisherigen Lehrbüchern
+stiefmütterlich behandelt wird.</p>
+
+<p>``Higher Order Perl'' ändert das. Der Leser wird behutsam und Schritt für
+Schritt an Rekursion, Referenzen auf Funktion, Callbacks und schliesslich 
+Closures
+herangeführt. Mit vielen zum Teil sehr praxisnahen Beispielen wird gezeigt,
+wie durch Verwendung der genannten Techniken ähnliche Stücke Programmcode zu
+einem Stück zusammengefasst werden können, und wie man mit Callbacks die
+Flexibilität von Funktionen deutlich erhöht.</p>
+
+<p>Ein Abschnitt zu Caching-Techniken dürfte alle performancebegeisterten
+Perlhacker erfreuen. Das Core-Modul <a
+href="http://search.cpan.org/perldoc?Memoize">Memoize</a> (das übrigens auch 
+von Mark
+Jason Dominus geschrieben wurde) wird vorgestellt, inklusive diverser darin
+verwendeten Techniken und einer ausführlichen Diskussion, wann man es am
+sinnvoll verwenden kann und wann nicht.</p>
+<p>Dann werden fortgeschrittenere Konzepte wie ``lazy streams'' vorgestellt,
+mit deren Hilfe beindruckende Programme konstruiert werden, zum Beispiel diverse
+Parser, eine Regex-Engine und ein System zum algebraischen Lösen von linearen
+Gleichungssystemen.</p>
+
+<p>Einige der Beispiele im Buch sind sehr praxisorientiert, 
+wie etwa das Entfernen von HTML-Tags und ein Crawler für Webseiten.</p>
+<p>``Higher Order Perl'' ist sehr gut zu lesen, allerdings nicht am Stück von vorne
+bis hinten - dafür wird zu viel ungewöhnliches Wissen vermittelt. Auch braucht
+man Zeit dafür, das Gelesene in das Repertoir der eigenen Programmiertechniken
+einzubauen. Der Text ist ab und an durch kleinere Anekdoten aufgelockert, die
+recht gut zum Thema passen und den Leser zum schmunzeln bringen. Grafiken gibt
+es wenige, die vorhanden sind klar und einfach gehalten und illustrieren
+anschaulich das aktuelle Problem.</p>
+
+<p>Das Buch ist für jeden empfehlenswert, der mit Perl sicher umgehen kann und
+das Gefühl hat, seine Programmierprobleme zwar mit Perl lösen zu können, aber
+nicht immer elegant. Auch zukünftigen Perl 6-Hackern kommt das Wissen um
+funktionale Programmierung zu Gute, weil Perl 6 viele funktional angehauchte
+Features hat. Wer Ambitionen als Perlprogrammier hat, kommt nicht um
+dieses Buch herum.</p>
+
+<hr />
+
+<p>Diese Buchrezension wurde ursprünglich für das <a
+href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben, und ist dort
+in der 6. Ausgabe (Mitte 2008) erschienen.</p>
+
+<p class="svn-keywords">$Id$</p>
