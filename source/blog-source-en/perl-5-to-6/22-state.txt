@@ -139,7 +139,8 @@ name="SEE_ALSO"
 >http://www.rakudo.org/</a>, source: <a href="https://svn.perl.org/parrot/trunk" class="podlinkurl"
 >https://svn.perl.org/parrot/trunk</a>.</p>
 
-<p>Elf: source: see pugs, <code>misc/elf/</code>.</p>
+<p>Elf: <a href="http://perl.net.au/wiki/Elf" class="podlinkurl"
+>http://perl.net.au/wiki/Elf</a> source: see pugs, <code>misc/elf/</code>.</p>
 
 <p>KindaPerl6: source: see pugs, <code>v6/v6-KindaPerl6</code>.</p>
 

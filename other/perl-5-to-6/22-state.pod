@@ -165,7 +165,7 @@ L<http://svn.pugscode.org/pugs>.
 Rakudo: L<http://www.parrotcode.org/>, L<http://www.rakudo.org/>, source:
 L<https://svn.perl.org/parrot/trunk>.
 
-Elf: source: see pugs, C<misc/elf/>.
+Elf: L<http://perl.net.au/wiki/Elf> source: see pugs, C<misc/elf/>.
 
 KindaPerl6: source: see pugs, C<v6/v6-KindaPerl6>.
 

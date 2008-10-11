@@ -35,7 +35,7 @@ first, if it's not found it is then searched for in the next outer scope and
 so on. Just like in Perl 5 a C<my> variable is a proper lexical variable, and
 an C<our> declaration introduces a lexical alias for a package variable.
 
-But there are subtle differences: variables are exactly visisble in the rest
+But there are subtle differences: variables are exactly visible in the rest
 of the block where they are declared, variables declared in block headers (for
 example in the condition of a C<while> loop) are not limited to the block
 afterwards. 
@@ -47,12 +47,12 @@ If you want to limit the scope, you can use formal parameters to the block:
   }
   # $result not visible here
 
-Variables are visisble immediately after they are declared, not at the end of
+Variables are visible immediately after they are declared, not at the end of
 the statement as in Perl 5.
 
   my $x = .... ;
           ^^^^^
-          $x visisble here in Perl 6
+          $x visible here in Perl 6
               but not in Perl 5
 
 =head2 Dynamic scoping

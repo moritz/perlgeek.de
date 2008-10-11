@@ -62,12 +62,12 @@ name="ROADMAP"
     15 Twigils
     16 Enums
     17 Unicode
-    18 Scoping</pre>
-
-<p>Planned:</p>
-
-<pre>    19 More Regexes
-    20 More Objects</pre>
+    18 Scoping
+    19 More Regexes
+    20 A Grammar for XML
+    21 Subset types
+    22 State of the Implementations
+    23 Quoting and Parsing</pre>
 
 <p>Things that I want to write about, but which I don&#39;t know well enough yet:</p>
 

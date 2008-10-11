@@ -42,7 +42,7 @@ name="Lexical_Scoping"
 
 <p>Scoping in Perl 6 is quite similar to that of Perl 5. A Block introduces a new lexical scope. A variable name is searched in the innermost lexical scope first, if it&#39;s not found it is then searched for in the next outer scope and so on. Just like in Perl 5 a <code>my</code> variable is a proper lexical variable, and an <code>our</code> declaration introduces a lexical alias for a package variable.</p>
 
-<p>But there are subtle differences: variables are exactly visisble in the rest of the block where they are declared, variables declared in block headers (for example in the condition of a <code>while</code> loop) are not limited to the block afterwards.</p>
+<p>But there are subtle differences: variables are exactly visible in the rest of the block where they are declared, variables declared in block headers (for example in the condition of a <code>while</code> loop) are not limited to the block afterwards.</p>
 
 <p>If you want to limit the scope, you can use formal parameters to the block:</p>
 
@@ -51,11 +51,11 @@ name="Lexical_Scoping"
   }
   # $result not visible here</pre>
 
-<p>Variables are visisble immediately after they are declared, not at the end of the statement as in Perl 5.</p>
+<p>Variables are visible immediately after they are declared, not at the end of the statement as in Perl 5.</p>
 
 <pre>  my $x = .... ;
           ^^^^^
-          $x visisble here in Perl 6
+          $x visible here in Perl 6
               but not in Perl 5</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
