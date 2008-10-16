@@ -93,7 +93,7 @@ name="Syntax_clean_up"
 
 <p>The changed semantics of <code>.</code> has already been mentioned, and that <code>[...]</code> are now non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
 
-<p>This means that that the <code>/s</code> and <code>/m</code> modifers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
+<p>This means that the <code>/s</code> and <code>/m</code> modifers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
         say &#34;Match&#34;;

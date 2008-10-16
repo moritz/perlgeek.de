@@ -28,7 +28,7 @@ useful (but not very structured) additional facts about Regexes.
 
 You don't need to write grammars to match regexes, the traditional form
 C<m/.../> still works, and has a new brother, the C<mm/.../> form, which
-implies the the C<:sigspace> modifier. Remember, that means that whitespaces
+implies the C<:sigspace> modifier. Remember, that means that whitespaces
 in the regex are substituted by the C<< <.ws> >> rule. 
 
 The default for the rule is to match C<\s+> if it is surrounded by two

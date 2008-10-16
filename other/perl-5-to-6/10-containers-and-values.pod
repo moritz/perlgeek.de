@@ -38,7 +38,7 @@ which hold these values:
 
 Binding can also be done at compile time with the C<::=> operator.
 
-You can check if two things are bound together the the C<=:=> comparison
+You can check if two things are bound together the C<=:=> comparison
 operator.
 
 =head1 MOTIVATION

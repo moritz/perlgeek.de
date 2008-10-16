@@ -41,7 +41,7 @@ name="DESCRIPTION"
 
 <p>Binding can also be done at compile time with the <code>::=</code> operator.</p>
 
-<p>You can check if two things are bound together the the <code>=:=</code> comparison operator.</p>
+<p>You can check if two things are bound together the <code>=:=</code> comparison operator.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"

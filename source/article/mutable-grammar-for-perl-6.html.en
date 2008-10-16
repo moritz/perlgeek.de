@@ -172,7 +172,7 @@ token sigil:sym<::> { <sym> }
 <p>This creates a group (<code>proto</code>) named <code>sigil</code>,
 and five rules in that group (they belong to the group because they have the
 same name as the group) that are
-parameterized with the the <code>sym</code> identifier. The first one sets
+parameterized with the <code>sym</code> identifier. The first one sets
 <code>sym</code> to <code>$</code> and then matches this symbol (with
 <code>&lt;sym&gt;</code>). The second one matches <code>@</code> etc. 
 Now if you call the rule

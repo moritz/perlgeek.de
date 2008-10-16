@@ -97,7 +97,7 @@ are now non-capturing groups. Char classes are C<< <[...]> >>, and negated
 char classes C<< <-[...]> >>. C<^> and C<$> always match begin and end of the
 string, to match begin and end of lines use C<^^> and C<$$>. 
 
-This means that that the C</s> and C</m> modifers are gone. Modifiers are now
+This means that the C</s> and C</m> modifers are gone. Modifiers are now
 given at the start of a regex, and are spelled as pairs.
 
     if "abc" ~~ m:i/B/ {
