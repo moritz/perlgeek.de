@@ -1,0 +1,195 @@
+Perl 6 Tidings from September and October 2008
+
+<h2>Specification</h2>
+
+<p>Perl 6 has got two new operators.</p>
+
+<h3>Series, again and again</h3>
+
+<p>The <em>series</em> operator
+<code>...</code> (yes, literally three dots) lazily constructs infinite series
+of objects. It takes a list on the left and a closure on the right, and calls
+the closure to determine the next values. It is best introduced by a few
+examples:</p>
+
+<pre>[% syntax perl6 %]
+my @even   = 0, 2, 4 ... { $_ + 2 };
+my @fib    = 1, 1, 2 ... { $^a + $^b };
+my @powers = 1, 2, 4 ... { $_ * 2 };
+[% endsyntax %]</pre>
+
+<p>These examples use a few items on the left for clarity, but it's only
+necessary to supply as many values as the closure expects.</p>
+
+<h3>also</h3>
+
+<p>The second new operator is <code>infix:&lt;also&gt;</code>, which
+constructs <code>all</code>-junctions like <code>&amp;</code>, 
+but guarantees order of execution.</p>
+
+<p>Its primary purpose is to allow tests with follow-up tests that might
+otherwise throw exceptions.</p>
+
+<pre>[% syntax perl6 %]
+ok('abc' ~~ m/<identifier>/ also $<identifier>.chars == 3);
+[% endsyntax %]</pre>
+
+<h3>New regex feature for matching delimited constructs</h3>
+
+<p>While trying to generate a syntax tree from his Perl 6 parser STD.pm,
+Larry noticed one construct that was repeated all over the grammar, and
+introduced unnecessary submatches. It looks like this:</p>
+
+
+<pre>[% syntax escape %]
+rule argument_list {
+    '(' <semilist> [ ')' || <panic: "Can't find closing ')'"> ]
+}[% endsyntax %]</pre>
+
+<p>This can now be replaced with this short construct:</p>
+
+<pre>[% syntax escape %]
+rule postcircumfix:sym<( )> {
+    '(' ~ ')' <semilist>
+}[% endsyntax %]</pre>
+
+<p>The <code>~</code> meta character is a parser combinator inspired by
+Haskell's <em>parsec</em>. It basically sets up a parsing goal (in this
+example the closing paren) and then executes the following subrule. If the
+goal can't be found, a nice error message is given.</p>
+
+<p>To produce even nicer error messages on parse failures, the new
+<code>:dba</code> (stands for <em>"do business as"</em>) adverb can give rules
+a human-understandable name (human = not a compiler implementer, but a mere
+mortal Perl 6 hacker).</p>
+
+<p>If the example rule above failed to match, it would say <em>Error while
+parsing postcircumfix:sym&lt;( )&gt;: can't find closing ')'</em>. Adding a
+<code>:dba&lt;argument list&gt;</code> would replace the unfriendly
+postcircumfix blah with... well, you get the picture.</p>
+
+<h3>Tests part of the language?</h3>
+
+<p>There's also (sic) <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29593.html">ongoing</a>
+<a href="http://use.perl.org/article.pl?sid=08/10/10/1234255">talk</a> about <a
+href="http://irclog.perlgeek.de/perl6/2008-10-09#i_613827">moving the testing
+capabilities</a> that are now in <code>Test.pm</code> into the language
+core. A likely scenario is that there will be a <code>:ok</code> adverb on
+comparison operators that has roughly the same semantics the the
+<code>ok()</code> sub, but enables better diagnosis messages in case of
+failure.</p>
+
+<pre>[% syntax perl6 %]
+# Warning: hypothetical syntax ahead
+'abc' ~~ m/a(.)b/        :ok<basic regex match works>;
+'abc' ~~ String          :ok<type check>;
+2.rand <= 2              :ok<Int.rand stays in limit>;
+[% endsyntax %]</pre>
+    
+<p>To achieve this, all comparison operators would need to get a new multi
+that accepts the named (mandatory) argument <code>:ok</code>. That seems like
+a big change, but most (or even all) could be generated automatically, and the
+candidate lists for the multis could be pre-computed mostly at compile time,
+so no (runtime) performance hit is expected.</p>
+
+<h3>Enhance the Match object by token list</h3>
+
+<p>Currently the Match object (the thing that's returned from a regex match)
+gives you no easy access to the sub-matches in the order in which they occured
+in the string, which means it's quite hard to extract information from it that
+the writer of the original regex didn't think about making available.</p>
+
+<p>In particular I tried to (ab)use the match tree from STD.pm to write a
+syntax hilighter, and found it to be a rather daunting task. So I suggested to
+add such sequential information to the Match object. Larry liked the idea,
+because he knows what pain the Perl 5 parser causes because it forgets
+information too quickly (actually it never builds a full parse tree, it
+generates the optree on the fly. That's efficient, but makes introspection
+very hard).</p>
+
+<p>However it's not entirely clear if it will be added, and if yes, in which
+form. Unclear are (a) performance impact, (b) access syntax and (c)
+symmetry.</p>
+
+<p>(b) and (c) need more explanatation: The match object already has list
+semantics for accessing positional captures, so you can't make the sequential
+chunks available through an array index. The simple most solution is
+composition, ie a method< code>$/.splits</code> or <code>$/.tokens</code>
+that returns such a list.</p>
+
+<p>But that 
+<a href="http://irclog.perlgeek.de/perl6/2008-10-15#i_623518"> breaks a
+fundamental symmetry</a> that now exists between match
+objects and captures (ie argument lists). Both can have a scalar component
+(the object that <code>make</code> returned/the method invocant), list
+components (positional captures/positional arguments) and hash components
+(named captures/named arguments). Introducing a way of accessing the
+components of a match object in a completely different order breaks that
+symmetry. We're not yet entirely clear on what that means for the language.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>Jerry "particle" Gay implemented the <code>is export</code> on subroutines,
+taking a large leap towards making modules usable in Rakudo. To facilitate
+testing of this new feature he also implemented the <code>=:=</code> infix
+operator (tests whether two variables are aliases).</p>
+
+<p>Allison Randal merged a branch which reworked Parrot's multi sub and multi
+method dispatch system. That broke some complex math in Rakudo, leaving us
+with "only" about 4380 passing spec tests. Otherwise we might have hit the
+4500 mark by now. Still it's good work, and is expected to solve some
+fundamental problems in the mid or long term.</p>
+
+<h3>Elf</h3>
+
+<p>Mitchell Charity worked furiously on the new Lisp backend for <a
+href="http://perl.net.au/wiki/Elf">elf</a>, bringing it
+(almost?) to bootstrap. That demonstrated the flexibilty of elf, and allows to
+get rid of some quirks that can kreep into a compiler if it has only one
+backend.</p>
+
+<p>It also opens up an opportunity for hackers that want to help with a Perl 6
+compiler by writing code in Perl 6. Or Lisp.</p>
+
+<h3>STD.pm and viv</h3>
+
+<p>STD.pm is the Perl 6 grammar written in Perl 6. It now parses all Perl 6
+code that we know of, so it's time to find out if it actually parses it in a
+useful way, and to check if it loses information while parsing.</p>
+
+<p>Finding that out is one of the goals of <em>viv</em> (Read that as
+<em>VI → V</em> and
+think of Roman numbers). The other goal is to replace <code>gimme5</code>,
+which currently does the ugly, hacky job of translating STD.pm to Perl 5
+code.</p>
+
+<p>It's a script that uses reduce actions at the end of each grammar rulle to
+build some kind of parse tree or abstract syntax tree, and it's planned to
+produce either Perl 6 or Perl 5 output. We'll see what the future (and $larry)
+brings.</p>
+
+<h3>Pugs and the test suite</h3>
+
+<p>Pugs is still hybernating, and waiting for the release of GHC 6.10.1.</p>
+
+<p>If pugs hybernates, the test suite has a light slumber, and is occasionally
+disturbed in its peace by a few more tests now and then.</p>
+
+<h3>SMOP</h3>
+
+<p>Daniel Ruoso and Paweł Murias are both hacking actively on <a
+href="http://www.perlfoundation.org/perl6/index.cgi?smop">smop</a>. Currently
+on the agend is multi dispatch, which is more complicated than it sounds at
+first. Remember that slurpy argument lists are lazy, which makes things more
+complicated.</p>
+
+<p>For me it's rather hard to judge how much progress they are making, or how
+close they are to run basic, real-world code.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html
+%]
