@@ -195,7 +195,9 @@ close they are to run basic, real-world code.</p>
 its parser. Right now it supports only a handfull of operations, the most
 advanced of it is creating an object with a simplified meta model.</p>
 
-<p>It lives in the Pugs repository under <code>v6/mildew/</code>.</p>
+<p>It lives in the Pugs repository under <code>v6/mildew/</code>. Anyone who
+wants to hack on it (in Perl 5) is welcome, instructions can be found on
+#perl6</p>
 
 [% option no-header %] [% option no-footer %]
 [% comment
