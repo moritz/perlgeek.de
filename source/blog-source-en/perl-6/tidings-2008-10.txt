@@ -189,6 +189,14 @@ complicated.</p>
 <p>For me it's rather hard to judge how much progress they are making, or how
 close they are to run basic, real-world code.</p>
 
+<p>Update: Paweł contributed another small explanation:</p>
+
+<p>SMOP now has a new compiler named <em>mildew</em> which uses viv/STD as
+its parser. Right now it supports only a handfull of operations, the most
+advanced of it is creating an object with a simplified meta model.</p>
+
+<p>It lives in the Pugs repository under <code>v6/mildew/</code>.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment
     vim: ft=html
