@@ -114,7 +114,7 @@ symmetry.</p>
 
 <p>(b) and (c) need more explanatation: The match object already has list
 semantics for accessing positional captures, so you can't make the sequential
-chunks available through an array index. The simple most solution is
+chunks available through an array index. The most simple solution is
 composition, ie a method< code>$/.splits</code> or <code>$/.tokens</code>
 that returns such a list.</p>
 
@@ -148,7 +148,7 @@ fundamental problems in the mid or long term.</p>
 <p>Mitchell Charity worked furiously on the new Lisp backend for <a
 href="http://perl.net.au/wiki/Elf">elf</a>, bringing it
 (almost?) to bootstrap. That demonstrated the flexibilty of elf, and allows to
-get rid of some quirks that can kreep into a compiler if it has only one
+get rid of some quirks that can creep into a compiler if it has only one
 backend.</p>
 
 <p>It also opens up an opportunity for hackers that want to help with a Perl 6
@@ -173,16 +173,16 @@ brings.</p>
 
 <h3>Pugs and the test suite</h3>
 
-<p>Pugs is still hybernating, and waiting for the release of GHC 6.10.1.</p>
+<p>Pugs is still hibernating, and waiting for the release of GHC 6.10.1.</p>
 
-<p>If pugs hybernates, the test suite has a light slumber, and is occasionally
+<p>If pugs hibernates, the test suite has a light slumber, and is occasionally
 disturbed in its peace by a few more tests now and then.</p>
 
 <h3>SMOP</h3>
 
 <p>Daniel Ruoso and Paweł Murias are both hacking actively on <a
 href="http://www.perlfoundation.org/perl6/index.cgi?smop">smop</a>. Currently
-on the agend is multi dispatch, which is more complicated than it sounds at
+on the agenda is multi dispatch, which is more complicated than it sounds at
 first. Remember that slurpy argument lists are lazy, which makes things more
 complicated.</p>
 
