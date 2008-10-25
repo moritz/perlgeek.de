@@ -1,0 +1,30 @@
+A Syntax Highlighter for Perl 6
+
+<p>Ahmed Zawawi implemented my <a
+href="http://www.nntp.perl.org/group/perl.perl6.users/2008/07/msg788.html">idea
+from June 2008</a> and wrote a <a
+href="http://svn.pugscode.org/pugs/src/perl6/STD_syntax_highlight">STD.pm
+based syntax highlighter</a> for Perl 6.</p>
+
+<p>It doesn't work very well for comments and POD (because they are parsed as
+whitespaces by STD.pm and thus don't appear in the parse tree at all), but
+apart from that <a
+href="http://feather.perl6.nl/~azawawi/html/S12-class/_anonymous.html">it
+works very nicely (example here)</a>.</p>
+
+<p>(The current heuristic for comments is that most of them happen at the
+<code>statement_list</code> level, so that is coloured blue, and everything
+else has different colours).</p>
+
+<p>And it's more than a syntax highlighter: If you have javascript enabled,
+you can click on the "Show syntax tree" button. Then when you move the mouse
+over the text you'll see the length of current token and the path through the
+parse tree that led to it. That already helped to identify at least two
+mis-parses in STD.pm.</p>
+
+<p>There's also a <a href="http://feather.perl6.nl/~azawawi/html/">directory
+of syntax-highlighted test files</a> where you can see some more output of the
+syntax highlighter.</p>
+
+
+[% option no-header %] [% option no-footer %]
