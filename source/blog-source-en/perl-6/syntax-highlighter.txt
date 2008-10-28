@@ -9,7 +9,7 @@ based syntax highlighter</a> for Perl 6.</p>
 <p>It doesn't work very well for comments and POD (because they are parsed as
 whitespaces by STD.pm and thus don't appear in the parse tree at all), but
 apart from that <a
-href="http://feather.perl6.nl/~azawawi/html/S12-class/_anonymous.html">it
+href="http://feather.perl6.nl/~azawawi/html/S12-class/anonymous.t.html">it
 works very nicely (example here)</a>.</p>
 
 <p>(The current heuristic for comments is that most of them happen at the
