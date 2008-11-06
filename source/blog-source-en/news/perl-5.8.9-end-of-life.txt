@@ -1,0 +1,16 @@
+Perl-5.8.9 is "end of life" release
+
+<p>Today Nicholas Clark, pumpking of the 5.8-maint branch of perl, <a
+href="http://www.nntp.perl.org/group/perl.perl5.porters/2008/11/msg141328.html">announced
+that 5.8.9 will be the last release of that branch.</a></p>
+
+<p>After this release, it will only receive the same amount of care as all
+other perl versions do, which boils down to patches for gaping security
+holes.</p>
+
+<p>I welcome the announcement, because ongoing migration to Perl 5.10 means
+that I can use the new, cool features in my code. Since Debian Lenny
+(scheduled for September this year, but delayed a bit) comes with perl-5.10.0,
+I'll upgrade soon.</p>
+
+[% option no-header %] [% option no-footer %]
