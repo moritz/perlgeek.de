@@ -9,7 +9,8 @@ other perl versions do, which boils down to patches for gaping security
 holes.</p>
 
 <p>I welcome the announcement, because ongoing migration to Perl 5.10 means
-that I can use the new, cool features in my code. Since Debian Lenny
+that I can use <a href="http://www.perlmonks.org/?node_id=654086">these cool
+features</a> in my code. Since Debian Lenny
 (scheduled for September this year, but delayed a bit) comes with perl-5.10.0,
 I'll upgrade soon.</p>
 
