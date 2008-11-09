@@ -1,0 +1,72 @@
+Perl 6 Tiding for November 2008
+
+<h2>Specification</h2>
+
+<p>A couple of small improvements to the spec made me a bit happier this past
+week:</p>
+
+<ul>
+    <li>
+        There's now a <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2008/11/msg29884.html">Nil</a>
+        type. A <code>Nil</code> represents the empty list, but unlike a
+        normal <code>List</code> object it is undefined in scalar context. It
+        is returned by a bare <code>return</code> statement.
+    </li>
+    <li>
+        A <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2008/11/msg29886.html">cleanup
+        of the global variables</a> added (among other things) a
+        <code>$?VM</code> variable, which holds informations about the backend
+        being used to execute some code. I like this very much because
+        currently some tests use the unspecced <code>$?PUGS_BACKEND</code>
+        variable, which of course breaks other implementions.
+    </li>
+    <li>
+        File test operators look like this in Perl 6 <code>$filename ~~
+        :e</code>. This used to boil down to calling the method
+        <code>:e</code> in class <code>Str</code>, which was a bit messy,
+        because colons are not part of an identifier, and thus :e wasn't
+        really a valid method name. Now <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2008/11/msg29887.html">this
+        is special-cased in the smart match operator instead</a>, and the
+        method is named without the colon.
+   </li>
+</ul>
+
+<h2>Implementations</h2>
+
+<h3>SMOP</h3>
+
+<p>In his <a
+href="http://news.perlfoundation.org/2008/11/running_grants_2008vii.html">report
+to the TPF grant comittee</a> Daniel Ruoso informed us about his work to
+integrate SMOP into Perl 5 by means of writing an XS module.</p>
+
+<p>I'm not sure how much you can actually do with it right now, but it seems
+like an important proof-of-concept.</p>
+
+<h3>Rakudo</h3>
+
+<p>Jonathan and Patrick <a
+href="http://www.rakudo.org/2008/11/rakudo-container-refactor-and.html">refactored
+Rakudo's handling of containers and values</a>, to great success. This
+resulted in quite a few tickets being closed, and  some more passing spec
+tests. Great work!</p>
+
+<p>It's now also possible to define custom stringification routines for your
+classes (what's called "overloading" in Perl 5).</p>
+
+<p>Last but not least, both Patrick Michaud and Jerry Gay received grants from
+Ian Hague's fanastic donation. Patrick will work on <a
+href="http://news.perlfoundation.org/2008/11/tpf_awards_first_hague_grant_t.html">protoregexes
+and longest token matching (LTM)</a> as well as the prerequisites to use
+external libraries (which is needed if you want to write the prelude in Perl 6
+- guess what the plan is...).</p>
+
+<p>(I've tried to explain the importance of LTM in <a
+href="http://perlgeek/en/article/mutable-grammar-for-perl-6">this article</a>,
+but I'm not sure if I succeeded. Anyway, it's essential for parsing Perl 6
+correctly.</p>
+
+[% option no-header%] [% option no-footer %]
