@@ -34,6 +34,10 @@ week:</p>
    </li>
 </ul>
 
+<p>The smart links in the synopsis documents at <a
+href="http://perlcabal.org/syn/">http://perlcabal.org/syn/</a> now contains
+syntax hilighted code.</p>
+
 <h2>Implementations</h2>
 
 <h3>SMOP</h3>
