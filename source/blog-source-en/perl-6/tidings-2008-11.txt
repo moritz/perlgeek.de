@@ -1,4 +1,4 @@
-Perl 6 Tiding for November 2008
+Perl 6 Tidings for November 2008
 
 <h2>Specification</h2>
 
@@ -69,7 +69,7 @@ external libraries (which is needed if you want to write the prelude in Perl 6
 - guess what the plan is...).</p>
 
 <p>(I've tried to explain the importance of LTM in <a
-href="http://perlgeek/en/article/mutable-grammar-for-perl-6">this article</a>,
+href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6">this article</a>,
 but I'm not sure if I succeeded. Anyway, it's essential for parsing Perl 6
 correctly.</p>
 
