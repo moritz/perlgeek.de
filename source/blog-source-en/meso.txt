@@ -1,0 +1,76 @@
+My Diploma Thesis: Spin Transport in Mesoscopic Systems
+
+<p>Sometimes people ask me what I'm doing right now, and I tell them
+"I'm writing my diploma thesis on mesoscopic spin transport", and they
+know just as much as before. So here I want to explain what that means.</p>
+
+<h2>Mesoscopic systems</h2>
+
+<p>A mesoscopic system is one that is larger than a few nanometers, but
+still small enough that you have to care about quantum effects.</p>
+
+<p>That's not a very precise definition, so I'll try again: Consider a
+metallic wire. For macroscopic systems (ie the ones that we are used to
+in day-to-day live) you might know that the electrical resistance of
+such a wire increases linearly as you increase its length, and decreases
+linearly if you increase its cross section.</p>
+
+<p>This is very intuitive, because electrical resistance describes how
+hard it is for an electron to travel through our wire. If the wire is
+longer, it sees more obstacles, so the resistance is higher. If the wire
+has a larger cross section, it's easier for the electron to find a way
+that's not blocked, so the resistance is smaller. That's called
+<em>Ohm's law</em>.</p>
+
+<p>These relations aren't true anymore for rather small systems. If you
+have a very thin wire, say 20 nanometers, and increase its diameter by
+another nanometer, the resistance might not change at all. Then you
+increase its diameter by another nanometer, the resistance suddenly jumps
+down by a few percent.</p>
+
+<p>All these systems that are too small for  Ohm's law to apply are
+called <em>mesoscopic</em>. All mesoscopic effects have to be explained
+with quantum physics, at least at some point.</p>
+
+<h2>Electron Spin</h2>
+
+<p>Electrons have something called <em>Spin</em>. Everybody knows that
+it has a charge, and it acts as if it rotated around its own axis very
+fast. So it looks like a current which runs in a circle, and that
+creates a small magnetic field.</p>
+
+<p>If you try to measure the magnetic field of one electron, you will
+only ever get two possible values, which we call <em>spin up</em> and
+<em>spin down</em>.</p>
+
+<h2>Topics of Interest</h2>
+
+<p>It's clear that my diploma thesis will either have to do with spin
+optics, or with the Spin Hall Effect, so I'll describe the two here.</p>
+
+<h3>Spin Optics</h3>
+
+<p>In a semiconductor, one can split up a beam of electrons into two beams
+of spin-up and spin-down electrons, just like in optics with polarized
+light. That splitting can be influenced by an external voltage, like a
+classical transistor.</p>
+
+<p>So one of my possible topics could very roughly be described as
+"calculate some properties of a spin beam transistor".</p>
+
+
+<h3>Spin Hall Effect</h3>
+
+<p>In the <a href="http://en.wikipedia.org/wiki/Hall_effect">classic Hall
+effect</a> a current is driven through a conductor, and a magnetic field
+generates a voltage  perpendicular to both the magnetic field and the
+current, and a charge is accumulated.</p>
+
+<p>Now through some complicated mechanism a similar setup can lead to a spin
+charge, ie a region in the conductor where there are more spin-up electrons
+than spin-down electrons.</p>
+
+<p>That's a pretty new effect, the first papers about it are from 1997 or
+1998, and there's a lot of things that can be calculated.</p>
+
+[% option no-footer %][% option no-header %]
