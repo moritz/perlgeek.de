@@ -5,7 +5,7 @@ Enums
 name="NAME"
 >NAME</a></h3>
 
-<p>&#34;Perl 5 to 6&#34; Lessen 16 - Enums</p>
+<p>&#34;Perl 5 to 6&#34; Lesson 16 - Enums</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SYNOPSIS"

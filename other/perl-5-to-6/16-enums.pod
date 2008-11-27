@@ -1,6 +1,6 @@
 =head1 NAME
 
-"Perl 5 to 6" Lessen 16 - Enums
+"Perl 5 to 6" Lesson 16 - Enums
 
 =head1 SYNOPSIS
 
