@@ -1,0 +1,72 @@
+Perl 6 Tidings from December 2008
+
+<p>... aka "Not This Christmas".</p>
+
+<h2>Specification</h2>
+
+<p>The POD files of the specification have moved into the Pugs svn repository,
+which formerly only held the draft specs.</p>
+
+<p>You can now find them all in <a
+href="http://svn.pugscode.org/pugs/docs/Perl6/Spec/">http://svn.pugscode.org/pugs/docs/Perl6/Spec</a>.
+The main reason was the wish to encourage contributions to the specs.</p>
+
+<p>It worked promptly: Daniel Ruoso and Tim Nelson checked in their first
+draft of <a href="http://perlcabal.org/syn/S07.html">Synopsis 7: Iterators and
+Laziness</a>. It's based on Ruoso's <a
+href="http://www.perlfoundation.org/perl6/index.cgi?smop_map_operator">notes
+on the lazy <code>map</code> function in SMOP</a> and IRC discussions with 
+Larry and others.</p>
+
+<p>Jerry "particle" Gay recived a grant for working on S19, the specification
+of the Perl 6 command line interface, and started working on it.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>After long struggling, Patrick Michaud <a
+href="http://www.rakudo.org/2008/11/lexicals-have-arrived.html">re-designed
+and re-implemented lexical variables in Parrot</a>, fixing lots of bugs that
+were really annoying in <a href="http://github.com/viklund/november/">real
+world application</a>. (The test suite didn't contain that many instances that
+triggered lexical bugs - this shows again how important real-world apps are
+for testing.</p>
+
+<p>There was other progress as well, much of which was geared towards enabling
+a prelude written in Perl 6: <code>is also</code> trait on classes (which
+allows to extend existing classes), <a
+href="http://www.rakudo.org/2008/12/rakudo-now-supports-inline-pir.html">inline
+PIR</a> (not strictly a Perl 6 feature, but hopefully very useful), <a
+href="http://www.rakudo.org/2008/12/a-first-cut-on-proto.html">basic support
+for protos</a> and countless small fixes that make live easier for Perl 6
+developers.</p>
+
+
+<h3>SMOP</h3>
+
+<p>SMOP also made progress, which <a
+href="http://news.perlfoundation.org/2008/11/smop_grant_special_update.html">is
+described here</a> better than I could with my own words.</p>
+
+<h3>Elf</h3>
+
+<p>Mitchell Charity updated <a href="http://perl.net.au/wiki/Elf">the Elf
+homepage</a> and continued his work on bootrapping Elf on Common Lisp.</p>
+
+<h3>Misc</h3>
+
+<p>Hinrik Örn Sigurðsson put notable effort in the <a
+href="http://svn.pugscode.org/pugs/util/perl6.vim">Perl 6 syntax hilighting
+file</a> for <a href="http://www.vim.org/">vim</a>, the world's best text
+editor. During his work he discovered  that parsing Perl 6 is non-trivial.</p>
+
+<p>This week's positive surprise was that <a
+href="http://justinsimoni.com/">Justin Simoni</a> offered <a
+href="http://use.perl.org/comments.pl?sid=41743&cid=66182">to contribute some
+art work to the Perl community</a>, and I promptly recruited him for creating
+a Logo for Rakudo. I'm really excited, and want to thank him,  and also
+chromatic for <a href="http://use.perl.org/~chromatic/journal/38016">calling
+people to action</a>.</p>
+
+[% option no-header %] [% option no-footer %]
