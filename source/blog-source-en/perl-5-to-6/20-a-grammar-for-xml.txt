@@ -33,7 +33,7 @@ name="DESCRIPTION"
 
 <p>On a Unix like OS, this might look like this:</p>
 
-<pre>    svn co -r 30633 https://svn.perl.org/parrot/trunk parrot
+<pre>    svn co https://svn.perl.org/parrot/trunk parrot
     cd parrot
     perl Configure.pl &#38;&#38; make
     cd languages/perl6/ &#38;&#38; make perl6</pre>
