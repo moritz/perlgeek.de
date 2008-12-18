@@ -43,34 +43,15 @@ creates a small magnetic field.</p>
 only ever get two possible values, which we call <em>spin up</em> and
 <em>spin down</em>.</p>
 
-<h2>Topics of Interest</h2>
-
-<p>It's clear that my diploma thesis will either have to do with spin
-optics, or with the Spin Hall Effect, so I'll describe the two here.</p>
-
-<h3>Spin Optics</h3>
+<h2>Spin Optics</h2>
 
 <p>In a semiconductor, one can split up a beam of electrons into two beams
 of spin-up and spin-down electrons, just like in optics with polarized
 light. That splitting can be influenced by an external voltage, like a
 classical transistor.</p>
 
-<p>So one of my possible topics could very roughly be described as
-"calculate some properties of a spin beam transistor".</p>
+<p>The topic of my diploma thesis is to figure out how such spin polarized
+electron beams behave in certain semiconductor systems.</p>
 
-
-<h3>Spin Hall Effect</h3>
-
-<p>In the <a href="http://en.wikipedia.org/wiki/Hall_effect">classic Hall
-effect</a> a current is driven through a conductor, and a magnetic field
-generates a voltage  perpendicular to both the magnetic field and the
-current, and a charge is accumulated.</p>
-
-<p>Now through some complicated mechanism a similar setup can lead to a spin
-charge, ie a region in the conductor where there are more spin-up electrons
-than spin-down electrons.</p>
-
-<p>That's a pretty new effect, the first papers about it are from 1997 or
-1998, and there's a lot of things that can be calculated.</p>
 
 [% option no-footer %][% option no-header %]
