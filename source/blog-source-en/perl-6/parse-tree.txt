@@ -1,0 +1,92 @@
+How to get a parse tree for a Perl 6 Program
+
+<p>Only Perl 6 can parse Perl 6, or so people say. This is mostly true, since
+the only parsers that can handle all known Perl 6 code is the module
+<code>STD.pm</code> written in Perl 6.</p>
+
+<p>To get access to that parser, all you have to do is get a checkout of a
+directory of the pugs repository, linux with perl-5.10.0 or newer in the
+location <code>/usr/local/bin/perl</code> and some
+modules, like for example <a
+href="http://search.cpan.org/perldoc?Moose">Mosse</a> and <a
+href="http://search.cpan.org/perldoc?YAML::Syck">YAML::Syck</a>. When you have
+that, type the following commands:</p>
+
+<pre>
+$ svn co http://svn.pugscode.org/pugs/src/perl6
+$ cd perl6
+$ make
+</pre>
+
+<p>Now the simplest way to check the syntax of a Perl 6 file is to use the
+program <code>tryfile</code>:</p>
+
+<pre>[% syntax escape %]
+$ echo 'my ($x, $y) = 1..2;' > test.t
+$ ./tryfile test.t
+00:02 85m
+[% endsyntax %]</pre>
+
+<p>The output might be a bit confusing at first. Since no error message was
+given, it means that no syntax error was found. The <code>00:02</code> is the
+parsing time, and <code>85</code> is the memory usage.</p>
+
+<p>Suppose we introduce a syntax error in our test file:</p>
+
+<pre>
+$ echo 'my ($x, $y) = 1..; 2' > wrong.pl
+$ ./tryfile wrong.pl
+############# PARSE FAILED #############
+Can't understand next input--giving up at wrong.pl line 1:
+------&gt; <span style="color:green;font-weight:bold">my ($x, $y) = 1..</span><span style="color:red;font-weight:bold">; 2</span>
+    expecting any of:
+        prefix or noun
+        whitespace
+00:02 85m
+</pre>
+
+<p>The green part of the output indicates the part where the syntax is still
+correct, the red part is where the errornous part begins. (The bold font
+weight isn't part of the output, though). At this point, either an
+<code>prefix or noun</code> would have been expected, as in <code>1..+2</code>
+or as in <code>1..2</code>, or a whitespace, probably followed by another
+term.</p>
+
+<p>But if you want to known not only if an expression was parsed, but also
+<em>how</em>, then there's another way: There's a syntax highlither based on
+<code>STD.pm</code> which generates HTML output that also encodes the parse
+tree:</p>
+
+<pre>
+$ ./STD_syntax_highlight --full-html=test.html test.t 
+</pre>
+
+<p>Open the generated file, <a href="/static/test.html">test.html (click here
+for an example)</a> in your favourite browser, enable Javascript, and click on
+the button labled <code>Show Syntax Tree</code>. Then when you hoover with the
+mouse over a piece of the code, on the right of the browser window a list is
+displayed that shows the calling hirarchy of rules in STD.pm.</p>
+
+<p>If you move the mouse to the test <code>my</code>, you'll see that the top
+most parsing statement was <code>statementlist</code>, which then called
+<code>statement</code>, which in turn called <code>statement_modexpr</code>
+and so on.</p>
+
+<p>You might also notice that <code>scope_declarator</code> calls
+<code>scope_declarator__S_905my</code>, which is slightly misleading. In fact
+<code>token scope_declarator</code> is a so called proto rule, which means
+that multiple rules have the same name, and if you call that rule, it tries to
+match all of them in parallel, and the longest match is picked. From these
+proto rules the compiler constructs automatically subrules whose names all
+contain the double underscore <code>__</code>.</p>
+
+<p>So you should actually read the two rules <code>scope_declarator</code> and
+<code>scope_declarator__S_905my</code> as one, where the alternative that
+contains the <code>my</code> matched.</p>
+
+<p>There are other possible ways to get a parse tree (for example modifying
+<code>tryfile</code> to emit a YAML parse tree, or using Rakudo's
+<code>--target=parse</code> option), but most of them produce somewhat verbose
+output that's hard to use.</p>
+
+[% option no-header %] [% option no-footer %]
