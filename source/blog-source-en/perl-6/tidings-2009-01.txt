@@ -1,0 +1,140 @@
+Perl 6 Tidings from January 2009
+
+<h2>Specification</h2>
+
+<p>Jerry Gay continued his work on <a
+href="http://perlcabal.org/syn/S19.html">S19 - Command Line Interface</a> with
+various improvements and corrections.</p>
+
+<p>Larry Wall <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2008/12/msg30273.html">clarified
+the meaning</a> of things like <code>*-1</code>, which
+can be used in array indexes to access the last element. If a noun starts with
+a Whatever Star <code>*</code>, it constructs a closure, so <code>*-1</code>
+is really the same as <code>{ $_ - 1}</code>. The routine that handles the
+array subscript operator <code>[ ]</code> passes the number of elements to
+that closure.</p>
+
+<p>Daniel Ruoso <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2008/12/msg30162.html">asked</a> whether <code>@@a</code> (slice view of array
+<code>@a</code>) and <code>@a</code> could be made distinct variables, since
+the originally planned unification between them would imply too much magic to
+allow an efficient implementation (so far no Perl 6 compiler implements slice
+context and variables). Larry replied that it's OK to separate them. However
+that separation didn't make it into the specs yet.</p>
+
+<p>Carl Mäsak published a <a
+href="http://use.perl.org/~masak/journal/38170">S29 laundry list</a>, and both
+encouraged other to work on <a href="http://perlcabal.org/syn/S29.html">S29 -
+Built-in Functions and Methods</a>, and announced that he would try to tackle
+at least some of the missing items himself.</p>
+
+<p>We've also seen a few spelling and grammar corrections - the move of the
+Synospis documents to the pugs repository did have a positive impact on
+hackability.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>Since my <a href="/blog-en/perl-6/tidings-2008-12.html">last updated</a>
+there has been a lot of progress in Rakudo: Arrray and Hash slices (as in
+<code>@array[1..3, 5]</code>) now work, list assignment (as in
+<code>my ($x, $y) = 0, 1;</code>) is implemented, and many reduction and some
+hyper meta operators now work, so you can write things like this:</p>
+
+<pre>[% syntax perl6 %]
+    my $sum     = [+] 1..10;
+    my @product = [*] @numbers;
+    my @sum     = @n1 »+« @n2;
+[% endsyntax %]</pre>
+
+<p>Rakudo now passes more than 6000 spec tests. As always you can monitor its
+progress in the test suite on <a href="http://rakudo.de/">rakudo.de</a>.</p>
+
+<h3>SMOP</h3>
+
+<p>The smop developers added support for the <code>return</code> function and
+control exception, and for integration with a C level coroutine library.</p>
+
+<h3>Test Suite</h3>
+
+<p>Over the hollidays I spent some time moving tests from the old part of the
+test suite to <code>t/spec/</code>, in particular tests for object
+orientation. I also moved many of the tests in
+<code>t/examples/99problems/</code> to <code>t/spec/integration/</code>, which
+is the place for tests that don't correspond to one particular synopsis, but
+which are common sense, or interaction between features from different
+synospis. To reduce the number of tests, I merged ten of them  into one.</p>
+
+<p>I also noticed with joy that other started to move files to
+<code>t/spec/</code> as well, and added more tests.</p>
+
+<p>The moving and test review is still an ongoing task. To give you an idea of
+the dimensions of the test suite, here are some numbers:</p>
+
+<table>
+<tr>
+    <th>Category</th>   <th>Files</th>  <th>Plan</th>
+</tr>
+<tr>
+    <td>spec</td>       <td>461</td>    <td>10272</td>
+</tr>
+<tr>
+    <td>unspecced</td>  <td>16</td>     <td>108</td>
+</tr>
+<tr>
+    <td>examples</td>   <td>26</td>     <td>136</td>
+</tr>
+<tr>
+    <td>xx-uncategorized</td><td>26</td><td>135</td>
+</tr>
+<tr>
+    <td>pugs</td>       <td>4</td>      <td>38</td>
+</tr>
+<tr>
+    <td>other</td>      <td>197</td>    <td>7624</td>
+</tr>
+<tr>
+    <td><strong>sum</strong></td><td>730</td><td>18313</td>
+</tr>
+</table>
+
+<p>The <em>plan</em> is the estimated number of invididual tests.
+<em>spec</em> menas the part that are official test suite, and are hopefully
+reviewed. <em>unspecced</em> are tests that people wrote for features they
+would like to have, but that aren't covered in the synopsis. They will only
+make it into the official test suite if the language design team decides that
+these features are desirable, and make it into the specs. <em>examples</em>
+should be self-explanatory. Some of them will likely be moved to
+<code>t/spec/integration/</code>. The same holds true for
+<code>xx-uncategorized</code>, which is full of assorted tests. <em>pugs</em>
+are the pugs specific tests. <em>other</em>
+is the whole rest of the not yet moved tests, all of which need some
+review.</p>
+
+<h2>Cool Uses for Perl 6</h2>
+
+<p>Carl Mäsak started the <a
+href="http://github.com/masak/druid/">implementation</a> of a cool, 2½-D
+board game named <a href="http://www.cameronius.com/games/druid/">Druid</a>.</p>
+
+<h2>A note to Implementors</h2>
+
+<p>You have probably noticed that these roughly monthly tidings are mostly
+about the Spec, the test suite and Rakudo. That's not because I want to
+neglect the other implementations, but because it's hard to actually get news
+from them.</p>
+
+<p>I read the mailing lists (p6l, p6c, p6u), <a
+href="http://planetsix.perl.org/">the blogs</a>, I'm on <a
+href="http://irclog.perlgeek.de/perl6/today">#perl6</a> quite often, and try
+to backlog when I'm not.</p>
+
+<p>I can only encourage all compiler hackers and users to blog about their
+progress and challenges (and, if it's not already there, get it included in
+the planetsix feed by sending a mail to the perl.org webmasters). If you don't
+want to write a full-blown blog entry, just drop me a line on IRC about your
+progress and its impact, and I'll include it in my next "tidings" post.</p>
+
+[% option no-header %][% option no-footer %]
