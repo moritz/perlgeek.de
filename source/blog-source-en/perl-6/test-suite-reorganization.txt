@@ -1,0 +1,194 @@
+Test Suite Reorganization: How to move tests
+
+<p>The Perl 6 test suite started its life in the Pugs Subversion repository,
+containing regression tests and one-to-one translations of the synopsis
+documents into tests.</p>
+
+<p>If you check out the pugs repository via <code>svn checkout
+http://svn.pugscode.org/pugs</code> and go the newly created directory
+<code>pugs</code>, you can find all these tests in the directory
+<code>t</code>.</p>
+
+<p>When it became clear that this test suite would grow into the official Perl
+6 test suite, and would be shared by multiple implementations, it became clear
+that it needed some reorganization; many tests where specific to pugs, or
+didn't reflect the actual state of the synopsis.</p>
+
+<p>So somebody created the directory <code>t/spec/</code>, and began
+to move the old tests there, reviewing them on the way if they still
+represent the current state of the Synopsis.</p>
+
+<p><code>t/spec/</code> is what we call the "official Perl 6 test
+suite" nowadays, and all things in there should be covered by the
+specifications. It is organized in subdirectories which are all named
+in the scheme <code>SXX-section</code>, where XX stands for the number
+of a Synopsis, and section for a section in that synopsis. There is
+another dir called <code>integration</code>, in which tests live that
+can't be mapped to a single synopsis, or that are regression tests
+that are worth sharing with other implementations.</p>
+
+<p>(The
+synopsis are located in <code>docs/Perl6/Spec</code> in the pugs repo,
+and are available as HTML at <a
+href="http://www.perlcabal.org/syn/">
+http://www.perlcabal.org/syn/"></a>.</p>
+
+<p>At the time of writing (2009-01-25) there are still more than 6000
+tests in 155 in the non-official part of the pugs repository (not
+counting those under <code>unspecced</code> and <code>pugs</code>,
+which probably never will become part of the official suite) that need
+to be reviewed, and if still up-to-date, moved.</p>
+
+<h2>Reviewing and moving tests</h2>
+
+<p>The typical procedure looks like this:</p>
+
+<p>First step, pick a test file in <code>t/</code> (outside of spec, pugs,
+examples or unspecced). For the beginner <code>builtins/</code> might
+be a good starting point, since you don't need to know a lot about the
+language to check if the test file is good.</p>
+
+<p>As an example we look at <code>blocks/nested_named.t</code>, which
+in its current state looks like this:</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+
+use Test;
+
+=begin desc
+
+Tests for nested subs in Apocalypse 6
+
+=end desc 
+
+plan 3;
+
+sub factorial (Int $n) {
+    my sub facti (Int $acc, Int $i) {
+        return $acc if $i > $n;
+        facti($acc * $i, $i + 1);
+    }
+    facti(1, 1);
+} ;
+
+is factorial(1), 1, "Checking semantics... 1";
+is factorial(2), 2, "Checking semantics... 2";
+is factorial(0), 1, "Checking semantics... 0";
+
+# vim: ft=perl6
+[% endsyntax %]</pre>
+
+<p>Let's look at what it does: It declares a sub one parameter
+<code>$n</code>, and then declares an inner sub, which uses the
+parameter of the outer sub. That's a closure, or at least something
+very similar. So it essentially tests signatures, and closures.</p>
+
+<p>As the second step we have to find out where that behavior is
+specced.</p>
+
+<pre>[% syntax escape %]
+$ cd ~/pugs/doc/Perl6/Spec
+$ grep -ic closure S*.pod
+S01-overview.pod:0
+S02-bits.pod:16
+S03-operators.pod:9
+S04-control.pod:42
+S05-regex.pod:33
+S06-routines.pod:19
+S07-iterators.pod:0
+S09-data.pod:10
+S10-packages.pod:0
+S11-modules.pod:0
+S12-objects.pod:23
+S13-overloading.pod:0
+S16-io.pod:0
+S17-concurrency.pod:5
+S19-commandline.pod:2
+S22-package-format.pod:0
+S26-documentation.pod:0
+S29-functions.pod:4
+[%endsyntax%]</pre>
+
+<p>So mostly S04, S05, S06 and S12 talk about closures. S05 is regexes
+- not our topic. S12 is Objects - not exactly what we're looking for
+either. S04 covers blocks and control structures (blocks are more
+interesting), and S06 covers subroutines, signatures and the like -
+bingo!</p>
+
+<p>So looking through S04 we notice sentences like <em>Every
+block is a closure</em> and S06 contains examples of positional
+parameters that look very much like ours. Grep'ping through the
+synopsis for <code>my sub</code> we also find a few examples, so it
+looks like allowed syntax too. Let's decide it's indeed a good test
+(in case of doubt, ask in #perl6 on irc.freenode.org).</p>
+
+<p>I usually move larger test files, while for smaller test files I
+look for existing test files (with similar topic, of course) in 
+<code>t/spec</code> into which I can
+merge them. Since I didn't find one in this case I type</p>
+
+<pre>svn mv t/blocks/nested_named.t t/spec/S06-signatures/closure-over-parameters.t
+svn ci -m '[t] moved nested_named.t to spec/' t/
+</pre>
+
+<p>Now the test is moved, and the change commit - success.</p>
+
+<p>But wait, we can do more. The documentation in the file referred
+to the Apocalypses (which are mostly of historical interest), not the
+Synopsis - so let's change that. Also the test descriptions aren't
+very good, so let's find something more descriptive. Also we could add
+one more test of the same scheme as the existing ones, just to be
+sure.</p>
+
+<p>The updated version looks like this:</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+
+use Test;
+
+=begin desc
+
+Closure over parameters of outer subs, as per
+# L<S04/The Relationship of Blocks and Declarations/"Every block is a
+# closure">
+# L<S06/Dynamically scoped subroutines>
+
+=end desc 
+
+plan 4;
+
+sub factorial (Int $n) {
+    my sub facti (Int $acc, Int $i) {
+        return $acc if $i > $n;
+        facti($acc * $i, $i + 1);
+    }
+    facti(1, 1);
+} ;
+
+is factorial(0), 1, "closing over params of outer subs (0)";
+is factorial(1), 1, "closing over params of outer subs (1)";
+is factorial(2), 2, "closing over params of outer subs (2)";
+is factorial(3), 6, "closing over params of outer subs (3)";
+
+# vim: ft=perl6
+[% endsyntax %]</pre>
+
+<p>The weird things in the test descriptions are so-called smartlinks,
+described in the <a
+href="http://svn.pugscode.org/pugs/t/README">README</a>.</p>
+
+<p>Bonus points for the person who adds tests for the same thing, but
+with parameters that are passed by name.</p>
+
+<p>According to the mantra "commit early, commit often", we type
+<code>svn ci -m '[t/spec] cleaned up
+S06-signatures/closure-over-parameters.t a bit' t/spec/</code> and be
+happy.</p>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: spell spelllang=en_us ft=html tw=70
+%]
