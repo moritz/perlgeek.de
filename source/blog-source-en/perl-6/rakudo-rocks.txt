@@ -18,7 +18,7 @@ functions, grammars and regexes are in place, the most important control
 structures, exceptions, you name it.</p>
 
 <p>The other day I did some charts, and found something interesting: Rakudo
-passes 700 more test each month, on average. Since Mai 2008. Really.</p>
+passes 700 more test each month, on average. Since May 2008. Really.</p>
 
 <img src="/static/rakudo-progress.png" width="792" height="612"
 alt="regression analysis of the number of passing tests. It goes up." />
