@@ -1,0 +1,75 @@
+Where Rakudo Lives Now
+
+<p>There has been some profund confusion over the whereabouts of the Rakudo
+source code repository. Since we've seen no official announcement on <a
+href="http://rakudo.org/">rakudo.org</a> I wrote a short guide on how to build
+Rakudo.</p>
+
+<p>The <a
+href="http://www.parrot.org/news/parrot-subversion-repository-moved-parrot.org">Parrot
+svn repository move to parrot.org</a> (formerly perl.org), and at the same
+time Rakudo left the Parrot repository.</p>
+
+<p>It now <a href="http://github.com/rakudo/rakudo/">lives on Github</a> (and
+has been migrated to <a href="http://git-scm.com/">git</a>).</p>
+
+<p>You can obtain a copy with</p>
+
+<pre>git clone git://github.com/rakudo/rakudo.git</pre>
+
+<p>(Please note that the <em>http://</em> currently does <strong>not</strong>
+work, you have to use <em>git://</em>).</p>
+
+<p>For people with commit access it is recommended to use the clone URL
+<code>git@github.com:rakudo/rakudo.git</code> instead.</p>
+
+<h3>Building Git</h3>
+
+<p>There are two ways to build Rakudo.</p>
+
+<h4>First way: Rakudo under Parrot</h4>
+
+<p>First obtain a copy of parrot (if you already have one, you may of course
+omit this step) and build it.</p>
+
+<pre>svn co https://svn.parrot.org/parrot/trunk parrot
+cd parrot/
+perl Configure.pl
+make
+</pre>
+
+<p>Then clone Rakudo to the subdirectory <code>languages/rakudo</code>,
+configure and build it:</p>
+
+<pre>
+cd languages/
+git clone git://github.com/rakudo/rakudo.git
+cd rakudo
+perl Configure.pl
+make 
+make spectest # please report any failures from this 
+              # step to rakudobug@perl.org
+</pre>
+
+<h4>Second way: Parrot under Rakudo</h4>
+
+<p>You can reverse the order of the nesting of Parrot and Rakudo
+directories:</p>
+
+<pre>
+git clone git://github.com/rakudo/rakudo.git
+cd rakudo
+svn co https://svn.parrot.org/parrot/trunk parrot
+cd parrot/
+perl Configure.pl
+make
+cd .. # back in Rakudo's clone
+perl Configure.pl
+make
+make spectest
+</pre>
+
+[% option no-header %][% option no-footer %]
+[% comment
+    vim: set spell spelllang=en_us ft=html
+%]
