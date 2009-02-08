@@ -69,6 +69,11 @@ make
 make spectest
 </pre>
 
+<p><strong>Update:</strong>: Chris Dolan also provided a nice <a
+href="http://wiki.github.com/rakudo/rakudo/steps-to-create-a-patch">explanation
+of how to use github's "fork" feature to create patches</a>. That's the
+gittish way, and very convenient.</p>
+
 [% option no-header %][% option no-footer %]
 [% comment
     vim: set spell spelllang=en_us ft=html
