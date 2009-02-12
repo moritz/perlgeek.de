@@ -31,11 +31,11 @@
 <p>
     It all began in the year 1963 with ASCII, the "American Standard for
     Information Interchange". It maps 128 charcters to the number from 0 to
-    127, which can be encoded with 7 bit.
+    127, which can be encoded with 7 bits.
 </p>
 
 <p>
-    Since a byte contains 8 bit, the first, "most significant" bit in ASCII
+    Since a byte contains 8 bits, the first, "most significant" bit in ASCII
     characters is always zero.
 </p>
 
