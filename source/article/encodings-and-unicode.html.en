@@ -49,7 +49,7 @@
 
 <p>
     Characters that aren't essential in the day to day life of an American
-    citizen are not defined, like cyrillic signs, "decorated" latin characters
+    citizen are not defined, like Cyrillic signs, "decorated" latin characters
     etc. weren't defined at all.
 </p>
 
@@ -57,14 +57,14 @@
 
 <p>
     When people started to use computers in other countries, other
-    characters needed to be encoded. In the european countries ASCII was
+    characters needed to be encoded. In the European countries ASCII was
     reused, and the 128 unused numbers per byte were used for the locally
     needed characters.
 </p>
 
 <p>
-    In western Europe the character encoding was called "Latin 1", and later
-    standardized as ISO-8859-1. Latin 2 was used in central europe and so on.
+    In Western Europe the character encoding was called "Latin 1", and later
+    standardized as ISO-8859-1. Latin 2 was used in central Europe and so on.
 </p>
 
 <p>
@@ -90,7 +90,7 @@
 
 <p>
     These local charsets are very limited. When the Euro was introduced in
-    2001, many european countries had a currencies whos symbols couldn't be
+    2001, many European countries had a currencies whose symbols couldn't be
     expressed in the traditional character encodings.
 </p>
 
@@ -105,7 +105,7 @@
 <p>
     In an attempt to unify all scripts into a single writing system, the
     Unicode consortium was created, and it started to collect all known
-    characters, and assign a unique number to each, called "codepoint".
+    characters, and assign a unique number to each, called a "codepoint".
 </p>
 
 <p>
@@ -114,7 +114,7 @@
 </p>
 
 <p>
-    Apart from letters and other "base characters" there are also accents
+    Apart from letters and other "base characters", there are also accents
     and decorations like <code>ACCENT, COMBINING ACUTE</code>, which can be
     added to a base character.
 </p>
@@ -224,7 +224,7 @@
     Note that <code>cmp</code> only compares non-ASCII chars by codepoint
     number, which might give unexpected results. In general the ordering
     is language dependent, so that you need <code>use locale</code> in effect to
-    sort strings according the rules of a natural language. For example in
+    sort strings according the rules of a natural language. For example, in
     German the desired ordering is <code>'a' lt 'ä' and 'ä' lt 'b'</code>,
     whereas comparison by codepoint number gives <code>'ä' gt ''b'</code>.
 </p>
@@ -254,7 +254,7 @@ print encode($enc, $text_str); # prints 'ä', lc worked as expected
 </p>
 
 <p>
-    Otherwise you can get confused very fast, and lose track of which strings
+    Otherwise, you can get confused very fast, and lose track of which strings
     are byte strings, and which ones are text strings.
 </p>
 
@@ -289,8 +289,8 @@ use open ':locale';
 
 <p>
     Care should be taken with the input layer <code>:utf8</code>, which often
-    pops up in example code and old documentation: it assume
-    the input to be in valid UTF-8, and you have know way of knowing in your
+    pops up in example code and old documentation: it assumes
+    the input to be in valid UTF-8, and you have no way of knowing in your
     program if that was actually the case.
     If not, it's a source of
     subtle security holes, see 
@@ -302,16 +302,16 @@ use open ':locale';
 <p>
     The module and pragma <code>utf8</code> also allows you to use non-ASCII
     chars in variable names and module names. But beware, don't do this for
-    package and module names, it might not work well.
-    Also consider that not everybody has a keyboard that allows easy typing of
-    non-ASCII characters, so you make maintenance of your code much harder of
+    package and module names; it might not work well.
+    Also, consider that not everybody has a keyboard that allows easy typing of
+    non-ASCII characters, so you make maintenance of your code much harder if
     you use them in your code.
 </p>
 
     <h2><a name="testing_your_environment"></a>Testing your Environment</h2>
 <p>
     You can use the following short script to your terminal, locales and
-    fonts. It is very europe centric, but you should be able to modify it to
+    fonts. It is very European centric, but you should be able to modify it to
     use the character encodings that are normally used where you live.
 </p>
 
@@ -368,7 +368,7 @@ for (@charsets){
 
 <p>
     Sometimes you want to inspect if a string from an unknown source has
-    already been decoded. Since per has no separate data types for binary
+    already been decoded. Since Perl has no separate data types for binary
     strings and decoded strings, you can't do that reliably.
 </p>
 
@@ -422,7 +422,7 @@ LEN = 4</pre>
     That also implies that if your program is written in Perl only (and has no
     XS components) it's almost certainly an error to rely on the presence or
     absence of that flag. You shouldn't care how perl stores its strings
-    already.
+    anyway.
 </p>
 
 <h3>Buggy Modules</h3>
@@ -437,19 +437,19 @@ LEN = 4</pre>
 use encoding ':locale';[%endsyntax%]</pre>
 
 <p>
-    But under the effect of <code>use encoding</code> some AUTOLOAD
+    But under the effect of <code>use encoding</code>, some AUTOLOAD
     functions stop working, and the module isn't thread safe.
 </p>
 
 <h2><a name="charsets_in_the_www"></a>Charsets in the WWW</h2>
 <p>
-    When you write a CGI script you have to decide for a character encoding,
+    When you write a CGI script you have to chose a character encoding,
     print all your data in that encoding, and write it in the HTTP headers.
 </p>
 <p>
-    For most applications UTF-8 is a good choice, since you can code arbitrary
-    Unicode codepoints with it, and on the other hand english text (and of
-    most other european languages) is encoded very efficiently.
+    For most applications, UTF-8 is a good choice, since you can code arbitrary
+    Unicode codepoints with it. On the other hand english text (and of
+    most other European languages) is encoded very efficiently.
 </p>
 
 <p>
@@ -505,15 +505,15 @@ use encoding ':locale';[%endsyntax%]</pre>
 
     <h2><a name="advanced_topics"></a>Advanced Topics</h2>
 <p>
-    With the basic charset and Perl knowledge you can get quite far, for
-    example you can make a web application "Unicode safe", i.e. you can 
+    With the basic charset and Perl knowledge you can get quite far. For
+    example, you can make a web application "Unicode safe", i.e. you can 
     take care
     that all possible user inputs are displayed correctly, in any script the
     user happens to use.
 </p>
 
 <p>
-    But that's not all there is to know on the topic. For example the Unicode
+    But that's not all there is to know on the topic. For example, the Unicode
     standard allows different ways to compose some characters, so you need to
     "normalize" them before you can compare two strings. You can read more
     about that in the <a
@@ -538,7 +538,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 
 <p>
     Many programmers who are confronted with encoding issues first react with
-    <i>"But shouldn't it just work?"</i>. Yes, it should just work. Bot too
+    <i>"But shouldn't it just work?"</i>. Yes, it should just work. But too
     many systems are broken by design regarding character sets and encodings.
 </p>
 
@@ -560,7 +560,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 </p>
 
 <p>
-    Currently many IRC clients try to autodetect character encodings, and
+    Currently, many IRC clients try to autodetect character encodings, and
     recode it to what the user configured. This works quite well in some
     cases, but produces really ugly results where it doesn't work.
 </p>
@@ -645,4 +645,9 @@ care of all encoding issues.</p>
     pointed out many smaller and a few
     not-so-small errors in earlier versions of this article, and contributed
     greatly to my understanding of perl's string handling. 
+</p>
+
+<p>
+    I'd also like to thank [http://www.perlmonks.org/?node=ELISHEVA|ELISHEVA]
+    for suggesting many improvements to both grammar and spelling.
 </p>
