@@ -1,7 +1,7 @@
 Perl 6 Tidings from February 2009
 
 <p>A lot of things has happened since the last <a
-href="/blog-en/perl-6/tidings-2009-01.txt">tidings post</a>: lots of
+href="/blog-en/perl-6/tidings-2009-01.html">tidings post</a>: lots of
 spec cleanup, Rakudo left the nest, there's an easy-to-install version
 of elf, and lots of small improvements.</p>
 
