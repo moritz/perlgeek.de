@@ -1,0 +1,89 @@
+Perl 6 Tidings from February 2009
+
+<p>A lot of things has happened since the last <a
+href="/blog-en/perl-6/tidings-2009-01.txt">tidings post</a>: lots of
+spec cleanup, Rakudo left the nest, there's an easy-to-install version
+of elf, and lots of small improvements.</p>
+
+<h2>Specification</h2>
+
+<p>Mark Lentczner worked on updating his "Periodic Table of the [Perl
+6] Operators" and asked many questions about operator parsing, meta
+operators, associativity and related subjects. It appears that some of
+these questions triggered Larry's dislike for the current situation,
+which in turn led to many improvements.</p>
+
+<p>The most user visible effect is certainly that the cross-meta
+operator which used to be <code>XopX</code> is now just
+<code>Xop</code>, and there's a new prefix-metaoperator for infix
+operators that reverses the order of arguments. So sorting with
+reversed string comparison now can be written as
+<code>@array.sort(&amp;infix&lt;Rleg&gt;)</code>.</p>
+
+<p>Jerry "particle" Gay continued his steady improvements of the S19
+draft, and eliminated some Perl5isms. I submitted my notes about
+built-in testing to p6l, which started a lively and interesting
+discussion. I'm still digesting its results in the background.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>Rakudo <a href="/blog-en/perl-6/where-rakudo-lives.txt">left the
+nest and now lives on github</a>. Since Patrick Michaud was occupied
+with real-life worries right after the move we had some time with
+uncertainty about the current state; but the community recovered
+quickly, and although we still see traces of the fallout here and
+there, most things work again, and development has continued.</p>
+
+<p>Most notably Jonathan Worthington made two days worth of bugfixes
+to decimate the <code>perl6</code>, which Carl Mäsak had tirelessly
+populate to over 250 open bug reports. Also Chris Dolan implemented
+the <code>make</code> builtin, which sets the scalar portion of a
+Match object.</p>
+
+<p>This Tuesday we will see the release of Parrot 0.9.1, the first
+release that doesn't come with Rakudo bundled. After that Rakudo will
+have its own release schedule, although the details aren't out
+yet.</p>
+
+<h3>Elf</h3>
+
+<p>Mitchell Charity developed a branch of his <i>elf</i> compiler
+<a href="http://svn.pugscode.org/pugs/misc/elfish/gimme_elf">that's
+very easy to get to run</a>: just change to its directory and type
+<code>make</code>.</p>
+
+<h3>Smop</h3>
+
+<p>Daniel Ruoso sent a very verbose update to his TPF grant manager; I
+haven't yet seen it published. But if you follow <a
+href="http://news.perlfoundation.org/">the TPF blog</a> you'll
+probably see it appear very soon, and it'll be loads better than
+anything I could try to write about smop.</p>
+
+<h2>Documentation</h2>
+
+<p>Carl Mäsak bemoaned the non-existence of user level documentation
+for Perl 6, and decided to start the <a
+href="http://svn.pugscode.org/pugs/docs/u4x">Userdocs for Christmas
+(u4x)</a> project. It's still mostly in the planning phase, although
+there are some glossary entries in there.</p>
+
+<h2>Packaging</h2>
+
+<p>This past month we've run into the situation were we wanted to move
+libraries out of the projects in which they were developed, in order
+to share them among other projects. Since CPAN.pm can't handle Perl 6
+code, dependencies and appropriate directory structures, and no other
+solution was in sight. So it was again Carl who lost his patience (and
+remember, impatience is one of the three virtues of the Perl
+programmer) and wrote <a
+href="http://github.com/masak/proto">proto</a>, a simple script that
+downloads and installs Parrot, Rakudo, and various Perl 6
+libraries.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html spell spelllang=en_us tw=70 
+%]
