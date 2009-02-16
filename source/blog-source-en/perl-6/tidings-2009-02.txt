@@ -7,8 +7,9 @@ of elf, and lots of small improvements.</p>
 
 <h2>Specification</h2>
 
-<p>Mark Lentczner worked on updating his "Periodic Table of the [Perl
-6] Operators" and asked many questions about operator parsing, meta
+<p>Mark Lentczner worked on updating his <a
+href="http://www.ozonehouse.com/mark/periodic/">"Periodic Table of the [Perl
+6] Operators"</a> and asked many questions about operator parsing, meta
 operators, associativity and related subjects. It appears that some of
 these questions triggered Larry's dislike for the current situation,
 which in turn led to many improvements.</p>
