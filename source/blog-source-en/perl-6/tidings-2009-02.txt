@@ -39,7 +39,7 @@ there, most things work again, and development has continued.</p>
 
 <p>Most notably Jonathan Worthington made two days worth of bugfixes
 to decimate the <code>perl6</code>, which Carl Mäsak had tirelessly
-populate to over 250 open bug reports. Also Chris Dolan implemented
+populated to over 250 open bug reports. Also Chris Dolan implemented
 the <code>make</code> builtin, which sets the scalar portion of a
 Match object.</p>
 
