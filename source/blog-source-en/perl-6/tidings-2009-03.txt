@@ -51,7 +51,6 @@ cleanups.</p>
         now done</a> with <code>augment class Object</code> instead of the
         previous <code>class Object is also</code>. Likewise
         <code>supersede</code> replaces <code>is instead</code>.</li>
-    <li>
 </ul>
 
 <p>I'm sure I've missed some important pieces, but the past month
