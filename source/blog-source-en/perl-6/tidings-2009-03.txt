@@ -32,7 +32,7 @@ cleanups.</p>
         <code>make</code> aren't automatically considered to be the
         scalar part of a match object. Instead they can now be
         accessed with the <code>?</code> key, for example as
-        <code>$<?></code>.</li>
+        <code>$&lt;?&gt;</code>.</li>
     <li>Lists in item context <a
         href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31091.html">now
         auto-promote to Captures</a>, not Arrays anymore. That means that
