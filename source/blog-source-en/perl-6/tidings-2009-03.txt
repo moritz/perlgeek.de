@@ -1,0 +1,103 @@
+Perl 6 Tidings from March 2009
+
+<h2>Specification</h2>
+
+<p>In the past month we've seen a huge effort on the specs, mostly
+driven by Timothy "wayland" S. Nelson. He split the ever-growing S29
+document into various API documents for built-in classes, all of them
+living in the <a
+href="http://svn.pugscode.org/pugs/docs/Perl6/Spec/S32-setting-library/">S32
+setting library</a>.</p>
+
+<p>The term "setting" is also new and requires an explanation. It's a
+term for the namespace in which built-in functions live. Other
+languages call that a "Prelude". Differently from a Prelude that scope
+is replaceable, meaning that it's easy to throw out all built-in
+functions and provide your own set, if that's what you want.</p>
+
+<p>There was also a <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2009/02/msg30722.html">lively
+discussion</a> about S16 (IO), and Daniel Ruoso and Timothy made some
+progress in the specs there. It seems our IO system will be heavily
+based on roles. Likewise there was some work on an S28 "special
+variables" draft.</p>
+
+<p>Larry Wall also contributed lots of small and not-so-small
+cleanups.</p>
+
+<ul>
+    <li>Private methods are now declared as <code>method !mymethod {
+        ... }</code> (as opposed to <code>my method</code> previously</li>
+    <li>Result objects (that is objects produced by regexes that call
+        <code>make</code> aren't automatically considered to be the
+        scalar part of a match object. Instead they can now be
+        accessed with the <code>?</code> key, for example as
+        <code>$<?></code>.</li>
+    <li>Lists in item context <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31091.html">now
+        auto-promote to Captures</a>, not Arrays anymore. That means that
+        when you write <code>my $a = (1, 2, 3)</code> the <code>$a</code>
+        is immutable; <code>$a[2] = 4</code> is an array. Instead you need
+        to say <code>my $a = [1, 2, 3];</code> (anyone speaks Perl 5 here?
+        ;-). Captures were also re-factored to <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31074.html">treat the invocant less
+        special.</a></li>
+    <li>Some <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31075.html">clarification
+        on what happens when you have a sub and an enum value of the same
+        name</a></li>
+    <li>Enhancing an already defined class <a
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/02/msg31014.html">is
+        now done</a> with <code>augment class Object</code> instead of the
+        previous <code>class Object is also</code>. Likewise
+        <code>supersede</code> replaces <code>is instead</code>.</li>
+    <li>
+</ul>
+
+<p>I'm sure I've missed some important pieces, but the past month
+brought so many changes it's hard to keep track of.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>In February we witnessed the <a
+href="http://rakudo.org/node/16">first release of Rakudo</a> that's
+independent from Parrot. The releases are simply numbered (without any
+major/minor distinction) and have code names; the names are picked
+among cities with Perl 6 supportive perlmongers groups. This release
+was dedicated to Vienna.pm who sponsored much of Jonathan
+Worthington's Rakudo work.</p>
+
+<p>Most notably <a
+href="http://rakudo.org/2009/02/rakudo-built-ins-can-now-be-wr.html">Rakudo
+now ships with some built-in functions written in Perl 6</a>, which
+makes it much more hackable if you love Perl 6, but have no clue about
+PIR.</p>
+
+<p>Other interesting changes and fixes are support for the new
+<code>R</code> meta operator (which reverses the order of arguments to
+the following operator) and a <code>.perl</code> method on Match objects
+(just for debugging purposes, it can't be eval'ed back into a Match object
+yet).</p>
+
+<h2>Misc</h2>
+
+<p>Since the Topic of our beloved IRC channel #perl6 become too
+crowded with links to Perl 6 implementations, I set up the page <a
+href="http://perl6-projects.org/">http://perl6-projects.org/</a> which
+simply links to all of the most important Perl 6 projects, including
+compilers and documentation efforts. It is meant to be an entry page
+to link to if you don't want to collect dozens of links yourself.</p>
+
+<p>Hinrik Örn Sigurðsson wrote on p6l that Google <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31051.html">"Summer
+of Code"</a> project where they pay students for work on open source
+projects, and hinted that he'd like to hack on Perl 6 stuff as a gsoc
+project. Jonathan Leto explained that he coordinates the TPF side of
+this year's project.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html spell spelllang=en_us tw=70 
+%]
