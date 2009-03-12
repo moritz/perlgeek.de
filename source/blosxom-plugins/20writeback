@@ -119,6 +119,37 @@ sub start {
 
   # Only spring into action if POSTing to the writeback plug-in
   if ( request_method() eq 'POST' and (param('plugin') eq 'writeback' or $blosxom::flavour eq $trackback_flavour) ) {
+    # check for spam...
+    use lib '/home/moritz/cpan/lib/perl/5.8.8/auto';
+    use Net::Akismet;
+    my $q = CGI->new;
+
+    my $x = Net::Akismet->new(
+            KEY => '418f4e0dd857',
+            URL => 'http://perlgeek.de/',
+        ) or die "Key wrong!";
+
+    my $answer = $x->check(
+                USER_IP                 => $q->remote_host(),
+                COMMENT_USER_AGENT      => $q->user_agent(),
+                COMMENT_CONTENT         => $q->param('comment'),
+                COMMENT_AUTHOR          => $q->param('name'),
+                COMMENT_AUTHOR_URL      => $q->param('url'),
+                REFERRER                => $q->referer,
+            );
+    unless (defined $answer) {
+      warn "Error while querying Akisment";
+      $writeback_response = "Internal error during submission";
+    }
+
+    if ($answer eq 'true') {
+      $writeback_response = "Sorry, your comment has been marked as spam. If
+        you disagree, please send an email to the site owner";
+      return;
+    }
+
+
+
 
     foreach ( ('', split /\//, $path) ) {
       $p .= "/$_";
