@@ -1,5 +1,5 @@
 [%setvar section Artikel%]
-[%setvar title Charsets oder „Warum funktionieren meine Umlaute nicht?”%]
+[%setvar title Zeichenkodierungen oder „Warum funktionieren meine Umlaute nicht?”%]
 [%menu main artikel unicode %]
 [%setvar en /en/article/encodings-and-unicode %]
 <!-- INDEX BEGIN -->
@@ -21,6 +21,7 @@
 
 			<li><a href="#unicode_transformation_formats">Unicode Transformation Formats</a></li>
 		</ul></li>
+        <li><a href="#was_sind_charsets">Was sind „Charsets”?</a></li>
 
 		<li><a href="#perl_und_zeichenkodierungen">Perl und Zeichenkodierungen</a></li>
 		<li><a href="#die_arbeitsumgebung_testen">Die Arbeitsumgebung testen</a></li>
@@ -130,6 +131,27 @@
     asiatische Schriftarten installiert haben.)
 </p>
 
+    <h2><a name="was_sind_charsets"></a>Was sind „Charsets”?</h2>
+
+<p>
+    Das Wort <em>charset</em> wird mit zwei verschiedenen, zum Teil
+    widersprüchlichen Bedeutungen verwendet.
+</p>
+
+<p>
+    Es kommt aus dem Englischen, und ist eigentlich eine Abkürzung für
+    <em>character set</em>. <em>Set</em> ist Englisch für <em>Menge</em>, wenn
+    man es wörtlich nimmt ist also ein Repertoir von Zeichen gemeint, wie
+    Unicode eines definiert. Allerdings schränken auch Kodierungen wie ASCII
+    oder Latin-1 den Zeichensatz ein, stellen also neben Kodierungen auch ein
+    Repertoir oder charset da.
+</p>
+
+<p>
+    Häufig wird <em>charset</em> auch einfach als Synonym für Zeichenkodierung
+    benutzt, wie zum Beispiel in den HTTP-Headern, die weiter unten noch
+    einmal erwähnt werden. 
+</p>
 
 
     <h2><a name="perl_und_zeichenkodierungen"></a>Perl und Zeichenkodierungen</h2>
