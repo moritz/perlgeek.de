@@ -15,7 +15,7 @@ the language is rather stable these days. Maybe I was wrong...</p>
         capture lists/hashes. The method is called <a
         href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31213.html">$/.caps</a>.
         There's also <code>$/.chunks</code> which returns not only
-        captures, but also non-captured-but-matched interleaved with
+        captures, but also non-captured-but-matched strings interleaved with
         captures.
     </li>
     <li>Larry (de?)promoted junctions <a
@@ -24,7 +24,7 @@ the language is rather stable these days. Maybe I was wrong...</p>
         many discussion on IRC and p6l about what are junctions good for,
         why don't they cook your lunch for free  and if they are
         really that hard to understand (no, they aren't; but they do
-        require a bit of effort).
+        require a bit of effort).<br />
         Independently, but also in a strive to make junctions more
         intuitive, block parameters now default to Object, so they are
         transparent to junctions. That means that <code> for @array
@@ -32,7 +32,7 @@ the language is rather stable these days. Maybe I was wrong...</p>
         junctions stored in @array.
     </li>
     <li>Carl Mäsak <a
-        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31167.html">introduce a nice syntax</a> for doing smartmatching in multi subs/methods -
+        href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31167.html">introduced a nice syntax</a> for doing smartmatching in multi subs/methods -
         but didn't quite achieve what he wanted. As a consequence
         Larry <a href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31218.html">tweaked
         the specs for type narrowness in multi dispatch</a>, and
