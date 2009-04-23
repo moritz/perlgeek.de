@@ -1,0 +1,184 @@
+What you can write in Perl 6 today
+
+<p>You've probably heard of Perl 6 before; this weird new version of Perl that
+Larry Wall is obsessed with, and that's being worked on since the year
+2000, and for which there's still no real compiler. Right?</p>
+
+<p>Well, nearly. In 2000 the decision for a complete rewrite of the language
+was made, hacking on <a href="http://parrot.org/">Parrot</a> (a virtual
+machine intended to run Perl 6 and other dynamic languages) began 2001, but hacking on <a href="http://rakudo.org">Rakudo</a>, the Perl 6 compiler on top of Parrot, began in earnest in December 2007.</p>
+
+<p>These days Rakudo is, in my humble opinion, fairly usable. It's not
+fast, and not feature complete, but it <a
+href="http://rakudo.org/status/">implements many neat features</a>, and passes
+more than 10,000 tests today.</p>
+
+<p>I've picked a few example of what Rakudo can run today, in the hope that it
+will impress some Perl 5 hackers and generate more interest in Perl 6 and
+Rakudo.</p>
+
+<h3>Built-in Schwartzian Transformation</h3>
+
+<!-- TODO: link to ST -->
+<p>This one is not overly complicated, but very handy anyway. If you want to
+sort an array case insensitively, in Perl 5 you'd write
+
+<pre>[% syntax perl %]
+# (Perl 5)
+@a = sort { uc($a) cmp uc($b) } @a;
+
+# or if you don't want to duplicate your uc effor, you do a ST:
+@a = map { $_->[0] } sort { $a->[1] cmp $b->[1] } map { [$_, uc] } @a;
+[% endsyntax %]</pre>
+
+<p>(See <a
+href="http://en.wikipedia.org/wiki/Schwartzian_transform">Schwartzian
+Transform</a> for details on what this does).</p>
+
+<p>Perl 6's <code>sort</code> built-in is smart enough to recognize a block that
+expects only one parameter, and automatically does the ST for you:</p>
+
+<pre>[% syntax perl6 %]
+# (Perl 6)
+
+@a = @a.sort: { .uc };
+[% endsyntax %]</pre>
+
+<p>Built-in functions don't default to <code>$_</code> anymore, but a method call
+without invocant does, so the <code>.uc</code> is equivalent to
+<code>$_.uc</code>.</p>
+
+<p>If you want to golf, you can write that even shorter: <code>@a = @a.sort:
+*.uc</code>. The <code>*.method</code> syntax automatically writes the closure for
+you.</p>
+
+<h3>Sorting Hashes</h3>
+
+<p>Another useful sort technique is <code>Hash.sort</code>. It passes Pairs
+(ie single key-to-value mappings) to its comparison routine, making the
+to hash items unnecessary that you might know from Perl 5 hash sorting
+code.</p>
+
+<p>Sorting a Hash by value, for example, is as easy as</p>
+
+<pre>[% syntax perl6 %]
+# (Perl 6)
+my %leaders = USA => 'Obama', Germany => 'Merkel', France => 'Sarkozy';
+say %leaders.sort(*.value).perl;
+
+# Output:
+# ["Germany" => "Merkel", "USA" => "Obama", "France" => "Sarkozy"]
+[% endsyntax %]</pre>
+
+<h3>Iterating made easy</h3>
+
+<p>Iterating arrays and hashes was never hard in Perl, but in Perl 6 a few
+things are even simpler than before. Suppose you want to iterate an array, but
+obtain two items in each iteration. In Perl 5 you'd either write a C-style
+<code>for</code> loop iterating over the index in steps of two, or use
+[doc://List::MoreUtils]::natatime (if you can spell it ;-).</p>
+
+<p>But this is so much easier:</p>
+
+<pre>[% syntax perl6 %]
+for <a b c d> -> $x, $y {
+    say "$x | $y";
+}
+# output:
+# a | b
+# c | d
+[% endsyntax %]</pre>
+
+<p>This also helps when you want to iterate over both index and values:</p>
+
+<pre>[% syntax perl6 %]
+for <a b c>.kv -> $k, $v {
+    say "key: $k    value: $v";
+}
+# output:
+# key: 0    value: a
+# key: 1    value: b
+# key: 2    value: c
+[% endsyntax %]</pre>
+
+<p>The same code also works with Hashes.
+
+<h3>Reductions</h3>
+
+<p>Long known to users of functional programming languages, reductions can be
+very easy in Perl 6. Instead of <code>1 + 2 + 3</code> you can write
+<code>[+] 1, 2, 3</code>, where <code>[...]</code> is the reduction meta
+operator.</p>
+
+<p>Some examples:</p>
+
+<pre>[% syntax perl6 %]
+
+say [+] 1...5;      # sum
+say [*] 1...5;      # product
+say [<] @list;      # is @list strictly ordered ascendingly?
+say [!=] @list;     # are no two consecutive items equal?
+say [eq] @list;     # are all items string-equal?
+[% endsyntax %]</pre>
+
+
+<h3>Parametric Roles</h3>
+
+<p>Perl 6 comes with a fully fledged object system including roles
+(pieces of behavior and data that can be composed into classes and
+objects).</p> 
+
+<p>Not only that, but you can also give the roles parameters, which are bound
+to values at composition time.</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+
+role Tax[Num $rate] {
+    method pay-tax {
+        my $tax = $.income * $rate;
+        $!income -= $tax;
+        say "Paying $tax Dollars tax";
+    }
+}
+
+class Banker {
+    has $.income = 234000;
+}
+
+my $bailout = Banker.new() but Tax[0.90];
+$bailout.pay-tax();
+# output: Paying 210600 Dollars tax
+[% endsyntax %]</pre>
+
+<p>(To get something similar in Perl 5 you'd need [mod://Moose] and
+[mod://MooseX::Role::Parameterized]).</p>
+
+<p>Parametric roles are used internally to implement typed arrays and
+hashes.</p>
+
+<pre>[% syntax perl6 %]
+my Int @a = 1, 2, 3;
+@a[1] = 4;      # fine
+@a[2] = 'foo';  # Error: Type mismatch in assignment.
+[% endsyntax %]<pre>
+
+<p>The <code>my Int @a</code> declares an Array that's parameterized by the type of
+array items, here <code>Int</code>.</p>
+
+<h2>Conclusions</h2>
+
+<p>These are just a few very basic examples of cool things to do with Perl 6
+today. Even more exciting are for example the regexes and grammars, about
+which I won't talk now because then I wouldn't finish before the end of the
+month ;-)</p>
+
+<p>If you haven't tried Perl 6, now is a good time. <a
+href="http://rakudo.org/how-to-get-rakudo">Download and build</a> it now, and
+if you have any questions go to #perl6 on irc.freenode.net, or ask on
+<code>perl6-users@perl.org</code>.</p>
+
+[% option no-header %] [% option no-footer %]
+<!--
+  vim: ft=html spell
+  -->
