@@ -161,7 +161,7 @@ hashes.</p>
 my Int @a = 1, 2, 3;
 @a[1] = 4;      # fine
 @a[2] = 'foo';  # Error: Type mismatch in assignment.
-[% endsyntax %]<pre>
+[% endsyntax %]</pre>
 
 <p>The <code>my Int @a</code> declares an Array that's parameterized by the type of
 array items, here <code>Int</code>.</p>
