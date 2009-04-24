@@ -154,7 +154,7 @@ $bailout.pay-tax();
 <p>(To get something similar in Perl 5 you'd need <a
         href="http://search.cpan.org/perldoc?Moose">Moose</a>and
 <a
-href="http://search.cpan.org/perldoc?Moose::Role::Parameterized">MooseMooseX::Role::Parameterized]</a>).</p>
+href="http://search.cpan.org/perldoc?MooseX::Role::Parameterized">MooseMooseX::Role::Parameterized]</a>).</p>
 
 <p>Parametric roles are used internally to implement typed arrays and
 hashes.</p>
