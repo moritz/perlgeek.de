@@ -2,6 +2,8 @@
 <h2 id="$fn">$title</h2>
 <br />
 
+<script type="text/javascript" src="http://www.reddit.com/button.js?t=1"></script>
+<a href="$url$path/$fn.writeback">Permanent link</a>
 <div class="blog_post_body">
 $body
 </div>
@@ -9,7 +11,8 @@ $body
 <p align="right">
 <em>[<a href="$url$path">$path</a>] 
 <!--<a href="$url/$yr/$mo_num/$da#$fn">permanent link</a>-->
-<a href="$url$path/$fn.html">Permanent link</a>
+<script type="text/javascript" src="http://www.reddit.com/button.js?t=1"></script>
+<a href="$url$path/$fn.writeback">Permanent link</a>
 </em>
 </p>
 <!-- TrackBack auto-discovery bits -->
