@@ -1,0 +1,108 @@
+Perl 6 Tidings from May 2009
+
+<h2>Specification</h2>
+
+<ul>
+    <li>masak, ruoso and I worked on the question how method calls
+        could do autovivification, ie how <code>%array{'foo'}.push:
+        'bar'</code> knows how to build an Array in
+        <code>%arrray{'foo'}</code> if that item didn't exists previously.
+        Sadly the outcome was a bit vague and dissatisfying (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26069">r26069</a>).</li>
+    <li>The <code>join</code> method now defaults to the empty
+        delimiter. If you want spaces, you can still use the
+        <code>.Str</code> method to coerce to String, which will add a
+        space between List items (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26129">r26129</a>).</li>
+    <li>The strive to make built-in methods and subs not depend too
+        much on the type of the invocant found two new "victims" -
+        string reversing is now done with <code>flip</code> (and
+        <code>reverse</code> always reverses lists), and the hash
+        reversal is now called <code>invert</code>). The new
+        <code>Hash.push</code> method adds items to an existing hash,
+        turning items into Arrays when they would otherwise
+        collide (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26129">r26129</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=26135">r26135</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=26182">r26182</a>)</li>
+    <li>Listop sigils are gone, so <code>@ @foo Z @bar</code> is now
+        illegal, you either have to write <code>list @foo Z
+        @bar</code> or <code>@( @foo Z @bar)</code>. Having only two
+        ways to do the same things is still now violation of the
+        timtowtdi principle ;-) (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26167">r26167</a>).</li>
+     <li><code>when</code> is also a statement modifier now, so you
+        can write <code>say "foo" when 'bar';</code> (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26241">r26241</a>).</li>
+     <li>The prefix <code>=</code> operator for iterating over a file
+        handle is now gone. Instead you can iterate over
+        <code>$handle.lines</code> or get a single one with
+        <code>$handle.get</code>. <code>lines</code> optionally takes
+        a limit. <code>readline</code> is also gone in favor of
+        <code>get</code>. (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26292">r26292</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=26295">r26295</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=26299">r26299</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=26302">r26302</a>).</li>
+     <li>Some more bracketing constructs are now allowed wherever any
+        kind of bracket is allow - Unicode-fu above my head
+        (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26401">r26401</a>).</li>
+</ul>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>As each month <a href="http://rakudo.org/">Rakudo</a> had another
+<a href="http://use.perl.org/~pmichaud/journal/38853">release</a> in
+April, featuring (among other new features) typed hashes and arrays,
+lexical subroutines  and multis, Perl 5 regexes, Unicode character
+names both in Regular expressions and double quote interpolations,
+Sockets and many bugfixes.</p>
+
+<p>This is also the first release where Rakudo passed more than ten
+thousand spec tests (mainly due to the regex improvements).</p>
+
+<p>The Rakudo team is also proud to welcome the first new committer since Rakudo
+left Parrot's nest: Cory Spencer contributed lots of patches to move
+built-in subs and methods to the setting (ie the Perl 6 library
+holding built-ins), thus enabling for example the Trig export, so that
+you can now say <code>use Num :Trig;</code> to import trigonometric
+functions.</p>
+
+<h3>SMOP</h3>
+
+<p>Paweł Murias spent much time bringing re-smop, the refactored
+version of SMOP, up and running. He will implement multi methods for
+SMOP as a <a
+href="http://socghop.appspot.com/org/list_proposals/google/gsoc2009/dukeleto">project
+for this year's Summer of Code</a>.</p>
+
+<h2>Summer of Code</h2>
+
+<p>I'm glad to inform you that this year The Perl Foundation will
+mentor <a
+href="http://socghop.appspot.com/org/list_proposals/google/gsoc2009/dukeleto">nine
+Perl related projects</a>, four of which are somehow related to Perl 6
+or Parrot: Paweł's project as mentioned above, Hinrik "Literal"'s <a
+href="http://socghop.appspot.com/student_proposal/review/google/gsoc2009/hinrik/t123853864414">Enduser
+documentation for Perl 6</a> project, Kevin Tew's <a
+href="http://socghop.appspot.com/student_proposal/review/google/gsoc2009/tewk/t123860766727">prototype
+for an LLVM based JIT core</a> in Parrot, and Daniel Arbelo will <a
+href="http://socghop.appspot.com/student_proposal/review/google/gsoc2009/darbelo/t123859816607">plug
+the libdecnum libraries for large decimal arithmetics</a> into
+parrot.</a>.</p>
+
+<p>These all look like excellent proposals, and all of the students
+have already proved their hacking skills in some Perl or Parrot
+projects. I wish them and us the best of luck.</p>
+
+<h2>Others</h2>
+
+<p>I probably missed this in my last summary, so here it comes: There
+was a large discussion about a logo for Perl 6 and/or Rakudo. Larry
+Wall <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31263.html">told
+us both what criteria a logo must fulfill, and what is initial
+proposal was</a>. So unless somebody comes up with an even better
+idea, it will be Camelia, a colourful female butterfly.</p>
+
+<p>It also appears on <a
+href="http://perl6-projects.org/">perl6-projects.org</a>, which has
+gained a pleasing number of occasional contributers.</p>
+
+
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html spell spelllang=en_us tw=70 
+%]
