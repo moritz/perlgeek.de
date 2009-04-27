@@ -23,7 +23,7 @@ Perl 6 Tidings from May 2009
     <li>Listop sigils are gone, so <code>@ @foo Z @bar</code> is now
         illegal, you either have to write <code>list @foo Z
         @bar</code> or <code>@( @foo Z @bar)</code>. Having only two
-        ways to do the same things is still now violation of the
+        ways to do the same things is still no violation of the
         timtowtdi principle ;-) (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26167">r26167</a>).</li>
      <li><code>when</code> is also a statement modifier now, so you
         can write <code>say "foo" when 'bar';</code> (<a href="http://perlcabal.org/svn/pugs/revision/?rev=26241">r26241</a>).</li>
@@ -42,7 +42,7 @@ Perl 6 Tidings from May 2009
 
 <h3>Rakudo</h3>
 
-<p>As each month <a href="http://rakudo.org/">Rakudo</a> had another
+<p>As happens each month, <a href="http://rakudo.org/">Rakudo</a> had another
 <a href="http://use.perl.org/~pmichaud/journal/38853">release</a> in
 April, featuring (among other new features) typed hashes and arrays,
 lexical subroutines  and multis, Perl 5 regexes, Unicode character
