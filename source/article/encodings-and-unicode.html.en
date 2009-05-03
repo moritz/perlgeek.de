@@ -24,13 +24,13 @@
     <h2 id="ascii">ASCII</h2>
 <p>
     To understand the root of the problem you have to understand how "normal"
-    latin characters and other characters (the ones that cause problems) are 
+    Latin characters and other characters (the ones that cause problems) are 
     stored.
 </p>
 
 <p>
     It all began in the year 1963 with ASCII, the "American Standard for
-    Information Interchange". It maps 128 charcters to the number from 0 to
+    Information Interchange". It maps 128 characters to the number from 0 to
     127, which can be encoded with 7 bits.
 </p>
 
@@ -40,8 +40,8 @@
 </p>
 
 <p>
-    The standard defines the latin letters <code>a</code> to <code>z</code> in
-    both upper and lower case, the arabic digits <code>0</code> to
+    The standard defines the Latin letters <code>a</code> to <code>z</code> in
+    both upper and lower case, the Arabic digits <code>0</code> to
     <code>9</code>, whitespace like "blank" and "carriage return", a few
     control characters and a few special signs like <code>%</code>,
     <code>$</code> and so on.
@@ -49,7 +49,7 @@
 
 <p>
     Characters that aren't essential in the day to day life of an American
-    citizen are not defined, like Cyrillic signs, "decorated" latin characters
+    citizen are not defined, like Cyrillic signs, "decorated" Latin characters
     etc. weren't defined at all.
 </p>
 
@@ -76,7 +76,7 @@
 <p>
     Other commonly used character encodings are the IBM code pages like <a
     href="http://en.wikipedia.org/wiki/Code_page_850">Code Page 850</a>
-    (similar to Latin-1), some of which were later superceeded by Microsoft
+    (similar to Latin-1), some of which were later superseded by Microsoft
     Windows specific encodings like <a
     href="http://en.wikipedia.org/wiki/Windows-1252">Windows-1252</a>.
 %]
@@ -84,7 +84,7 @@
 
 [% comment TODO: check the Shift-JIS part %]
 <p>
-    In other parts of world other character encodings were developped, like
+    In other parts of world other character encodings were developed, like
     Big5 in China and Shift-JIS in Japan.
 </p>
 
@@ -134,7 +134,7 @@
 <h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
 
 <p>
-    The concept of Unicode codepoints and graphemes is completely independant
+    The concept of Unicode codepoints and graphemes is completely independent
     of the encoding.
 </p>
 
@@ -194,7 +194,7 @@
     Interaction with the environment (like reading data from
     <code>STDIN</code> or a file, or printing it) treats strings as binary
     data.
-    The same holds true for the return value of many builtin functions (like
+    The same holds true for the return value of many built-in functions (like
     <code>gethostbyname</code>) and special variables that
     carry information to your program (<code>%ENC</code> and <code>@ARGV</code>).
 </p>
@@ -249,7 +249,7 @@ print encode($enc, $text_str); # prints 'ä', lc worked as expected
 
 <p>
     It is highly recommended to convert all input to text strings, then work
-    with the text strings, and only covert them back to byte strings on ouput
+    with the text strings, and only covert them back to byte strings on output
     or storing.
 </p>
 
@@ -286,6 +286,7 @@ binmode STDOUT, ':locale';
 # all I/O with current locale:
 use open ':locale';
 [%endsyntax%]</pre>
+[% comment make vim happy again: ' %]
 
 <p>
     Care should be taken with the input layer <code>:utf8</code>, which often
@@ -354,7 +355,7 @@ for (@charsets){
 <h3>"Wide Character in print"</h3>
 
 <p>
-    Somtimes you might see the <code>Wide character in print</code> warning.
+    Sometimes you might see the <code>Wide character in print</code> warning.
 </p>
 
 <p>
@@ -414,7 +415,7 @@ LEN = 4</pre>
 <p>
     But there is a big caveat: Just because the <code>UTF8</code> flag isn't present
     doesn't mean that the text string hasn't been decoded. Perl uses either
-    Latin-1 or UTF-8 internally to store strings, and the precense of this
+    Latin-1 or UTF-8 internally to store strings, and the presence of this
     flag indicates which one is used.
 </p>
 
@@ -448,7 +449,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 </p>
 <p>
     For most applications, UTF-8 is a good choice, since you can code arbitrary
-    Unicode codepoints with it. On the other hand english text (and of
+    Unicode codepoints with it. On the other hand English text (and of
     most other European languages) is encoded very efficiently.
 </p>
 
@@ -594,7 +595,7 @@ first 127 bytes (for example UTF-7, UCS-2 and UTF-16).</p>
 <p>So although the encoding information is available, the parser first has to
 guess nearly correctly to extract it.</p>
 
-<h3>How to Do it Right: Out-of-band Signalling</h3>
+<h3 id="outofband">How to Do it Right: Out-of-band Signaling</h3>
 
 <p>The XML example above demonstrates that a file format can't carry encoding
 information in the file itself, unless you specify a way to carry that encoding
@@ -639,15 +640,16 @@ care of all encoding issues.</p>
     Perl magazine. It was enhanced and corrected since then.
 </p>
 
-<!-- TODO: proper attribution -->
 <p>
     Many thanks go to <a href="http://juerd.nl">Juerd Waalboer</a>, who 
     pointed out many smaller and a few
     not-so-small errors in earlier versions of this article, and contributed
-    greatly to my understanding of perl's string handling. 
+    greatly to my understanding of Perl's string handling. 
 </p>
 
 <p>
     I'd also like to thank [http://www.perlmonks.org/?node=ELISHEVA|ELISHEVA]
     for suggesting many improvements to both grammar and spelling.
 </p>
+[% comment vim: spell ft=html
+%]

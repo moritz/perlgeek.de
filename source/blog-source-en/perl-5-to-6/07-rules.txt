@@ -1,5 +1,5 @@
 Rules (formerly Regexes)
-
+<!-- 1222381200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -93,7 +93,7 @@ name="Syntax_clean_up"
 
 <p>The changed semantics of <code>.</code> has already been mentioned, and that <code>[...]</code> are now non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
 
-<p>This means that the <code>/s</code> and <code>/m</code> modifers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
+<p>This means that the <code>/s</code> and <code>/m</code> modifiers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
         say &#34;Match&#34;;
@@ -162,13 +162,13 @@ name="MOTIVATION"
 
 <p>Perl 5 regexes are often rather unreadable, the grammars encourage you to split a large regex into more readable, short fragments. Named captures make the rules more self-documenting, and many things are now much more consistent than they were before.</p>
 
-<p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the perl 5 one, which is written in C and not changable at parse time.</p>
+<p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the perl 5 one, which is written in C and not changeable at parse time.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a></p>
+>http://perlcabal.org/syn/S05.html</a> =for time 1222381200 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

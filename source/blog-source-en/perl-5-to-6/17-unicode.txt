@@ -1,5 +1,5 @@
 Unicode
-
+<!-- 1227826800 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -23,7 +23,7 @@ name="DESCRIPTION"
 
 <p><i>Logical character</i> is still a vague term. To be more precise a <code>Str</code> is an object that can be viewed at different levels: <code>Byte</code>, <code>Codepoint</code> (anything that the Unicode Consortium assigned a number to is a codepoint), <code>Grapheme</code> (things that visually appear as a character) and <code>CharLingua</code> (language defined characters).</p>
 
-<p>For example the string with the hex bytes <code>61 cc 80</code> consists of three bytes (obviously), but can also be viewd as being consisting of two codepoints with the names <code>LATIN SMALL LETTER A</code> (U+0041) and <code>COMBINING GRAVE ACCENT</code> (U+0300), or as one grapheme that, if neither my blog software nor your browser kill it, looks like this: <code>&#224;</code>.</p>
+<p>For example the string with the hex bytes <code>61 cc 80</code> consists of three bytes (obviously), but can also be viewed as being consisting of two codepoints with the names <code>LATIN SMALL LETTER A</code> (U+0041) and <code>COMBINING GRAVE ACCENT</code> (U+0300), or as one grapheme that, if neither my blog software nor your browser kill it, looks like this: <code>&#224;</code>.</p>
 
 <p>So you can&#39;t simply ask for the length of a string, you have to ask for a specific length:</p>
 
@@ -33,7 +33,7 @@ name="DESCRIPTION"
 
 <p>There&#39;s also method named <code>chars</code>, which returns the length in the current Unicode level (which can be set by a pragma like <code>use bytes</code>, and which defaults to graphemes).</p>
 
-<p>In Perl 5 you sometimes had the problem of accidentially concatenating byte strings and text strings. If you should ever suffer from that problem in Perl 6, you can easily identify where it happens by overloading the concatenation operator:</p>
+<p>In Perl 5 you sometimes had the problem of accidentally concatenating byte strings and text strings. If you should ever suffer from that problem in Perl 6, you can easily identify where it happens by overloading the concatenation operator:</p>
 
 <pre>  sub GLOBAL::infix:&#60;~&#62; is deep (Str $a, buf $b)|(buf $b, Str $a) {
       die &#34;Can&#39;t concatenate text string &#171;&#34;
@@ -55,13 +55,13 @@ name="Regexes_and_Unicode"
 
 <p>Regexes can take modifiers that specify their Unicode level, so <code>m:codes/./</code> will match exactly one codepoint. In the absence of such modifiers the current Unicode level will be used.</p>
 
-<p>Character classes like <code>\w</code> (match a word character) behave accordingly to the Unicode standard. There are modifiers that ignore case (<code>:i</code>) and accents (<code>:a</code>), and modifiers for the substition operators that can carry case information to the substition string (<code>:samecase</code> and <code>:sameaccent</code>, short <code>:ii</code>, <code>:aa</code>).</p>
+<p>Character classes like <code>\w</code> (match a word character) behave accordingly to the Unicode standard. There are modifiers that ignore case (<code>:i</code>) and accents (<code>:a</code>), and modifiers for the substitution operators that can carry case information to the substitution string (<code>:samecase</code> and <code>:sameaccent</code>, short <code>:ii</code>, <code>:aa</code>).</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>It is quite hard to correctly process strings with most tools and most programming languages these days. Suppose you have a web application in perl 5, and you want to break long words automatically so that they don&#39;t mess up your layout. When you use naiive <code>substr</code> to do that, you might accidentially rip graphemes apart.</p>
+<p>It is quite hard to correctly process strings with most tools and most programming languages these days. Suppose you have a web application in perl 5, and you want to break long words automatically so that they don&#39;t mess up your layout. When you use naive <code>substr</code> to do that, you might accidentally rip graphemes apart.</p>
 
 <p>Perl 6 will be the first mainstream programming language with built in support for grapheme level string manipulation, which basically removes most Unicode worries, and which (in conjunction with regexes) makes Perl 6 one of the most powerful languages for string processing.</p>
 
@@ -72,6 +72,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S29.html#Str" class="podlinkurl"
->http://perlcabal.org/syn/S29.html#Str</a></p>
+>http://perlcabal.org/syn/S29.html#Str</a> =for time 1227826800 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

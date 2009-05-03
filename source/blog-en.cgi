@@ -13,7 +13,7 @@ my $cwd =  getcwd();
 # --- Configurable variables -----
 
 # What's this blog's title?
-$blog_title = "Perlgeek.de Blog";
+$blog_title = "Perlgeek.de";
 
 # What's this blog's description (for outgoing RSS feed)?
 $blog_description = "Perl and Programming Blog.";
@@ -34,7 +34,7 @@ $url = "/blog-en/";
 $depth = 0;
 
 # How many entries should I show on the home page?
-$num_entries = 40;
+$num_entries = 15;
 
 # What file extension signifies a blosxom entry?
 $file_extension = "txt";
@@ -179,6 +179,7 @@ $entries =
         my $curr_depth = $File::Find::dir =~ tr[/][]; 
         return if $depth and $curr_depth > $depth; 
      
+        my  $mtime = datesort::dateforfile($File::Find::name);
         if ( 
           # a match
           $File::Find::name =~ m!^$datadir/(?:(.*)/)?(.+)\.$file_extension$!
@@ -189,17 +190,17 @@ $entries =
             # to show or not to show future entries
             ( 
               $show_future_entries
-              or stat($File::Find::name)->mtime < time 
+              or $mtime <= time 
             )
 
               # add the file and its associated mtime to the list of files
-              and $files{$File::Find::name} = stat($File::Find::name)->mtime
+              and $files{$File::Find::name} = $mtime
 
                 # static rendering bits
                 and (
                   param('-all') 
                   or !-f "$static_dir/$1/index." . $static_flavours[0]
-                  or stat("$static_dir/$1/index." . $static_flavours[0])->mtime < stat($File::Find::name)->mtime
+                  or datesort::dateforfile("$static_dir/$1/index." . $static_flavours[0]) < datesort::dateforfile($File::Find::name)
                 )
                   and $indexes{$1} = 1
                     and $d = join('/', (nice_date($files{$File::Find::name}))[5,2,3])
@@ -209,7 +210,7 @@ $entries =
 
             } 
             else {
-              !-d $File::Find::name and -r $File::Find::name and $others{$File::Find::name} = stat($File::Find::name)->mtime
+              !-d $File::Find::name and -r $File::Find::name and $others{$File::Find::name} = $mtime;
             }
       }, $datadir
     );

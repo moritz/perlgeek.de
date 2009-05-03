@@ -1,5 +1,5 @@
 Strings, Arrays, Hashes;
-
+<!-- 1221949200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -97,7 +97,7 @@ name="Hashes"
     say &#34;The people in France love &#34;,  %drinks{&#39;France&#39;};
     %drinks.delete(&#39;France&#39;);</pre>
 
-<p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not auto quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The autoquoting isn&#39;t gone, it just has a different syntax:</p>
+<p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not auto quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The auto quoting isn&#39;t gone, it just has a different syntax:</p>
 
 <pre>    say %drinks&#60;Bavaria&#62;;</pre>
 
@@ -112,7 +112,7 @@ name="Final_Notes"
 <pre>    my $a = [1, 2, 3];
     say $a[2];          # 3</pre>
 
-<p>This means that you don&#39;t need special dereferncing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
+<p>This means that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

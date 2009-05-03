@@ -1,5 +1,5 @@
 How to get a parse tree for a Perl 6 Program
-
+<!-- 1230850800 -->
 <p>Only Perl 6 can parse Perl 6, or so people say. This is mostly true, since
 the only parsers that can handle all known Perl 6 code is the module
 <code>STD.pm</code> written in Perl 6.</p>

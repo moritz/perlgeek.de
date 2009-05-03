@@ -1,5 +1,5 @@
 Junctions
-
+<!-- 1222467600 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -67,7 +67,7 @@ name="DESCRIPTION"
     say &#34;Yes&#34; if   $a != $b ;       # Yes
     say &#34;Yes&#34; if !($a == $b);       # no output</pre>
 
-<p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparion returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
+<p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparison returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"
@@ -106,6 +106,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Junctive_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Junctive_operators</a></p>
+>http://perlcabal.org/syn/S03.html#Junctive_operators</a> =for time 1222467600 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

@@ -1,0 +1,46 @@
+The Cross Meta Operator
+<!-- 1243375200 -->
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 25 - The Cross Meta Operator</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>    for &#60;a b&#62; X 1..3 -&#62; $a, $b {
+        print &#34;$a: $b   &#34;;
+    }
+    # output: a: 1  a: 2  a: 3  b: 1  b: 2  b: 3
+
+    .say for &#60;a b c&#62; X 1, 2;
+    # output: a1\n a2\n b1\n b2\n c1\n c2\n
+    # (with real newlines instead of \n)</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>The cross operator <code>X</code> returns the Cartesian product of two or more lists, which means that it returns all possible tuples where the first item is an item of the first list, the second item is an item of second list etc.</p>
+
+<p>If an operator follows the <code>X</code>, then this operator is applied to all tuple items, and the result is returned instead. So <code>1, 2 X+ 3, 6</code> will return the values <code>1+3, 1+6, 2+3, 2+6</code> (evaluated as <code>4, 7, 5, 8</code> of course).</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>It&#39;s quite common that one has to iterate over all possible combinations of two or more lists, and the cross operator can condense that into a single iteration, thus simplifying programs and using up one less indentation level.</p>
+
+<p>The usage as a meta operator can sometimes eliminate the loops altogether.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S03.html#Cross_operators" class="podlinkurl"
+>http://perlcabal.org/syn/S03.html#Cross_operators</a>,</p>
+
+[% option no-header %] [% option no-footer %]

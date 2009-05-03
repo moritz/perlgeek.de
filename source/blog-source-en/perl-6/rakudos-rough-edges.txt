@@ -1,0 +1,57 @@
+Rakudo's rough edges
+<!-- 1241367871 -->
+
+<p><a href="http://rakudo.org/">Rakudo</a> <a
+href="http://perlgeek.de/blog-en/perl-6/rakudo-rocks.html">rocks</a>, it has
+many cool and convenient features - but it also has its rough edges. Some things
+really need improvements.</p>
+
+<p>The Rakudo developers know about these, but by shedding a light on these
+edges I hope that I motivate people to work on them, as well as giving fellow
+Rakudo users the feeling that they are not alone with their woes.</p>
+
+<p>Here they are:</p>
+
+<ul>
+    <li>Missing line numbers in error messages</li>
+    <li>Can't initialize attributes in BUILD methods</li>
+    <li>Performance</li>
+</ul>
+
+<p>The first one is pretty obvious: While parse errors show a line number
+in the error message, other compile time errors and parse errors don't. When
+debugging a larger application that's really a pain. I've been told that this
+is very close to being implemented, and maybe it is at the time I get this
+blog post published, so here is hope.</p>
+
+<p>If you've only toyed around with Rakudo a bit, you might not have hit the
+second item on my list. Perl 6 has a rather sophisticated object model, and
+Rakudo implements large parts of it. But in larger applications it still feels
+a bit hacky because you can't use the <code>BUILD</code> submethod to set up
+attributes, it dies with a <code>Null PMC access</code>. Therefore one has to
+revert to custom init methods, and is always in danger of forgetting to call
+it.</p>
+
+<p>Performance again is very obvious: Rakudo has a startup time of nearly a
+second, and both execution and compilation is very slow. Thanks to module
+precompilation it is somewhat manageable in bigger projects, but it's still
+something that needs improvement. Thankfully Allison Randal is reworking the
+calling conventions in Parrot, and we can hope for some speedup there.</p>
+
+<p>There are other things that could use some polishing, but which seem of 
+somewhat lower priority to me:</p>
+
+<ul>
+    <li>Syntax errors could be more specific.</li>
+    <li>The error <code>say requires an argument</code> should only appear for
+    an otherwise syntactically correct statement, not if there's a syntax error
+    later in the code - it is rather misleading in that case.</li>
+    <li>When the user lets his program <code>die()</code>, parrot's stack
+    trace should not be shown - if a stack trace is desirable, then one
+    showing only Perl 6 routines.</li>
+    <li>A mechanism for controlling warnings would be very welcome.</li>
+</ul>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell spelllang=en_us: 
+%]

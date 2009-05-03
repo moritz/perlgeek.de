@@ -1,5 +1,5 @@
 Magic ARGV (considered harmful)
-
+<!-- 1217282400 -->
 <p>A <a
 href="http://www.nntp.perl.org/group/perl.perl5.porters/2008/07.html">bunch of
 threads</a> on the perl5-porters mailing list made me aware of a rather

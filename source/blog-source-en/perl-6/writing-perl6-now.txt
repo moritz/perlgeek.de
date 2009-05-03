@@ -1,5 +1,5 @@
 What you can write in Perl 6 today
-
+<!-- 1240524000 -->
 <p>You've probably heard of Perl 6 before; this weird new version of Perl that
 Larry Wall is obsessed with, and that's being worked on since the year
 2000, and for which there's still no real compiler. Right?</p>

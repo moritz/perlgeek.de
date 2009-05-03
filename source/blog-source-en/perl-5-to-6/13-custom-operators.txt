@@ -1,5 +1,5 @@
 Custom Operators
-
+<!-- 1224367200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -23,7 +23,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Operators are functions with unusual names, and a few addtional properties like precedence and associativity. Perl 6 usually follows the pattern <code>term infix term</code>, where <code>term</code> can be optionally preceeded by prefix operators and followed by postfix or postcircumfix operators.</p>
+<p>Operators are functions with unusual names, and a few additional properties like precedence and associativity. Perl 6 usually follows the pattern <code>term infix term</code>, where <code>term</code> can be optionally preceded by prefix operators and followed by postfix or postcircumfix operators.</p>
 
 <pre>    1 + 1               infix
     +1                  prefix
@@ -58,7 +58,7 @@ name="Precedence"
 name="Associativity"
 >Associativity</a></h4>
 
-<p>Most infix operators take only two arguments. In an expression like <code>1 / 2 / 4</code> the <i>associativity</i> of the operator decides the order of evaluation. The <code>infix:&#60;/&#62;</code> operator is left associative, so this expression is parsed as <code>(1 / 2) / 4</code>. for a right associative operator like <code>infix:&#60;**&#62;</code> (exponentation) <code>2 ** 2 ** 4</code> is parsed as <code>2 ** (2 ** 4)</code>.</p>
+<p>Most infix operators take only two arguments. In an expression like <code>1 / 2 / 4</code> the <i>associativity</i> of the operator decides the order of evaluation. The <code>infix:&#60;/&#62;</code> operator is left associative, so this expression is parsed as <code>(1 / 2) / 4</code>. for a right associative operator like <code>infix:&#60;**&#62;</code> (exponentiation) <code>2 ** 2 ** 4</code> is parsed as <code>2 ** (2 ** 4)</code>.</p>
 
 <p>Perl 6 has more associativities: <code>non</code> forbids chaining of operators of the same precedence (for example <code>2 &#60;=&#62; 3 &#60;=&#62; 4</code> is forbidden), and <code>infix:&#60;,&#62;</code> has <code>list</code> associativity. <code>1, 2, 3</code> is translated to <code>infix:&#60;,&#62;(1; 2; 3)</code>. Finally there&#39;s the <code>chain</code> associativity: <code>$a &#60; $b &#60; $c</code> translates to <code>($a &#60; $b) &#38;&#38; ($b &#60; $c)</code>.</p>
 
@@ -88,7 +88,7 @@ name="Postfcircumfix_and_Circumfix"
         return $text.comb(rx/\S+/);
     }</pre>
 
-<p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurences of a regex and returns a list of the text of all matches.</p>
+<p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurrences of a regex and returns a list of the text of all matches.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="&#34;Overload&#34;_existing_operators"

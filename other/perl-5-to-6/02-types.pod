@@ -15,7 +15,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 has types. Everything is an Object in some way, and has a type.
+Perl 6 has types. Everything is an Object in some way, and has a type.
 Variables can have type constraints, but they don't need to have one.
 
 There are some basic types that you should know about:
@@ -25,7 +25,7 @@ There are some basic types that you should know about:
     3.14            # Num
     (1, 2, 3)       # List
 
-All "normal" builtin types begin with an upper case letter. All "normal" types
+All "normal" built-in types begin with an upper case letter. All "normal" types
 inherit from C<Any>, and absolutely everything inherits from C<Object>.
 
 You can restrict the type of values that a variable can hold by adding the
@@ -37,14 +37,14 @@ type name to the declaration.
 It is an error to try to put a value into a variable that is of a "wrong" type
 (ie neither the specified type nor a subtype).
 
-A type declaration on an Arrray is used for its contents, so C<my Str @s> is
+A type declaration on an Array is used for its contents, so C<my Str @s> is
 an array that can only contain strings.
 
 =head2 Introspection
 
 You can learn about the direct type of a thing by calling its C<.WHAT> method.
 
-    say "foo".WHAT;     # Str
+    say "foo".WHAT;     # Str()
 
 However if you want to check if something is of a specific type, there is a
 different way, which also takes inheritance into account and is therefore
@@ -81,3 +81,6 @@ for particular types.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S02.html#Built-In_Data_Types>,
+
+=for time 1221950400
+=for editor vim: spell

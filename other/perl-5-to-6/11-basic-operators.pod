@@ -54,7 +54,7 @@ and it does what you mean.
 =head1 MOTIVATION
 
 Many changes to the operators aim at a better Huffman coding, ie give often
-use things short names (like C<.> for method calls) and seldomly used
+use things short names (like C<.> for method calls) and seldom used
 operators a longer name (like C<~&> for string bit-wise AND).
 
 The chaining comparison operators are another step towards making the language
@@ -64,3 +64,5 @@ notation.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators>
+=for time 1224194400
+=for editor vim: spell

@@ -1,5 +1,5 @@
 Quoting and Parsing
-
+<!-- 1228777200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -36,17 +36,17 @@ name="Quoting"
 
 <p>Perl 6 has a powerful mechanism of quoting strings, you have exact control over what features you want in your string.</p>
 
-<p>Perl 5 had single quotes, double quotes and <code>qw(...)</code> (single quotes, splitted on whitespaces) as well as the <code>q(..)</code> and <code>qq(...)</code> forms which are basically synomyms for single and double quotes.</p>
+<p>Perl 5 had single quotes, double quotes and <code>qw(...)</code> (single quotes, splitted on whitespaces) as well as the <code>q(..)</code> and <code>qq(...)</code> forms which are basically synonyms for single and double quotes.</p>
 
 <p>Perl 6 in turn defines a quote operator named <code>Q</code> that can take various modifiers. The <code>:b</code> (<i>backslash</i>) modifier allows interpolation of backslash escape sequences like <code>\n</code>, the <code>:s</code> modifier allows interpolation of scalar variables, <code>:c</code> allows the interpolation of closures (<code>&#34;1 + 2 = { 1 + 2 }&#34;</code>) and so on, <code>:w</code> splits on words as <code>qw/.../</code> does.</p>
 
-<p>You can arbitrarily combine those modifiers. For example you might wish a form of <code>qw/../</code> that interplates only scalars, but nothing else? No problem:</p>
+<p>You can arbitrarily combine those modifiers. For example you might wish a form of <code>qw/../</code> that interpolates only scalars, but nothing else? No problem:</p>
 
 <pre>    my $stuff = &#34;honey&#34;;
     my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
     say @list[*-1];                     # prints with\nfunny\nescapes</pre>
 
-<p>Here&#39;s a list of what modifiers are available, mostly stolen from S02 directly. All of these also have long names, which I ommited here.</p>
+<p>Here&#39;s a list of what modifiers are available, mostly stolen from S02 directly. All of these also have long names, which I omitted here.</p>
 
 <pre>    Features:
         :q          Interpolate \\, \q and \&#39;
@@ -94,7 +94,7 @@ name="Parsing"
 
 <pre>    if ($x &#60; 3) { say &#39;&#60;3&#39; }</pre>
 
-<p>Or just omit the parens alltogether:</p>
+<p>Or just omit the parens altogether:</p>
 
 <pre>    if $x &#60; 3 { say &#39;&#60;3&#39; }</pre>
 

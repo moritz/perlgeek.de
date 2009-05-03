@@ -1,5 +1,5 @@
 Introduction
-
+<!-- 1221948000 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -79,6 +79,8 @@ name="ROADMAP"
 <p>Things that I want to mention somewhere, but don&#39;t know where</p>
 
 <pre>    .perl method</pre>
+
+<p>I&#39;ll also update these lessons from time to time make sure they are not too outdated.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="AUTHOR"

@@ -18,7 +18,7 @@
 Java programmers tend to think of a type as either a class or an interface
 (which is something like a crippled class), but that view is too limited for
 Perl 6. A type is more generally a constraint of what a values a container can
-containt. The "classical" constraint is 
+constraint. The "classical" constraint is 
 I<it is an object of a class C<X> or of a class that inherits from C<X>>. Perl
 6 also has constraints like I<the class or the object does role C<Y>>, or
 I<this piece of code returns true for our object>. The latter is the most
@@ -52,3 +52,6 @@ data that the previous implementation rejected as "bad", he can simple add a
 multi sub with the same name that accepts the data. For example a math library
 that handles real numbers could be enhanced this way to also handle complex
 numbers.
+
+=for time 1228604400
+=for editor vim: spell

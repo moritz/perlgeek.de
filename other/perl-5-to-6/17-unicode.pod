@@ -26,7 +26,7 @@ that the Unicode Consortium assigned a number to is a codepoint), C<Grapheme>
 defined characters).
 
 For example the string with the hex bytes C<61 cc 80> consists of three bytes
-(obviously), but can also be viewd as being consisting of two codepoints
+(obviously), but can also be viewed as being consisting of two codepoints
 with the names C<LATIN SMALL LETTER A>  (U+0041) and
 C<COMBINING GRAVE ACCENT> (U+0300), or as one grapheme that, if neither my
 blog software nor your browser kill it, looks like this: C<à>.
@@ -42,7 +42,7 @@ There's also method named C<chars>, which returns the length in the current
 Unicode level (which can be set by a pragma like C<use bytes>, and which
 defaults to graphemes).
 
-In Perl 5 you sometimes had the problem of accidentially concatenating byte
+In Perl 5 you sometimes had the problem of accidentally concatenating byte
 strings and text strings. If you should ever suffer from that problem in Perl
 6, you can easily identify where it happens by overloading the concatenation
 operator:
@@ -70,8 +70,8 @@ current Unicode level will be used.
 
 Character classes like C<\w> (match a word character) behave accordingly to
 the Unicode standard. There are modifiers that ignore case (C<:i>) and accents
-(C<:a>), and modifiers for the substition operators that can carry case
-information to the substition string (C<:samecase> and C<:sameaccent>, short
+(C<:a>), and modifiers for the substitution operators that can carry case
+information to the substitution string (C<:samecase> and C<:sameaccent>, short
 C<:ii>, C<:aa>).
 
 =head1 MOTIVATION
@@ -79,7 +79,7 @@ C<:ii>, C<:aa>).
 It is quite hard to correctly process strings with most tools and most
 programming languages these days. Suppose you have a web application in perl
 5, and you want to break long words automatically so that they don't mess up
-your layout. When you use naiive C<substr> to do that, you might accidentially
+your layout. When you use naive C<substr> to do that, you might accidentally
 rip graphemes apart.
 
 Perl 6 will be the first mainstream programming language with built in support
@@ -93,3 +93,5 @@ introspection quite easy.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S29.html#Str>
+=for time 1227826800
+=for editor vim: spell

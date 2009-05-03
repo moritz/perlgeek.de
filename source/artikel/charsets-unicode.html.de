@@ -144,7 +144,7 @@
     man es wörtlich nimmt ist also ein Repertoir von Zeichen gemeint, wie
     Unicode eines definiert. Allerdings schränken auch Kodierungen wie ASCII
     oder Latin-1 den Zeichensatz ein, stellen also neben Kodierungen auch ein
-    Repertoir oder charset da.
+    Repertoire oder charset da.
 </p>
 
 <p>
@@ -159,8 +159,8 @@
     Perl unterscheidet bei Operationen auf Strings zwischen solchen, die
     die Strings als Text betrachten (wie z.B. <code>uc</code>, 
     <code>lc</code> und <code>substr</code> sowie reguläre Ausdrücke),
-    und solche, die Strings als Binärdaten betrachen, wie etwa
-    <code>print</code> und das lesen aus Dateihandles.
+    und solche, die Strings als Binärdaten betrachten, wie etwa
+    <code>print</code> und das Lesen aus Dateihandles.
 </p>
 
 <p>
@@ -221,7 +221,7 @@ print encode($enc, $text_str); # gibt 'ä' aus, lc hat gewirkt
 </p>
 
 <p>
-    Perl bietet mit den IO-Layern Mechanismen, mit denen man das kodieruen und
+    Perl bietet mit den IO-Layern Mechanismen, mit denen man das kodieren und
     dekodieren an Dateihandles oder global an allen Handles durchführen lassen
     kann.
 </p>
@@ -248,11 +248,13 @@ binmode STDOUT, ':locale';
 use open ':locale';
 [%endsyntax%]</pre>
 
+[% comment make vim happy again: ' %]
+
 <p>
     Mit Vorsicht sollte man den Input Layer <code>:utf8</code> genießen,
     der annimmt, dass die Eingabedatei gültiges UTF-8 ist.
     Sollte sie das nicht sein (und man hat keine Möglichkeit, das zu
-    überprüfen), ist das eine potentielle Quelle für Sichheitslücken (siehe
+    überprüfen), ist das eine potentielle Quelle für Sicherheitslücken (siehe
     <a href="http://www.perlmonks.org/?node_id=644786">diesen Artikel auf
     Perlmonks</a> für Details).
 </p>
@@ -282,6 +284,7 @@ for (@charsets){
     print "$_: " . encode($_, $test);
 }
 [%endsyntax%]</pre>
+
     <p>Wenn man dieses Programm in einem Terminal ausführt, wird nur eine Textzeile
     korrekt angezeigt werden, die erste Spalte darin ist dann die Zeichenkodierung
     des Terminals.</p>
@@ -382,7 +385,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 
 <h2><a name="kodierungen_im_www"></a>Kodierungen im WWW</h2>
     <p>Beim Schreiben von CGI-Scripten muss man sich überlegen in welcher Kodierung
-    die Daten ausgegeben werden sollen und das enstprechend im HTTP-Header
+    die Daten ausgegeben werden sollen und das entsprechend im HTTP-Header
     vermerken.</p>
     <p>Für die meisten Anwendungen empfiehlt sich UTF-8, da man damit einerseits
     beliebge Unicode-Zeichen kodieren kann, andererseits auch deutschen Text 
@@ -391,7 +394,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     herauszufinden, ob ein Browser mit einer Zeichenkodierung etwas anfangen kann,
     aber wenn man sich an die gängigen Kodierungen hält, ist es in der Praxis
     nicht nötig, diesen Header zu prüfen.</p>
-    <p>Für HTML-Dateien sieht ein Header typtischerweise so aus: 
+    <p>Für HTML-Dateien sieht ein Header typischerweise so aus: 
     <code>Content-Type: text/html; charset=UTF-8</code>. Wenn man einen solchen Header
     sendet, muss man im HTML-Code nur die Zeichen escapen, die in HTML eine
     Sonderbedeutung haben (<code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> und innerhalb von Attributen
@@ -457,3 +460,5 @@ use encoding ':locale';[%endsyntax%]</pre>
     Ausgabe (Anfang 2008) veröffentlicht.</p>
 
     <p class="svn-keywords">$Id$</p>
+[% comment vim: ft=html spell spelllang=de_de 
+%]

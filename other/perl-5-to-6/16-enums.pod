@@ -18,7 +18,7 @@
 =head1 DESCRIPTION
 
 Enums are versatile beasts. They are low-level classes that consist of an
-enummeration of constants, typically integers or strings (but can be
+enumeration of constants, typically integers or strings (but can be
 arbitrary).
 
 These constants can act as subtypes, methods or normal values. They can be
@@ -51,7 +51,7 @@ match operator, or with C<.does>:
   if $today.does(Fri) { ... }
 
 Note that you can specify the name of the value only (like C<Fri>) if that's
-unambigous, if it's ambigous you have to provide the full name C<Day::Fri>.
+unambiguous, if it's ambiguous you have to provide the full name C<Day::Fri>.
 
 =head1 MOTIVATION
 
@@ -65,3 +65,5 @@ data for debugging or tracing.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S12.html#Enums>
+=for time 1227740400
+=for editor vim: spell

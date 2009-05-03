@@ -82,3 +82,6 @@ The C-style for-loop is now called C<loop>:
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S04.html#Conditional_statements>
+
+=for time 1221951600
+=for editor vim: spell

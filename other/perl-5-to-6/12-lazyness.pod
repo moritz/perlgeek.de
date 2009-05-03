@@ -31,7 +31,7 @@ anything to all of its arguments, they take up only as much space as the items
 need that have already been evaluated.
 
 There are pitfalls, though: determining the length of a list or sorting it
-kills laziness - if the list is infinite, it will likely loop infinitly.
+kills laziness - if the list is infinite, it will likely loop infinitely.
 
 In general all conversions to a scalar (like C<List.join>) are I<eager>, i.e.
 non-lazy.
@@ -44,11 +44,11 @@ C<< for (<HANDLE>) >> because it reads all the file into memory, and only then
 starts iterating. With laziness that's not an issue:
 
     my $file = open '/etc/passwd', :r;
-    for =$file -> $line {
+    for $file.lines -> $line {
         say $line;
     }
 
-Since C<=$file> is an iterator or a lazy list (it doesn't really matter
+Since C<$file.lines> is an iterator or a lazy list (it doesn't really matter
 which), the lines are only physically read from disk as needed (besides
 buffering, of course).
 
@@ -114,3 +114,6 @@ nothing.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S02.html#Lists>
+
+=for time 1224280800
+=for editor vim: spell

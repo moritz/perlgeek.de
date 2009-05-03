@@ -71,7 +71,7 @@ the longest one.
     'aaaa' ~~ m/ a | aaa | aa /;
     say $/                          # aaa
 
-While this might seem like a trivial change, it has far reaching conseqeunces,
+While this might seem like a trivial change, it has far reaching consequences,
 and is crucial for extensible grammars. Since Perl 6 is parsed using a Perl 6
 grammar, it is responsible for the fact that in  C<++$a> the C<++> is parsed
 as a single token, not as two C<< prefix:<+> >> tokens.
@@ -104,7 +104,7 @@ an array, it will match as an alternation of its values:
     }
 
 There is yet another construct that automatically matches the longest
-alternation: mutli regexes. They can be either written as
+alternation: multi regexes. They can be either written as
 C<multi token name> or with a C<proto>:
 
     grammar Perl {
@@ -142,3 +142,6 @@ matched it.
 
 In the next lesson you'll see the development of a real, working grammar with
 Rakudo.
+
+=for time 1227999600
+=for editor vim: spell

@@ -1,5 +1,5 @@
 Containers and Values
-
+<!-- 1224108000 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -54,6 +54,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Item_assignment_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a></p>
+>http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a> =for time 1224108000 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

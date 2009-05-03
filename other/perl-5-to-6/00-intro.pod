@@ -23,7 +23,7 @@ name) attempts to fill that gap with a series of short articles.
 
 Each lesson has a rather limited topic, and tries to explain the two or three
 most important points with very short examples. It also tries to explain why
-things changed from Perl 5 to 6, and why this is important. I also hope that
+things changed from Perl 5 to 6, and why this is important. I also hope that
 the knowledge you gain from reading these lessons is enough to basically
 understand the Synopsis, which are the canonical source of all Perl 6 wisdom.
 
@@ -41,6 +41,9 @@ comprehensive list of differences. See
 L<http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod|Perl6::Perl5::Differences>
 instead if you're looking for something like that.
 
+It is also not oriented on the current state of the implementations, but on
+the ideal language as specified.
+
 =head1 ROADMAP
 
 Already written or in preparation:
@@ -57,18 +60,21 @@ Already written or in preparation:
     09 Comparisons and Smartmatching
     10 Containers and Binding
     11 Basic Operators
-    12 Lazyness
-    13 Custom Operators
+    12 Lazyness (-)
+    13 Custom Operators (-)
     14 the MAIN sub
     15 Twigils
     16 Enums
-    17 Unicode
+    17 Unicode (-)
     18 Scoping
     19 More Regexes
     20 A Grammar for XML
     21 Subset types
     22 State of the Implementations
-    23 Quoting and Parsing
+    23 Quoting and Parsing (-)
+
+(Things that are not or mostly not implemented in Rakudo are marked with
+ C<(-)>)
 
 Things that I want to write about, but which I don't know well enough yet:
     
@@ -81,7 +87,12 @@ Things that I want to mention somewhere, but don't know where
 
     .perl method
 
+I'll also update these lessons from time to time make sure they are not too
+outdated.
+
 =head1 AUTHOR
 
 Moritz Lenz, L<http://perlgeek.de/>, C<moritz@faui2k3.org>
 
+=for time 1221948000
+=for editor vim: spell

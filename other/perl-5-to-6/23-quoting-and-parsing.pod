@@ -28,7 +28,7 @@ over what features you want in your string.
 
 Perl 5 had single quotes, double quotes and C<qw(...)> (single quotes,
 splitted on whitespaces) as well as the C<q(..)> and C<qq(...)> forms which
-are basically synomyms for single and double quotes.
+are basically synonyms for single and double quotes.
 
 Perl 6 in turn defines a quote operator named C<Q> that can take various
 modifiers. The C<:b> (I<backslash>) modifier allows interpolation of backslash
@@ -37,14 +37,14 @@ variables, C<:c> allows the interpolation of closures (C<"1 + 2 = { 1 + 2 }">)
 and so on, C<:w> splits on words as C<qw/.../> does.
 
 You can arbitrarily combine those modifiers. For example you might wish a
-form of C<qw/../> that interplates only scalars, but nothing else? No problem:
+form of C<qw/../> that interpolates only scalars, but nothing else? No problem:
 
     my $stuff = "honey";
     my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
     say @list[*-1];                     # prints with\nfunny\nescapes
 
 Here's a list of what modifiers are available, mostly stolen from S02
-directly. All of these also have long names, which I ommited here.
+directly. All of these also have long names, which I omitted here.
 
     Features:
         :q          Interpolate \\, \q and \'
@@ -94,7 +94,7 @@ is parsed as a call to sub C<if>. You can disambiguate with whitespaces:
 
     if ($x < 3) { say '<3' }
 
-Or just omit the parens alltogether:
+Or just omit the parens altogether:
 
     if $x < 3 { say '<3' }
 
@@ -109,10 +109,13 @@ sense to expose these also to the user, who gains flexibility, and can very
 easily write macros that provide a shortcut for the exact quoting semantics he
 wants.
 
-And when you limit the speciality of keywords, you have far less troubles 
+And when you limit the specialty of keywords, you have far less troubles 
 with backwards compatibility if you want to change what you consider a
 "keyword".
 
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S02.html#Literals>
+
+=for time 1228777200
+=for editor vim: spell

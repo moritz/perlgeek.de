@@ -1,5 +1,5 @@
 The Reduction Meta Operator
-
+<!-- 1228863600 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -29,7 +29,7 @@ name="Description"
 
 <p>The reduction meta operator <code>[...]</code> can enclose any associative infix operator, and turn it into a list operator. This happens as if the operator was just put between the items of the list, so <code>[op] $i1, $i2, @rest</code> returns the same result as if it was written as <code>$i1 op $i2 op @rest[0] op @rest[1] ...</code>.</p>
 
-<p>This is a very powerful construct that promotes the plus <code>+</code> oeprator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
+<p>This is a very powerful construct that promotes the plus <code>+</code> operator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
 
 <p>Like all other operators whitespaces are forbidden, so you while you can write <code>[+]</code>, you can&#39;t say <code>[ + ]</code>.</p>
 

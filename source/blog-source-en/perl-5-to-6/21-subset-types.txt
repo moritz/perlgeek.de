@@ -1,5 +1,5 @@
 Subset Types
-
+<!-- 1228604400 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -24,7 +24,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Java programmers tend to think of a type as either a class or an interface (which is something like a crippled class), but that view is too limited for Perl 6. A type is more generally a constraint of what a values a container can containt. The &#34;classical&#34; constraint is <i>it is an object of a class <code>X</code> or of a class that inherits from <code>X</code></i>. Perl 6 also has constraints like <i>the class or the object does role <code>Y</code></i>, or <i>this piece of code returns true for our object</i>. The latter is the most general one, and is called a <i>subset</i> type:</p>
+<p>Java programmers tend to think of a type as either a class or an interface (which is something like a crippled class), but that view is too limited for Perl 6. A type is more generally a constraint of what a values a container can constraint. The &#34;classical&#34; constraint is <i>it is an object of a class <code>X</code> or of a class that inherits from <code>X</code></i>. Perl 6 also has constraints like <i>the class or the object does role <code>Y</code></i>, or <i>this piece of code returns true for our object</i>. The latter is the most general one, and is called a <i>subset</i> type:</p>
 
 <pre>    subset Even of Int where { $_ % 2 == 0 }
     # Even can now be used like every other type name

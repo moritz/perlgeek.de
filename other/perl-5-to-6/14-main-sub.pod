@@ -16,7 +16,7 @@
 
 =head1 DESCRIPTION
 
-Calling subs and running a typical unix program from the command line is
+Calling subs and running a typical Unix program from the command line is
 visually very similar: you can have positional, optional and named arguments.
 
 You can benefit from it, because Perl 6 can process the command line for you,
@@ -62,4 +62,5 @@ specification.
 
 =cut
 
-# vim: ft=pod sw=2
+=for time 1224453600
+=for editor vim: sw=2 spell

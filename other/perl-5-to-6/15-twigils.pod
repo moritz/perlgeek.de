@@ -49,7 +49,7 @@ So now you can write
 
 Without any special cases.
 
-And to keep the symetry between positional and named arguments, the C<:>
+And to keep the symmetry between positional and named arguments, the C<:>
 twigil
 does the same for named parameters, so these lines are roughly equivalent:
 
@@ -82,4 +82,5 @@ much more consistent and readable.
 
 =cut
 
-# vim: sw=2
+=for time 1224540000
+=for editor vim: sw=2 spell

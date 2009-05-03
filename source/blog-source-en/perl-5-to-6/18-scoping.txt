@@ -1,5 +1,5 @@
 Scoping
-
+<!-- 1227913200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -72,7 +72,7 @@ name="Context_variables"
 
 <p>Some variables that are global in Perl 5 (<code>$!</code>, <code>$_</code>) are <i>context</i> variables in Perl 6, that is they are passed between dynamic scopes.</p>
 
-<p>This solves an old Problem in Perl 5. In Perl 5 an <code>DESTROY</code> sub can be called at a block exit, and accidentially change the value of a global variable, for example one of the error variables:</p>
+<p>This solves an old Problem in Perl 5. In Perl 5 an <code>DESTROY</code> sub can be called at a block exit, and accidentally change the value of a global variable, for example one of the error variables:</p>
 
 <pre>  # Broken Perl 5 code here:
   sub DESTROY { eval { 1 }; }

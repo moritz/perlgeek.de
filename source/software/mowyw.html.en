@@ -13,7 +13,7 @@
 <h2 id="what-is">What is mowyw?</h2>
 
 <p>
-    Mowyw is a command line driven offline CMS that processes html files
+    Mowyw is a command line driven offline CMS that processes HTML files
     with a few special syntax elements.
 </p>
 
@@ -37,8 +37,8 @@
 <h2 id="what-not">What is it not?</h2>
 
 <p>
-    mowyw is <strong>not</strong> an online CMS with a web frontend, sql
-    backend, guestbook and other "fancy" whiz bang features.
+    mowyw is <strong>not</strong> an online CMS with a web frontend, SQL
+    backend, guest book and other "fancy" whiz bang features.
 </p>
 
 <h2 id="syntax-example">Syntax Example</h2>
@@ -69,7 +69,7 @@
 <p>
     Please note that previous versions only used double square
     brackets, which collided with the closing CDATA-declaration from
-    standards compliant xhtml and xml documents.
+    standards compliant xhtml and XML documents.
 </p>
 
 <p>
@@ -161,5 +161,5 @@ inclusion</li>
 [% endverbatim changelog %]
 
 [% comment
-    vim: sw=4 ts=4 expandtab syn=html
+    vim: sw=4 ts=4 expandtab ft=html spell
 %]

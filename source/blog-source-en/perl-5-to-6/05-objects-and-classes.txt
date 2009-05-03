@@ -1,5 +1,5 @@
 Objects and Classes
-
+<!-- 1222208400 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -57,7 +57,7 @@ name="DESCRIPTION"
 name="Methods"
 >Methods</a></h4>
 
-<p>Methods are declared with the <code>method</code> key word. Inside the the method you can use the <code>self</code> keyword to refer to the object on which the method is called (the invocant).</p>
+<p>Methods are declared with the <code>method</code> key word. Inside the method you can use the <code>self</code> keyword to refer to the object on which the method is called (the invocant).</p>
 
 <p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
 
@@ -75,7 +75,7 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;proto object&#34; of <code>SomeClass</code>, which is an object representation of the the type.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;proto object&#34; of <code>SomeClass</code>, which is an object representation of the type.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
@@ -127,7 +127,7 @@ name="Inheritance"
         ...
     }</pre>
 
-<p>All the usual inheritance rules apply - methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conformant to that of a parent class:</p>
+<p>All the usual inheritance rules apply - methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conforming to that of a parent class:</p>
 
 <pre>        class Bar { }
         class Foo is Bar { }

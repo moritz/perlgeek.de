@@ -1,0 +1,38 @@
+package datesort;
+use strict;
+use warnings;
+use File::stat;
+
+use Memoize;
+memoize('dateforfile');
+
+sub start { 1 }
+
+sub dateforfile {
+    my $fn = shift;
+    open my $h, '<:encoding(UTF-8)', $fn
+        or die "Can't opne file `$fn' for writing: $!";
+    my $date = <$h>;
+    $date = <$h>;
+    close $h or warn $!;
+    no warnings 'uninitialized';
+    if ($date =~ m/(\d{4,})/) {
+        return $1;
+    } else {
+#        warn "No date found for file `$fn'";
+        return stat($fn)->mtime;
+    }
+}
+
+sub sorter {
+    my $f = shift;
+    sort { dateforfile($b) <=> dateforfile($a) } keys %$f;
+}
+
+#sub sort {
+#    \&sorter;
+#}
+
+1;
+
+# vim: ft=perl

@@ -1,5 +1,5 @@
 Perl-5.8.9 is "end of life" release
-
+<!-- 1225926000 -->
 <p>Today Nicholas Clark, pumpking of the 5.8-maint branch of perl, <a
 href="http://www.nntp.perl.org/group/perl.perl5.porters/2008/11/msg141328.html">announced
 that 5.8.9 will be the last release of that branch.</a></p>

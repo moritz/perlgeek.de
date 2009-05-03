@@ -1,5 +1,5 @@
 Perl 6 Tidings for November 2008
-
+<!-- 1226271600 -->
 <h2>Specification</h2>
 
 <p>A couple of small improvements to the spec made me a bit happier this past

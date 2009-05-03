@@ -1,5 +1,5 @@
 Dumping UTF-8 Data
-
+<!-- 1217023200 -->
 <p>The other day I wrote <a
 href="http://search.cpan.org/perldoc?Perl6::Str">Perl6::Str</a>, and 
 a small script that I called <code>utf8-dump</code> helped a lot during 

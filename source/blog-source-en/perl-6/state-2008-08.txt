@@ -1,5 +1,5 @@
 Recent Perl 6 Developments August 2008
-
+<!-- 1219269600 -->
 <p>There are two major, recent improvements in Perl 6 development:</p>
 
 <p>Patrick Michaud implemented pre-compiled modules for Rakudo. Precompiling

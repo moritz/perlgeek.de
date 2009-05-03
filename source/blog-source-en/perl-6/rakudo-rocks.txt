@@ -1,5 +1,5 @@
 Rakudo Rocks
-
+<!-- 1233097200 -->
 <p>Ok, we all knew that Rakudo (for the casual reader: the Perl 6 compiler
 based on <a href="http://www.parrot.org/">Parrot</a>) rocks. You probably knew
 the <a href="http://rakudo.de/">regularly updated progress graph</a> already

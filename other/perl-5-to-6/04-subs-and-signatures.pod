@@ -78,7 +78,7 @@ C<$first> argument is bound to the first formal parameter, the C<$second>
 argument to the second parameter etc., which is why they are called
 "positional".
 
-Sometimes it's easier to remeber names than numbers, which is why Perl 6 also
+Sometimes it's easier to remember names than numbers, which is why Perl 6 also
 has named parameters:
 
     my $r = Rectangle.new( 
@@ -121,7 +121,7 @@ hand, positional arguments can be passed by name by default.
 =head2 Slurpy Arguments
 
 Just because you give your sub a signature doesn't mean you have to know the
-number of arguments in advance. You can define so-called slurpy parameters
+number of arguments in advance. You can define so-called I<slurpy> parameters
 (after all the regular ones) which use up any remaining arguments:
 
     sub tail ($first, *@rest){
@@ -147,7 +147,7 @@ That also means that by default you can't use a list as an argument list:
     my @indexes = 1, 4;
     say "abc".substr(@indexes)       # error!
 
-You can achieve the desired behaviour with a prefix C<|>
+You can achieve the desired behavior with a prefix C<|>
 
     say "abcdefgh".substr(|@indexes) # bcde
 
@@ -181,7 +181,7 @@ parameters has also been discussed already.
 
 Multi subs are very useful because they allow builtins to be overridden for
 new types. Let's assume you want a version of Perl 6 which is localized to
-handle turkish strings correctly, which have unsual rules for case
+handle Turkish strings correctly, which have unusual rules for case
 conversions.
 
 Instead of modifying the language, you can just introduce a new type
@@ -198,3 +198,6 @@ Since operators are also subs, that refinement works for operators too.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S06.html>
+
+=for time 1221952800
+=for editor vim: spell

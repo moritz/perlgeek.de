@@ -1,5 +1,5 @@
 Test Suite Reorganization: How to move tests
-
+<!-- 1232838000 -->
 <p>The Perl 6 test suite started its life in the Pugs Subversion repository,
 containing regression tests and one-to-one translations of the synopsis
 documents into tests.</p>

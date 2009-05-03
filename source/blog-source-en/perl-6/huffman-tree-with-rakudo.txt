@@ -1,5 +1,5 @@
 Building a Huffman Tree With Rakudo
-
+<!-- 1217109600 -->
 <p>15 months ago I wrote a blog post about <a
 href="http://moritz.faui2k3.org/blog/huffman-codierung-mit-perl-6">Building a
 Huffman Tree with Perl 6 (German)</a>. Back then I used pugs to test it.</p>

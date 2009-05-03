@@ -8,8 +8,11 @@ use Data::Dumper;
 sub start {
     my $data_dir = $blosxom::datadir . '/' . $blosxom::path_info;
     return unless $blosxom::path_info;
-    return unless -d $data_dir;
-    my @files = sort glob "$data_dir/*.$blosxom::file_extension";
+    unless (-d $data_dir) {
+        $data_dir =~ s{[^/]+$}{};
+        return unless -d $data_dir;
+    };
+    my @files = grep { datesort::dateforfile($_) < time } sort glob "$data_dir/*.$blosxom::file_extension";
     return unless @files > 1;
 
     $cat_index = '<div class="blog_index"><h3>Posts in this category</h3>';
@@ -23,15 +26,6 @@ sub start {
         $cat_index .= get_title($_) . qq{</a></li>\n};
     }
     $cat_index .= "</ul>\n";
-#    $cat_index .= '<pre>';
-#    for (keys %blosxom::){
-#        next if m/[A-Z]/;
-#        no strict 'refs';
-#        my $val = ${"blosxom::$_"};
-#        next unless $val;
-#        $cat_index .= "$_\t=&gt;$val\n";
-#    }
-#    $cat_index .= '</pre>';
     $cat_index .= '</div>';
 
 }

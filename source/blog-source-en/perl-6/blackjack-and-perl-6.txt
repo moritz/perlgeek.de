@@ -1,0 +1,84 @@
+Blackjack and Perl 6
+<!-- 1241445110 -->
+
+<p>When you play Blackjack, you need to collect cards so that the sum of their
+values gets as close as possible to 21, but not above.</p>
+
+<p>The tricky thing is that an Ace can count both as 1 or 11, whatever suits
+better for you. So how do we find the best value of a dealt set of cards?</p>
+
+<p>Well, somhow we have to sum over all combinations. For example if you have
+an ace and a three, you could represent them as <code>3</code> and
+<code>[1, 11]</code> in your program. What you want as a result is the array
+<code>[4, 14]</code>.</p>
+
+<p>The cross meta-operator lets us apply a <code>+</code> pairwise on all
+possible combinations of a list (shown on Rakudo's REPL):</p>
+
+<pre>[% syntax escape %]
+> say (1, 11 X+ 3).perl
+[4, 14]
+[% endsyntax %]</pre>
+
+<p>In principle some of the values could have been greater than 21 (if you had
+two aces), so let's filter out only those that are at most as large as 21, and
+find the maximum:</p>
+
+<pre>[% syntax escape %]
+> say [max] (1, 11 X+ 3).grep({$_ <= 21})
+14
+[% endsyntax %]</pre>
+
+<p><code>max</code> is an operator that gives us the larger of two values, and
+the reduction operator <code>[...]</code> applies this pair wise to all list
+items.</p>
+
+<p>Now that works, but you can have more than two cards on your hand, so
+we need to generalize it a bit..</p>
+
+<p>In a perfect Perl 6 world we could simply write
+<code>[max] ([X+] @cards).grep: {$_ <= 21};</code>, but that requires a quite
+complicated thing named <em>slice context</em>, which Rakudo doesn't
+implement yet.</p>
+
+<p>So we have to work around the non-working <code>[X+]</code> by doing the
+reduction manually:</p>
+
+<pre>[% syntax escape %]
+> my @cards = [1, 11], 4, [1, 11];
+  say [max] @cards.reduce({ @($^a) X+ @($^b) }).grep: { $_ <= 21 }
+16
+[% endsyntax %]</pre>
+
+<p>(Note: splitted on two lines for readability, but should really be on one
+line.)</p>
+
+<p>The <code>reduce</code> method does (roughly) the same as the equally named
+sub in
+Perl 5's <a href="http://search.cpan.org/perldoc?List::Util">List::Util</a>
+module: it calls the block with two arguments, where the first one is the
+previous return value from the block (or the first array item on the first
+call), and the second is the next list item. The difference is that in Perl 5
+the arguments are stored in the special variables <code>$a</code> and
+<code>$b</code> (about which <code>strict.pm</code> doesn't complain), whereas
+in Perl 6 they are passed as ordinary arguments to the block. The
+<code>^</code> twigil (secondary sigil) specifies that the value of that
+variable should be taken from the parameter list, in lexicographic order of
+all such variables in the block.</p>
+
+<p>Since <code>X+</code> operates on lists and not on array references, the
+arguments needs to be derefences. In Perl 5 you'd write that as
+<code>@{...}</code>, in Perl 6 it's <code>@(...)</code> - with the slight
+difference that the derefencing on a number is not an error, but simply
+returns a list of that number.</p>
+
+<p>(you can write the same thing a bit simpler with junctions, but that
+doesn't demonstrate the meta operators, and is discouraged for other
+reasons).</p>
+
+<p>You see that you can still write scary code with Perl 6, and I hope you
+will play around with it a bit, join us on <a
+href="irc://irc.freenode.net/#perl6">#perl6</a> and have the appropriate
+amount of fun!</p>
+
+[% option no-header %] [% option no-footer %]

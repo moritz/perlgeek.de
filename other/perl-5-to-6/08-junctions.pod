@@ -70,7 +70,7 @@ If one of these variables is a junction, that might be different:
     say "Yes" if !($a == $b);       # no output
 
 C<2 != 3> is true, thus C<$a != 2|3> is also true. On the other hand the 
-C<$a == $b> comparion returns a single Bool value (C<True>), and the negation
+C<$a == $b> comparison returns a single Bool value (C<True>), and the negation
 of that is C<False>.
 
 =head1 MOTIVATION
@@ -112,3 +112,5 @@ In Perl 6 that is short and sweet:
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S03.html#Junctive_operators>
+=for time 1222467600
+=for editor vim: spell

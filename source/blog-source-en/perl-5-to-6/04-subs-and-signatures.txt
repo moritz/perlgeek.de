@@ -1,5 +1,5 @@
 Subroutines and Signatures
-
+<!-- 1221952800 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -82,7 +82,7 @@ name="Named_Parameters"
 
 <p>When you invoke a subroutine like this: <code>my_sub($first, $second)</code> the <code>$first</code> argument is bound to the first formal parameter, the <code>$second</code> argument to the second parameter etc., which is why they are called &#34;positional&#34;.</p>
 
-<p>Sometimes it&#39;s easier to remeber names than numbers, which is why Perl 6 also has named parameters:</p>
+<p>Sometimes it&#39;s easier to remember names than numbers, which is why Perl 6 also has named parameters:</p>
 
 <pre>    my $r = Rectangle.new( 
             x       =&#62; 100, 
@@ -177,7 +177,7 @@ name="MOTIVATION"
 
 <p>Nobody will doubt the usefulness of explicit sub signatures: less typing, less duplicate argument checks, and more self-documenting code. The value of named parameters has also been discussed already.</p>
 
-<p>Multi subs are very useful because they allow builtins to be overridden for new types. Let&#39;s assume you want a version of Perl 6 which is localized to handle turkish strings correctly, which have unsual rules for case conversions.</p>
+<p>Multi subs are very useful because they allow builtins to be overridden for new types. Let&#39;s assume you want a version of Perl 6 which is localized to handle Turkish strings correctly, which have unusual rules for case conversions.</p>
 
 <p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>
 

@@ -66,7 +66,7 @@ Problem vermeiden.</p>
 
 <p>Ein weiteres Problem der globalen Variablen ist, dass man als Modul-Autor
 genau wissen muss, welche Variablen man implizit verwendet. So benutzt zum
-Beispiel <code>print</code> implizt <code>$\</code>, and bei mehr als einem 
+Beispiel <code>print</code> implizit <code>$\</code>, and bei mehr als einem 
 Argument auch noch <code>$,</code>. Wenn man ein Array in einen String
 interpoliert benutzt man implizit <code>$"</code>.</p>
 
@@ -79,13 +79,13 @@ sein muss und sich beliebige Listen von Variablen merken muss.</p>
 
 <h2>Objektorientierung</h2>
 
-<p>Perls Objektorientierungssystem ist recht allgemein und flexibel (auch wenn
+<p>Perls Objektsystem ist recht allgemein und flexibel (auch wenn
 es nicht immer so wahrgenommen wird), aber es hat auch einige Probleme.</p>
 
 <p>So kennt perl keinen Unterschied zwischen Subroutinen und Methoden, was es
 quasi unmöglich macht eine Liste aller Methoden zu ermitteln, die man auf
 einem Objekt aufrufen kann. (Ausser man benutzt ein extra
-Objektorientierungsframework wie <a
+Objektframework wie <a
 href="http://search.cpan.org/perldoc?Moose">Moose</a>).</p>
 
 <p>Auch wünscht man sich heute eine kürzere Syntax für Methodenaufrufe,
@@ -93,7 +93,7 @@ href="http://search.cpan.org/perldoc?Moose">Moose</a>).</p>
 
 <h2>Regexes</h2>
 
-<p>Reguläre Ausdrücke, kurz Regexes, gehörten traditionell zu perls
+<p>Reguläre Ausdrücke, kurz Regexes, gehörten traditionell zu Perls
 Stärken.</p>
 
 <p>Allerdings gibt es auch hier einige Schwächen. So sollten verschiedene
@@ -185,5 +185,5 @@ war.</p>
 <p class="svn-keywords">$Id$</p>
 
 [% comment 
-    vim: ft=html
+    vim: ft=html spell spelllang=de_de
 %]

@@ -1,5 +1,5 @@
 Why you don't need the Y combinator in Perl 6
-
+<!-- 1219788000 -->
 <p>The other day on IRC we discussed the book "Higher Order Perl" and the <a
 href="http://en.wikipedia.org/wiki/Y_combinator">Y combinator</a>. <a
 href="http://plasmasturm.org/">Aristotle</a> wrote an <a

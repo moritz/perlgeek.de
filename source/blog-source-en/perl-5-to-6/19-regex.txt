@@ -1,5 +1,5 @@
 Regexes strike back
-
+<!-- 1227999600 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -66,7 +66,7 @@ name="Alternations"
 <pre>    &#39;aaaa&#39; ~~ m/ a | aaa | aa /;
     say $/                          # aaa</pre>
 
-<p>While this might seem like a trivial change, it has far reaching conseqeunces, and is crucial for extensible grammars. Since Perl 6 is parsed using a Perl 6 grammar, it is responsible for the fact that in <code>++$a</code> the <code>++</code> is parsed as a single token, not as two <code>prefix:&#60;+&#62;</code> tokens.</p>
+<p>While this might seem like a trivial change, it has far reaching consequences, and is crucial for extensible grammars. Since Perl 6 is parsed using a Perl 6 grammar, it is responsible for the fact that in <code>++$a</code> the <code>++</code> is parsed as a single token, not as two <code>prefix:&#60;+&#62;</code> tokens.</p>
 
 <p>The old, sequential style is still available with <code>||</code>:</p>
 
@@ -91,7 +91,7 @@ name="Alternations"
         say &#34;You&#39;ve got $0 $1, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
     }</pre>
 
-<p>There is yet another construct that automatically matches the longest alternation: mutli regexes. They can be either written as <code>multi token name</code> or with a <code>proto</code>:</p>
+<p>There is yet another construct that automatically matches the longest alternation: multi regexes. They can be either written as <code>multi token name</code> or with a <code>proto</code>:</p>
 
 <pre>    grammar Perl {
         ...

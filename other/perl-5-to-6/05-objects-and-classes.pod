@@ -50,9 +50,9 @@ inside the blocks is considered to be the class definition.
 
 =head2 Methods
 
-Methods are declared with the C<method> key word. Inside the the method you
+Methods are declared with the C<method> key word. Inside the method you
 can use the C<self> keyword to refer to the object on which the method is
-called (the invocant).
+called (the I<invocant>).
 
 You can also give the invocant a different name by adding a first parameter to
 the signature list and append a colon C<:> to it.
@@ -76,7 +76,7 @@ takes arguments.
 (The C<my SomeClass $x .= new> is actually a shorthand for 
 C<my SomeClass $x .= SomeClass.new>. It works because the type declaration
 fills the variable with a "proto object" of C<SomeClass>, which is an object
-representation of the the type.)
+representing the class.)
 
 Methods can also take additional arguments just like subs.
 
@@ -130,7 +130,7 @@ Inheritance is done through an C<is> trait.
 
 All the usual inheritance rules apply - methods are first looked up on the
 direct type, and if that fails, on the parent class (recursively). Likewise
-the type of a child class is conformant to that of a parent class:
+the type of a child class is conforming to that of a parent class:
 
         class Bar { }
         class Foo is Bar { }
@@ -172,3 +172,6 @@ conformance, roles are the primary means for code reuse in Perl 6.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S12.html>
+
+=for time 1222208400
+=for editor vim: spell

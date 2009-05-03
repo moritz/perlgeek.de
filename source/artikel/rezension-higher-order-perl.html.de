@@ -28,9 +28,9 @@ Jason Dominus geschrieben wurde) wird vorgestellt, inklusive diverser darin
 verwendeten Techniken und einer ausführlichen Diskussion, wann man es am
 sinnvoll verwenden kann und wann nicht.</p>
 <p>Dann werden fortgeschrittenere Konzepte wie ``lazy streams'' vorgestellt,
-mit deren Hilfe beindruckende Programme konstruiert werden, zum Beispiel diverse
-Parser, eine Regex-Engine und ein System zum algebraischen Lösen von linearen
-Gleichungssystemen.</p>
+mit deren Hilfe beeindruckende Programme konstruiert werden, zum Beispiel
+diverse Parser, eine Regex-Engine und ein System zum algebraischen Lösen
+von linearen Gleichungssystemen.</p>
 
 <p>Einige der Beispiele im Buch sind sehr praxisorientiert, 
 wie etwa das Entfernen von HTML-Tags und ein Crawler für Webseiten.</p>
@@ -56,3 +56,5 @@ href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben, und ist dort
 in der 6. Ausgabe (Mitte 2008) erschienen.</p>
 
 <p class="svn-keywords">$Id$</p>
+[% comment vim: ft=perl spell spelllang=de_de
+%]

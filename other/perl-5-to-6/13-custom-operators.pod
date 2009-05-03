@@ -14,9 +14,9 @@
 
 =head1 DESCRIPTION
 
-Operators are functions with unusual names, and a few addtional properties
+Operators are functions with unusual names, and a few additional properties
 like precedence and associativity. Perl 6 usually follows the pattern
-C<term infix term>, where C<term> can be optionally preceeded by prefix
+C<term infix term>, where C<term> can be optionally preceded by prefix
 operators and followed by postfix or postcircumfix operators.
 
     1 + 1               infix
@@ -59,10 +59,10 @@ Most infix operators take only two arguments. In an expression like
 C<1 / 2 / 4> the I<associativity> of the operator decides the order of
 evaluation. The C<< infix:</> >> operator is left associative, so this
 expression is parsed as C<(1 / 2) / 4>. for a right associative operator like
-C<< infix:<**> >> (exponentation) C<2 ** 2 ** 4> is parsed as
+C<< infix:<**> >> (exponentiation) C<2 ** 2 ** 4> is parsed as
 C<2 ** (2 ** 4)>.
 
-Perl 6 has more associativities: C<non> forbids chaining of operators of the
+Perl 6 has more associativities: C<none> forbids chaining of operators of the
 same precedence (for example C<< 2 <=> 3 <=> 4 >> is forbidden), and
 C<< infix:<,> >> has C<list> associativity. C<1, 2, 3> is translated to
 C<< infix:<,>(1; 2; 3) >>. Finally there's the C<chain> associativity:
@@ -97,7 +97,7 @@ C<< my @list = <a b c>; >>), and are thus implemented as macros:
 The C<is parsed> trait is followed by a regex that parses everything between
 the delimiters. If no such rule is given, it is parsed as normal Perl 6 code
 (which is usually not what you want if you introduce a new syntax).
-C<Str.comb> searches for occurences of a regex and returns a list of the text
+C<Str.comb> searches for occurrences of a regex and returns a list of the text
 of all matches. 
 
 =head2 "Overload" existing operators
@@ -128,3 +128,6 @@ L<http://perlcabal.org/syn/S06.html#Operator_overloading>
 If you are interested in the technical background, ie how Perl 6 can implement
 such operator changes and other grammar changes, read
 L<http://perlgeek.de/en/article/mutable-grammar-for-perl-6>.
+
+=for time 1224367200
+=for editor vim: spell

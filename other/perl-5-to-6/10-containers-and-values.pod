@@ -50,3 +50,5 @@ operator.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S03.html#Item_assignment_precedence>
+=for time 1224108000
+=for editor vim:  spell

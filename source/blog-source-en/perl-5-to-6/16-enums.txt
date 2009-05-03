@@ -1,5 +1,5 @@
 Enums
-
+<!-- 1227740400 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -26,7 +26,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Enums are versatile beasts. They are low-level classes that consist of an enummeration of constants, typically integers or strings (but can be arbitrary).</p>
+<p>Enums are versatile beasts. They are low-level classes that consist of an enumeration of constants, typically integers or strings (but can be arbitrary).</p>
 
 <p>These constants can act as subtypes, methods or normal values. They can be attached to an object with the <code>but</code> operator, which &#34;mixes&#34; the enum into the value:</p>
 
@@ -51,7 +51,7 @@ name="DESCRIPTION"
   }
   if $today.does(Fri) { ... }</pre>
 
-<p>Note that you can specify the name of the value only (like <code>Fri</code>) if that&#39;s unambigous, if it&#39;s ambigous you have to provide the full name <code>Day::Fri</code>.</p>
+<p>Note that you can specify the name of the value only (like <code>Fri</code>) if that&#39;s unambiguous, if it&#39;s ambiguous you have to provide the full name <code>Day::Fri</code>.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"
@@ -66,6 +66,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enums</a></p>
+>http://perlcabal.org/syn/S12.html#Enums</a> =for time 1227740400 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

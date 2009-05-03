@@ -65,7 +65,7 @@ parsing, proto regexes and longest token matching (LTM).</p>
 
 <p>Rules are just like perl 5's regexes, only better. They are declared like
 subs or methods, and they can call other rules (and of course recurse directly
-into itself as well). For ease of use and efficiency there are aditional
+into itself as well). For ease of use and efficiency there are additional
 techniques for handling whitespaces and backtracking control.</p>
 
 <p>Here is a made-up example of how you could parse basic variable names:</p>
@@ -154,7 +154,7 @@ value of the matched text, and won't know what to do with <code>¢</code>.</p>
 <h2 id="proto">Proto Regexes</h2>
 
 <p>A proto regex is a set of regexes/rules with the same name, that can be
-distinguished nontheless.</p>
+distinguished nonetheless.</p>
 
 <p>The current <a href="http://svn.pugscode.org/pugs/src/perl6/STD.pm">Perl 6
 grammar</a> uses this construct:</p>
@@ -208,7 +208,7 @@ easily.</p>
 
 <h2 id="bottom-up">Bottom-up parsing</h2>
 
-<p>There's one thing left to ultimate extensibilty: introducing new precedence
+<p>There's one thing left to ultimate extensibility: introducing new precedence
 levels.</p>
 
 <p><a href="http://www.perlmonks.org/?node_id=678119">Traditional top-down
@@ -239,9 +239,9 @@ token mul_op:sym</>  { <sym> }
 token mul_op:sym<%>  { <sym> }
 [%endsyntax%]</pre>
 
-<p>Now if we want a derived grammar with a precedence level inbetween <code>+</code>
+<p>Now if we want a derived grammar with a precedence level in between <code>+</code>
 and <code>*</code>, we have to modify two rules (<code>expression</code> and <code>term</code>),
-which breaks any other changes made to these rules. (Remember, we're ambitous
+which breaks any other changes made to these rules. (Remember, we're ambitious
 and what to allow multiple local grammar changes).</p>
 
 <p>Also notice that we produced very similar code for each precedence level,
@@ -259,7 +259,7 @@ operators and precedence levels without altering other rules:</p>
 token infix:sym<bla> is tighter:<+> { <sym> }
 [% endsyntax %]</pre>
 
-<p>This introduces the <code>bla</code> operator, which has tigher precedence 
+<p>This introduces the <code>bla</code> operator, which has tighter precedence 
 than <code>+</code>, but looser than <code>*</code>.</p>
 
 <h2 id="ltm">Longest Token Matching</h2>
@@ -274,11 +274,11 @@ isn't very robust if you have multiple grammar modifications (for example
 multiple mixins).</p>
 
 <p>So instead of defining an order, all rules that could possibly match in an
-atlernation are matched in parallel, and the one that matches the most text
+alternation are matched in parallel, and the one that matches the most text
 wins.</p>
 
 <p>For example if you want to introduce a <code>+++</code> postfix operator that
-inrements a variable by two, you'd just introduce a new rule for it, and when
+increments a variable by two, you'd just introduce a new rule for it, and when
 the parser expects a <code>postfix</code> token, both <code>++</code> and <code>+++</code>
 match, but since the latter matches more text, it wins.</p>
 
@@ -352,5 +352,5 @@ can be easily modified with understanding only a small subset of the grammar,
 or in simple cases without it.</p>
 
 [% comment
-    vim: ft=html expandtab
+    vim: ft=html expandtab spell
 %]

@@ -1,5 +1,5 @@
 Perl 6 Tidings from January 2009
-
+<!-- 1231196400 -->
 <h2>Specification</h2>
 
 <p>Jerry Gay continued his work on <a

@@ -1,5 +1,5 @@
 Perl 6 Tidings from December 2008
-
+<!-- 1228431600 -->
 <p>... aka "Not This Christmas".</p>
 
 <h2>Specification</h2>

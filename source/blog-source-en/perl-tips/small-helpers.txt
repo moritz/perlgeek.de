@@ -1,0 +1,76 @@
+Small Perl Helpers
+<!-- 1244498400 -->
+
+<h2>CoreList</h2>
+
+<p>You want to use a module, but you're only allowed to use core modules? Or
+you want to recommend a module to somebody, and you know it's more likely that
+he'll use a module if it's in core (and thus he won't hand-roll his crappy CGI
+parser, and open a wide door to spammers)?</p>
+
+<p><a
+href="http://search.cpan.org/perldoc?Module::CoreList">Module::CoreList</a> is
+the answer, and it comes with a very handy script called
+<code>corelist</code>:</p>
+
+<pre>[% syntax escape %]
+$ corelist Unicode::Normalize
+Unicode::Normalize was first released with perl 5.007003
+
+$ corelist DBI
+DBI was not in CORE (or so I think)
+
+# search with regexes
+$ corelist /Tie/
+Pod::Simple::TiedOutFH was first released with perl 5.009003
+Tie::Array was first released with perl 5.005
+Tie::File was first released with perl 5.007003
+Tie::Handle was first released with perl 5.00405
+Tie::Hash was first released with perl 5.002
+Tie::Hash::NamedCapture was first released with perl 5.009005
+Tie::Memoize was first released with perl 5.007003
+Tie::RefHash was first released with perl 5.004
+Tie::Scalar was first released with perl 5.002
+Tie::StdHandle was first released with perl 5.01
+Tie::SubstrHash was first released with perl 5.002
+TieHash was first released with perl 5
+[% endsyntax %]</pre>
+
+<p>(empty lines sanitized; corelist emits an empty line after each module
+which is a bit annoying)</p>
+
+<h2>Timestamps</h2>
+
+<p>Not from CPAN, but a tiny script I wrote:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Time::Local qw(timelocal);
+
+if (@ARGV) {
+    my $date = shift @ARGV;
+    if ($date =~ m/^(\d{4})-(\d\d)-(\d\d)$/){
+        my ($year, $month, $mday) = ($1, $2, $3);
+        my ($hr, $min, $sec) = (0, 0, 0);
+        my $time;
+        if ($time = shift @ARGV && $time ~~ m/^(\d{1,2}):(\d\d):(\d\d)$/) {
+            ($hr, $min, $sec) = ($1, $2, $3);
+        }
+        print timelocal($sec, $min, $hr, $mday, $month - 1, $year - 1900), $/;
+    }
+
+} else {
+    print scalar(time), $/;
+}
+[% endsyntax %]</pre>
+
+<p>If called with one argument it will print the current time as a Unix
+timestamp. If called with one or two arguments, it will interpret these as a
+date in the <code>YYYY-MM-DD</code> and a time in <code>HH:MM:SS</code> format
+and print the corresponding timestamp.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]

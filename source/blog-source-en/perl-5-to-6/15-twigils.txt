@@ -1,5 +1,5 @@
 Twigils
-
+<!-- 1224540000 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -50,7 +50,7 @@ name="DESCRIPTION"
 
 <p>Without any special cases.</p>
 
-<p>And to keep the symetry between positional and named arguments, the <code>:</code> twigil does the same for named parameters, so these lines are roughly equivalent:</p>
+<p>And to keep the symmetry between positional and named arguments, the <code>:</code> twigil does the same for named parameters, so these lines are roughly equivalent:</p>
 
 <pre>  my $block = { say $:stuff }
   my $sub   = sub (:$stuff) { say $stuff }</pre>

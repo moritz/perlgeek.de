@@ -1,5 +1,5 @@
 Comparing and Matching
-
+<!-- 1222554000 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -51,13 +51,13 @@ name="Smart_matching"
 
 <p>There are other, more advanced forms of matching: for example you can check if an argument list (<code>Capture</code>) fits to the parameter list (<code>Signature</code>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
 
-<p>What you should remeber is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
+<p>What you should remember is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence</a></p>
+>http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence</a> =for time 1222554000 =for editor vim: spell</p>
 
 [% option no-header %] [% option no-footer %]

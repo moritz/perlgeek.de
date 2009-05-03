@@ -70,7 +70,7 @@ Some variables that are global in Perl 5 (C<$!>, C<$_>) are I<context>
 variables in Perl 6, that is they are passed between dynamic scopes.
 
 This solves an old Problem in Perl 5. In Perl 5 an C<DESTROY> sub can be
-called at a block exit, and accidentially change the value of a global
+called at a block exit, and accidentally change the value of a global
 variable, for example one of the error variables:
 
   # Broken Perl 5 code here:
@@ -130,3 +130,6 @@ S04 discusses block scoping: L<http://perlcabal.org/syn/S04.html>.
 
 S02 lists all pseudo packages and explains context scoping:
 L<http://perlcabal.org/syn/S02.html#Names>.
+
+=for time 1227913200
+=for editor vim: spell

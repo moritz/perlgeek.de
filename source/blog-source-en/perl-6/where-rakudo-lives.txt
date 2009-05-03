@@ -1,5 +1,5 @@
 Where Rakudo Lives Now
-
+<!-- 1234047600 -->
 <p>There has been some profund confusion over the whereabouts of the Rakudo
 source code repository. Since we've seen no official announcement on <a
 href="http://rakudo.org/">rakudo.org</a> I wrote a short guide on how to build

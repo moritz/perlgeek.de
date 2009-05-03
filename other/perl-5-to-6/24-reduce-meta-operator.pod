@@ -23,7 +23,7 @@ and turn it into a list operator. This happens as if the operator was just put
 between the items of the list, so C<[op] $i1, $i2, @rest> returns the same
 result as if it was written as C<$i1 op $i2 op @rest[0] op @rest[1] ...>.
 
-This is a very powerful construct that promotes the plus C<+> oeprator into a
+This is a very powerful construct that promotes the plus C<+> operator into a
 C<sum> function, C<~> into a C<join> (with empty separator) and so on. It is
 somewhat similar to the C<List.reduce> function, and if you had some exposure
 to functional programming, you'll probably know about C<foldl> and C<foldr>
@@ -82,3 +82,6 @@ real fun.
 
 L<http://perlcabal.org/syn/S03.html#Reduction_operators>,
 L<http://www.perlmonks.org/?node_id=716497>
+
+=for time 1228863600
+=for editor vim: spell

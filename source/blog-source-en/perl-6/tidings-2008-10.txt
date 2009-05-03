@@ -1,5 +1,5 @@
 Perl 6 Tidings from September and October 2008
-
+<!-- 1224367200 -->
 <h2>Specification</h2>
 
 <p>Perl 6 has got two new operators.</p>
@@ -112,7 +112,7 @@ very hard).</p>
 form. Unclear are (a) performance impact, (b) access syntax and (c)
 symmetry.</p>
 
-<p>(b) and (c) need more explanatation: The match object already has list
+<p>(b) and (c) need more explanation: The match object already has list
 semantics for accessing positional captures, so you can't make the sequential
 chunks available through an array index. The most simple solution is
 composition, ie a method< code>$/.splits</code> or <code>$/.tokens</code>
@@ -147,7 +147,7 @@ fundamental problems in the mid or long term.</p>
 
 <p>Mitchell Charity worked furiously on the new Lisp backend for <a
 href="http://perl.net.au/wiki/Elf">elf</a>, bringing it
-(almost?) to bootstrap. That demonstrated the flexibilty of elf, and allows to
+(almost?) to bootstrap. That demonstrated the flexibility of elf, and allows to
 get rid of some quirks that can creep into a compiler if it has only one
 backend.</p>
 
@@ -192,7 +192,7 @@ close they are to run basic, real-world code.</p>
 <p>Update: Paweł contributed another small explanation:</p>
 
 <p>SMOP now has a new compiler named <em>mildew</em> which uses viv/STD as
-its parser. Right now it supports only a handfull of operations, the most
+its parser. Right now it supports only a handful of operations, the most
 advanced of it is creating an object with a simplified meta model.</p>
 
 <p>It lives in the Pugs repository under <code>v6/mildew/</code>. Anyone who

@@ -7,7 +7,6 @@
                         [% item article  <li{{ id="current"}}><a href="/en/article/">Articles</a></li> %]
                         [% item blog     <li{{ id="current"}}><a href="/blog-en/">Blog</a></li>        %]
                         [% item service  <li{{ id="current"}}><a href="/en/service/">Services</a></li> %]
-<!--                    [% item blog     <li{{ id="current"}}><a href="#">Blog</a></li>     %] -->
                         [% item software <li{{ id="current"}}><a href="/en/software/">Software</a></li> %]
                     </ul>
                 </div>
@@ -32,6 +31,7 @@
             <div id="col1">
                 <div id="col1_content" class="clearfix">
                 $categories::categories
+                $cat_index::cat_index
                 </div>
             </div>
             }} %]

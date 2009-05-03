@@ -1,5 +1,5 @@
 A Syntax Highlighter for Perl 6
-
+<!-- 1225148400 -->
 <p>Ahmed Zawawi implemented my <a
 href="http://www.nntp.perl.org/group/perl.perl6.users/2008/07/msg788.html">idea
 from June 2008</a> and wrote a <a

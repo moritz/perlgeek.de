@@ -23,16 +23,16 @@
 
 =head1 DESCRIPTION
 
-Perl 6 is just like perl 5 - only better. Statements are terminated by
+Perl 6 is just like Perl 5 - only better. Statements are terminated by
 semicolons. The after the last statement in a block and after a closing curly
-brace at the end of a line the semicolon is option.
+brace at the end of a line the semicolon is optional.
 
 Variables still begin with a sigil (like C<$>, C<@>, C<%>), and many Perl 5
 builtins are still mostly unchanged in Perl 6.
 
 =head2 Strings
 
-Strings are quoted with double quotes (in which case they are interpolating),
+Strings are surrounded by double quotes (in which case they are interpolating),
 or with single quotes. Backslash escapes work just like in Perl 5.
 
 However the interpolation rules have changed a bit. The following things
@@ -93,7 +93,7 @@ also have methods that you can call on them.
 
 Note that when you access hash elements with C<%hash{...}>, the key is not
 auto quoted like in Perl 5. So C<%hash{foo}> doesn't access index C<"foo">,
-but calls the function C<foo()>. The autoquoting isn't gone, it just has a
+but calls the function C<foo()>. The auto quoting isn't gone, it just has a
 different syntax:
     
     say %drinks<Bavaria>;
@@ -110,10 +110,16 @@ that they are also not tied to a particular sigil.
     my $a = [1, 2, 3];
     say $a[2];          # 3
 
-This means that you don't need special dereferncing syntax, and that you can
+This means that you don't need special dereferencing syntax, and that you can
 create objects that can act as arrays, hashes and subs at the same time.
+
+Note that Rakudo only implements interpolation of scalars, closures and
+backslash sequences at the moment; arrays and hashes are never interpolated
 
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S02.html>, 
 L<http://perlcabal.org/syn/S29.html> 
+
+=for time 1221949200
+=for editor vim: spell

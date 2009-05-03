@@ -1,5 +1,5 @@
 Laziness
-
+<!-- 1224280800 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
@@ -34,7 +34,7 @@ name="DESCRIPTION"
 
 <p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
-<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitly.</p>
+<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely.</p>
 
 <p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
@@ -43,11 +43,11 @@ name="DESCRIPTION"
 <p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
 <pre>    my $file = open &#39;/etc/passwd&#39;, :r;
-    for =$file -&#62; $line {
+    for $file.lines -&#62; $line {
         say $line;
     }</pre>
 
-<p>Since <code>=$file</code> is an iterator or a lazy list (it doesn&#39;t really matter which), the lines are only physically read from disk as needed (besides buffering, of course).</p>
+<p>Since <code>$file.lines</code> is an iterator or a lazy list (it doesn&#39;t really matter which), the lines are only physically read from disk as needed (besides buffering, of course).</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="gather/take"
