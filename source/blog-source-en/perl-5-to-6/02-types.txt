@@ -33,7 +33,7 @@ name="DESCRIPTION"
     3.14            # Num
     (1, 2, 3)       # List</pre>
 
-<p>All &#34;normal&#34; builtin types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Object</code>.</p>
+<p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Object</code>.</p>
 
 <p>You can restrict the type of values that a variable can hold by adding the type name to the declaration.</p>
 
@@ -50,7 +50,7 @@ name="Introspection"
 
 <p>You can learn about the direct type of a thing by calling its <code>.WHAT</code> method.</p>
 
-<pre>    say &#34;foo&#34;.WHAT;     # Str</pre>
+<pre>    say &#34;foo&#34;.WHAT;     # Str()</pre>
 
 <p>However if you want to check if something is of a specific type, there is a different way, which also takes inheritance into account and is therefore recommended:</p>
 

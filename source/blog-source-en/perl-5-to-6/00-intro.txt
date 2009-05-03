@@ -38,6 +38,8 @@ name="IT&#39;S_NOT"
 <p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences. See <a href="http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod|Perl6::Perl5::Differences" class="podlinkurl"
 >http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod|Perl6::Perl5::Differences</a> instead if you&#39;re looking for something like that.</p>
 
+<p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
+
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="ROADMAP"
 >ROADMAP</a></h3>
@@ -56,18 +58,20 @@ name="ROADMAP"
     09 Comparisons and Smartmatching
     10 Containers and Binding
     11 Basic Operators
-    12 Lazyness
-    13 Custom Operators
+    12 Lazyness (-)
+    13 Custom Operators (-)
     14 the MAIN sub
     15 Twigils
     16 Enums
-    17 Unicode
+    17 Unicode (-)
     18 Scoping
     19 More Regexes
     20 A Grammar for XML
     21 Subset types
     22 State of the Implementations
-    23 Quoting and Parsing</pre>
+    23 Quoting and Parsing (-)</pre>
+
+<p>(Things that are not or mostly not implemented in Rakudo are marked with <code>(-)</code>)</p>
 
 <p>Things that I want to write about, but which I don&#39;t know well enough yet:</p>
 

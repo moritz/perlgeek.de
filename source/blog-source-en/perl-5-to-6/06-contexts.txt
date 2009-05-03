@@ -14,7 +14,7 @@ name="SYNOPSIS"
 <pre>    my @a = &#60;a b c&#62;
     my $x = @a;
     say $x[2];          # c
-    say (~2).WHAT       # Str
+    say (~2).WHAT       # Str()
     say +@a;            # 3
     if @a &#60; 10 { say &#34;short array&#34;; }</pre>
 
@@ -28,23 +28,25 @@ name="DESCRIPTION"
 
 <p>in Perl 5, <code>$x</code> contains less information than <code>@a</code> - it contains only the number of items in <code>@a</code>. To preserve all information, you have to explicitly take a reference: <code>$x = \@a</code>.</p>
 
-<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called &#34;scalar&#34; in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
+<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called <i>scalar</i> in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
 
 <p>You can force contexts with special syntax.</p>
 
-<pre>    syntax      context
-    ~stuff      String
-    ?stuff      Bool
-    +stuff      Numeric
-    -stuff      Numeric (also negates)
-    $( stuff )  Generic item context
-    @( stuff )  List Context</pre>
+<pre>    syntax       context
+
+    ~stuff       String
+    ?stuff       Bool
+    +stuff       Numeric
+    -stuff       Numeric (also negates)
+    $( stuff )   Generic item context
+    @( stuff )   List Context
+    @@( stuff )  Slice context</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Slice_Context"
 >Slice Context</a></h4>
 
-<p>There&#39;s also a new context called <i>slice context</i>. It is a list context in which lists don&#39;t interpolate.</p>
+<p>There&#39;s also a new context called <i>slice context</i>. It is a list context in which sublists don&#39;t interpolate.</p>
 
 <pre>     @( &#60;a b&#62; Z &#60;c d&#62; )     # &#60;a c b d&#62;
     @@( &#60;a b&#62; Z &#60;c d&#62; )     # ([&#39;a&#39;, &#39;c&#39;], [&#39;b&#39;, &#39;d&#39;])</pre>

@@ -13,8 +13,8 @@ name="SYNOPSIS"
 
 <pre>    grammar XML {
         token TOP   { ^ &#60;xml&#62; $ };
-        token xml   { &#60;plain&#62; [ &#60;tag&#62; &#60;plain&#62; ]* };
-        token plain {  &#60;-[&#60;&#62;&#38;]&#62;* };
+        token xml   { &#60;text&#62; [ &#60;tag&#62; &#60;text&#62; ]* };
+        token text {  &#60;-[&#60;&#62;&#38;]&#62;* };
         rule tag   {
             &#39;&#60;&#39;(\w+) &#60;attributes&#62;*
             [
@@ -29,21 +29,10 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo. I used revision 30633 for this, so in order to reproduce it reliably, you should check out the same revision.</p>
+<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
 
-<p><i>The instructions below are outdated. Please look at <a href="http://rakudo.org/" class="podlinkurl"
->http://rakudo.org/</a> for newer build instructions.</i></p>
-
-<p>On a Unix like OS, this might look like this:</p>
-
-<pre>    svn co https://svn.perl.org/parrot/trunk parrot
-    cd parrot
-    perl Configure.pl &#38;&#38; make
-    cd languages/perl6/ &#38;&#38; make perl6</pre>
-
-<p>Windows users have to build <code>perl6.exe</code> in the last step instead.</p>
-
-<p>Now run <code>make spectest_regression</code>, and if you get any failures, please send a mail to <code>rakudobug@perl.org</code>.</p>
+<p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
+>http://rakudo.org/how-to-get-rakudo</a> to obtain and build Rakudo, and try it out yourself.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Our_idea_of_XML"
@@ -79,7 +68,7 @@ name="Our_idea_of_XML"
         $count++;
     }</pre>
 
-<p>This is a list of both &#34;good&#34; and &#34;bad&#34; XML, and a small test script that runs these tests by matching against <code>XML::TOP</code>. By convention the rule that matches what the grammar should match is named <code>TOP</code>.</p>
+<p>This is a list of both &#34;good&#34; and &#34;bad&#34; XML, and a small test script that runs these tests by calling <code>XML.parse($string)</code>. By convention the rule that matches what the grammar should match is named <code>TOP</code>.</p>
 
 <p>(As you can see from test 1 we don&#39;t require a single root tag, but it would be trivial to add this restriction).</p>
 
@@ -87,20 +76,15 @@ name="Our_idea_of_XML"
 name="Developing_the_grammar"
 >Developing the grammar</a></h4>
 
-<p>The examples can be downloaded from <a href="http://perlgeek.de/static/xml-grammar-01.tar.gz" class="podlinkurl"
->http://perlgeek.de/static/xml-grammar-01.tar.gz</a></p>
-
-<p>The essential of XML is surely the nesting of tags, so we&#39;ll focus on the second test first. Place this at the top of the test script:</p>
+<p>The essence of XML is surely the nesting of tags, so we&#39;ll focus on the second test first. Place this at the top of the test script:</p>
 
 <pre>    grammar XML {
-        token TOP   { ^ &#60;tag&#62; $ };
+        token TOP   { ^ &#60;tag&#62; $ }
         token tag   {
             &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
             &#39;&#60;/&#39; $0   &#39;&#62;&#39;
-        };
+        }
     };</pre>
-
-<p>(All tokens end with a <code>;</code>. This is not required in Perl 6, but a limitation of Rakudo).</p>
 
 <p>Now run the script:</p>
 
@@ -137,34 +121,20 @@ name="Developing_the_grammar"
 
 <p>And run it:</p>
 
-<pre>    $ ./perl6 xml-02.pl
-    Null PMC access in type()
-    current instr.: &#39;parrot;XML;xml&#39; pc 975 (EVAL_17:282)
-    called from Sub &#39;parrot;XML;TOP&#39; pc 778 (EVAL_17:202)
-    called from Sub &#39;parrot;Code;ACCEPTS&#39; pc 5559 (src/gen_builtins.pir:3700)
-    called from Sub &#39;_block87&#39; pc 1621 (EVAL_17:535)
-    ...</pre>
-
-<p>Bad surprise, it dies. Let&#39;s try to find out where and why.</p>
-
-<p>The stack trace shows that it was in an anonymous block, which doesn&#39;t really help, because we don&#39;t know which. <code>Code;ACCEPTS</code> points us to the regex match: the smartmatch <code>~~</code> internally calls <code>ACCEPTS</code>, and regexes are compiled down to Code object. It calls <code>XML::TOP</code>, then <code>XML::xml</code>, and then dies. Since we haven&#39;t changed the <code>tag</code> token, it must be <code>text</code> that&#39;s causing the problem.</p>
-
-<p>Playing around a bit, asking on <code>#perl6</code> on <code>irc.freenode.org</code> or digging through the bug tracker reveals that, due to some weird limitation, you can&#39;t call a regex <code>text</code> in Rakudo. So changing the name from <code>text</code> to <code>plain</code> makes it work again, with this result:</p>
-
 <pre>    $ ./perl6 xml-03.pl
     ok 1 - &#39;abc&#39;
     not ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
     (rest unchanged)</pre>
 
-<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t do longest token matching yet, but matches sequentially. <code>&#60;plain&#62;</code> matches the empty string (and thus always), so <code>&#60;plain&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>.</p>
+<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t do longest token matching yet, but matches sequentially. <code>&#60;text&#62;</code> matches the empty string (and thus always), so <code>&#60;text&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>. Reversing the order of the two alternations would help.</p>
 
 <p>But we don&#39;t just want to match either plain text or a tag anyway, but random combinations of both of them:</p>
 
-<pre>    token xml   { &#60;plain&#62; [ &#60;tag&#62; &#60;plain&#62; ]*  };</pre>
+<pre>    token xml   { &#60;text&#62; [ &#60;tag&#62; &#60;text&#62; ]*  };</pre>
 
 <p>(<code>[...]</code> are non-capturing groups, like <code>(?: ... )</code> is in Perl 5).</p>
 
-<p>And low and behold, the first two tests pass both.</p>
+<p>And low and behold, the first two tests both pass.</p>
 
 <p>The third test, <code>.&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary XML, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
 

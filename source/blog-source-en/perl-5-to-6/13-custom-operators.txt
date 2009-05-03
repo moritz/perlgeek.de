@@ -60,7 +60,7 @@ name="Associativity"
 
 <p>Most infix operators take only two arguments. In an expression like <code>1 / 2 / 4</code> the <i>associativity</i> of the operator decides the order of evaluation. The <code>infix:&#60;/&#62;</code> operator is left associative, so this expression is parsed as <code>(1 / 2) / 4</code>. for a right associative operator like <code>infix:&#60;**&#62;</code> (exponentiation) <code>2 ** 2 ** 4</code> is parsed as <code>2 ** (2 ** 4)</code>.</p>
 
-<p>Perl 6 has more associativities: <code>non</code> forbids chaining of operators of the same precedence (for example <code>2 &#60;=&#62; 3 &#60;=&#62; 4</code> is forbidden), and <code>infix:&#60;,&#62;</code> has <code>list</code> associativity. <code>1, 2, 3</code> is translated to <code>infix:&#60;,&#62;(1; 2; 3)</code>. Finally there&#39;s the <code>chain</code> associativity: <code>$a &#60; $b &#60; $c</code> translates to <code>($a &#60; $b) &#38;&#38; ($b &#60; $c)</code>.</p>
+<p>Perl 6 has more associativities: <code>none</code> forbids chaining of operators of the same precedence (for example <code>2 &#60;=&#62; 3 &#60;=&#62; 4</code> is forbidden), and <code>infix:&#60;,&#62;</code> has <code>list</code> associativity. <code>1, 2, 3</code> is translated to <code>infix:&#60;,&#62;(1; 2; 3)</code>. Finally there&#39;s the <code>chain</code> associativity: <code>$a &#60; $b &#60; $c</code> translates to <code>($a &#60; $b) &#38;&#38; ($b &#60; $c)</code>.</p>
 
 <pre>    multi sub infix:&#60;foo&#62; is tighter(&#38;infix:&#60;+&#62;)
                           is assoc(&#39;left&#39;)

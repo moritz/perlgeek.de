@@ -106,7 +106,7 @@ name="MOTIVATION"
 
 <p>Various combinations of the quoting modifiers are already used internally, for example <code>q:w</code> to parse <code>&#60;...&#62;</code>, and <code>:regex</code> for <code>m/.../</code>. It makes sense to expose these also to the user, who gains flexibility, and can very easily write macros that provide a shortcut for the exact quoting semantics he wants.</p>
 
-<p>And when you limit the speciality of keywords, you have far less troubles with backwards compatibility if you want to change what you consider a &#34;keyword&#34;.</p>
+<p>And when you limit the specialty of keywords, you have far less troubles with backwards compatibility if you want to change what you consider a &#34;keyword&#34;.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

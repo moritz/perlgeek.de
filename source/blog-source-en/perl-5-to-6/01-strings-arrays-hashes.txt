@@ -34,7 +34,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is just like perl 5 - only better. Statements are terminated by semicolons. The after the last statement in a block and after a closing curly brace at the end of a line the semicolon is option.</p>
+<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. The after the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
@@ -42,7 +42,7 @@ name="DESCRIPTION"
 name="Strings"
 >Strings</a></h4>
 
-<p>Strings are quoted with double quotes (in which case they are interpolating), or with single quotes. Backslash escapes work just like in Perl 5.</p>
+<p>Strings are surrounded by double quotes (in which case they are interpolating), or with single quotes. Backslash escapes work just like in Perl 5.</p>
 
 <p>However the interpolation rules have changed a bit. The following things interpolate</p>
 
@@ -113,6 +113,8 @@ name="Final_Notes"
     say $a[2];          # 3</pre>
 
 <p>This means that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
+
+<p>Note that Rakudo only implements interpolation of scalars, closures and backslash sequences at the moment; arrays and hashes are never interpolated</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

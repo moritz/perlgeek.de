@@ -25,7 +25,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Calling subs and running a typical unix program from the command line is visually very similar: you can have positional, optional and named arguments.</p>
+<p>Calling subs and running a typical Unix program from the command line is visually very similar: you can have positional, optional and named arguments.</p>
 
 <p>You can benefit from it, because Perl 6 can process the command line for you, and turn it into a sub call. Your script is normally executed (at which time it can munge the command line arguments stored in <code>@*ARGS</code>), and then the sub <code>MAIN</code> is called, if it exists.</p>
 

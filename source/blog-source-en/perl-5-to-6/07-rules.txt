@@ -1,11 +1,11 @@
-Rules (formerly Regexes)
+Regexes (also called C<rules>)
 <!-- 1222381200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
 >NAME</a></h3>
 
-<p>&#34;Perl 5 to 6&#34; Lesson 07 - Rules (formerly Regexes)</p>
+<p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called <code>rules</code>)</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SYNOPSIS"
@@ -20,7 +20,6 @@ name="SYNOPSIS"
         }
         token byte {
             (\d**{1..3}) &#60;?{ $0 &#60; 256 }&#62;
-
         }
         token ip {
             &#60;byte&#62; [\. &#60;byte&#62; ] ** 3
@@ -36,7 +35,6 @@ name="SYNOPSIS"
         }
         token path {
             &#60;[a..zA..Z0..9-_.!~*&#39;():@&#38;=+$,/]&#62;+
-
         }
     }</pre>
 
@@ -44,7 +42,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Regexes are one of the areas that has been improved and revamped most in Perl 6. To honour that, an because they aren&#39;t &#34;regular expressions&#34; any more, they are now called &#34;rules&#34;.</p>
+<p>Regexes are one of the areas that has been improved and revamped most in Perl 6. We don&#39;t call them <i>regular expressions</i> anymore because they are even less regular than they are in Perl 5.</p>
 
 <p>There are three large changes and enhancements to the regexes</p>
 
@@ -57,17 +55,17 @@ name="DESCRIPTION"
 
 <p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[..]</code>, which are a lot easier to write than the old <code>(?:...)</code>.</p>
 
-<dt><a name="Nested_caputures_and_match_object"
->Nested caputures and match object</a></dt>
+<dt><a name="Nested_captures_and_match_object"
+>Nested captures and match object</a></dt>
 
 <dd>
 <p>In perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
 
-<dt><a name="Named_Rules_and_Grammars"
->Named Rules and Grammars</a></dt>
+<dt><a name="Named_regexes_and_grammars"
+>Named regexes and grammars</a></dt>
 
 <dd>
-<p>You can declare regexes with names just like you can with subs and methods. You can refer to these inside other rules with <code>&#60;name&#62;</code>. And you can put multiple rules into grammars, which are just like classes and support inheritance and composition</p>
+<p>You can declare regexes with names just like you can with subs and methods. You can refer to these inside other rules with <code>&#60;name&#62;</code>. And you can put multiple regexes into grammars, which are just like classes and support inheritance and composition</p>
 </dd>
 </dl>
 
@@ -137,8 +135,8 @@ name="The_Match_Object"
 <p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object again. This allows you to build real parse trees with rules.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
-name="Named_Rules_and_Grammars"
->Named Rules and Grammars</a></h4>
+name="Named_Regexes_and_Grammars"
+>Named Regexes and Grammars</a></h4>
 
 <p>Rules can either be used with the old style <code>m/.../</code>, or be declared like subs and methods.</p>
 
@@ -162,7 +160,7 @@ name="MOTIVATION"
 
 <p>Perl 5 regexes are often rather unreadable, the grammars encourage you to split a large regex into more readable, short fragments. Named captures make the rules more self-documenting, and many things are now much more consistent than they were before.</p>
 
-<p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the perl 5 one, which is written in C and not changeable at parse time.</p>
+<p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the Perl 5 one, which is written in C and not changeable at parse time.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"
