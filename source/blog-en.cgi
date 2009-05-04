@@ -70,7 +70,7 @@ $static_entries = 0;
 
 # --------------------------------
 
-use vars qw! $version $blog_title $blog_description $blog_language $datadir $url %template $template $depth $num_entries $file_extension $default_flavour $static_or_dynamic $plugin_dir $plugin_state_dir @plugins %plugins $static_dir $static_password @static_flavours $static_entries $path_info $path_info_yr $path_info_mo $path_info_da $path_info_mo_num $flavour $static_or_dynamic %month2num @num2month $interpolate $entries $output $header $show_future_entries %files %indexes %others $rssDate !;
+use vars qw! $version $blog_title $blog_description $blog_language $datadir $url %template $template $depth $num_entries $file_extension $default_flavour $static_or_dynamic $plugin_dir $plugin_state_dir @plugins %plugins $static_dir $static_password @static_flavours $static_entries $path_info $path_info_yr $path_info_mo $path_info_da $path_info_mo_num $flavour $static_or_dynamic %month2num @num2month $interpolate $entries $output $header $show_future_entries %files %indexes %others $rssDate $dcDate!;
 
 use strict;
 use FileHandle;
@@ -350,6 +350,12 @@ sub generate {
 
       $rssDate = ctime($f{$path_file});
       $rssDate =~ s/(\w+) /$1, /;
+      {
+          my ($sec, $min, $hour, $mday, $mon, $year) = gmtime();
+
+          $dcDate = sprintf "%04d-%02d-%02dT%02d:%02d:%02d+00:00",
+                    $year + 1900, $mon, $mday, $hour, $min, $sec;
+      }
 
       # Date fiddling for by-{year,month,day} archive views
       use vars qw/ $dw $mo $mo_num $da $ti $yr $hr $min $hr12 $ampm /;
@@ -444,7 +450,7 @@ html date <h3>$dw, $da $mo $yr</h3>\n
 html foot <p /><center><a href="http://www.blosxom.com/"><img src="http://www.blosxom.com/images/pb_blosxom.gif" border="0" /></a></body></html>
 rss content_type text/xml
 rss head <?xml version="1.0"?>\n<!-- name="generator" content="blosxom/$version" -->\n<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://www.rssboard.org/rss-0.91.dtd">\n\n<rss version="0.91">\n  <channel>\n    <title>$blog_title $path_info_da $path_info_mo $path_info_yr</title>\n    <link>http://perlgeek.de$url/</link>\n    <description>$blog_description</description>\n    <language>$blog_language</language>\n
-rss story   <item>\n    <title>$title</title>\n    <pubDate>$rssDate</pubDate>\n   <link>http://perlgeek.de$url$path/$fn.writeback</link>\n    <description>$body</description>\n  </item>\n
+rss story   <item>\n    <title>$title</title>\n  <!--  <pubDate>$rssDate</pubDate>-->\n    <dc:date>$dcDate</dc:date>     \n   <link>http://perlgeek.de$url$path/$fn.writeback</link>\n    <description>$body</description>\n  </item>\n
 rss date \n
 rss foot   </channel>\n</rss>
 error content_type text/html
