@@ -349,6 +349,7 @@ sub generate {
       $path &&= "/$path";
 
       $rssDate = ctime($f{$path_file});
+      $rssDate =~ s/(\w+) /$1, /;
 
       # Date fiddling for by-{year,month,day} archive views
       use vars qw/ $dw $mo $mo_num $da $ti $yr $hr $min $hr12 $ampm /;
