@@ -76,7 +76,7 @@ say %leaders.sort(*.value).perl;
 things are even simpler than before. Suppose you want to iterate an array, but
 obtain two items in each iteration. In Perl 5 you'd either write a C-style
 <code>for</code> loop iterating over the index in steps of two, or use
-[doc://List::MoreUtils]::natatime (if you can spell it ;-).</p>
+<a href="http://search.cpan.org/perldoc?List::MoreUtils">List::MoreUtils</a>::natatime (if you can spell it ;-).</p>
 
 <p>But this is so much easier:</p>
 
