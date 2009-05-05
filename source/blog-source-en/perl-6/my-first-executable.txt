@@ -1,0 +1,35 @@
+My first executable from Perl 6
+<!-- 1241549143 -->
+
+<p>In various occasions I have been asked if "Perl 6 compiles programs into
+real executables" or so.</p>
+
+<p>The answer so far has always been the same: Perl 6 is a language
+specification, and it's up to the implementations if they offer that option,
+it's not a required feature.</p>
+
+<p>But today I actually compiled a Perl 6 program into an executable, with <a
+href="http://rakudo.org/">Rakudo</a>. It's not automated, so it takes a few
+steps, but it would be easy to wrap into a shell script or Makefile. Here it
+goes:</p>
+
+<pre>[% syntax escape %]
+$ cat hello.pl
+say "Hello, Perl people";
+$ ./perl6 --target=PIR hello.pl > hello.pir
+$ ./parrot/parrot -o hello.pbc hello.pir
+$ ./parrot/pbc_to_exe hello.pbc > hello
+$ file hello
+hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.8, not stripped
+$./hello
+Hello, Perl people
+[% endsyntax %]</pre>
+
+<p>This is what the Parrot folks call a "fake executable" - it contains the
+byte code as a string, links to libparrot, and has a small main program that
+initializes parrot. But hey, it's an executable ;-)</p> 
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html spell
+%]
