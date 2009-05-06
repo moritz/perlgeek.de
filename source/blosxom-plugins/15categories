@@ -9,10 +9,12 @@ $categories = <<END;
 <h3>Categories</h3>
 <ul>
 END
+    my $url = $blosxom::url;
+    $url =~ s{[^/]+$}{};
     for (map m{([^/]+)$}, sort grep -d, glob("$blosxom::datadir/*")){
         my $title = ucfirst $_;
         $title =~ s/-/ /g;
-        $categories .= qq{\t<li><a href="$blosxom::url/$_/">$title</a></li>\n};
+        $categories .= qq{\t<li><a href="$url/$_/">$title</a></li>\n};
     }
 
     $categories .= "</ul>\n";
