@@ -17,13 +17,11 @@ sub start {
 
     $cat_index = '<div class="blog_index"><h3>Posts in this category</h3>';
     $cat_index .= "\n<ul>\n";
-    use Data::Dumper;
     for (@files){
         my $fn = $_;
         $fn =~ s{^.*/}{};
         my $path = "$blosxom::url/$blosxom::path_info";
         # we're not always in a directory
-        warn Dumper [ $path, $fn ] => [qw(path fn)];
         $path =~ s{/[^/]+$}{}g if $path =~ /\.(?:html|txt|rss)$/;
         $path .= '/' . $fn;
         $path =~ s/\Q$blosxom::file_extension\E$/$blosxom::flavour/;
