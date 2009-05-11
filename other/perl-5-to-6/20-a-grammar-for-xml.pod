@@ -54,7 +54,7 @@ want to parse as valid "XML", and what not:
     my $count = 1;
     for @tests -> $t {
         my $s = $t[1];
-        my $M := $s ~~ XML::TOP;
+        my $M = XML::TOP.parse($s);
         if !($M  xor $t[0]) {
             say "ok $count - '$s'";
         } else {
