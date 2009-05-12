@@ -1,0 +1,89 @@
+Subroutines vs. Methods - Differences and Commonalities
+<!-- 1242149738 -->
+
+<p>This is mostly a response to s1n's <a
+href="http://s1n.dyndns.org/index.php/2009/05/11/sub-method/">post about subs
+and methods in Perl 6</a>. He maintains that since methods are very common in
+classes, a <code>sub</code> declaration inside a class should automatically
+get the semantics of a method. The reason was a deep confusion about what the
+difference is, and if they are different at all (especially since class
+methods and subs look very similar at first).</p>
+
+<p>I want to stress that both are quite different in some ways, and indeed
+deserve different keywords. I won't discuss multi subs and multi methods,
+because they add nothing new to the points I want to make.</p>
+
+<h3>Methods</h3>
+
+<p>A method is a piece of code that is associated with an object, which we
+call the <em>invocant</em> (at least in Perl land). It can never be called
+without the invocant.</p>
+
+<p>The lookup behaviour of a method is independent of the calling code's scope
+ore namespace; in the abstractest sense an object passes deals with method
+calls by passing that method call to its "meta" object (ie that things that
+manages the object under the hood).</p>
+
+<p>The default meta object looks for that method in the actual class of the
+object, and if it can't find the method there it'll fall back the parent
+classes.</p>
+
+<p>Note that this mechanism might be rather different for calls to foreign
+languages; if you call a method on a Lisp object, then the dispatch will
+happen with Lisp semantics.</p>
+
+<p>In Perl 6, all methods automatically get access to the invocant through the
+<code>self</code> keyword.</p>
+
+<p>Note that "class" or "static" methods are still ordinary objects, just the
+invocant is the class itself (or the <em>type object</em>), not an instance of
+that class.</p>
+
+<h3>Subroutines</h3>
+
+<p>Subroutines, short subs, are pieces of code that don't have an invocant,
+and live in a symbol table, a lexical scope or an ordinary variable holding
+it.</p>
+
+<p>Calling a sub (that's not stored in an ordinary variable) involves looking
+down the lexical scopes, and falling back to the symbol table.</p>
+
+<h3>Subroutines in classes</h3>
+
+<p>Usually subroutines live in modules, but they can also exist in classes.
+However they don't have access to any attributes of that class, just to outer
+lexicals (as any piece of code in Perl 6 has).</p> 
+
+<p>Or to phrase it differently, it's like placing a subroutine in the
+namespace that the class happens to introduce anyway.</p>
+
+
+<h2>The "different things should look different" paradigm</h2>
+
+<p>In Perl 5, often things that do quite different things look very much the
+same. One example is <a
+href="http://perldoc.perl.org/functions/reverse.html"</a>reverse</a>, which
+does string reversal in scalar context, and list reversal in list context.
+That implied that <code>print reverse "abc";</code> actually prints
+<code>abc</code>, which is very confusing to the beginner, and still annoying
+to everybody else.</p>
+
+<p>It also uses the same keyword for subs and methods, because in Perl 5
+there's no difference between the two, only the invocation makes the
+difference. That proofed rather difficult for introspection and static code
+analysis.</p>
+
+<p>The proposal to automatically promote subs to methods inside classes brings
+us back to the dangerous part of having different things looking similar; it
+also raises the question how you declare subroutines (not methods) inside a
+class. We'd have to invent a new syntax for that.</p>
+
+<p>Then when somebody asks <i>how do I write a sub in Perl?</i>, the answer
+would be <i>you simply write <code>sub name { ... }</code>, except in classes,
+where you write <code>really_a_sub name { ... }</code>.</i> I don't want that
+kind of answers in our Perl 6 FAQs.</p>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]
