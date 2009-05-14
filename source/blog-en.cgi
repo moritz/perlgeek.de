@@ -351,10 +351,10 @@ sub generate {
       $rssDate = ctime($f{$path_file});
       $rssDate =~ s/(\w+) /$1, /;
       {
-          my ($sec, $min, $hour, $mday, $mon, $year) = gmtime();
+          my ($sec, $min, $hour, $mday, $mon, $year) = gmtime($f{$path_file});
 
           $dcDate = sprintf "%04d-%02d-%02dT%02d:%02d:%02d+00:00",
-                    $year + 1900, $mon, $mday, $hour, $min, $sec;
+                    $year + 1900, $mon+1, $mday, $hour, $min, $sec;
       }
 
       # Date fiddling for by-{year,month,day} archive views
