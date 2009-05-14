@@ -1,0 +1,23 @@
+Custom operators in Rakudo
+<!-- 1242337063 -->
+
+<p>Last night <a href="http://pmichaud.com/">Patrick Michaud</a> implemented
+a few nice features in Rakudo: you can now refer to operators by their 
+sub names, define custom operators and overload existing operators.</p>
+
+<p>It comes with a few caveats (precedence levels and associativity are not
+yet implemented, and some operators that are parrot primitives don't work too
+well as subs), but all in all it's very nice to see this in action:</p>
+
+<pre>[% syntax escape %]
+sub postfix:<!>(Int $x) {
+    [*] 1..$x
+}
+
+say 5!;         # 120
+[% endsyntax %]</pre>
+
+<p><em>"Rakudo: every day a bit more Perl 6"</em>. Thanks to all who
+contributed so far!</p>
+
+[% option no-header %] [% option no-footer %]
