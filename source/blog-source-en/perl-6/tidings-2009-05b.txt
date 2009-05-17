@@ -117,6 +117,14 @@ test suite each:</p>
 
 <p>We had commits from 132 different accounts in the test suite.</p>
 
+<h3>Web.pm</h3>
+
+<p>The TPF grant for producing a Web framework on top of Perl 6 seems
+to <a href="http://use.perl.org/~masak/journal/38973">progress
+nicely</a>, for example it <a
+href="http://use.perl.org/~masak/journal/38946">enabled the quick
+building of a blogging application</a>.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment
     vim: ft=html spell spelllang=en_us tw=70 
