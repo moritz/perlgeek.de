@@ -11,7 +11,7 @@ sub start { 1 }
 sub dateforfile {
     my $fn = shift;
     open my $h, '<:encoding(UTF-8)', $fn
-        or die "Can't opne file `$fn' for writing: $!";
+        or die "Can't open file `$fn' for reading: $!";
     my $date = <$h>;
     $date = <$h>;
     close $h or warn $!;

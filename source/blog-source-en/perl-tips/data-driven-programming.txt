@@ -1,0 +1,202 @@
+Data driven programming
+<!-- 1245103200 -->
+
+<p>The other days somebody asked on IRC for help with this question:</p>
+
+<p>He was looking for all 9 digit numbers that didn't 
+contain a zero digit anywhere, and the first digit
+should be divisible by one, the  number formed from the
+first two digits should be divisible by 2, the number formed
+from the first three digits should be divisible by 3
+etc.</p>
+
+<p>The first such number is 1232525616, because 1 can be
+divided by 1, 12 can be divided by 2, 123 can be divided by
+3 etc.</p>
+
+<p>Since finding one isn't really a challenge, let's focus
+on finding them all. The easiest approach is, of course,
+brute force. There are 10<sup>9</sup> numbers with 9 digits,
+that's quite a manageable number for a modern computer. On
+my laptop it takes perl about 45 seconds to loop over all
+10<sup>9</sup> numbers, doing nothing else.</p>
+
+<p>So all you've got to do is iterate over all numbers, test
+if they meet the criterion stated above, and print them out
+if they do:</p>
+
+<pre>[% syntax perl %]
+use strict;
+use warnings;
+sub test {
+    my $z = shift;
+    for (2..9) {
+        return if (substr($z, 0, $_) % $_ != 0);
+    }
+    return 1;
+}
+
+for (my $i = 1 x 9; length($i) == 9; $i += 9) {
+    next if $i =~ /0/;
+    if (test($i)) {
+        print $i, $/;
+    }
+}
+[% endsyntax %]</pre>
+
+<p>This uses a small trick: the first number that doesn't
+contain any zero is <code>111111111</code>, or short <code>1
+x 9</code>.</p>
+
+<p>It takes 4 minutes and 20 seconds, produces the right answer, and we're
+happy.</p>
+
+<p>But it wastes a lot of resources, and wouldn't scale for
+larger numbers. So for the sake of fun I tried a few
+different optimizations.</p>
+
+<p>The first one is quite simple: the second digit must
+always be even, otherwise the number consisting of the
+first two digits could not be even. Likewise the fifths
+digit must be 5 or 0 to ensure that it can be divided by 5.
+Since 0 is forbidden anyway, it has to be 5. So let's skip
+the expensive check if those conditions aren't
+fulfilled:</p>
+
+<pre>[% syntax perl %]
+for (my $i = 1 x 9; length($i) == 9; $i += 9) {
+    next if $i =~ /0/;
+    next if $i =~ /^.[13579]/;
+    next unless $i =~ /^....5/;
+    if (test($i)) {
+        print $i, $/;
+    }
+}[% endsyntax %]</pre>
+
+<p>This speeds up the computation to roughly a minute. Since
+40 seconds are minimum for the iteration alone, it's nearly
+as good as it gets with this approach.</p>
+
+<p>But of course there's still room for improvement: when
+the second digit is odd, the program iterates over a hundred
+million of numbers without finding one. Instead of skipping
+them each time, it would be much more efficient to generate
+the number digit by digit,  checking divisibility at each
+step of the way.</p> 
+
+<pre>[% syntax perl %]
+for my $a (1..9) {
+    for my $b (2, 4, 6, 8) {
+        for my $c (1..9) {
+            next if ($a + $b + $c) % 3;
+            for my $d (2, 4, 6, 8) {
+                next if (10 * $c + $d) % 4;
+                my $e = 5;
+                for my $f (2, 4, 6, 8) {
+                    next if ($a + $b + $c + $d + $e + $f) % 3;
+                    for my $g (1..9) {
+                        my $so_far = "$a$b$c$d$e$f$g";
+                        next if $so_far % 7;
+                        for my $h (2, 4, 6, 8) {
+                            next if ($so_far . $h) % 8;
+                            for my $i (1..9) {
+                                my $so_far = $so_far . "$h$i";
+                                next if $so_far % 9;
+                                print "$so_far$h\n";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+[% endsyntax %]</pre>
+
+<p>Wow, that's ugly code, but it works and it's fast. Very
+fast. 27 milliseconds, or more than 2000 times faster as the
+previous version.</p>
+
+<p>Bug it contains lots of duplicated code, and again it
+wouldn't scale for finding larger numbers, this time because
+for digit a loop needs to be written.</p>
+
+<p>Whenever I find myself repeating some piece of code a few
+times, but in slightly different forms, I try to pack the
+code into a data structure instead.</p>
+
+<p>For each digit position there needs to a list of digit to
+try, and a test that determines if the newly added digit
+violates its divisibility rule.</p>
+
+
+<pre>[% syntax perl %]
+use strict;
+use warnings;
+
+my @config = (
+    [[1..9],        sub { 0 }],
+    [[2, 4, 6, 8],  sub { 0 }],
+    [[1..9],        sub { $_[0] % 3}],
+    [[2, 4, 6, 8],  sub { $_[0] % 4 }],
+    [[5],           sub { 0 }],
+    [[2, 4, 6, 8],  sub { $_[0] % 6 }],
+    [[1..9],        sub { $_[0] % 7 }],
+    [[2, 4, 6, 8],  sub { $_[0] % 8 }],
+    [[1..9],        sub { $_[0] % 9 }],
+);
+[% endsyntax %]</pre>
+
+<p>The nested loops from the previous script can be emulated
+by recursion, passing the previous digits along (and the
+configuration for all digit positions that still need to be
+tested).</p>
+
+<pre>[% syntax perl %]
+sub f {
+    my ($so_far, $config) = @_; 
+    $config = [ @$config ];
+    if (!@$config) {
+        print "$so_far\n";
+    } else {
+        my $c = shift @$config;
+        for my $current (@{$c->[0]}) {
+            next if $c->[1]->($so_far . $current);
+            f($so_far . $current, $config);
+        }
+    }
+}
+
+f('', \@config);
+[% endsyntax %]</pre>
+
+<p>With 46ms runtime it's still acceptably fast, and much
+leaner than the nested loops.</p>
+
+<p>Actually a rough sketch of the configuration table 
+can also be generated automatically, and then optimized
+manually:</p>
+
+<pre>[% syntax perl %]
+my @config;
+
+for my $n (1..9) {
+    push @config, [
+        ($n % 2 ? [1..9] : [2, 4, 6, 8]),
+        sub { $_[0] % $n },
+    ]
+}
+$config[4] = [[5], sub { 0 } ];
+[% endsyntax %]</pre>
+
+<p>Now the script contains as little duplication as
+possible, is reasonably fast, and I'm happy.</p>
+
+<p>(Just one final note: there's no scalability problem in
+this particular task, because it can't be extended to more
+than nine digits: if no zero is allowed, there won't be any
+numbers divisible by 10.)</p>
+
+[% option no-header %] [% option no-footer %] 
+[% comment vim: ft=html tw=60 spell spelllang=en_us
+%]

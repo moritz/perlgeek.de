@@ -1,0 +1,124 @@
+Perl 6 Tidings from May 2009 (second iteration)
+<!-- 1242684000 -->
+
+<p>Shortly before my vacations (Ferie i Norge!) I want summarize
+what happened in Perl 6 land.</p>
+
+<h2>Specification</h2>
+
+<p>Many small corrections improved the consistency of the
+specification, but the biggest area of development was the
+language mutability and interaction of various languages.</p>
+
+<p>There are various dialects that inherit some of the main language's
+syntactic features, but are quite different: quotes, regexes, quasi
+quotes (for macros), transliterations etc. Those are now called
+<em>slang</em>s, and for example declaring a new backslash assertion
+in a regex now works like this (r26734):</p>
+
+<pre>[% syntax escape %]
+augment slang Regex {
+    token backslash:sym<y> { y\w+ }
+}
+[% endsyntax %]</pre>
+
+<p>The various slangs are available via the <code>~</code> twigil, for
+example <code>$~Regex</code> refers to the current braid of the
+<code>Regex</code> slang (r26733).</p>
+
+
+<h2>Implementations</h2>
+<h3>Rakudo</h3>
+
+<p>There were, as usual, many activities in Rakudo. Jonathan
+Worthington finished his Hague grant on the multi dispatcher and
+object orientation, and applied for a new one, covering (among other
+features) parallel dispatch (of the form
+<code>@array&gt;&gt;.method(@args)</code>) and user defined
+traits. He started his work already (and seems to have finished a good
+part already), even though the grant committee
+hasn't yet approved.</p>
+
+<p>He also implemented much nicer error message: they now contain a
+stack trace of the Perl 6 functions only (used to be also internal subs),
+and each position in the call chain is annotated  with file name and
+line number. This brings Rakudo an important step closer to
+real-world usability.</p>
+
+<p>Patrick Michaud implemented basic parsing of the <code>«...»</code>
+quotes, fixed some Unicode issues, and <a
+href="http://perlgeek.de/blog-en/perl-6/custom-operators-in-rakudo.html">implemented
+operator definitions and overloading</a> (things like precedence and
+associativity are still missing, but it's very impressive
+nonetheless).</p>
+
+<p>chromatic tirelessly optimized Parrot and Rakudo startup (Rakudo
+startup used to be about one second) with good success.</p>
+
+<p>Stephen "Tene" Weeks put Rakudo into its own high level language
+(HLL) namespace, which is Parrot's tool to avoid leakage of Parrot
+symbols into Perl 6's namespaces, and to simplify interaction with
+other languages. Sadly this make Rakudo a bit slow, eliminating about
+half of chromatic's speed improvements.</p>
+
+<h3>SMOP</h3>
+
+<p>Paweł Murias continued the refactoring of smop and mildew, working
+(as far as I can tell) on attributes, method signatures and control
+exceptions.</p>
+
+
+<h2>Miscellaneous</h2>
+
+
+<h3>Smartlinks</h3>
+
+<p>Gabor Szabo released the smartlinks utility as <a
+href="http://search.cpan.org/perlodc?Text::SmartLinks">Text::Smartlinks</a>
+to CPAN, and implemented the linking to the various S32 documents, and
+published a keyword index to the synopsis documents.</p>
+
+<h3>Test suite</h3>
+
+<p>In the test suite there are 50 to 60 files (with a total of about
+230 tests) left that are under
+consideration/review to moved into <code>t/spec/</code>, the
+official part of the test suite.</p>
+
+<p>Commit activity in the test suite:</p>
+
+<p><img src="http://perlgeek.de/images/commits-testsuite.png"
+width="600" height="400" alt="" /></p>
+
+<p>(The last spike is caused by me using git-svn. Every other weekend
+I'm offline and do some work on the test suite. With svn that resulted
+in one huge commit, with git-svn that results in many more smaller
+commits.)</p>
+
+<p>I did some useless statistics on who committed how much, and found
+that there were twelve hackers who had at least 100 commits to the
+test suite each:</p>
+
+<table summary="number of commits per contributor">
+    <tr> <th># Commits</th>  <th>Nick</th> </tr>
+    <tr> <td>1259 </td><td> moritz   </td></tr>
+    <tr> <td> 916 </td><td> audreyt  </td></tr>
+    <tr> <td> 548 </td><td> iblech   </td></tr>
+    <tr> <td> 279 </td><td> lwall    </td></tr>
+    <tr> <td> 230 </td><td> jnthn    </td></tr>
+    <tr> <td> 212 </td><td> pmichaud </td></tr>
+    <tr> <td> 152 </td><td> corion   </td></tr>
+    <tr> <td> 148 </td><td> agentz   </td></tr>
+    <tr> <td> 145 </td><td> putter   </td></tr>
+    <tr> <td> 123 </td><td> Stevan   </td></tr>
+    <tr> <td> 117 </td><td> cosimo   </td></tr>
+    <tr> <td> 107 </td><td> Auzon    </td></tr>
+</table>
+
+<p>We had commits from 132 different accounts in the test suite.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment
+    vim: ft=html spell spelllang=en_us tw=70 
+%]
+
