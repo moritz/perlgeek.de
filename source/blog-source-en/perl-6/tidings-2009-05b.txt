@@ -74,7 +74,7 @@ exceptions.</p>
 <h3>Smartlinks</h3>
 
 <p>Gabor Szabo released the smartlinks utility as <a
-href="http://search.cpan.org/perlodc?Text::SmartLinks">Text::Smartlinks</a>
+href="http://search.cpan.org/perldoc?Text::SmartLinks">Text::Smartlinks</a>
 to CPAN, and implemented the linking to the various S32 documents, and
 published a keyword index to the synopsis documents.</p>
 
