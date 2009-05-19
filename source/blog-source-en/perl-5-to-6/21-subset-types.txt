@@ -14,7 +14,7 @@ name="SYNOPSIS"
 <pre>    subset Squares of Int where { .sqrt.int**2 == $_ };
 
     multi sub square_root(Squares $x --&#62; Int) {
-        return int $x.sqrt;
+        return $x.sqrt.int;
     }
     multi sub square_root(Num $x --&#62; Num) {
         return $x.sqrt;

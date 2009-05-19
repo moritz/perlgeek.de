@@ -7,7 +7,7 @@
     subset Squares of Int where { .sqrt.int**2 == $_ };
 
     multi sub square_root(Squares $x --> Int) {
-        return int $x.sqrt;
+        return $x.sqrt.int;
     }
     multi sub square_root(Num $x --> Num) {
         return $x.sqrt;
