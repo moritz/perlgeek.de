@@ -23,5 +23,5 @@
 				<!-- end: skip link navigation -->
 				<span><a href="/en/imprint">Imprint</a></span> </div>
 <!--			<h1>[%readvar section%]</h1> -->
-			<span>perlgeek.de | [%readvar section%][% ifvar de %] -- <a
+			<span>Perl Programming | [%readvar section%][% ifvar de %] -- <a
             href="[% readvar de %]">Diese Seite auf Deutsch</a>[% endifvar %]</span></div>
