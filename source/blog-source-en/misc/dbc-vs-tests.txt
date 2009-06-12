@@ -2,20 +2,21 @@ Why Design By Contract Does Not Replace a Test Suite
 <!-- 1243844911 -->
 
 <p><em>"Design By Contract"</em> (DBC) usually refers both to very sophisticated
-assertion systems (for example that get inherited together with the methods to
-which they belong), and to the practice of using such assertions extensively,
-not only for quality assurance but also as a form of documentation.</p>
+assertion systems (for example in which assertions are inherited along with
+the methods to which they belong), and to the practice of using such
+assertions extensively, not only for quality assurance but also as a form of
+documentation.</p>
 
 <p>When I was mostly programming in Eiffel some years ago, I liked DBC very
 much, and I still think that it's a very good idea, and that more programming
 language should offer good support for it.</p>
 
 <p>However there's one comment that I've seen frequently on the web, in blogs
-and on IRC. Often DBC evangalists say something along these lines: <em>"We
+and on IRC. Often DBC evangelists say something along these lines: <em>"We
 have DBC, we don't need a test suite"</em>. I find such comments incredibly
 stupid, and here I want to write down why.</p>
 
-<h2>Code needs to run</h2>
+<h3>Code needs to run</h3>
 
 <p>If you want to verify that the code does what you want, you have to
 actually run it - otherwise the assertions won't be triggered, and are
@@ -26,7 +27,7 @@ path - just like you'd do it when you write tests. Doing that manually
 requires much work, so you still need a test suite that you can run to verify
 that some changes didn't break anything.</p>
 
-<h2>Examples are easy, general rules are hard</h2>
+<h3>Examples are easy, general rules are hard</h3>
 
 <p>Test cases are just example input, paired with the expected output. Usually
 it's pretty easy to come with examples, so writing tests is also easy, even
@@ -36,6 +37,24 @@ for corner cases.</p>
 input data, so to formulate them, you have to consider the general case -
 that's usually rather hard, so the lazy programmer leaves out the hard
 cases.</p>
+
+<p>A simple example: suppose you've written a subroutine that adds two numbers
+(for example for a bignum library). Writing assertions for the general case of
+addition is quite hard if you can't trust your subtraction routine; so the
+only things you can really do is to check the signs (positive number plus
+positive number is positive etc.), but that won't catch any off-by-one
+errors.</p>
+
+<p>So you should also write tests; tests like <code>add(3, 4) == 7</code> are
+trivial to come up with, and catch potential errors.</p>
+
+<h2>Conclusions</h2>
+
+<p>Design by Contract and testing should go hand in hand so that the tests
+exercise as many code paths as possible, and should cover those areas that are
+hard to validate with assertions.</p>
+
+<p>DBC should not be viewed as a replacement for tests.</p>
 
 [% option no-header %] [% option no-footer %]
 [% option vim: ft=html
