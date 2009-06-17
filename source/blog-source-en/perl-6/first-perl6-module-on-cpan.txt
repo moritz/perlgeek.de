@@ -1,5 +1,5 @@
 The first Perl 6 module on CPAN
-<-- 1245275198 -->
+<!-- 1245275198 -->
 <p>About a month ago we had a discussion about distributing Perl 6 modules,
 again. This time I also looked at <a href="http://cpan6.org/">cpan6.org</a>
 and mailed Mark Overmeer about his progress and visions.</p>
