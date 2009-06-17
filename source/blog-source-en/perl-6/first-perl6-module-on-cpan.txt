@@ -1,0 +1,35 @@
+The first Perl 6 module on CPAN
+<-- 1245275198 -->
+<p>About a month ago we had a discussion about distributing Perl 6 modules,
+again. This time I also looked at <a href="http://cpan6.org/">cpan6.org</a>
+and mailed Mark Overmeer about his progress and visions.</p>
+
+<p>The discussion moved to the perl6-language mailing list, and I went to
+vacations. When I came back roughly three weeks later, there were nearly
+hundred messages on that subject in five different threads, and so far I
+didn't feel like reading it all. (Additionally my mail server went down
+during that time, so I didn't even have them in my mailbox).</p>
+
+<p>So instead of discussing things, I started to <strong>do</strong>
+something: I <a
+href="http://github.com/moritz/json/commit/52295f3ae0d0375f4f888ffdac5a9354f677e8d9">added
+meta data files</a> to my Perl 6 <a href="http://github.com/moritz/json">JSON
+parser</a> and <a
+href="http://search.cpan.org/~moritz/JSON-Tiny-0.1.1/">uploaded it to
+CPAN</a>. I think that's the first Perl 6 module on CPAN, discounting some
+modules included in distributions like pugs and v6.pm.</p>
+
+<p>Since the documentation is in Perl 6 Pod, search.cpan.org doesn't display
+it properly. So my next steps will be to find out whom I can prod to implement
+Perl 6 Pod rendering and indexing, or if I have to do that myself (and if yes,
+on which code base).</p>
+
+<p>In parallel I'll try to get the <a
+href="http://github.com/masak/proto/">proto</a> hackers to install from
+tarballs, or write that myself too. In the end I'd want Perl 5 and Perl 6
+modules to coexist on CPAN, presumably with the option to select packages
+implemented in either language for searching.</p>
+
+[% option no-header %] [% option no-footer %]
+[% vim: ft=html 
+ %]
