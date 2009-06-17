@@ -31,5 +31,5 @@ modules to coexist on CPAN, presumably with the option to select packages
 implemented in either language for searching.</p>
 
 [% option no-header %] [% option no-footer %]
-[% vim: ft=html 
+[% comment vim: ft=html 
  %]
