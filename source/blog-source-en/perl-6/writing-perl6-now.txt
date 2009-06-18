@@ -114,8 +114,8 @@ operator.</p>
 
 <pre>[% syntax perl6 %]
 
-say [+] 1...5;      # sum
-say [*] 1...5;      # product
+say [+] 1..5;       # sum
+say [*] 1..5;       # product
 say [<] @list;      # is @list strictly ordered ascendingly?
 say [!=] @list;     # are no two consecutive items equal?
 say [eq] @list;     # are all items string-equal?
