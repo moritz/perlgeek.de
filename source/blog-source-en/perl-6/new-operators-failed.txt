@@ -1,0 +1,61 @@
+Trying to implement new operators - failed
+<!-- 1245616389 -->
+
+<p>This isn't a success story - it's only almost a success story.</p>
+
+<p>On <a href="http://www.perlmonks.org/">perlmonks.org</a> we had a Golf
+challenge (ie writing code in as little characters as possible): write an
+<a href="http://www.perlmonks.org/?node_id=772766">implementation of the
+Euclidian algorithm in Perl 6</a>.</p>
+
+<p>I proposed <a href="http://www.perlmonks.org/?node_id=772778">a solution
+which I liked very much</a>, but which didn't work in Rakudo yet, because it
+used the series operator <code>infix:&lt;...&gt;</code> (yes, three literal
+dots) which isn't yet implemented in Rakudo. D'oh!.</p>
+
+<p>I like Perl 6 discussions on Perlmonks, but every solution that shows a
+NYI-feature encourages the "Perl 6 is vapor-ware" thoughts and comments. So I
+decided to make it work, and decided to JFDI and implement the missing
+operator.</p>
+
+<p>In general implementing a new operator in <a
+href="http://rakudo.org/">Rakudo</a> is not much harder than implementing a
+function: all you have to do more is to add it to <a
+href="http://github.com/rakudo/rakudo/blob/1b06df80900096dab8a9f74467f504f73a6115dd/src/parser/grammar-oper.pg">src/parser/grammar-oper.pg</a>
+including precedence and associativity (both of which can be found in <a
+href="http://perlcabal.org/syn/S03.html">the spec</a>.</p>
+
+<p>For quite a while now built-in functions and methods can be written in Perl
+6 now, so I also decided to write the new operator in Perl 6. Since lazy lists
+aren't implemented yet, I decided not to care about the lazy version, and did
+the eager version instead. This is what my code looked like:</p>
+
+<pre>[% syntax perl6 %]
+multi sub infix:<...> (@lhs, Code $generator) {
+    my $c = $generator.count;
+    if $c > @lhs {
+        fail 'the closure wants more parameters than given on the LHS';
+    }
+    my @result = @lhs;
+    my @r;
+    # XXX work around http://rt.perl.org/rt3/Ticket/Display.html?id=66824
+    # this is a bit ugly.. since @a[1..1] returns a single item and not 
+    # an array, |@result[$one-item-range] throws the error
+    # "argument doesn't array"
+    while @r = $generator(|@(@result[*-$c..*-1])) {
+        @result.push: @r;
+    }
+    return @result;
+}[% endsyntax %]</pre>
+
+<p>This works... partly. It works only in the file it is defined in, <a
+href="http://rt.perl.org/rt3/Ticket/Display.html?id=66826">not if it's defined
+in the setting library</a>.</p>
+
+<p>So to summarize: I have an implementation ready, but due to Rakudo bugs it
+can't go into mainstream Rakudo right now. JFDI, partly failed.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html
+%]
