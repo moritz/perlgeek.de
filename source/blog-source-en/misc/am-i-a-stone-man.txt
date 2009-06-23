@@ -1,5 +1,5 @@
 Iron Man Challenge - Am I a Stone Man?
-
+<!-- 1245793450 -->
 <p>Gabor asked <a href="http://szabgab.com/blog/2009/06/1245788806.html">what
 I'm missing</a> from the <a
 href="http://www.enlightenedperl.org/ironman.html">Iron Man blogging
