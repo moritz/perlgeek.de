@@ -22,5 +22,6 @@ nice on-topic programming pictures, and use.perl.org doesn't even allow the
 inclusion of pictures in posts, and I don't do it often myself, but having
 more  picture or charts would be nice.</p>
 
+[% option no-header %] [% option no-footer %]
 [% comment vim: ft=html
 %]
