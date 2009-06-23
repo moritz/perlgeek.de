@@ -1,0 +1,26 @@
+Iron Man Challenge - Am I a Stone Man?
+
+<p>Gabor asked <a href="http://szabgab.com/blog/2009/06/1245788806.html">what
+I'm missing</a> from the <a
+href="http://www.enlightenedperl.org/ironman.html">Iron Man blogging
+challenge</a>. Gabor focused on the contents of the blog posts, I'll talk
+about the challenge itself.</p>
+
+<p>I'm missing <a href="http://www.enlightenedperl.org/ironman.html">the
+things announced on their website</a>: a way to find out to which level you
+made it, a monthly selection of best blog posts, and all these other things
+that were designed to create some competition, and more fun.</p>
+
+<p>Don't get me wrong, I like to read the blog of my fellow Perl programmers,
+and it motivates me to write more often myself. But that's not all that was
+promised to us.</p>
+
+<p>One thing I'd like to add about the content, though: So far most of
+what I read was
+very good and informative, but it was all text. I know it's not easy to find
+nice on-topic programming pictures, and use.perl.org doesn't even allow the
+inclusion of pictures in posts, and I don't do it often myself, but having
+more  picture or charts would be nice.</p>
+
+[% comment vim: ft=html
+%]
