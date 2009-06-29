@@ -36,8 +36,8 @@ name="Description"
 <p>Since comparison operators can be chained, you can also write things like</p>
 
 <pre>    if    [==] @nums { say &#34;all nums in @nums are the same&#34; }
-    elsif [&#60;=] @nums { say &#34;@nums is in ascending order&#34;}
-    elsif [&#60;]  @nums { say &#34;@nums is in strict ascending order&#34; }</pre>
+    elsif [&#60;]  @nums { say &#34;@nums is in strict ascending order&#34; }
+    elsif [&#60;=] @nums { say &#34;@nums is in ascending order&#34;}</pre>
 
 <p>You can even reduce the assignment operator:</p>
 

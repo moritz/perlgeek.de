@@ -38,8 +38,8 @@ C<[+]>, you can't say C<[ + ]>.
 Since comparison operators can be chained, you can also write things like
 
     if    [==] @nums { say "all nums in @nums are the same" }
-    elsif [<=] @nums { say "@nums is in ascending order"}
     elsif [<]  @nums { say "@nums is in strict ascending order" }
+    elsif [<=] @nums { say "@nums is in ascending order"}
 
 You can even reduce the assignment operator:
 
