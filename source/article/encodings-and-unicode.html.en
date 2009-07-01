@@ -165,7 +165,7 @@
         <td>U+0041</td><td>A</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x41</td><td>0x00 0x41</td> 
     </tr>
     <tr>
-        <td>U+00c4    </td><td> Ä       </td><td>  -    </td><td> 0xc4 0x84
+        <td>U+00c4    </td><td> Ä       </td><td>  -    </td><td> 0xc3 0x84
         </td><td> 0xc4    </td><td> 0xc4        </td><td> 0x00 0xc4</td>
     </tr>
     <tr>
