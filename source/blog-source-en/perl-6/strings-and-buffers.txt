@@ -53,7 +53,7 @@ provide a nice, convenient interface for some operations.</p>
 <h3>Conversion</h3>
 
 <p>Conversion between Str and Buf is called encoding, the other way round is
-called decoding. For example <code></code> is a Str, and
+called decoding. For example <code>"møøse"</code> is a Str, and
 <code>"møøse".encode('Latin-1')</code> returns a Buf, more specifically a
 buf8.</p>
 
@@ -62,7 +62,7 @@ the result as a text string, you decode it: <code>my $str =
 $buf.decode('UTF-16LE')</code>.</p>
 
 <p>Mixing a Str and Buf that doesn't know about its own encoding in an
-operation like concatenation or comparison throws an exception, because that
+operation like concatenation or comparison throws an exception, because those
 are the conditions where most Perl 5 programs mess up strings beyond all
 repair.</p>
 
