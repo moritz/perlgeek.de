@@ -88,7 +88,7 @@ used. This autodetection scheme is the default.</p>
 
 <h3>Conclusions</h3>
 
-<p>We Learned from the experience that cramming too many different semantics
+<p>We learned from the experience that cramming too many different semantics
 into a single data type is harmful. So now byte streams and text streams have
 different data types, and a clean interface for converting back and forth.</p>
 
