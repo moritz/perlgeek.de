@@ -22,12 +22,12 @@
 
 <p>The topics in which I am interested the most are Perl 6, <a
 href="en/article/encodings-and-unicode">Unicode and character encodings</a>,
-and security aspects of web applications.</p>
+and security aspects of various technologies.</p>
 
 
 
 <p class="svn-keywords">$Id$</p>
 
 [% comment
-    vim: syn=html ts=4 sw=4 expandtab
+    vim: syn=html ts=4 sw=4 expandtab spell
 %]

@@ -1,6 +1,6 @@
 [%setvar title Perlgeek.de - Moritz Lenz %]
 [%setvar section Home %]
-[%menu main home %]
+[%menu main home%]
 [% setvar en /en/ %]
 [% setvar more_header <meta name="verify-v1" content="C7A9XlZl4p3+BhzykrL6QhcngxVKE+lt6wMoWhmppj0=" /> %]
 
@@ -29,7 +29,8 @@
     zusammenhängt. Besonders interessant finde <a
     href="http://perl-6.de/">Perl 6</a>, <a
     href="/de/artikel/charsets-unicode">Unicode und Zeichenkodierungen</a>
-    sowie Sicherheitsaspekte von Webanwendungen.
+    sowie Sicherheitsaspekte von Webanwendungen und diverser anderer
+    Technologien.
 </p>
 
 
@@ -61,17 +62,17 @@
         zu <a href="http://perlmongers.de/?ErlangenPM">Erlangen.pm</a>.
     </li>
     <li>
-        Diese Seite befasst sich mit Perl 5. Die nächste große Version ist 
+        Diese Seite befasst sich größtenteils mit Perl 5. Die nächste große
+        Version ist 
         Perl 6, ihr habe ich <a href="http://perl-6.de/">die bisher einzige 
         ernsthafte deutsche Perl 6-Seite</a> gewidmet. Dort gibt es
         Informationen zum Entwicklungs- und Designprozess, Tutorials und
-        akturelle Nachrichten.
-
+        aktuelle Nachrichten.
     </li>
 </ul>
 
 <p class="svn-keywords">$Id$</p>
 
 [% comment
-    vim: syn=html ts=4 sw=4 expandtab
+    vim: syn=html ts=4 sw=4 expandtab spell
 %]

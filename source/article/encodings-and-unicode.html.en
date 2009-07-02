@@ -648,7 +648,8 @@ care of all encoding issues.</p>
 </p>
 
 <p>
-    I'd also like to thank [http://www.perlmonks.org/?node=ELISHEVA|ELISHEVA]
+    I'd also like to thank <a
+    href="http://www.perlmonks.org/?node=ELISHEVA">ELISHEVA</a>
     for suggesting many improvements to both grammar and spelling.
 </p>
 [% comment vim: spell ft=html

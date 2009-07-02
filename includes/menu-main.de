@@ -14,6 +14,17 @@
         <!-- begin: main content area #main -->
         <div id="main">
             <!-- begin: #col1 - first float column -->
+            [% item home {{
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                <h3>Beliebeste Seiten</h3>
+                <ul>
+                    <li><a href="/de/artikel/charsets-unicode">Artikel: Charsets und Unicode</a></li>
+                    <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a></li>
+                </ul>
+                </div>
+            </div>
+            }} %]
             [% item artikel {{
             <div id="col1">
                 <div id="col1_content" class="clearfix">

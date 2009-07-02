@@ -15,6 +15,19 @@
             <!-- begin: main content area #main -->
             <div id="main">
 
+            [% item home {{
+                <!-- begin: #col1 - first float column -->
+                <div id="col1">
+                    <div id="col1_content" class="clearfix">
+					<h3>Most popular pages</h3>
+                    <ul>
+                        <li><a href="/en/en/article/encodings-and-unicode">Article: Encodings and Unicode</a></li>
+                        <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a>
+                    </ul>
+                    </div>
+                </div>
+            }} %]
+
             [% item software {{
                 <!-- begin: #col1 - first float column -->
                 <div id="col1">
