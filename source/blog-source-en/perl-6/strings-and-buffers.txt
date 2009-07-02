@@ -1,0 +1,104 @@
+Strings and Buffers
+<!-- 1246518493 -->
+<p>Subtitled "The Zen of not messing up your strings".</p>
+
+<p>Handling non-ASCII strings in Perl 5 is a real pain, because there are no
+real separate types for binary data and text strings. Mostly the operation
+provides a context of either binary or string processing, but function like
+<code>length</code> don't, so the answer is dependent on internal
+representations about wich the programmer should never care.</p>
+
+<p>In the Perl 6 language design we decided not to repeat that mistake. Since
+Strings are objects like everything else, it's easy to invent new types. So in
+essence we have two types relevant for our discussion, <code>Str</code> and
+<code>Buf</code>.</p>
+
+<h3>Str</h3>
+
+<p>A <code>Str</code> is notionally a sequence of characters, or a text
+string. There's no character encoding attached to it, and while it is surely 
+stored in a specific encoding scheme internally, it's nothing that programmer
+cares about.</p>
+
+<p>A Str co-exists on two (at least) two levels, on codepoint and
+grapheme level. A codepoint is everything that the Unicode consortium has
+assigned a number and a name, like <code>U+0065 LATIN SMALL LETTER E</code>
+or <code>U+0300 COMBINING GRAVE ACCENT</code>. A grapheme is either a
+codepoint or a sequence of codepoints that are visually represented together,
+for example the two codepoints mentioned before would be printed as a single
+grapheme <code>è</code>.</p>
+
+<p>The default level is grapheme, because that's closest to how humans usually
+think of characters and text. Specific operations can override the default
+abstraction level, or it can be adjusted by pragmas like <code>use
+codes;</code>.</p>
+
+<h3>Buf</h3>
+
+<p>Of course you can also handle binary data in Perl 6. Such data is stored in
+objects of type <code>Buf</code>. Notionally a Buf is a list of integers of a
+fixed size. It has subtypes for common sizes <code>buf8</code> is a sequence
+of unsigned bytes, <code>buf16</code> and <code>buf32</code> store unsigned 16
+and 23 bit integers.</p>
+
+<p>When you communicate with anything outside of Perl 6, you'll need
+<code>Buf</code> objects for that, because files and terminals only understand
+byte streams, not character streams.</p>
+
+<p>There are also a different kind of <code>Buf</code>s which enforce a
+specific encoding, for example <code>utf8</code> can only hold byte sequences
+which can be interpreted as UTF-8. They are not strictly necessary, but
+provide a nice, convenient interface for some operations.</p>
+
+<h3>Conversion</h3>
+
+<p>Conversion between Str and Buf is called encoding, the other way round is
+called decoding. For example <code></code> is a Str, and
+<code>"møøse".encode('Latin-1')</code> returns a Buf, more specifically a
+buf8.</p>
+
+<p>On the other hand if you read some bytes from a socket and want to treat
+the result as a text string, you decode it: <code>my $str =
+$buf.decode('UTF-16LE')</code>.</p>
+
+<p>Mixing a Str and Buf that doesn't know about its own encoding in an
+operation like concatenation or comparison throws an exception, because that
+are the conditions where most Perl 5 programs mess up strings beyond all
+repair.</p>
+
+<h3>IO</h3>
+
+<p>If you read the above, maybe you think that printing a Str to standard
+output is an error because the string doesn't know its encoding, so it can't
+represented as a byte stream. That's only half the truth; the output handle can
+also have knowledge about its own encoding.</p>
+
+<p>When you open a file, you can either specify that it's opened as a binary
+file, or you specify an encoding. In the former case reading from the handle
+returns <code>Buf</code>s, in the latter <code>Str</code>s.</p>
+
+<p>For the sake of convenience a pseudo encoding called <code>Unicode</code>
+exists. (Yes, we know that Unicode defines a character repertoire, not a
+character encoding). If there's a byte order mark (short BOM) at the start of
+the stream, it is used to determine the encoding. If not, a very simple
+autodetection is used: If the file is obviously UTF-16LE, UTF-16BE or UTF-32
+(detectable by the position of the zero bytes when encoding ASCII characters)
+then the detected encoding is used, otherwise as a fallback UTF-8 is
+used. This autodetection scheme is the default.</p>
+
+<h3>Conclusions</h3>
+
+<p>We Learned from the experience that cramming too many different semantics
+into a single data type is harmful. So now byte streams and text streams have
+different data types, and a clean interface for converting back and forth.</p>
+
+<p>The specification is not set in stone so far, and no compiler implements
+the Buf type yet, but it is already planned for Rakudo.</p>
+
+<p>Since this is an important topic to me I will continue to nag the
+implementors and language designers about it, and write tests to ensure a
+solid implementation.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell:
+%]
