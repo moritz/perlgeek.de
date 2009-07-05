@@ -69,7 +69,10 @@ name="ROADMAP"
     20 A Grammar for XML
     21 Subset types
     22 State of the Implementations
-    23 Quoting and Parsing (-)</pre>
+    23 Quoting and Parsing (-)
+    24 Recude meta operator
+    25 Cross meta operator
+    26 Exceptions and control exceptions</pre>
 
 <p>(Things that are not or mostly not implemented in Rakudo are marked with <code>(-)</code>)</p>
 

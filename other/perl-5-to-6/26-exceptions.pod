@@ -1,0 +1,102 @@
+=head1 NAME
+
+"Perl 5 to 6" Lesson 26 - Exceptions and control exceptions
+
+=head1 SYNOPSIS
+
+    try {
+        my $x = 1 / 0; # dies with 'Divide by zero'
+
+        CATCH { 
+            say "there was an error: $!";
+        }
+    }
+
+
+=head1 DESCRIPTION
+
+Exceptions are, contrary to their name, nothing exceptional. In fact they are
+part of the normal control flow of programs in Perl 6.
+
+Exceptions are generated either by implicit errors (for example dividing by
+zero, calling a non-existing method, type check failures) or by explicitly
+calling C<die> or other functions.
+
+When an exception is thrown, the program searches for C<CATCH> statements or
+C<try> blocks in the caller frames, unwinding the stack all the way (that
+means it forcibly returns from all routines called so far). If no C<CATCH> or
+C<try> is found, the program terminates, and prints out a hopefully helpful
+error message. If one was found, the error message is stored in the special
+variable C<$!>, and the C<CATCH> block is executed (or in the case of a
+C<try> without a CATCH block the try block returns C<undef>).
+
+So far exceptions might still sound exceptional, but error handling is
+integral part of each non-trivial application. But even more, normal C<return>
+statements also throw exceptions!
+
+They are called I<control exceptions>, and can be caught with C<CONTROL>
+blocks, or are implicitly caught at each routine declaration.
+
+Consider this example:
+
+    use v6;
+    my $block = -> { return "block"; say "still here" };
+
+    sub s {
+        $block.();
+        return "sub";
+    }
+
+    say s();
+
+Here the C<return "block"> throws a control exception, causing it to not only
+exit the current block (and thus not printing C<still here> on the screen),
+but also exiting the subroutine, where it is caught by the C<sub s...>
+declaration. The payload, here a string, is handed back as the return value,
+and the C<say> in the last line prints it to the screen.
+
+Embedding the call C<$block.()> in a C<try { ... }> block or adding a
+C<CONTROL { ... }> block to the body of the routine causes it to catch the
+exception.
+
+Contrary to what other programming languages do, the C<CATCH>/C<CONTROL>
+blocks are within the scope in which the error is caught (not on the outside),
+giving it full access to the lexical variables, which makes it easier to
+generate useful error message, and also prevents DESTROY blocks from being run
+before the error is handled.
+
+=head2 Unthrown exceptions
+
+Perl 6 embraces the idea of multi threading, and in particular automated
+parallelization. To make sure that not all threads suffer from the termination
+of a single thread, a kind of "soft" exception was invented.
+
+When a function calls C<fail($obj)>, it returns a special value of C<undef>,
+which contains the payload C<$obj> (usually an error message) and the back
+trace (file name and line number). Processing that special undefined value
+without check if it's undefined causes a normal exception to be thrown.
+
+    my @files = </etc/passwd /etc/shadow nonexisting>;
+    my @handles = hyper map { open($_) }, @files;
+
+In this example the C<hyper> operator tells C<map> to parallelize its actions
+as far as possible. When the opening of the C<nonexisting> file fails, an
+ordinary C<die "No such file or directory"> would also abort the execution of
+all other C<open> operations. But since a failed open calls C<fail("No such
+file or directory"> instead, it gives the caller the possibility to check the
+contents of C<@handles>, and it I<still has access to the full error message>.
+
+If you don't like soft exceptions, you say C<use fatal;> at the start of the
+program and cause all exceptions from C<fail()> to be thrown immediately.
+
+=head1 MOTIVATION
+
+A good programming language needs exceptions to handle error conditions.
+Always checking return values for success is a plague and easily forgotten.
+
+Since traditional exceptions can be poisonous for implicit parallelism, we
+needed a solution that combined the best of both worlds: not killing
+everything at once, and still not loosing any information.
+
+=for time 1247130002
+=for editor vim: spell

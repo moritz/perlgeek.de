@@ -50,7 +50,7 @@ It is hosted on github, you can find build instructions on
 L<http://rakudo.org/how-to-get-rakudo>.
 
 Rakudo development is very active, it's the most active Perl 6 compiler today.
-It passes a bit more than 10,000 tests from the official test suite (May 2009).
+It passes a bit more than 17,000 tests from the official test suite (July 2009).
 Its progress in the test suite is monitored
 on L<http://rakudo.org/status> .
 
@@ -128,7 +128,7 @@ C<YAML::XS> and C<Moose>):
 
     cd src/perl6/
     make
-    make testt      # warning: takes lot of 80 time
+    make testt      # warning: takes lot of time, 80 minutes or so
     ./tryfile $your_file
 
 It correctly parses custom operators and warns about non-existent subs,

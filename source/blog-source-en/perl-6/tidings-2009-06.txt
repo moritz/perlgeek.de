@@ -1,0 +1,93 @@
+Perl 6 Tidings from June 2009
+<!-- 1246806559 -->
+
+<h2>Specification</h2>
+
+<h3>Packaging</h3>
+
+<p>At the end of May and begin of June we saw several long threads on p6l
+about how to distribute Perl 6 modules, and if <a
+href="http://cpan6.org/">Mark Overmeer's cpan6 project</a> is (part of) the
+solution.</p>
+
+<p>As far as I could tell the discussion didn't become very productive, partly
+because the participants tried to discuss too many things at once (for example
+distribution problems, format of source repositories and binary
+distributions).</p>
+
+<p>My personal conclusion was that cpan6 isn't going anywhere soon, and not
+being designed as an evolution of something existing it means that really much
+would have to happen until something useful comes out. As a consequence I
+uploaded a Perl 6 module (JSON::Tiny) to the existing CPAN and watched the
+fallout. My next steps will be to teach <a
+href="http://github.com/masak/proto/">proto</a> to install modules from CPAN,
+and to pester the modules@perl.org mailing list.</p>
+
+<h3>Module loading</h3>
+
+<p>As the result of a perlmonks discussion <!-- TODO: link --> Larry <a
+href="http://perlcabal.org/svn/pugs/revision/?rev=27324">broke down module
+finding and loading into separate steps</a>.</p>
+
+<p>He also <a
+href="http://perlcabal.org/svn/pugs/revision/?rev=27312">addressed the
+problem of having multiple modules with different authorities</a>.</p>
+
+<h3>Strings and Bufs</h3>
+
+<p>Larry and I fleshed out the <a
+href="http://perlgeek.de/blog-en/perl-6/strings-and-buffers.html">semantics
+for the <code>Buf</code> types</a>,
+encoding and decoding and related issues (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27095">r27095</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27096">r27096</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27097">r27097</a>,
+<a href="http://perlcabal.org/svn/pugs/revision/?rev=27098">r27098</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27100">r27100</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27106">r27106</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27365">r27365</a>).</p>
+
+<h3>Other changes</h3>
+
+<ul>
+    <li>New built-in method Array.rotate (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27062">r27062</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27063">r27063</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27073">r27073</a>)</li>
+    <li>Clarification on ties and epsilons in multi dispatch (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27313">r27313</a>)</li>
+    <li>The <code>constant</code> declarator scopes like <code>our</code>
+    (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27313">r27313</a>)</li>
+</ul>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>Although both jnthn and pmichaud had some vacations, Rakudo has seen some
+nice progress in June:</p>
+
+<ul>
+    <li>Martin Berends contributed an implementation of the Temporal type
+    (date and time stuff)</li>
+    <li>Methods now accept additional named arguments (jnthn)</li>
+    <li>jnthn fix the BUILD submethod to be actually usable</li>
+    <li>If you load libraries from other programming languages, the symbols
+        are now declared at compile time (Tene)</li>
+    <li>Type checking of implicitly returned values (jnthn)</li>
+    <li>Improved assignment handling (pmichaud)</li>
+    <li>More introspection (<code>.^parents, .^methods</code>) (jnthn)</li>
+    <li>Allow operators to be defined in the setting (pmichaud)</li>
+    <li>Partially implement series and eqv operators (moritz)</li>
+    <li>Literals in a signature act like <code>where $literal</code>
+        (jnthn)</li>
+    <li>minmax infix operator (pmichaud)</li>
+    <li>take() without gather now warns (masak)</li>
+    <li>extensive multi dispatch refactor. With even better handling of
+        where-clauses, and allows generics in multi dispatch (jnthn)</li> 
+</ul>
+
+<p>Currently Rakudo suffers from memory handling problems in parrot, where
+seemingly randomly the .succ method is called on strings (which is equivalent
+to the ++ operator) which for example mangles type names (Hash becomes
+Hasi).</p>
+
+<h3>Smop and mildew</h3>
+
+<p>pmurias makes great progress in implementing multi dispatch for mildew.
+Curiously he hits the same speed problems that Rakudo initially faced as the
+multi dispatch algorithm became more sophisticated.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html spell
+%]

@@ -49,24 +49,27 @@ use strict;
 use warnings;
 use Time::Local qw(timelocal);
 
+
 if (@ARGV) {
     my $date = shift @ARGV;
     if ($date =~ m/^(\d{4})-(\d\d)-(\d\d)$/){
         my ($year, $month, $mday) = ($1, $2, $3);
         my ($hr, $min, $sec) = (0, 0, 0);
         my $time;
-        if ($time = shift @ARGV && $time ~~ m/^(\d{1,2}):(\d\d):(\d\d)$/) {
-            ($hr, $min, $sec) = ($1, $2, $3);
+        if ($time = shift(@ARGV)
+            and $time =~ m/^(\d{1,2}):(\d\d)(?::(\d\d))?$/) {
+
+            ($hr, $min, $sec) = ($1, $2, $3||0);
         }
         print timelocal($sec, $min, $hr, $mday, $month - 1, $year - 1900), $/;
     }
 
 } else {
-    print scalar(time), $/;
+    print time, $/;
 }
 [% endsyntax %]</pre>
 
-<p>If called with one argument it will print the current time as a Unix
+<p>If called with no argument it will print the current time as a Unix
 timestamp. If called with one or two arguments, it will interpret these as a
 date in the <code>YYYY-MM-DD</code> and a time in <code>HH:MM:SS</code> format
 and print the corresponding timestamp.</p>

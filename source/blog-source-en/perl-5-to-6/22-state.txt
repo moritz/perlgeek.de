@@ -50,7 +50,7 @@ name="Rakudo"
 <p>It is hosted on github, you can find build instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo</a>.</p>
 
-<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 10,000 tests from the official test suite (May 2009). Its progress in the test suite is monitored on <a href="http://rakudo.org/status" class="podlinkurl"
+<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 17,000 tests from the official test suite (July 2009). Its progress in the test suite is monitored on <a href="http://rakudo.org/status" class="podlinkurl"
 >http://rakudo.org/status</a> .</p>
 
 <p>It implements most control structures, most syntaxes for number literals, interpolation of scalars and closures, chained operators, <code>BEGIN</code>- and <code>END</code> blocks, pointy blocks, named, optional and slurpy arguments, sophisticated multi dispatch, large parts of the object system, regexes and grammars, Junctions, generic types, parametric roles, typed arrays and hashes, importing and exporting of subroutines and basic meta operators.</p>
@@ -103,7 +103,7 @@ name="STD.pm"
 
 <pre>    cd src/perl6/
     make
-    make testt      # warning: takes lot of 80 time
+    make testt      # warning: takes lot of time, 80 minutes or so
     ./tryfile $your_file</pre>
 
 <p>It correctly parses custom operators and warns about non-existent subs, undeclared variables and multiple declarations of the same variable as well as about some Perl 5isms.</p>
