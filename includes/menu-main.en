@@ -21,7 +21,7 @@
                     <div id="col1_content" class="clearfix">
 					<h3>Most popular pages</h3>
                     <ul>
-                        <li><a href="/en/en/article/encodings-and-unicode">Article: Encodings and Unicode</a></li>
+                        <li><a href="/en/article/encodings-and-unicode">Article: Encodings and Unicode</a></li>
                         <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a>
                     </ul>
                     </div>
