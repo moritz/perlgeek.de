@@ -1,0 +1,45 @@
+Musings on Rakudo's spectest chart
+<!-- 1247610685 -->
+
+<p>In an attempt to track progress in a measurable way, the <a
+href="http://rakudo.org/">Rakudo</a> people count the number of passing tests
+each night (ok, they don't do that manually :-) and write that into <a
+href="http://github.com/rakudo/rakudo/blob/master/docs/spectest-progress.csv">a
+CSV file</a>.</p>
+
+<p>The next step wasn't far: generate a chart from it, put it <a
+href="http://rakudo.de/">on a website</a>, and tell everybody about it. Here's
+a snapshot:</p>
+
+<p><img src="http://perlgeek.de/images/rakudo-tests-2009-07-14.png"
+width="500" height="500" alt="" /></p>
+
+<p>Old news so far, as an eager Perl 6 follower you surely know that already,
+nothing new here. But the other day somebody asked me why the green (PASS) and
+the grey (number of spectests available) seem to be parallel.</p>
+
+<p>My first reaction was "no, they aren't parallel" because the big jumps
+don't happen at the same time, but still there are large areas where they do
+seem to grow roughly at the same rate. So what's up?</p>
+
+<p>As far as I can tell there are two mechanism at work here. The first one
+accounts for much of the past behaviour: tests were moved from the old part of
+the pugs test suite to the official test suite (where they are counted towards
+the grey line), and at the same time people also tried to get it to run under
+Rakudo - mostly successfully, as the green line shows.</p>
+
+<p>Now most test files are actually moved to the official Perl 6 test suite,
+there are less than 200 tests left to moved (as opposed to 17k already
+moved), and this mechanism is drained.</p>
+
+<p>The second mechanism is that as soon as Rakudo implements a cool new
+feature, we realize that we need more tests for it, and people write more
+tests for it. (It's rather hard to write tests for language feature that
+doesn't run yet. "test first" is a nice idea, but it only works to some extend
+in reality). Also people explore the new features, find bugs, and bug tickets are
+only closed if there are tests for them, so even more spec tests that coincide with
+passing Rakudo tests.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]
