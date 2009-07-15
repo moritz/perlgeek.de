@@ -35,7 +35,7 @@ moved), and this mechanism is drained.</p>
 <p>The second mechanism is that as soon as Rakudo implements a cool new
 feature, we realize that we need more tests for it, and people write more
 tests for it. (It's rather hard to write tests for language feature that
-doesn't run yet. "test first" is a nice idea, but it only works to some extend
+doesn't run yet. "test first" is a nice idea, but it only works to some extent
 in reality). Also people explore the new features, find bugs, and bug tickets are
 only closed if there are tests for them, so even more spec tests that coincide with
 passing Rakudo tests.</p>
