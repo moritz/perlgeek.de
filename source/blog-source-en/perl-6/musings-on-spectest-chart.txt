@@ -29,7 +29,7 @@ the grey line), and at the same time people also tried to get it to run under
 Rakudo - mostly successfully, as the green line shows.</p>
 
 <p>Now most test files are actually moved to the official Perl 6 test suite,
-there are less than 200 tests left to moved (as opposed to 17k already
+there are less than 200 tests left to move (as opposed to 17k already
 moved), and this mechanism is drained.</p>
 
 <p>The second mechanism is that as soon as Rakudo implements a cool new
