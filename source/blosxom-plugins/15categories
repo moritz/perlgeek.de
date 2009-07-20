@@ -6,6 +6,7 @@ our $categories;
 
 sub start {
 $categories = <<END;
+<span style="margin: -2ex">
 <script type="text/javascript"><!--
 google_ad_client = "pub-3564070552657348";
 /* perlgeek.de navi klein */
@@ -17,6 +18,7 @@ google_ad_height = 200;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+</span>
 <h3>Categories</h3>
 <ul>
 END
