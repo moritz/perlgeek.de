@@ -6,13 +6,13 @@ our $categories;
 
 sub start {
 $categories = <<END;
-<span style="margin: -2ex">
+<span style="margin: -1ex">
 <script type="text/javascript"><!--
 google_ad_client = "pub-3564070552657348";
-/* perlgeek.de navi klein */
-google_ad_slot = "8513141780";
-google_ad_width = 200;
-google_ad_height = 200;
+/* perlgeek.de navi noch kleiner (125x125) */
+google_ad_slot = "6383558643";
+google_ad_width = 125;
+google_ad_height = 125;
 //-->
 </script>
 <script type="text/javascript"
