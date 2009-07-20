@@ -8,10 +8,10 @@ sub start {
 $categories = <<END;
 <script type="text/javascript"><!--
 google_ad_client = "pub-3564070552657348";
-/* perlgeek.de navi */
-google_ad_slot = "8619309910";
-google_ad_width = 250;
-google_ad_height = 250;
+/* perlgeek.de navi klein */
+google_ad_slot = "8513141780";
+google_ad_width = 200;
+google_ad_height = 200;
 //-->
 </script>
 <script type="text/javascript"
