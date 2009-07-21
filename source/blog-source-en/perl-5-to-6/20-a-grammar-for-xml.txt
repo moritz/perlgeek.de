@@ -59,7 +59,7 @@ name="Our_idea_of_XML"
     my $count = 1;
     for @tests -&#62; $t {
         my $s = $t[1];
-        my $M = XML::TOP.parse($s);
+        my $M = XML.parse($s);
         if !($M  xor $t[0]) {
             say &#34;ok $count - &#39;$s&#39;&#34;;
         } else {
