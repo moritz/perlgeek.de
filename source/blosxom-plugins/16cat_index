@@ -22,7 +22,7 @@ sub start {
         $fn =~ s{^.*/}{};
         my $path = "$blosxom::url/$blosxom::path_info";
         # we're not always in a directory
-        $path =~ s{/[^/]+$}{}g if $path =~ /\.(?:html|txt|rss)$/;
+        $path =~ s{/[^/]+$}{}g if $path =~ /\.(?:html|txt|rss|writeback)$/;
         $path .= '/' . $fn;
         $path =~ s/\Q$blosxom::file_extension\E$/$blosxom::flavour/;
         $cat_index .= qq{<li><a href="$path">};
