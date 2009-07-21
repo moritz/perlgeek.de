@@ -117,8 +117,20 @@ sub start {
   $path =~ m!^/! or $path = "/$path";
   $path = "/$path";
 
+  my $comments_allowed = 1;
+  if (length($fn)) {
+    my $fn = $blosxom::datadir . $path . '/' . $fn . '.txt';
+    $fn =~ s{//}{/}g;
+    my $date = datesort::dateforfile($fn);
+    if (time - $date > 3600 * 24 * 20) {
+        $comments_allowed = 0;
+        $writeback::closedWarning = 'The comments on this blog post have'
+            . ' been disabled; the comment form below will not work.'
+    }
+  }
+
   # Only spring into action if POSTing to the writeback plug-in
-  if ( request_method() eq 'POST' and (param('plugin') eq 'writeback' or $blosxom::flavour eq $trackback_flavour) ) {
+  if ( $comments_allowed and request_method() eq 'POST' and (param('plugin') eq 'writeback' or $blosxom::flavour eq $trackback_flavour) ) {
     # check for spam...
     use lib '/home/moritz/cpan/lib/perl/5.8.8/auto';
     use Net::Akismet;

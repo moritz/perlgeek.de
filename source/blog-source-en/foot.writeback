@@ -4,6 +4,7 @@
 
 <!-- A simple comments form -->
 
+<p><strong>$writeback::closedWarning</strong></p>
 <form method="post" action="$url/$path_info">
 
 <table border="0" cellspacing="3" cellpadding="0">
