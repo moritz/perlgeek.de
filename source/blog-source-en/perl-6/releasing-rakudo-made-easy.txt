@@ -1,0 +1,33 @@
+Releasing Rakudo made easy
+<!-- 1248375902 -->
+
+<p>Two weeks ago <a href="http://pmichaud.com/">Patrick Michaud</a> asked for
+<a href="http://rakudo.org/node/49">volunteers to release</a> <a
+href="http://rakudo.org/">Rakudo Perl 6</a>.</p>
+
+<p>So I first did a fake release some days ago, and it went pretty well. All I
+had to do was follow <a
+href="http://github.com/rakudo/rakudo/blob/9b37b818f4df7002411c877235c192dcfc2a0c7b/docs/release_guide.pod">the
+instructions</a> - no magic required.</p>
+
+<p>Then it turned out that Patrick was busy at the OSCON, and asked me to do
+the July release for real. <a href="http://rakudo.org/node/50">Which I
+did</a>. Which was also no magic.</p>
+
+<p>Please note that I am familiar with Rakudo, I know in which steps it is
+built, where which functionality is - but I'm very far from understanding how
+most things work; luckily I didn't have to.</p>
+
+<p>All in all I think I spent about an hour for the release, not counting the
+time in which I built it and ran tests - but those things didn't require any
+attention, I did other things in the mean time.</p>
+
+<p>So to summarize: it's simple; you don't have to be an über hacker to do it.
+You just need some basic familiarity with Rakudo, and a bit of free time.</p>
+
+<p>If you want to support us and gather some fame, consider doing a release for
+us.</p>
+
+
+[% option no-header %] [% option no-footer %] [% comment vim: ft=html spell
+%]
