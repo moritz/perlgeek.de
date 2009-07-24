@@ -1,0 +1,411 @@
+[% setvar title Doppelt verkettete Listen in C %]
+[% setvar section Artikel %]
+[% menu main artikel doublylinked %]
+
+<h1>[% readvar title %]</h1>
+
+<p>Doppelt verkettete Listen (oder <em>doubly linked lists</em>) sind eine
+grundlegende Datenstruktur, die ich hier anhand von Beispielen in der
+Programmiersprache C vorstellen will.</p>
+
+<p>Sie funktioniert in jeder Programmiersprache genauso, die Zeiger oder
+Referenzen und so etwas wie Klassen oder Structs zur Verfügung stellt.</p>
+
+<h2 id="vorteile">Was bringen doppelt verkettete Listen?</h2>
+
+<p>Doppelt verkettete Listen, oder "double linked lists" braucht man
+immer dann, wenn man sich in einer Liste leicht vorwärts und
+rückwärts bewegen können muß, und wenn man schnell
+und einfach Elemente der Liste an beliebigen Positionen löschen und 
+neue einfügen muß.</p>
+
+<p>Ein Beispiel ist z.B. die Implementierung <a
+href="http://moritz.faui2k3.org/de/dancing-links#spaerlich-besetzte-matrizen">Spärlich besetzter Matrizen ("Sparse Matrices")</a>, aber es gibt viele weiter
+      Anwendungen.</p>
+
+<h2 id="idee">Die Grundidee</h2>
+
+<p>Die Idee einer doppelt verketteten Liste ist es, für jedes
+Element zwei Zeiger zu speichern, einen nach links und einen nach
+rechts:</p>
+
+<pre>[% syntax c %]
+struct node {
+	struct node *left;
+	struct node *right;
+	int data;
+};[% endsyntax %]</pre>
+
+<p>Die eigentlichen Daten, die in der Liste gespeichert werden sollen,
+stehen in <code>data</code>, das hier als <code>int</code> definiert
+ist. Jeder andere Datentyp, z.B. ein Zeiger auf beliebige andere
+Strukturen, funktioniert genau so.</p>
+
+<p>Die Illustrationen weiter unten werden dazu beitragen, die Struktur
+verständlich zu machen.</p>
+
+<h2 id="erzeugen">Eine Liste erzeugen</h2>
+
+<p>Eine Liste ist nichts anderes als ein einzelnes Element, das auf
+sich selbst zeigt. Mit diesem Wissen kann man eine neue Liste
+erzeugen:</p>
+
+<pre>[% syntax c %]
+struct node * new_list(){
+	struct node *new = (struct node*) malloc(sizeof(struct node));
+	new->data = -1;
+	new->right = new;
+	new->left = new;
+	return new;
+}[% endsyntax %]</pre>
+
+<img src="/images/dmisc/dll01.png" width="124" height="90" alt=""/>
+
+<p>(Anmerkung: In C++ darf man die Variable nicht <code>new</code> nennen, da
+das ein reserviertes Wort ist).</p>
+
+<p>Dadurch, dass das erste Element auf das letzte zeigt und umgekehrt,
+kann man sich bei den späteren Operationen Abfragen ersparen, ob
+man bei dem letzten Element angekommen ist.</p>
+
+<p>Oft empfiehlt es sich, dem ersten Element einen Wert zu geben, den
+die anderen Elemente nicht annehmen können, z.B. <code>-1</code>
+wenn alle anderen Elemente größer gleich Null sind.</p>
+
+<h2 id="einfuegen">Elemente einfügen</h2>
+
+<p>Jetzt kommt der eigentliche Vorteil doppelt verketteter Listen zum
+tragen: das Einfügen neuer Elemente ist sehr einfach:</p>
+
+<pre>[% syntax c %]
+struct node * insert_right(struct node *list, int data){
+	struct node *new = (struct node *) malloc(sizeof(struct node));
+	new->data        = data;
+	new->left        = list;
+	new->right       = list->right;
+	list->right      = new;
+	new->right->left = new;
+	return new;
+}[%endsyntax%]</pre>
+
+<p>Die Schritte im einzelnen:</p>
+
+<img src="/images/dmisc/dll02.png" width="216" height="90" alt="" />
+<p>Ein neues <code>struct node</code> wird erstellt und die Daten
+werden initialisierst.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll03.png" width="304" height="142" alt="" />
+<p>Die Zeiger des neuen Elements werden gesetzt.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll04.png" width="304" height="142" alt="" />
+<p>Der Zeiger <code>right</code> des Elements auf der linken Seite wird
+auf das neue Element gesetzt, ebenso der Zeiger <code>left</code> des
+Elements auf der rechten Seite des neu eingefügten Elements.</p>
+
+<div style="clear:left;margin-bottom:1ex"></div>
+
+<h3>Noch ein Beispiel für das Einfügen</h3>
+
+<p>Da das vorherige Beispiel ein Spezialfall einer Liste mit nur einem
+Element war, hier noch ein Beispiel, diesmal mit einer zweielementigen
+Liste, in die ein drittes Element rechts neben
+<code>head</code>, also in der Mitte eingefügt werden soll.</p>
+
+<img src="/images/dmisc/dll05.png" width="332" height="132" alt="" />
+<p>Eine doppelt verkettete Liste mit zwei Elementen.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+	black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll06.png" width="332" height="240" alt="" />
+
+<p>Ein neues Objekt wird erstellt, der Zeiger
+<code>new-&gt;left</code> wird auf <code>head</code> gesetzt, der
+Zeiger <code>new-&gt;right</code> wird auf <code>head-&gt;right</code>
+gesetzt, was gleichbedeutend mit <code>node1</code> ist.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll07.png" width="332" height="240" alt="" />
+<p>Der Zeiger <code>head-&gt;right</code> wird auf <code>new</code>
+gesetzt. Jetzt muss noch <code>node1-&gt;left</code> auf
+<code>new</code> gesetzt werden, aber da wir keinen Zeiger mehr von
+<code>head</code> aus auf <code>node1</code> haben, ist der einfachste
+Weg über <code>new-&gt;right</code>: <code>new-&gt;right-&gt;left
+= new</code>.
+
+<p>Und schon sind wir fertig - mit dem umbiegen von nur vier
+Zeigern.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll08.png" width="332" height="132" alt="" />
+<p>Hier noch einmal die gleiche Liste, diesmal mit dem neuen Element
+auf gleicher Höhe wie die anderen Elemente. Sieht doch gleich
+viel übersichtlicher aus...</p>
+<div style="clear:left;margin-bottom:1ex"></div>
+
+    <a class="topOfPage" href="#top" title="Go to top of page">top</a>
+
+<h2 id="loeschen">Elemente Löschen</h2>
+
+<p>Für viele Backtracking-Algorithmen ist es hilfreich, wenn man
+Elemente schnell entfernen und gegebenenfalls wieder einfügen
+kann. Hier erst mal der codes fürs löschen:</p>
+
+<pre>[% syntax c %]
+struct node * delete(struct node *list){
+	list->right->left = list->left;
+	list->left->right = list->right;
+	return list->left;
+}[% endsyntax %]</pre>
+
+<p>Am Beispiel:</p>
+
+<img src="/images/dmisc/dll09.png" width="442" height="132" alt="" />
+<p>Aus dieser Liste soll <code>node2</code>entfernt werden, es wird
+also <code>delete(node2)</code>aufgerufen.</p>
+
+<div style="clear:left;border-bottom:1px dashed
+black;margin-bottom:1ex"></div>
+
+<img src="/images/dmisc/dll10.png" width="442" height="132" alt="" />
+<p>
+<code>list-&gt;right-&gt;left</code>, also
+<code>node3-&gt;left</code>, auf den linken Nachbarn des zu
+löschenden Elements
+    gesetzt, also auf <code>node1</code>.
+    Danach kommt die andere Richtung dran, d.h.
+<code>list-&gt;left-&gt;right</code>, also
+<code>node1-&gt;right</code>, wird auf den rechten Nachbarn des zu
+löschenden Elements gesetzt, also auf <code>node3</code>.</p>
+
+<p>Wenn man sich jetzt von <code>head</code> aus an den Zeigern
+entlang durch die Liste hangelt, erreicht man <code>node2</code>
+nicht mehr, das Element ist also quasi gelöscht.</p>
+
+<p>Allerdings wird in Funktion den Speicher, den <code>node2</code>,
+oder wie es innerhalb der Funktion heißt, <code>list</code>
+benötigt, nicht wieder freigegeben, denn es können ja noch
+andere Zeiger auf dieses Element existieren.</p>
+
+<p>Und wenn man das Element nicht löscht, kann man es
+später wiederherstellen, wenn man noch einen Zeiger darauf hat.</p>
+
+<h2 id="wiederherstellen">Elemente wiederherstellen</h2>
+
+<p>Gelöschte Elemente, auf die man noch einen Pointer hat,
+können sehr einfach wieder in die Liste eingefügt
+werden:</p>
+
+<pre>[% syntax c %]
+struct node * restore(struct node *list){
+	list->right->left = list;
+	list->left->right = list;
+	return list;
+}[% endsyntax %]</pre>
+
+<p>Das ist sogar noch weniger Aufwand als das Einfügen, da zwei
+der Zeiger schon richtig gesetzt sind, und zwar die in dem
+wiederherzustellendem Element.</p>
+
+	<h2 id="durchlaufen">Die Liste durchlaufen</h2>
+
+	<p>Es ist sehr einfach, die doppelt verkettete Liste nach rechts oder
+	links zu durchlaufen, man muss lediglich darauf aufpassen, dass man
+	nach einem Durchlauf aufhört.</p>
+
+<p>Hier ein Beispiel zur Ausgabe einer Liste:</p>
+
+<pre>[% syntax c %]
+void print_all(struct node* list){
+	struct node *head = list;
+	struct node *current = list;
+	printf("%d ", head->data);
+	while (head != (current = current->right)){
+		printf("%d ", current->data);
+	}
+	printf("\n");
+}[% endsyntax %]</pre>
+
+<p>Hier wird das erste Element der übergebenen Liste in der
+Variable <code>head</code> gespeichert, und <code>current</code>
+läuft durch die Liste, in diesem Fall nach rechts.</p>
+
+<p>Wenn beide wieder gleich sind, d.h. die Liste einmal
+vollständig durchlaufen ist, wird die Schleife beendet.</p>
+
+<h3>Ein kleines Testprogramm</h3>
+<p>Zeit, die geschriebenen Funktionen zu testen:</p>
+
+<pre>[% syntax c %]
+int main(int argc, char** argv){
+	/* erstelle eine neue Liste: */
+	struct node *head = new_list();
+	struct node *current = head;
+	int i;
+
+	/* Bevoelkere die List mit den Zahlen 1 bis 10 */
+	for(i = 1; i <= 10; i++){
+		current = insert_right(current, i);
+	}
+
+	/* Gebe die Liste  aus, einmal von head aus startent, einmal vom 
+	   letzten Element aus: */
+	print_all(head);
+	print_all(current);
+
+	/* loesche das vorletzte Element: */
+	current = current->left;
+	current = delete(current); 
+	printf("Liste nach loeschen:\n");
+	print_all(head);
+
+	current = delete(head);
+	printf("Liste nach loeschen des Kopfes:\n");
+	print_all(current);
+
+	head = restore(head);
+	printf("Liste nach Wiederherstellen des Kopfes:\n");
+	print_all(head);
+
+	return 0;
+}[%endsyntax%]</pre>
+
+<p>Und die passende Ausgabe dazu:</p>
+<pre>-1 1 2 3 4 5 6 7 8 9 10 
+10 -1 1 2 3 4 5 6 7 8 9 
+Liste nach loeschen:
+-1 1 2 3 4 5 6 7 8 10 
+Liste nach loeschen des Kopfes:
+10 1 2 3 4 5 6 7 8 
+Liste nach Wiederherstellen des Kopfes:
+-1 1 2 3 4 5 6 7 8 10</pre>
+
+	<p>Offensichtlich funktionieren die Funktionen wie gewünscht.</p>
+
+	<h2 id="probleme">Mögliche Probleme</h2>
+
+	<p>Hier sei noch auf ein paar Fehler hingewiesen, die man vermeiden
+	sollte:</p>
+
+	<h3>Endlosschleifen</h3>
+
+<p>Was macht folgender Code?</p>
+
+<pre>[% syntax c %]
+delete(current);
+print_all(current);
+[%endsyntax%]</pre>
+
+<p>Das Element <code>current</code> wird gelöscht, und
+anschließend wird die Liste ausgegeben.</p>
+
+<p>Prinzipiell sollte das funktionieren, schließlich sind in
+dem entfernten Element noch Zeiger auf den Rest der Liste gespeichert.
+Allerdings erzeugt man damit eine Endlosschleife in der Funktion
+<code>print_all</code>, da diese solange läuft, bis sie zum
+ursprünglichen Element zurückkommt.</p>
+
+<p>Da das Element aber nicht von der Liste aus erreichbar ist, wird
+die Liste so oft ausgegeben, bis der Benutzer das Programm
+abbricht.</p>
+
+<p>Daraus kann man sich folgende Regel herleiten:</p>
+
+<p><strong>Mit entfernten Elementen einer Liste darf man nichts
+anderes machen, als <code>restore</code> aufzurufen.</strong></p>
+
+<h3>Memory Leaks</h3>
+
+<p>Was macht folgender Code?</p>
+
+<pre>[% syntax c %]
+current = insert_right(current, 2);
+current = delete(current);
+[%endsyntax%]</pre>
+
+<p>Nun, erst wird ein Knoten mit dem Wert 2 eingefügt, und dann
+wird er wieder entfernt, die Liste ist weiterhin intakt.</p>
+
+<p>Allerdings wurde in <code>insert_right</code> ein Stück
+Speicher für das neue Element reserviert, auf den es keinen
+Pointer mehr gibt, der aber auch nicht frei geworden wurde.</p>
+
+<p>Wenn das mehrfach in den Programm passiert, läuft der Speicher
+mit nutzlosen Daten voll.</p>
+
+<p>Abhilfe schafft es, das Element mit <code>free()</code> zu
+löschen und den Speicher an das Betriebssystem
+zurückzugeben:</p>
+
+<pre>[%syntax c %]
+current = insert_right(current, 2);
+node * tmp = current;
+current = delete(current);
+free(tmp);
+tmp = NULL;
+[%endsyntax%]</pre>
+
+<p>Wenn das häufiger vorkommt, ist es sinnvoll eine Funktion
+<code>delete_and_free</code> zu schreiben, die das gelöschte
+Element automatisch frei gibt:</p>
+
+<pre>[%syntax c %]
+struct node * delete_and_free(struct node *list){
+	list->right->left = list->left;
+	list->left->right = list->right;
+	struct node *res = list->left;
+	free(list);
+	return list->left;
+}[%endsyntax%]</pre>
+	
+<p>Diese beiden Probleme, Endlosschleifen und Memory Leaks, kann man
+umgehen, indem man die Datenstruktur weiter kapselt und als Interface
+z.B. immer nur <code>head</code> und einen aktuellen Zeiger
+anbietet.</p>
+
+<p>Allerdings verliert man damit auch ein wenig
+Funktionalität.</p>
+
+<h3>Löschen und wiederherstellen mehrerer Elemente</h3>
+
+<p>Man betrachte eine Liste aus einem Kopf und drei Elementen
+<code>node1</code>, <code>node2</code> und <code>node3</code>, aus der
+das zweite Element gelöscht wird:</p>
+
+<img src="/images/dmisc/dll10.png" width="442" height="132" alt=""
+style="float:none" />
+
+<p>Und jetzt lösche man <code>node1</code>:</p>
+
+<img src="/images/dmisc/dll11.png" width="442" height="173" alt=""
+style="float:none" />
+
+<p>Das sieht nicht mehr so schön aus. Wenn man jetzt erst
+<code>node1</code> und dann <code>node2</code> wieder herstellen, sind
+wir wieder bei der ursprünglichen Liste.</p>
+
+<p>Aber was passiert, wenn man erst <code>node2</code>
+wiederherstellt?</p>
+
+<img src="/images/dmisc/dll12.png" width="500" height="173" alt=""
+style="float:none" />
+
+<p>Die Antwort ist, dass ein Zeiger von dem gelöschten
+<code>node1</code> anstatt von <code>head</code> auf das
+wiederhergestellte Element verbogen wurde, das Resultat ist keine
+gültige, doppelt verkettete Liste.</p>
+
+<p>Aus diesem Beispiel kann man sich eine Regel herleiten:</p>
+
+<p><strong>Gelöschte Elemente dürfen nur in umgekehrter
+Reihenfolge wiederhergestellt werden</strong>.</p>
