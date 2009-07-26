@@ -1,0 +1,185 @@
+[%setvar title Einfach verkettete Listen in C %]
+[% setvar section Artikel %]
+[% menu main artikel linkedlist %]
+
+<h1 id="introduction">[% readvar title %]</h1>
+
+<p>Nach den <a href="/de/artikel/doppelt-verkettete-listen">doppelt
+verketteten Listen</a> werden hier einfach verkettete Listen
+vorgestellt.</p>
+
+<p>Einfach verkettete Listen zeichnen sich dadurch aus, dass man
+besonders einfach Elemente einfügen kann, wodurch sie sich
+besonders gut für <a href="#insertion-sort">Insertion Sort</a>
+eignen.</p>
+
+<h2 id="nodes">Knoten</h2>
+
+<p>Eine einfach verkettete Liste besteht aus Knoten, Englisch nodes, die
+einen Zeiger auf das nächste Element und auf Daten.</p>
+
+<pre>[% syntax c %]
+struct list_node {
+	int data;
+	struct list_node *next;
+};[%endsyntax%]</pre>
+
+<p>Eine leere Liste besteht aus einem Kopf (Head) und nichts sonst:</p>
+
+<dl>
+    <dt>
+        <img src="/images/dmisc/sll01.png" width="197" height="87"
+        alt="Eine leere Liste beseht aus einem Kopf und einem NULL-Zeiger"
+        class="nofloat" />
+    </dt>
+    <dd>
+        Eine leere Liste
+    </dd>
+</dl>
+
+<p>Wenn man mehrere Elemente einfügt, sieht das so aus:</p>
+
+<dl>
+    <dt>
+		<img src="/images/dmisc/sll02.png" width="397" height="87"
+		alt="Eine etwas befülltere Liste" class="nofloat" />
+	</dt>
+	<dd>
+		Eine einfach verkettete Liste mit einem Kopf und zwei Knoten.
+	</dd>
+</dl>
+
+      <h2>Elemente Einfügen</h2>
+
+      <p>Wenn man einen Zeiger auf ein Element der Liste hat, ist es einfach,
+      ein Element dahinter einzufügen.</p>
+
+      <p>Dazu muss man den <code>next</code>-Zeiger der Liste auf das neue
+      Element setzen, und den <code>next</code>-Zeiger des neuen Element auf
+      den alten Wert des <code>next</code>-Zeigers der Liste:</p>
+
+<pre>[% syntax c %]
+node insert_right(node list, int data){
+	node new_node = (node) malloc(sizeof(struct list_node));
+	new_node->data = data;
+	new_node->next = list->next;
+	list->next     = new_node;
+	return new_node;
+}[% endsyntax %]</pre>
+
+<dl>
+    <dt>
+		<img src="/images/dmisc/sll03.png" width="447" height="164"
+		alt="Eine liste mit zwei Elementen, in die ein neues Element
+		eingefügt werden soll" class="nofloat" />
+	</dt>
+	<dd>
+		In diese List soll links neben <code>node1</code> ein Element
+		mit dem Datum <code>3</code>eingefügt werden.
+		
+	</dd>
+    <dt>
+		<img src="/images/dmisc/sll04.png" width="447" height="164"
+		alt="Eine liste mit zwei Elementen, in die ein neues Element
+		eingefügt ist" class="nofloat" />
+	</dt>
+	<dd>
+		Durch das Setzen eines Zeigers wird das neue Element in die
+		Liste eingegliedert.
+	</dd>
+    <dt>
+		<img src="/images/dmisc/sll05.png" width="507" height="87"
+		alt="" class="nofloat" />
+	</dt>
+	<dd>
+		Die gleiche Liste in etwas schönerer Darstellung
+	</dd>
+</dl>
+
+      <h2>Elemente löschen</h2>
+
+      <p>Auch das löschen eines Elements ist einfach, wenn man einen
+      Zeiger auf das Element links des zu löschenden Elements hat.</p>
+
+      <p>Dazu muss man nur den <code>next</code>-Zeiger des linken Elements
+      auf das Element rechts des zu löschenden setzen:</p>
+<pre>[% syntax c %]
+node delete_right(node list){
+	node tmp   = list->next;
+	list->next = list->next->next;
+	free(tmp);
+	return list;
+}[% endsyntax %]</pre>
+	<p>In diesem Fall wurde noch ein temporärer Zeiger benutzt, um
+	den Speicher des genutzten Elements freizugeben.</p>
+
+<dl>
+    <dt>
+		<img src="/images/dmisc/sll02.png" width="397" height="87"
+		alt="Eine Liste mit einem Kopf und zwei Elementen" class="nofloat" />
+	</dt>
+	<dd>
+		Aus dieser Liste soll das erste Element gelöscht werden.
+	</dd>
+    <dt>
+		<img src="/images/dmisc/sll06.png" width="397" height="86"
+		alt="Der next-Zeiger des Kopfes wird auf das zweite Element gesetzt" 
+		class="nofloat" />
+	</dt>
+	<dd>
+		Und schon ist es gelöscht.
+	</dd>
+</dl>
+
+<h2 id="insertion-sort">Insertion Sort mit verketteten Listen</h2>
+
+<p>Eine schöne Anwendung für einfach verkettete Listen ist der
+Sortieralgorithmus "Insertion Sort", oder auf Deutsch "Sortieren durch
+einfügen".</p>
+
+<p>Für große Datenmengen eignet sich Insertion Sort nicht,
+weil die Laufzeit quadratisch mit der Anzahl der Elemente wächst,
+aber für kleine Datenmengen (vielleicht bis 20 Elemente) es
+schneller als die "schnellen" Algorithmen wie Mergesort oder
+Quicksort.</p>
+
+<p>Es ist auch ganz einfach: man startet mit einer leeren Liste, und wenn
+     man Elemente einfügt, achtet man darauf, sie an der richtigen Stelle
+     einzufügen:</p>
+<pre>[% syntax c %]
+node insertion_sort(int *a, int count){
+	node list = new_list();
+	node c;
+	int i;
+
+	for (i = 0; i < count; i++){
+		c = list;
+		while(c->next != NULL &&; c->next->data < a[i]){
+			c = c->next;
+		}
+		insert_right(c, a[i]);
+
+	}
+	return list;
+}[% endsyntax %]</pre>
+
+<p>In Worten: mache für jedes Element des zu sortierenden Arrays
+das folgende:</p>
+
+<p>Gehe solange vom Kopf der Liste nach rechts, bis das Ende erreicht
+ist oder das nächste Element größer als das
+einzufügende ist, und füge dann das Element davor ein.</p>
+
+<h2>Zusammenfassung</h2>
+
+<p>Eine einfach verkettete Liste speichert pro Element einen Zeiger auf das
+nächste Element und die Nutzdaten. Das Durchlaufen von Rechts nach Links, das
+Einfügen und das Entfernen des Elements rechts des aktuellen Elements sind
+einfach und erfordern nur das umsetzen von zwei Zeigern.</p>
+
+<p>Gegenüber <a href="/de/artikel/doppelt-verkettete-listen">doppelt
+verketteten Listen</a> brauchen sie also weniger Verwaltungsaufwand, bei etwas
+geringerer Flexibilität.</p>
+
+[% comment vim: ft=html spell 
+%]

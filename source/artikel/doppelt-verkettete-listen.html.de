@@ -290,14 +290,14 @@ Liste nach loeschen des Kopfes:
 Liste nach Wiederherstellen des Kopfes:
 -1 1 2 3 4 5 6 7 8 10</pre>
 
-	<p>Offensichtlich funktionieren die Funktionen wie gewünscht.</p>
+<p>Offensichtlich funktionieren die Funktionen wie gewünscht.</p>
 
-	<h2 id="probleme">Mögliche Probleme</h2>
+<h2 id="probleme">Mögliche Probleme</h2>
 
-	<p>Hier sei noch auf ein paar Fehler hingewiesen, die man vermeiden
-	sollte:</p>
+<p>Hier sei noch auf ein paar Fehler hingewiesen, die man vermeiden
+sollte:</p>
 
-	<h3>Endlosschleifen</h3>
+<h3>Endlosschleifen</h3>
 
 <p>Was macht folgender Code?</p>
 
@@ -409,3 +409,18 @@ gültige, doppelt verkettete Liste.</p>
 
 <p><strong>Gelöschte Elemente dürfen nur in umgekehrter
 Reihenfolge wiederhergestellt werden</strong>.</p>
+
+<h2 id="zusammenfassung">Zusammenfassung</h2>
+
+<p>Die meisten Operationen auf doppelt verketteten Listen bestehen aus dem
+umsetzen von einem bis vier Zeigern; solange man die Übersicht bewahrt und
+sich vorher aufmalt, welche Zeiger wohin müssen, sind die Operationen auch
+nicht kompliziert.</p>
+
+<p>Das bewegen in der Liste sowie das Einfügen und Löschen von Elementen geht
+jeweils sehr schnell, nur der Zugriff auf ein Element mit einer bestimmten
+Nummer - was  die Stärke von Arrays ist - erfordert das Durchlaufen der
+einzelnen Elemente.</p>
+
+<!-- vim: spell ft=html
+  -->
