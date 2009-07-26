@@ -11,6 +11,13 @@ AddLanguage de .de
 AddType text/html cgi-script .cgi
 AddHandler cgi-script .cgi
 
+# referrer spam from bing.com
+# see http://www.the-art-of-web.com/system/logs-bing/ for an explanation
+RewriteCond %{REMOTE_ADDR} ^65\.55\.(104|107|109|110|165|232)
+RewriteCond %{HTTP_REFERER} (www\.bing|search\.live)\.com
+RewriteCond %{HTTP_REFERER} !\&
+RewriteRule .* - [F]
+
 RewriteEngine on
 SetEnvIf Request_URI ^(de|en) prefer-language=$1
 
