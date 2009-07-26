@@ -4,14 +4,16 @@
 
 <h1 id="introduction">[% readvar title %]</h1>
 
-<p>Nach den <a href="/de/artikel/doppelt-verkettete-listen">doppelt
-verketteten Listen</a> werden hier einfach verkettete Listen
-vorgestellt.</p>
+<p>Einfach verkettete Listen oder <em>linked lists</em> sind eine fundamentale
+Datenstruktur, die ich hier anhand von Code-Beispielen und Grafiken erklären
+will.</p>
 
 <p>Einfach verkettete Listen zeichnen sich dadurch aus, dass man
 besonders einfach Elemente einfügen kann, wodurch sie sich
 besonders gut für <a href="#insertion-sort">Insertion Sort</a>
-eignen.</p>
+eignen. Eine Verallgemeinerung stellen die <a
+href="/de/artikel/doppelt-verkettete-listen">doppelt verketteten Listen</a>
+da.</p>
 
 <h2 id="nodes">Knoten</h2>
 

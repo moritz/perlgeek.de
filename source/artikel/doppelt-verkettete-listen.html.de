@@ -4,9 +4,10 @@
 
 <h1>[% readvar title %]</h1>
 
-<p>Doppelt verkettete Listen (oder <em>doubly linked lists</em>) sind eine
-grundlegende Datenstruktur, die ich hier anhand von Beispielen in der
-Programmiersprache C vorstellen will.</p>
+<p>Doppelt verkettete Listen (oder <em>doubly linked lists</em>) sind 
+häufig benutze Datenstrukturen und eine Verallgemeinerung der <a
+href="/de/artikel/einfach-verkettete-listen">einfach verketteten Listen</a>, 
+die ich hier anhand von Beispielen in der Programmiersprache C vorstellen will.</p>
 
 <p>Sie funktioniert in jeder Programmiersprache genauso, die Zeiger oder
 Referenzen und so etwas wie Klassen oder Structs zur Verfügung stellt.</p>
