@@ -1,0 +1,30 @@
+Goodby Iron Man
+<!-- 1249415641 -->
+<p>So I accepted the <a href="http://ironman.enlightenedperl.org/">Iron
+Man</a> blogging challenge a few month ago. And last week I discovered that my
+blog was gone from their feed. For the second time. Without any
+notification.</p>
+
+<div style="border: 1px">
+    <img src="/images/rusty-robot.jpg" alt="rusty iron man"
+        width="362" height="500" />
+
+    <p>Image: <i>rusty iron man</i>, by courtesy of <a
+    href="http://www.flickr.com/photos/artvixn/1525491415/">artvixn</a>,
+    available under a <a
+    href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">create
+    commons non-commerical by-attribution</a> license.</p>
+</div>
+
+<p>The first time they had a good reason: the date tags in my RSS feed were
+goofed; still I'd thought it would be nice to at least notify me of such a
+removal. After some mails back and forth I was able to fix it; after the
+second removal without any notification I'm simply fed up and don't want to
+investigate any more energy into this.</p>
+
+<p>Still I'll continue to follow the collected RSS feed, there are still many
+interesting blogs to be read there.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+ %]
