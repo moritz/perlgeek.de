@@ -1,8 +1,8 @@
 Rakudo "star" announced
 <!-- 1249453512 -->
 <p>
-    Yesterday <a href="http://pmichaud.com/">Patrick Michaud</a> announced the
-    he'll <a
+    Yesterday <a href="http://pmichaud.com/">Patrick Michaud</a> announced
+    that he'll <a
     href="http://brunorc.wordpress.com/2009/08/04/perl-6-release-or-xmas-in-easter/">release
     a special version of Rakudo called <em>Rakudo star</em></a> in
     Spring 2010. Sadly I was not present, but as minor minion I picked some
