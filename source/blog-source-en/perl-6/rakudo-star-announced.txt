@@ -1,5 +1,12 @@
 Rakudo "star" announced
 <!-- 1249453512 -->
+
+<p>(<strong>Update:</strong>: <a
+   href="http://use.perl.org/~pmichaud/journal/39411">Here is the "official"
+   blog post from pmichaud</a> - which pretty much makes my rambling
+   superfluous.)
+</p>
+
 <p>
     Yesterday <a href="http://pmichaud.com/">Patrick Michaud</a> announced
     that he'll <a
