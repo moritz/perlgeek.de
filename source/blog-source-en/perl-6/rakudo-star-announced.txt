@@ -1,0 +1,71 @@
+Rakudo "star" announced
+<!-- 1249453512 -->
+<p>
+    Yesterday <a href="http://pmichaud.com/">Patrick Michaud</a> announced the
+    he'll <a
+    href="http://brunorc.wordpress.com/2009/08/04/perl-6-release-or-xmas-in-easter/">release
+    a special version of Rakudo called <em>Rakudo star</em></a> in
+    Spring 2010. Sadly I was not present, but as minor minion I picked some
+    things up on IRC and want to provide some backgrounds.
+</p>
+
+<p>
+    Alias <a href="http://use.perl.org/~Alias/journal/39406">bitched about the
+    term "Spring"</a>, which is a rather regional thing and of course he is
+    right. I'd like to clarify that we are talking about spring on the
+    northern hemisphere, so the release will probably be between March and June.
+</p>
+
+<p>
+    The idea behind this release is to provide something more shiny than our
+    usual development releases, get good press for it, and motivate lots of
+    people to use it. We need that for several reasons:
+</p>
+
+<ul>
+    <li>
+        A release is the only way to get good testing from a wide audience; we
+        learned as much from the perl-5.10.0 release, for which many new bugs 
+        were only found after the release.
+    </li>
+    <li>
+        Many Perl 5 programmers are vaguely excited about Perl 6, but
+        wait for a "real thing" before they spend more time on it. We want
+        to show these people that Rakudo has become a "real thing" by now,
+        and implements much of the language.
+    </li>
+    <li>
+        We want to encourage hackers to port their Perl 5 modules to Perl 6.
+        For them it's a good way to learn Perl 6, for the rest of the
+        community it provides a valuable ecosystem. Perl is a good example
+        of how a great collection of libraries can greatly enhance a
+        languages popularity - we'd like to have such a bonus for Perl 6 too.
+    </li>
+</ul>
+
+<p>
+    Currently the Rakudo developers mostly focus on features that are either
+    at the very heart of Perl 6, or that are needed for bootstrapping.
+    Examples for the first category re the object model, multi dispatch and 
+    regexes/grammars. The second category covers features like contextual
+    variables, proto regexes and longest token matching.
+</p>
+
+<p>
+    I expect the focus to (temporarily) shift towards other features, like
+    improved module loading/importing and maybe speedups. But still there are
+    areas that not yet actively pursued - the <a
+    href="http://github.com/rakudo/rakudo/blob/24b26a0e5319646877f9cdfa5976062e1a02b95a/docs/ROADMAP">roadmap</a>
+    does not even mention concurrency/threads. So we hope for volunteers to
+    step up and champion their pet projects.
+</p>
+
+<p>
+    In the last few months various pieces of PR helped to bring more people
+    into the Perl 6 community. I hope that the Rakudo star release will boost
+    that and will help to form a healthy Perl 6 community. 
+</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]
