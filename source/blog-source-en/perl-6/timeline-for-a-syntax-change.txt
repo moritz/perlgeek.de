@@ -1,0 +1,30 @@
+Timeline for a syntax change in Perl 6
+<!-- 1250019362 -->
+
+<p>August 10, 16:30 (UTC): Carl Mäsak starts a <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2009/08/msg32272.html">thread
+about the syntax for embedded comments on p6l</a>. Various different ideas are
+being discussed for about a day.</p>
+
+<p>August 11, 17:28 (UTC): Larry Wall <a
+href="http://www.nntp.perl.org/group/perl.perl6.language/2009/08/msg32309.html">decides 
+ on the new syntax</a> and commits his changes to the specification.</p>
+
+<p>August 11, 17:43 (UTC): (that is, 15 minutes later) Larry Wall <a
+href="http://perlcabal.org/svn/pugs/revision/?rev=27960">updates the official
+grammar</a> to parse the new syntax.</p>
+
+<p>August 11, 17:51 (UTC): (that is, another 8 minutes later): Moritz Lenz
+(me) <a href="http://perlcabal.org/svn/pugs/revision/?rev=27961">updates the
+spectests to reflect the new syntax.</a>.</p>
+
+<p>August 11, 18:11 (UTC): (that is, another 20 minutes later): Patrick
+Michaud <a href="http://github.com/rakudo/rakudo/commit/1d75a78c376b602cbccb2cf701a5e5c76babbdb4">updates
+Rakudo to the new syntax</a>.</p>
+
+<p>So from the time of the decision it took less than an hour to be adopted by
+the test suite and two major implementations.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html spell
+ %]
