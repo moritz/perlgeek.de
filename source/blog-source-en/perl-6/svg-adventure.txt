@@ -1,0 +1,152 @@
+A SVG plotting adventure
+<!-- 1250440634 -->
+
+<h2>The Quest</h2>
+
+<p>It usually begins with <a href="http://use.perl.org/~masak/journal">Carl
+Mäsak</a> - this time was no exception.</p>
+
+<p>First he <a href="http://use.perl.org/~masak/journal/39445">sent us on big adventure</a>, and then
+<a href="http://irclog.perlgeek.de/perl6/2009-08-14#i_1393669">me on a 
+particular quest</a> by asking innocently if there were
+any vistor statics for the site <a
+href="http://perl6-projects.org/">http://perl6-projects.org</a>.
+Being curious myself I copied the access.log, started <a
+href="http://www.hping.org/visitors">a log analyzer</a> and voilá, we had a
+HTML page with some statistics.</p>
+
+<p>But a tiny nagging voice in my head asked <em>Can't you do that with
+Perl 6?</em>. Well, sure I can, with a bit of effort.</p>
+
+<p>So I decided to spend some time of my weekend (namely a travel by train and
+the time when my girlfriend took a nap) on this, and wrote a web log analyzer
+that produced a bar chart of the daily number of visitors. Here it goes:</p>
+
+<img src="http://perlgeek.de/images/p6p-access.png" width="427" height="392" 
+alt="visitor stats for perl6-projects.org" />
+
+
+<p>If you use a browser that supports SVG, you can <a
+href="/images/p6p-access.svg">view the svg version directly.</a>.</p>
+
+<p>That was the short story. If you are more of a geek, you might be more
+interested in some of technical details.</p>
+
+<h2>The Gory Details - SVG</h2>
+
+<p>The choice of SVG as output format was pretty obvious: It's text based, a
+vector format, and masak had already <a
+href="http://github.com/masak/svg/">written a SVG module for Perl 6</a>.
+Despite its name, it's actually a module that generally transforms data
+structures of a particular form to XML - the only things specific to SVG in
+there are the name and the documentation.</p>
+
+<p>Since it doesn't know about SVG, I as the programmer had to learn some SVG.
+So I downloaded the specs, and went offline.</p>
+
+<h2>Coordinate transformations</h2>
+
+<p>Skimming through the specs revealed something interesting: you can apply
+coordinate transformations to SVG primitives or groups. Also the drawing area
+stretches from negative to positive infinity in both <i>x</i> and <i>y</i>
+direction. In combination that means that the plotting module can start
+drawing without looking at the whole input data. It just has to keep track of
+how much space it has written to, and then in the end it can apply a scaling
+to fit the canvas (ie the visible drawing area).</p>
+
+<p>There's just one problem with this approach:</p>
+
+<img src="http://perlgeek.de/images/distorted.png" width="215" height="144"  alt="distorted
+text" />
+
+<p>The text is scaled with the same aspect ratio as the chart, leading to
+distorted text. Of course one could apply the reverse transformation to the
+text, but to avoid overlapping label text one has to know the size of the text
+anyway, so there's nothing gained by letting the SVG renderer do coordinate
+transformation.</p>
+
+<p>So I ended up doing the scaling in my program code after all.</p>
+
+<h2>Text in SVG</h2>
+
+<p>There's one open problem so far: since the plotting program just emits SVG
+(or more accurately, a data structure which SVG.pm turns into SVG) and doesn't
+know about its rendering, it can't know how much space the text will take up,
+making it impossible to calculate the spaces appropriately. Inkscape and
+gqview render the text quite differently, I'm sure other user agents will have
+their own interpretation of text sizes and scaling.</p>
+
+<p>The specs talks about precomputed text width according to which text might
+be scaled; I'll have to see if I can make use of that feature to solve this
+problem.</p>
+
+<h2>SVG != SVG</h2>
+
+<p>Speaking of different user agents: Firefox and gqview only show drawing on the
+canvas, silently (as per SVG spec) dropping elements outside the canvas. It
+was incredible helpful to have inkscape, which shows the border of the canvas,
+but also objects outside of it. When  I got a coordinate transform wrong, that
+was a good way to debug it.</p>
+
+<h2>Mandatory Options</h2>
+
+<p>I made one observation not tied to SVG, but to plotting in general: without
+having planned for it, I ended up with having about ten configuration
+variables/attributes, more to come when I include captions, axis labels and
+so on.  It just falls naturally out of process of writing the code, and
+thinking twice each time I used a numeric constant in code.</p>
+
+<p>Perl 6 makes them very nice, the begin of the code looks like this:</p>
+
+<pre>[% syntax perl6 %]
+class SVG::Plot {
+    has $.height            = 200;
+    has $.width             = 300;
+    has $.fill-width        = 0.80;
+    has $.label-font-size   = 14;
+    has $.plot-width        = $.width  * 0.80;
+    has $.plot-height       = $.height * 0.65;
+
+    has &.y-tick-step       = -> $max_y {
+        10 ** floor(log10($max_y)) / 5
+    }
+
+    has $.max-x-labels      = $.plot-width / (1.5 * $.label-font-size);
+
+    has $.label-spacing     = ($.height - $.plot-height) / 20;
+    ...
+}[% endsyntax %]</pre>
+
+<p>Basically I declare attributes with default values, which can be overridden
+by passing a named argument to the <code>new</code> constructor - and the
+subsequent declarations which depend on them simply pick up the user supplied
+value if present, or the default otherwise.</p>
+
+<p>It seems easier to come up with a myriad of configuration options than
+choosing sane defaults.</p>
+
+<h2>The Result</h2>
+
+<p>... can be found on <a
+href="http://github.com/moritz/svg-plot/">http://github.com/moritz/svg-plot/</a>.
+The log parser is included in the <code>examples/</code> directory.</p>
+
+<p>It is far from complete, the interface is not yet stable etc, but it's
+still a nice piece of software, IMHO.</p>
+
+<h2>The Future</h2>
+
+<p>I want to pursue development in a few directions: more meta data (axis
+labels, captions, annotations, maybe clickable data points), other chart types
+(lines and points), documentation, and maybe more styling options.</p>
+
+<p>I don't know yet how to write unit tests for it, and test driven
+development only works if you know in advance what to expect.</p>
+
+<p>I don't know if I'll find the time to turn this into a full-blown charting
+module, but so far the work on it has been very rewarding, and I liked it.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html sw=4 ts=4 tw=78 spell
+%]

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding='utf-8'?>
+<Channel 
+  rdf:about="$url/"
+  xmlns:p="http://purl.org/net/rss1.1/payload#"
+  xmlns="http://purl.org/net/rss1.1#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:admin="http://webns.net/mvcb/"
+  xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+
+  <title>$blog_title $path_info</title>
+  <link>$url/</link>
+  <description>$blog_description</description>
+$rss11::image_code
+  <dc:language>$blog_language</dc:language>
+  <dc:creator>$rss11::creator</dc:creator>
+  <dc:rights>Copyright $rss11::creator</dc:rights>
+  <admin:generatorAgent rdf:resource="$rss11::generatorAgent" />
+  <admin:errorReportsTo rdf:resource="mailto:$rss11::email"/>
+  <items rdf:parseType="Collection">
