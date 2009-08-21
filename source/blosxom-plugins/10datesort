@@ -2,16 +2,17 @@ package datesort;
 use strict;
 use warnings;
 use File::stat;
+use Carp qw(confess);
 
 use Memoize;
-memoize('dateforfile');
+#memoize('dateforfile');
 
 sub start { 1 }
 
 sub dateforfile {
     my $fn = shift;
     open my $h, '<:encoding(UTF-8)', $fn
-        or die "Can't open file `$fn' for reading: $!";
+        or confess "Can't open file `$fn' for reading: $!";
     my $date = <$h>;
     $date = <$h>;
     close $h or warn $!;

@@ -121,11 +121,13 @@ sub start {
   if (length($fn)) {
     my $fn = $blosxom::datadir . $path . '/' . $fn . '.txt';
     $fn =~ s{//}{/}g;
-    my $date = datesort::dateforfile($fn);
-    if (time - $date > 3600 * 24 * 20) {
-        $comments_allowed = 0;
-        $writeback::closedWarning = 'The comments on this blog post have'
-            . ' been disabled; the comment form below will not work.'
+    eval {
+	my $date = datesort::dateforfile($fn);
+	if (time - $date > 3600 * 24 * 20) {
+		$comments_allowed = 0;
+		$writeback::closedWarning = 'The comments on this blog post have'
+		. ' been disabled; the comment form below will not work.'
+	}
     }
   }
 
