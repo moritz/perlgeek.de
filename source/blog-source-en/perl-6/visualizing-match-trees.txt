@@ -1,0 +1,38 @@
+Visualizing match trees
+<!-- 1250929497 -->
+
+<p>I think I mentioned once or twice that regexes and grammars in Perl 6
+really rock. Most Perl 6 compilers use them to parse Perl 6, which
+demonstrates how powerful they are. Writing a full grammar for <a
+href="http://www.json.org/">JSON</a> took only <a
+href="http://github.com/moritz/json/blob/43d69db6a549869110f8b97ba7c635946ab733b4/lib/JSON/Tiny/Grammar.pm">about
+70 generously spaced lines</a>.</p>
+
+<p>A successful match stores all kind of captures in a <code>Match</code>
+objects, which is actually a full match tree. If you're new to Perl 6 regexes,
+you might find the structure a bit surprising at first.</p>
+
+<p>So I wrote a module which visualizes a match tree, annotating parts of the
+original string with the access path on the match object.</p>
+
+<pre>[% syntax perl6 %]
+use SVG::MatchDumper;
+
+my $x = 'use v6; 100 + 100';
+if Perl6::Grammar.parse($x) {
+    svg-dump($/, $x);
+} else {
+    die "no match";
+}
+[% endsyntax %]</pre>
+
+<p>produces</p>
+
+<img src="http://perlgeek.de/images/match-tree.png"
+    alt="match tree visualization" width="478" height="118" />
+
+<p>I appreciate any feedback and testing.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]
