@@ -18,8 +18,12 @@ original string with the access path on the match object.</p>
 <pre>[% syntax perl6 %]
 use SVG::MatchDumper;
 
-my $x = 'use v6; 100 + 100';
-if Perl6::Grammar.parse($x) {
+token fruit     { banana | apple }
+token currency  { 'USD' | 'dollar' | 'EUR' | '$' | '€' }
+
+my $x = 'just 20,000 dollar per apple';
+
+if $x ~~ m/:s ((\d+) ** ',') <currency> 'per' <fruit> $ / {
     svg-dump($/, $x);
 } else {
     die "no match";
