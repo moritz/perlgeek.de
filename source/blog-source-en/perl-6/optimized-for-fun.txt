@@ -1,0 +1,68 @@
+Perl 6 is optimized for fun
+<!-- 1250949811 -->
+
+<p>Audrey Tang coined term <em>optimized for fun</em> in the context of Perl
+6, <a href="http://irclog.perlgeek.de/perl6/2005-09-06#i_-496682">abbreviated
+<em>-Ofun</em></a>. (The <code>-O</code> compiler option instructs gcc to
+optimize code).</p>
+
+<p>And indeed we have lots of fun: <a
+href="http://use.perl.org/~masak/journal/39445">Perl 6 is our MMORPG</a>, but
+we <a href="http://use.perl.org/~masak/journal/39483">still get things
+done</a> and <a href="http://www.arcamax.com/garfield/s-590852-357951">avoid
+the planning trap</a>.</p>
+
+<p>We also have fun <a href="http://perlcabal.org/syn/S26.html">in our
+specification</a>:</p>
+
+<blockquote>
+<pre>
+    1. Retreat to remote Himalayan monastery
+
+    2. Learn the hidden mysteries of space and time
+
+    ????
+
+    3. Prophet!
+</pre>
+</blockquote>
+
+<p>We also have fun on IRC:</p>
+
+<pre>[% syntax escape %]
+12:49 < pugs_svn> r28043 | moritz++ | [S02] small clarifications on Whatever 
+                  comprehensions
+12:50 <@wayland76> I experience a strange feeling when reading moritz_'s
+                   commit message :)
+[...]
+14:11 < pugs_svn> r28045 | wayland++ | [S02,S03,S09,S11] Changed any example 
+                  that had the animal "Cat" to have "Squirrel"
+14:11 < pugs_svn> r28045 | wayland++ | instead (both have kittens), because we 
+                  already have a type called Cat and a 
+14:11 < pugs_svn> r28045 | wayland++ | method called "cat", and I could see 
+                  some potential for confusion.  
+[...]
+14:14 <@moritz_> wayland76: +     %cats\   .{'fluffy'} = Squirrel.new;
+14:15 <@jnthn> Squirrel is not a type of cat?
+14:15 <@moritz_> well, it would be sensible to name the variable %squirrels in 
+                 that case ;-)
+14:18 < pugs_svn> r28046 | moritz++ | [S03] store Squirrels in %squirrels, not 
+                  in %cats
+14:19 <@moritz_> somehow my commit messages sound a bit surrealistic today
+14:20  * jnthn likes surrealism.
+14:20  * masak fish surrealism
+14:37 <@frettled> moritz_: You know, the cats may disagree and think that 
+                  squirrels _should_ be stored in cats.  Just mentioning it.
+14:37 <@jnthn> wantfud!
+14:38 <@wayland76> well, those cats can go clarify their Whatever 
+                   comprehensions for all I care :)
+14:38 <@masak> one would think that cats have been evolved to store rodents.
+14:39 <@wayland76> I doubt the rodents think of it as "storage" :)
+[% endsyntax %]</pre>
+
+<p>If you also like programming and having fun, join us on #perl6 on
+irc.freenode.net.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell
+%]
