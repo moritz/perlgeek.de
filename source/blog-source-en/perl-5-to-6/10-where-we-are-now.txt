@@ -1,4 +1,5 @@
 Where we are now - an update
+<!-- 1224194400 -->
 
 <p>(This is an update on this blog series, not on Perl 6 in general).</p>
 
