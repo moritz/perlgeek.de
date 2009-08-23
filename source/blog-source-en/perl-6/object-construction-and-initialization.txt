@@ -7,7 +7,7 @@ class you just write <code>YourClass.new(attrib1 =&gt; $value1)</code> to
 create an object of class <code>YourClass</code>, at the same time
 initializing an attribute.</p>
 
-<h2>Running initiliaztions code</h2>
+<h2>Running initializations code</h2>
 
 <p>If you want to run some initialization code on object creation, you don't
 have to touch the <code>new</code> method at all. Something like this
