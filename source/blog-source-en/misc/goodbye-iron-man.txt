@@ -1,5 +1,15 @@
 Goodby Iron Man
 <!-- 1249415641 -->
+<p><strong>&lt;update&gt;</strong> (from 2009-08-23)
+It turned out that my disappearance
+on the ironman blog feed was due to a broken RSS feed. Matt S. Trout tried to
+inform me by blog comment, my blog marked it as spam and swallowed it.</p>
+
+<p>So now we talked on IRC, clarified things, and I'm back in the game.
+<strong>&lt;/update&gt;</strong>
+</p>
+
+
 <p>So I accepted the <a href="http://ironman.enlightenedperl.org/">Iron
 Man</a> blogging challenge a few month ago. And last week I discovered that my
 blog was gone from their feed. For the second time. Without any
