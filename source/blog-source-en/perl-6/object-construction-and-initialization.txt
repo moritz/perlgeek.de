@@ -1,0 +1,105 @@
+Let's build an object
+<!-- 1251031086 -->
+<p>Building an object in Perl 6 is rather easy. As the author of a class you
+don't really have to care (at least in the simplest case), you inherit a
+default constructor from class <code>Object</code>. As a consumer of that
+class you just write <code>YourClass.new(attrib1 =&gt; $value1)</code> to
+create an object of class <code>YourClass</code>, at the same time
+initializing an attribute.</p>
+
+<h2>Running initiliaztions code</h2>
+
+<p>If you want to run some initialization code on object creation, you don't
+have to touch the <code>new</code> method at all. Something like this
+works:</p>
+
+<pre>[% syntax perl6 %]
+class C {
+    submethod BUILD {
+        say "Created a new instance of C";
+    }
+}
+
+C.new();
+[% endsyntax %]</pre>
+
+<p>The BUILD submethod is called by the constructor automatically, and can
+do any initialization that's necessary. It also receives the named arguments
+that the user passes on to <code>new()</code>.</p>
+
+<p>(In case you wonder, a submethod is a public method that's not inherited to
+child classes).</p>
+
+<h2>Custom constructors</h2>
+
+<p>Suppose you're not a big fan of named arguments, and you want to write a
+constructor that takes one mandatory positional parameter. In that case you'd
+write a custom <code>new</code> method. To create an object, that method has
+to call <code>self.bless</code>:</p>
+
+<pre>[% syntax perl6 %]
+class C {
+    has $.size;
+    method new($x) {
+        self.bless(*, size => 2 * $x);
+    }
+}
+
+say C.new(3).size;      # prints 6
+[% endsyntax %]</pre>
+
+<p>The star <code>*</code> as the first argument to <code>bless</code> tells
+it to create an empty object itself.</p>
+
+<p>If you want to enable additional named parameters, that's easily done:</p>
+
+<pre>[% syntax perl6 %]
+class C {
+    has $.size;
+    method new($x, %n) {
+        self.bless(*, size => 2 * $x, |%n);
+    }
+}
+[% endsyntax %]</pre>
+
+<p>Note that these two concepts (custom new() and BUILD() (sub)methods) are
+orthogonal; you can use both at once, and both peacefully coexist.</p>
+
+<h2>Understanding object initialization</h2>
+
+<p>As demonstrated above you don't need to understand the full process of
+building and initializing objects to manipulate it. If you still want to know,
+read on.</p>
+
+<p>Suppose you have a class <code>C</code> which inherits from another class
+<code>B</code>, then the process of building an object of class <code>C</code>
+looks like this:</p>
+
+<img src="http://perlgeek.de/images/creation.png" alt="Perl 6 object creation"
+  width="413" height="341" />
+
+<p>The user calls <code>C.new</code> (which is inherited from class Object),
+which in turn calls <code>self.bless(*, |%args)</code>. <code>bless</code>
+creates a new <code>P6Opaque</code> object which is the storage for the newly
+created object. This is the call to <code>CREATE</code> in the image above.</p>
+
+<p>After the storage has been allocated and the attributes initialized,
+<code>new</code> passes control to <code>BUILDALL</code> (passing along all
+named parameters), which in turn calls <code>BUILD</code> in all classes in
+the inheritance hierarchy, starting at the top of the hierarchy and calling
+the BUILD method of class <code>C</code> at last.</p>
+
+<p>This design allows you to substitute parts of the initialization with least
+effort, and especially writing custom <code>new</code> and <code>BUILD</code>
+methods very easily.</p>
+
+<p>Instead of passing a <code>*</code> to <code>bless</code>, you can also
+pass along an object of different storage type, which means that you can
+instruct Perl 6 to store your objects by a different mechanism, for example by
+the gnome library <a
+href="http://library.gnome.org/devel/gobject/unstable/">GObject</a> or similar
+(though that's not yet implemented in Rakudo).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html sw=4 ts=4 tw=78 spell
+%]
