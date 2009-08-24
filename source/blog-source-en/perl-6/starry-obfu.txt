@@ -26,6 +26,9 @@ release.</p>
 
 <p>Have fun figuring it out!</p>
 
+<p><strong>Update:</strong> Since it has caused a bit of confusion on #perl6,
+it does not print the usual obfu text, but rather a minor variation.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: ft=html spell tw=78
 %]
