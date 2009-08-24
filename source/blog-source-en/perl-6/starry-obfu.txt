@@ -1,0 +1,31 @@
+Starry Perl 6 obfu
+<!-- 1251141453 -->
+
+<p>I decided to <a
+href="http://perlgeek.de/blog-en/perl-6/optimized-for-fun.html">have some
+fun</a> with Perl 6 and wrote my first obfu. So here it is, broken to 50
+columns per line:</p>
+
+<pre>[% syntax escape %]
+<(*+*)*(*+* +*/*) **** ** * * *+*+*/* **** ** * *
+*+*-*/* **** ** * * *+* ****-* **** ** * * *-(*-*/
+*) ** (*+*/*) **** ** * * *-* **** ** * * *-*+*/*
+**** ** * * *+* **** ** * * *-* * * ***((* - */*)
+** * * *-*/*) * * **** ** * * *+*/* ****-* ***(*-*
+/*)**(*+*/*) * * ***((*-*/*)** * * *-*/*) * * ****
+** * * *+*/* **** ** * * *+*+*/*-* * *>.split(<***
+>).map: {eval("(* ** *+*+*-*/*+$_)(<* * *>)").chr\
+.print}[%endsyntax%]</pre>
+
+<p>(Not syntax-hilighted as I usually do here because the syntax hilighter
+does this one oh so wrong, it would only enhance confusion).</p>
+
+<p>It works on today's <a href="http://rakudo.org/">Rakudo</a> build, but I'm
+not aware of any feature that I use which wasn't available in the 2009-08
+release.</p>
+
+<p>Have fun figuring it out!</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell tw=78
+%]
