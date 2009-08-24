@@ -1,0 +1,78 @@
+Dissecting the "Starry obfu"
+<!-- 271251324000 -->
+
+<p>I've been asked a few times how the <a
+href="http://perlgeek.de/blog-en/perl-6/starry-obfu.html">starry obfu</a>
+works. Here it is again in all it's <em>*cough*</em> glory:</p>
+
+<pre>[% syntax escape %]
+<(*+*)*(*+* +*/*) **** ** * * *+*+*/* **** ** * *
+*+*-*/* **** ** * * *+* ****-* **** ** * * *-(*-*/
+*) ** (*+*/*) **** ** * * *-* **** ** * * *-*+*/*
+**** ** * * *+* **** ** * * *-* * * ***((* - */*)
+** * * *-*/*) * * **** ** * * *+*/* ****-* ***(*-*
+/*)**(*+*/*) * * ***((*-*/*)** * * *-*/*) * * ****
+** * * *+*/* **** ** * * *+*+*/*-* * *>.split(<***
+>).map: {eval("(* ** *+*+*-*/*+$_)(<* * *>)").chr\
+.print}[%endsyntax%]</pre>
+
+<p>This first character is a <code>&gt;</code>, which introduces a list
+quote: <code>&lt;a b c&gt;</code> is the same as <code>("a", "b", "c")</code>.
+This quote covers the first six and three quarter of the sevenths line.</p>
+
+<p>It is later then used a string (by calling <code>.split</code> on it, and
+as such stringifies with spaces between the items. So it's roughly the same as
+<code>"..."</code> in this context.</p>
+
+<p>Then comes a fairly trivial part: the string is split on <code>***</code>,
+and via <code>map</code> a transformation is applied to to each item: it is
+interpolated into a string, which is eval'ed. The result is taken as a Unicode
+codepoint number, and printed to the screen.</p>
+
+<p>To find out what exactly is evaled, you can replace the code inside the
+<code>map</code> to read something like this:</p>
+
+<pre>[% syntax escape %]
+<(*+*)*(*+* +*/*) **** ** * * *+*+*/* **** ** * *
+... 
+>.map: { say("(* ** *+*+*-*/*+$_)(<* * *>)") };
+[%endsyntax%]</pre>
+
+<p>The output begins with</p>
+
+<pre>[% syntax escape %]
+(* ** *+*+*-*/*+(*+*)*(*+* +*/*) )(<* * *>)
+(* ** *+*+*-*/*+* ** * * *+*+*/* )(<* * *>)
+[%endsyntax%]</pre>
+
+<p>You might ask yourself <em>"how on earth is this valid Perl code?"</em></p>
+
+<p>The answer is quite simple: a single star can be either a term or an
+operator in Perl 6. As an infix operator it is simply multiplication. As a
+term it does magic: It constructs a closure which takes one positional
+argument, and puts that everywhere where a * appears as a term within that
+expression.</p>
+
+<p>The reason is to make things like <code>@array[*-1]</code> work: it creates
+a closure <code>{ $_ - 1 }</code> which is passed on to the array, which in
+turn passes the number of items in that array to closure, making
+<code>@array[*-1]</code> return the last array item.</p>
+
+<p>So by the same token <code>* ** *+*+*-*/*+(*+*)*(*+* +*/*)</code> is
+internally transformed to </p>
+
+<pre>
+{ $_ ** $_ + $_ + $_ - $_ / $_ + ($_ + $_ ) * ($_ + $_ + $_/ $_) }
+</pre>
+
+<p>The <code>(&lt;* * *&gt;)</code> behind it invokes that closure with a list
+consisting of three items. In numerical context that becomes just the number
+3, so the above translates to <code>3**3 + 3 + 3 - 3/3 + (3+3) * (3 + 3 +
+3/3)</code>, evaluated 74 - the Unicode codepoint (and at the same time ASCII
+code) for the letter capital <code>J</code>.</p>
+
+<p>It works similarly for all other letters; mystery lifted.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell tw=78
+%]
