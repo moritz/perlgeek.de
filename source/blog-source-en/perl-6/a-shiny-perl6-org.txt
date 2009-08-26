@@ -1,0 +1,47 @@
+A shiny perl6.org site
+<!-- 1251320644 -->
+
+<p>I'm very pleased to announce that <a href="http://perl6.org/">perl6.org</a>
+now got a shiny new face - the one that <a
+href="http://sushee.schreibsturm.org/">Su-Shee</a> developed for
+perl6-projects.org. I'd also like to thank <a
+href="http://www.dwright.org/">Daniel Wright</a>, owner of the perl6.org
+domain, for making that domain available to us.</p>
+
+<p>The story behind it is as simple as amazing: I noticed that we had no good,
+up to date overview of what Perl 6 projects existed out there. So I bought the
+domain perl6-projects.org, put up a few lists of different projects - and gave
+it a rather bad design. Because I may be decent with programming, blogging and
+explaining things, but as a designer I simply suck.</p>
+
+
+<p>But what I did was sticking the source code into a public repository (the
+pugs repository, to be exact) to which it is very easy to gain access, and
+made the server pull from that repository every 15 minutes. So basically
+everybody who wanted could update the site.</p>
+
+<p>And lo and behold, four month later Su-Shee contributed a nice design,
+which we modified in small things based on feedback from #perl6.</p>
+
+<p>Slowly it dawned to me (and others probably) that this site had the
+potential to be much larger in scope than a simple project list - it could
+evolve into the central web site for Perl 6 developers and users. With the
+small caveat that <code>perl6.org</code> would have been a much nicer domain
+name - but it was taken already.</p>
+
+<p>But the whois entry gave us hope - it belongs to Daniel Wright, and a quick
+google search turned up that he's a perl monger, organizer and attendee of YAPC
+conferences. So we decided that pmichaud should contact him, being more of an
+authority in Perl 6 land than me.</p>
+
+<p>After a few exchanged mails we found out that Daniel's and our goals matched,
+so about one day later he changed the DNS to the same IP that
+perl6-projects.org uses, I added another alias to the virtual host, and we
+were done.</p>
+
+<p>It's a prime example both for attracting contributors, and for what you can
+reach by simply talking to people. Thanks to everyone involved.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: ft=html spell tw=78
+%]
