@@ -1,5 +1,5 @@
 Dissecting the "Starry obfu"
-<!-- 271251324000 -->
+<!-- 1251654289 -->
 
 <p>I've been asked a few times how the <a
 href="http://perlgeek.de/blog-en/perl-6/starry-obfu.html">starry obfu</a>
