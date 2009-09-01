@@ -1,0 +1,50 @@
+Perl 6 Tidings from August 2009
+<!-- 1251844362 -->
+
+<p>It's been quite some time since my <a
+href="http://perlgeek.de/blog-en/perl-6/tidings-2009-06.html">last tidings
+post</a>, so I don't think I can cover it all in great detail. I'll try
+anyway.</p>
+
+<h2>Specification</h2>
+
+<ul>
+    <li>File test operations now look like <code>$str.IO ~~ :e</code>
+(r27503)</li>
+    <li>Some cool regex features were documented that previously only existed
+    unofficially (r27692, r27695)</li>
+    <li>The want() function was removed as unimplementable (r27755).</li>
+    <li>Subroutines without signatures don't always default to
+    <code>(*@_, *%_)</code>, only when these variables are actually used
+    (r27801).</li>
+    <li>Nil coercions (r27882)</li>
+    <li>Embedded comments now look like <code>#`[...]</code> (r27959)</li>
+    <li><code>infix:&lt;/&gt;(Int, Int)</code> now produces a Rat object, that
+    is a fraction.</li>
+    <li>Changes to context, variables (r28151); <code>::=</code> now does
+    read-only binding (instead of compile time binding as before)
+    (r28150)</li>
+</ul>
+
+<h2>Rakudo</h2>
+
+<p>Rakudo had two releases by people other than Patrick Michaud, namely by me
+and Kyle Hasselbacher.</p>
+
+<p>Among the highlights are much improved introspection capabilities, user
+defined traits, user defined and overloadable operators.</p>
+
+<p>Jonathan also worked on the prototype of <a
+href="http://github.com/jnthn/blizkost/tree/master">perl 5 integration into
+parrot</a>.</p>
+
+
+<h2>MP6</h2>
+
+<p>Flavio Glock <a
+href="http://www.nntp.perl.org/group/perl.perl6.announce/2009/08/msg603.html">updated
+mp6 and bootstrapped in on SBCL</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: ft=html spell
+%]
