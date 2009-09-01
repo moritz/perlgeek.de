@@ -10,20 +10,20 @@ anyway.</p>
 
 <ul>
     <li>File test operations now look like <code>$str.IO ~~ :e</code>
-(r27503)</li>
+(<a href="http://perlcabal.org/svn/pugs/revision/?rev=27503">r27503</a>)</li>
     <li>Some cool regex features were documented that previously only existed
-    unofficially (r27692, r27695)</li>
-    <li>The want() function was removed as unimplementable (r27755).</li>
+    unofficially (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27692">r27692</a>, <a href="http://perlcabal.org/svn/pugs/revision/?rev=27695">r27695</a>)</li>
+    <li>The want() function was removed as unimplementable (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27755">r27755</a>).</li>
     <li>Subroutines without signatures don't always default to
     <code>(*@_, *%_)</code>, only when these variables are actually used
-    (r27801).</li>
-    <li>Nil coercions (r27882)</li>
-    <li>Embedded comments now look like <code>#`[...]</code> (r27959)</li>
+    (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27801">r27801</a>).</li>
+    <li>Nil coercions (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27882">r27882</a>)</li>
+    <li>Embedded comments now look like <code>#`[...]</code> (<a href="http://perlcabal.org/svn/pugs/revision/?rev=27959">r27959</a>)</li>
     <li><code>infix:&lt;/&gt;(Int, Int)</code> now produces a Rat object, that
     is a fraction.</li>
-    <li>Changes to context, variables (r28151); <code>::=</code> now does
+    <li>Changes to context, variables (<a href="http://perlcabal.org/svn/pugs/revision/?rev=28151">r28151</a>); <code>::=</code> now does
     read-only binding (instead of compile time binding as before)
-    (r28150)</li>
+    (<a href="http://perlcabal.org/svn/pugs/revision/?rev=28150">r28150</a>)</li>
 </ul>
 
 <h2>Rakudo</h2>
