@@ -45,6 +45,12 @@ parrot</a>.</p>
 href="http://www.nntp.perl.org/group/perl.perl6.announce/2009/08/msg603.html">updated
 mp6 and bootstrapped in on SBCL</a>.</p>
 
+<h2>perl6.org</h2>
+
+<p>We now have a <a
+href="http://perlgeek.de/blog-en/perl-6/a-shiny-perl6-org.html">shiny
+perl6.org site</a>.</p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: ft=html spell
 %]
