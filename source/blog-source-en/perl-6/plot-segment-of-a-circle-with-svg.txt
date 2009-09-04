@@ -1,0 +1,88 @@
+How to Plot a Segment of a Circle with SVG
+<!-- 1252274400 -->
+
+<img src="http://perlgeek.de/images/arc.png" width="200" height="200"
+alt="circle with differently colored segments" />
+
+<p>(<a href="http://perlgeek.de/images/arc.svg">SVG version</a>)</p>
+
+<p>I wanted to generate some pie charts with SVG (for <a
+href="http://perlgeek.de/blog-en/perl-6/svg-adventure.html">SVG::Plot</a>),
+and a search on the Internet quickly showed that I need <a
+href="http://www.w3.org/TR/SVG/paths.html">paths</a> for that. But the exact
+usage remained unclear to me until I read the specs and did some
+experimenting.</p>
+
+<p>The way to go is:</p>
+
+<ol>
+    <li>Move to (M) the center of the circle</li>
+    <li>Line to (l) the starting point of the arc</li>
+    <li>Arc to  (A) the end point of the arc</li>
+    <li>Close the path (z)</li>
+<ol>
+
+<p>The start and end point of the arc can be calculated as</p>
+
+<pre>
+x = center_x + radius * cos(angle)
+y = center_y + radius * sin(angle)
+</pre>
+
+<p>The parameters to the <code>A</code> command in the path are <em>rx, ry,
+axis-rotation large-arc-flag sweep-flag x y</em>.</p>
+
+<p>For our purposes
+<em>rx</em> and <em>ry</em> need to be just the radius of the circle,
+<em>large-arc-flag</em> is 1 if the difference between start angle and end
+angle is larger than <em>pi</em> (or 180°).
+<em>sweep-flag</em> is 1 if we assume that the start angle is smaller than the
+end angle (and thus, since the SVG coordinate system has the positive y axis
+downwards, plot clockwise).
+<em>x</em> and <em>y</em> are the
+coordinates of the end point.</p>
+
+<p>The code I used to generate the SVG above is (in <a
+href="http://perl6.org/">Perl 6</a>, using <a
+href="http://github.com/masak/svg/tree/master">Carl Mäsak's SVG module</a>):</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+BEGIN { @*INC.push: 'src/svg/lib' }
+use SVG;
+
+sub arc($cx = 100, $cy = 100, $r = 50, :$start, :end($phi), :$color = 'red') {
+    my @commands = 'M', $cx, $cy,
+            'l', $r * cos($start), $r * sin($start),
+            'A', $r, $r, 0,  + ($phi - $start > pi), 1,
+                    $cx + $r * cos($phi), $cy + $r * sin($phi), "z";
+
+    my $c = join ' ', @commands;
+    return 'g' => [
+        :stroke<none>,
+        :fill($color),
+        path => [ :d($c) ],
+    ];
+}
+
+
+say SVG.serialize(
+    'svg' => [
+        :width(200), :height(200),
+        'xmlns' => 'http://www.w3.org/2000/svg',
+        'xmlns:svg' => 'http://www.w3.org/2000/svg',
+        'xmlns:xlink' => 'http://www.w3.org/1999/xlink',
+        arc(:color<blue>, :start(0),    :end(pi/3)),
+        arc(:color<red>,  :start(pi/3), :end(3 * pi / 2)),
+        arc(:color<yellow>, :start(3 * pi / 2), :end(0)),
+    ]);
+[% endsyntax %]</pre>
+
+<p>The only syntactic feature here worth explaining is that
+<code>+ ( $thing &gt; pi )</code> returns 1 if <code>$thing</code> is larger
+than <em>pi</em> and 0 otherwise. Everything else should be straight
+forward.</p>
+
+
+[% option no-footer %][% option no-header %]
+[% comment vim: set ft=html spell tw=78: %]
