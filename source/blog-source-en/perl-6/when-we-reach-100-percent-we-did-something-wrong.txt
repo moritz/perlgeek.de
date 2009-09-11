@@ -1,0 +1,113 @@
+When we reach 100% we did something wrong
+<!-- 1252864800 -->
+<p>&lt;meta&gt; This is not a marketing blurb as I originally intended to
+write. It is quite a lengthy and a bit philosophical brain dump. If my
+regular readers skip it that's fine; I promise that my next post will be
+shorter, more exciting and easier to digest.&lt;/meta&gt;</p>
+
+<p>A few times per week we (the
+<a href="http://www.rakudo.org7">Rakudo</a> development team) update our <a
+href="http://rakudo.de/">spectest graph</a> which shows how many tests Rakudo
+passed in the past and now, and how many tests there are in the official test
+suite.</p>
+
+<p>This is a very useful information, but still its use is limited. Among
+other reactions we also received two kinds of responses that I want to talk
+about. One is <em>"And when Rakudo passes all tests, Perl 6 is ready,
+right?"</em>, the other is <em>"I don't care how many tests you pass until
+it's 100%</em> (the latter seen in a reddit or Y-combinator comment,
+for example).</p>
+
+<h2>Implications</h2>
+
+<p>The first reaction points to a larger problem - how can we know if our
+tests actually cover the whole specification? The answer is we can't. Ever. We
+can identify parts of the spec that are very well covered by tests (for
+example multi dispatch), and parts that are covered badly or not at all (IO,
+and way too many other areas). But there is a huge number of ways the various
+parts of the specification interact (growing exponential in the number of
+specified facts), which makes it impossible to reach complete covering.</p>
+
+<p>Still we can read each paragraph in the specs and see if we have an
+appropriate test, achieving some kind of shallow coverage.</p>
+
+<p>But worse still there are many things implicit but not explicit in the spec.
+I write "worse" because for the test suite writer it's a pain, but on the
+other hand if everything was stated explicitly, we'd waste too much time on
+trivialities.</p>
+
+<p>One example is a bug which Rakudo had in the beginning: recursion would
+screw up some lexical variables rather badly. When Patrick and Jonathan looked
+into fixing it, I wanted to contribute my part and provided some tests. And
+then I didn't know where to put them. The specs talk about subroutines, and
+about lexical variables. But it does not talk about the interaction between
+recursion and lexicals - because it's obvious that each instance of a
+function gets its own lexical pad on recursion. Perl 5 does this just fine, we
+carry that semantics over to Perl 6. Perfectly sane, but it's an implication
+nonetheless.</p>
+
+<p>And, after much talking, I finally come to my first main point: We can't
+measure test coverage of such implications. We have no automatic way to turn
+implications into explicit statements either. We can't know if spec and the
+implications have a decent test coverage.</p>
+
+<h2>We won't ever reach 100% passing tests</h2>
+
+<p>Most people consider Perl 5 "done". Not in the sense that there's nothing
+left to do, but that there are stable releases, wide acceptance, on generally
+technical and social maturity. And yet Perl 5 does not pass all of its
+test.</p>
+
+<p>It might come as a shock to you if you haven't looked at Perl 5's source
+tree, and never compiled it from source and run the tests (and actually looked
+at the results), but it's true.</p>
+
+<pre>
+$ ~/tmp/perl&gt; ack -w 'skip(?:_all)?' t|wc -l
+381
+$ ~/tmp/perl&gt; ack -w 'todo' t|wc -l
+48
+</pre>
+
+<p>There are many valid reasons why some tests should not be run - for example
+the tested feature might not be available on the current platform, or maybe a
+previous failure would make their outcome inconclusive.</p>
+
+<p>There are also valid reasons why some tests are marked as TODO (which means
+the are run, but don't pass) - for example to test a bug that is not yet
+fixed, or for behavior that is subject to change but has not yet been
+adapted.</p>
+
+<p>So even with huge efforts our chances of ever unconditionally passing each and
+every test in the Perl 6 test suite are practically 0. When a run over the
+whole test suite shows that all tests passed, the first thing I'll do is to
+check our test module and test harness for errors - maybe some bug prevented
+them from successfully identifying errors.</p>
+
+<p>If you compare how the tests for Perl 5 and Perl 6 were originally written,
+you'll see that in the case of Perl 5 a huge amount was written against a
+working implementation, while many Perl 6 tests were whipped up by reading the
+spec and transforming it into code, or even as feature requests for pugs. So
+it won't surprise you that in the Perl 6 test suite there is a larger amount
+of contradictory tests, written either against different versions of the
+specification, or by various people who understood the spec differently. We'll
+work hard to weed out such contradictions, but it would be an illusion to
+assume that we will fully succeed.</p>
+
+<h2>Are you moody?</h2>
+
+<p>When you read the previous paragraphs you might think I'm moody, and quite
+negative about Perl 6. I'm not. I just faced the reality that each software
+project of at least modest complexity faces, and brain-dumped it here.</p>
+
+<p>In fact I'm quite optimistic. Many areas of Perl 6 improve at an impressive
+rate these days: the specification, Rakudo, smop+mildew, the websites,
+available libraries and applications, and last but not least: the community.</p>
+
+<p>Having written quite some Perl 6 code (see my SVG related posts on this
+blog) over the previous weekend I think that developing Perl 6 has never been
+more fun - at least not to me ;-)</p>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
