@@ -1,0 +1,82 @@
+Rats and other pets
+<!-- 1253516400 -->
+<p>If you follow <a href="http://www.perlmonks.org/">perlmonks</a> (or just
+about any other programming forum) you'll notice recurring questions related
+to floating point arithmetics not being accurate. A typical example would
+be</p>
+
+<pre>[% syntax perl %]
+my $a =  1 / 10;
+my $b = 1;
+for ( 1..10 ) {
+    $b -= $a;
+}
+if ( $b == 0 ) {
+    print "yes\n";
+} else {
+    print "no\n";
+}
+
+printf "%.20f\n", $b;
+[% endsyntax %]</pre>
+
+<p>When you run this with perl5 the output is</p>
+
+<pre>
+no
+0.00000000000000013878
+</pre>
+
+<p>And the reason is that <code>1/10</code> is an infinite binary fraction,
+and perl uses floating points internally with only a finite number of bits for
+the mantissa. So it subtracts ten times not exactly one tenth, but a number
+close to that, and in the end the result is not exactly zero, but of the order
+of magnitude of the machine precision.</p>
+
+<p>However when you run the very same program with Perl 6, you get</p>
+
+<pre>
+yes
+0.00000000000000000000
+</pre>
+
+<p>Why? Introspection helps:</p>
+
+<pre>
+$ perl6 -e 'say (1/10).WHAT'
+Rat()
+$ perl6 -e 'say (1/10).perl'
+1/10
+</pre>
+
+<p>So <code>1/10</code> produces not a floating point number, but a
+<code>Rat</code> object. Rat is short for Rational, and it's a fraction that
+stores the numerator and denominator as an integer each, allowing exact
+arithmetics without floating point errors.</p>
+
+<p>Here is a real world example where this makes a difference:</p>
+
+<img src="http://perlgeek.de/images/blog/labels-combined.png" width="590"
+height="135" alt="Two plots, one with rationals for the axis, one with floats"
+/>
+
+<p>These two plots are both made with <a
+href="http://www.github.com/moritz/svg-plot/">SVG::Plot</a>; the right hand
+side uses floats, the left hand side uses Rats. With floats the zero axis
+label is not exactly zero, but a small number close to zero. Instead of making
+a special case for the zero label, or introducing complicated rounding rules,
+I switcht to Rats - which just implied changing a <code>5.0</code> (Num) to
+<code>5</code> (Int).</p>
+
+<p>(Back in the days when I used pugs for Perl 6 programming I found the
+extensive use of rationals quite annoying, because when I wanted to calculate
+<code>1/7</code> it would answer me with <code>1/7</code> - thank you, I knew
+that already.
+The current specification says that rationals should delegate string
+representation to Num (aka floating point numbers), so <code>say 1/7</code>
+produces <code>0.142857142857143</code>. This is very handy, but means that
+conversion to Str and back to a number loses precision. Works for me.)</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
+
