@@ -23,7 +23,7 @@ the second argument to <code>open</code> also works in <code>@ARGV</code>:</p>
 
 <pre>[% syntax perl %]
 local @ARGV = ('fortune |');
-priint while <>;
+print while <>;
 [% endsyntax %]</pre>
 
 <p>Instead of trying to open a file called <code>fortune |</code>, it actually
