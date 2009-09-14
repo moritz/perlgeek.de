@@ -1,0 +1,47 @@
+The Happiness of Design Convergence
+<!-- 1253138400 -->
+
+<p>Recently I've been having fun <a
+href="http://perlgeek/blog-en/perl-6/svg-adventure.html">writing a plotting
+module for Perl 6</a>. It's been really fun because adding new shiny things
+(titles, new chart types, whatever) has been relatively easy, and there was
+fast visual feedback.</p>
+
+<p>However it's really just a toy module, lacking proper design. When I added
+legend boxes to one of the chart types (the lines plots), I noticed how much
+hassle it was, and that I needed code changes in many places to incorporate
+that feature into other chart types too - that's what you call "design
+smell".</p>
+
+<p>So I thought about how to improve it, and the answer was quite obvious.
+Currently each thing that I plot (the data representation, the axis, ticks,
+labels, title, legend box) know where to place itself, so if I need more space
+for the legend box every piece has to adapt. Which is ugly.</p>
+
+<p>Instead, I should just make each of them plot itself on to coordinates
+<code>(0, 0)</code>, record their width and height, and later move (and
+possibly scale) them to fit onto the canvas (Note that I only planned that so
+far, I implemented the boxing only for a single component so far).</p>
+
+<p>Flashback to the past: Shortly after announcing my very early SVG::Plot
+module <a href="http://use.perl.org/~masak/journal">masak</a> pointed me to <a
+href="http://scruffy.rubyforge.org/">Scruffy</a>, a small ruby based SVG
+plotting library that produces beautiful graphs. I looked into the source and
+found that it was spread into about 50 classes, all of which were short and
+sweet. I didn't really understand the code, mostly due to lack of Ruby reading
+skills, and lack of effort.</p>
+
+<p>So I and others decided to port scruffy to Perl 6, the Perl 6 version will
+be called <a href="http://github.com/moritz/tufte">Tufte</a>. And after
+re-reading the Scruffy source code I noticed that it was doing just what I
+planned for SVG::Plot: it encapsulates each graphical element into components
+(called <code>Scruffy::Components::*</code>). On top of that it allows
+multiple plots per canvas (the plots are called
+<code>Scruffy::Layers::*</code>), and allows arranging of them too.</p>
+
+<p>So I was happy to come up with the same idea as the Scruffy hackers,
+independently, reassuring me that I actually port a nicely designed library
+;-)</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
