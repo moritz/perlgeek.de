@@ -1,5 +1,5 @@
 Rats and other pets
-<!-- 1253516400 -->
+<!-- 1253570400 -->
 <p>If you follow <a href="http://www.perlmonks.org/">perlmonks</a> (or just
 about any other programming forum) you'll notice recurring questions related
 to floating point arithmetics not being accurate. A typical example would
