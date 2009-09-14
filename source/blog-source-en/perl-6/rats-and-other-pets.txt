@@ -77,6 +77,10 @@ representation to Num (aka floating point numbers), so <code>say 1/7</code>
 produces <code>0.142857142857143</code>. This is very handy, but means that
 conversion to Str and back to a number loses precision. Works for me.)</p>
 
+<p>(frettled gets <a
+href="http://irclog.perlgeek.de/perl6/2009-09-01#i_1455575">credit for
+suggesting the title of this blog post</a>).</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell tw=78 : %]
 
