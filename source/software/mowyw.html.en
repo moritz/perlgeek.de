@@ -23,7 +23,7 @@
 </p>
 
 <p>
-    It uses a <a href="#syntax-example">simple syntax</a>  
+    It uses a <a href="#syntax-example">simple syntax</a>
     and needs very little time to get used to.
 </p>
 
@@ -100,8 +100,8 @@
 <h2 id="doc">Documentation</h2>
 <p>
     You can read the <a href="https://faui2k3.org/svn/moritz/mowyw/README">README 
-    file</a> and the <a href="/software/mowyw.1">mowyw manual page</a> online, 
-    and you can download the tar ball and take a look at the distributed 
+    file</a> and the <a href="/software/mowyw.1">mowyw manual page</a> online,
+    and you can download the tar ball and take a look at the distributed
     examples.
 </p>
 
@@ -118,6 +118,11 @@
 <p>
     You can get the <a href="http://moritz.faui2k3.org/files/mowyw-current.tar.gz">latest
     version</a> here (recommended).
+</p>
+
+<p>
+    The latest (non-release) version of the source code <a
+    href="http://github.com/moritz/mowyw">is available from github</a>.
 </p>
 
 <p>Older versions are/will be available as well:</p>
