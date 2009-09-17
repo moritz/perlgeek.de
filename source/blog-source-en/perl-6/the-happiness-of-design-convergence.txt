@@ -2,7 +2,7 @@ The Happiness of Design Convergence
 <!-- 1253138400 -->
 
 <p>Recently I've been having fun <a
-href="http://perlgeek/blog-en/perl-6/svg-adventure.html">writing a plotting
+href="http://perlgeek.de/blog-en/perl-6/svg-adventure.html">writing a plotting
 module for Perl 6</a>. It's been really fun because adding new shiny things
 (titles, new chart types, whatever) has been relatively easy, and there was
 fast visual feedback.</p>
