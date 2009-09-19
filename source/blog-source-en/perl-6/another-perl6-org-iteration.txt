@@ -8,7 +8,7 @@ those who didn't like it :-). A bit later somebody contributed a not quite so
 bright color scheme, which improved overall reception again.</p>
 
 <p>Today I launched another small re-design. <a
-href="http://perl.org/">perl6.org</a> now has sub pages, because all the
+href="http://perl6.org/">perl6.org</a> now has sub pages, because all the
 information simply wouldn't fit onto a single page. For example the <a
 href="http://perl6.org/fun/">"fun" subpage</a> is completely new.</p>
 
@@ -17,6 +17,8 @@ perl6.org, but couldn't because of lack of available space. Please speak up
 again (or simply <a href="http://perl6.org/about/">add them yourself</a>).</p>
 
 <p>Over and out, Moritz.</p>
+
+<p>(Update: fixed link)</p>
 
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell tw=78 : %]
