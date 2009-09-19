@@ -1,0 +1,22 @@
+Another perl6.org iteration
+<!-- 1253371842 -->
+
+<p>About a month ago I <a
+href="http://perlgeek.de/blog-en/perl-6/a-shiny-perl6-org.html">announce a new
+perl6.org layout</a>, which has been well-received by everybody (except by
+those who didn't like it :-). A bit later somebody contributed a not quite so
+bright color scheme, which improved overall reception again.</p>
+
+<p>Today I launched another small re-design. <a
+href="http://perl.org/">perl6.org</a> now has sub pages, because all the
+information simply wouldn't fit onto a single page. For example the <a
+href="http://perl6.org/fun/">"fun" subpage</a> is completely new.</p>
+
+<p>I'm afraid I don't remember all those links that people wanted to add to
+perl6.org, but couldn't because of lack of available space. Please speak up
+again (or simply <a href="http://perl6.org/about/">add them yourself</a>).</p>
+
+<p>Over and out, Moritz.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
