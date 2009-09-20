@@ -11,6 +11,7 @@ read in the chronological order.</p>
 
 <h2>Table of Contents</h2>
 <ul>
+    <li><a href="#post_00">Introduction</a></li>
     <li><a href="#post_01">Strings, Arrays, Hashes;</a></li>
     <li><a href="#post_02">Types</a></li>
     <li><a href="#post_03">Basic Control Structures</a></li>
@@ -168,13 +169,14 @@ name="SYNOPSIS"
     my %hash = foo =&#62; 1, bar =&#62; 2, baz =&#62; 3;
     say %hash{&#39;bar&#39;};                       # 2
     say %hash&#60;bar&#62;;                         # same with auto-quoting
-    # this is an error: %hash{bar}</pre>
+    # this is an error: %hash{bar}
+    # (it tries to call the subroutine bar(), which is not defined</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. The after the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
+<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
@@ -225,7 +227,7 @@ name="Arrays"
 name="Hashes"
 >Hashes</a></h4>
 
-<p>While Perl 5 hashes are even sized lists, Perl 6 hashes are lists of pairs. Pairs are also used for other things, like named arguments to subs, but more on that later.</p>
+<p>While Perl 5 hashes are even sized lists when viewed in list context, Perl 6 hashes are lists of pairs in that context. Pairs are also used for other things, like named arguments for subroutines, but more on that later.</p>
 
 <p>Just like with arrays the sigil stays invariant when you index it. And hashes also have methods that you can call on them.</p>
 
@@ -235,7 +237,7 @@ name="Hashes"
         USA     =&#62; &#39;Coke&#39;;
 
     say &#34;The people in France love &#34;,  %drinks{&#39;France&#39;};
-    %drinks.delete(&#39;France&#39;);</pre>
+    my @countries = %drinks.keys.sort;</pre>
 
 <p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not auto quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The auto quoting isn&#39;t gone, it just has a different syntax:</p>
 
@@ -280,7 +282,7 @@ name="SYNOPSIS"
 
 <pre>    my Int $x = 3;
     $x = &#34;foo&#34;;         # error
-    say $x.WHAT;        # &#39;Int&#39;
+    say $x.WHAT;        # &#39;Int()&#39;
  
     # check for a type:
     if $x ~~ Int {
@@ -309,7 +311,7 @@ name="DESCRIPTION"
 
 <p>It is an error to try to put a value into a variable that is of a &#34;wrong&#34; type (ie neither the specified type nor a subtype).</p>
 
-<p>A type declaration on an Array is used for its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
+<p>A type declaration on an Array applies to its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Introspection"
@@ -635,6 +637,9 @@ name="MOTIVATION"
 
 <p>Nobody will doubt the usefulness of explicit sub signatures: less typing, less duplicate argument checks, and more self-documenting code. The value of named parameters has also been discussed already.</p>
 
+<p>It also allows useful introspection. For example when you pass a block or a subroutine to <code>Array.sort</code>, and that piece of code expects exactly one argument, a Schwartzian Transform (see <a href="http://en.wikipedia.org/wiki/Schwartzian_transform" class="podlinkurl"
+>http://en.wikipedia.org/wiki/Schwartzian_transform</a>) is automatically done for you - such a functionality would be impossible in Perl 5, because the lack of explicit signatures means that <code>sort</code> can never find out how many arguments the code block expects.</p>
+
 <p>Multi subs are very useful because they allow builtins to be overridden for new types. Let&#39;s assume you want a version of Perl 6 which is localized to handle Turkish strings correctly, which have unusual rules for case conversions.</p>
 
 <p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>
@@ -730,14 +735,14 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;proto object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
-<p>Private methods can be declared with <code>my method</code>, and called with <code>self!method_name</code>.</p>
+<p>Private methods can be declared with <code>method !methodname</code>, and called with <code>self!method_name</code>.</p>
 
 <pre>    class Foo {
-        my method private($frob) {
+        method !private($frob) {
             return &#34;Frobbed $frob&#34;;
         }
 
@@ -823,7 +828,8 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
->http://perlcabal.org/syn/S12.html</a></p>
+>http://perlcabal.org/syn/S12.html</a> <a href="http://perlcabal.org/syn/S14.html" class="podlinkurl"
+>http://perlcabal.org/syn/S14.html</a></p>
 
 
 <h2 id="post_06">Contexts</h2>
@@ -937,7 +943,7 @@ name="SYNOPSIS"
             \d+
         }
         token path {
-            &#60;[a..zA..Z0..9-_.!~*&#39;():@&#38;=+$,/]&#62;+
+            &#60;[ a..z A..Z 0..9 -_.!~*&#39;():@&#38;=+$,/ ]&#62;+
         }
     }</pre>
 
@@ -963,6 +969,8 @@ name="DESCRIPTION"
 
 <dd>
 <p>In perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
+
+<p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
 
 <dt><a name="Named_regexes_and_grammars"
 >Named regexes and grammars</a></dt>

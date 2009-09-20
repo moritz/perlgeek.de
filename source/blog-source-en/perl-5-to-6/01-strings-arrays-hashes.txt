@@ -28,13 +28,14 @@ name="SYNOPSIS"
     my %hash = foo =&#62; 1, bar =&#62; 2, baz =&#62; 3;
     say %hash{&#39;bar&#39;};                       # 2
     say %hash&#60;bar&#62;;                         # same with auto-quoting
-    # this is an error: %hash{bar}</pre>
+    # this is an error: %hash{bar}
+    # (it tries to call the subroutine bar(), which is not defined</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. The after the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
+<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
@@ -85,7 +86,7 @@ name="Arrays"
 name="Hashes"
 >Hashes</a></h4>
 
-<p>While Perl 5 hashes are even sized lists, Perl 6 hashes are lists of pairs. Pairs are also used for other things, like named arguments to subs, but more on that later.</p>
+<p>While Perl 5 hashes are even sized lists when viewed in list context, Perl 6 hashes are lists of pairs in that context. Pairs are also used for other things, like named arguments for subroutines, but more on that later.</p>
 
 <p>Just like with arrays the sigil stays invariant when you index it. And hashes also have methods that you can call on them.</p>
 
@@ -95,7 +96,7 @@ name="Hashes"
         USA     =&#62; &#39;Coke&#39;;
 
     say &#34;The people in France love &#34;,  %drinks{&#39;France&#39;};
-    %drinks.delete(&#39;France&#39;);</pre>
+    my @countries = %drinks.keys.sort;</pre>
 
 <p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not auto quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The auto quoting isn&#39;t gone, it just has a different syntax:</p>
 

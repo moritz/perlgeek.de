@@ -20,11 +20,12 @@
     say %hash{'bar'};                       # 2
     say %hash<bar>;                         # same with auto-quoting
     # this is an error: %hash{bar}
+    # (it tries to call the subroutine bar(), which is not defined
 
 =head1 DESCRIPTION
 
 Perl 6 is just like Perl 5 - only better. Statements are terminated by
-semicolons. The after the last statement in a block and after a closing curly
+semicolons. After the last statement in a block and after a closing curly
 brace at the end of a line the semicolon is optional.
 
 Variables still begin with a sigil (like C<$>, C<@>, C<%>), and many Perl 5
@@ -37,7 +38,7 @@ or with single quotes. Backslash escapes work just like in Perl 5.
 
 However the interpolation rules have changed a bit. The following things
 interpolate
-    
+
     my $scalar = 6;
     my @array = 1, 2, 3;
     say "Perl $scalar";         # 'Perl 6'
@@ -76,9 +77,10 @@ There is a short form for the old C<qw(..)> quoting construct:
 
 =head2 Hashes
 
-While Perl 5 hashes are even sized lists, Perl 6 hashes are lists of pairs. 
-Pairs are also used for other things, like named arguments to subs, but more
-on that later.
+While Perl 5 hashes are even sized lists when viewed in list context,
+Perl 6 hashes are lists of pairs in that context.
+Pairs are also used for other things, like named arguments for subroutines,
+but more on that later.
 
 Just like with arrays the sigil stays invariant when you index it. And hashes
 also have methods that you can call on them.
@@ -89,13 +91,13 @@ also have methods that you can call on them.
         USA     => 'Coke';
 
     say "The people in France love ",  %drinks{'France'};
-    %drinks.delete('France');
+    my @countries = %drinks.keys.sort;
 
 Note that when you access hash elements with C<%hash{...}>, the key is not
 auto quoted like in Perl 5. So C<%hash{foo}> doesn't access index C<"foo">,
 but calls the function C<foo()>. The auto quoting isn't gone, it just has a
 different syntax:
-    
+
     say %drinks<Bavaria>;
 
 =head2 Final Notes
@@ -118,8 +120,8 @@ backslash sequences at the moment; arrays and hashes are never interpolated
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S02.html>, 
-L<http://perlcabal.org/syn/S29.html> 
+L<http://perlcabal.org/syn/S02.html>,
+L<http://perlcabal.org/syn/S29.html>
 
 =for time 1221949200
 =for editor vim: spell

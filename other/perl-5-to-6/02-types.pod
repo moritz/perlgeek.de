@@ -6,7 +6,7 @@
 
     my Int $x = 3;
     $x = "foo";         # error
-    say $x.WHAT;        # 'Int'
+    say $x.WHAT;        # 'Int()'
  
     # check for a type:
     if $x ~~ Int {
@@ -37,7 +37,7 @@ type name to the declaration.
 It is an error to try to put a value into a variable that is of a "wrong" type
 (ie neither the specified type nor a subtype).
 
-A type declaration on an Array is used for its contents, so C<my Str @s> is
+A type declaration on an Array applies to its contents, so C<my Str @s> is
 an array that can only contain strings.
 
 =head2 Introspection

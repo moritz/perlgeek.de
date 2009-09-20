@@ -73,18 +73,18 @@ takes arguments.
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x
 
-(The C<my SomeClass $x .= new> is actually a shorthand for 
+(The C<my SomeClass $x .= new> is actually a shorthand for
 C<my SomeClass $x .= SomeClass.new>. It works because the type declaration
-fills the variable with a "proto object" of C<SomeClass>, which is an object
+fills the variable with a "typo object" of C<SomeClass>, which is an object
 representing the class.)
 
 Methods can also take additional arguments just like subs.
 
-Private methods can be declared with C<my method>, and called with
+Private methods can be declared with C<method !methodname>, and called with
 C<self!method_name>.
-    
+
     class Foo {
-        my method private($frob) {
+        method !private($frob) {
             return "Frobbed $frob";
         }
 
@@ -98,7 +98,7 @@ Private methods can't be called from outside the class.
 =head2 Attributes
 
 Attributes are declared with the C<has> key word, and have a "twigil", that is
-a special character after the sigil. For private attributes that's a bang C<!>, 
+a special character after the sigil. For private attributes that's a bang C<!>,
 for public attributes it's the dot C<.>. Public attributes are just private
 attributes with a public accessor.
 
@@ -135,7 +135,7 @@ the type of a child class is conforming to that of a parent class:
         class Bar { }
         class Foo is Bar { }
         my Bar $x = Foo.new();
-        
+
 In this example the type of C<$x> is C<Bar>, and it is allowed to assign an
 object of type C<Foo> to it, because "every C<Foo> is a C<Bar>".
 
@@ -172,6 +172,7 @@ conformance, roles are the primary means for code reuse in Perl 6.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S12.html>
+L<http://perlcabal.org/syn/S14.html>
 
 =for time 1222208400
 =for editor vim: spell

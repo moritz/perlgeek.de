@@ -75,14 +75,14 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;proto object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
-<p>Private methods can be declared with <code>my method</code>, and called with <code>self!method_name</code>.</p>
+<p>Private methods can be declared with <code>method !methodname</code>, and called with <code>self!method_name</code>.</p>
 
 <pre>    class Foo {
-        my method private($frob) {
+        method !private($frob) {
             return &#34;Frobbed $frob&#34;;
         }
 
@@ -168,6 +168,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
->http://perlcabal.org/syn/S12.html</a></p>
+>http://perlcabal.org/syn/S12.html</a> <a href="http://perlcabal.org/syn/S14.html" class="podlinkurl"
+>http://perlcabal.org/syn/S14.html</a></p>
 
 [% option no-header %] [% option no-footer %]

@@ -60,7 +60,7 @@ for my $source (glob 'perl-5-to-6/*.pod'){
 
 print $out qq[<h2>Table of Contents</h2>\n];
 print $out qq[<ul>\n];
-for (1..$#titles) {
+for (0..$#titles) {
     my $n = sprintf '%02d', $_;
     print $out qq[    <li><a href="#post_$n">],
                escapeHTML($titles[$_]), "</a></li>\n";

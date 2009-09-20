@@ -177,6 +177,9 @@ name="MOTIVATION"
 
 <p>Nobody will doubt the usefulness of explicit sub signatures: less typing, less duplicate argument checks, and more self-documenting code. The value of named parameters has also been discussed already.</p>
 
+<p>It also allows useful introspection. For example when you pass a block or a subroutine to <code>Array.sort</code>, and that piece of code expects exactly one argument, a Schwartzian Transform (see <a href="http://en.wikipedia.org/wiki/Schwartzian_transform" class="podlinkurl"
+>http://en.wikipedia.org/wiki/Schwartzian_transform</a>) is automatically done for you - such a functionality would be impossible in Perl 5, because the lack of explicit signatures means that <code>sort</code> can never find out how many arguments the code block expects.</p>
+
 <p>Multi subs are very useful because they allow builtins to be overridden for new types. Let&#39;s assume you want a version of Perl 6 which is localized to handle Turkish strings correctly, which have unusual rules for case conversions.</p>
 
 <p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>

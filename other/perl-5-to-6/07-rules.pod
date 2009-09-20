@@ -27,13 +27,13 @@
             \d+
         }
         token path {
-            <[a..zA..Z0..9-_.!~*'():@&=+$,/]>+
+            <[ a..z A..Z 0..9 -_.!~*'():@&=+$,/ ]>+
         }
     }
 
 =head1 DESCRIPTION
 
-Regexes are one of the areas that has been improved and revamped most in 
+Regexes are one of the areas that has been improved and revamped most in
 Perl 6. We don't call them I<regular expressions> anymore because they are even
 less regular than they are in Perl 5.
 
@@ -53,9 +53,12 @@ C<[..]>, which are a lot easier to write than the old C<(?:...)>.
 =item Nested captures and match object
 
 In perl 5, a regex like this C<(a(b))(c)> would put C<ab> into C<$1>, C<b>
-into C<$2> and C<c> into C<$3> upon successful match. This has changed. Now 
+into C<$2> and C<c> into C<$3> upon successful match. This has changed. Now
 C<$0> (enumeration starts at zero) contains C<ab>, and C<$0[0]> or C<$/[0][0]>
 contains C<b>. C<$1> holds C<c>.
+
+All the match variables are aliases into C<$/>, which is the so-called
+I<Match object>, and it actually contains a full match tree.
 
 =item Named regexes and grammars
 

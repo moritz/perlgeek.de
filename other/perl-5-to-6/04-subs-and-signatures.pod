@@ -180,6 +180,14 @@ Nobody will doubt the usefulness of explicit sub signatures: less typing, less
 duplicate argument checks, and more self-documenting code. The value of named
 parameters has also been discussed already.
 
+It also allows useful introspection. For example when you pass a block or a
+subroutine to C<Array.sort>, and that piece of code expects exactly one
+argument, a Schwartzian Transform (see
+L<http://en.wikipedia.org/wiki/Schwartzian_transform>) is automatically done
+for you - such a functionality would be impossible in Perl 5, because the lack
+of explicit signatures means that C<sort> can never find out how many
+arguments the code block expects.
+
 Multi subs are very useful because they allow builtins to be overridden for
 new types. Let's assume you want a version of Perl 6 which is localized to
 handle Turkish strings correctly, which have unusual rules for case
