@@ -100,7 +100,7 @@ in the signature list:
     }
     area(width => 2,  height => 3);
     area(height => 3, width => 2 ); # the same
-    area(:height<3>, :width<2>);    # the same
+    area(:height(3), :width(2));    # the same
 
 In these the variable name is used as the name. You can use a different name,
 though:
@@ -112,7 +112,8 @@ though:
 
 
 Named arguments can only be passed by name, not by position. On the other
-hand, positional arguments can be passed by name by default.
+hand, positional arguments can be passed by name by default (but it is not yet
+implemented in Rakudo).
 
     sub sqrt($number) { ... };
     sqrt(3);
