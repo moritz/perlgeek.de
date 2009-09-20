@@ -172,7 +172,7 @@ can also differ in the type of the parameters:
     multi sub frob(Int $i) { say "Frobbing Integer $i" }
 
     frob("x")       # Frobbing String x
-    frob(2)         # Frobbing Inteteger 2
+    frob(2)         # Frobbing Integer 2
 
 =head1 MOTIVATION
 

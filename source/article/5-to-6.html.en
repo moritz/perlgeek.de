@@ -627,7 +627,7 @@ name="Multi_Subs"
     multi sub frob(Int $i) { say &#34;Frobbing Integer $i&#34; }
 
     frob(&#34;x&#34;)       # Frobbing String x
-    frob(2)         # Frobbing Inteteger 2</pre>
+    frob(2)         # Frobbing Integer 2</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="MOTIVATION"
