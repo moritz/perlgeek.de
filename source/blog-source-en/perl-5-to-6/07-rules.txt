@@ -1,11 +1,11 @@
-Regexes (also called C<rules>)
+Regexes (also called "rules")
 <!-- 1222381200 -->
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="NAME"
 >NAME</a></h3>
 
-<p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called <code>rules</code>)</p>
+<p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called &#34;rules&#34;)</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SYNOPSIS"

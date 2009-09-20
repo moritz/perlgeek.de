@@ -1,6 +1,6 @@
 =head1 NAME
 
-"Perl 5 to 6" Lesson 07 - Regexes (also called C<rules>)
+"Perl 5 to 6" Lesson 07 - Regexes (also called "rules")
 
 =head1 SYNOPSIS
 

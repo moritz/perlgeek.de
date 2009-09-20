@@ -101,7 +101,7 @@ name="Named_Parameters"
     }
     area(width =&#62; 2,  height =&#62; 3);
     area(height =&#62; 3, width =&#62; 2 ); # the same
-    area(:height&#60;3&#62;, :width&#60;2&#62;);    # the same</pre>
+    area(:height(3), :width(2));    # the same</pre>
 
 <p>In these the variable name is used as the name. You can use a different name, though:</p>
 
@@ -110,7 +110,7 @@ name="Named_Parameters"
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name by default.</p>
+<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name by default (but it is not yet implemented in Rakudo).</p>
 
 <pre>    sub sqrt($number) { ... };
     sqrt(3);
