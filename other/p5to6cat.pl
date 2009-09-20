@@ -45,6 +45,7 @@ for my $source (glob 'perl-5-to-6/*.pod'){
     } else {
         die "No timestamp found for file '$source'";
     }
+    $pod =~ s/^=for.*$//mg;
     $pod =~ s/^=head(\d)/'=head' . (2+$1)/meg;
     $parser->set_source(\$pod);
     $parser->output_string(\$html);

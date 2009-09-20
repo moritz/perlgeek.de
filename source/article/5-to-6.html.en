@@ -1070,7 +1070,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a> =for time 1222381200 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S05.html</a></p>
 
 
 <h2 id="post_08">Junctions</h2>
@@ -1181,7 +1181,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Junctive_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Junctive_operators</a> =for time 1222467600 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Junctive_operators</a></p>
 
 
 <h2 id="post_09">Comparing and Matching</h2>
@@ -1244,7 +1244,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence</a> =for time 1222554000 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence</a></p>
 
 
 <h2 id="post_10">Containers and Values</h2>
@@ -1303,7 +1303,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Item_assignment_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a> =for time 1224108000 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a></p>
 
 
 <h2 id="post_11">Changes to Perl 5 Operators</h2>
@@ -1372,7 +1372,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a> =for time 1224194400 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a></p>
 
 
 <h2 id="post_12">Laziness</h2>
@@ -1813,7 +1813,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enums</a> =for time 1227740400 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S12.html#Enums</a></p>
 
 
 <h2 id="post_17">Unicode</h2>
@@ -1890,7 +1890,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S29.html#Str" class="podlinkurl"
->http://perlcabal.org/syn/S29.html#Str</a> =for time 1227826800 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S29.html#Str</a></p>
 
 
 <h2 id="post_18">Scoping</h2>
