@@ -72,6 +72,6 @@ name="MOTIVATION"
 
 <p>A good programming language needs exceptions to handle error conditions. Always checking return values for success is a plague and easily forgotten.</p>
 
-<p>Since traditional exceptions can be poisonous for implicit parallelism, we needed a solution that combined the best of both worlds: not killing everything at once, and still not loosing any information.</p>
+<p>Since traditional exceptions can be poisonous for implicit parallelism, we needed a solution that combined the best of both worlds: not killing everything at once, and still not losing any information.</p>
 
 [% option no-header %] [% option no-footer %]
