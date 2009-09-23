@@ -96,7 +96,7 @@ Always checking return values for success is a plague and easily forgotten.
 
 Since traditional exceptions can be poisonous for implicit parallelism, we
 needed a solution that combined the best of both worlds: not killing
-everything at once, and still not loosing any information.
+everything at once, and still not losing any information.
 
 =for time 1247130002
 =for editor vim: spell

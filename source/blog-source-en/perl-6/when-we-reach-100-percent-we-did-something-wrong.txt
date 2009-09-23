@@ -74,7 +74,7 @@ the tested feature might not be available on the current platform, or maybe a
 previous failure would make their outcome inconclusive.</p>
 
 <p>There are also valid reasons why some tests are marked as TODO (which means
-the are run, but don't pass) - for example to test a bug that is not yet
+they are run, but don't pass) - for example to test a bug that is not yet
 fixed, or for behavior that is subject to change but has not yet been
 adapted.</p>
 
