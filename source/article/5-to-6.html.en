@@ -1720,7 +1720,7 @@ name="DESCRIPTION"
 
 <p>the variables <code>$a</code> and <code>$b</code> are special cased by the <code>strict</code> pragma. In Perl 6, there&#39;s a concept named <i>self-declared positional parameter</i>, and these parameters have the <code>^</code> twigil. It means that they are positional parameters of the current block, without being listed in a signature. The variables are filled in lexicographic (alphabetic) order:</p>
 
-<pre>  my $block = { say &#34;$^c $a $^b&#34; };
+<pre>  my $block = { say &#34;$^c $^a $^b&#34; };
   $block(1, 2, 3);                # 3 1 2</pre>
 
 <p>So now you can write</p>
@@ -2916,7 +2916,7 @@ name="MOTIVATION"
 
 <p>A good programming language needs exceptions to handle error conditions. Always checking return values for success is a plague and easily forgotten.</p>
 
-<p>Since traditional exceptions can be poisonous for implicit parallelism, we needed a solution that combined the best of both worlds: not killing everything at once, and still not loosing any information.</p>
+<p>Since traditional exceptions can be poisonous for implicit parallelism, we needed a solution that combined the best of both worlds: not killing everything at once, and still not losing any information.</p>
 
 
 

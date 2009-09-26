@@ -38,7 +38,7 @@ these parameters have the C<^> twigil. It means that they are positional
 parameters of the current block, without being listed in a signature. The
 variables are filled in lexicographic (alphabetic) order:
 
-  my $block = { say "$^c $a $^b" };
+  my $block = { say "$^c $^a $^b" };
   $block(1, 2, 3);                # 3 1 2
 
 So now you can write
