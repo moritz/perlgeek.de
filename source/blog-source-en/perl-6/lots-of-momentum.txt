@@ -1,0 +1,43 @@
+Lots of momentum in the Perl 6 community
+<!-- 1254257168 -->
+
+<p>Usually I try to tell you something intelligent about Perl 6, but this
+night's frustrating hours of debugging very simple mistakes demonstrated that
+my wits have left to 90% at least. Still there's the <a
+href="http://ironman.enlightenedperl.org/">Iron man blogging challenge</a>, so
+I'll write a few lines about something entirely subjective.</p>
+
+<p>If found that there's really momentum in the Perl 6 community, and I'm even
+more happy to to observe that people hack on other people's projects.</p>
+
+<p>For example Johan Viklund, co-author of the <a
+href="http://november-wiki.org/">November wiki</a> chimed in with the
+<code>installed-modules</code> branch of <a
+href="http://github.com/masak/proto/">proto</a>, making it usable rather
+quickly. Martin Berends jumped on the train that diakopter set off by starting
+his new pet project, a Perl 6 interpreter that emits javascript and runs it
+through the <a href="http://code.google.com/p/v8/">V8</a> engine (more on that
+project in one of the next blog posts).</p>
+
+<p>Solomon Foster joined the Rakudo development and did some very significant
+work on the trigonometric functions and the corresponding tests. However it
+suffered from rather weird dispatch where some some methods that are defined
+in parrot's Complex PMC were not overridable. So today I started a branch
+which aims to implement the <code>Complex</code> class completely in Perl 6,
+and using the Complex PMC only by delegation through inline PIR. I just ripped
+out all the old stuff, and Solomon and I started to re-add them.</p>
+
+<p>On a completely unrelated note I want to point out that <a
+href="http://use.perl.org/~masak/journal/39686">we have some SQL support</a>
+in Perl 6 now, through Tene's <a
+href="http://github.com/tene/perl6-sqlite">perl6-sqlite</a> module.</p>
+
+<img src="/images/blog/proto-projects-list-2009-09-29.png" width="640"
+height="480" alt="Number of Perl 6 projects over time" />
+
+<p>The image above shows the development of the numbers of projects known to
+proto over time - another indication of the momentum we're gathering.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
+
