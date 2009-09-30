@@ -7,7 +7,7 @@ my wits have left to 90% at least. Still there's the <a
 href="http://ironman.enlightenedperl.org/">Iron man blogging challenge</a>, so
 I'll write a few lines about something entirely subjective.</p>
 
-<p>If found that there's really momentum in the Perl 6 community, and I'm even
+<p>I've found that there's really momentum in the Perl 6 community, and I'm even
 more happy to to observe that people hack on other people's projects.</p>
 
 <p>For example Johan Viklund, co-author of the <a
