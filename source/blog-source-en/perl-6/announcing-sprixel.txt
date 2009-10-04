@@ -1,48 +1,47 @@
-Announcing sprixel
+Sprixel, a 6 compiler powered by JavaScript
 <!-- 1254780000 -->
 
-<p>Today I want to announce <b>sprixel</b>, a new Perl 6 compiler in its early
-stage of development, based on Javascript and the standard Perl 6 grammar
-STD.pm.</p>
+<p>Today I want to announce <b>sprixel</b>, a new Perl 6 compiler in its early
+stage of development, written in JavaScript and using the standard Perl 6
+grammar STD.pm.</p>
 
 <p>Sprixel (an anagram of <em>perlsix</em>) development was initiated by
-Matthew Wilson aka diakopter. It traverses the Abstract Syntax Tree as
-produced by STD.pm, transforms it into an intermediate javascript data
+Matthew Wilson, aka diakopter.  It traverses the Abstract Syntax Tree as
+produced by STD.pm, transforms it into an intermediate JavaScript data
 structure similar to JSON (but with some enhancements to handle cyclic
-structures), and has a small, continuation based runloops that executes the
-Javascript. Currently the only backend is the <a href="TODO">V8</a> compiler
-and virtual machine - but maybe somebody you can run Perl 6 in your
-browser.</p>
+structures), and has a small, continuation based runloop that executes the
+JavaScript. Currently the only backend is the <a href="TODO">V8</a> compiler
+and virtual machine - but if/when the STD grammar is implemented, you'll be
+able to run Perl 6 in your browser.</p>
 
-<p>Currently sprixel supports scalar and array variables, numbers (including
-bigint), strings, string interpolation, basic control flow, closures and basic
-method calls.</p>
+<p>Currently sprixel supports scalar and list variables, numbers (including
+bigint), strings, string interpolation, basic control flow, closures, named
+sub declaration (with parameters), and <em>map</em>.</p>
 
 <p>Sprixel development is optimized for fun, and already picked up some
-contributors. The source code can be found in the <a
+contributors (notably, mberends implemented many infix operators, a makefile,
+and a test harness). The source code can be found in the <a
 href="http://svn.pugscode.org/pugs/src/perl6/sprixel">pugs repository</a> (but
-is completely independent of pugs). The main communication medium so far has
-been <a href="irc://irc.freenode.net/#perl6">the #perl6 IRC channel</a> on
-irc.freenode.net.</p>
+is completely independent of the pugs compiler project). The main communication
+medium so far has been <a href="irc://irc.freenode.net/#perl6">the #perl6 IRC
+channel</a> on irc.freenode.net.</p>
 
 <h2>Motivation</h2>
 
-<p><em>Why yet another Perl 6 implementation?</em> you might ask. A few
+<p><em>Why yet another Perl 6 implementation?</em> you might ask. A few
 reasons actually:</p>
 
 <ul>
-    <li>Matthew likes Javascript. So do browsers.</li>
-    <li>Sprixel exercises STD.pm, which so far is mostly tested only for right
-        or wrong parse results. Relying on the underlying AST structure in a
-        real compiler helps to reveal tricky bugs and unnecessary hard
+    <li>Sprixel exercises STD.pm, which so far is mostly tested only for parse
+        successes or failures. Relying on the underlying AST structure in a
+        real compiler helps to reveal tricky bugs and unnecessarily difficult
         interfaces.</li>
-    <li>Most existing Perl 6 compilers either implement only a minimal subset
-        of Perl 6, or rely heavily on a rather large stack of underlying
+    <li>Most existing Perl 6 compilers either implement only a minimal subset
+        of Perl 6, or rely heavily on a rather large stack of underlying
         software, thus making substantial contributions non-trivial.</li>
-    <li>Implementing a compiler helps you to understand the language
+    <li>Implementing a compiler helps one to understand the language
         better.</li>
 </ul>
 
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell tw=78 : %]
-
