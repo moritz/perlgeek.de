@@ -10,7 +10,8 @@ Matthew Wilson, aka diakopter.  It traverses the Abstract Syntax Tree as
 produced by STD.pm, transforms it into an intermediate JavaScript data
 structure similar to JSON (but with some enhancements to handle cyclic
 structures), and has a small, continuation based runloop that executes the
-JavaScript. Currently the only backend is the <a href="TODO">V8</a> compiler
+JavaScript. Currently the only backend is the
+<a href="http://code.google.com/p/v8/">V8</a> compiler
 and virtual machine - but if/when the STD grammar is implemented, you'll be
 able to run Perl 6 in your browser.</p>
 
