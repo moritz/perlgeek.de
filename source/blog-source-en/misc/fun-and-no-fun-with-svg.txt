@@ -1,0 +1,101 @@
+Fun and No-Fun with SVG
+<!-- 1255298400 -->
+
+<p>Lately I've been playing a lot of with SVG, and all in all I greatly
+enjoyed it. I wrote some <a href="http://perl6.org/">Perl 6</a> programs that
+generate graphical output, and being a new programming language it doesn't
+have many bindings to graphic libraries. Simply emitting a text description of
+a graphic and then viewing it in the browser is a nice and simple way out.</p>
+
+<p>I also enjoy getting visual feedback from my programs. I'd even more enjoy
+it if the feedback was more consistent.</p>
+
+<p>I generally test my svg images with three different viewers: Firefox
+3.0.6-3, inkscape (or inkview) 0.46-2.lenny2 and Opera
+10.00.4585.gcc4.qt3. Often they produce two or more different renderings of
+the same SVG file.</p>
+
+<p>Consider this seemingly simple SVG file:</p>
+
+<pre>[% syntax xml %]
+<svg
+    width="400"
+    height="250"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="background-color: white"
+>
+
+    <defs>
+        <path id="curve"
+              d="M 20 100
+                 C 60 30
+                 320 30
+                 380 100"
+              style="fill:none; stroke:black; stroke-width: 2"
+        />
+   </defs>
+   <text font-size="40" textLength="390" >
+        <use xlink:href="#curve" />
+        <textPath xlink:href="#curve">SPRIXEL</textPath>
+   </text>
+</svg>
+[% endsyntax %]</pre>
+
+<p>If your browser supports SVG, <a href="/images/blog/sprixel.svg">you can
+view it directly here</a>.</p>
+
+<p>This SVG file first defines a path, and then references it twice: once a
+text is placed on the path, the second time it is simply referenced and given
+some styling information.</p>
+
+<p>Rendered by Firefox:</p>
+<img src="/images/blog/sprixel-firefox.png" width="400" height="200"
+    alt="rendered by firefox" />
+
+<p>Rendered by Inkview:</p>
+<img src="/images/blog/sprixel-inkview.png" width="402" height="270"
+    alt="rendered by inkview" />
+
+<p>Rendered by Opera:</p>
+<img src="/images/blog/sprixel-opera.png"   width="401" height="202"
+    alt="rendered by opera" />
+
+<p>Three renderers, three outputs. Neither Firefox nor Inkview support the
+<code>textLength</code> attribute, which is a real pity, because it's the only
+way you can make a program emit SVG files where text is guaranteed not to
+overlap.</p>
+
+<p>If you scale text in Inkscape and then put it onto a path, the scaling is
+lost. I found no way to reproduce opera's output with inkscape without
+resorting to really evil trickery (like decomposing the text into paths, can
+then cutting the letters apart and placing them manually). (Equally useful is
+the <code>dominant-baseline</code> attribute, which Inkscape doesn't support
+either).</p>
+
+<p>The second difference is that only Firefox shows the shape of the path.
+Firefox is correct here. The SVG specification <!-- TODO: link --> clearly
+states about the <code>use</code> attribute:</p>
+
+<blockquote>
+For user agents that support Styling with CSS, the conceptual deep cloning of the referenced element into a non-exposed DOM tree also copies any property values resulting from the CSS cascade [CSS2-CASCADE] on the referenced element and its contents. CSS2 selectors can be applied to the original (i.e., referenced) elements because they are part of the formal document structure. CSS2 selectors cannot be applied to the (conceptually) cloned DOM tree because its contents are not part of the formal document structure.
+</blockquote>
+
+<p>Sadly it seems to be a coincidence that Firefox works correctly here. If
+the styling information is moved from the <code>path</code> to the
+<code>use</code> element the curve is still displayed - even though it should
+not be.</p>
+
+<p>Using SVG feels like writing HTML and CSS for 15 year old browsers, which
+had their very own, idiosyncratic idea of how to render what, and what to
+support and what not.</p>
+
+<p>Just like with HTML I have high hopes that the overall state will improve;
+Indeed I've been told that Firefox 3.5 now supports the
+<code>textLength</code> attribute. I'd also love to see wide-spread support
+for SVG animations, which could replace some inaccessible flash
+applications.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]

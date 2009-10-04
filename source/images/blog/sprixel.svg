@@ -1,0 +1,26 @@
+<svg
+    width="400"
+    height="250"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="background-color: white"
+>
+
+    <defs>
+        <path id="curve"
+              d="M 20 100
+                 C 60 30
+                 320 30
+                 380 100"
+        />
+   </defs>
+   <text font-size="40"
+         textLength="390"
+            >
+        <use xlink:href="#curve" 
+              style="fill:none; stroke:black; stroke-width: 2"
+              />
+        <textPath xlink:href="#curve">SPRIXEL</textPath>
+   </text>
+</svg>
