@@ -1,5 +1,5 @@
 Sprixel, a 6 compiler powered by JavaScript
-<!-- 1254780000 -->
+<!-- 1254683484 -->
 
 <p>Today I want to announce <b>sprixel</b>, a new Perl 6 compiler in its early
 stage of development, written in JavaScript and using the standard Perl 6
