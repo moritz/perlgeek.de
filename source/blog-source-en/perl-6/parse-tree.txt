@@ -8,7 +8,7 @@ the only parsers that can handle all known Perl 6 code is the module
 directory of the pugs repository, linux with perl-5.10.0 or newer in the
 location <code>/usr/local/bin/perl</code> and some
 modules, like for example <a
-href="http://search.cpan.org/perldoc?Moose">Mosse</a> and <a
+href="http://search.cpan.org/perldoc?Moose">Moose</a> and <a
 href="http://search.cpan.org/perldoc?YAML::Syck">YAML::Syck</a>. When you have
 that, type the following commands:</p>
 
@@ -46,7 +46,7 @@ Can't understand next input--giving up at wrong.pl line 1:
 </pre>
 
 <p>The green part of the output indicates the part where the syntax is still
-correct, the red part is where the errornous part begins. (The bold font
+correct, the red part is where the erroneous part begins. (The bold font
 weight isn't part of the output, though). At this point, either an
 <code>prefix or noun</code> would have been expected, as in <code>1..+2</code>
 or as in <code>1..2</code>, or a whitespace, probably followed by another
