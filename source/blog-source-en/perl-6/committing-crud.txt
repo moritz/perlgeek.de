@@ -1,0 +1,40 @@
+Why I commit Crud to the Perl 6 Test Suite
+<!-- 1255644000 -->
+
+<p>A few days ago a relative new contributor to the Perl 6 test suite
+apologized for the perceived bad quality of his commits to the test suite.
+(There was no reason, the commits were actually quite good). It made me think
+about the quality of what I contribute there.</p>
+
+<p>It's not easy to assess the quality of tests. We want to keep the test
+suite as simple as possible, in the sense that every test should test one
+specific piece of Perl 6, and use simplest syntax otherwise. That means we
+have trade offs regarding code duplication: Not using fancy data driven
+testing often results in multiple test that look similar - something you'd
+avoid in normal programs, and even in normal test suites.</p>
+
+<p>So extensive tests are bound to look a bit ugly, but that's OK. But it also
+means that our usual standards of assessing code quality don't necessarily
+hold. Leaving that aside, many parts of the test suite still look a bit weird
+or suspicious. I remembered <a
+href="http://en.wikipedia.org/wiki/Sturgeon's_Law">Sturgeon's Law: 90% of
+everything is crud</a>. Assuming it holds for the test suite too...</p>
+
+<img src="http://perlgeek.de/images/blog/testsuite.png"
+width="400" height="300" alt="committer stats to the test suite" />
+
+<p>... and considering the fact that I contributed about 20% of the commits to
+the test suite (number from 2009-10-10), at least half of what I contributed
+was crud too.</p>
+
+<p>I'm not ashamed of it - as long as I strive for good code and do my best,
+everything is fine. And I encourage those who think their tests are crud to
+commit them anyway - or at least ask for review. Those who are concerned about
+their code quality usually produce quite decent code.</p>
+
+<p>See also: <a
+href="http://video.google.com/videoplay?docid=-2180030323991676060&hl=en#">Matt
+S Trout - <em>You are not good enough</em></a>.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
