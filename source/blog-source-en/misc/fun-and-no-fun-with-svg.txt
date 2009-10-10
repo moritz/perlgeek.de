@@ -1,5 +1,5 @@
 Fun and No-Fun with SVG
-<!-- 1255298400 -->
+<!-- 1255170852 -->
 
 <p>Lately I've been playing a lot of with SVG, and all in all I greatly
 enjoyed it. I wrote some <a href="http://perl6.org/">Perl 6</a> programs that
