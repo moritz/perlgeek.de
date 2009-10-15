@@ -1,0 +1,81 @@
+Creating an entry point for newcomers
+<!-- 1255640151 -->
+<p>This is a direct reply to <a
+href="http://anonymoushash.vmbrasseur.com/2009/10/too-many-ways-to-do-it.html">a
+blog post by VM Brasseur</a>, telling about the difficulties to get started in
+the Perl 6 community. I started it as a comment on that blog, but it got too
+long pretty quickly.</p>
+
+<p>The problem is known: far too many Perl 6 sites, far too many of which are
+out of date. I hoped to kill fire with fire by starting one more (which is
+perl6.org), and trying to make it easy and attractive to keep it up to
+date - by making it central, easy to contribute to,  and by making it light on
+content and rich on links.</p>
+
+<p>However being an "old hat" in the community, it is sometimes hard for me to
+assess what we have to present to the newcomer, and in what way.</p>
+
+<p>I also like to keep in mind that Perl 6 has multiple implementations, and
+even a newcomer should have the choice. Being involved with some of the
+implementations I also feel it's unfair against the others to just point to
+one of them.</p>
+
+<p>So, what would a newbie need? I'm guessing here, please do tell if you have
+different opinions.</p>
+
+<ul>
+    <li>Introductory documents/tutorials</li>
+    <li>A way to run a Perl 6 compiler to try it out</li>
+    <li>Ways to contact the community</li>
+    <li>A list of what needs to be done</li>
+    <li>Further reading</li>
+</ul>
+
+<p>The first one is maybe the toughest: frankly speaking, we don't have any.
+We have my 5-to-6 blog which I <a
+href="http://perlgeek.de/en/article/5-to-6">put up here in chronological
+form</a>, but which assumes Perl 5 knowledge, and which talks about many
+features that Rakudo does not implement yet, and which mostly isn't
+practical. We have <a
+href="http://github.com/perl6/perl6-examples">examples</a>, but the rest is
+unorganized, out of date, or woefully incomplete. D'oh.</p>
+
+<p>On the second point we're doing fairly well with a big download button - at
+least I hope we do.</p>
+
+<p>We also advertise our IRC channel (which I consider the heart beat of Perl
+6 development) and mailing lists, another score here.</p>
+
+<p>The fourth point is a tough one again. Being a completely volunteer driven
+project, we are not used to handing out tasks. There are a huge variety of
+tasks that all have vastly different requirements in terms of interests,
+skills, time and commitment. The larger such a list becomes, the harder it
+becomes to maintain. And TODO lists are one of those things that go out of
+date rather quickly. Which is why I'd encourage newcomers to contact the
+community, tell about their interest and skills so that we can search for
+suitable tasks together.</p>
+
+<p>However that's quite a hurdle for some people. I usually suggest <a
+href="http://www.perlmonks.org/?node_id=771635">to write tests and
+applications</a>, which sometimes finds resonance. But any ideas how to
+perform better is greatly appreciated.</p>
+
+<p>The last point, further reading, is mostly covered by the
+Synopsis/specification.</p>
+
+<p>But all in all I think we need a better presentation, though I don't yet
+know how. Ideas?</p>
+
+<p>Also somebody mentioned that our IRC channel is friendly, but still not
+very accessible to the newcomer, because we use lots of technical terms when
+talking among ourselves. That's something we can't really avoid, but it does
+scare off some people. So far we have tried to avoid splitting into many
+subchannels (with the possible exception of per-project dedicated channels),
+but maybe the time has come to fork off a newbie or users channel?</p>
+
+<p>Anything else we can do right now to improve newcomer experience? And yes,
+we're working on improving introductory material. More on that next Friday.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
+
