@@ -12,7 +12,8 @@ perl6.org), and trying to make it easy and attractive to keep it up to
 date - by making it central, easy to contribute to,  and by making it light on
 content and rich on links.</p>
 
-<p>However being an "old hat" in the community, it is sometimes hard for me to
+<p>However being a "seasoned warrior" in the community, it is sometimes
+hard for me to
 assess what we have to present to the newcomer, and in what way.</p>
 
 <p>I also like to keep in mind that Perl 6 has multiple implementations, and
@@ -47,7 +48,7 @@ least I hope we do.</p>
 6 development) and mailing lists, another score here.</p>
 
 <p>The fourth point is a tough one again. Being a completely volunteer driven
-project, we are not used to handing out tasks. There are a huge variety of
+project, we are not used to handing out tasks. There is a huge variety of
 tasks that all have vastly different requirements in terms of interests,
 skills, time and commitment. The larger such a list becomes, the harder it
 becomes to maintain. And TODO lists are one of those things that go out of
