@@ -7,6 +7,7 @@
                     [% item artikel  <li{{ id="current"}}><a href="/de/artikel/">Artikel</a></li>   %]
                     [% item software <li{{ id="current"}}><a href="/de/software/">Software</a></li> %]
                     [% item service  <li{{ id="current"}}><a href="/de/service/">Services</a></li>  %]
+                    [% item blog     <li{{ id="current"}}><a href="/blog-en/">Blog</a></li>         %]
                 </ul>
             </div>
         </div>
