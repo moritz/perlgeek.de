@@ -1,0 +1,64 @@
+Perl 6 ticket life cycle
+<!-- 1256159855 -->
+<p>The typical life cycle of a bug <a href="http://rt.perl.org/rt3/">filed</a>
+against <a href="http://rakudo.org/">Rakudo Perl 6</a> looks like this:</p>
+
+<ul>
+    <li>Somebody tries out a new feature, finds a bug, and submits it to
+        <code>rakudobug@perl.org</code>. (Typically that's masak)</li>
+    <li>Somebody writes a failing test for that, and puts it into the test suite.
+    (Typically that's kyle or me)</li>
+    <li>Somebody fixes the bug in Rakudo. (Typically that's pmichaud or
+    jnthn).</li>
+    <li>The one who fixed the bug usually closes the ticket.</li>
+</ul>
+
+<p>The second and third step are occasionally reversed - in that case either
+the implementor writes a test himself, or he assigns the ticket to me, asking
+for tests. I just act as a placeholder here for the "needs a test" stage. In
+any case a bug that can be tested with reasonable effort won't be closed
+unless there's a regression test present.</p>
+
+<p>The tests are usually disabled, because often they cause Rakudo to die
+until it behaves at least mostly correct.</p>
+
+<p>But sometimes it's a bit different: there is a subsystem that needs
+substantial refactoring or a rewrite, and lots of bug tickets queue up for
+that subsystem. Somebody invests much time and energy into that subsystem,
+starts a branch, develops the rewrite there, and finally merges the
+changes.</p>
+
+<p>That happend this week when Jonathan implemented a new signature binder,
+which fixed both many problems with passing arguments to routines, and also
+enabled classes to see outer lexical variables.</p>
+
+<p>We have a script called <i>autounfudge</i> which goes through all the test
+files, enables the disabled tests one by one, run them again, and if they
+pass, it writes a patch that enables them.</p>
+
+<p>That's not only useful for enabling the tests, but also for finding the
+tickets which can be closed. A typical auto-generated patch looks like this:</p>
+
+<pre>[% syntax diff %]
+--- t/spec/S02-builtin_data_types/anon_block.t	Wed Oct  7 13:54:31 2009
++++ RAKUDO815xU3/temps1BKu.t	Tue Oct 20 10:26:03 2009
+@@ -44,7 +44,6 @@
+ 
+         eval '$anon_block( foo => "RT #64844" )';
+         ok $! ~~ Exception, 'too many parameters';
+-        #?rakudo skip 'RT #64844'
+         is ~$!, $errmsg, 'same error for named param as positional';
+     }
+ }
+[% endsyntax %]</pre>
+
+<p>So after a big branch merge somebody will run the autounfudge script, and
+that spits out a list of closable RT tickets. In the case of the signature
+binder that were about 15 tickets, which would have taken ages to find without
+help in the 500+ open tickets.</p>
+
+<p>All in all I'm rather happy with this infrastructure.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
+
