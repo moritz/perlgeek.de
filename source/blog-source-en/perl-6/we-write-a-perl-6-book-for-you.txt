@@ -1,0 +1,45 @@
+We write a Perl 6 book for you
+<!-- 1256305707 -->
+<p>We want a Perl 6 book. We want it badly enough to write it ourselves. So
+that's what we're doing: writing one.</p>
+
+<p>We, that is Patrick Michaud (architect of the Rakudo Perl compiler),
+Jonathan Worthington (prolific contributor to both Rakudo and Parrot), Carl
+Mäsak (frenetic Rakudo user, and our number one bug finder) and Moritz Lenz
+(keeper of the Perl 6 test suite, and Perl 6 user and blogger). We are also
+open to contribution from others - already Jonathan Scott Duff has written an
+initial preface for us.</p>
+
+<p>We don't have a name yet for our book. We want to cover the basics of Perl 6,
+enough to get your feet wet, and enough to make you want to use it. We want it
+to be based on useful examples. It is not going to be the definitive book,
+that task we leave to Larry Wall and Damian Conway.</p>
+
+<p>Our vision is to present primarily the subset of Perl 6 that Rakudo
+understands, and have printed copies available by the time Rakudo Star is
+released, that is April or May 2010. chromatic and Allison Randal have kindly
+offered to published it via Onyx Neon Press.</p>
+
+<p>Until then, monthly releases will be published under a Creative Commons
+license (noncommercial, attribution, share-alike). </p>
+
+<p>Currently we have four chapters under construction, and the intention of
+writing the more introductory chapters later, when we know what we need to
+introduce for the later chapters. So far we have</p>
+
+<ul>
+    <li> Multi dispatch</li>
+    <li> Classes and Object</li>
+    <li> Regexes</li>
+    <li> Grammars</li>
+</ul>
+
+<p>You can <a
+href="http://cloud.github.com/downloads/perl6/book/book-2009-10.pdf">download
+the preliminary PDF version of the book here</a>.</p>
+
+<p>Interested? Check out
+<a href="http://github.com/perl6/book">the git repository</a>, and
+join us in <code>irc://freenode.net#perl6book</code>.</p>
+
+[% option no-header %] [% option no-footer%]
