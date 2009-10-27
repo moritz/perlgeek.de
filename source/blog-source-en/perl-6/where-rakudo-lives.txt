@@ -1,5 +1,11 @@
 Where Rakudo Lives Now
 <!-- 1234047600 -->
+
+<p><b>Update</b> from October 2009: this blog post is of historical interest
+only, the <a href="http://rakudo.org/how-to-get-rakudo">updated, official
+instructions on how to install Rakudo can be found here</a>. If you want to
+build Rakudo, that's where you should look these days.</p>
+
 <p>There has been some profund confusion over the whereabouts of the Rakudo
 source code repository. Since we've seen no official announcement on <a
 href="http://rakudo.org/">rakudo.org</a> I wrote a short guide on how to build
