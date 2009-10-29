@@ -11,15 +11,15 @@ aggregator anyway.</p>
     <li>Larry lifted up the dual nature of Ranges. They mostly serve as an
     interval now, for smart iteration the series operator has been pimped up.
     You can now write <code> for 1, 3 ... *+2, 9 { .say }</code> to print all
-    the odd numbers between 1 and 9. (r28344, r28348, r28351).</li>
+    the odd numbers between 1 and 9. (<a href="perlcabal.org/svn/pugs/revision/?rev=28344">r28344</a>, <a href="perlcabal.org/svn/pugs/revision/?rev=28348">r28348</a>, <a href="perlcabal.org/svn/pugs/revision/?rev=28351">r28351</a>).</li>
     <li><code>Rat</code>ional and Complex types now have their own literals
-    (r28173).</li>
-    <li>Stubbed classes are now documented (r28196, r28197).</li>
+    (<a href="perlcabal.org/svn/pugs/revision/?rev=28173">r28173</a>).</li>
+    <li>Stubbed classes are now documented (<a href="perlcabal.org/svn/pugs/revision/?rev=28196">r28196</a>, <a href="perlcabal.org/svn/pugs/revision/?rev=28197">r28197</a>).</li>
     <li>The new <a href="http://perlcabal.org/syn/S08.html">S08</a> documents
     Parcels and Captures.</li>
-    <li>The numeric types have been cleaned up a lot (r28502 and later commits
-    up to r28597).</li>
-    <li>New and improved signature introspection (r28664, r28665).</li>
+    <li>The numeric types have been cleaned up a lot (<a href="perlcabal.org/svn/pugs/revision/?rev=28502">r28502</a> and later commits
+    up to <a href="perlcabal.org/svn/pugs/revision/?rev=28597">r28597</a>).</li>
+    <li>New and improved signature introspection (<a href="perlcabal.org/svn/pugs/revision/?rev=28664">r28664</a>, <a href="perlcabal.org/svn/pugs/revision/?rev=28665">r28665</a>).</li>
 </ul>
 
 <h2>Compilers</h2>
