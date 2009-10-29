@@ -42,7 +42,7 @@ designed with ease of parsing in mind.</p>
 
 <h2 id="goals">Goals for Perl 6</h2>
 
-<p>Learning from perl 5's problems, there were additionaly design goals set
+<p>Learning from perl 5's problems, there were additionally design goals set
 for Perl 6 syntax:</p>
 
 <ol>
@@ -59,7 +59,7 @@ for Perl 6 syntax:</p>
 
 <p>The Perl 6 syntax isn't very easy either, but now there are tools in
 place that can handle it. And these tools are grammars, rules, bottom-up
-parsing, proto regexes and longest token matching (LTM).</p>
+parsing, proto regexes and longest-token matching (LTM).</p>
 
 <h3 id="rules">Rules</h3>
 
@@ -262,7 +262,7 @@ token infix:sym<bla> is tighter:<+> { <sym> }
 <p>This introduces the <code>bla</code> operator, which has tighter precedence 
 than <code>+</code>, but looser than <code>*</code>.</p>
 
-<h2 id="ltm">Longest Token Matching</h2>
+<h2 id="ltm">Longest-Token Matching</h2>
 
 <p>We're mostly there now, small changes and enhancements work like a charm.
 The example syntax changes took great care not to conflict with existing Perl 6
@@ -281,6 +281,10 @@ wins.</p>
 increments a variable by two, you'd just introduce a new rule for it, and when
 the parser expects a <code>postfix</code> token, both <code>++</code> and <code>+++</code>
 match, but since the latter matches more text, it wins.</p>
+
+<p>LTM is a tad more complicated than you might think from reading this, <a
+href="/en/article/longest-token-matching">but there are some gory details
+involved</a>.</p>
 
 <h2 id="nice-syntax">A nice syntax for grammar changes</h2>
 
