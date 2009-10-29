@@ -1,0 +1,75 @@
+[% setvar title Longest-Token Matching in Perl 6 %]
+[% setvar section article %]
+[% menu main article ltm %]
+
+<p>Published on 2009-10-29</p>
+<h1>[% readvar title %]</h1>
+
+<p>Longest-Token Matching, short LTM, is a concept from Perl 6 regexes which
+<a href="/en/article/mutable-grammar-for-perl-6">is essential to keep the
+grammar extensible</a>. It 
+basically states that in an
+alternation <code>&lt;rule1&gt; | &lt;rule2&gt; | &lt;rule3&gt; | ...</code> the
+longest alternative wins, if multiple of these rules actually match.</p>
+
+
+<p>But it's not quite as easy. Matching many rules to the bitter end might be
+quite expensive, so there's some limit as to what participates in LTM.</p>
+<p>Perl 6 regex features are split into two categories: declarative and
+procedural. The former includes <code>|</code> alternation, <code>&amp;</code> conjunction,
+<code>&lt;subrule&gt;</code> calls, literals, character classes and quantifiers, the
+latter includes non-declarative forms of alternation and conjunction (<code>||</code>
+and <code>&amp;&amp;</code>), code assertions <code>{...}</code>, backreferences <code>$0</code> or
+<code>$&lt;subrule&gt;</code> and other things that can't be represented by traditional
+regular expressions.</p>
+
+<p>Only the declarative prefixes of each rule participate in LTM. By
+<em>declarative prefix</em> we mean that each branch of the alternation may consist
+of declarative and procedural elements, and we start from the left of each
+branch, and take all declarative atoms until we find the first procedural
+one. All the declarative atoms at the start are the declarative prefix.</p>
+
+<pre>[% syntax escape %]
+ # declarative prefix
+ #   +-----+
+ #  /       \
+ | 'foo' \d+ [ <bar> || <baz> ]
+ | \s* [ a & b ] [ c | d] 
+ # \                   /
+ #  +----------------+
+ #  declarative prefix
+[% endsyntax %]</pre>
+
+<p>Subrule calls are notionally inlined for LTM, recursive calls (also by mutual
+recursion) end the declarative prefix (and are thus considered procedural
+for this matter).</p>
+
+<pre>
+ token a { 'A' &lt;a&gt;? }            # recursion limits LTM
+ token b { 'B' { say &quot;hi&quot; } }    # a closure limits LTM
+
+ token c {
+     | &lt;a&gt;   # effective declarative prefix: 'A'
+     | &lt;b&gt;   # effective declarative prefix: 'B'
+ }</pre>
+
+<p>So all the features allowed in declarative prefixes (after inlining, that is)
+are present in the traditional Regular Expressions (in the sense that computer
+scientist use it; aka Type-3 languages in the Chomsky hierarchy).</p>
+
+<p>So after all this preamble, we know that</p>
+<ul>
+    <li>branches of alternations are analyzed for declarative prefixes</li>
+    <li>these declarative prefixes are regular</li>
+    <li>the longest declarative prefix wins</li>
+</ul>
+
+<p>When the procedural part of the branch with the longest declarative prefix
+match fails, and backtracking is allowed, the second-longest is tried, so
+there might still be some backtracking going on.</p>
+
+<p>There's more to LTM - for example if two declarative prefixes match a string
+of the same length, the more specific one wins - string literals count as more
+specific than character classes, and so on.</p>
+
+<p>But this should describe the most important concepts.</p>
