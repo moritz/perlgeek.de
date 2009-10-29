@@ -50,7 +50,6 @@ href="http://perlgeek.de/blog-en/perl-6/announcing-sprixel.writeback">sprixel</a
 a Perl 6 to Javascript compiler.</p>
 
 <h3>Mildew</h3>
-emitter.</p>
 <p>Mildew now has an experimental javascript emitter.</p>
 
 <h2>Other matters</h2>
