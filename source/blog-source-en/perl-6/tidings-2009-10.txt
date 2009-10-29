@@ -1,0 +1,68 @@
+Perl 6 Tidings from October 2009
+<!-- 1256851013 -->
+
+<p>These tidings posts seem to become rather sparse, but I hope you get some
+news by reading the <a href="http://planetsix.perl.org/">Planet Six</a> feed
+aggregator anyway.</p>
+
+<h2>Specification</h2>
+
+<ul>
+    <li>Larry lifted up the dual nature of Ranges. They mostly serve as an
+    interval now, for smart iteration the series operator has been pimped up.
+    You can now write <code> for 1, 3 ... *+2, 9 { .say }</code> to print all
+    the odd numbers between 1 and 9. (r28344, r28348, r28351).</li>
+    <li><code>Rat</code>ional and Complex types now have their own literals
+    (r28173).</li>
+    <li>Stubbed classes are now documented (r28196, r28197).</li>
+    <li>The new <a href="http://perlcabal.org/syn/S08.html">S08</a> documents
+    Parcels and Captures.</li>
+    <li>The numeric types have been cleaned up a lot (r28502 and later commits
+    up to r28597).</li>
+    <li>New and improved signature introspection (r28664, r28665).</li>
+</ul>
+
+<h2>Compilers</h2>
+
+<h3>Rakudo</h3>
+
+<p>As opposed to two months ago, Rakudo now</p>
+
+<ul>
+    <li>supports the Rat type</li>
+    <li>supports overloading of many built-in operators</li>
+    <li>has contextual variables</li>
+    <li>has a faster and much better signature binder</li>
+    <li>supports all kind of trigonometric functions, including on complex
+    numbers</li>
+    <li>implements sophisticated signature introspection</li>
+</ul>
+
+<p>Patrick Michaud is also working on a new tool named npq-rx, which combines
+a self-hosting NQP compiler and a new regex engine, which already supports
+proto regexes, NQP code assertions and closures, and is generally much faster
+and better than PGE.</p>
+
+<h3>Sprixel</h3>
+
+<p>Mathew Wilson aka diakopter started <a
+href="http://perlgeek.de/blog-en/perl-6/announcing-sprixel.writeback">sprixel</a>,
+a Perl 6 to Javascript compiler.</p>
+
+<h3>Mildew</h3>
+emitter.</p>
+<p>Mildew now has an experimental javascript emitter.</p>
+
+<h2>Other matters</h2>
+
+<p><a href="http://perl6.org/">perl6.org</a> is redesigned again, this time
+spanning multiple pages, thus allowing much more stuff to be linked there.</p>
+
+<p>Four Perl 6 and Rakudo hackers <a
+href="http://perlgeek.de/blog-en/perl-6/we-write-a-perl-6-book-for-you.writeback">announced
+that they are writing a Perl 6 book</a>, the print release of which shall
+coincide with the release of Rakudo Star.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
+
