@@ -12,10 +12,10 @@ the algorithms you deal with.</p>
 <p>That's different if you learn Perl 6 - it's a largely unexplored field, and
 while there are loads of nice features, you might still feel a bit lost. At
 least I do.  That's because I often think <em>"There's got to be a much easier
-way to achieve $this</em>, but it often takes time find that easier solution -
-because nobody developed an idiom for it.</p>
+way to achieve $this</em>, but it often takes time to find that easier
+solution - because nobody developed an idiom for it.</p>
 
-<p>In that cases it helps to ask on the #perl6 IRC channel; many smart people
+<p>In those cases it helps to ask on the #perl6 IRC channel; many smart people
 read and write there, and are rather good in coming up with simpler
 solutions.</p>
 
