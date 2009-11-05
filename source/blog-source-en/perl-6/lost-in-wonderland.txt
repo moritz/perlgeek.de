@@ -33,7 +33,7 @@ these reduction methods first I used Perl 6 baby talk language.</p>
 <p>The nice things about exploring the Perl 6 wonderland of unexplored idioms
 is that it really pushes your ego if you find a nice simplification, and that
 you have something to blog about for the <a
-href="http://ironman.enlightenedperl.org/">Plant Perl Iron man</a> ;-)</p>
+href="http://ironman.enlightenedperl.org/">Planet Perl Iron man</a> ;-)</p>
 
 
 [% option no-header %][% option no-footer %]
