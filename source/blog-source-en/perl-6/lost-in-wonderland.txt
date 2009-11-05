@@ -1,0 +1,40 @@
+Perl 6: Lost in Wonderland
+<!-- 1257448016 -->
+
+<p>When you learn a programming language, you not only learn about the syntax,
+semantics and core libraries, but also the coding style and common
+idioms.</p>
+
+<p>Idioms are common usage patterns; learning and reusing them means you have
+to spend less time thinking on common things, and have more time working out
+the algorithms you deal with.</p>
+
+<p>That's different if you learn Perl 6 - it's a largely unexplored field, and
+while there are loads of nice features, you might still feel a bit lost. At
+least I do.  That's because I often think <em>"There's got to be a much easier
+way to achieve $this</em>, but it often takes time find that easier solution -
+because nobody developed an idiom for it.</p>
+
+<p>In that cases it helps to ask on the #perl6 IRC channel; many smart people
+read and write there, and are rather good in coming up with simpler
+solutions.</p>
+
+<p>For example see <a
+href="https://gist.github.com/224204/a13c291237d438f331dff6cf9b30d6759c9185b9">masak's
+ROT13 implementation in Perl 6</a>.  In the right column you can see later
+revisions, and how they gradually improve, steady up to a <a
+href="https://gist.github.com/224204/fdb1468afffb9bc122bb84797b9e0c4df6cf0c96">one-liner</a>.</p>
+
+<p>I also made <a
+href="http://github.com/moritz/json/commit/107a11c0b4f181c130a9ff0433e8939c730d3f53">some
+simplifications to JSON::Tiny</a>, which basically shows that when I wrote
+these reduction methods first I used Perl 6 baby talk language.</p>
+
+<p>The nice things about exploring the Perl 6 wonderland of unexplored idioms
+is that it really pushes your ego if you find a nice simplification, and that
+you have something to blog about for the <a
+href="http://ironman.enlightenedperl.org/">Plant Perl Iron man</a> ;-)</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
