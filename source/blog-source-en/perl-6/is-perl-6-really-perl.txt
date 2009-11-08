@@ -1,0 +1,43 @@
+Is Perl 6 really Perl?
+<!-- 1258066800 -->
+
+<p>A few days ago <a href="http://use.perl.org/~masak/journal/39861">masak
+blogged about the social aspect</a> of the <em>is Perl 6 really Perl?</em>
+question.</p>
+
+<p>He presumes that the answer is <em>yes</em>, but doesn't tell us why.
+I'll try to give some reasons.</p>
+
+<h2>Perl 6 started as the successor to Perl 5</h2>
+
+<p>Perl 6 <a
+href="http://www.mail-archive.com/perl6-meta@perl.org/msg00409.html">started
+off as the successor to Perl 5, at a Perl 5 meeting</a>, by the Perl
+crowd. It was a plan to escape both the backwards compatibility trap (which
+meant that broken things couldn't be fixed without many people yelling), and
+the lack of momentum in the community.</p>
+
+<h2>Perl 6 embraces the Perl philosophy</h2>
+
+<p>What makes Perl Perl? In my opinion it's not the sigils on variables that
+make Perl Perl, or that writing a regex only need two characters and so on.
+It's mostly the philosophy that makes the difference.</p>
+
+<p>There are some underlying principles like TIMTOWTDI, context sensitivity,
+convenience over consistency, making simple things easy and hard things
+possible, often used constructs short and less frequent things longer, and so
+on.</p>
+
+<p>Perl 6 is founded on all those philosophies and ideals, and also shares
+some technical principles. For example sigils on variables (oh, I mentioned
+them already ...), easy access to powerful regexes, that fact that operations
+coerce their arguments (instead of the type of arguments determining the
+operation like in javascript, where a <code>+</code> can either mean addition
+or string concatenation).</p>
+
+<p>So if you agree with my definition of what makes Perl Perl, Perl 6 is also
+Perl. If not, please tell me what's the essence of Perl!</p>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html: %]
