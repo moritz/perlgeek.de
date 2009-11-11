@@ -1,0 +1,19 @@
+Set Phasers to Stun!
+<!-- 1259190000 -->
+
+<p>Did you ever wonder how <code>BEGIN</code>, <code>CHECK</code>,
+<code>END</code> and so on are called in Perl? Well, they didn't have a good
+name, until <a
+href="http://irclog.perlgeek.de/perl6/2009-11-06#i_1695188">recently</a>.</p>
+
+<p>The Perl 6 spec listed them under <em>closure traits</em>, which is
+unwieldy, and not really exact either. <a
+href="http://perlcabal.org/svn/pugs/revision/?rev=29004">Now they are called
+<em>phasers</em></a>, because they tell you which execution phase the block or
+statement runs in.</p>
+
+<p>There are so many possible puns that I'll refrain from writing any.</p>
+
+[% option no-footer %][% option no-header %]
+[% comment vim: set ft=html spell tw=78: %]
+
