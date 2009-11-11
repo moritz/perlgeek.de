@@ -1,0 +1,54 @@
+Immutable Sigils and Context
+<!-- 1258585400 -->
+<p>If you have an array <code>@a</code> and want to access the first element,
+in Perl 5 you write that as <code>$a[0]</code>, in Perl 6 you write it as
+<code>@a[0]</code>. We call the former <em>mutable sigil</em>, and the latter
+<em>immutable sigil</em>.</p>
+
+<p>You might think that's a small change, but the implications are rather
+deep, and we've had quite a few discussions about it in <a
+href="http://irclog.perlgeek.de/perl6/today">#perl6</a>. In particular people
+often ask if it's possible to backport the Perl 6 behavior to Perl 5. The
+answer is <em>"not easily"</em>.</p>
+
+<p>In Perl 5 context propagates inwards, which means that in a statement like
+
+<pre>
+... = func()
+</pre>
+
+<p>The compiler wants to know at compile time which context
+<code>func()</code> is in. If it doesn't, it complains:</p>
+
+<pre>[% syntax escape %]
+2$ perl -ce '(rand() < 0.5 ? $a : @a) = func()'
+Assignment to both a list and a scalar at -e line 1, at EOF
+-e had compilation errors.
+[% endsyntax %]</pre>
+
+<!-- unfreakout syntax hilightiing -->
+
+<p>This also means that, in Perl 5,  array slices and scalar array accesses have to be
+syntactically distinguished:</p>
+
+<pre>[% syntax perl %]
+my @a;
+$a{other_func()} = ...; # scalar context
+@a{other_func()} = ...; # list context
+[% endsyntax %]</pre>
+
+<p>So you can't just make sigils in Perl 5 immutable without also rewriting
+the whole context handling rules.</p>
+
+<p>In Perl 6 that's not a problem at all, because functions don't know the
+context they're in, in fact can't know because of multi dispatch.</p>
+
+<p>Instead functions return objects that behave appropriately in various
+contexts, and the context is determined at run time.</p>
+
+<p>After getting used to it the immutable sigils are quite nice, and less
+complicated when references are involved. Anybody who objects without having
+tried it for at least three weeks, and is spoiled by Perl 5, will be shot.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
