@@ -1,5 +1,5 @@
 Is Perl 6 really Perl?
-<!-- 1258066800 -->
+<!-- 1258026641 -->
 
 <p>A few days ago <a href="http://use.perl.org/~masak/journal/39861">masak
 blogged about the social aspect</a> of the <em>is Perl 6 really Perl?</em>
