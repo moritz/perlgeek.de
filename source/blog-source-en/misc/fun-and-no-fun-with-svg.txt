@@ -62,8 +62,9 @@ some styling information.</p>
 <img src="/images/blog/sprixel-opera.png"   width="401" height="202"
     alt="rendered by opera" />
 
-<p>Three renderers, three outputs. Neither Firefox nor Inkview support the
-<code>textLength</code> attribute, which is a real pity, because it's the only
+<p>Three renderers, three outputs. Neither Firefox nor Inkview support <a
+href="http://www.w3.org/TR/SVG/text.html#TSpanElementTextLengthAttribute">the
+<code>textLength</code> attribute</a>, which is a real pity, because it's the only
 way you can make a program emit SVG files where text is guaranteed not to
 overlap.</p>
 
