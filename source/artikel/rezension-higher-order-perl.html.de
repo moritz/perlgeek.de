@@ -55,6 +55,5 @@ dieses Buch herum.</p>
 href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben, und ist dort
 in der 6. Ausgabe (Mitte 2008) erschienen.</p>
 
-<p class="svn-keywords">$Id$</p>
 [% comment vim: ft=perl spell spelllang=de_de
 %]

@@ -182,8 +182,6 @@ wird <code>find()</code> aufgerufen, was den Rest des Hashes aufbraucht
 fängt wieder von vorne an, weil der Iterator ja einmal ganz durchgelaufen
 war.</p>
 
-<p class="svn-keywords">$Id$</p>
-
 [% comment 
     vim: ft=html spell spelllang=de_de
 %]

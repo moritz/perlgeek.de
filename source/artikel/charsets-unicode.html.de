@@ -459,6 +459,5 @@ use encoding ':locale';[%endsyntax%]</pre>
     href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben und in der 5.
     Ausgabe (Anfang 2008) veröffentlicht.</p>
 
-    <p class="svn-keywords">$Id$</p>
 [% comment vim: ft=html spell spelllang=de_de 
 %]

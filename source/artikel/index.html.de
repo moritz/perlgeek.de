@@ -7,8 +7,6 @@
 <p>Hier gibt es eine kleine Sammlung von Artikeln über Programmierung im
 Allgemeinen, und zum Teil über Perl.</p>
 
-<p class="svn-keywords">$Id$</p>
-
 [% comment
     vim: ft=html
 %]
