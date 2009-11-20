@@ -1,0 +1,81 @@
+Doubt and Confidence
+<!-- 1259967600 -->
+
+<p>
+    &lt;meta&gt;From my <em>useless musings</em> series.&lt;/meta&gt;
+</p>
+
+<p>
+    As a programmer you have to have confidence in your skills, to some
+    extend, and at the same time you have to constantly doubt them. Weird, eh?
+</p>
+
+<h2>Confidence</h2>
+
+<p>
+    You need some level of confidence to do anything efficiently.
+    Planning ahead requires confidence that you can achieve the steps
+    on your way.
+</p>
+
+<p>
+    As a programmer you also need some confidence with the language,
+    libraries and other tools you're using.
+</p>
+
+<p>
+    If you program for money, you also have to assess what kind of programs
+    you can write, and where you might have problems.
+</p>
+
+<h2>Doubt</h2>
+
+<p>
+    In the process of programming you make a lot of assumptions, some of the
+    explicit, some of them implicit. If you want to write a good program, it's
+    essential that you are aware of as many assumptions as possible.
+</p>
+
+<p>
+    When you find a bug in your program, you have to challenge previous
+    assumptions, and that's where doubt comes in. You not only suspect, but
+    you <em>know</em> that at least one of the assumptions was false (or maybe
+    just a bit too specific), and you know that <em>you</em> did something
+    wrong.
+</p>
+
+<p>
+    Sometimes programmers make really stupid mistakes which are rather tricky
+    to track down. That's when you have to question your own sanity.
+</p>
+
+<p>
+    One example (that luckily doesn't happen all that often to me) is when I
+    edit my program, and nothing seems to change. Nothing at all. Depending on
+    the setup it might be some cache, but something it is even more
+    devious - for example I didn't notice that the console where I edit and
+    the console where I test are on different hosts - and thus the edits
+    actually have no effect at all.
+</p>
+
+<p>
+    After having done such a thing once or twice I adopted the habit of just
+    adding a <code>die('BOOM');</code> instruction to my code, to verify that
+    the part I'm looking at is actually run.
+</p>
+
+<p>
+    These are moments when I question my own sanity, thinking "how could I
+    have possibly done such a stupid thing?". Doubt.
+</p>
+
+<p>
+    The same phenomena applies when doing scientific research: since you
+    usually do things that nobody has done before (or at nobody has published
+    about it yet), you can't know the results beforehand -- if you could, your
+    research would be rather boring. So you have no external reference for
+    verification, only your intuition and discussion with peers.
+</p>
+
+[% option no-header %] [% no-footer %]
+[% vim: set ft=html spell: %]
