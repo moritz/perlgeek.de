@@ -77,5 +77,5 @@ Doubt and Confidence
     verification, only your intuition and discussion with peers.
 </p>
 
-[% option no-header %] [% no-footer %]
-[% vim: set ft=html spell: %]
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
