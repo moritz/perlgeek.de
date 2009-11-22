@@ -4,7 +4,8 @@
 
 <h1>[% readvar title %]</h1>
 
-<p>ISBN 1-55860-701-3, erschienen 2005 bei Morgan Kaufmann.</p>
+<p><a href="http://hop.perl.plover.com/">ISBN 1-55860-701-3, erschienen 2005
+bei Morgan Kaufmann</a>.</p>
 
 <p>Um funktional programmieren zu lernen, muss man nicht Lisp lernen und sich mit
 zig Klammern herumschlagen. Perl hat fast alles unter der Haube, was man für
@@ -12,8 +13,8 @@ funktionale Programmierung braucht. Doch wenige Programmierer benutzen diese
 mächtigen Werkzeuge, größtenteils weil sie in den bisherigen Lehrbüchern
 stiefmütterlich behandelt wird.</p>
 
-<p>``Higher Order Perl'' ändert das. Der Leser wird behutsam und Schritt für
-Schritt an Rekursion, Referenzen auf Funktion, Callbacks und schliesslich 
+<p><em>Higher Order Perl</em> ändert das. Der Leser wird behutsam und Schritt für
+Schritt an Rekursion, Referenzen auf Funktion, Callbacks und schließlich
 Closures
 herangeführt. Mit vielen zum Teil sehr praxisnahen Beispielen wird gezeigt,
 wie durch Verwendung der genannten Techniken ähnliche Stücke Programmcode zu
@@ -36,7 +37,7 @@ von linearen Gleichungssystemen.</p>
 wie etwa das Entfernen von HTML-Tags und ein Crawler für Webseiten.</p>
 <p>``Higher Order Perl'' ist sehr gut zu lesen, allerdings nicht am Stück von vorne
 bis hinten - dafür wird zu viel ungewöhnliches Wissen vermittelt. Auch braucht
-man Zeit dafür, das Gelesene in das Repertoir der eigenen Programmiertechniken
+man Zeit dafür, das Gelesene in das Repertoire der eigenen Programmiertechniken
 einzubauen. Der Text ist ab und an durch kleinere Anekdoten aufgelockert, die
 recht gut zum Thema passen und den Leser zum schmunzeln bringen. Grafiken gibt
 es wenige, die vorhanden sind klar und einfach gehalten und illustrieren
@@ -46,7 +47,7 @@ anschaulich das aktuelle Problem.</p>
 das Gefühl hat, seine Programmierprobleme zwar mit Perl lösen zu können, aber
 nicht immer elegant. Auch zukünftigen Perl 6-Hackern kommt das Wissen um
 funktionale Programmierung zu Gute, weil Perl 6 viele funktional angehauchte
-Features hat. Wer Ambitionen als Perlprogrammier hat, kommt nicht um
+Features hat. Wer Ambitionen als Perlprogrammierer hat, kommt nicht um
 dieses Buch herum.</p>
 
 <hr />
@@ -55,5 +56,4 @@ dieses Buch herum.</p>
 href="http://foo-magazin.de/">$foo-Magazin</a> geschrieben, und ist dort
 in der 6. Ausgabe (Mitte 2008) erschienen.</p>
 
-[% comment vim: ft=perl spell spelllang=de_de
-%]
+[% comment vim: set ft=html spell spelllang=de_de: %]
