@@ -1,0 +1,145 @@
+[%setvar section article %]
+[%setvar title How to set up a clean UTF-8 envirnoment in Linux %]
+[% menu main article utf8 %]
+
+<h1>[% readvar title %]</h1>
+
+<p>Many people have problems with handling non-ASCII characters in their
+programs, or even getting their IRC client or text editor to display them
+correctly.</p>
+
+<p>To efficiently work with text data, your environment has to be set up
+properly - it is so much easier to debug a problem which has encoding issues
+if you can trust your terminal to correctly display correct UTF-8.</p>
+
+<p>I will show you how to set up such a clean environment on Debian Lenny, but
+most things work independently of the distribution, and parts of it even work
+on other Unix-flavored operating systems like MacOS X.</p>
+
+<h2>Choosing an encoding</h2>
+
+<p>In the end the used character encoding doesn't matter much, as long as it's
+a Unicode encoding, i.e. one which can be used to encode all Unicode
+characters.</p>
+
+<p>UTF-8 is usually a good choice because it efficiently encodes ASCII data
+too, and the character data I typically deal with still has a high percentage
+of ASCII chars. It is also used in many places, and thus one can often avoid
+conversions.</p>
+
+<p>Whatever you do, chose one encoding and stick to it, for your whole system.
+On Linux that means text files, file names, locales and all text based
+applications (mutt, slrn, vim, irssi, ...).</p>
+
+<p>For the rest of this article I assume UTF-8, but it should work very
+similarly for other character encodings.</p>
+
+
+<h2>Locales: installing</h2>
+
+<p>Check that you have the <code>locales</code> package installed. On Debian
+you can do that with.</p>
+
+<pre>[% syntax escape %]
+$ dpkg -l locales
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Cfg-files/Unpacked/Failed-cfg/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Hold/Reinst-required/X=both-problems (Status,Err: uppercase=bad)
+||/ Name           Version        Description
++++-==============-==============-============================================
+ii  locales        2.7-18         GNU C Library: National Language (locale) da
+[% endsyntax %]</pre>
+
+<p>The last line is the important one: if it starts with <code>ii</code>, the
+package is installed, and everything is fine. If not, install it. As root,
+type</p>
+
+<pre>[% syntax escape %]
+$ aptitude install locales
+[% endsyntax %]</pre>
+
+<p>If you get a dialog asking for details, read on to the next section.</p>
+
+<h2>Locales: generation</h2>
+
+<p>make sure that on your system an UTF-8 locale is generated. As root, type</p>
+
+<pre>[% syntax escape %]
+$ dpkg-reconfigure locales
+[% endsyntax %]</pre>
+
+<p>You'll see a long list of locales, and you can navigate that list with the
+up/down arrow keys. Pressing the space bar toggles the locale under the
+cursor. Make sure to select at least one UTF-8 locale, for example
+<code>en_US-UTF-8</code> is usually supported very well. (The first part of
+the locale name stands for the language, the second for the country or
+dialect, and the third for the character encoding).</p>
+
+<p>In the next step you have the option to make one of the previously selected
+locales the default. Picking a default UTF-8 locale as default is usually a
+good idea, though it might change how some programs work, and thus shouldn't
+be done servers hosting sensitive applications.</p>
+
+<h2>Locales: configuration</h2>
+
+<p>If you chose a default locale in the previous step, log out completely and
+then log in again. In any case you can configure your per-user environment
+with environment variables.</p>
+
+<p>The following variables can effect programs: LANG, LANGUAGE, LC_CTYPE, 
+LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES, LC_PAPER, LC_NAME,
+LC_ADDRESS, LC_TELEPHONE, LC_MEASUREMENT, LC_IDENTIFICATION.</p>
+
+<p>Most of the time it works to set all of these to the same value. Instead of
+setting all LC_ variables separately, you can set the <code>LC_ALL</code>. If
+you use bash as your shell, you can put these lines in your
+<code>~/.bashrc</code> and <code>~/.profile</code> files:</p>
+
+<pre>[% syntax escape %]
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+[% endsyntax %]</pre>
+
+<p>To make these changes active in the current shell, source the .bashrc:</p>
+
+<pre>[% syntax escape %]
+$ source ~/.bashrc
+[% endsyntax %]</pre>
+
+<p>All newly started interactive bash processes will respect these settings.</p>
+
+<h2>Locales: check</h2>
+
+<p>Run the <code>locale</code> program. The output should be similar to
+this:</p>
+
+<pre>[% syntax escape %]
+LANG=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=en_US.UTF-8
+[% endsyntax %]</pre>
+
+<p>If not you've made a mistake in one of the previous steps, and need to
+recheck what you did.</p>
+
+<h2>Setting up the terminal</h2>
+
+<p>TODO</p>
+
+<pre>[% syntax escape %]
+[% endsyntax %]</pre>
+[% comment vim: spell ft=html
+%]
