@@ -135,9 +135,13 @@ LC_ALL=en_US.UTF-8
 <p>If not you've made a mistake in one of the previous steps, and need to
 recheck what you did.</p>
 
-<h2>Setting up the terminal</h2>
+<h2>Setting up the terminal emulator</h2>
 
-<p>TODO</p>
+<p>Setting up the terminal emulator for your terminal emulator strongly
+depends on what you actually use. If you use <code>xterm</code>, you can start
+it as <code>xterm -en utf-8</code>, <a
+href="http://konsole.kde.org/">konsole</a> and the Gnome Terminal can be
+configured in their respective configuration menus.</p>
 
 <pre>[% syntax escape %]
 [% endsyntax %]</pre>
