@@ -34,7 +34,7 @@ one. All the declarative atoms at the start are the declarative prefix.</p>
  #   +-----+
  #  /       \
  | 'foo' \d+ [ <bar> || <baz> ]
- | \s* [ a & b ] [ c | d] 
+ | \s* [ \w & b ] [ c | d]
  # \                   /
  #  +----------------+
  #  declarative prefix
