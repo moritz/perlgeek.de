@@ -7,7 +7,7 @@ Doubt and Confidence
 
 <p>
     As a programmer you have to have confidence in your skills, to some
-    extend, and at the same time you have to constantly doubt them. Weird, eh?
+    extent, and at the same time you have to constantly doubt them. Weird, eh?
 </p>
 
 <h2>Confidence</h2>
