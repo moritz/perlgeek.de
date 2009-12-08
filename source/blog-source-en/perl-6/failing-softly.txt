@@ -1,0 +1,57 @@
+Perl 6: Failing Softly with Unthrown Exceptions
+<!-- 1260302442 -->
+
+<p>Most programming languages handle failures with either of two paradigms:
+failing routines return special values, or they throw exceptions.</p>
+
+<p>Either way has its severe problems: in languages like C it can be very
+simple to forget to catch such a return value, and very tedious to propagate
+them to the caller; on the other hand throwing exceptions often clutters the
+code with way too many <code>try</code> blocks, and it's  generally unfriendly
+if you try to automatically parallelize expressions.</p>
+
+<p>So Perl 6 offers a middle ground: <em>soft</em> or <em>unthrown</em>
+exceptions. If a routine calls <code>fail("message")</code>, a new
+<code>Exception</code> object is created and returned from the current
+routine. That object behaves as an undefined value, which stores the message,
+file and line information of the fail() location, a backtrace and so on.</p>
+
+<p>When you ask such an object whether it's true or false, or defined or
+undefined, you'll get a correct answer, and the exception is marked as
+handled. However if you try to use it as an ordinary value, it turns into an
+(ordinary) fatal exception. So both of these work:</p>
+
+<pre>[% syntax perl6 %]
+# Variant 1: no exception thrown
+
+my $handle = open('nonexistingfile');
+if $handle {
+    .say for $handle.lines;
+} else {
+    # do something else
+}
+
+
+# Variant 2
+
+my $handle = open('nonexistingfile');
+
+# throws a fatal exception while calling $handle.lines
+.say for $handle.lines;
+[% endsyntax %]</pre>
+
+<p>Now if you do some automatically parallelized operations, a single failure
+doesn't have to abort the whole operation, and neither is information lost</p>
+
+<pre>[% syntax perl6 %]
+# divide @a1 by @a2 element-wise, a division by zero might occur:
+@a1 »/« @a2;
+[% endsyntax %]</pre>
+
+<p>The API for accessing the <code>Exception</code> objects isn't very mature
+yet, but the concept stands. See <a
+href="http://perlcabal.org/syn/S04.html#Exceptions">S04/Exceptions</a> for the
+gory details, as they stand today.</p>
+
+[% option no-footer %][% option no-header %]
+[% comment vim: set ft=html spell tw=78: %]
