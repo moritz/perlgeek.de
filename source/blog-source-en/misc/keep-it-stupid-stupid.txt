@@ -1,0 +1,38 @@
+Keep it stupid, stupid!
+<!-- 1260310486 -->
+
+<p>How hard is it to build a good search engine? Very hard. So far I thought
+that only one company has managed to build a search engine that's not only
+decent, but good.</p>
+
+<p>Sadly, they seem to have overdone it. Today I searched for <a
+href="http://www.google.com/search?hl=en&q=tagged+dfa">tagged dfa</a>. I was
+looking for a technique used in regex engines. On the front page three out
+of ten results actually dealt with the subjects, the other uses of
+<em>dfa</em> meant <em>dog friendly area</em>, <em>department of foreign
+affairs</em> or other unrelated things.</p>
+
+<p>That's neither bad nor unexpected. But I wanted more specific results, so I
+decided against using the abbreviation, and searched for the full form: <a
+href="http://www.google.com/search?hl=en&q=tagged+deterministic+finite+automaton">tagged
+deterministic finite automaton</a>. You'd think that would give better
+results, no?</p>
+
+<p>No. It gave worse. On the first result page only one of the hits actually
+dealt with the DFAs I was looking for. Actually the first hit contained none
+of my search terms. None. It just contained a phrase, which is also sometimes
+abbreviated <em>dfa</em>.</p>
+
+<p>WTF? Google seemed to have internally converted my query into an
+ambiguous, abbreviated form, and then used that to find matches, without
+filtering. So it attempted to be very smart, and came out very stupid.</p>
+
+<p>I doubt that any Google engineer is ever going to read this rant. But if
+one is: <strong>Please, Google, keep it stupid, stupid</strong>.</p>
+
+<p>I'm fine with getting automatic suggestions on how to improve my search
+query; but please don't automatically "improve" it for me. I want to find what
+I search for. I'm not interested in dog friendly areas.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
