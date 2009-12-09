@@ -12,7 +12,7 @@ if you try to automatically parallelize expressions.</p>
 
 <p>So Perl 6 offers a middle ground: <em>soft</em> or <em>unthrown</em>
 exceptions. If a routine calls <code>fail("message")</code>, a new
-<code>Exception</code> object is created and returned from the current
+<code>Failure</code> object is created and returned from the current
 routine. That object behaves as an undefined value, which stores the message,
 file and line information of the fail() location, a backtrace and so on.</p>
 
@@ -48,7 +48,7 @@ doesn't have to abort the whole operation, and neither is information lost</p>
 @a1 »/« @a2;
 [% endsyntax %]</pre>
 
-<p>The API for accessing the <code>Exception</code> objects isn't very mature
+<p>The API for accessing the <code>Failure</code> objects isn't very mature
 yet, but the concept stands. See <a
 href="http://perlcabal.org/syn/S04.html#Exceptions">S04/Exceptions</a> for the
 gory details, as they stand today.</p>
