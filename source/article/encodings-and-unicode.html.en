@@ -196,7 +196,7 @@
     data.
     The same holds true for the return value of many built-in functions (like
     <code>gethostbyname</code>) and special variables that
-    carry information to your program (<code>%ENC</code> and <code>@ARGV</code>).
+    carry information to your program (<code>%ENV</code> and <code>@ARGV</code>).
 </p>
 
 <p>
