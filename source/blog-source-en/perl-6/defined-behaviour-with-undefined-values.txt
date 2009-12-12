@@ -1,0 +1,41 @@
+Defined Behaviour with Undefined Values
+<!-- 1260636219 -->
+
+<p>In Perl 5 there is the <code>undef</code> value. Uninitialized variables
+contain <code>undef</code>, as well as non-existing hash values, reading from
+unopened or exhausted file handles and so on.</p>
+
+<p>In Perl 6 the situation is a bit more complicated: variables can have a
+type constraint, and are initialized with the corresponding type object:</p>
+
+<pre>[% syntax perl6 %]
+my Int $x;
+say Int.WHAT();     # Int()
+[% endsyntax %]</pre>
+
+<p>These type objects are also <em>undefined</em>, but in Perl 6 that doesn't
+mean they are a magical value named <code>undef</code>, but that they respond
+with <code>False</code> to the <code>defined()</code> subroutine and
+method.</p>
+
+<p>In fact there is no <code>undef</code> anymore. Instead there are various
+values that can take its place:</p>
+
+<p><code>Mu</code> is the type object of the root type of the object hierarchy
+(or put differently, every object in Perl 6 conforms to <code>Mu</code>). It's
+the most general undefined value you can think of.</p>
+
+<p><code>Nil</code> is a "magic" value: in item (scalar) context it evaluates to
+<code>Mu</code>, in list context it evaluates to the empty list. It's the
+<em>nothing to see here, move along</em> value.</p>
+
+<p>Each type has a type object; if you want to return a string, but can't
+decide which, just return a <code>Str</code>.</p>
+
+<p>Other interesting undefined values are <code>Exception</code> (which
+usually contain a message and  a back trace), <code>Failure</code> (unthrown
+exceptions), <code>Whatever</code> is a generic placeholder that can stand for
+"all", "infinitely many", "many" or as a placeholder for a real value.</p>
+
+[% option no-footer %][% option no-header %]
+[% comment vim: set ft=html spell tw=78: %]
