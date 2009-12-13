@@ -1,0 +1,40 @@
+Publicity for Perl 6
+<!-- 1261177200 -->
+<p>I've blogged about the <a href="http://perl6advent.wordpress.com/">Perl 6
+Advent Calendar 2009</a>, and want to follow up that it's been a huge success
+so far.<7p>
+
+<p>We're about half-way through, and you might be interested in our number of
+visits per day:</p>
+
+<a src="http://perlgeek.de/images/blog/advent-slashdot-peak.png" width="682"
+height="260" alt="visitors per day: about 1k to 2k visitors per day, except
+for 6th and 7th of December with 9000 visitors each" />
+
+<p>On 6th and 7th of December we had about 18k visitors in sum, courtesy of <a
+href="http://developers.slashdot.org/story/09/12/06/196202/The-Perl-6-Advent-Calendar">slashdot</a>
+and <a href="http://twitter.com/timoreilly/status/6418183386">Tim O'Reilly on
+Twitter</a>.</p>
+
+<p>As a result we got a lot of new people in our #perl6 IRC channel, asking
+for help on how to get Rakudo working, how to code some specific things in
+Perl 6, or asking about general design decisions.</p>
+
+<p>Also mj41 reported that he <a
+href="http://tapir2.ro.vutbr.cz/P6aP-links/stats.html">has collected more than
+50% more Perl 6/parrot blog posts than in the previous year</a>.</p>
+
+<p>We've also <a
+href="http://perlgeek.de/blog-en/perl-6/a-shiny-perl6-org.html">acquired
+perl6.org</a> for our uses this year, and it has been promoted enough to be
+the third hit on a google search for <code>Perl 6</code>.</p>
+
+<p>All in all I'm rather happy with the marketing state of Perl 6 in 2009, and
+hope to see similar efforts for 2010. With the upcoming releases of <a
+href="http://use.perl.org/~pmichaud/journal/39411">Rakudo Star</a> and <a
+href="http://perlgeek.de/blog-en/perl-6/we-write-a-perl-6-book-for-you.html">a
+Perl 6 book</a> I'm pretty sure we'll do well, and I hope for more slashdot
+coverage :-).</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
