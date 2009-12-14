@@ -143,7 +143,43 @@ it as <code>xterm -en utf-8</code>, <a
 href="http://konsole.kde.org/">konsole</a> and the Gnome Terminal can be
 configured in their respective configuration menus.</p>
 
+<h2>Testing the terminal emulator</h2>
+
+<p>To test if you terminal emulator works, copy and paste this line in your
+shell:</p>
+
 <pre>[% syntax escape %]
+perl -Mcharnames=:full -CS -wle 'print "\N{EURO SIGN}"'
 [% endsyntax %]</pre>
+
+
+<p>This should print a Euro sign <code>€</code> on the console. If it prints a
+single question mark instead, your fonts might not contain it. Try installing
+additional fonts. If multiple different (nonsensical) characters are shown,
+the wrong character encoding is configured. Keep trying :-).</p>
+
+<h2>SSH</h2>
+
+<p>If you use SSH to log in into another machine, repeat the previous steps,
+making sure that the locale is set correctly, and that you can view a
+non-ASCII character like the Euro sign.</p>
+
+<h2>Screen</h2>
+
+<p>The <a href="http://www.gnu.org/software/screen/">screen</a> program can
+work with UTF-8 if you tell it to.</p>
+
+<p>The easiest (and sometimes the only) way is to start it with the <code>-U</code> option:</p>
+
+<pre>
+$ screen -U
+</pre>
+
+<p>and also when detaching (<code>screen -Urd</code> or so).</p>
+
+<p>Inside a running screen you can try <code>Ctrl+a :utf8
+on&lt;return&gt;</code>. If that doesn't work, exit your screen and start a
+new one with -U</p>
+
 [% comment vim: spell ft=html
 %]
