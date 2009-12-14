@@ -65,7 +65,7 @@ href="http://www.github.com/moritz/svg-plot/">SVG::Plot</a>; the right hand
 side uses floats, the left hand side uses Rats. With floats the zero axis
 label is not exactly zero, but a small number close to zero. Instead of making
 a special case for the zero label, or introducing complicated rounding rules,
-I switcht to Rats - which just implied changing a <code>5.0</code> (Num) to
+I switched to Rats - which just implied changing a <code>5.0</code> (Num) to
 <code>5</code> (Int).</p>
 
 <p>(Back in the days when I used pugs for Perl 6 programming I found the
