@@ -2,7 +2,7 @@ Publicity for Perl 6
 <!-- 1261177200 -->
 <p>I've blogged about the <a href="http://perl6advent.wordpress.com/">Perl 6
 Advent Calendar 2009</a>, and want to follow up that it's been a huge success
-so far.<7p>
+so far.</p>
 
 <p>We're about half-way through, and you might be interested in our number of
 visits per day:</p>
