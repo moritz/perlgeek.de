@@ -1,0 +1,61 @@
+Why was the Perl 6 Advent Calendar such a Success?
+<!-- 1261782000 -->
+
+<p>I think it's not too bold to call the <a
+href="http://perl6advent.wordpress.com/">Perl 6 Advent Calendar</a> a full
+success: over 40k page views, more than 150 non-spam comments, and lots of
+new faces and nicknames in #perl6 - it's been a very pleasant surprise.</p>
+
+<p>I asked myself why it became such a success, and came up with this list of
+things:</p>
+
+<h3>Limited in Scope</h3>
+
+<p>24 days are over rather quickly, so everyone who contributes knows when the
+deed is done</p>
+
+<h3>It appeals to very different contributors</h3>
+
+<p>Some people like the shiny new regex and grammar features, others are
+interested in the object model, operator overloading or complex numbers.
+Since we had no fixed topics, everybody could choose a topic that played to
+their strengths.</p>
+
+<h3>Each task is small and well limited</h3>
+
+<p>Writing a good post about a topic you know takes about half an hour up to
+an hour, maybe two if you need to do some research on the topic. Either way
+it's a relatively small task (compared to "write a regex engine" or "redesign
+the build system of $compiler" or so).</p>
+
+<h3>Schedule and polite nagging</h3>
+
+<p>We had a schedule for each day, and people could add their name to a free
+slot. When the day approached, the other authors started to ask politely how
+it was progressing, making sure people did not forget their posts. Also
+authors felt the subtle pressure to finish their posts on time.</p>
+
+<h3>Lots of positive feedback</h3>
+
+<p>We had lots of feedback, most of it quite positive: blog comments, visitors
+in our IRC channel, being featured on slashdot. That was very encouraging.</p>
+
+<p>Also other authors would preview and proof-read the posts before they were
+published, pointing out falsities and gems.</p>
+
+<h3>We had a driving force</h3>
+
+<p>PerlJam and colomon took care. The decided to make the advent calendar
+happen, set up a blog, discussed things and so on - they made it happen.</p>
+
+<hr />
+
+<p>All these factors encouraged contributions. I don't think all of them are
+necessary for a successful, lively projects, but they certainly help.</p>
+
+<p>What other factors do you know that encourage contribution in open-source
+projects? What could we have done even better?</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell : %]
+
