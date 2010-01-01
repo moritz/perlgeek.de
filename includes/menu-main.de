@@ -21,6 +21,7 @@
                 <h3>Beliebeste Seiten</h3>
                 <ul>
                     <li><a href="/de/artikel/charsets-unicode">Artikel: Charsets und Unicode</a></li>
+                    <li><a href="/blog-en/">Blog (Englisch)</a></li>
                     <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a></li>
                 </ul>
                 </div>

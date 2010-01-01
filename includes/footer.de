@@ -9,7 +9,7 @@
 		<div id="footer">Urheberrechte: Moritz Lenz<br />
         <a href="/de/lizenz">Lizenz</a>
         <br />
-Layout based on <a href="http://www.yaml.de/">YAML</a>, erstellt mit <a
+Layout basiert auf <a href="http://www.yaml.de/">YAML</a>, erstellt mit <a
 href="/de/software/mowyw">mowyw</a> [% ifvar is_blog %]und <a
 href="http://www.blosxom.com/">blosxom</a>[% endifvar %].
 </div>
