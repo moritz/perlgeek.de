@@ -4,8 +4,29 @@
 [%setvar en /en/article/ %]
 <h1>[%readvar title%]</h1>
 
-<p>Hier gibt es eine kleine Sammlung von Artikeln über Programmierung im
-Allgemeinen, und zum Teil über Perl.</p>
+<p>Hier gibt es eine kleine (aber stetig wachsende) Sammlung von Artikeln
+über Programmierung im Allgemeinen, und zum Teil über Perl.</p>
+
+<p>Eher an Programmieranfänger richten sich die Beschreibungen <a
+href="/de/artikel/einfach-verkettete-listen">einfach</a> und <a
+href="/de/artikel/doppelt-verkettete-listen">doppelte verketteter
+Listen</a>.</p>
+
+<p>Wie man Text im Computer darstellen kann, und was für Probleme daraus
+entstehen können, beschreibe ich im Artikel <a
+href="/de/artikel/charsets-unicode">Zeichenkodierungen oder „Warum
+funktionieren meine Umlaute nicht?”</a>, wobei der erste Teil unabhängig von
+Programmiersprachen ist und damit von allgemeinem Interesse; der zweite Teile
+befasst sich ausgiebig damit, wie Perl 5 mit diesem Thema umgeht.</p>
+
+<p>Rein Perl-spezifisch sind die <a
+href="/de/artikel/schwaechen-von-perl-5">Schwächen von Perl 5</a> sowie die
+Buchrezension <a href="/de/artikel/rezension-higher-order-perl">Higher Order
+Perl</a>.</p>
+
+<p>Wenn Sie Englisch verstehen, empfehle ich Ihnen noch <a
+href="/en/article/">die Englische Version dieser Seite</a>, da ich auch
+Artikel auf Englisch schreibe, die ich (noch?) nicht übersetzt habe.</p>
 
 [% comment
     vim: ft=html
