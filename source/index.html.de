@@ -67,12 +67,18 @@
         zu <a href="http://perlmongers.de/?ErlangenPM">Erlangen.pm</a>.
     </li>
     <li>
-        Diese Seite befasst sich größtenteils mit Perl 5. Die nächste große
-        Version ist 
-        Perl 6, ihr habe ich <a href="http://perl-6.de/">die bisher einzige 
-        ernsthafte deutsche Perl 6-Seite</a> gewidmet. Dort gibt es
+        Diese Seite befasst sich mit Perl 5 und Perl  6.
+        Der visionären Programmiersprache Perl 6, die aus der Perl-Community
+        unter Federführung von Larry Wall hervorging, widme ich
+        <a href="http://perl-6.de/">die bisher einzige 
+        ernsthafte deutsche Perl 6-Seite</a>. Dort gibt es
         Informationen zum Entwicklungs- und Designprozess, Tutorials und
         aktuelle Nachrichten.
+    </li>
+    <li>
+        Die zentrale Anlaufstelle für Perl 6 ist
+        <a href="http://perl6.org/">perl6.org, die offizielle Perl 6
+        homepage</a>.
     </li>
 </ul>
 
