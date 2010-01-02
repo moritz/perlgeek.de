@@ -1,0 +1,223 @@
+Perl 6 in 2009
+<!-- 1262527200 -->
+
+<p>Much has happened in the Perl 6 land in 2009. Here is my humble attempt to
+summarize some of it; If you find something that I missed, feel free to
+contact me, I'll try to add it.</p>
+
+<h2>Specification</h2>
+
+<p>The year started with lots of improvements to <a
+href="http://perlcabal.org/syn/S19.html">S19</a>. In January we also learned
+that <code>*-1</code> constructs a closure, which means that Perl 6 has
+semi-automatic currying features built into most operators.</p>
+
+<h3>Lists, Captures and Parcels</h3>
+
+<p>We've seen a lot of talk about slices, lists, captures and parcels.
+The heart of the discussions is always how interpolation and non-interpolation
+of lists can be made both flexible and intuitive. For example: should <code>1,
+2, 3 Z 'a', 'b', 'c'</code> return a single, flat list? or instead a list of
+lists? How can a function which receives the result decide for itself what it
+want to receive? How does that mix with multi-dimensional arrays?</p>
+
+<p>I haven't followed these discussions very closely, and so I'm hard pressed
+to give a good summary; however it seems that in the end an agreement was
+reached: each parenthesis constructs a <code>Parcel</code>, short for
+<em><strong>Par</strong>enthesis <strong>cel</strong>l</em>. A Parcel can
+behave context sensitively: A single-item Parcel degrades to its contents; as
+a signature list it is converted to a <code>Capture</code> object; code object
+also return parcels.</p>
+
+<p>It remains to be seen how multi-dimensional slices (with the
+<code>@@</code> sigil) evolve, and if we can't find anything suitable to
+replace them.</p>
+
+<h3>Built-in Routines</h3>
+
+
+<p>S29, the list of built-in functions and methods, finally got some long
+awaited attention in 2009, starting with <a
+href="http://use.perl.org/~masak/journal/38170">Carl Mäsak's S29 Laundry
+List</a>, and later carried on by Timothy Nelson, who split S29 into a set of
+documents summarized as S32.</p>
+
+<p>In December it was decreed that most built-in
+methods have a candidate in a new class <code>Cool</code>, (<em>Convenient
+OO Loopbacks</em>), of which all value types and container types in Perl 6
+inherit. That way maximal DWIMyness can be retained, while keeping user
+defined types clean of the more than hundred methods defined in <code>Cool</code>.</p>
+
+<p>It is rather perlish to have a distinct name for each operation,
+and make it coerce its arguments. A few exceptions exist in Perl 5 (like <a
+href="http://perldoc.perl.org/functions/reverse.html">reverse</a>, which is
+list reverse in list context, and string reverse in string context); in
+Perl 6, most of these exceptions have been removed: <code>reverse</code> now
+only reverses lists, strings are reverted with <code>flip</code>, hashes with
+<code>invert</code>.</p>
+
+<p>At the Nordic Perl Workshop, Larry decided that the
+<code>prefix:&lt;=&gt;</code> operator had to go, and replaced it with the
+<code>.get</code> and <code>.lines</code> methods.</p>
+
+<h3>Operators</h3>
+
+<p>The Cross Meta Operator is now <code>Xop</code> instead of
+<code>XopX</code>; in analogy the <code>R</code> meta operator reverses the
+argument list, so <code>$a R- $b</code> is the same as <code>$b -
+$a</code>.</p>
+
+<p>Ranges served two purposes: one for denoting ranges in the sense that the
+mathematicians use them, and for generating lists according to simple
+schemes. These two functions have been separated: ranges are still constructed
+with two dots, but the <code>:by</code> adverb is gone; more intricate, lazy
+list generation can be achieved with the new <em>series</em> operator:</p>
+
+<pre>[% syntax perl6 %]
+.say for 1, 1.5, 2 ... 5;
+.say for 1 ... *+0.5, 5;
+[% endsyntax %]</pre>
+
+<h3>Numbers</h3>
+
+<p>The above actually works, and doesn't suffer from floating-point
+arithmetics, because <code>0.5</code> isn't stored as a floating-point number,
+but rather as a fractional number of type <code>Rat</code>.</p>
+
+<p>Other languages decided against that approach, because some very simple
+loops quickly produce rather large numerators and denominators, degrading
+performance of the integer operations. Perl 6 instead has a limit in
+denominator size, and falls back to floating-point operations when that limit
+is crossed.</p>
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>A lot of work has been done in Rakudo; in fact it's hard to remember how it
+used to be in January 2009; Most features were implemented by Patrick Michaud
+and Jonathan Worthington, but we had a lot of other contributors too.</p>
+
+<p>In January, Rakudo left the Parrot repository and since then lives on
+github as a git repository. It now relies on an installed parrot.</p>
+
+<p>Rakudo implements many new features and lifts old limitations:</p>
+
+<ul>
+    <li>Many built-in routines are now written in Perl 6</li>
+    <li><code>eval()</code> and classes now have access to outer lexical variables</li>
+    <li>Much improved Unicode support, both in IO and regular expression</li>
+    <li>punning of roles when <code>.new</code> is called</li>
+    <li>Typed arrays and hashes, parametric roles</li>
+    <li>Routine return types are now enforced</li>
+    <li>Error messages now contain backtraces with filenames and line
+    numbers</li>
+    <li>Multi dispatch is now implemented with a custom dispatcher and
+    signature binder, bringing much improvements over the dispatch and binding
+    semantics that parrot supports.</li>
+    <li>User-defined operators now possible, and automatically generate some
+    of their associated meta-operators.</li>
+    <li>Contextual variables</li>
+    <li>User-defined traits are now possible; some of the built-in traits are
+    now written in pure Perl 6.</li>
+    <li>Rational numbers are now implemented, and support for Complex numbers
+    has been much improved.</li>
+    <li>routine signatures can now be introspected properly.</li>
+</ul>
+
+<h3>SMOP and Mildew</h3>
+
+<p>SMOP and Mildew have seen a major refactoring, connected to the changed
+semantics of slices, captures and parcels, and to the way method invocations
+are stored.</p>
+
+<p>Paweł Murias implemented multi dispatch as a Summer of Code project. Mildew
+now supports an impressive set of features, but since it is not very user
+oriented, I know of no projects that actually use mildew as a platform.</p>
+
+<h3>Other implementations</h3>
+
+<p><a href="http://perl.net.au/wiki/Elf">Elf</a> development seems to have
+stalled. <a href="http://pugscode.org/">Pugs</a> mostly sleeps, too, though
+Audrey updated it to work with the latest Haskell compilers. (It doesn't live
+in the Pugs repository anymore though, and is distributed by cabal,
+the Haskell package manager).</p>
+
+<p>New in the field are <a
+href="/blog-en/perl-6/announcing-sprixel.html">Sprixel</a>, a Perl 6 to
+Javascript compiler, and <em>vill</em>, an experimental LLVM backend to
+STD.pm+viv.</p>
+
+<h2>Test Suite</h2>
+
+<p>The test suite continued to grow; most tests have now been moved to
+<code>t/spec/</code>, the official Perl 6 test suite. Most tests in the other
+remaining files are either rather dubious, or rely on behaviour that's not
+officially specified (or are specific to an implementation).</p>
+
+<p>Many new tests have been contributed by two new faces: Solomon Foster
+contributed a large number of tests for trigonometric functions on the various
+number types, and rational and complex numbers. Kyle Hasselbacher provided us
+with many regression tests for Rakudo which are also useful to other
+implementations.</p>
+
+<h2>Documentation</h2>
+
+<p>Bemoaning the fact that Perl 6 has nearly no user-level documentation, Carl
+Mäsak started <a href="http://svn.pugscode.org/pugs/docs/u4x/README">u4x,
+User-Level Documentation for X-Mas</a>. Hinrik Örn Sigurðsson chimed in, and
+started to write <a href="http://github.com/hinrik/grok/">grok</a>, a tool for
+retrieving and showing documentation, sponsored by the Google Summer of Code
+project.</p>
+
+<p>Patrick Michaud, Jonathan Worthington, Carl Mäsak, Jonathan Scott Duff
+and Moritz Lenz started
+<a href="/blog-en/perl-6/we-write-a-perl-6-book-for-you.html">to work on a
+Perl 6 book</a>, with a few chapters already being written.</p>
+
+<h2>Websites</h2>
+
+<p>In an attempt to provide an up-to-date link list, Moritz registered
+perl6-projects.org and collected links. Later Susanne "Su-Shee" Schmitt
+contributed a nice design, and Daniel Wright made the domain perl6.org
+available to us.</p>
+
+<p>So we now have a community driven, <a href="http://perl6.org/">central
+Perl 6 site at perl6.org</a>.</p>
+
+<p>Leo Lapworth redesigned <a href="http://perl.org/">perl.org</a>, and also
+the <a href="http://dev.perl.org/perl6/">old Perl 6 development page</a>, and
+updated it a bit.</p>
+
+<h2>Blogs</h2>
+
+<p>As an attempt to improve the visibility of the Perl community, Matt S.
+Trout issued the <a href="http://ironman.enlightenedperl.org/">Ironman Perl
+Blogging Challenge</a>. So far it's a huge success, and quite a few hackers
+blog about Perl 6 there. Also the blog roll of <a
+href="http://planetsix.perl.org/">the Planetsix Blog Aggregator</a> continued
+to grow, some excellent new blogs were added in 2009.</p>
+
+<p>Carl Mäsak blogged at least once per day in Novemeber, same procedure as
+least year :-)</p> <!-- TODO: "Dinner for One"-Link -->
+
+<h2>IRC</h2>
+
+<p>The #perl6 IRC channel has been very pleasant and active in 2009, with
+three times the activity of 2008.</p>
+
+<img src="http://perlgeek.de/images/blog/perl6-lines-per-month.png"
+width="640" height="480" alt="" />
+
+<h2>The Future</h2>
+
+<p>For April 2010 the Rakudo developers have planned a big release called
+<em>Rakudo *</em>, not feature complete but still useful and usable. Around
+the same time the new Perl 6 book will be released.</p>
+
+<p>The specification is still evolving, and has some areas that are in need of
+implementation before they can evolve more; among them are macros, concurrency
+and IO.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
