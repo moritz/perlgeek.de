@@ -1,5 +1,5 @@
 Perl 6 in 2009
-<!-- 1262527200 -->
+<!-- 1262602984 -->
 
 <p>Much has happened in the Perl 6 land in 2009. Here is my humble attempt to
 summarize some of it; If you find something that I missed, feel free to
@@ -198,8 +198,9 @@ blog about Perl 6 there. Also the blog roll of <a
 href="http://planetsix.perl.org/">the Planetsix Blog Aggregator</a> continued
 to grow, some excellent new blogs were added in 2009.</p>
 
-<p>Carl Mäsak blogged at least once per day in Novemeber, same procedure as
-least year :-)</p> <!-- TODO: "Dinner for One"-Link -->
+<p>Carl Mäsak blogged at least once per day in Novemeber, <a
+href="http://www.youtube.com/watch?v=b1v4BYV-YvA">same procedure as
+least year :-)</a></p>
 
 <h2>IRC</h2>
 
