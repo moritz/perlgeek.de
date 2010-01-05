@@ -19,12 +19,12 @@
 </p>
 
 <p>
-    Es ist also eine Art Präprozesser, der speziell für Webseiten 
+    Es ist also eine Art Präprozesser, der speziell für Webseiten
     geschrieben wurde.
 </p>
 
 <p>
-    Es benutzt sehr einfache <a href="#syntax-example">Syntax</a>, an 
+    Es benutzt sehr einfache <a href="#syntax-example">Syntax</a>, an
     die man sich schnell gewöhnt.
 </p>
 
@@ -106,14 +106,14 @@
 <h2 id="warning">Warnung</h2>
 
 <p>
-    mowyw wird, ausser von seinem Entwickler, bisher kaum eingesetzt. 
-    Daher kann das System z.B. auf anderen Plattformen nicht so 
+    mowyw wird, ausser von seinem Entwickler, bisher kaum eingesetzt.
+    Daher kann das System z.B. auf anderen Plattformen nicht so
     zuverlässig funktionieren - Bugreports sind immer willkommen.
 </p>
-      
+
 <p>
     Vor dem ersten Ausführen sollten Sie unbedingt die <a
-    href="https://faui2k3.org/svn/moritz/mowyw/README">README</a>-Datei 
+    href="https://faui2k3.org/svn/moritz/mowyw/README">README</a>-Datei
     lesen.
 </p>
 
@@ -129,6 +129,7 @@
 
 <p>Ältere Versionen sind ebenfalls verfügbar:</p>
 <ul>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw/mowyw-0.6.0.tar.gz">mowyw-0.6.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.5.2.tar.gz">mowyw-0.5.2</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.5.0.tar.gz">mowyw-0.5.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.4.0.tar.gz">mowyw-0.4.0</a></li>

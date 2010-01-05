@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.2.1" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
 <style type="text/css">
 /* Debug borders */
 p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
@@ -26,10 +26,12 @@ a:visited {
 
 em {
   font-style: italic;
+  color: navy;
 }
 
 strong {
   font-weight: bold;
+  color: #083194;
 }
 
 tt {
@@ -44,12 +46,17 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.3;
 }
 
-h1 {
+h1, h2, h3 {
   border-bottom: 2px solid silver;
 }
 h2 {
-  border-bottom: 2px solid silver;
   padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
 }
 
 div.sectionbody {
@@ -64,6 +71,10 @@ hr {
 p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
 }
 
 pre {
@@ -118,6 +129,7 @@ div.content { /* Block element content. */
 
 /* Block element titles. */
 div.title, caption.title {
+  color: #527bbd;
   font-family: sans-serif;
   font-weight: bold;
   text-align: left;
@@ -153,13 +165,25 @@ div.listingblock > div.content {
   padding: 0.5em;
 }
 
-div.quoteblock > div.content {
+div.quoteblock {
   padding-left: 2.0em;
 }
-
-div.attribution {
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
   text-align: right;
 }
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
 div.verseblock + div.attribution {
   text-align: left;
 }
@@ -182,10 +206,6 @@ div.exampleblock > div.content {
   padding: 0.5em;
 }
 
-div.verseblock div.content {
-  white-space: pre;
-}
-
 div.imageblock div.content { padding-left: 0; }
 div.imageblock img { border: 1px solid silver; }
 span.image img { border-style: none; }
@@ -197,16 +217,19 @@ dl {
 dt {
   margin-top: 0.5em;
   margin-bottom: 0;
-  font-style: italic;
+  font-style: normal;
 }
 dd > *:first-child {
-  margin-top: 0;
+  margin-top: 0.1em;
 }
 
 ul, ol {
     list-style-position: outside;
 }
-ol.olist2 {
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
   list-style-type: lower-alpha;
 }
 
@@ -226,11 +249,11 @@ div.hlist {
   margin-bottom: 0.8em;
 }
 div.hlist td {
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 td.hlist1 {
   vertical-align: top;
-  font-style: italic;
+  font-style: normal;
   padding-right: 0.8em;
 }
 td.hlist2 {
@@ -266,6 +289,24 @@ div.toclevel4 {
   margin-left: 6em;
   font-size: 0.9em;
 }
+/* Overrides for manpage documents */
+h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+h2 {
+  border-style: none;
+}
+div.sectionbody {
+  margin-left: 5%;
+}
+
+@media print {
+  div#toc { display: none; }
+}
+
 /* Workarounds for IE6's broken and incomplete CSS2. */
 
 div.sidebar-content {
@@ -274,6 +315,7 @@ div.sidebar-content {
   padding: 0.5em;
 }
 div.sidebar-title, div.image-title {
+  color: #527bbd;
   font-family: sans-serif;
   font-weight: bold;
   margin-top: 0.0em;
@@ -286,8 +328,17 @@ div.listingblock div.content {
   padding: 0.5em;
 }
 
-div.quoteblock-content {
-  padding-left: 2.0em;
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
 }
 
 div.exampleblock-content {
@@ -297,22 +348,32 @@ div.exampleblock-content {
 
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
 </style>
 <title>MOWYW(1)</title>
 </head>
 <body>
 <div id="header">
-<h1>MOWYW(1)</h1>
-<span id="author">Moritz Lenz</span><br />
-<span id="email"><tt>&lt;<a href="mailto:moritz@faui2k3.org">moritz@faui2k3.org</a>&gt;</tt></span><br />
-</div>
+<h1>
+MOWYW(1) Manual Page
+</h1>
 <h2>NAME</h2>
 <div class="sectionbody">
-<p>mowyw - Offline content management system</p>
+<p>mowyw -
+   Offline content management system
+</p>
+</div>
 </div>
 <h2>SYNOPSIS</h2>
 <div class="sectionbody">
-<ul>
+<div class="ilist"><ul>
 <li>
 <p>
 <strong>mowyw</strong>
@@ -320,85 +381,87 @@ div#toc a:visited { color: blue; }
 </li>
 <li>
 <p>
-<strong>mowyw</strong> <tt>&#8212;make &#8212;source-prefix sp &#8212;destination-prefix dp &#8212;menu-prefix mp
-           &#8212;includes-prefix=ip &#8212;postifx=.html</tt>
+<strong>mowyw</strong> <tt>--make --source-prefix sp --destination-prefix dp --menu-prefix mp
+           --includes-prefix=ip --postifx=.html</tt>
 </p>
 </li>
-</ul>
+</ul></div>
 </div>
-<h2>DESCRIPTION</h2>
+<h2 id="_description">DESCRIPTION</h2>
 <div class="sectionbody">
-<p>mowyw is a text processor for building static websites. It supports includes,
+<div class="para"><p>mowyw is a text processor for building static websites. It supports includes,
 menus, external datasources (like XML files or databases) and syntax
-hilighting.</p>
-<p>To use mowyw you need three directories called <strong>source</strong>, <strong>online</strong> and
+hilighting.</p></div>
+<div class="para"><p>To use mowyw you need three directories called <strong>source</strong>, <strong>online</strong> and
 <strong>includes</strong>. <tt>source</tt> holds the source files that are to be interpreted by
 mowyw. When you run mowyw, it will walk (recursively) through the source dir,
 and for each file it either copies it verbatimely to <tt>online</tt>, or, if the file
 looks like HTML (ends on .html, .shtml, .htm etc.) it is processed by mowyw,
-and the output is written into the online dir.</p>
-<p>In <tt>includes/</tt> are include files (how surprising), header, footer, global
-include files, and optionally data source files.</p>
-<p>You should always execute mowyw from the parent directory of these three
-directories.</p>
-<p>The name of these three directories can be overridden with command line
-options.</p>
+and the output is written into the online dir.</p></div>
+<div class="para"><p>In <tt>includes/</tt> are include files (how surprising), header, footer, global
+include files, and optionally data source files.</p></div>
+<div class="para"><p>You should always execute mowyw from the parent directory of these three
+directories.</p></div>
+<div class="para"><p>The name of these three directories can be overridden with command line
+options.</p></div>
 </div>
-<h2>COMMAND LINE OPTIONS</h2>
+<h2 id="_command_line_options">COMMAND LINE OPTIONS</h2>
 <div class="sectionbody">
-<ul>
+<div class="ilist"><ul>
 <li>
 <p>
-<tt>&#8212;make</tt>
+<tt>--make</tt>
    Only process files with a newer timestamp than the corresponding `online/'
    file.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;postfix</tt>
+<tt>--postfix</tt>
    Append the given postfix to the filename of all included file names (and
    menu files). Defaults to the empty string.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;includes-prefix</tt>
+<tt>--includes-prefix</tt>
    Change the search path for include files. Defaults to `includes/'.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;menu-prefix</tt>
+<tt>--menu-prefix</tt>
    Change the search for menu files. Defaults to <tt>includes/menu-</tt>.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;destination-prefix</tt>
+<tt>--destination-prefix</tt>
    Change the path for the output files. Defaults to `online/'.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;source-prefix</tt>
+<tt>--source-prefix</tt>
    Change the search path for source files. Defaults to `source/'. Must be a
    directory.
 </p>
 </li>
 <li>
 <p>
-<tt>&#8212;encoding</tt>
+<tt>--encoding</tt>
    Interpret all input files to have that encoding. Defaults to UTF-8.
    (Conjecture: should default to the current locale&#8230; what to do?).
 </p>
 </li>
-</ul>
+</ul></div>
+<div class="para"><p>All options except <tt>--make</tt> can be specified in a config file, with more
+customization options.</p></div>
 </div>
-<h2>PROCESSING ORDER</h2>
+<h2 id="_processing_order">PROCESSING ORDER</h2>
 <div class="sectionbody">
-<p>mowyw processes files in several steps:</p>
-<ul>
+<div class="para"><p>mowyw processes files in several steps:</p></div>
+<div class="ilist"><ul>
 <li>
 <p>
 The file <strong>mowyw.conf</strong> is read (if it exists)
@@ -413,7 +476,7 @@ The source directory is traversed
 <p>
 For all source file that is actually processed
 </p>
-<ul>
+<div class="ilist"><ul>
 <li>
 <p>
 the file <strong>includes/global</strong> is read, if it exists
@@ -436,21 +499,21 @@ the file <strong>includes/footer</strong> is processed and appended to the curre
       output file
 </p>
 </li>
-</ul>
+</ul></div>
 </li>
-</ul>
+</ul></div>
 </div>
-<h2>MARKUP</h2>
+<h2 id="_markup">MARKUP</h2>
 <div class="sectionbody">
-<p>Normal text (including HTML markup) is copied verbatimely to the output file.</p>
-<p>Special directives are delimited either with <tt>[% &#8230; %]</tt> (preferred) or with
-<tt>[[[ &#8230; ]]]</tt> (deprecated, but still supported for compatibility).</p>
-<p>Many elements take options, which are usually whitespace delimited, for
-example <tt>[% include includefile.html %]</tt>.</p>
-<p>Inline elements consist only of one tag, while block elements run until the
-matching end tag.</p>
-<p>The following inline elements are supported:</p>
-<ul>
+<div class="para"><p>Normal text (including HTML markup) is copied verbatimely to the output file.</p></div>
+<div class="para"><p>Special directives are delimited either with <tt>[% &#8230; %]</tt> (preferred) or with
+<tt>[[[ &#8230; ]]]</tt> (deprecated, but still supported for compatibility).</p></div>
+<div class="para"><p>Many elements take options, which are usually whitespace delimited, for
+example <tt>[% include includefile.html %]</tt>.</p></div>
+<div class="para"><p>Inline elements consist only of one tag, while block elements run until the
+matching end tag.</p></div>
+<div class="para"><p>The following inline elements are supported:</p></div>
+<div class="ilist"><ul>
 <li>
 <p>
 <tt>include</tt> includes a file, and processes it. Example: <tt>[% include
@@ -496,9 +559,9 @@ matching end tag.</p>
 <tt>bind</tt> binds a variable to a datasource. See section <a href="#datasource">DATA    SOURCES</a> below.
 </p>
 </li>
-</ul>
-<p>The following block elements are supported:</p>
-<ul>
+</ul></div>
+<div class="para"><p>The following block elements are supported:</p></div>
+<div class="ilist"><ul>
 <li>
 <p>
 <tt>verbatim</tt> reads the file until it finds an <tt>endverbatim</tt> tag. It expects a
@@ -512,7 +575,9 @@ matching end tag.</p>
 <p>
 <tt>syntax</tt> uses vim(1) to do syntax hilighting. Expects the name of the
    language or configuration as its only argument. Example: <tt>&lt;pre&gt;[%syntax
-   perl%]print "Hello, world\n";[%endsyntax%]&lt;/pre&gt;</tt>.
+   perl%]print "Hello, world\n";[%endsyntax%]&lt;/pre&gt;</tt>. The pseudo-syntax
+   <tt>escape</tt> HTML-escapes the string and doesn't to any other syntax
+   hilighting.
 </p>
 </li>
 <li>
@@ -527,64 +592,60 @@ matching end tag.</p>
     Example: <tt>[% ifvar title %]&lt;h1&gt;[%readvar title%]&lt;/h1&gt;[% endifvar %]</tt>.
 </p>
 </li>
-</ul>
+</ul></div>
 </div>
-<h2><a id="menu"></a>MENUES</h2>
+<h2 id="menu">MENUES</h2>
 <div class="sectionbody">
-<p>mowyw has special menu support. To define a menu named <tt>foo</tt>, create a file
-<tt>source/menu-foo</tt> with the following contents:</p>
+<div class="para"><p>mowyw has special menu support. To define a menu named <tt>foo</tt>, create a file
+<tt>source/menu-foo</tt> with the following contents:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>&lt;h2&gt;Your menu title&lt;/h2&gt;
 &lt;ul&gt;
-    [% item home  &lt;li&gt;&lt;a {{class="active"}}
-        href="/"&gt;Home&lt;/a&gt;&lt;/li&gt; %]
-    [% item first &lt;li&gt;&lt;a {{class="active"}}
-        href="/first"&gt;First&lt;/a&gt;&lt;/li&gt; %]
-    [% item sec &lt;li&gt;&lt;a {{class="active"}}
-        href="/sec/"&gt;First&lt;/a&gt;
+    [% item home  &lt;li&gt;&lt;a {{class="active"}} href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;       %]
+    [% item first &lt;li&gt;&lt;a {{class="active"}} href="/first"&gt;First&lt;/a&gt;&lt;/li&gt; %]
+    [% item sec   &lt;li&gt;&lt;a {{class="active"}} href="/sec/"&gt;First&lt;/a&gt;
         {{
              [% comment this is a sub menu that will only be visible
-                 inside the `sec' menu %]
-             [% item subitem1 &lt;p&gt;More menu markup&lt;/p&gt; %]
+                 inside the `sec' menu                     %]
+             [% item subitem1 &lt;p&gt;More menu markup&lt;/p&gt;      %]
              [% item subitem2 &lt;p&gt;Even more menu markup&lt;/p&gt; %]
         }}
-    &lt;/li&gt;
-    %]
- &lt;/ul&gt;</tt></pre>
+    &lt;/li&gt;   %]
+&lt;/ul&gt;</tt></pre>
 </div></div>
-<p>Now in your index page you can include that menu with the directive
+<div class="para"><p>Now in your index page you can include that menu with the directive
 <tt>[% menu home %]</tt>. This will produce the menu contents with the markup
 stripped, and insde the <tt>home</tt> all of the contents will appear, the other menu
 items only contribute the parts that are <strong>not</strong> enclosed in double curly
-braces.</p>
-<p>Menus can ben nested, a nested menu entry can be accessed for example with
-<tt>[% menu sec subitem1 %]</tt>.</p>
-<p>It's best to take a look at the examples in the distribution, which should
-nicely illustrate the menu mechanism.</p>
+braces.</p></div>
+<div class="para"><p>Menus can ben nested, a nested menu entry can be accessed for example with
+<tt>[% menu sec subitem1 %]</tt>.</p></div>
+<div class="para"><p>It's best to take a look at the examples in the distribution, which should
+nicely illustrate the menu mechanism.</p></div>
 </div>
-<h2><a id="syntax_hilight"></a>SYNTAX HILIGHTING</h2>
+<h2 id="syntax_hilight">SYNTAX HILIGHTING</h2>
 <div class="sectionbody">
-<p>Syntax hilighting requires <a href="http://www.vim.org/">vim</a> and
+<div class="para"><p>Syntax hilighting requires <a href="http://www.vim.org/">vim</a> and
 <a href="http://search.cpan.org/perldoc?Text::VimColor">Text::VimColor</a> to be installed
-(otherwise the code is just HTML escaped, not hilighted).</p>
-<p>Since you can't tell vim which encoding a source file is in,
+(otherwise the code is just HTML escaped, not hilighted).</p></div>
+<div class="para"><p>Since you can't tell vim which encoding a source file is in,
 non-ASCII-characters might not survive the round trip to vim if the locales
 don't fit. On my systems UTF-8 locales worked, everything else didn't. So use
-with caution.</p>
+with caution.</p></div>
 </div>
-<h2><a id="options"></a>OPTIONS</h2>
+<h2 id="options">OPTIONS</h2>
 <div class="sectionbody">
-<p>Currently only two options are supported, <tt>no-header</tt> and <tt>no-footer</tt>.
+<div class="para"><p>Currently only two options are supported, <tt>no-header</tt> and <tt>no-footer</tt>.
 If they are set in a file via <tt>[% option no-header %]</tt>, the inclusion of
-header or footer files will be omitted.</p>
+header or footer files will be omitted.</p></div>
 </div>
-<h2>DATA SOURCES</h2>
+<h2 id="_data_sources">DATA SOURCES</h2>
 <div class="sectionbody">
-<p><a id="datasource"></a>You can access external data sources by first <tt>bind</tt>'ing a variable to a
-data source, and then iterating with a <tt>for</tt> loop over that source.</p>
-<p>This is best illustrated with a short example.</p>
-<p>File <tt>includes/news.xml</tt>:</p>
+<div class="para" id="datasource"><p>You can access external data sources by first <tt>bind</tt>'ing a variable to a
+data source, and then iterating with a <tt>for</tt> loop over that source.</p></div>
+<div class="para"><p>This is best illustrated with a short example.</p></div>
+<div class="para"><p>File <tt>includes/news.xml</tt>:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>&lt;rootTag&gt;
@@ -601,7 +662,7 @@ data source, and then iterating with a <tt>for</tt> loop over that source.</p>
     &lt;/item&gt;
 &lt;/rootTag&gt;</tt></pre>
 </div></div>
-<p>Now you can access the contents of this XML file in your source files:</p>
+<div class="para"><p>Now you can access the contents of this XML file in your source files:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>[% bind news_variable type:xml file:news.xml root:item %]
@@ -611,18 +672,18 @@ data source, and then iterating with a <tt>for</tt> loop over that source.</p>
     &lt;p&gt;Status: [% readvar i.status %]&lt;/p&gt;
 [% endfor %]</tt></pre>
 </div></div>
-<p>Data sources are handled via plugins. Currently XML and DBI are supported.</p>
-<p>The XML source is explained by the example above. The only additional option
+<div class="para"><p>Data sources are handled via plugins. Currently XML and DBI are supported.</p></div>
+<div class="para"><p>The XML source is explained by the example above. The only additional option
 is <em>limit</em>, which can be set to a positive number and which limits the number
 of iterations. This plugin is quite limited in that the file structure always
 has be the
 same: one root tag that contains a list of secondary tags, each of which many
 only contain distinct tags. Nested tags might work, but aren't officially
-supported.</p>
-<p>DBI is perls generic database interface. You can use it to access a database.
+supported.</p></div>
+<div class="para"><p>DBI is perls generic database interface. You can use it to access a database.
 This has some limitations, for example you can't reuse database connections,
-so every <tt>bind</tt> statement actually opens a database connection on its own.</p>
-<p>For the brave, here is an example of how to use it:</p>
+so every <tt>bind</tt> statement actually opens a database connection on its own.</p></div>
+<div class="para"><p>For the brave, here is an example of how to use it:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>[% bind my_db type:dbi dsn:DBI:mysql:database=yourdatabse;host=dbhost
@@ -634,8 +695,8 @@ so every <tt>bind</tt> statement actually opens a database connection on its own
     &lt;p&gt;Status: [% readvar i.status escape:html %]&lt;/p&gt;
 [% endfor %]</tt></pre>
 </div></div>
-<p>The options are as follows:</p>
-<ul>
+<div class="para"><p>The options are as follows:</p></div>
+<div class="ilist"><ul>
 <li>
 <p>
 The <tt>dsn</tt> option is the "data source name" that <tt>DBI</tt>'s <tt>connect</tt> method
@@ -656,17 +717,17 @@ the <tt>password</tt> and <tt>username</tt> options can be omitted if your datab
    doesn't ask for them
 </p>
 </li>
-</ul>
-<p>This plugin may seem weird if you don't know Perl and its database module. If
+</ul></div>
+<div class="para"><p>This plugin may seem weird if you don't know Perl and its database module. If
 that's the case, consider toying around with Perl and DBI first (it's really
-worth a try).</p>
+worth a try).</p></div>
 </div>
-<h2>CONFIGURATION FILE</h2>
+<h2 id="_configuration_file">CONFIGURATION FILE</h2>
 <div class="sectionbody">
-<p><a id="config"></a>Mowyw tries to read a file called <tt>mowyw.conf</tt>. Within that file you can
+<div class="para" id="config"><p>Mowyw tries to read a file called <tt>mowyw.conf</tt>. Within that file you can
 configure include pathes and file names on a per-file base, and you can
-specify which files should be processed.</p>
-<p>An example config file might look like this:</p>
+specify which files should be processed.</p></div>
+<div class="para"><p>An example config file might look like this:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>MATCH[german]    = \.de
@@ -679,49 +740,49 @@ POSTFIX[english] = .en</tt></pre>
 <pre><tt>INCLUDE[10]      = \.xhtml$
 EXCLUDE[50]      = _private</tt></pre>
 </div></div>
-<p>The first part defines two sections called "german" and "english".
+<div class="para"><p>The first part defines two sections called "german" and "english".
 If a file matches the
 regular expression <tt>\.de</tt>, it is treated as being in section "german". All
 include files will have the postfix <em>.de</em>, which means that if a file is
 called <tt>source/index.html.de</tt>, the header file will be <tt>includes/header.de</tt>, a
-menu <tt>foo</tt> will be searched for in file <tt>includes/menu-foo.de</tt> etc.</p>
-<p>This configuration mechanism is primarily intented for creating mutilingual
-sites, but might be useful for other things as well.</p>
-<p>The second part consists of <tt>INCLUDE</tt> and <tt>EXCLUDE</tt> statements with their
+menu <tt>foo</tt> will be searched for in file <tt>includes/menu-foo.de</tt> etc.</p></div>
+<div class="para"><p>This configuration mechanism is primarily intented for creating mutilingual
+sites, but might be useful for other things as well.</p></div>
+<div class="para"><p>The second part consists of <tt>INCLUDE</tt> and <tt>EXCLUDE</tt> statements with their
 priority and the regex they match. Higher priority rules are tested first.
 When a rule matches the file is either processed (in the case of an <tt>INCLUDE</tt>
-option) or just verbatimly copied (in case of an <tt>EXCLUDE</tt> option).</p>
-<p>Due to an limition of the module that reads the config file
+option) or just verbatimly copied (in case of an <tt>EXCLUDE</tt> option).</p></div>
+<div class="para"><p>Due to an limition of the module that reads the config file
 (<a href="http://search.cpan.org?Config::File">Config::File</a>) the
 only way to specify rules with the same priority is to prefix them with
-distinct strings:</p>
+distinct strings:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>INCLUDE[a5] = foo
 INCLUDE[b5] = bar</tt></pre>
 </div></div>
-<p>is equivalent to</p>
+<div class="para"><p>is equivalent to</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>INCLUDE[5]  = foo|bar</tt></pre>
 </div></div>
-<p>Don't give <tt>INCLUDE</tt> and <tt>EXCLUDE</tt>-options with the same priority, the
-behaviour in that case is undefined.</p>
+<div class="para"><p>Don't give <tt>INCLUDE</tt> and <tt>EXCLUDE</tt>-options with the same priority, the
+behaviour in that case is undefined.</p></div>
 </div>
-<h2>RESOURCES</h2>
+<h2 id="_resources">RESOURCES</h2>
 <div class="sectionbody">
-<p>If something isn't clear to you, please take a look into the  <tt>README</tt> file
+<div class="para"><p>If something isn't clear to you, please take a look into the  <tt>README</tt> file
 and the examples in the source tarball. If that doesn't answer your questions,
-don't hesitate to contact the author.</p>
-<p>The official website can be found here:
-<a href="http://perlgeek.de/en/software/mowyw">Mowyw homepage</a>.</p>
+don't hesitate to contact the author.</p></div>
+<div class="para"><p>The official website can be found here:
+<a href="http://perlgeek.de/en/software/mowyw">Mowyw homepage</a>.</p></div>
 </div>
-<h2>BUGS AND LIMITATIONS</h2>
+<h2 id="_bugs_and_limitations">BUGS AND LIMITATIONS</h2>
 <div class="sectionbody">
-<p>mowyw was written to get its author's job done, and it does that well. While
+<div class="para"><p>mowyw was written to get its author's job done, and it does that well. While
 it was written with generality in mind, there are still some restrictions that
-were accepted as a tradeoff for simplicity.</p>
-<ul>
+were accepted as a tradeoff for simplicity.</p></div>
+<div class="ilist"><ul>
 <li>
 <p>
 Error messages aren't very useful for the uninitiated, and aren't annotated
@@ -751,24 +812,23 @@ There are some limitations due to multi-pass parsing. For example you can't
    tag closer by the lexer. A future rewrite might change that.
 </p>
 </li>
-</ul>
+</ul></div>
 </div>
-<h2>AUTHOR</h2>
+<h2 id="_author">AUTHOR</h2>
 <div class="sectionbody">
-<p>Written by <a href="http://perlgeek.de/">Moritz Lenz</a>, <a href="mailto:moritz@faui2k3.org">moritz@faui2k3.org</a>.</p>
+<div class="para"><p>Written by <a href="http://perlgeek.de/">Moritz Lenz</a>, <a href="mailto:moritz@faui2k3.org">moritz@faui2k3.org</a>.</p></div>
 </div>
-<h2>COPYRIGHT</h2>
+<h2 id="_copyright">COPYRIGHT</h2>
 <div class="sectionbody">
-<p>Copyright 2006 - 2008 by Moritz Lenz.</p>
-<p>This is free software.  You may redistribute copies  of  it  under  the terms
-of the  <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>,
-Version 2.1 or 3 (choose the one you prefer).</p>
-<p>(If this license is not permissive enough for you, please contact the author).</p>
-<p>There is NO WARRANTY, to the extent permitted by law.</p>
+<div class="para"><p>Copyright 2006 - 2009 by Moritz Lenz.</p></div>
+<div class="para"><p>This is free software.  You may redistribute copies  of  it  under  the terms
+of the Artistic License 2 as published by The Perl Foundation.</p></div>
+<div class="para"><p>(If this license is not permissive enough for you, please contact the author).</p></div>
+<div class="para"><p>There is NO WARRANTY, to the extent permitted by law.</p></div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 25-Jul-2008 16:37:55 CEST
+Last updated 2010-01-05 10:47:03 CEST
 </div>
 </div>
 </body>
