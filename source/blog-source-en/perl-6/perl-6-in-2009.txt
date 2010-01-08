@@ -74,14 +74,14 @@ with two dots, but the <code>:by</code> adverb is gone; more intricate, lazy
 list generation can be achieved with the new <em>series</em> operator:</p>
 
 <pre>[% syntax perl6 %]
-.say for 1, 1.5, 2 ... 5;
-.say for 1 ... *+0.5, 5;
+.say for 1, 1.1, 1.2 ... 5;
+.say for 1 ... *+0.1, 5;
 [% endsyntax %]</pre>
 
 <h3>Numbers</h3>
 
 <p>The above actually works, and doesn't suffer from floating-point
-arithmetics, because <code>0.5</code> isn't stored as a floating-point number,
+arithmetics, because <code>0.1</code> isn't stored as a floating-point number,
 but rather as a fractional number of type <code>Rat</code>.</p>
 
 <p>Other languages decided against that approach, because some very simple
@@ -219,6 +219,9 @@ the same time the new Perl 6 book will be released.</p>
 <p>The specification is still evolving, and has some areas that are in need of
 implementation before they can evolve more; among them are macros, concurrency
 and IO.</p>
+
+<p><b>Update</b>: improved floating point example as per comment from
+Matthias.</p>
 
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell tw=78 : %]
