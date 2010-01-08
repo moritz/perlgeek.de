@@ -85,7 +85,7 @@
 [% comment TODO: check the Shift-JIS part %]
 <p>
     In other parts of world other character encodings were developed, like
-    Big5 in China and Shift-JIS in Japan.
+    EUC-CN in China and Shift-JIS in Japan.
 </p>
 
 <p>
