@@ -35,8 +35,8 @@ name="DESCRIPTION"
 name="IT&#39;S_NOT"
 >IT&#39;S NOT</a></h3>
 
-<p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences. See <a href="http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod|Perl6::Perl5::Differences" class="podlinkurl"
->http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod|Perl6::Perl5::Differences</a> instead if you&#39;re looking for something like that.</p>
+<p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences. See <a href="http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod" class="podlinkurl"
+>http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod</a> Perl6::Perl5::Differences instead if you&#39;re looking for something like that.</p>
 
 <p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
 
