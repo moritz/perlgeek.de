@@ -504,8 +504,10 @@ use encoding ':locale';[%endsyntax%]</pre>
     knows how to handle character encodings. Good examples are 
     <a href="http://search.cpan.org/perldoc?Template::Alloy">Template::Alloy</a>,
     <a href="http://search.cpan.org/perldoc?HTML::Template::Compiled">HTML::Template::Compiled</a> 
-    (since version 0.90 with the <code>open_mode</code> option), or 
-    Template Toolkit together with
+    (since version 0.90 with the <code>open_mode</code> option), or
+    Template Toolkit (with the <code>ENCODING</code> option in the constructor
+    and an IO layer in the <code>process</code> method).</p>
+
     <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.</p>
 
     <h2><a name="advanced_topics"></a>Advanced Topics</h2>
