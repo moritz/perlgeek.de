@@ -478,14 +478,16 @@ use encoding ':locale';[%endsyntax%]</pre>
     
 <p>
     Special care must be taken when reading POST or GET parameters with the
-    function <code>param</code> in the module <code>CGI</code>. Older 
-    versions (prior to 3.29) always returned byte strings, newer version 
+    function <code>param</code> in the module <code>CGI</code>. Older
+    versions (prior to 3.29) always returned byte strings, newer version
     return text strings if <code>charset("UTF-8")</code> has been called
     before, and byte strings otherwise.
 </p>
 
 <p>
-    CGI.pm doesn't support character encodings other than UTF-8.
+    CGI.pm also doesn't support character encodings other than UTF-8.
+    Therefore you should not to use the <code>charset</code> routine
+    and explicitly decode the parameter strings yourself.</p>
 </p>
 
 <p>
