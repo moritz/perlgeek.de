@@ -1,0 +1,118 @@
+Report from the Perl 6 Hackathon in Copenhagen
+<!-- 1268218751 -->
+
+<p>During and the "Open Source Days 2010" in Copenhagen there was a
+Perl 6 track, and also a hackathon that stretched out three more days after
+the conference.</p>
+
+<p>I arrived on Saturday afternoon (which happend to be the last day of the
+conference) and thus missed all of the talks and the more public part of the
+hackathon.</p>
+
+<h2>Module Loading</h2>
+
+<p>On Sunday we discussed module loading extensively. Martin Berends had
+prepared that topic, and drove the effort by asking the right questions.</p>
+
+<h3>Discussions</h3>
+
+<p>Modules are complicated beasts in Perl 6. They not only have a name and a
+version as in Perl 5, but they can also have so-called <em>authorities</em>,
+which handle the case when different programmers write modules with the same
+name. Also unlike Perl 5 a module can be installed with different versions,
+and the programmer can either request a particular version or the highest
+version available.</p>
+
+<p>Also they have Unicode and case sensitive names, which Perl 6 must support
+even if the underlying file system does not provide both features.</p>
+
+<p>Although it doesn't really sound like it, this combination of requirements
+make it incredibly hard to implement a module loader that is both correct and
+efficient. Previously all discussions on the mailing lists and IRC channels
+ended in huge threads full of bikeshedding and even more feature ideas.</p>
+
+<p>We were well aware of these requirements before the hackathon, and also
+aware of the fact that we have no chance of implementing all that in a
+reasonable time frame. So the first step was to decide what subset of features
+to implement, and how that could be achieved.</p>
+implement
+
+<p>We decided not to implement Unicode emulation/mapping, and partially ignore
+authorities for now. Still we leave some room for wriggeling in the mapping
+from module name to file name: a module <code>My::Module</code> can live in
+the file <code>My/Module.pm</code> or in
+<code>My/Module.ignored.pm</code>. That way several modules with the same name
+but different versions or authorities can be stored in the same module
+repository.</p>
+
+<p>This also implies that the Perl 6 compiler has to actually read and parse
+those files to find out which file to load. In a later stage the compiler will
+write a cache file to store the mapping from file name to module name(s),
+verisons, authorities, a timestamp and probably also dependencies plus
+timestamps (in order to know when to recompile a module).</p>
+
+<p>Once this caching mechanism is implemented, it solves the Unicode problem
+mostly for free, because it will store the full Unicode module name and  ASCII
+file name in the cache, and makes it available to the module locater.</p>
+
+<p>After reaching an initial consensus, the discussion went on to other
+topics: can we use the existing CPAN infrastructure to actually distribute our
+modules? The conclusion was that we most likely can use (with very little
+patching) the PAUSE and mirroring infrastructure, but we likely have to write
+our own indexing and searching facilities and also a completely separate
+module installer.</p>
+
+<h3>Implementation</h3>
+
+<p>I wrote a very simplistic prototype of a module locater in Perl 5, which
+Jonathan mostly translated to NQP on Monday, and actually plugged it into
+Rakudo's module loading facility on Tuesday.</p>
+
+<p>So now you can actually have multi modules with different versions, and
+load the one with the highest version - requesting a particular version is
+not yet implemented, but hopefully now a mere SMOP.</p>
+
+<h2>Other matters</h2>
+
+<p>Martin Berends wrote up the results of our module discussions, and spent
+the rest of his hacking time on a foreign function interface.</p>
+
+<p>Not everybody worked full-time on module things; baest worked on some
+builtin functions and (most of the time) number handling. Carl Mäsak spent
+some time on <a href="http://github.com/masak/tardis/">tardis</a>, his time
+travelling debugger. He also spent quite some effort on getting enums back
+into Rakudo, with occasional assistance from Jonathan.</p>
+
+<p>Many of us fixed some bugs that popped up, and also found new bugs</p>
+
+<h3>RT Queue</h3>
+
+<p>The perl6 RT queue has grown to such a size that it was both scary and hard
+to use at all. On Sunday it peaked around 725 open tickets.</p>
+
+<p>I did rough sweep over most of the tickets, identifying those that were
+either fixed (but not yet closed), superseded by changes to the specification
+or actually not bugs at all (spam and false reports), or could be closed by
+simple changes to Rakudo.</p>
+
+<p>That way I closed about 80 tickets, and identified another 40 or so tickets
+that are actually fixed, but need test coverage before being closed.</p>
+
+<h2>Personal notes</h2>
+
+<p>This was the first Perlish event to which I have traveled, and it was just
+awesome. I met friends in "meat space" that I previously only (or mostly) knew
+over the Internet, and found them to be just as I had experienced them from
+the distance: friendly, witty, full of good jokes and bad puns, curious,
+relaxed and all in all a very enjoyable company.</p>
+
+<p>We enjoyed the hospitality of Jonas Brømsø Nielsen and the OSD folks who
+did everything to make our stay pleasant: prepare the arrival with maps and
+tips about the public transport system, booking and funding (!) our
+accommodation, inviting us to lunch or dinner now and then, and being
+available whenever questions or problems arose. <strong>Thank you!</strong>.
+The March release of Rakudo will be named <em>Copenhagen</em> for very good
+reasons.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
