@@ -342,11 +342,13 @@ for (@charsets){
 </p>
 
 <p>
-    Windows uses mostly <code>cp*</code> encodings, for example
+    Windows terminals mostly use <code>cp*</code> encodings, for example
     <code>cp850</code> or <code>cp858</code> (only available in new versions
-    of Encode) for German windows installations. Use
-    <code>Encode->encodings(":all");</code> as the list of encodings to check
-    all available ones.
+    of Encode) for German windows installations. The rest of the operating
+    environment uses <code>Windows-*</code> encodings, for example
+    <code>Windows-1252</code> for a number of Western European localizations.
+    <code>Encode->encodings(":all");</code> returns a list of
+    all available encodings.
 </p>
 
 
