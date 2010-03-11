@@ -35,7 +35,6 @@ ended in huge threads full of bikeshedding and even more feature ideas.</p>
 aware of the fact that we have no chance of implementing all that in a
 reasonable time frame. So the first step was to decide what subset of features
 to implement, and how that could be achieved.</p>
-implement
 
 <p>We decided not to implement Unicode emulation/mapping, and partially ignore
 authorities for now. Still we leave some room for wriggeling in the mapping
