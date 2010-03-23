@@ -1,0 +1,103 @@
+In search of an exponential time regex
+<!-- 1269367219 -->
+
+<p>Somebody asked on IRC if it was dangerous to  interpolate a user-supplied
+string into a regular expression in Perl. Since by defaul the <a
+href="http://perldoc.perl.org/re.html">re 'eval'</a> pragma is disabled, there
+is no direct danger of malicious code execution.</p>
+
+<p>But still there is danger: since the Perl regex engine does backtracking,
+it is possible to craft malicious regexes that take up much time. Very much
+time. So much time that if you don't do anything against it, it will eat up
+all your CPU - a denial of service attack.</p>
+
+<p>Such a thing is best illustrated with an example - and I wanted one to
+demonstrate exponential matching time. Easy, you'd think; the literature has
+one: match the regex <code>/(a*)*b/</code> against the string
+<code>"aaaa...a"</code>. It fails, but first tries to do search for many
+possible combinations of how many a's to much with the first capture. You'd
+think. A quick test reveals that this is not the case:</p>
+
+<pre>
+$ time perl -e ' ("a" x shift)  ~~ /(a*)*b/' 100000000
+
+real    0m0.286s
+user    0m0.194s
+sys     0m0.093s
+</pre>
+
+<p>This constructs a string of 10 million a's, and then matches the regex
+against it - and it takes less than the third of a second. That's quite fast.
+But why? The answer is that Perl does some clever optimizations. You can learn
+a bit about the applied optimizations with the <code>re 'debug';</code>
+pragma:</p>
+
+<pre>[% syntax escape %]
+$ time perl -Mre=debug -e ' ("a" x shift)  ~~ /(a*)*b/' 100000000
+Compiling REx "(a*)*b"
+synthetic stclass "ANYOF[ab]".
+Final program:
+   1: CURLYX[0] {0,32767} (11)
+   3:   OPEN1 (5)
+   5:     STAR (8)
+   6:       EXACT <a> (0)
+   8:   CLOSE1 (10)
+  10: WHILEM[1/1] (0)
+  11: NOTHING (12)
+  12: EXACT <b> (14)
+  14: END (0)
+floating "b" at 0..2147483647 (checking floating) stclass ANYOF[ab] minlen 1 
+Guessing start of match in sv for REx "(a*)*b" against "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"...
+Did not find floating substr "b"...
+Match rejected by optimizer
+Freeing REx: "(a*)*b"
+
+real    0m0.361s
+user    0m0.223s
+sys     0m0.101s
+[% endsyntax %]</pre>
+[% comment </b> %]
+
+<p>This means the regex engine has found a literal <code>b</code> in the
+regex, and is clever enough to search for that in the string. Which is quite
+fast, it just has to look at each character once. It doesn't find it, so it
+knows that it can short-circuit all this expensive backtracking.</p>
+
+<p>So how to fool the optimizer? By not using a literal string, but something
+that's not so easy to detect -- a character class:
+<code>/(a*)*[bc]/</code>.</p>
+
+<p>This fools the optimizer, and the regex runs slower - half a second for one
+million characters. Still not very impressive.</p>
+
+<p>What's up here? If you look at the debugging output, and try to read the
+structure of the compiled regex, you'll find that it actually corresponds to
+<code>/(a*)[bc]/</code>. The optimizer has dropped the second star, because it
+prefers the longest possible match with the star, so never needs to quantify
+the whole group more than once anyway.</p>
+
+<p>So again I had to fool the optimizer somehow: for example by requiring at
+least two matches of the first group: <code>(a*){2,}[bc]</code>. However the
+experiment shows that it still didn't backtrack exponentially.</p>
+
+<p>The next trick finally worked: also give it an upper limit. That defies the
+optimizer for some reasons not quite transparent to me:</p>
+
+<pre>
+$ time perl -e ' ("a" x shift)  ~~ /(.*){1,32000}[bc]/' 25
+
+real    0m8.856s
+user    0m8.841s
+sys     0m0.008s
+</pre>
+
+<p>That's nearly 9 seconds for a 25 character string, extending the string
+length to 27 already takes 35 seconds, 30 characters took 276 seconds. I did
+not have the patience to try it with any higher numbers - but it's clearly
+growing fast enough to satisfy my curiosity.</p>
+
+<p>So after some fiddling I did find a malicious regex, but it was not quite a
+trivial task.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
