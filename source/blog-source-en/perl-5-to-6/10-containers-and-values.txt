@@ -34,7 +34,7 @@ name="DESCRIPTION"
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = &#39;Foo&#39;;   # Error &#39;Type check failed&#39;</pre>
 
-<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of that type can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
+<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
 
 <pre>    my $a = 1;
     $a = 2;     # no surprise here</pre>

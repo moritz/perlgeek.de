@@ -57,7 +57,7 @@ name="DESCRIPTION"
 
 <p>The <code>?</code> twigil stands for variables and constants that are known at compile time, like <code>$?LINE</code> for the current line number (formerly <code>__LINE__</code>), and <code>$?DATA</code> is the file handle to the <code>DATA</code> section.</p>
 
-<p>Global variables can be accessed with the <code>*</code> twigil, so <code>%GLOBAL::ENV</code> can be abbreviated to <code>%*ENV</code>, the command line arguments are stored in <code>@*ARGS</code>, the current process number is in <code>$*PID</code> and so on.</p>
+<p>Contextual variables can be accessed with the <code>*</code> twigil, so <code>$*IN</code> and <code>$*OUT</code> can be overridden dynamically.</p>
 
 <p>A pseudo twigil is <code>&#60;</code>, which is used in a construct like <code>$&#60;capture&#62;</code>, where it is a shorthand for <code>$/&#60;capture&#62;</code>, which accesses the Match object after a regex match.</p>
 

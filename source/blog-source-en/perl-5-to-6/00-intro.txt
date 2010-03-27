@@ -19,7 +19,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is underdocumented. That&#39;s no surprise, because (apart from the specification) writing a compiler for Perl 6 seems to be much more urgent than writing documentation that targets the user.</p>
+<p>Perl 6 is under-documented. That&#39;s no surprise, because (apart from the specification) writing a compiler for Perl 6 seems to be much more urgent than writing documentation that targets the user.</p>
 
 <p>Unfortunately that means that it&#39;s not easy to learn Perl 6, and that you have to have a profound interest in Perl 6 to actually find the motivation to learn it from the specification, IRC channels or from the test suite.</p>
 
@@ -95,5 +95,12 @@ name="AUTHOR"
 
 <p>Moritz Lenz, <a href="http://perlgeek.de/" class="podlinkurl"
 >http://perlgeek.de/</a>, <code>moritz@faui2k3.org</code></p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="LINKS"
+>LINKS</a></h3>
+
+<p>Other documentation efforts can be found on <a href="http://perl6.org/documentation/" class="podlinkurl"
+>http://perl6.org/documentation/</a>.</p>
 
 [% option no-header %] [% option no-footer %]

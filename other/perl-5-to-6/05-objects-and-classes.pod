@@ -7,12 +7,11 @@
     class Shape {
         method area { ... }    # literal '...'
         has $.colour is rw;
-
     }
 
     class Rectangle is Shape {
-        has Num $.width;
-        has Num $.height;
+        has $.width;
+        has $.height;
 
         method area {
             $!width * $!height;
@@ -20,8 +19,8 @@
     }
 
     my $x = Rectangle.new(
-            width   => 30,
-            height  => 20,
+            width   => 30.0,
+            height  => 20.0,
             colour  => 'black',
         );
     say $x.area;                # 600
@@ -100,7 +99,8 @@ Private methods can't be called from outside the class.
 Attributes are declared with the C<has> key word, and have a "twigil", that is
 a special character after the sigil. For private attributes that's a bang C<!>,
 for public attributes it's the dot C<.>. Public attributes are just private
-attributes with a public accessor.
+attributes with a public accessor. So for write access you always use the C<!>
+twigil.
 
     class SomeClass {
         has $!a;

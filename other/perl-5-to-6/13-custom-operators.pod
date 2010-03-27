@@ -26,7 +26,7 @@ operators and followed by postfix or postcircumfix operators.
     @a[1]               postcircumfix
 
 Operator names are not limited to "special" characters, they can contain
-anything except whitespaces.
+anything except whitespace.
 
 The long name of an operator is its type, followed by a colon and a string
 literal or list of the symbol or symbols, for example C<< infix:<+> >> is the
@@ -55,7 +55,7 @@ operators:
 
 =head2 Associativity
 
-Most infix operators take only two arguments. In an expression like 
+Most infix operators take only two arguments. In an expression like
 C<1 / 2 / 4> the I<associativity> of the operator decides the order of
 evaluation. The C<< infix:</> >> operator is left associative, so this
 expression is parsed as C<(1 / 2) / 4>. for a right associative operator like

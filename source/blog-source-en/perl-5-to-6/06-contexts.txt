@@ -35,11 +35,12 @@ name="DESCRIPTION"
 <pre>    syntax       context
 
     ~stuff       String
-    ?stuff       Bool
+    ?stuff       Bool (logical)
     +stuff       Numeric
     -stuff       Numeric (also negates)
     $( stuff )   Generic item context
-    @( stuff )   List Context
+    @( stuff )   List context
+    %( stuff )   Hash context
     @@( stuff )  Slice context</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'

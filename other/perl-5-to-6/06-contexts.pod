@@ -31,11 +31,12 @@ You can force contexts with special syntax.
     syntax       context
 
     ~stuff       String
-    ?stuff       Bool
+    ?stuff       Bool (logical)
     +stuff       Numeric
     -stuff       Numeric (also negates)
     $( stuff )   Generic item context
-    @( stuff )   List Context
+    @( stuff )   List context
+    %( stuff )   Hash context
     @@( stuff )  Slice context
 
 =head2 Slice Context

@@ -20,7 +20,7 @@
         token schema {
             \w+
         }
-        token host {
+        token hostname {
             (\w+) ( \. \w+ )*
         }
         token port {
@@ -30,6 +30,9 @@
             <[ a..z A..Z 0..9 -_.!~*'():@&=+$,/ ]>+
         }
     }
+
+    my $match = URI.parse('http://perl6.org/documentation/');
+    say $match<hostname>;       # perl6.org
 
 =head1 DESCRIPTION
 
@@ -52,7 +55,7 @@ C<[..]>, which are a lot easier to write than the old C<(?:...)>.
 
 =item Nested captures and match object
 
-In perl 5, a regex like this C<(a(b))(c)> would put C<ab> into C<$1>, C<b>
+In Perl 5, a regex like this C<(a(b))(c)> would put C<ab> into C<$1>, C<b>
 into C<$2> and C<c> into C<$3> upon successful match. This has changed. Now
 C<$0> (enumeration starts at zero) contains C<ab>, and C<$0[0]> or C<$/[0][0]>
 contains C<b>. C<$1> holds C<c>.
@@ -78,9 +81,9 @@ here.
 =head2 Syntax clean up
 
 Letter characters (ie underscore, digits and all Unicode letters) match
-literally, and have a special meaning (they are "metasyntactic") when escaped 
-with a backslash. For all other characters it's the other way round - they are 
-metasyntactic unless escaped. 
+literally, and have a special meaning (they are I<metasyntactic>) when escaped
+with a backslash. For all other characters it's the other way round - they are
+metasyntactic unless escaped.
 
     literal         metasyntactic
     a  b  1  2      \a \b \1 \2
@@ -96,7 +99,7 @@ There is another way to escape strings in regexes: with quotes.
 The changed semantics of C<.> has already been mentioned, and that C<[...]>
 are now non-capturing groups. Char classes are C<< <[...]> >>, and negated
 char classes C<< <-[...]> >>. C<^> and C<$> always match begin and end of the
-string, to match begin and end of lines use C<^^> and C<$$>. 
+string, to match begin and end of lines use C<^^> and C<$$>.
 
 This means that the C</s> and C</m> modifiers are gone. Modifiers are now
 given at the start of a regex, and are spelled as pairs.
@@ -122,7 +125,7 @@ default, i.e. white spaces are ignored.
     :ex     :exhaustive     Match in all possible ways
             :ratchet        Don't backtrack
 
-The C<:sigspace> needs a bit more explanation. It replace all whitespaces in
+The C<:sigspace> needs a bit more explanation. It replace all whitespace in
 the pattern with C<< <.ws> >> (that is it calls the rule C<ws> without keeping
 its result). You can override that rule. By default it matches one or more
 white spaces if it's enclosed in word characters, and zero or more otherwise.
@@ -150,7 +153,8 @@ C<$0>, C<$1> etc are just aliases for C<$/[0]>, C<$/[1]> etc. Likewise
 C<< $/<x> >> and C<$/{'x'}> are aliased to C<< $<x> >>.
 
 Note that anything that you access via C<$/[...]> and C<$/{...}> is a match
-object again. This allows you to build real parse trees with rules.
+object (or a list of Match objects) again. This allows you to build real
+parse trees with rules.
 
 =head2 Named Regexes and Grammars
 

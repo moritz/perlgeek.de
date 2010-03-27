@@ -43,7 +43,7 @@ name="DESCRIPTION"
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename ~~ :e</code>.</p>
+<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.io ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 

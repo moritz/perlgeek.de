@@ -23,7 +23,7 @@ There are some basic types that you should know about:
     'a string'      # Str
     2               # Int
     3.14            # Num
-    (1, 2, 3)       # List
+    (1, 2, 3)       # Seq
 
 All "normal" built-in types begin with an upper case letter. All "normal" types
 inherit from C<Any>, and absolutely everything inherits from C<Object>.

@@ -61,7 +61,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is underdocumented. That&#39;s no surprise, because (apart from the specification) writing a compiler for Perl 6 seems to be much more urgent than writing documentation that targets the user.</p>
+<p>Perl 6 is under-documented. That&#39;s no surprise, because (apart from the specification) writing a compiler for Perl 6 seems to be much more urgent than writing documentation that targets the user.</p>
 
 <p>Unfortunately that means that it&#39;s not easy to learn Perl 6, and that you have to have a profound interest in Perl 6 to actually find the motivation to learn it from the specification, IRC channels or from the test suite.</p>
 
@@ -138,6 +138,13 @@ name="AUTHOR"
 <p>Moritz Lenz, <a href="http://perlgeek.de/" class="podlinkurl"
 >http://perlgeek.de/</a>, <code>moritz@faui2k3.org</code></p>
 
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="LINKS"
+>LINKS</a></h3>
+
+<p>Other documentation efforts can be found on <a href="http://perl6.org/documentation/" class="podlinkurl"
+>http://perl6.org/documentation/</a>.</p>
+
 
 <h2 id="post_01">Strings, Arrays, Hashes;</h2>
 <p>Sat Sep 20 22:20:00 2008</p>
@@ -195,7 +202,7 @@ name="Strings"
     say &#34;@array[1]&#34;;            # &#39;2&#39;
     say &#34;Code: { $scalar * 2 }&#34; # &#39;Code: 12&#39;</pre>
 
-<p>Arrays and hashes only interpolate if followed by an index, empty indexes interpolate the whole data structure.</p>
+<p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), empty indexes interpolate the whole data structure.</p>
 
 <p>A block in curly braces is executed as a code block, and the result is interpolated.</p>
 
@@ -300,7 +307,7 @@ name="DESCRIPTION"
 <pre>    &#39;a string&#39;      # Str
     2               # Int
     3.14            # Num
-    (1, 2, 3)       # List</pre>
+    (1, 2, 3)       # Seq</pre>
 
 <p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Object</code>.</p>
 
@@ -399,6 +406,8 @@ name="DESCRIPTION"
 
 <p>Most Perl 5 control structures are quite similar in Perl 6. The biggest visual difference is that you don&#39;t need a pair of parenthesis after <code>if</code>, <code>while</code>, <code>for</code> etc.</p>
 
+<p>In fact your discouraged from using parenthesis around the conditions.</p>
+
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Branches"
 >Branches</a></h4>
@@ -480,7 +489,7 @@ name="SYNOPSIS"
     }
 
     # Signature with fixed arity and type:
-    sub distance(Num $x1, Num $y1, Num $x2, Num $y2) {
+    sub distance(Int $x1, Int $y1, Int $x2, Int $y2) {
         return sqrt ($x2-$x1)**2 + ($y2-$y1)**2;
     }
     say distance(3, 5, 0, 1); 
@@ -563,14 +572,14 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>In these the variable name is used as the name. You can use a different name, though:</p>
+<p>In these the variable name is also used as the name of the parameter. You can use a different name, though:</p>
 
 <pre>    sub area(:width($w), :height($h)){
         return $w * $h;
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name by default (but it is not yet implemented in Rakudo).</p>
+<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name.</p>
 
 <pre>    sub sqrt($number) { ... };
     sqrt(3);
@@ -648,7 +657,7 @@ name="MOTIVATION"
 
 <p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
 
-<p>Since operators are also subs, that refinement works for operators too.</p>
+<p>Since operators are also subs, these refinements works for operators too.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"
@@ -674,12 +683,11 @@ name="SYNOPSIS"
 <pre>    class Shape {
         method area { ... }    # literal &#39;...&#39;
         has $.colour is rw;
-
     }
 
     class Rectangle is Shape {
-        has Num $.width;
-        has Num $.height;
+        has $.width;
+        has $.height;
 
         method area {
             $!width * $!height;
@@ -687,8 +695,8 @@ name="SYNOPSIS"
     }
 
     my $x = Rectangle.new(
-            width   =&#62; 30,
-            height  =&#62; 20,
+            width   =&#62; 30.0,
+            height  =&#62; 20.0,
             colour  =&#62; &#39;black&#39;,
         );
     say $x.area;                # 600
@@ -757,7 +765,7 @@ name="Methods"
 name="Attributes"
 >Attributes</a></h4>
 
-<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor.</p>
+<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So for write access you always use the <code>!</code> twigil.</p>
 
 <pre>    class SomeClass {
         has $!a;
@@ -869,11 +877,12 @@ name="DESCRIPTION"
 <pre>    syntax       context
 
     ~stuff       String
-    ?stuff       Bool
+    ?stuff       Bool (logical)
     +stuff       Numeric
     -stuff       Numeric (also negates)
     $( stuff )   Generic item context
-    @( stuff )   List Context
+    @( stuff )   List context
+    %( stuff )   Hash context
     @@( stuff )  Slice context</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
@@ -936,7 +945,7 @@ name="SYNOPSIS"
         token schema {
             \w+
         }
-        token host {
+        token hostname {
             (\w+) ( \. \w+ )*
         }
         token port {
@@ -945,7 +954,10 @@ name="SYNOPSIS"
         token path {
             &#60;[ a..z A..Z 0..9 -_.!~*&#39;():@&#38;=+$,/ ]&#62;+
         }
-    }</pre>
+    }
+
+    my $match = URI.parse(&#39;http://perl6.org/documentation/&#39;);
+    say $match&#60;hostname&#62;;       # perl6.org</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
@@ -968,7 +980,7 @@ name="DESCRIPTION"
 >Nested captures and match object</a></dt>
 
 <dd>
-<p>In perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
+<p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
 
 <p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
 
@@ -988,7 +1000,7 @@ name="DESCRIPTION"
 name="Syntax_clean_up"
 >Syntax clean up</a></h4>
 
-<p>Letter characters (ie underscore, digits and all Unicode letters) match literally, and have a special meaning (they are &#34;metasyntactic&#34;) when escaped with a backslash. For all other characters it&#39;s the other way round - they are metasyntactic unless escaped.</p>
+<p>Letter characters (ie underscore, digits and all Unicode letters) match literally, and have a special meaning (they are <i>metasyntactic</i>) when escaped with a backslash. For all other characters it&#39;s the other way round - they are metasyntactic unless escaped.</p>
 
 <pre>    literal         metasyntactic
     a  b  1  2      \a \b \1 \2
@@ -1024,7 +1036,7 @@ name="Syntax_clean_up"
     :ex     :exhaustive     Match in all possible ways
             :ratchet        Don&#39;t backtrack</pre>
 
-<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespaces in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
+<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespace in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
 
 <p>(There are more new modifiers, but probably not as important as the listed ones).</p>
 
@@ -1043,7 +1055,7 @@ name="The_Match_Object"
 
 <p><code>$0</code>, <code>$1</code> etc are just aliases for <code>$/[0]</code>, <code>$/[1]</code> etc. Likewise <code>$/&#60;x&#62;</code> and <code>$/{&#39;x&#39;}</code> are aliased to <code>$&#60;x&#62;</code>.</p>
 
-<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object again. This allows you to build real parse trees with rules.</p>
+<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Named_Regexes_and_Grammars"
@@ -1114,13 +1126,13 @@ name="DESCRIPTION"
 
 <p><code>1 | 2 | 3</code> is the same as <code>any(1..3)</code>.</p>
 
-<pre>    my Junction $weekday = any &#60;Monday Tuesday Wednesday 
+<pre>    my junction $weekday = any &#60;Monday Tuesday Wednesday 
                                 Thursday Friday Saturday Sunday&#62;
     if $day eq $weekday {
         say &#34;See you on $day&#34;;
     }</pre>
 
-<p>In this example the <code>eq</code> operator is called with each pair <code>$day, &#39;Monday&#39;</code>, <code>$day, &#39;Tuesday&#39;</code> etc. and the result is put in an <code>any</code>-Junction again. As soon as the result is determined (in this case, as soon as one comparison returns <code>True</code>) it can abort the execution of the other comparisons.</p>
+<p>In this example the <code>eq</code> operator is called with each pair <code>$day, &#39;Monday&#39;</code>, <code>$day, &#39;Tuesday&#39;</code> etc. and the result is put in an <code>any</code>-junction again. As soon as the result is determined (in this case, as soon as one comparison returns <code>True</code>) it can abort the execution of the other comparisons.</p>
 
 <p>This works not only for operators, but also for subs:</p>
 
@@ -1130,22 +1142,23 @@ name="DESCRIPTION"
 
 <p>To make this possible, junctions stand outside the normal type hierarchy (a bit):</p>
 
-<pre>                    Object
+<pre>                      Mu
+                    /    \
                    /      \
-                 Any     Junction
+                 Any     junction
                /  |  \
             All other types</pre>
 
-<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Object</code> or <code>Junction</code></p>
+<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>junction</code></p>
 
-<pre>    sub dump_yaml(Object $stuff) {
+<pre>    sub dump_yaml(junction $stuff) {
         # we hope that YAML can represent junctions ;-)
         ....
     }</pre>
 
-<p>A word of warning: Junctions can behave counter-intuitive sometimes. With non-junction types <code>$a != $b</code> and <code>!($a == $b)</code> always mean the same thing. If one of these variables is a junction, that might be different:</p>
+<p>A word of warning: junctions can behave counter-intuitive sometimes. With non-junction types <code>$a != $b</code> and <code>!($a == $b)</code> always mean the same thing. If one of these variables is a junction, that might be different:</p>
 
-<pre>    my Junction $b = 3 | 2;
+<pre>    my junction $b = 3 | 2;
     my $a = 2; 
     say &#34;Yes&#34; if   $a != $b ;       # Yes
     say &#34;Yes&#34; if !($a == $b);       # no output</pre>
@@ -1291,7 +1304,7 @@ name="DESCRIPTION"
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = &#39;Foo&#39;;   # Error &#39;Type check failed&#39;</pre>
 
-<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of that type can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
+<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
 
 <pre>    my $a = 1;
     $a = 2;     # no surprise here</pre>
@@ -1359,7 +1372,7 @@ name="DESCRIPTION"
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename ~~ :e</code>.</p>
+<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.io ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 
@@ -1524,7 +1537,7 @@ name="DESCRIPTION"
     &#60;a b c&#62;             circumfix
     @a[1]               postcircumfix</pre>
 
-<p>Operator names are not limited to &#34;special&#34; characters, they can contain anything except whitespaces.</p>
+<p>Operator names are not limited to &#34;special&#34; characters, they can contain anything except whitespace.</p>
 
 <p>The long name of an operator is its type, followed by a colon and a string literal or list of the symbol or symbols, for example <code>infix:&#60;+&#62;</code> is the the operator in <code>1+2</code>. Another example is <code>postcircumfix:&#60;[ ]&#62;</code>, which is the operator in <code>@a[0]</code>.</p>
 
@@ -1738,7 +1751,7 @@ name="DESCRIPTION"
 
 <p>The <code>?</code> twigil stands for variables and constants that are known at compile time, like <code>$?LINE</code> for the current line number (formerly <code>__LINE__</code>), and <code>$?DATA</code> is the file handle to the <code>DATA</code> section.</p>
 
-<p>Global variables can be accessed with the <code>*</code> twigil, so <code>%GLOBAL::ENV</code> can be abbreviated to <code>%*ENV</code>, the command line arguments are stored in <code>@*ARGS</code>, the current process number is in <code>$*PID</code> and so on.</p>
+<p>Contextual variables can be accessed with the <code>*</code> twigil, so <code>$*IN</code> and <code>$*OUT</code> can be overridden dynamically.</p>
 
 <p>A pseudo twigil is <code>&#60;</code>, which is used in a construct like <code>$&#60;capture&#62;</code>, where it is a shorthand for <code>$/&#60;capture&#62;</code>, which accesses the Match object after a regex match.</p>
 

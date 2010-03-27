@@ -10,7 +10,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 is underdocumented. That's no surprise, because (apart from the
+Perl 6 is under-documented. That's no surprise, because (apart from the
 specification) writing a compiler for Perl 6 seems to be much more urgent than
 writing documentation that targets the user.
 
@@ -95,6 +95,11 @@ outdated.
 =head1 AUTHOR
 
 Moritz Lenz, L<http://perlgeek.de/>, C<moritz@faui2k3.org>
+
+=head1 LINKS
+
+Other documentation efforts can be found on
+L<http://perl6.org/documentation/>.
 
 =for time 1221948000
 =for editor vim: spell

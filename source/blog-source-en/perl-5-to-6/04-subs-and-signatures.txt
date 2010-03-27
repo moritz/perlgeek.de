@@ -20,7 +20,7 @@ name="SYNOPSIS"
     }
 
     # Signature with fixed arity and type:
-    sub distance(Num $x1, Num $y1, Num $x2, Num $y2) {
+    sub distance(Int $x1, Int $y1, Int $x2, Int $y2) {
         return sqrt ($x2-$x1)**2 + ($y2-$y1)**2;
     }
     say distance(3, 5, 0, 1); 
@@ -103,14 +103,14 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>In these the variable name is used as the name. You can use a different name, though:</p>
+<p>In these the variable name is also used as the name of the parameter. You can use a different name, though:</p>
 
 <pre>    sub area(:width($w), :height($h)){
         return $w * $h;
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name by default (but it is not yet implemented in Rakudo).</p>
+<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name.</p>
 
 <pre>    sub sqrt($number) { ... };
     sqrt(3);
@@ -188,7 +188,7 @@ name="MOTIVATION"
 
 <p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
 
-<p>Since operators are also subs, that refinement works for operators too.</p>
+<p>Since operators are also subs, these refinements works for operators too.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

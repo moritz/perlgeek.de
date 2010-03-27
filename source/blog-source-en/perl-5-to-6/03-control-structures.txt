@@ -35,6 +35,8 @@ name="DESCRIPTION"
 
 <p>Most Perl 5 control structures are quite similar in Perl 6. The biggest visual difference is that you don&#39;t need a pair of parenthesis after <code>if</code>, <code>while</code>, <code>for</code> etc.</p>
 
+<p>In fact your discouraged from using parenthesis around the conditions.</p>
+
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Branches"
 >Branches</a></h4>

@@ -31,7 +31,7 @@ name="DESCRIPTION"
     &#60;a b c&#62;             circumfix
     @a[1]               postcircumfix</pre>
 
-<p>Operator names are not limited to &#34;special&#34; characters, they can contain anything except whitespaces.</p>
+<p>Operator names are not limited to &#34;special&#34; characters, they can contain anything except whitespace.</p>
 
 <p>The long name of an operator is its type, followed by a colon and a string literal or list of the symbol or symbols, for example <code>infix:&#60;+&#62;</code> is the the operator in <code>1+2</code>. Another example is <code>postcircumfix:&#60;[ ]&#62;</code>, which is the operator in <code>@a[0]</code>.</p>
 

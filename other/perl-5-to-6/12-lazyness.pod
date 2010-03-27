@@ -37,9 +37,9 @@ In general all conversions to a scalar (like C<List.join>) are I<eager>, i.e.
 non-lazy.
 
 Laziness prevents unnecessary computations, and can therefor boost performance
-while keeping code simple. 
+while keeping code simple.
 
-When you read a file line by line in Perl 5, you don't use 
+When you read a file line by line in Perl 5, you don't use
 C<< for (<HANDLE>) >> because it reads all the file into memory, and only then
 starts iterating. With laziness that's not an issue:
 

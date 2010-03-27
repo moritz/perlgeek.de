@@ -40,7 +40,7 @@ String concatenation is now C<~>, the dot C<.> is used for method calls.
 
 File tests are now formulated in C<Pair> notation, Perl 5 C<-e> is now
 C<:e>. If something other than C<$_> should be used as the file name, it can
-be supplied via C<$filename ~~ :e>.
+be supplied via C<$filename.io ~~ :e>.
 
 The repetition operator C<x> is now split into two operators: C<x> replicates
 strings, C<xx> lists.

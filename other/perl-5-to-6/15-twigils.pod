@@ -60,9 +60,8 @@ The C<?> twigil stands for variables and constants that are known at compile
 time, like C<$?LINE> for the current line number (formerly C<__LINE__>), and
 C<$?DATA> is the file handle to the C<DATA> section. 
 
-Global variables can be accessed with the C<*> twigil, so C<%GLOBAL::ENV> can
-be abbreviated to C<%*ENV>, the command line arguments are stored in
-C<@*ARGS>, the current process number is in C<$*PID> and so on.
+Contextual variables can be accessed with the C<*> twigil, so C<$*IN> and
+C<$*OUT> can be overridden dynamically.
 
 A pseudo twigil is C<< < >>, which is used in a construct like
 C<< $<capture> >>, where it is a shorthand for C<< $/<capture> >>, which

@@ -27,7 +27,7 @@ name="SYNOPSIS"
         token schema {
             \w+
         }
-        token host {
+        token hostname {
             (\w+) ( \. \w+ )*
         }
         token port {
@@ -36,7 +36,10 @@ name="SYNOPSIS"
         token path {
             &#60;[ a..z A..Z 0..9 -_.!~*&#39;():@&#38;=+$,/ ]&#62;+
         }
-    }</pre>
+    }
+
+    my $match = URI.parse(&#39;http://perl6.org/documentation/&#39;);
+    say $match&#60;hostname&#62;;       # perl6.org</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
@@ -59,7 +62,7 @@ name="DESCRIPTION"
 >Nested captures and match object</a></dt>
 
 <dd>
-<p>In perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
+<p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
 
 <p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
 
@@ -79,7 +82,7 @@ name="DESCRIPTION"
 name="Syntax_clean_up"
 >Syntax clean up</a></h4>
 
-<p>Letter characters (ie underscore, digits and all Unicode letters) match literally, and have a special meaning (they are &#34;metasyntactic&#34;) when escaped with a backslash. For all other characters it&#39;s the other way round - they are metasyntactic unless escaped.</p>
+<p>Letter characters (ie underscore, digits and all Unicode letters) match literally, and have a special meaning (they are <i>metasyntactic</i>) when escaped with a backslash. For all other characters it&#39;s the other way round - they are metasyntactic unless escaped.</p>
 
 <pre>    literal         metasyntactic
     a  b  1  2      \a \b \1 \2
@@ -115,7 +118,7 @@ name="Syntax_clean_up"
     :ex     :exhaustive     Match in all possible ways
             :ratchet        Don&#39;t backtrack</pre>
 
-<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespaces in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
+<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespace in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
 
 <p>(There are more new modifiers, but probably not as important as the listed ones).</p>
 
@@ -134,7 +137,7 @@ name="The_Match_Object"
 
 <p><code>$0</code>, <code>$1</code> etc are just aliases for <code>$/[0]</code>, <code>$/[1]</code> etc. Likewise <code>$/&#60;x&#62;</code> and <code>$/{&#39;x&#39;}</code> are aliased to <code>$&#60;x&#62;</code>.</p>
 
-<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object again. This allows you to build real parse trees with rules.</p>
+<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Named_Regexes_and_Grammars"

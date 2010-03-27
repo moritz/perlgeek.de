@@ -46,7 +46,8 @@ interpolate
     say "@array[1]";            # '2'
     say "Code: { $scalar * 2 }" # 'Code: 12'
 
-Arrays and hashes only interpolate if followed by an index, empty indexes
+Arrays and hashes only interpolate if followed by an index (or a method call
+that ends in parenthesis, like C<"some $obj.method()">), empty indexes
 interpolate the whole data structure.
 
 A block in curly braces is executed as a code block, and the result is

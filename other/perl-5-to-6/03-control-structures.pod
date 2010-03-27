@@ -28,6 +28,8 @@ Most Perl 5 control structures are quite similar in Perl 6. The biggest visual
 difference is that you don't need a pair of parenthesis after C<if>, C<while>,
 C<for> etc.
 
+In fact your discouraged from using parenthesis around the conditions.
+
 =head2 Branches
 
 C<if> is mostly unchanged, you can still add C<elsif> and C<else> branches.

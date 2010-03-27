@@ -29,7 +29,7 @@ containers is called C<binding>.
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = 'Foo';   # Error 'Type check failed'
 
-Types like C<Int> and C<Str> are immutable, ie the objects of that type can't
+Types like C<Int> and C<Str> are immutable, ie the objects of these types can't
 be changed; but you can still change the variables (the containers, that is)
 which hold these values:
 

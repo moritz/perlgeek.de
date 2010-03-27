@@ -31,7 +31,7 @@ name="DESCRIPTION"
 <pre>    &#39;a string&#39;      # Str
     2               # Int
     3.14            # Num
-    (1, 2, 3)       # List</pre>
+    (1, 2, 3)       # Seq</pre>
 
 <p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Object</code>.</p>
 

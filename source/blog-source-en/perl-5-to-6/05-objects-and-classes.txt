@@ -14,12 +14,11 @@ name="SYNOPSIS"
 <pre>    class Shape {
         method area { ... }    # literal &#39;...&#39;
         has $.colour is rw;
-
     }
 
     class Rectangle is Shape {
-        has Num $.width;
-        has Num $.height;
+        has $.width;
+        has $.height;
 
         method area {
             $!width * $!height;
@@ -27,8 +26,8 @@ name="SYNOPSIS"
     }
 
     my $x = Rectangle.new(
-            width   =&#62; 30,
-            height  =&#62; 20,
+            width   =&#62; 30.0,
+            height  =&#62; 20.0,
             colour  =&#62; &#39;black&#39;,
         );
     say $x.area;                # 600
@@ -97,7 +96,7 @@ name="Methods"
 name="Attributes"
 >Attributes</a></h4>
 
-<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor.</p>
+<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So for write access you always use the <code>!</code> twigil.</p>
 
 <pre>    class SomeClass {
         has $!a;
