@@ -1,0 +1,45 @@
+A Perl 6 Date Module
+<!-- 1271013209 -->
+
+<p>The Perl 6 specification talks, among other things, about <a
+    href="http://svn.pugscode.org/pugs/docs/Perl6/Spec/S32-setting-library/Temporal.pod">built-in
+    date/time classes</a>. After much discussions back and forth it is now
+(and is likely staying that way) a subset of the excellent Perl 5 module <a
+href="http://search.cpan.org/perldoc?DateTime">DateTime</a>.</p>
+
+<p>The discussions on the perl6-language mailing list showed that Dave Rolsky,
+author of DateTime, <a
+    href="http://www.nntp.perl.org/group/perl.perl6.language/2010/04/msg33492.html">wants
+    us to learn from the shortcomings of DateTime</a>, in particular having a
+date-only class looks like a good idea to him.</p>
+
+<p>That encouraged me to implement such a module. There's also prior art for
+that on CPAN: <a
+    href="http://search.cpan.org/perldoc?Date::Simple">Date::Simple</a>.</p>
+
+<p>It's really simple, as the name says: You can construct a Date::Simple
+object either from year, month, day or from a string in the form
+<code>YYYY-MM-DD</code>, subtracting two dates yields an integer, adding or
+subtracting an integer to a date gives another date, you can <code>++</code>
+or <code>--</code> date objects to get the next/previous day, and you can
+query date objects for year, month, day and day of week.</p>
+
+<p>With some <a href="http://www.merlyn.demon.co.uk/daycount.htm">good
+    literature</a> at hand (and the Date::Simple test suite for inspiration)
+that's rather straight forward to implement, so that's
+what I did. I called it <code>Date</code>, and <a
+    href="http://github.com/moritz/Date">the code is on github</a>.</p>
+
+<p>It works to the extent possible by current Rakudo: all the object oriented
+features work, <a
+href="http://rt.perl.org/rt3/Ticket/Display.html?id=74104">overloading
+operators doesn't quite work yet</a>. Still the logic for the operators is
+already there, and once the bug in Rakudo is fixed, the Date module will be
+nearly fully implemented.</p>
+
+<p>I enjoyed doing some solid work in this area of continued <a
+    href="http://en.wiktionary.org/wiki/bikeshedding">bikeshedding</a>, and
+I'll wait and see if people want such a class in Perl 6 or not.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
