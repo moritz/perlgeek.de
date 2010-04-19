@@ -30,7 +30,12 @@ while (<>){
 }
 
 sub N_escape {
-    return '\N{' . charnames::viacode(ord($_[0])) . '}';
+    my $n = charnames::viacode(ord($_[0]));
+    return defined($n) ? "\\N{$n}" : sprintf('\x{%x}', ord($_[0]));
 }
 [%endsyntax%]</pre>
+
+
+<p>(Update 2010-04-19:) Added <code>\x{...}</code> escapes for characters
+which <code>viacode</code> doesn't like.</p>
 [% option no-header %][% option no-footer %]
