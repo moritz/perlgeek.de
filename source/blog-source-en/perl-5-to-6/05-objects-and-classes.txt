@@ -96,12 +96,18 @@ name="Methods"
 name="Attributes"
 >Attributes</a></h4>
 
-<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So for write access you always use the <code>!</code> twigil.</p>
+<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So if you want to modify the attribute, you need to use the <code>!</code> sigil to access the actual attribute, and not the accessor (unless the accessor is marked <code>is rw</code>).</p>
 
 <pre>    class SomeClass {
         has $!a;
         has $.b;
         has $.c is rw;
+
+        method set_stuff {
+            $!a = 1;    # ok, writing to attribute from within the clas
+            $!b = 2;    # same
+            $.b = 3;    # ERROR, can&#39;t write to ro-accessor
+        }
 
         method do_stuff {
             # you can use the private name instead of the public one

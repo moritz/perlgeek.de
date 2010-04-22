@@ -99,13 +99,20 @@ Private methods can't be called from outside the class.
 Attributes are declared with the C<has> key word, and have a "twigil", that is
 a special character after the sigil. For private attributes that's a bang C<!>,
 for public attributes it's the dot C<.>. Public attributes are just private
-attributes with a public accessor. So for write access you always use the C<!>
-twigil.
+attributes with a public accessor. So if you want to modify the attribute, you
+need to use the C<!> sigil to access the actual attribute, and not the
+accessor (unless the accessor is marked C<is rw>).
 
     class SomeClass {
         has $!a;
         has $.b;
         has $.c is rw;
+
+        method set_stuff {
+            $!a = 1;    # ok, writing to attribute from within the clas
+            $!b = 2;    # same
+            $.b = 3;    # ERROR, can't write to ro-accessor
+        }
 
         method do_stuff {
             # you can use the private name instead of the public one
