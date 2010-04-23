@@ -1,0 +1,45 @@
+Monetize Perl 6?
+<!-- 1272053637 -->
+
+<p>In some of <a href="http://www.perlmonks.org/?node_id=835419">recent
+perlmonks</a> <a href="http://www.perlmonks.org/?node_id=836349">Perl 6
+discussions</a> one of the comments mentioned something along the lines of
+<em>Perl 5 is where the money is</em> (I can't find the exact quote in these
+monstrous threads...</p>
+
+<p>If money was my primary interest, I wouldn't be hacking Perl 6 as much as I
+do - it's mostly just for fun. Still one can speculate on how to earn money
+with Perl 6 today - I wouldn't mind having fun with Perl 6 <em>and</em> earn
+some money.</p>
+
+<p>In fact, I did that already. I wrote a series of articles for the <a
+href="http://www.heise.de/ix/">iX Magazin</a> (together with <a
+href="http://plasmasturm.org/">Aristotle Pagaltzis</a>), and while it was
+quite some effort, it also payed well. Next up down a similar route is the <a
+href="http://github.com/perl6/book/">Perl 6 book</a> that some Perl 6
+developers write. It's not primarily written for profit, but there will be
+royalties.</p>
+
+<p>I also thought about monetizing this blog - with a few hundred page views
+per new entry it might be worth it; still I have some standards as a web
+publisher, and find most ads annoying and disturbing, often fitting badly into
+the layout. I don't want my readers to suffer for my greed.</p>
+
+<p>What kind of advertisements could actually add value to the site?
+Typically programmers read my blogs, and programmers need... jobs, tools,
+books and gadgets. I haven't pursued the thought very far yet, but I think
+having job ads in text form might be both profitable, maybe interesting and
+hopefully not annoying.</p>
+
+<p>What do you, the readers of my blog, think about that? Is there any type of
+monetizing that you would enjoy? or if not enjoy, then at least tolerate with
+good will? What would you prefer, job ads, geek books, gadgets, or anything
+else?</p>
+
+<p>On a related note, do you know any reputable job market for which I can
+advertise in text form?</p>
+
+<p>Or any company that would hire me for Perl 6 consulting? :-)</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
