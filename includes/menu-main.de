@@ -31,10 +31,15 @@
             <div id="col1">
                 <div id="col1_content" class="clearfix">
                 <h3>Artikel</h3>
+                <h4>Perl</h4>
                 <ul>
                     [% item unicode    <li><a {{class="selected" }}href="/de/artikel/charsets-unicode">Charsets und Unicode</a></li> %]
                     [% item hop        <li><a {{class="selected" }}href="/de/artikel/rezension-higher-order-perl">Rezension "Higher Order Perl"</a></li> %]
                     [% item schwaechen <li><a {{class="selected" }}href="/de/artikel/schwaechen-von-perl-5">Perls Schwächen</a></li> %]
+                </ul>
+                <h4>Datenstrukturen</h4>
+                <ul>
+                    [% item rekursion <li><a {{class="selected" }}href="/de/artikel/rekursion">Rekursion</a></li> %]
                     [% item linkedlist <li><a {{class="selected" }}href="/de/artikel/einfach-verkettete-listen">Verkettete Listen in C</a></li> %]
                     [% item doublylinked <li><a {{class="selected" }}href="/de/artikel/doppelt-verkettete-listen">Doppelt verkettete Listen in C</a></li> %]
                 </ul>

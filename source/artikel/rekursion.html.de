@@ -1,0 +1,277 @@
+[% setvar section Artikel%]
+[%setvar title „Was ist Rekursion?” Rekursion erklärt %]
+[%menu main artikel rekursion %]
+
+<h1 id="introduction">Rekursion erklärt</h1>
+
+
+<p>Was ist Rekursion? Wofür braucht man sie? Diese Fragen soll der
+vorliegende Artikel möglichst einfach beantworten.</p>
+
+<h2 id="rekursion">Was ist Rekursion?</h2>
+
+<p>Rekursion ist ein Programmierkonzept, bei der eine Funktion nur einen
+kleinen Teil der Arbeit macht und damit ein Problem ein bisschen
+verkleinter, und sich dann selbst aufruft um den Rest des Problems zu
+lösen.</p>
+<p>Das wird so lange fortgesetzt, bis das Problem auf einen sehr
+einfachen Fall reduziert ist.</p>
+
+<h2 id="beispiel-hanoi">Ein Beispiel</h2>
+
+<p>Ein klassisches Beispiel zum erklären der Rekursion ist die
+sogenannte Fakultätsfunktion.</p>
+
+<p>Sie ist folgendermaßen definiert:</p>
+
+<pre>n! = n * (n-1) * ... * 2 * 1</pre>
+<p>Das heißt die Fakultät einer Zahl das Produkt aller
+ganzer Zahlen kleiner gleich der Zahl selbst.</p>
+
+<p>Die obige Definition ist aber nicht sehr elegant: obwohl
+offensichtlich ist, was gemeint ist, liefert sie für
+<code>n=1</code> streng genommen keine sinnvollen Werte, weil in der
+Definition eine <code>2</code> auftaucht.</p>
+
+<p>Die elegantere Defintion geht so:</p>
+
+<pre>n! = 1 wenn n=1 ist
+n! = n * (n-1)! sonst</pre>
+
+<p>Man beachte, dass <strong>in der Defintion der Fakultät die
+Fakultät selbst auftaucht</strong>, trotzdem ist sie sinnvoll definiert.</p>
+
+<p>Diese Form der Definition ist sehr eng an die rekursive
+Programmierung angelehnt. In C programmiert sieht diese Funktion
+so aus:</p>
+
+<pre>[% syntax c %]
+int fakultaet(int n){
+	if (n == 1){
+		return 1;
+	} else {
+		return n * fakultaet(n-1);
+    }
+}[% endsyntax %]</pre>
+
+<p>Was passiert jetzt, wenn man <code>fakultaet(3)</code> aufruft?</p>
+
+<p>Im ersten Aufruf ist die Bedingung <code>n == 1</code> sicher nicht
+erfüllt, also wird der zweite Zweig aufgerufen, und
+<code>3 * fakultaet(2)</code> zurückgeliefert.</p>
+
+<p>Aber der Wert für <code>fakultaet(2)</code> ist nicht bekannt,
+die Funktion muss also noch einmal berechnet werden, diesmal mit
+dem Argument <code>2</code>.</p>
+
+<p>Auch der Aufruf von <code>fakultaet(2)</code> liefert noch keine
+reine Zahl zurück, sondern <code>2 * fakultaet(1)</code>, und
+<code>fakultaet(1)</code> ist endlich <code>1</code>.</p>
+
+<p>Es wurde also folgendes berechnet:</p>
+<pre>fakultaet(3)
+ = 3 * fakultaet(2)
+ = 3 * 2 * fakultaet(1)
+ = 3 * 2 * 1
+ = 6</pre>
+
+<h3>Wozu das ganze?</h3>
+
+<p>Wer dieses Beispiel gesehen hat, fragt sich sicher, was die
+Rekursion denn soll. Schließlich tut es ein ganz einfaches,
+iteratives (also nicht-rekursives) Programm genauso:</p>
+<pre>[% syntax c %]
+int fakultaet(int n){
+	int p = 1;
+    while(n > 1){
+		p = p * n;
+		n--;
+	}
+	return p;
+}
+[% endsyntax %]</pre>
+
+<p>Und schneller ist es auch noch.</p>
+
+<p>Rekursion hat aber den Vorteil, dass es ganz natürlich größere Probleme in kleinere zerlegt,
+und so zum Teil erheblich leichter anzupacken ist.</p>
+
+<p>Beispiel gefällig? Nehmen wir die "Türme von Hanoi".</p>
+
+<p>Das ist ein altes Spiel, bei dem man drei Pfosten hat, auf denen
+Ringe verschiedener Größe liegen. Ziel des Spiels ist es,
+den Turm auf einen der anderen Pfosten zu verschieben, ohne jemals
+zwei Ringe auf einmal zu bewegen oder einen größeren auf einen
+kleineren Ring zu legen.</p>
+
+<img src="/images/articles/hanoi01.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen (Ausgangsposition)" />
+
+<img src="/images/articles/hanoi02.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi03.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi04.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi05.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi06.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi07.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<img src="/images/articles/hanoi08.png" width="320" height="240"
+alt="Die Türme von Hanoi, mit drei Ringen" />
+
+<p style="clear:left">Dabei kann man die Lösungsstrategie
+folgendermaßen beschreiben: wenn man nur einen Ring verschieben
+will, kann man es einfach machen. Wenn man mehrere Ringe verschieben
+will, verschiebt man erstmal alle außer dem untersten auf den
+Zwischenstapel, verschiebt den letzten Ring und dann verschiebt man
+den restlichen Stapel auf seine Endposition über den verschobenen
+Ring.</p>
+
+<p>Oder als C-Programm:</p>
+
+<pre>[% syntax c %]
+void move(int coin, char start, char end){
+	printf("Moving coin %d from '%c' to '%c'\n", start, start, end);
+}
+
+void hanoi(int coin, char start, char end, char third) {
+	if (coin == 1){
+		move(1, start, end);
+	} else {
+		hanoi(coin - 1, start, third, end);
+		move(coin, start, end);
+		hanoi(coin - 1, third, end, start);
+	}
+} 
+int main(int argc, char** argv){
+        hanoi_move(3, 'A', 'B', 'C');
+        return 0;
+}
+[% endsyntax %]</pre>
+
+<p>Man glaubt es kaum, dass dieser einfache Code das Problem
+lösen soll, aber es ist tatsächlich so.</p>
+
+<p>Um sich das zu veranschaulichen, kann man sich "von Hand" überlegen, in welcher Reihenfolge die Aufrufe geschehen.</p>
+
+<p>Um Platz zu sparen ersetze ich hier in jeder Ebene alle Aufrufe von Unterfunktionen, obwohl sie im Programm nacheinander (und nicht gleichzeitig) gesehen</p>
+
+<pre>
+0. Ebene:
+hanoi(3, 'A', 'B', 'C');
+
+1. Ebene:
+	hanoi(2, 'A', 'C', 'B');
+	move('A', 'C');
+	hanoi(2, 'C', 'B', 'A');
+
+2. Ebene:
+		hanoi(1, 'A', 'B', 'C');
+		move('A', 'C');
+		hanoi(1, 'C', 'B', 'A');
+	move('A', 'C');
+		hanoi(1, 'C', 'A', 'B');
+		move('C', 'B');
+		hanoi(1, 'A', 'B', 'C');
+
+3. Ebene:
+			move('A', 'B');
+		move('A', 'C');
+			move('C', 'B');
+	move('A', 'C');
+			move('C', 'A');
+		move('C', 'B');
+			move('A', 'B');</pre>
+
+<p>Zuerst wird also ein Ring von <code>A</code> nach <code>B</code> bewegt. Das Programm hat drei Funktionsaufrufe gebraucht, um das herauszufinden.</p>
+
+<p>Typisch für rekursive Funktionen sind diese Schritte:</p>
+
+<ul>
+    <li>Eine Abbruchbedingung, die dafür sorgt, dass keine endlose Schleife
+    entsteht</li>
+    <li>Ein kleiner Teil des Problems wird in der Funktion selbst gelöst, der
+    Rest wird durch rekursives von sich selbst gelöst</li>
+    <li>Wenn nötig werden die beiden Lösungen kombiniert.</li>
+</ul>
+
+<h2 id="mergesort">Noch ein Beispiel: Merge Sort</h2>
+
+<p>Die Türme von Hanoi sind sind ein eher akademisches Beispiel. Häufig in der
+freien Wildbahn des Programmierers trifft man auf das Problem, eine Liste
+sortieren zu müssen. Ein beliebtes und schnelles Verfahren ist <em>Merge
+    Sort</em>.</p>
+
+<p>Merge Sort funktioniert wie folgt:</p>
+
+<ul>
+    <li>Wenn die Eingabeliste ein oder gar kein Element enthält, ist sie
+    sortiert</li>
+    <li>Teile die Liste in in der Mitte. Sortiere die beiden Hälften
+    rekursiv</li>
+    <li>Füge die beiden sortieren Listen zu einer gemeinsamen sortierten Liste
+    (nach dem Reissverschlußprinzip) zusammen.</li>
+</ul>
+
+<p>Und wieder in C implementiert:</p>
+
+<pre>[% syntax c %]
+#include <stdio.h>
+
+void mergesort(int* const list, const int length) {
+    if (length <= 1) {
+        return;
+    }
+
+    int half = length / 2;
+
+    /* sort the left half */
+    mergesort(list, half);
+    /* sort the right half */
+    mergesort(list+half, length - half);
+
+    /* join the sorted half */
+    int left_p = 0;
+    int right_p = half;
+    int new_values[length];
+    for (int i = 0; i < length; i++) {
+        if (left_p == half ) {
+            new_values[i] = list[right_p++];
+        } else if (right_p == length) {
+            new_values[i] = list[left_p++];
+        } else {
+            if (list[left_p] <= list[right_p]) {
+                new_values[i] = list[left_p++];
+            } else {
+                new_values[i] = list[right_p++];
+            }
+        }
+    }
+    for (int i = 0; i < length; i++) {
+        list[i] = new_values[i];
+    }
+}
+
+
+int main(int argc, char** argv) {
+    int l[9] = { 12, 0, 3, 7, 6, 8, 3, -3, 8};
+    mergesort(l, 9);
+    for (int i = 0; i < 9; i++) {
+        printf("%d ", l[i]);
+    }
+    printf("\n");
+
+}
+[% endsyntax %]</pre>
+
+[% comment vim: ft=html spell
+%]
