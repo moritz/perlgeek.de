@@ -42,6 +42,7 @@
                     [% item rekursion <li><a {{class="selected" }}href="/de/artikel/rekursion">Rekursion</a></li> %]
                     [% item linkedlist <li><a {{class="selected" }}href="/de/artikel/einfach-verkettete-listen">Verkettete Listen in C</a></li> %]
                     [% item doublylinked <li><a {{class="selected" }}href="/de/artikel/doppelt-verkettete-listen">Doppelt verkettete Listen in C</a></li> %]
+                    [% item heap <li><a {{class="selected" }}href="/de/artikel/heap-und-heapsort">Heaps und Heapsort in C und C++</a></li> %]
                 </ul>
                 </div>
             </div>
