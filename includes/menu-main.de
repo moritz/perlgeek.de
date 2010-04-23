@@ -37,7 +37,7 @@
                     [% item hop        <li><a {{class="selected" }}href="/de/artikel/rezension-higher-order-perl">Rezension "Higher Order Perl"</a></li> %]
                     [% item schwaechen <li><a {{class="selected" }}href="/de/artikel/schwaechen-von-perl-5">Perls Schwächen</a></li> %]
                 </ul>
-                <h4>Datenstrukturen</h4>
+                <h4>Algorithmen</h4>
                 <ul>
                     [% item rekursion <li><a {{class="selected" }}href="/de/artikel/rekursion">Rekursion</a></li> %]
                     [% item linkedlist <li><a {{class="selected" }}href="/de/artikel/einfach-verkettete-listen">Verkettete Listen in C</a></li> %]
