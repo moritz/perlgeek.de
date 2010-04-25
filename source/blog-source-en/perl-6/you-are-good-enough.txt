@@ -1,0 +1,122 @@
+You are good enough!
+<!-- 1272192184 -->
+
+<p>Have you ever tried writing a compiler?</p>
+
+<p>Most programmers haven't. Most programmers think that writing a compiler is
+hard. Or even some deep magic for which you need some kind of advanced
+wizardry that you only obtain by hacking twenty years on a compiler already,
+or so.</p>
+
+<p>It's not.</p>
+
+<p>Writing a feature complete compiler for a full fledged programming
+language is quite some work. But writing a simple compiler isn't. And
+contributing to an existing compiler isn't either.</p>
+
+<p>I'd like to point you to <a href="http://compilers.iecc.com/crenshaw/">Jack
+Crenshaw's tutorial series <em>Let's Build a Compiler</em></a>. It's
+rather old, and outdated by many standards, and not all that well formatted
+and so on, but it really teaches you the basics of how to parse a program, and
+then interpret it, or compile it down to assembler.</p>
+
+<p>But mostly it shows you that compiler writing is no black magic at all.
+It's just like writing any other kind of program: Once you've got the gist of
+how compilers can work, it's mostly a matter of actually implementing things.
+And if some features seem hard to implement, there's plenty of literature that
+you can read on that particular topic.</p>
+
+<p>(Mr. Chrenshaw's tutorial inspired me to write a toy interpreter in Perl
+for a nearly usable, Turing complete programming language. <a
+href="http://search.cpan.org/perldoc?Math::Expression::Evaluator">Math::Expression::Evaluator</a>
+is a side product of writing that interpreter).</p>
+
+<p>Contributing to an existing compiler is even easier. The overall
+architecture already exists, and typically you need to only modify small
+parts to add a feature.</p>
+
+<p>I want to illustrate this by a feature that <a
+href="http://justrakudoit.wordpress.com/">Solomon Foster</a>, <a
+href="http://jnthn.net/">Jonathan Worthington</a> and I added to
+<a href="http://rakudo.org/">Rakudo</a> in a nice piece of collaboration.</p>
+
+<h2>The Feature</h2>
+
+<p>Perl 6 has the <a
+    href="http://perlgeek.de/blog-en/perl-5-to-6/24-reduce-meta-operator.html">reduction
+    meta operator</a>. It takes an infix operator, and applies it to a list.
+Here a few examples:</p>
+
+<pre>[% syntax perl6 %]
+# normal form
+# same as 1 + 2 + 3 + 4
+my $sum = [+] 1, 2, 3, 4;
+
+# triangle form:
+# same as
+# my @sub-sums = 1, 1 + 2, 1 + 2 +3 , 1 + 2 + 3 + 4
+my @sub-sums = [\+] 1, 2, 3, 4;
+
+# right-associative operators are reduced right to left:
+# infix:<**> is exponentiation
+# same as 2 ** (3 ** 4)
+say [**] 2, 3, 4
+
+# chained operators are AND'ed together:
+# same as  1 <= 2 && 2 <= 3 && 3 <= 4
+my $sorted = [<=] 1, 2, 3, 4;
+[% endsyntax %]</pre>
+
+<h2>Status Quo</h2>
+
+<p>When we started our work, only the first, simplest version was implemented,
+i.e. reduction of a left associative, non-chaining infix operator.</p>
+
+<h2>What we did</h2>
+
+<p>Solomon <a
+href="http://github.com/rakudo/rakudo/commit/8f35ce29e93a779c8f791fc80011ea7477451161">started
+with a basic implementation of the reduction logic</a>. You'll notice that
+it's written in Perl 6, so no knowledge of scary low level languages
+required.</p>
+
+<p>In a <a
+    href="http://github.com/rakudo/rakudo/commit/0ccaf6c4ddaef2100bad6fe013a3bcd1825b3dc2">series</a>
+<a
+    href="http://github.com/rakudo/rakudo/commit/bcdee8ef256fb2fe0af01466f6b1faff115dce84">of</a>
+<a
+    href="http://github.com/rakudo/rakudo/commit/e50ff8cb3400da8872b241f479c09ce7a7c89871">small</a>
+<a
+    href="http://github.com/rakudo/rakudo/commit/d906f517613ba839cb6a0db6fc23629ddbd4551d">patches</a>
+Solomon and I generalized and improved the logic step by step, and Jonathan <a
+    href="http://github.com/rakudo/rakudo/commit/3469ffe042f2b2f749a163cbdb80289120d06a51">wired
+    the parser to the reduction logic</a>.</p>
+
+<p>All of these patches were written in Perl 6 code, and only the last one
+required more than a trivial amount of guts knowledge.</p>
+
+<p>The actual reduction method is no piece of magic. It ended up a bit lengthy
+because it needs to consider several different variations of the reduction
+feature. It's just an ordinary function that you would typically find in a
+perl module.</p>
+
+<h2>Conclusion</h2>
+
+<p>If you know a bit of Perl 6, you can contribute to Rakudo today. Many
+built-in features can be desugared to ordinary library functions under the
+hood. If implement the logic, somebody can tell you how to wire up it with the
+rest of the compiler, or even do it for you.</p>
+
+<p>You are good enough. Ordinary programmers can do it, no wizardry
+required.</p>
+
+<p>(The same actually holds true for most projects that look scary from the
+outside. In my experience it's just very important that the community is
+friendly and helpful.)</p>
+
+<p>(With <a
+href="http://yapc.tv/2008/ye/lt/lt1-12-trout-arent-good-enough/">apologies
+to mst</a>).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
