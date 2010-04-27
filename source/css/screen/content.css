@@ -161,10 +161,12 @@
 
     a[href^="http://"]
   {
-    padding-left: 12px;
+      /* TODO: visually hilighit external links */
+/*    padding-left: 12px;
     background-image: url('/images/new-external.png');
     background-repeat: no-repeat;
     background-position: 0 0.25em;
+    */
   }
 
   /**
