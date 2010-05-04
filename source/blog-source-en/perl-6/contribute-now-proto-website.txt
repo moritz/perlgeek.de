@@ -36,6 +36,11 @@ and URLs available in JSON format too.</p>
 email to perl6-compiler@perl.org. For real-time discussions <a
     href="http://perl6.org/community/irc">our IRC channel</a> is a good place.</p>
 
+<p><strong>Update:</strong> There is a first submission by <tt>patrickas</tt>,
+which is already in the proto repository in the <code>web/</code> directory.</p>
+
+<p>The results can be seen on <a
+    href="http://proto.perl6.org/">proto.perl6.org</a>.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
