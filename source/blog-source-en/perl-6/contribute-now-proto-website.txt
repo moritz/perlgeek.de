@@ -33,7 +33,7 @@ and URLs available in JSON format too.</p>
 <h2>Submission</h2>
 
 <p>If you have something working or want to discuss things, please send an
-email to perl6-compilers@perl.org. For real-time discussions <a
+email to perl6-compiler@perl.org. For real-time discussions <a
     href="http://perl6.org/community/irc">our IRC channel</a> is a good place.</p>
 
 
