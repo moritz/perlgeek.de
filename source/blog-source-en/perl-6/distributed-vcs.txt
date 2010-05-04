@@ -18,7 +18,7 @@ developers.</p>
 than 5 minutes later had the awesome Audrey Tang done three thing:</p>
 
 <ol>
-  <li>Fixed then link.</li>
+  <li>Fixed the link.</li>
   <li>Told me in which file of the repository the fix was.</li>
   <li>Sent me a commit bit, so that I could make such fixes in future,
   too</li>
