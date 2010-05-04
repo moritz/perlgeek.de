@@ -1,0 +1,68 @@
+The case for distributed version control systems
+<!-- 1272983203 -->
+<p>Currently the <a href="http://www.parrot.org/">parrot</a> developers are
+discussion whether to ditch svn in favour of anohter distributed version
+control system, maybe git.</p>
+
+<p>I'm not a very active parrot developer, so my opinion probably doesn't
+count that much, but I still want to share a story, and then my opinion.</p>
+
+<h2>The story</h2>
+
+<p>Back in 2007 I was bored. I read about Perl 6 and pugs, and decided to
+check it out. And then I found a broken link on the pugscode website. And
+since I tried to be a nice guy, and I was bored, I decided to inform the
+developers.</p>
+
+<p>So I joined #perl6, and told the developers about the broken link. No more
+than 5 minutes later had the awesome Audrey Tang done three thing:</p>
+
+<ol>
+  <li>Fixed then link.</li>
+  <li>Told me in which file of the repository the fix was.</li>
+  <li>Sent me a commit bit, so that I could make such fixes in future,
+  too</li>
+</ol>
+
+<p>I was very impressed by this display of openness, and stayed. Granted,
+there were some other reasons for staying too, but it did leave a very good
+impression.</p>
+
+<p>Roughly a year (or maybe two) I had a doc patch for the Perl 5 core
+documentation. And I was surprised and disappointed to find that perl 5 (at
+that time locked into perforce) didn't even offer public read access to its
+version control system.</p>
+
+<h2>What we can learn</h2>
+
+<p>I've shared my short, romantic story with you because I think we can learn
+something from it: openness pays off, and being closed deters
+contributors.</p>
+
+<p>I'm well aware that the parrot contributors can't hand out commit bits as
+openly as pugs (mostly for legal reasons; also it's a quite different stlye of
+development). But still a distributed version control system (DVCS) offers
+some of the openness that Audrey lured me with. With a DCVS the new developers
+can work just the same way as the core contributors, easily stack changes,
+bisect regressions and so on.</p>
+
+<p>This social aspect of development is, in my opinion, a strong point for
+DVCS'. There are other reasons which speak for it; the strongest is probably
+that DCVS support both the central and the distributed development styles,
+while central CVS only support their own style.</p>
+
+<h2>Git vs. other DCVS</h2>
+
+<p>By know it should be clear that I propose to migrate to a distributed
+version control system. Any decent DCVS would be fine by me. I prefer git,
+because it's what I'm familiar with, and because it has very good performance
+characteristics.</p>
+
+<p>I also like it because it has a feel similar feel to perl; many powerful
+built-ins, some of which are used day to day, others to explore if you have an
+usual problem or setup.</p>
+
+<p>In short, I like git.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
