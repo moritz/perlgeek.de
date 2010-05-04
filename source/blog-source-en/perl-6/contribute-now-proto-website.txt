@@ -30,6 +30,12 @@ projects, and contains their names and descriptions.</p>
 <p>You'll get bonus points if you make the list of projects, descriptions
 and URLs available in JSON format too.</p>
 
+<h2>Submission</h2>
+
+<p>If you have something working or want to discuss things, please send an
+email to perl6-compilers@perl.org. For real-time discussions <a
+    href="http://perl6.org/community/irc">our IRC channel</a> is a good place.</p>
+
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
