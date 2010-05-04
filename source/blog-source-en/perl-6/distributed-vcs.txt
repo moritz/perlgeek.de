@@ -42,19 +42,19 @@ contributors.</p>
 <p>I'm well aware that the parrot contributors can't hand out commit bits as
 openly as pugs (mostly for legal reasons; also it's a quite different stlye of
 development). But still a distributed version control system (DVCS) offers
-some of the openness that Audrey lured me with. With a DCVS the new developers
+some of the openness that Audrey lured me with. With a DVCS the new developers
 can work just the same way as the core contributors, easily stack changes,
 bisect regressions and so on.</p>
 
 <p>This social aspect of development is, in my opinion, a strong point for
 DVCS'. There are other reasons which speak for it; the strongest is probably
-that DCVS support both the central and the distributed development styles,
+that DVCS support both the central and the distributed development styles,
 while central CVS only support their own style.</p>
 
-<h2>Git vs. other DCVS</h2>
+<h2>Git vs. other DVCS</h2>
 
 <p>By know it should be clear that I propose to migrate to a distributed
-version control system. Any decent DCVS would be fine by me. I prefer git,
+version control system. Any decent DVCS would be fine by me. I prefer git,
 because it's what I'm familiar with, and because it has very good performance
 characteristics.</p>
 
