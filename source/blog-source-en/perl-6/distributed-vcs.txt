@@ -15,7 +15,7 @@ since I tried to be a nice guy, and I was bored, I decided to inform the
 developers.</p>
 
 <p>So I joined #perl6, and told the developers about the broken link. No more
-than 5 minutes later had the awesome Audrey Tang done three thing:</p>
+than 5 minutes later had the awesome Audrey Tang done three things:</p>
 
 <ol>
   <li>Fixed the link.</li>
@@ -53,7 +53,7 @@ while central CVS only support their own style.</p>
 
 <h2>Git vs. other DVCS</h2>
 
-<p>By know it should be clear that I propose to migrate to a distributed
+<p>By now it should be clear that I propose to migrate to a distributed
 version control system. Any decent DVCS would be fine by me. I prefer git,
 because it's what I'm familiar with, and because it has very good performance
 characteristics.</p>
