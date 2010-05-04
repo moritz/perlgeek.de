@@ -1,7 +1,7 @@
 The case for distributed version control systems
 <!-- 1272983203 -->
 <p>Currently the <a href="http://www.parrot.org/">parrot</a> developers are
-discussion whether to ditch svn in favour of anohter distributed version
+discussion whether to ditch svn in favor of another distributed version
 control system, maybe git.</p>
 
 <p>I'm not a very active parrot developer, so my opinion probably doesn't
@@ -47,7 +47,7 @@ can work just the same way as the core contributors, easily stack changes,
 bisect regressions and so on.</p>
 
 <p>This social aspect of development is, in my opinion, a strong point for
-DVCS'. There are other reasons which speak for it; the strongest is probably
+DVCSes. There are other reasons which speak for it; the strongest is probably
 that DVCS support both the central and the distributed development styles,
 while central CVS only support their own style.</p>
 
