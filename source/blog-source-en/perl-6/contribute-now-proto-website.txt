@@ -5,6 +5,10 @@ This Week's Contribution to Perl 6 Week 1: A website for proto
 understand a single line of Perl 6 code - Perl 5 or another scripting language
 woorks fine.</p>
 
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
 <h2>Background</h2>
 
 <p>As <a href="http://www.perlmonks.org/?node_id=837535">explained here</a>,
