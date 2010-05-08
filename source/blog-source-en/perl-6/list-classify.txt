@@ -1,0 +1,44 @@
+List.classify
+<!-- 1273328035 -->
+
+<p>Yesterday I <a
+href="http://github.com/rakudo/rakudo/commit/916b56d60d40d02f3e620d8857d94582b896c1ae">implement
+a nice Perl 6 built-in</a> called <code>classify</code>.</p>
+
+<p>Just like <code>map</code> it takes a closure and a  list (or can be called
+as a method on a list). Unlike map it doesn't just return the values from the
+closure calls, but instead it constructs <code>Pair</code> objects from them,
+and groups them by equal keys. Here's one example:</p>
+
+<pre>[% syntax perl6 %]
+say <red brown blue yellow black>.classify({ $_.substr(0, 1)}).perl;
+# output:
+# ("y" => ["yellow"], "b" => ["brown", "blue", "black"], "r" => ["red"])
+[% endsyntax %]</pre>
+
+<p>This takes a list of color names, and groups them by their first
+letter. It returns a list of pairs, of which the key is always the first
+character (returned by the closure), the value is an array of the input values
+that have this first character.</p>
+
+<p>Of course you can assign the result to a hash, and index by key you're
+interested in:</p>
+
+<pre>[% syntax perl6 %]
+my %h = <red brown blue yellow black>.classify({ $_.substr(0, 1)});
+say %h<b>.join(', ');
+# output:
+# brown, blue, black
+[% endsyntax %]</pre>
+[% comment </b> %]
+
+<p>So far I haven't come up with a real-world use case for
+<code>classify</code>, but I strongly suspect I'll run across one soon,
+and I kinda like the function.</p>
+
+<p>Have you written any code lately where such a built-in would have been
+beneficial?</p>
+
+[% option no-header %] [% option no-footer%]
+[% comment vim: set ft=html spell: %]
+
