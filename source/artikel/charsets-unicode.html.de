@@ -312,7 +312,7 @@ for (@charsets){
     oder
     einem entsprechenden Output-Layer zu kodieren.</p>
 
-<h3>Sttrings Untersuchen</h3>
+<h3>Strings Untersuchen</h3>
 
 <p>
     Leider dokumentieren viele Module nicht, welche Art von Daten sie
