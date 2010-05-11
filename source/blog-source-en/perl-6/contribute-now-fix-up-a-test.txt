@@ -38,6 +38,11 @@ parsefile methods, and add another test that demonstrates the bug.
 
 <h2>Submission</h2>
 
+<p><strong>&lt;update&gt; bubaflub has taken the challenge, and <a
+href="http://perlcabal.org/svn/pugs/revision/?rev=30617">fixed the
+test in r30617</a>. Of course further improvements to the test are
+still welcome.&lt;/update&gt;</strong>.</p>
+
 <p>For this challenge please join the <a
 href="http://perl6.org/community/irc">#perl6 IRC channel</a>, and ask for a
 commit bit to the test suite. You'll need to tell us your desired nick name
