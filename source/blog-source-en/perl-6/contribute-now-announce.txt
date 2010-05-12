@@ -24,7 +24,8 @@ announcement - fame and eternal glory are certain.</p>
 <p>Sponsors:</p>
 <ul>
     <li>2 T-shirts (Rakudo or Perl 6) from moritz</li>
-    <li>(your name and donation here) (I'm looking for more sponsors right now)</li>
+    <li>T-shirts + shipping for up to $100 courtesy of <a
+        href="http://www.perlfoundation.org/">The Perl Foundation</a>.</li>
 </ul>
 
 <h2>Challenges</h2>
