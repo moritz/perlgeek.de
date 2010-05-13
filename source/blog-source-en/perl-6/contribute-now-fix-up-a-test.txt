@@ -50,7 +50,7 @@ and email address for the SVN user account.</p>
 
 <p>When you build Rakudo <a href="http://rakudo.org/how-to-get-rakudo">by
 following these instructions</a>, run <code>make spectest</code>. This
-will automatically checkout out a copy of the test into the <code>t/spec<code>
+will automatically checkout out a copy of the test into the <code>t/spec</code>
 subdirectory of your rakudo directory.</p>
 
 <p>Edit <code>t/spec/S05-grammar/parse_and_parsefile.t</code>, and then test
