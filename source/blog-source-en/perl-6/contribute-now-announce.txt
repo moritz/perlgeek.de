@@ -37,6 +37,9 @@ announcement - fame and eternal glory are certain.</p>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-fix-up-a-test.html">Week
         2 - fix up a test</a>. Status: Fix submitted, challenge closed.</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-main-sub.html">Week
+        3 - MAIN sub</a>. Status: open, waiting for submissions.<li>
 </ul>
 
 [% option no-header %][% option no-footer %]
