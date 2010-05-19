@@ -1,0 +1,91 @@
+This Week's Contribution to Perl 6 Week 3: Write supporting code for the MAIN
+sub
+<!-- 1274253986 -->
+
+<p>For this week's contribution to Perl 6 we ask you to write some Perl 6 code
+that parses command line arguments, and might end up in the code base of a
+Perl 6 compilers.
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>In Perl 6 you can write a <a
+href="http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine">sub
+MAIN</a> that is automatically called when the script is run, and it
+handles command line parsing for you.</p>
+
+<p>So for example if you write</p>
+
+<pre>[% syntax perl6 %]
+sub MAIN($filename, *@rest, :$verbose) {
+    ...
+}[% endsyntax %]</pre>
+
+<p>And you call the script as</p>
+
+<pre>
+perl6 create_many_copies.pl --verbose=2  /etc/password pw1 pw2 pw3
+</pre>
+
+<p>The parameters are automatically set to <code>$filename =
+'/etc/password', @rest = ('pw1', 'pw2', 'pw3')</code> and <code>$verbose =
+2</code>.</p>
+
+<h2>What you can do</h2>
+
+<p>Write a subroutine in Perl 6 that takes an array of command line arguments,
+and a hash of option names that are declared as Bool, and returns an array of
+positional arguments, and a hash of named arguments</p>
+
+<pre>[% syntax perl6 %]
+sub process-cmd-args(@args, %boolean-names) {
+    ...
+    return @positional-arguments, %named-arguments;
+}
+[% endsyntax %]</pre>
+
+<p>It should separate the named arguments (options) and the ordinary,
+positional arguments. For example a command line argument of
+<code>--myname=23</code> should be result in a hash entry
+<code>%named-arguments{'myname'} = 23</code>. If a named option is declared as
+type <code>Bool</code>, then <code>--myoption foo</code> is turned into
+<code>%named-arguments{'myoption'} = True, @positional-arguments =
+'foo'</code>. Otherwise it is taken as
+<code>%named-arguments{'myoption'} = 'foo'</code>.</p>
+
+<p>The <a
+href="http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine">specification
+describes the various syntax forms in detail</a>, but you are very welcome to
+implement only parts of them. For example it's recommended to ignore the
+negation forms, short names and spaces inside options.</p>
+
+<p>We will then use  the separate positional and named arguments to call the
+MAIN routine.</p>
+
+<p>If you need some more background on how to write Perl 6 code, I recommend
+to start with a <a href="http://github.com/perl6/book/">book that is currently
+being written</a> (you can find a fairly up-to-date <a
+href="http://github.com/perl6/book/">PDF version here</a>.). See also our <a
+href="http://perl6.org/documentation/">documentation overview</a>.</p>
+
+<h2>Submission</h2>
+
+<p>Your program should run with the current <a
+href="http://rakudo.org/">Rakudo</a> Perl 6 compiler - bonus points if you
+also provide some tests.</p>
+
+<p>Please send your submission to the perl6-compiler@perl.org mailing list,
+and set me (moritz@faui2k3.org) as CC, because the mailing list sometimes has
+a large delay.</p>
+
+<p>If you have any questions, please ask the mailing list, me or (preferred)
+on <a href="http://perl6.org/community/irc">our IRC channel, #perl6</a>.</p>
+
+<p>I will try to integrate the best submission into Rakudo (though it might
+not happen before the upcoming release on Tuesday).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
