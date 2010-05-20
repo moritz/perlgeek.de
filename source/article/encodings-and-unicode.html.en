@@ -658,5 +658,19 @@ care of all encoding issues.</p>
     href="http://www.perlmonks.org/?node=ELISHEVA">ELISHEVA</a>
     for suggesting many improvements to both grammar and spelling.
 </p>
+
+<h2>Further reading</h2>
+
+<ul>
+    <li><a
+        href="http://www.w3.org/International/tutorials/tutorial-char-enc/">W3c
+        tutorial on character encodings in HTML and CSS</a></li>
+    <li><a
+        href="http://en.wikibooks.org/wiki/Perl_Programming/Unicode_UTF-8">Perl
+        Programming/Unicode UTF-8 wikibook</a></li>
+    <li><a href="http://perldoc.perl.org/perlunitut.html">perlunitut, the Perl
+        Unicode Tutorial</a></li>
+</ul>
+
 [% comment vim: spell ft=html
 %]
