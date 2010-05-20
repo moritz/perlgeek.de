@@ -1,0 +1,15 @@
+The Perl Survey and Perl 6
+<!-- 1274344538 -->
+<p>Today I've participated in <a href="http://perl.websurvey.net.au/">The Perl
+Survey</a>, and I want to encourage you to do the same.</p>
+
+<p>I was a bit disappointed that the list of Perl versions didn't include any
+Perl 6 - which I use sufficiently to mark that option if it existed.</p>
+
+<p>It's a sad fact that parts of the Perl community haven't realized that
+Perl 6 is more than a dream, but comes <a href="http://rakudo.org/">with
+programs you can run today</a>. Association with or funding from TPF doesn't
+seem to make you immune to that misconception.</p>
+
+[%option no-header%][%option no-footer%}
+[% comment vim: set ft=html spell: %]
