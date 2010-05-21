@@ -80,6 +80,12 @@ also provide some tests.</p>
 and set me (moritz@faui2k3.org) as CC, because the mailing list sometimes has
 a large delay.</p>
 
+<p><strong>Update:</strong>: patrickas has submitted one implementation to <a
+href="http://github.com/moritz/process-cmd-args">this github
+repository</a>. Instead of starting your own implementation, you can also
+contribute to this one (ask on #perl6 for commit access), and of course you're
+still eligible for winning a cool Perl 6 or Rakudo t-shirt.</p>
+
 <p>If you have any questions, please ask the mailing list, me or (preferred)
 on <a href="http://perl6.org/community/irc">our IRC channel, #perl6</a>.</p>
 
