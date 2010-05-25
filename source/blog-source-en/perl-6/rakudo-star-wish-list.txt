@@ -26,7 +26,7 @@ release:<p>
     <li><code>use</code> currently only accepts pairs, not proper argument
     lists. Would be nice to have that.</li>
     <li>General Whatever-currying (ie <code>* op 3</code> returns a
-    closure of type WhateverCode</li>
+    closure of type WhateverCode)</li>
     <li>Currently user-defined operators hide candidates of the same name from
     outer scopes. This is rather annoying.</li>
 </ul>
