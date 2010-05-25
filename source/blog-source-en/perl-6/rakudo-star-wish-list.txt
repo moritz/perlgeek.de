@@ -1,0 +1,35 @@
+My personal "I want a PONIE" wish list for Rakudo Star
+<!-- 1274773657 -->
+
+<p>In June we'll see a special Rakudo release codenamed <a
+href="http://use.perl.org/~pmichaud/journal/39411">Rakudo Star</a>. I've done
+some development with and of Rakudo, and here's the list of features and bug
+fixes that I think are essential for a successful and well-received
+release:<p>
+
+<ul>
+    <li>Backtraces with Perl 6 file names and line numbers</li>
+    <li>Proper closure cloning (pmichaud has a plan for this)</li>
+    <li>Match objects which return Perl 6 (and not parrot) data structures</li>
+    <li><code>/&lt;foo&gt;/</code> should pick up a regex named
+    <code>foo</code> from the lexical scope, not only from method lookup. (I'm
+    working on it, but I'm kinda stuck)</li>
+    <li>Using the same list or iterator twice returned from <code>map</code> or
+    <code>gather/take</code> should work</li>
+</ul>
+
+<p>Other things that I consider nice to have, but not essential:</p>
+
+<ul>
+    <li><code>$/</code> should be available in the RHS of
+    <code>s///</code> (seems hard to do with current Parrot semantics)</li>
+    <li><code>use</code> currently only accepts pairs, not proper argument
+    lists. Would be nice to have that.</li>
+    <li>General Whatever-currying (ie <code>* op 3</code> returns a
+    closure of type WhateverCode</li>
+    <li>Currently user-defined operators hide candidates of the same name from
+    outer scopes. This is rather annoying.</li>
+</ul>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell : %]
