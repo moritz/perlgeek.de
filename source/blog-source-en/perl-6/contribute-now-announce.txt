@@ -40,7 +40,8 @@ announcement - fame and eternal glory are certain.</p>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-main-sub.html">Week
         3 - MAIN sub</a>. Status: two submissions so far. If you want to help
-    out, please improve one of them instead of writing your own from scratch.<li>
+    out, please improve one of them instead of writing your own from
+    scratch.</li>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-samecase-for-subst.writeback">Week
         4: implement :samecase option for string substitution</a>. Status:
