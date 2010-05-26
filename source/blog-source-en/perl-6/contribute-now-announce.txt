@@ -45,7 +45,7 @@ announcement - fame and eternal glory are certain.</p>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-samecase-for-subst.writeback">Week
         4: implement :samecase option for string substitution</a>. Status:
-    open, no submissions so far.</li>
+        We have a working patch and some tests;; more tests are always welcome.</li>
 </ul>
 
 [% option no-header %][% option no-footer %]
