@@ -33,7 +33,7 @@ announcement - fame and eternal glory are certain.</p>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-proto-website.html">Week
         1 - a website for proto</a>. Status: four submissions , website
-        life, challenge closed.</li>
+        live, challenge closed.</li>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-fix-up-a-test.html">Week
         2 - fix up a test</a>. Status: Fix submitted, challenge closed.</li>
