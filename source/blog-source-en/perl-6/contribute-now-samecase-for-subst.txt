@@ -1,0 +1,62 @@
+This Week's Contribution to Perl 6 Week 2: Implement :samecase for .subst
+<!-- 1274861743 -->
+
+<p>For this week's contribution to Perl 6 we ask you to implement an option in
+the string substitution backend that is be used for <code>s///<code> style
+replacements.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>In Perl 6, the string substitution operation <code>s///</code> has a method
+backend. Instead of <code>s:g/foo/bar/</code> (globally substitute foo by bar)
+you can write:</p>
+
+<pre>[% syntax perl6 %]
+say 'some foo with sugar'.subst(/foo/, 'bar', :g);
+[% endsyntax %]</pre>
+
+<p>Currently Rakudo doesn't parse the adverbs at the front, but supports the
+named arguments in the method form.</p>
+
+<h2>What you can do</h2>
+
+<p>Implement the <code>:samecase</code> named parameter. With this option, the
+case (upper/lower) of the original string is applied to the substitution:</p>
+
+<pre>[% syntax perl6 %]
+say 'The foo and the bar'.subst(/:i the/, 'that', :g, :samecase);
+# should produces 'That foo and that bar'
+[% endsyntax %]</pre>
+
+<p>The actual case transformation is implemented in form of the
+<code>samecase($substitution, $pattern)</code> function already. If the
+replacement part is actually a code object, the <code>samecase</code>
+translation should apply to its return value.</p>
+
+<p>Your task is to hook that function into the <a
+    href="http://github.com/rakudo/rakudo/blob/master/src/core/Cool-str.pm#L25"><code>subst</code>
+    method in src/core/Cool-str.pm</code></a>, and put some tests into <a
+href="http://svn.pugscode.org/pugs/t/spec/S05-substitution/subst.t">t/spec/S05-substitutions/subst.t</a>
+in the pugs repository that demonstrate that your code works.</p>
+
+<p>When you've modified the test and/or the source file, you can run it
+with</p>
+
+<pre>
+make t/spec/S05-substitution/subst.t
+</pre>
+
+<h2>Submission</h2>
+
+<p>Please submit your patches to the <a
+href="perl6-compiler@perl.org">perl6-compiler</a> mailing list, and CC' me
+(moritz@faui2k3.org). As always, feel free to ask any questions about this
+question either on that mailing list, or on <a
+href="http://perl6.org/community/irc">our IRC channel</a>.</p> 
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
