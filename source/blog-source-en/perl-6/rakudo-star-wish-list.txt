@@ -26,7 +26,9 @@ release:<p>
     <li><code>use</code> currently only accepts pairs, not proper argument
     lists. Would be nice to have that.</li>
     <li>General Whatever-currying (ie <code>* op 3</code> returns a
-    closure of type WhateverCode)</li>
+    closure of type WhateverCode) (Update: jnthn <a
+    href="http://github.com/rakudo/rakudo/commit/4293e0722d05267accd66fe6ce312bee1f7a3e22">implemented
+    it</a> one or two days after this blog post)</li>
     <li>Currently user-defined operators hide candidates of the same name from
     outer scopes. This is rather annoying.</li>
 </ul>
