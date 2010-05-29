@@ -1,0 +1,11 @@
+[% setvar title IPv6 connectivity %]
+[%setvar section Home %]
+[%menu main home%]
+
+
+<h1>I'm (mostly) IPv6 ready</h1>
+<a href="http://ipv6.he.net/certification/scoresheet.php?pass_name=moritz" target="_blank"><img src="http://ipv6.he.net/certification/create_badge.php?pass_name=moritz&badge=1" width=128 height=128 border=0 alt="IPv6 Certification Badge for moritz"></img></a>
+
+[% comment
+    vim: syn=html ts=4 sw=4 expandtab spell
+%]
