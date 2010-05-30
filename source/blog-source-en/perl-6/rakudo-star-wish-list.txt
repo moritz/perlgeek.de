@@ -8,12 +8,14 @@ fixes that I think are essential for a successful and well-received
 release:<p>
 
 <ul>
-    <li>Backtraces with Perl 6 file names and line numbers</li>
+    <li>Backtraces with Perl 6 file names and line numbers (Update 2010-05-30:
+    jnthn implemented those)</li>
     <li>Proper closure cloning (pmichaud has a plan for this)</li>
-    <li>Match objects which return Perl 6 (and not parrot) data structures</li>
+    <li>Match objects which return Perl 6 (and not parrot) data structures
+    (Update 2010-05-30: pmichaud laid the foundations for that, and I got it
+    to a "good enough" state).</li>
     <li><code>/&lt;foo&gt;/</code> should pick up a regex named
-    <code>foo</code> from the lexical scope, not only from method lookup. (I'm
-    working on it, but I'm kinda stuck)</li>
+    <code>foo</code> from the lexical scope, not only from method lookup.</li>
     <li>Using the same list or iterator twice returned from <code>map</code> or
     <code>gather/take</code> should work</li>
 </ul>
