@@ -1,0 +1,90 @@
+This Week's Contribution to Perl 6 Week 5: Implement Str.trans
+<!-- 1275337626 -->
+
+<p>For this week's contribution to Perl 6 we ask you to write some Perl 6 code
+that implements the <code>trans</code> method for <a
+href="http://rakudo.org/">Rakudo Perl</a>. This is the backend for the
+<code>tr///</code> operator.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>The <a href="http://perlcabal.org/syn/S05.html#Transliteration">Perl 6
+transliteration operator</a> is also available as a method. It replaces all
+occurrences of some characters (or regexes) with a substitution string. The
+easiest case is:</p>
+
+
+
+<pre>[% syntax perl6 %]
+say 'Hello World'.trans('a' => 'A', 'e' => 'E', 'O' => 'O');
+# output: HEllO WOrld
+
+say 'Hello World'.trans('aeo' => 'AEO');
+# same thing
+[% endsyntax %]</pre>
+
+<p>The previous iteration of Rakudo had a PIR-based (and complicated)
+implementation for <code>trans</code>. There are <a
+href="http://svn.pugscode.org/pugs/t/spec/S05-transliteration/trans.t">tests
+in the official test suite</a> for .trans.</p>
+
+<h2>What you can do</h2>
+
+<p>Please write a method <code>trans</code> that implements part of the
+<a href="http://perlcabal.org/syn/S05.html#Transliteration">specification</a>.
+Since it's quite a lot to do, it's OK to only do parts. For example I
+recommend to omit regexes altogether for now, and only implement literal string
+patterns. The easiest approach is probably to create a hash that maps each
+input pattern character to the transliteration, and walk the string character
+by character by iterating over <code>self.comb</code>.</p>
+
+<p>To test it without actually having to recompile Rakudo after each change, I
+recommend to copy the test that Rakudo can parse (ie the method tests, not the
+tests for tr///), and start it with</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+
+use Test;
+
+use MONKEY_TYPING;
+augment class Str {
+    method trans(*@patterns)  {
+        # do your hacking here
+        'wrong return value';
+    }
+}
+
+plan *;
+
+is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
+    "abc",
+    "Each side can be individual characters");
+
+is("XYZ".trans( ('XYZ' => 'xyz') ),
+    "xyz",
+    "The two sides of the any pair can be strings interpreted as tr/// would multichar");
+
+...
+
+done_testing;
+[% endsyntax %]</pre>
+
+<h2>Submission</h2>
+
+<p>Please send your submission to the perl6-compiler@perl.org mailing list,
+and set me (moritz@faui2k3.org) as CC, because the mailing list sometimes has
+a large delay.</p>
+
+<p>If you have any questions, please ask the mailing list, me or (preferred)
+on <a href="http://perl6.org/community/irc">our IRC channel, #perl6</a>.</p>
+
+<p>The best/most extensible/most complete/prettiest/whatever submission will
+make it into the next release of Rakudo.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
