@@ -86,5 +86,12 @@ on <a href="http://perl6.org/community/irc">our IRC channel, #perl6</a>.</p>
 <p>The best/most extensible/most complete/prettiest/whatever submission will
 make it into the next release of Rakudo.</p>
 
+<p><b>Update</b>: There have been two submissions <a
+href="http://www.nntp.perl.org/group/perl.perl6.compiler/2010/06/msg5885.html">discussed
+on perl6-compiler</a>, and another one submitted as <a
+href="http://gist.github.com/424674">gist</a>. If you want to work on this
+challenge, please improve one of the existing submissions, not write a new one
+from scratch.</p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
