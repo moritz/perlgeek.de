@@ -1,0 +1,8 @@
+This Week's Contribution to Perl 6 Week 6: Improve Book markup
+<!-- 1275978637 -->
+
+<p>This Week's Contribution to Perl 6 can be found <a
+href="http://use.perl.org/~masak/journal/40385">on masak's blog</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
