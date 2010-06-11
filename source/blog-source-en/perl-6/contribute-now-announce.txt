@@ -50,6 +50,8 @@ announcement - fame and eternal glory are certain.</p>
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-Str-trans.html">Week
         5: implement Str.trans</a>. Status: 3 submissions, if you want to work
     on it, please consider working on one of the existing submissions.</li>
+    <li><a href="http://use.perl.org/~masak/journal/40385">Week 6: Improve
+        book markup</a>. Status: two submissions, challenge closed.</li>
 </ul>
 
 [% option no-header %][% option no-footer %]
