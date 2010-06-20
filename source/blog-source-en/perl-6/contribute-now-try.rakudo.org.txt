@@ -3,7 +3,8 @@ This Week's Contribution to Perl 6 Week 7: Implement try.rakudo.org
 
 <p>For this week's contribution to Perl 6 we ask you to write 
 a web shell for Rakudo, just like <a
-    href="http://tryruby.org/">tryruby.org</a> but for Perl 6 + Rakudo.</p>
+href="http://tryruby.org/">tryruby.org</a> (or <a
+href="http://ejohn.org/apps/learn/#1">this js course</a>) but for Perl 6 + Rakudo.</p>
 
 <p>(<a
     href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
