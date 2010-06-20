@@ -258,6 +258,9 @@ simulate a mass attached to a spring, which can move freely in the xy plane.
 If you chose random initial values for the velocities in both directions, you
 can get non-periodic (chaotic?) trajectories in the xy plane.</p>
 
+<p>(If you do, please send me the model so that I can also play with it :-))
+</p>
+
 <h2>A personal note</h2>
 
 <p>Ever since I've used the simulation tool "stella" in school (must have been
