@@ -247,8 +247,8 @@ proportional to the square of the velocity (making analytical solutions a
 nuisance), and always points in the opposite direction as the velocity.</p>
 
 <p>
-<a href="http://perlgeek.de/images/blog/throw-angle-30.svg">
-<img src="http://perlgeek.de/images/blog/throw-angle-30.png" width="800"
+<a href="http://perlgeek.de/images/blog/spring.svg">
+<img src="http://perlgeek.de/images/blog/spring.png" width="800"
 height="600" alt="oscillation of a spring with air drag" /></a></p>
 
 <h2>Moving on</h2>
