@@ -123,8 +123,8 @@ the file <code>throw-vertically.svg</code>. And here it is, without further
 ado:</p>
 
 <p><a href="http://perlgeek.de/images/blog/throw-vertically.svg">
-<img src="http://perlgeek.de/images/blog/throw-vertically.png" width="263"
-height="177" alt="integration of vertical throw" /></a></p>
+<img src="http://perlgeek.de/images/blog/throw-vertically.png" width="526"
+height="353" alt="integration of vertical throw" /></a></p>
 
 <p>The blue line is the height (in meter), and the yellow line the velocity
 (in meter/second). Positive velocities mean that the stone is moving upwards,
