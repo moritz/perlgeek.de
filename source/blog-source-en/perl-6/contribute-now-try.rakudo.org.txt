@@ -1,0 +1,49 @@
+This Week's Contribution to Perl 6 Week 7: Implement try.rakudo.org
+<!-- 1277103600 -->
+
+<p>For this week's contribution to Perl 6 we ask you to write 
+a web shell for Rakudo, just like <a
+    href="http://tryruby.org/">tryruby.org</a> but for Perl 6 + Rakudo.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>We want a website like tryruby, but for Perl 6: A combination of web shell
+and built-in tutorial.</p>
+
+<p>The idea is that for each session a supervisor/controller process runs on
+the server, which talks to a Rakudo process, and listens at a local socket.
+A CGI script receives the program lines to be executed, looks up the port
+number in a session file or database, and connects via a local socket to the
+controller process.</p>
+
+<img src="http://perlgeek.de/images/blog/tryrakudo.svg" width="677"
+height="673" alt="planned architecture of try.rakudo.org" />
+
+<h2>What you can do</h2>
+
+<p>You can help to make try.rakudo.org come real. This week I ask you to work
+on the front end, ie. a HTML page with some javascript that works like a
+shell; it sends the command entered by the user to a CGI script, and displays
+its response.</p>
+
+<p>It should also be able to show instructions, and advance to the next
+instruction when the user has entered what he should.</p>
+
+<h2>Submission</h2>
+
+<p>A stub of the source code can be found <a
+href="http://github.com/moritz/try.rakudo.org/">on github</a>. Please join <a
+href="http://perl6.org/community/irc">our IRC channel</a> and ask for commit
+access to that repository.</p>
+
+<p>Then fill in any parts you want, primarily concerning the front-end. If you
+have any questions, don't hesitate to ask either on the IRC channel, or on the
+perl6-compiler@perl.org mailing list (and put moritz@faui2k3.org on CC,
+because the mailing list sometimes lack quite a bit).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
