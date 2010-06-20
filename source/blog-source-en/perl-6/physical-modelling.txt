@@ -200,10 +200,10 @@ height="200" alt="integration of throw at 45 degrees" /></a><br />
 height="200" alt="integration of throw at 60 degrees" /></a>
 </p>
 
-<p>The output graphs for the angles of 30, 45 and 60 degrees (measured from
-ground to throwing angle, so vertical would be 90 degrees) all look quite the
-same, because the plotting module automatically adjust the axis. If it didn't,
-you'd see that for larger angles the stone rises much higher.</p>
+<p>(Note that I cheated to produces these charts; normally SVG::Plot, the
+module that produces these graphs, automatically scales the axis; I've
+manually suppressed that; if you try to out the example you'll see that the
+three charts look much the same, except for different axis scaling).</p>
 
 <p>The maximum
 reach in x direction before hitting the ground is achieved at 45 degrees. For
