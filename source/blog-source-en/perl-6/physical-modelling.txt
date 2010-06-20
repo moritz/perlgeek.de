@@ -1,0 +1,269 @@
+Physical modeling with Math::Model and Perl 6
+<!-- 1277034601 -->
+
+<p>Let's talk about physics. I'm a physicist by education and profession, so
+it might be not be too surprising. But I also want to talk about programming,
+so please bear with me.</p>
+
+<p>When physicists try to understand a system, typically they first come up
+with a lot of equations, and then try to solve them. Unfortunately some of
+those equations are quite hard to solve. I've written a module that solves
+them numerically, and allows you to express the equations in very simple Perl
+6 code.</p>
+
+<h2>Getting started</h2>
+
+<p>Let's start with a very simple model. As a prerequisite you need the <a
+href="http://rakudo.org/">Rakudo Perl 6 compiler</a> (latest release or
+current development version), and then use <a
+href="http://proto.perl6.org/">proto</a> to <code>proto install Math-Model</code>
+(which also installs its dependencies).</p>
+
+<h2>A first model: throwing a stone horizontally into the air</h2>
+
+<p>Let's start with an example (to be found in examples/vertical-throw.pl in
+the Math-Model repository, with small modifications to unconfuse the syntax
+hilighter used for this page).</p>
+
+<p>It describes the path of stone thrown vertically into the air.</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+use Math::Model;
+
+my $m = Math::Model.new(
+    derivatives => {
+        y_velocity      => 'y',
+        y_acceleration  => 'y_velocity',
+    },
+    variables   => {
+        y_acceleration  => { $:force / $:mass },
+        mass            => { 1 },           # kg
+        force           => { -9.81 },       # N = kg m / s**2
+    },
+    initials    => {
+        y               => 0,               # m
+        y_velocity      => 20,              # m/s
+    },
+    captures    => ('y', 'y_velocity'),
+);
+
+$m.integrate(:from(0), :to(4.2), :min-resolution(0.2));
+$m.render-svg('throw-vertically.svg', :title('vertical throwing'));
+[% endsyntax %]</pre>
+
+<p>First we declare that we use Perl 6 (<code>use v6;</code>), and then we
+load the module that does all the hard work, <a
+    href="http://github.com/moritz/Math-Model/">Math::Model</a>.</p>
+
+<p>Then comes the interesting part: the actual model. It starts by declaring
+that the derivative of <code>y</code> (which is the name we use for the
+current height of the stone) is called <code>y_velocity</code>. Likewise the
+derivative of <code>y_velocity</code> is called
+<code>y_acceleration</code>.</p>
+
+<p>A derivative describes the rate of change of some other variables. Here is
+a short list of useful physical quantities and their derivatives:</p>
+
+<table>
+    <tr><th>Quantity</th><th>Derivative</th></tr>
+    <tr><td>position</td><td>velocity</td></tr>
+    <tr><td>velocity</td><td>acceleration</td></tr>
+    <tr><td>acceleration</td><td>jerk</td></tr>
+    <tr><td>momentum</td><td>force</td></tr>
+    <tr><td>energy</td><td>power</td></tr>
+    <tr><td>charge</td><td>current</td></tr>
+</table>
+
+<p>Next in the model are formulas for some variables. We don't need to give
+formulas for those values on the right-hand side of the derivatives
+declarations (<code>y</code> and <code>y_velocity</code>), which we will call
+<em>integration variables</em>. We just need formulas for the derivatives that
+are not also integration variables, and for other variables we use in the
+formulas.</p>
+
+<p>You might remember from physics class that F = m * a, force is mass times
+acceleration. We use this formula for calculating the acceleration</p>
+
+<pre>[%syntax escape %]
+        y_acceleration  => { $:force / $:mass },
+[% endsyntax %]</pre>
+
+<p>The other variables are actually constants (but Math::Model doesn't
+distinguish those); mass is set to 1 kg, and the force to the -9.81 N that a
+mass of 1 kg experiences at the latitude where I live (Germany).</p>
+
+<p>The programmer in you might ask what the heck the : in <code>$:force</code>
+means. It's a variable that is automatically a named parameter to the current
+block. Math::Model uses <a
+href="http://perlcabal.org/syn/S06.html#Signature_Introspection">Signature
+introspection</a> to find out which variables such a block depends on, and
+topologically sorts all variables into an order of execution that satisfies
+all the dependencies.</p>
+
+<p>Back to the physical model; all integration variables need an initial
+value, which are provided on the next few lines. The line</p>
+
+<pre>[%syntax escape %]
+    captures    => ('y', 'y_velocity'),
+[% endsyntax %]</pre>
+
+<p>tells Math::Model which variables to record while the simulation is
+running.</p>
+
+
+<pre>[%syntax perl6 %]
+$m.integrate(:from(0), :to(4.2), :min-resolution(0.2));
+$m.render-svg('throw-vertically.svg', :title('vertical throwing'));
+[% endsyntax %]</pre>
+
+<p>Finally these two lines are responsible for running the actual simulation
+(for the time t = 0s to t = 4.2s), and then write the resulting curves into
+the file <code>throw-vertically.svg</code>. And here it is, without further
+ado:</p>
+
+<p><a href="http://perlgeek.de/images/blog/throw-vertically.svg">
+<img src="http://perlgeek.de/images/blog/throw-vertically.png" width="263"
+height="177" alt="integration of vertical throw" /></a></p>
+
+<p>The blue line is the height (in meter), and the yellow line the velocity
+(in meter/second). Positive velocities mean that the stone is moving upwards,
+negative that it's moving downwards. After about 4 seconds the stone has the
+height with which it started, at a velocity of about -20m/s. You don't see any
+effect of the stone hitting the ground, because the model knows nothing about
+a ground located at a height of 0m. Just imagine the stone fell into a well or
+down a cliff, and thus can have negative height too.</p>
+
+<h2>Iterating: throwing a stone at an arbitrary angle</h2>
+
+<p>It gets a bit more involved when you consider not only the y direction, but
+also the x direction, and throw the stone at an arbitrary angle. Still the
+x and y axis are rather independent:</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+use Math::Model;
+
+for 30, 45, 60 -> $angle {
+
+    my $m = Math::Model.new(
+        derivatives => {
+            y_velocity      => 'y',
+            y_acceleration  => 'y_velocity',
+            x_velocity      => 'x',
+        },
+        variables   => {
+            y_acceleration  => { $:force / $:mass },
+            mass            => { 1 },           # kg
+            force           => { -9.81 },       # N = kg m / s**2
+            x_velocity      => { 20 * cos($angle, Degrees) } # m / s
+        },
+        initials    => {
+            y               => 0,               # m
+            y_velocity      => 20 * sin($angle, Degrees),    # m/s
+            x               => 0,               # m
+        },
+        captures    => <y x>,
+    );
+
+    $m.integrate(:from(0), :to(2 * 20 * sin($angle, Degrees) / 9.81), :min-resolution(0.2));
+    $m.render-svg("throw-angle-$angle.svg", :x-axis<x>,
+                  :width(300), :height(200),
+                  :title("Throwing at $angle degreees"));
+}
+[% endsyntax %]</pre>
+
+<p>The x velocity stays approximately constant (we disregard air drag), and
+it's value is the cosine of the throwing angle times the initial, total
+velocity. The velocity in y direction is the sine of the throwing angle times
+the initial, total velocity.</p>
+
+<p>As a trick to get nicer graphs in the end, I calculated the expected time
+until it hits the ground (which I know to be <code>2 * v_y / a</code>; this is
+cheating, but it doesn't change the physics behind it).</p>
+
+<p>Finally this time we don't want to have the elapsed time on the x axis, but
+the actual position in x direction. That can be done with the
+<code>:x-axis&lt;x&gt;</code> option.</p>
+
+<p>
+<a href="http://perlgeek.de/images/blog/throw-angle-30.svg">
+<img src="http://perlgeek.de/images/blog/throw-angle-30.png" width="300"
+height="200" alt="integration of throw at 30 degrees" /></a><br />
+
+<a href="http://perlgeek.de/images/blog/throw-angle-45.svg">
+<img src="http://perlgeek.de/images/blog/throw-angle-45.png" width="300"
+height="200" alt="integration of throw at 45 degrees" /></a><br />
+
+<a href="http://perlgeek.de/images/blog/throw-angle-60.svg">
+<img src="http://perlgeek.de/images/blog/throw-angle-60.png" width="300"
+height="200" alt="integration of throw at 60 degrees" /></a>
+</p>
+
+<p>The output graphs for the angles of 30, 45 and 60 degrees (measured from
+ground to throwing angle, so vertical would be 90 degrees) all look quite the
+same, because the plotting module automatically adjust the axis. If it didn't,
+you'd see that for larger angles the stone rises much higher.</p>
+
+<p>The maximum
+reach in x direction before hitting the ground is achieved at 45 degrees. For
+smaller angles it's not long enough in the air, and for larger angles too much
+of the velocity is "wasted" in the vertical direction, so the stone doesn't
+get very far.</p>
+
+<h2>A third model: oscillating spring</h2>
+
+<p>Finally I want to present a third, simple model: a mass hanging down from a
+spring, this time including air drag. It doesn't show off any new features of
+Math::Model, but the result is a nice, oscillating curve.</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+use Math::Model;
+
+my $m = Math::Model.new(
+    derivatives => {
+        velocity     => 'height',
+        acceleration => 'velocity',
+    },
+    variables   => {
+        acceleration    => { $:force / $:mass },
+        mass            => { 1 },
+        force           => { - $:height - 0.2 * $:velocity * abs($:velocity)},
+    },
+    initials    => {
+        height      => 1,
+        velocity    => 0,
+    },
+    captures    => <height>,
+);
+
+$m.integrate(:from(0), :to(20), :min-resolution(1));
+$m.render-svg('spring.svg', :title('Spring with damping'));
+[% endsyntax %]</pre>
+
+<p>The air drag/damping is built into the formula for the force. It is
+proportional to the square of the velocity (making analytical solutions a
+nuisance), and always points in the opposite direction as the velocity.</p>
+
+<p>
+<a href="http://perlgeek.de/images/blog/throw-angle-30.svg">
+<img src="http://perlgeek.de/images/blog/throw-angle-30.png" width="800"
+height="600" alt="oscillation of a spring with air drag" /></a></p>
+
+<h2>Moving on</h2>
+
+<p>If you want to have some fun with Math::Model, here's a nice idea: You can
+simulate a mass attached to a spring, which can move freely in the xy plane.
+If you chose random initial values for the velocities in both directions, you
+can get non-periodic (chaotic?) trajectories in the xy plane.</p>
+
+<h2>A personal note</h2>
+
+<p>Ever since I've used the simulation tool "stella" in school (must have been
+year 2002 or so), I've wanted to write something similar. Math::Model is it.
+It was quite fun to implement in Perl 6. The only drawback is that it's quite
+slow.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
