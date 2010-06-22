@@ -17,7 +17,8 @@ release:<p>
     <li><code>/&lt;foo&gt;/</code> should pick up a regex named
     <code>foo</code> from the lexical scope, not only from method lookup.</li>
     <li>Using the same list or iterator twice returned from <code>map</code> or
-    <code>gather/take</code> should work</li>
+    <code>gather/take</code> should work (Update: pmichaud fixed that in The
+    Big List Refactor, which was merged shortly before the 2010.06 release).</li>
 </ul>
 
 <p>Other things that I consider nice to have, but not essential:</p>
