@@ -52,6 +52,10 @@ announcement - fame and eternal glory are certain.</p>
     on it, please consider working on one of the existing submissions.</li>
     <li><a href="http://use.perl.org/~masak/journal/40385">Week 6: Improve
         book markup</a>. Status: two submissions, challenge closed.</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-try.rakudo.org.writeback">Week
+        7: try.rakudo.org</a>. Status: One submission in the git repository,
+        improvements and further implementations are always welcome.</li>
 </ul>
 
 [% option no-header %][% option no-footer %]

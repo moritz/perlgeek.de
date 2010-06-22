@@ -46,5 +46,9 @@ have any questions, don't hesitate to ask either on the IRC channel, or on the
 perl6-compiler@perl.org mailing list (and put moritz@faui2k3.org on CC,
 because the mailing list sometimes lack quite a bit).</p>
 
+<p><strong>Update</strong>: We now have a frontend and parts of the backend,
+by courtesy of cygx++. If you want to join the project, please improve what we
+have now instead of submitting a new solution.</p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
