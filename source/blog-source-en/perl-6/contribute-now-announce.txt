@@ -28,6 +28,11 @@ announcement - fame and eternal glory are certain.</p>
         href="http://www.perlfoundation.org/">The Perl Foundation</a>.</li>
 </ul>
 
+<p><strong>&lt;update&gt;</strong>: The <a
+href="http://perlgeek.de/blog-en/perl-6/contribute-now-lottery.html">lottery
+has been done</a>, and the winners will receive their t-shirts soon.
+For future challenges, you have to be motivated on your own :-).</p>
+
 <h2>Challenges</h2>
 <ul>
     <li><a

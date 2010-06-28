@@ -1,0 +1,77 @@
+This Week's Contribution to Perl 6 - Lottery Intermession
+<!-- 277743469 -->
+
+<p>In the <a
+href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">original
+"Contribute now" announcement</a> I've promised that there would be some
+t-shirts to win.</p>
+
+<p>Since then there have seven challenges (mostly weekly), and I've decided on
+the rules of the lottery:</p>
+
+<ul>
+    <li>Every contributor can win at most one t-shirt, even if he had
+    submissions for multiple weeks</li>
+    <li>The lottery will be done on a per-week base</li>
+</ul>
+
+<p>Of course the lottery was conducted by a Perl 6 script. Here it is:</p>
+
+<pre> [% syntax perl6 %]
+use v6;
+
+my @contribs =
+    [ "patrickas", "shawjef3@<omitted>", "Dagur Valberg Johannsson", "Juan José 'Peco' San Martín"],
+    [ "bubaflub" ],
+    [ "patrickas", "David Green" ],
+    [ "Hongwn Qiu"],
+    [ "David Green", "Chris Fields", "rgrau"],
+    [ "sahadev" , "Dean Serenevy"],
+    [ "cygx" ],
+    ;
+
+my %winners;
+
+for @contribs.pairs.pick(*) -> $p {
+    my $week = $p.key + 1;
+    my @people = $p.value.flat.grep({ !%winners{$_} });
+    say "Candidates for Week $week: @people.join(', ')";;
+    my $winner = @people.pick;
+    say "And the winner is... $winner!";
+    %winners{$winner} = $week;
+}
+
+say %winners.perl;
+[%endsyntax%]</pre>
+
+<p>And then, in the moment of truth, it produced this output:</p>
+
+<pre>[%syntax escape %]
+Candidates for Week 7: cygx
+And the winner is... cygx!
+Candidates for Week 2: bubaflub
+And the winner is... bubaflub!
+Candidates for Week 5: David Green, Chris Fields, rgrau
+And the winner is... David Green!
+Candidates for Week 1: patrickas, shawjef3@<omitted>, Dagur Valberg Johannsson, Juan José 'Peco' San Martín
+And the winner is... shawjef3@<omitted>!
+Candidates for Week 4: Hongwn Qiu
+And the winner is... Hongwn Qiu!
+Candidates for Week 3: patrickas
+And the winner is... patrickas!
+Candidates for Week 6: sahadev, Dean Serenevy
+And the winner is... sahadev!
+{"Hongwn Qiu" => 4, "patrickas" => 3, "bubaflub" => 2, "David Green" => 5,
+"cygx" => 7, "sahadev" => 6, "shawjef3\@<omitted>" => 1}
+[%endsyntax%]</pre>
+
+<p>If you are one of the winners, and haven't told me your address yet, please
+do so. Also tell me your t-shirt size, and whether you want a <a
+href="http://rakudo.spreadshirt.de/rakudo-perl-A10548545/customize/color/1">Rakudo</a> or a <a href="http://rakudo.spreadshirt.de/second-system-camelia-A10548459/customize/color/1">Perl 6</a> t-shirt.</p>
+
+<p>I'd like to thank again everybody who contributed, and <a
+    href="http://perlfoundation.org/">The Perl Foundation</a> for sponsoring
+some of the t-shirts!</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
