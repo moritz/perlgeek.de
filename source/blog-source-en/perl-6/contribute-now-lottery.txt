@@ -1,5 +1,5 @@
-This Week's Contribution to Perl 6 - Lottery Intermession
-<!-- 277743469 -->
+This Week's Contribution to Perl 6 - Lottery Intermission
+<!-- 1277760551 -->
 
 <p>In the <a
 href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">original
