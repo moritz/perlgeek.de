@@ -1,0 +1,65 @@
+This Week's Contribution to Perl 6 Week 7: Implement $*ARGFILES for Rakudo
+<!-- 1277762400 -->
+
+<p>For this week's contribution to Perl 6 we ask you to implement the
+<code>$*ARGFILES</code> special variable (and underlying object) for
+Rakudo.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>In Perl 5, there is a "magic" way to iterate over input: <code>while (my
+$line = &lt;&gt;) { ... }</code>. This reads from standard input if no command
+line arguments were provided. If there are command line arguments, they are
+taken as file names, and <code>&lt;&gt;</code> iterates over the contents of
+these files.</p>
+
+<p>In Perl 6 this magic is performed with the <code>$*ARGFILES</code> special
+variable. Please implement it!</p>
+
+<p>To do that, you have to understand how file reading works in Perl 6. Once
+you have a file handle, there are two ways to read lines: either by calling
+<code>$handle.get</code>, which returns just one line, or by calling
+<code>$handle.lines</code>, which returns a (lazy) list of all the remaining
+lines.</p>
+
+<p>You can obtain the command line arguments from <code>@*ARGS</code>, open a
+file with <code>my $handle = open $filename;</code> for reading; And finally
+you can use <code>lines('filename')</code> to read all lines from a file.</p>
+
+
+<h2>What you can do</h2>
+
+<p>Implement a backend class for <code>$*ARGFILES</code>. You can do that in
+normal Perl 6 code, no need to change the actual compiler. Once that's done,
+we will plug it into Rakudo. Your code might look like this:</p>
+
+<pre>[%syntax perl6 %]
+class IO::ArgFiles {
+    has @!filenames;
+    method get() { ... }
+    method lines() { ... }
+    method filename() {
+        # return the current filename, or '-' if standard input
+        ...
+    }
+}
+my $*ARGFILES = IO::ArgFiles.new(filenames => @*ARGS);
+.say for $*ARGFILES.lines();
+[% endsyntax %]</pre>
+
+<p>(Of course this is only a rough skeleton, you might need to change some
+details, or add some things).</p>
+
+<h2>Submission</h2>
+
+<p>Please submit your source code to the <a
+href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
+list (and put moritz@faui2k3.org on CC,
+because the mailing list sometimes lack quite a bit).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
