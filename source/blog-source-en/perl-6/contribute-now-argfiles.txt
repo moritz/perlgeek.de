@@ -1,4 +1,4 @@
-This Week's Contribution to Perl 6 Week 7: Implement $*ARGFILES for Rakudo
+This Week's Contribution to Perl 6 Week 8: Implement $*ARGFILES for Rakudo
 <!-- 1277762400 -->
 
 <p>For this week's contribution to Perl 6 we ask you to implement the
@@ -60,6 +60,9 @@ details, or add some things).</p>
 href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
 list (and put moritz@faui2k3.org on CC,
 because the mailing list sometimes lack quite a bit).</p>
+
+<p><strong>Update:</strong>: there's one submission already, testing that
+now...</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
