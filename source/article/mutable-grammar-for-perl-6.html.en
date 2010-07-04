@@ -298,12 +298,12 @@ have the newly defined operators in place.</p>
 
 <pre>[% syntax perl6 %]
 # previous example
-multi sub postfix:<+++> is equiv:<++> { Num $x is rw }
+multi sub postfix:<+++> is equiv:<++> ( Num $x is rw ) {
     $x += 2;
 }
 
 # define the factorial operator
-multi sub postfix:<!> is equiv:<++> { Int $x }
+multi sub postfix:<!> is equiv:<++> ( Int $x ) {
     return [*] 1 .. $x;
 }
 
