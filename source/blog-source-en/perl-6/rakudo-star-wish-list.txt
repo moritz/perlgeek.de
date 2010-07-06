@@ -10,7 +10,7 @@ release:<p>
 <ul>
     <li>Backtraces with Perl 6 file names and line numbers (Update 2010-05-30:
     jnthn implemented those)</li>
-    <li>Proper closure cloning (pmichaud has a plan for this)</li>
+    <li>Proper closure cloning (Update 2010-06-07: pmichaud has fixed it)</li>
     <li>Match objects which return Perl 6 (and not parrot) data structures
     (Update 2010-05-30: pmichaud laid the foundations for that, and I got it
     to a "good enough" state).</li>
