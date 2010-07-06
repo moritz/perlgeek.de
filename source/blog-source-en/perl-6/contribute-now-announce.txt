@@ -61,6 +61,10 @@ For future challenges, you have to be motivated on your own :-).</p>
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-try.rakudo.org.writeback">Week
         7: try.rakudo.org</a>. Status: One submission in the git repository,
         improvements and further implementations are always welcome.</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-argfiles.html">Week
+        8: implement $*ARGFILES</a>. Status: two submissions, challenge
+    closed.</li>
 </ul>
 
 [% option no-header %][% option no-footer %]

@@ -61,8 +61,8 @@ href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
 list (and put moritz@faui2k3.org on CC,
 because the mailing list sometimes lack quite a bit).</p>
 
-<p><strong>Update:</strong>: there's one submission already, testing that
-now...</p>
+<p><strong>Update:</strong>: there have been two submissions, and a mixture of
+both has been applied.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
