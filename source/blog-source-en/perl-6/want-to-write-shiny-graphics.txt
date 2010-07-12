@@ -3,10 +3,10 @@ Want to write shiny SVG graphics with Perl 6? Port Scruffy!
 
 <p>First let my apologize for waiting so long to come up with a new 
 <a href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">"weekly"
-    Perl 6 challenge</a> - I'm running out of ideas, and then one I have left needs
+    Perl 6 challenge</a> - I'm running out of ideas, and the one I have left needs
 more time to prepare.</p>
 
-<p>Instead I want to motivated you to help porting the ruby <a
+<p>Instead I want to motivate you to help porting the ruby <a
 href="http://scruffy.rubyforge.org/">scruffy charting library</a> to Perl 6.
 It can generate <a
     href="http://replay.waybackmachine.org/20080625015853/http://scruffy.rubyforge.org/">shiny
@@ -16,7 +16,7 @@ waybackmachine link).</p>
 
 <p>There's already an <a href="http://github.com/moritz/tufte/">initial
 version Perl 6 port called "tufte"</a>, but it's not running yet. It needs your
-help. If you know some little ruby, and want to learns some more Perl 6, join
+help. If you know a little ruby, and want to learn some more Perl 6, join
 #perl6, ask for a commit bit, and translate some ruby code into Perl 6. And in
 the end you'll be rewarded with nice SVG charts :-).</p>
 
