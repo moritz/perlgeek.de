@@ -25,7 +25,7 @@ too:</p>
 [% endsyntax %]</pre>
 
 <p>This is already <a
-href="http://github.com/rakudo/rakudo/blob/master/src/core/Any-list.pm#L165">implement
+href="http://github.com/rakudo/rakudo/blob/master/src/core/Any-list.pm#L165">implemented
 through several multi methods in Rakudo</a>.</p>
 
 <p>Now the specification <a
