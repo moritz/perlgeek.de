@@ -11,7 +11,7 @@ Rakudo.</p>
 
 <h2>Background</h2>
 
-<p>In Perl 6 the <code>List</code> class has method called <code>pick</code>,
+<p>In Perl 6 the <code>List</code> class has a method called <code>pick</code>,
 which randomly selects one item from a list. It has a few more options
 too:</p>
 
