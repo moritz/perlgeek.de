@@ -1,0 +1,86 @@
+This Week's Contribution to Perl 6 Week 9: Implement Hash.pick for Rakudo
+<!-- 1279027367 -->
+
+<p>For this week's contribution to Perl 6 we ask you to implement the
+<code>Hash.pick</code> method (which does a weighted random selection) for
+Rakudo.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>In Perl 6 the <code>List</code> class has method called <code>pick</code>,
+which randomly selects one item from a list. It has a few more options
+too:</p>
+
+<pre>[%syntax perl6 %]
+<a b c>.pick;       # pick one random element
+<a b c>.pick(2);    # pick two distinct, random elements
+<a b c>.pick(2, :replace); # pick two random elements, it's ok
+                           # if they are the same
+<a b c>.pick(*);    # return a random permutation of the elements
+<a b c>.pick(*, :replace); # infinite, random stream of elements
+[% endsyntax %]</pre>
+
+<p>This is already <a
+href="http://github.com/rakudo/rakudo/blob/master/src/core/Any-list.pm#L165">implement
+through several multi methods in Rakudo</a>.</p>
+
+<p>Now the specification <a
+href="http://perlcabal.org/syn/S32/Containers.html#Bag">describes such a
+method for hashes too</a> (actually it talks about Bags, but Rakudo doesn't
+have Bags yet. Pretend it says "Hash" instead). It assumes that each value in
+the hash is numeric, and that the value is a weight that determines the
+probability of picking one value. For example</p>
+
+<pre>[%syntax perl6 %]
+{a => 1, b => 2}.pick;  # returns 'a' with probability 1/3
+                        # and 'b' with probability 2/3
+
+{a => 1, b => 2}.pick(*);  # <a b b> with probability 1/3
+                           # <b a b> with probability 1/6
+                           # <b b a> with probability 1/6
+{a => 1, b => 0.5}.pick(*) # dies, because the weights aren't all integers
+{a => 1, b => 0.5}.pick(*, :replace)  # ok 
+[% endsyntax %]</pre>
+
+[% comment </b> %]
+
+<h2>What you can do</h2>
+
+<p>Implement Hash.pick. It's ok if your patch doesn't cover all cases. It
+would be nice if it supported non-integer weights.</p>
+
+<p>Hint: this could be done by storing a list of accumulated weights, and a
+list of keys.</p>
+
+<pre>[%syntax perl6 %]
+{a => 1, b => 2.5, c => 1}
+
+# could translate to 
+my @keys = ('a', 'b', 'c');
+my @accumulated_weights = (1, 3.5, 4.5);
+
+# now pick a random number between 0 and 4.5,
+# find the next-highest index in @accumulated_weights
+# with a binary search, and then use that to obtain the key.
+[% endsyntax %]</pre>
+
+<p>Of course other schemes are fine too.
+
+<p>Second hint: because it takes quite some time to recompile Rakudo, it is 
+probably easier to implement the actual logic in a function
+in a normal source file first, and only later move it into src/core/Hash.pm.</p>
+
+<h2>Submission</h2>
+
+<p>Please submit your source code to the <a
+href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
+list (and put moritz@faui2k3.org on CC,
+because the mailing list sometimes lack quite a bit).</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
