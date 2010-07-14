@@ -16,7 +16,7 @@ them numerically, and allows you to express the equations in very simple Perl
 <p>Let's start with a very simple model. As a prerequisite you need the <a
 href="http://rakudo.org/">Rakudo Perl 6 compiler</a> (latest release or
 current development version), and then use <a
-href="http://proto.perl6.org/">proto</a> to <code>proto install Math-Model</code>
+href="http://modules.perl6.org/">proto</a> to <code>proto install Math-Model</code>
 (which also installs its dependencies).</p>
 
 <h2>A first model: throwing a stone horizontally into the air</h2>

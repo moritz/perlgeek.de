@@ -40,7 +40,7 @@ email to perl6-compiler@perl.org. For real-time discussions <a
 which is already in the proto repository in the <code>web/</code> directory.</p>
 
 <p>The results can be seen on <a
-    href="http://proto.perl6.org/">proto.perl6.org</a>.</p>
+    href="http://modules.perl6.org/">modules.perl6.org</a>.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
