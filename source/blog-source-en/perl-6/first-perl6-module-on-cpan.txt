@@ -1,5 +1,10 @@
 The first Perl 6 module on CPAN
 <!-- 1245275198 -->
+<p>(Update 2010-07-14: it seems that Perl 6 modules on the Perl 5 CPAN are not
+a good idea with the current infrastructure.
+See the <a href="http://modules.perl6.org/">Perl 6 Module
+Directory</a> for an alternative.)</p>
+
 <p>About a month ago we had a discussion about distributing Perl 6 modules,
 again. This time I also looked at <a href="http://cpan6.org/">cpan6.org</a>
 and mailed Mark Overmeer about his progress and visions.</p>
