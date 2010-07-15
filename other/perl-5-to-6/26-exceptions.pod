@@ -5,7 +5,7 @@
 =head1 SYNOPSIS
 
     try {
-        my $x = 1 / 0; # dies with 'Divide by zero'
+        die "OH NOEZ";
 
         CATCH { 
             say "there was an error: $!";

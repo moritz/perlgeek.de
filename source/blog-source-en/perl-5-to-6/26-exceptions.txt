@@ -12,7 +12,7 @@ name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
 <pre>    try {
-        my $x = 1 / 0; # dies with &#39;Divide by zero&#39;
+        die &#34;OH NOEZ&#34;;
 
         CATCH { 
             say &#34;there was an error: $!&#34;;
