@@ -28,7 +28,7 @@ Most Perl 5 control structures are quite similar in Perl 6. The biggest visual
 difference is that you don't need a pair of parenthesis after C<if>, C<while>,
 C<for> etc.
 
-In fact your discouraged from using parenthesis around the conditions.
+In fact you are discouraged from using parenthesis around the conditions.
 
 =head2 Branches
 
@@ -75,7 +75,8 @@ This is also how you iterate over hashes:
         say "$key: $value";
     }
 
-The C-style for-loop is now called C<loop>:
+The C-style for-loop is now called C<loop> (and the only looping construct
+that requires parenthesis):
 
     loop (my $x = 1; $x < 100; $x = $x**2) {
         say $x;

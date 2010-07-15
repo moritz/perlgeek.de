@@ -20,7 +20,7 @@
     say %hash{'bar'};                       # 2
     say %hash<bar>;                         # same with auto-quoting
     # this is an error: %hash{bar}
-    # (it tries to call the subroutine bar(), which is not defined
+    # (it tries to call the subroutine bar(), which is not declared
 
 =head1 DESCRIPTION
 
@@ -42,7 +42,7 @@ interpolate
     my $scalar = 6;
     my @array = 1, 2, 3;
     say "Perl $scalar";         # 'Perl 6'
-    say "An @array[]";          # 'An 1 2 3'
+    say "An @array[]";          # 'An 1 2 3', a so-called "Zen slice"
     say "@array[1]";            # '2'
     say "Code: { $scalar * 2 }" # 'Code: 12'
 
@@ -50,13 +50,13 @@ Arrays and hashes only interpolate if followed by an index (or a method call
 that ends in parenthesis, like C<"some $obj.method()">), empty indexes
 interpolate the whole data structure.
 
-A block in curly braces is executed as a code block, and the result is
+A block in curly braces is executed as code, and the result is
 interpolated.
 
 =head2 Arrays
 
-Arrays variables still begin with the C<@> sigil. And they always do, even if
-an index is present.
+Arrays variables still begin with the C<@> sigil. And they always do,
+even when accessing stored items, ie. when an index is present.
 
     my @a = 5, 1, 2;            # no parens needed anymore
     say @a[0];                  # yes, it starts with @
@@ -95,7 +95,7 @@ also have methods that you can call on them.
     my @countries = %drinks.keys.sort;
 
 Note that when you access hash elements with C<%hash{...}>, the key is not
-auto quoted like in Perl 5. So C<%hash{foo}> doesn't access index C<"foo">,
+automatically quoted like in Perl 5. So C<%hash{foo}> doesn't access index C<"foo">,
 but calls the function C<foo()>. The auto quoting isn't gone, it just has a
 different syntax:
 
@@ -106,18 +106,16 @@ different syntax:
 Most builtin methods exists both as a method and as a sub. So you can write
 both C<sort @array> and C<@array.sort>.
 
-Finally you should know that both C<[..]> and C<{...}> are just method calls
+Finally you should know that both C<[..]> and C<{...}> (occurring directly
+after a term) are just method calls
 with a special syntax, not something tied to arrays and hashes. That means
 that they are also not tied to a particular sigil.
 
     my $a = [1, 2, 3];
     say $a[2];          # 3
 
-This means that you don't need special dereferencing syntax, and that you can
+This implies that you don't need special dereferencing syntax, and that you can
 create objects that can act as arrays, hashes and subs at the same time.
-
-Note that Rakudo only implements interpolation of scalars, closures and
-backslash sequences at the moment; arrays and hashes are never interpolated
 
 =head1 SEE ALSO
 

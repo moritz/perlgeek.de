@@ -56,7 +56,7 @@ Parameters are read-only by default. That can be changed with so-called
     sub quox($bar is copy){
         $bar = 3;
     }
-    quox($x); say $x    # 0
+    quox($x); say $x    # still 0
 
 Parameters can be made optional by adding a question mark C<?> after them, or
 by supplying a default value.

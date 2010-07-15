@@ -31,7 +31,8 @@
 
 Perl 6 has an object model that is much more fleshed out than the Perl 5 one.
 It has keywords for creating classes, roles, attributes and methods, and has
-encapsulated private attributes and methods.
+encapsulated private attributes and methods. In fact it's much closer to the
+C<Moose> Perl 5 module (which was inspired by the Perl 6 object system).
 
 There are two ways to declare classes
 

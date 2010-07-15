@@ -22,7 +22,7 @@ There are some basic types that you should know about:
 
     'a string'      # Str
     2               # Int
-    3.14            # Num
+    3.14            # Rat (rational number)
     (1, 2, 3)       # Seq
 
 All "normal" built-in types begin with an upper case letter. All "normal" types
@@ -31,7 +31,7 @@ inherit from C<Any>, and absolutely everything inherits from C<Object>.
 You can restrict the type of values that a variable can hold by adding the
 type name to the declaration.
 
-    my Num $x = 3.4;
+    my Numeric $x = 3.4;
     my Int @a = 1, 2, 3;
 
 It is an error to try to put a value into a variable that is of a "wrong" type
@@ -39,6 +39,10 @@ It is an error to try to put a value into a variable that is of a "wrong" type
 
 A type declaration on an Array applies to its contents, so C<my Str @s> is
 an array that can only contain strings.
+
+Some types stand for whole family of more specific types, for example
+integers, rationals and floating-point numbers (type C<Num>) conform to the
+C<Numeric> type.
 
 =head2 Introspection
 
