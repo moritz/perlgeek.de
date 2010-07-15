@@ -39,7 +39,7 @@ translation should apply to its return value.</p>
 
 <p>Your task is to hook that function into the <a
     href="http://github.com/rakudo/rakudo/blob/master/src/core/Cool-str.pm#L25"><code>subst</code>
-    method in src/core/Cool-str.pm</code></a>, and put some tests into <a
+    method in <code>src/core/Cool-str.pm</code></a>, and put some tests into <a
 href="http://svn.pugscode.org/pugs/t/spec/S05-substitution/subst.t">t/spec/S05-substitutions/subst.t</a>
 in the pugs repository that demonstrate that your code works.</p>
 
