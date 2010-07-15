@@ -5,7 +5,7 @@ My personal "I want a PONIE" wish list for Rakudo Star
 href="http://use.perl.org/~pmichaud/journal/39411">Rakudo Star</a>. I've done
 some development with and of Rakudo, and here's the list of features and bug
 fixes that I think are essential for a successful and well-received
-release:<p>
+release:</p>
 
 <ul>
     <li>Backtraces with Perl 6 file names and line numbers (Update 2010-05-30:
