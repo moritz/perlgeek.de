@@ -2,7 +2,7 @@ This Week's Contribution to Perl 6 Week 4: Implement :samecase for .subst
 <!-- 1274861743 -->
 
 <p>For this week's contribution to Perl 6 we ask you to implement an option in
-the string substitution backend that is be used for <code>s///<code> style
+the string substitution backend that is be used for <code>s///</code> style
 replacements.</p>
 
 <p>(<a
