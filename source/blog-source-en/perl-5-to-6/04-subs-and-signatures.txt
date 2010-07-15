@@ -62,7 +62,7 @@ name="DESCRIPTION"
     sub quox($bar is copy){
         $bar = 3;
     }
-    quox($x); say $x    # 0</pre>
+    quox($x); say $x    # still 0</pre>
 
 <p>Parameters can be made optional by adding a question mark <code>?</code> after them, or by supplying a default value.</p>
 

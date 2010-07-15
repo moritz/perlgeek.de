@@ -29,7 +29,7 @@ name="SYNOPSIS"
     say %hash{&#39;bar&#39;};                       # 2
     say %hash&#60;bar&#62;;                         # same with auto-quoting
     # this is an error: %hash{bar}
-    # (it tries to call the subroutine bar(), which is not defined</pre>
+    # (it tries to call the subroutine bar(), which is not declared</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
@@ -50,19 +50,19 @@ name="Strings"
 <pre>    my $scalar = 6;
     my @array = 1, 2, 3;
     say &#34;Perl $scalar&#34;;         # &#39;Perl 6&#39;
-    say &#34;An @array[]&#34;;          # &#39;An 1 2 3&#39;
+    say &#34;An @array[]&#34;;          # &#39;An 1 2 3&#39;, a so-called &#34;Zen slice&#34;
     say &#34;@array[1]&#34;;            # &#39;2&#39;
     say &#34;Code: { $scalar * 2 }&#34; # &#39;Code: 12&#39;</pre>
 
 <p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), empty indexes interpolate the whole data structure.</p>
 
-<p>A block in curly braces is executed as a code block, and the result is interpolated.</p>
+<p>A block in curly braces is executed as code, and the result is interpolated.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Arrays"
 >Arrays</a></h4>
 
-<p>Arrays variables still begin with the <code>@</code> sigil. And they always do, even if an index is present.</p>
+<p>Arrays variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
 
 <pre>    my @a = 5, 1, 2;            # no parens needed anymore
     say @a[0];                  # yes, it starts with @
@@ -98,7 +98,7 @@ name="Hashes"
     say &#34;The people in France love &#34;,  %drinks{&#39;France&#39;};
     my @countries = %drinks.keys.sort;</pre>
 
-<p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not auto quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The auto quoting isn&#39;t gone, it just has a different syntax:</p>
+<p>Note that when you access hash elements with <code>%hash{...}</code>, the key is not automatically quoted like in Perl 5. So <code>%hash{foo}</code> doesn&#39;t access index <code>&#34;foo&#34;</code>, but calls the function <code>foo()</code>. The auto quoting isn&#39;t gone, it just has a different syntax:</p>
 
 <pre>    say %drinks&#60;Bavaria&#62;;</pre>
 
@@ -108,14 +108,12 @@ name="Final_Notes"
 
 <p>Most builtin methods exists both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
 
-<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
+<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
 
 <pre>    my $a = [1, 2, 3];
     say $a[2];          # 3</pre>
 
-<p>This means that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
-
-<p>Note that Rakudo only implements interpolation of scalars, closures and backslash sequences at the moment; arrays and hashes are never interpolated</p>
+<p>This implies that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

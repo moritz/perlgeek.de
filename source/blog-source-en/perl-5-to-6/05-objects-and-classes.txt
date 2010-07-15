@@ -38,7 +38,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 has an object model that is much more fleshed out than the Perl 5 one. It has keywords for creating classes, roles, attributes and methods, and has encapsulated private attributes and methods.</p>
+<p>Perl 6 has an object model that is much more fleshed out than the Perl 5 one. It has keywords for creating classes, roles, attributes and methods, and has encapsulated private attributes and methods. In fact it&#39;s much closer to the <code>Moose</code> Perl 5 module (which was inspired by the Perl 6 object system).</p>
 
 <p>There are two ways to declare classes</p>
 
