@@ -1132,7 +1132,7 @@ name="DESCRIPTION"
 
 <p><code>1 | 2 | 3</code> is the same as <code>any(1..3)</code>.</p>
 
-<pre>    my junction $weekday = any &#60;Monday Tuesday Wednesday 
+<pre>    my Junction $weekday = any &#60;Monday Tuesday Wednesday 
                                 Thursday Friday Saturday Sunday&#62;
     if $day eq $weekday {
         say &#34;See you on $day&#34;;
@@ -1151,20 +1151,20 @@ name="DESCRIPTION"
 <pre>                      Mu
                     /    \
                    /      \
-                 Any     junction
+                 Any     Junction
                /  |  \
             All other types</pre>
 
 <p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>junction</code></p>
 
-<pre>    sub dump_yaml(junction $stuff) {
+<pre>    sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
         ....
     }</pre>
 
 <p>A word of warning: junctions can behave counter-intuitive sometimes. With non-junction types <code>$a != $b</code> and <code>!($a == $b)</code> always mean the same thing. If one of these variables is a junction, that might be different:</p>
 
-<pre>    my junction $b = 3 | 2;
+<pre>    my Junction $b = 3 | 2;
     my $a = 2; 
     say &#34;Yes&#34; if   $a != $b ;       # Yes
     say &#34;Yes&#34; if !($a == $b);       # no output</pre>
