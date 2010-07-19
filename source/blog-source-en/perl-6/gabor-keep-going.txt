@@ -1,0 +1,19 @@
+Gabor: Keep going
+<!-- 1279571765 -->
+
+<p>After reading <a
+href="http://blogs.perl.org/users/gabor_szabo/2010/07/promoting-perl-is-fun.html">this
+blog post</a>, I just want to say: keep going.</p>
+
+<p>Gabor does really awesome things for Perl (and especially for Perl 6, which
+I tend to notice more): beginner's tutorials, screencasts, training courses,
+writes an IDE and so on. If his primary interest was his own success, his
+priorities would be quite different.</p>
+
+<p>I hope that Gabor doesn't pay too much attention to the hostilities from
+parts of the Perl community, and I wish him and us all the best for his <a
+href="http://news.perlfoundation.org/2010/06/hague-grant-application-perl-e.html">current
+project</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
