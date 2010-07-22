@@ -22,7 +22,7 @@
   # including its name, to STDERR
   note :$x.perl;
 
-  # sort case insensitively
+  # sort case-insensitively
   say @list.sort: *.uc;
 
   # mandatory attributes
@@ -79,12 +79,20 @@ operators, that simplifies considerably to
 
   my $in-range = $lower max $x min $upper;
 
+because C<$lower max $x> returns the larger of the two numbers, and thus
+clipping to the lower end of the range.
+
+Since C<min> and C<max> are infix operators, you can also clip infix:
+
+ $x max= 0;
+ $x min= 10;
+
 =head2 Debugging
 
 Perl 5 has Data::Dumper, Perl 6 objects have the C<.perl> method. Both
-generate code that reproduces the original data structure as good as possible.
+generate code that reproduces the original data structure as faithfully as possible.
 
-C<:$var> generates a Pair ("I<colonpair>"), using the variable name as key
+C<:$var> generates a Pair ("colonpair"), using the variable name as key
 (but with sigil stripped). So it's the same as C<< var => $var >>. C<note()>
 writes to the standard error stream, appending a newline. So C<note
 :$var.perl> is quick way of obtaining the value of a variable for debugging;
