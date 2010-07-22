@@ -2998,7 +2998,7 @@ name="Hashes"
   # solution 2: meta operators
   my %hash = @keys Z=&#62; @values;</pre>
 
-<p>The first solution is the same you&#39;d use in Perl 5: assignment to a slice. The second solution uses the zip operator <code>Z</code>, which joins to list like a zip fastener: <code>1, 2, 3 Z 10, 20, 30</code> is <code>1, 10, 2, 20, 3, 30</code>. The <code>Z=&#62;</code> is a meta operator, which combines zip with <code>Z=&#62;</code> (the Pair construction operator). So <code>1, 2, 3 Z=&#62; 10, 20, 30</code> evaluates to <code>1 =&#62; 10, 2 =&#62; 20, 3 =&#62; 30</code>. Assignment to a hash variable turns that into a Hash.</p>
+<p>The first solution is the same you&#39;d use in Perl 5: assignment to a slice. The second solution uses the zip operator <code>Z</code>, which joins to list like a zip fastener: <code>1, 2, 3 Z 10, 20, 30</code> is <code>1, 10, 2, 20, 3, 30</code>. The <code>Z=&#62;</code> is a meta operator, which combines zip with <code>=&#62;</code> (the Pair construction operator). So <code>1, 2, 3 Z=&#62; 10, 20, 30</code> evaluates to <code>1 =&#62; 10, 2 =&#62; 20, 3 =&#62; 30</code>. Assignment to a hash variable turns that into a Hash.</p>
 
 <p>For existence checks, the values in a hash often doesn&#39;t matter, as long as they all evaluate to <code>True</code> in boolean context. In that case, a nice way to initialize the hash from a given array or list of keys is</p>
 
