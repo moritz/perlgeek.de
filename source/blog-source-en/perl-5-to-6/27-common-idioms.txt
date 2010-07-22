@@ -1,0 +1,134 @@
+Common Perl 6 data processing idioms
+<!-- 1279805666 -->
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 27 - Common Perl 6 data processing idioms</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>  # create a hash from a list of keys and values:
+  # solution 1: slices
+  my %hash; %hash{@keys} = @values;
+  # solution 2: meta operators
+  my %hash = @keys Z=&#62; @values;
+
+  # create a hash from an array, with
+  # true value for each array item:
+  my %exists = @keys Z=&#62; 1 xx *;
+
+  # limit a value to a given range, here 0..10.
+  my $x = -2;
+  say 0 max $x min 10;
+
+  # for debugging: dump the contents of a variable,
+  # including its name, to STDERR
+  note :$x.perl;
+
+  # sort case-insensitively
+  say @list.sort: *.lc;
+
+  # mandatory attributes
+  class Something {
+      has $.required = die &#34;Attribute &#39;required&#39; is mandatory&#34;;
+  }
+  Something.new(required =&#62; 2); # no error
+  Something.new()               # BOOM</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p>Learning the specification of a language is not enough to be productive with it. Rather you need to know how to solve specific problems. Common usage patterns, called <i>idioms</i>, helps you not having to re-invent the wheel every time you&#39;re faced with a problem.</p>
+
+<p>So here a some common Perl 6 idioms, dealing with data structures.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Hashes"
+>Hashes</a></h4>
+
+<pre>  # create a hash from a list of keys and values:
+  # solution 1: slices
+  my %hash; %hash{@keys} = @values;
+  # solution 2: meta operators
+  my %hash = @keys Z=&#62; @values;</pre>
+
+<p>The first solution is the same you&#39;d use in Perl 5: assignment to a slice. The second solution uses the zip operator <code>Z</code>, which joins to list like a zip fastener: <code>1, 2, 3 Z 10, 20, 30</code> is <code>1, 10, 2, 20, 3, 30</code>. The <code>Z=&#62;</code> is a meta operator, which combines zip with <code>Z=&#62;</code> (the Pair construction operator). So <code>1, 2, 3 Z=&#62; 10, 20, 30</code> evaluates to <code>1 =&#62; 10, 2 =&#62; 20, 3 =&#62; 30</code>. Assignment to a hash variable turns that into a Hash.</p>
+
+<p>For existence checks, the values in a hash often doesn&#39;t matter, as long as they all evaluate to <code>True</code> in boolean context. In that case, a nice way to initialize the hash from a given array or list of keys is</p>
+
+<pre>  my %exists = @keys Z=&#62; 1 xx *;</pre>
+
+<p>which uses a lazy, infinite list of 1s on the right-hand side, and relies on the fact that <code>Z</code> ends when the shorter list is exhausted.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Numbers"
+>Numbers</a></h4>
+
+<p>Sometimes you want to get a number from somewhere, but clip it into a predefined range (for example so that it can act as an array index).</p>
+
+<p>In Perl 5 you often end up with things like <code>$a = $b &#62; $upper ? $upper : $b</code>, and another conditional for the lower limit. With the <code>max</code> and <code>min</code> infix operators, that simplifies considerably to</p>
+
+<pre>  my $in-range = $lower max $x min $upper;</pre>
+
+<p>because <code>$lower max $x</code> returns the larger of the two numbers, and thus clipping to the lower end of the range.</p>
+
+<p>Since <code>min</code> and <code>max</code> are infix operators, you can also clip infix:</p>
+
+<pre> $x max= 0;
+ $x min= 10;</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Debugging"
+>Debugging</a></h4>
+
+<p>Perl 5 has Data::Dumper, Perl 6 objects have the <code>.perl</code> method. Both generate code that reproduces the original data structure as faithfully as possible.</p>
+
+<p><code>:$var</code> generates a Pair (&#34;colonpair&#34;), using the variable name as key (but with sigil stripped). So it&#39;s the same as <code>var =&#62; $var</code>. <code>note()</code> writes to the standard error stream, appending a newline. So <code>note :$var.perl</code> is quick way of obtaining the value of a variable for debugging; purposes, along with its name.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Sorting"
+>Sorting</a></h4>
+
+<p>Like in Perl 5, the <code>sort</code> built-in can take a function that compares two values, and then sorts according to that comparison. Unlike Perl 5, it&#39;s a bit smarter, and automatically does a transformation for you if the function takes only one argument.</p>
+
+<p>In general, if you want to compare by a transformed value, in Perl 5 you can do:</p>
+
+<pre>    # WARNING: Perl 5 code ahead
+    my @sorted = sort { transform($a) cmp transform($b) } @values;
+
+    # or the so-called Schwartzian Transform:
+    my @sorted = map { $_-&#62;[1] }
+                 sort { $a-&#62;[0] cmp $b-&#62;[0] }
+                 map { [transform($_), $_] }
+                 @values</pre>
+
+<p>The former solution requires repetitive typing of the transformation, and executes it for each comparison. The second solution avoids that by storing the transformed value along with the original value, but it&#39;s quite a bit of code to write.</p>
+
+<p>Perl 6 automates the second solution (and a bit more efficient than the naiive Schwartzian transform, by avoiding an array for each value) when the transformation function has arity one, ie accepts one argument only:</p>
+
+<pre>    my @sorted = sort &#38;transform, @values;</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Mandatory_Attributes"
+>Mandatory Attributes</a></h4>
+
+<p>The typical way to enforce the presence of an attribute is to check its presence in the constructor - or in all constructors, if there are many.</p>
+
+<p>That works in Perl 6 too, but it&#39;s easier and safer to require the presence at the level of each attribute:</p>
+
+<pre>    has $.attr = die &#34;&#39;attr&#39; is mandatory&#34;;</pre>
+
+<p>This exploits the default value mechanism. When a value is supplied, the code for generating the default value is never executed, and the <code>die</code> never triggers. If any constructor fails to set it, an exception is thrown.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>N/A</p>
+
+[% option no-header %] [% option no-footer %]
