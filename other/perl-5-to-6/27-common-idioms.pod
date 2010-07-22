@@ -53,7 +53,7 @@ So here a some common Perl 6 idioms, dealing with data structures.
 The first solution is the same you'd use in Perl 5: assignment to a slice. The
 second solution uses the zip operator C<Z>, which joins to list like a zip
 fastener: C<1, 2, 3 Z 10, 20, 30> is C<1, 10, 2, 20, 3, 30>. The C<< Z=> >> is
-a meta operator, which combines zip with C<< Z=> >> (the Pair construction
+a meta operator, which combines zip with C<< => >> (the Pair construction
 operator). So C<< 1, 2, 3 Z=> 10, 20, 30 >> evaluates to
 C<< 1 => 10, 2 => 20, 3 => 30 >>. Assignment to a hash variable turns that
 into a Hash.
