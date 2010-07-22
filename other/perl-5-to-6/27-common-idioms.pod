@@ -23,7 +23,7 @@
   note :$x.perl;
 
   # sort case-insensitively
-  say @list.sort: *.uc;
+  say @list.sort: *.lc;
 
   # mandatory attributes
   class Something {
