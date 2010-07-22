@@ -1,0 +1,142 @@
+=head1 NAME
+
+"Perl 5 to 6" Lesson 27 - Common Perl 6 data processing idioms
+
+=head1 SYNOPSIS
+
+  # create a hash from a list of keys and values:
+  # solution 1: slices
+  my %hash; %hash{@keys} = @values;
+  # solution 2: meta operators
+  my %hash = @keys Z=> @values;
+
+  # create a hash from an array, with
+  # true value for each array item:
+  my %exists = @keys Z=> 1 xx *;
+
+  # limit a value to a given range, here 0..10.
+  my $x = -2;
+  say 0 max $x min 10;
+
+  # for debugging: dump the contents of a variable,
+  # including its name, to STDERR
+  note :$x.perl;
+
+  # sort case insensitively
+  say @list.sort: *.uc;
+
+  # mandatory attributes
+  class Something {
+      has $.required = die "Attribute 'required' is mandatory";
+  }
+  Something.new(required => 2); # no error
+  Something.new()               # BOOM
+
+
+=head1 DESCRIPTION
+
+Learning the specification of a language is not enough to be productive with
+it. Rather you need to know how to solve specific problems. Common usage
+patterns, called I<idioms>, helps you not having to re-invent the wheel every
+time you're faced with a problem.
+
+So here a some common Perl 6 idioms, dealing with data structures.
+
+=head2 Hashes
+
+  # create a hash from a list of keys and values:
+  # solution 1: slices
+  my %hash; %hash{@keys} = @values;
+  # solution 2: meta operators
+  my %hash = @keys Z=> @values;
+
+The first solution is the same you'd use in Perl 5: assignment to a slice. The
+second solution uses the zip operator C<Z>, which joins to list like a zip
+fastener: C<1, 2, 3 Z 10, 20, 30> is C<1, 10, 2, 20, 3, 30>. The C<< Z=> >> is
+a meta operator, which combines zip with C<< Z=> >> (the Pair construction
+operator). So C<< 1, 2, 3 Z=> 10, 20, 30 >> evaluates to
+C<< 1 => 10, 2 => 20, 3 => 30 >>. Assignment to a hash variable turns that
+into a Hash.
+
+For existence checks, the values in a hash often doesn't matter, as long as
+they all evaluate to C<True> in boolean context. In that case, a nice way to
+initialize the hash from a given array or list of keys is
+
+  my %exists = @keys Z=> 1 xx *;
+
+which uses a lazy, infinite list of 1s on the right-hand side, and relies on
+the fact that C<Z> ends when the shorter list is exhausted.
+
+=head2 Numbers
+
+Sometimes you want to get a number from somewhere, but clip it into a
+predefined range (for example so that it can act as an array index).
+
+In Perl 5 you often end up with things like
+C<< $a = $b > $upper ? $upper : $b >>, and another conditional for the lower
+limit. With the C<max> and C<min> infix
+operators, that simplifies considerably to
+
+  my $in-range = $lower max $x min $upper;
+
+=head2 Debugging
+
+Perl 5 has Data::Dumper, Perl 6 objects have the C<.perl> method. Both
+generate code that reproduces the original data structure as good as possible.
+
+C<:$var> generates a Pair ("I<colonpair>"), using the variable name as key
+(but with sigil stripped). So it's the same as C<< var => $var >>. C<note()>
+writes to the standard error stream, appending a newline. So C<note
+:$var.perl> is quick way of obtaining the value of a variable for debugging;
+purposes, along with its name.
+
+=head2 Sorting
+
+Like in Perl 5, the C<sort> built-in can take a function that compares two
+values, and then sorts according to that comparison. Unlike Perl 5, it's a bit
+smarter, and automatically does a transformation for you if the function takes
+only one argument.
+
+In general, if you want to compare by a transformed value, in Perl 5 you can
+do:
+
+    # WARNING: Perl 5 code ahead
+    my @sorted = sort { transform($a) cmp transform($b) } @values;
+
+    # or the so-called Schwartzian Transform:
+    my @sorted = map { $_->[1] }
+                 sort { $a->[0] cmp $b->[0] }
+                 map { [transform($_), $_] }
+                 @values
+
+The former solution requires repetitive typing of the transformation, and
+executes it for each comparison. The second solution avoids that by storing
+the transformed value along with the original value, but it's quite a bit of
+code to write.
+
+Perl 6 automates the second solution (and a bit more efficient than the naiive
+Schwartzian transform, by avoiding an array for each value) when the
+transformation function has arity one, ie accepts one argument only:
+
+    my @sorted = sort &transform, @values;
+
+=head2 Mandatory Attributes
+
+The typical way to enforce the presence of an attribute is to check its
+presence in the constructor - or in all constructors, if there are many.
+
+That works in Perl 6 too, but it's easier and safer to require the presence at
+the level of each attribute:
+
+    has $.attr = die "'attr' is mandatory";
+
+This exploits the default value mechanism. When a value is supplied, the code
+for generating the default value is never executed, and the C<die> never
+triggers. If any constructor fails to set it, an exception is thrown.
+
+=head1 MOTIVATION
+
+N/A
+
+=for time 1279805666
+=for editor vim: spell
