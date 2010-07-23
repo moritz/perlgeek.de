@@ -70,6 +70,7 @@ their usefulness and beauty.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S02.html#Context>
+L<http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html>
 
 =for time 1222294800
 =for editor vim: spell
