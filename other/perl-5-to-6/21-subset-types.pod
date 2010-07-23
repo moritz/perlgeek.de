@@ -4,10 +4,10 @@
 
 =head1 SYNOPSIS
 
-    subset Squares of Int where { .sqrt.int**2 == $_ };
+    subset Squares of Int where { .sqrt.Int**2 == $_ };
 
     multi sub square_root(Squares $x --> Int) {
-        return $x.sqrt.int;
+        return $x.sqrt.Int;
     }
     multi sub square_root(Num $x --> Num) {
         return $x.sqrt;
