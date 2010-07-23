@@ -31,7 +31,7 @@
         }
     }
 
-    my $match = URI.parse('http://perl6.org/documentation/');
+    my $match = URL.parse('http://perl6.org/documentation/');
     say $match<hostname>;       # perl6.org
 
 =head1 DESCRIPTION
