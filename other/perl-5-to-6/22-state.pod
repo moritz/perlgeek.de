@@ -8,6 +8,10 @@
 
 =head1 DESCRIPTION
 
+B<Note:> This lesson is long outdated, and preserved for historical interest
+only. The best way to stay informed about various Perl 6 compilers is to
+follow the blogs at L<http://planetsix.perl.org/>.
+
 Perl 6 is a language specification, and there are multiple compilers being
 written that aim to implement Perl 6, and partially they already do.
 
