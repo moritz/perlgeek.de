@@ -38,7 +38,7 @@ name="SYNOPSIS"
         }
     }
 
-    my $match = URI.parse(&#39;http://perl6.org/documentation/&#39;);
+    my $match = URL.parse(&#39;http://perl6.org/documentation/&#39;);
     say $match&#60;hostname&#62;;       # perl6.org</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'

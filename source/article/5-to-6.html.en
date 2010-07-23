@@ -920,7 +920,8 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S02.html#Context" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Context</a></p>
+>http://perlcabal.org/syn/S02.html#Context</a> <a href="http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html" class="podlinkurl"
+>http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html</a></p>
 
 
 <h2 id="post_07">Regexes (also called &quot;rules&quot;)</h2>
@@ -963,7 +964,7 @@ name="SYNOPSIS"
         }
     }
 
-    my $match = URI.parse(&#39;http://perl6.org/documentation/&#39;);
+    my $match = URL.parse(&#39;http://perl6.org/documentation/&#39;);
     say $match&#60;hostname&#62;;       # perl6.org</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
