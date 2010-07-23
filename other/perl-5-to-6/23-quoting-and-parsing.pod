@@ -52,7 +52,7 @@ directly. All of these also have long names, which I omitted here.
     Operations:
         :x          Execute as shell command, return result
         :w          Split on whitespaces
-        :ww         Split on whitespaces, with quote proection
+        :ww         Split on whitespaces, with quote protection
     Variable interpolation
         :s          Interpolate scalars   ($stuff)
         :a          Interpolate arrays    (@stuff[])
