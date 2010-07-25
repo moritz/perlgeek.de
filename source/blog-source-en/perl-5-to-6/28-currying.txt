@@ -95,4 +95,17 @@ name="MOTIVATION"
 
 <p>Perl 6 strives to make it even easier, and thus provides tools to make typical constructs in functional programming easily available. Currying and easy construction of closures is a key to functional programming, and makes it very easy to write transformation for your data, for example together with <code>map</code> or <code>grep</code>.</p>
 
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SEE_ALSO"
+>SEE ALSO</a></h3>
+
+<p><a href="http://perlcabal.org/syn/S02.html#Built-In_Data_Types" class="podlinkurl"
+>http://perlcabal.org/syn/S02.html#Built-In_Data_Types</a></p>
+
+<p><a href="http://hop.perl.plover.com/" class="podlinkurl"
+>http://hop.perl.plover.com/</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Currying" class="podlinkurl"
+>http://en.wikipedia.org/wiki/Currying</a></p>
+
 [% option no-header %] [% option no-footer %]
