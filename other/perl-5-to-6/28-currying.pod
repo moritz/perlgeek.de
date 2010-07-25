@@ -103,5 +103,13 @@ construction of closures is a key to functional programming, and makes it very
 easy to write transformation for your data, for example together with C<map>
 or C<grep>.
 
+=head1 SEE ALSO
+
+L<http://perlcabal.org/syn/S02.html#Built-In_Data_Types>
+
+L<http://hop.perl.plover.com/>
+
+L<http://en.wikipedia.org/wiki/Currying>
+
 =for time 1280049430
 =for editor vim: spell
