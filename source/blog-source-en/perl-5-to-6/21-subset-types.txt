@@ -11,10 +11,10 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    subset Squares of Int where { .sqrt.int**2 == $_ };
+<pre>    subset Squares of Int where { .sqrt.Int**2 == $_ };
 
     multi sub square_root(Squares $x --&#62; Int) {
-        return $x.sqrt.int;
+        return $x.sqrt.Int;
     }
     multi sub square_root(Num $x --&#62; Num) {
         return $x.sqrt;

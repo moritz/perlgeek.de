@@ -39,6 +39,7 @@ read in the chronological order.</p>
     <li><a href="#post_25">The Cross Meta Operator</a></li>
     <li><a href="#post_26">Exceptions and control exceptions</a></li>
     <li><a href="#post_27">Common Perl 6 data processing idioms</a></li>
+    <li><a href="#post_28">Currying</a></li>
 </ul>
 
 <h2 id="post_00">Introduction</h2>
@@ -1033,7 +1034,7 @@ name="Syntax_clean_up"
 <pre>    short   long            meaning
     -------------------------------
     :i      :ignorecase     ignore case (formerly /i)
-    :a      :ignoreaccents  ignore accents
+    :m      :ignoremark     ignore marks (accents, diaeresis etc.)
     :g      :global         match as often as possible (/g)
     :s      :sigspace       Every white space in the regex matches
                             (optional) white space
@@ -2432,10 +2433,10 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    subset Squares of Int where { .sqrt.int**2 == $_ };
+<pre>    subset Squares of Int where { .sqrt.Int**2 == $_ };
 
     multi sub square_root(Squares $x --&#62; Int) {
-        return $x.sqrt.int;
+        return $x.sqrt.Int;
     }
     multi sub square_root(Num $x --&#62; Num) {
         return $x.sqrt;
@@ -2488,6 +2489,9 @@ name="SYNOPSIS"
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
+
+<p><b>Note:</b> This lesson is long outdated, and preserved for historical interest only. The best way to stay informed about various Perl 6 compilers is to follow the blogs at <a href="http://planetsix.perl.org/" class="podlinkurl"
+>http://planetsix.perl.org/</a>.</p>
 
 <p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
 
@@ -2674,7 +2678,7 @@ name="Quoting"
     Operations:
         :x          Execute as shell command, return result
         :w          Split on whitespaces
-        :ww         Split on whitespaces, with quote proection
+        :ww         Split on whitespaces, with quote protection
     Variable interpolation
         :s          Interpolate scalars   ($stuff)
         :a          Interpolate arrays    (@stuff[])
@@ -3072,6 +3076,104 @@ name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>N/A</p>
+
+
+<h2 id="post_28">Currying</h2>
+<p>Sun Jul 25 09:17:10 2010</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME</a></h3>
+
+<p>&#34;Perl 5 to 6&#34; Lesson 28 - Currying</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="SYNOPSIS"
+>SYNOPSIS</a></h3>
+
+<pre>  use v6;
+  
+  my &#38;f := &#38;substr.assuming(&#39;Hello, World&#39;);
+  say f(0, 2);                # He
+  say f(3, 2);                # lo
+  say f(7);                   # World
+  
+  say &#60;a b c&#62;.map: * x 2;     # aabbcc
+  say &#60;a b c&#62;.map: *.uc;      # ABC
+  for ^10 {
+      print &#60;R G B&#62;.[$_ % *]; # RGBRGBRGBR
+  }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION</a></h3>
+
+<p><i>Currying</i> or <i>partial application</i> is the process of generating a function from another function or method by providing only some of the arguments. This is useful for saving typing, and when you want to pass a callback to another function.</p>
+
+<p>Suppose you want a function that lets you extract substrings from <code>&#34;Hello, World&#34;</code> easily. The classical way of doing that is writing your own function:</p>
+
+<pre>  sub f(*@a) {
+      substr(&#39;Hello, World&#39;, |@a)
+  }</pre>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Currying_with_assuming"
+>Currying with <code>assuming</code></a></h4>
+
+<p>Perl 6 provides a method <code>assuming</code> on code objects, which applies the arguments passed to it to the invocant, and returns the partially applied function.</p>
+
+<pre>  my &#38;f := &#38;substr.assuming(&#39;Hello, World&#39;);</pre>
+
+<p>Now <code>f(1, 2)</code> is the same as <code>substr(&#39;Hello, World&#39;, 1, 2)</code>.</p>
+
+<p><code>assuming</code> also works on operators, because operators are just subroutines with weird names. To get a subroutine that adds 2 to whatever number gets passed to it, you could write</p>
+
+<pre>  my &#38;add_two := &#38;infix:&#60;+&#62;.assuming(2);</pre>
+
+<p>But that&#39;s tedious to write, so there&#39;s another option.</p>
+
+<h4><a class='u' href='#___top' title='click to go to top of document'
+name="Currying_with_the_Whatever-Star"
+>Currying with the Whatever-Star</a></h4>
+
+<pre>  my &#38;add_two := * + 2;
+  say add_two(4);         # 6</pre>
+
+<p>The asterisk, called <i>Whatever</i>, is a placeholder for an argument, so the whole expression returns a closure. Multiple Whatevers are allowed in a single expression, and create a closure that expects more arguments, by replacing each term <code>*</code> by a formal parameter. So <code>* * 5 + *</code> is equivalent to <code>-&#62; $a, $b { $a * 5 + $b }</code>.</p>
+
+<pre>  my $c = * * 5 + *;
+  say $c(10, 2);                # 52</pre>
+
+<p>Note that the second <code>*</code> is an infix operator, not a term, so it is not subject to Whatever-currying.</p>
+
+<p>The process of lifting an expression with Whatever stars into a closure is driven by syntax, and done at compile time. This means that</p>
+
+<pre>  my $star = *;
+  my $code = $star + 2</pre>
+
+<p>does not construct a closure, but instead dies with a message like</p>
+
+<pre>  Can&#39;t take numeric value for object of type Whatever</pre>
+
+<p>Whatever currying is more versatile than <code>.assuming</code>, because it allows to curry something else than the first argument very easily:</p>
+
+<pre>  say  ~(1, 3).map: &#39;hi&#39; x *    # hi hihihi</pre>
+
+<p>This curries the second argument of the string repetition operator infix <code>x</code>, so it returns a closure that, when called with a numeric argument, produces the string <code>hi</code> as often as that argument specifies.</p>
+
+<p>The invocant of a method call can also be Whatever star, so</p>
+
+<pre>  say &#60;a b c&#62;.map: *.uc;      # ABC</pre>
+
+<p>involves a closure that calls the <code>uc</code> method on its argument.</p>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="MOTIVATION"
+>MOTIVATION</a></h3>
+
+<p>Perl 5 could be used for functional programming, which has been demonstrated in Mark Jason Dominus&#39; book <i>Higher Order Perl</i>.</p>
+
+<p>Perl 6 strives to make it even easier, and thus provides tools to make typical constructs in functional programming easily available. Currying and easy construction of closures is a key to functional programming, and makes it very easy to write transformation for your data, for example together with <code>map</code> or <code>grep</code>.</p>
 
 
 

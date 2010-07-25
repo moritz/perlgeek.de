@@ -17,6 +17,9 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
+<p><b>Note:</b> This lesson is long outdated, and preserved for historical interest only. The best way to stay informed about various Perl 6 compilers is to follow the blogs at <a href="http://planetsix.perl.org/" class="podlinkurl"
+>http://planetsix.perl.org/</a>.</p>
+
 <p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'

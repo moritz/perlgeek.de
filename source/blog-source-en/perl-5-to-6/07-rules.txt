@@ -107,7 +107,7 @@ name="Syntax_clean_up"
 <pre>    short   long            meaning
     -------------------------------
     :i      :ignorecase     ignore case (formerly /i)
-    :a      :ignoreaccents  ignore accents
+    :m      :ignoremark     ignore marks (accents, diaeresis etc.)
     :g      :global         match as often as possible (/g)
     :s      :sigspace       Every white space in the regex matches
                             (optional) white space

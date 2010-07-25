@@ -59,10 +59,12 @@ name="Currying_with_the_Whatever-Star"
 <pre>  my &#38;add_two := * + 2;
   say add_two(4);         # 6</pre>
 
-<p>The asterisk, called <i>Whatever</i>, is a placeholder for an argument, so the whole expression returns a closure. Multiple Whatevers are allowed in a single expression, and create a closure that expects more arguments. So <code>* * 5 + *</code> is equivalent to <code>-&#62; $a, $b { $a * 5 + $b }</code>.</p>
+<p>The asterisk, called <i>Whatever</i>, is a placeholder for an argument, so the whole expression returns a closure. Multiple Whatevers are allowed in a single expression, and create a closure that expects more arguments, by replacing each term <code>*</code> by a formal parameter. So <code>* * 5 + *</code> is equivalent to <code>-&#62; $a, $b { $a * 5 + $b }</code>.</p>
 
 <pre>  my $c = * * 5 + *;
   say $c(10, 2);                # 52</pre>
+
+<p>Note that the second <code>*</code> is an infix operator, not a term, so it is not subject to Whatever-currying.</p>
 
 <p>The process of lifting an expression with Whatever stars into a closure is driven by syntax, and done at compile time. This means that</p>
 
