@@ -57,11 +57,15 @@ But that's tedious to write, so there's another option.
 
 The asterisk, called I<Whatever>, is a placeholder for an argument, so the
 whole expression returns a closure. Multiple Whatevers are allowed in a single
-expression, and create a closure that expects more arguments. So C<* * 5 + *>
+expression, and create a closure that expects more arguments, by replacing
+each term C<*> by a formal parameter. So C<* * 5 + *>
 is equivalent to C<< -> $a, $b { $a * 5 + $b } >>.
 
   my $c = * * 5 + *;
   say $c(10, 2);                # 52
+
+Note that the second C<*> is an infix operator, not a term, so it is not
+subject to Whatever-currying.
 
 The process of lifting an expression with Whatever stars into a closure is
 driven by syntax, and done at compile time. This means that
