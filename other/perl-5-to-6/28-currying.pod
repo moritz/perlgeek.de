@@ -24,7 +24,7 @@ from another function or method by providing only some of the arguments. This
 is useful for saving typing, and when you want to pass a callback to another
 function.
 
-Suppose you want a function that lets you extracts substrings from
+Suppose you want a function that lets you extract substrings from
 C<"Hello, World"> easily. The classical way of doing that is writing your own
 function:
 
@@ -59,6 +59,9 @@ The asterisk, called I<Whatever>, is a placeholder for an argument, so the
 whole expression returns a closure. Multiple Whatevers are allowed in a single
 expression, and create a closure that expects more arguments. So C<* * 5 + *>
 is equivalent to C<< -> $a, $b { $a * 5 + $b } >>.
+
+  my $c = * * 5 + *;
+  say $c(10, 2);                # 52
 
 The process of lifting an expression with Whatever stars into a closure is
 driven by syntax, and done at compile time. This means that
