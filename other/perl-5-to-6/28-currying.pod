@@ -1,0 +1,100 @@
+=head1 NAME
+
+"Perl 5 to 6" Lesson 28 - Currying
+
+=head1 SYNOPSIS
+
+  use v6;
+  
+  my &f := &substr.assuming('Hello, World');
+  say f(0, 2);                # He
+  say f(3, 2);                # lo
+  say f(7);                   # World
+  
+  say <a b c>.map: * x 2;     # aabbcc
+  say <a b c>.map: *.uc;      # ABC
+  for ^10 {
+      print <R G B>.[$_ % *]; # RGBRGBRGBR
+  }
+
+=head1 DESCRIPTION
+
+I<Currying> or I<partial application> is the process of generating a function
+from another function or method by providing only some of the arguments. This
+is useful for saving typing, and when you want to pass a callback to another
+function.
+
+Suppose you want a function that lets you extracts substrings from
+C<"Hello, World"> easily. The classical way of doing that is writing your own
+function:
+
+  sub f(*@a) {
+      substr('Hello, World', |@a)
+  }
+
+=head2 Currying with C<assuming>
+
+Perl 6 provides a method C<assuming> on code objects, which applies the
+arguments passed to it to the invocant, and returns the partially applied
+function.
+
+  my &f := &substr.assuming('Hello, World');
+
+Now C<f(1, 2)> is the same as C<substr('Hello, World', 1, 2)>.
+
+C<assuming> also works on operators, because operators are just subroutines
+with weird names. To get a subroutine that adds 2 to whatever number gets
+passed to it, you could write
+
+  my &add_two := &infix:<+>.assuming(2);
+
+But that's tedious to write, so there's another option.
+
+=head2 Currying with the Whatever-Star
+
+  my &add_two := * + 2;
+  say add_two(4);         # 6
+
+The asterisk, called I<Whatever>, is a placeholder for an argument, so the
+whole expression returns a closure. Multiple Whatevers are allowed in a single
+expression, and create a closure that expects more arguments. So C<* * 5 + *>
+is equivalent to C<< -> $a, $b { $a * 5 + $b } >>.
+
+The process of lifting an expression with Whatever stars into a closure is
+driven by syntax, and done at compile time. This means that
+
+  my $star = *;
+  my $code = $star + 2
+
+does not construct a closure, but instead dies with a message like
+
+  Can't take numeric value for object of type Whatever
+
+Whatever currying is more versatile than C<.assuming>, because it allows to
+curry something else than the first argument very easily:
+
+  say  ~(1, 3).map: 'hi' x *    # hi hihihi
+
+This curries the second argument of the string repetition operator infix C<x>,
+so it returns a closure that, when called with a numeric argument, produces
+the string C<hi> as often as that argument specifies.
+
+The invocant of a method call can also be Whatever star, so
+
+  say <a b c>.map: *.uc;      # ABC
+
+involves a closure that calls the C<uc> method on its argument.
+
+=head1 MOTIVATION
+
+Perl 5 could be used for functional programming, which has been demonstrated
+in Mark Jason Dominus' book I<Higher Order Perl>.
+
+Perl 6 strives to make it even easier, and thus provides tools to make typical
+constructs in functional programming easily available. Currying and easy
+construction of closures is a key to functional programming, and makes it very
+easy to write transformation for your data, for example together with C<map>
+or C<grep>.
+
+=for time 1280049430
+=for editor vim: spell
