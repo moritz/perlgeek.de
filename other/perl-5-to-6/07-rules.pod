@@ -7,7 +7,7 @@
     grammar URL {
         token TOP {
             <schema> '://' 
-            [<hostname> | <ip> ]
+            [<ip> | <hostname> ]
             [ ':' <port>]?
             '/' <path>?
         }
