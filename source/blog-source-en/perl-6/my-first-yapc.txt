@@ -1,12 +1,14 @@
 My first YAPC - YAPC::EU 2010 in Pisa
-<!-- 1281087706 -->
+<!-- 1281105427 -->
 
 <p>This week I attended my first international Perl conference, the <a
 href="http://conferences.yapceurope.org/ye2010/index.html">YAPC::EU 2010 in
 Pisa, Italy</a>. I very much enjoyed it.</p>
 
 <p>I arrived a few days earlier, and spent the time visiting Pisa, talking
-with old and new friends, and did some collaborative hacking.</p>
+with old and new friends, and did some collaborative hacking. I especially
+enjoyed meeting people with whom I had had only contact via Internet so far,
+and found all of them to be very nice in meat space.</p>
 
 <p>On Tuesday, the day before the conference started officially, a group of
 Perl 6 hackers met and discussed topics around Perl 6 and Rakudo. I recall
@@ -15,6 +17,52 @@ Murias, Gabor Szabo, smash (I can't spell his full name correctly from memory,
 sorry for that), and we have a very productive discussion (about 5 hours or
 so). Notes from the discussion will be published later.</p>
 
+<p>On Wednesday the actual conference started, and there were plenty of very
+interesting talks, and very amusing lightning talks. I generally like the
+humor that is widespread in the Perl community.</p>
+
+<p>On Thursday I continued to attend nice and informative talks, and also gave
+a talk on my own. It was about physical modelling with Perl 6, and in general
+the feedback was very positive, and somebody even commented that while he
+didn't understand everything I wrote, it reminded him that it was important to
+learn Perl 6 now. Win \o/. (There was also some criticism, but from somebody
+who apparently hasn't read <a
+href="http://conferences.yapceurope.org/ye2010/talk/2949">the abstract</a>;
+the "write-only" meme seems to apply to perl bloggers, not code). You can find
+<a href="http://perlgeek.de/talks/2010/yapceu-p6-realworld/">the slides
+to my talk here.</a></p>
+
+<p>Firday was the day of my departure too - sadly I had to leave after the
+first talk, and missed the rest of the day, including the closing keynote by
+mst (I did attend a talk of his) and the traditional auction.</p>
+
+<p>I especially enjoyed...</p>
+
+<ul>
+    <li>meeting Patrick, Larry, Gloria, Aaron, Gabor and many others for the
+    first time in real-life</li>
+    <li>a thorough, high-bandwith discussion with Larry, Jonathan, Patrick and
+    Carl about p6 spec questions, and the Perl 6 discussions mentioned
+    earlier</li>
+    <li>a lightning talk <em>imagine you're in a data center with no
+    connection to the outside, and you accidentally executed <code>chmod -x
+    chmod</code>. What would you do?</em></li>
+    <li>good Italian Pizzas (although I had to wait 50 minutes for one of
+    them)</li>
+<!--    <li>discovering that the cable connection in the hotel did not block
+TCP port 53</li> -->
+    <li>A talk by Tim Bunce, where he demonstrated database access in Perl 6
+    both with libraries that do native calls, and through the Blizkost project
+    using the Perl 5 DBI/DBD::SQLite modules</li>
+    <li>the general relaxed attitude in the Perl community, where people help
+    each other, and don't seem to be easily offended (at least in meat space
+    :)</li>
+    <li>being surrounded by many other geeks</li>
+    <li>realizing that several Perl hackers brought their family to the
+    conference</li>
+</ul>
+
+<p>It was an overwhelming experience, and I look forward to my next YAPC!</p>
 
 [% option no-header %][ %option no-footer %]
 [% comment vim: set ft=html spell: %]
