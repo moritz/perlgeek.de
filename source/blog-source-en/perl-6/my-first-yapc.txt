@@ -1,0 +1,20 @@
+My first YAPC - YAPC::EU 2010 in Pisa
+<!-- 1281087706 -->
+
+<p>This week I attended my first international Perl conference, the <a
+href="http://conferences.yapceurope.org/ye2010/index.html">YAPC::EU 2010 in
+Pisa, Italy</a>. I very much enjoyed it.</p>
+
+<p>I arrived a few days earlier, and spent the time visiting Pisa, talking
+with old and new friends, and did some collaborative hacking.</p>
+
+<p>On Tuesday, the day before the conference started officially, a group of
+Perl 6 hackers met and discussed topics around Perl 6 and Rakudo. I recall
+talking with Patrick Michaud, Jonathan Worthington, Carl Mäsak, Paweł
+Murias, Gabor Szabo, smash (I can't spell his full name correctly from memory,
+sorry for that), and we have a very productive discussion (about 5 hours or
+so). Notes from the discussion will be published later.</p>
+
+
+[% option no-header %][ %option no-footer %]
+[% comment vim: set ft=html spell: %]

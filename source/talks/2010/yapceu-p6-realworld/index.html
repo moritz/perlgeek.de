@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Perl 6 and the Real World</title>
+<
+<!-- metadata -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1></h1>
+<h2>Perl 6 and the Real World</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h1>Perl 6 and the Real World</h1>
+<h2>Physical Modelling with Perl 6</h2>
+<h3>Moritz Lenz &lt;moritz@faui2k3.org&gt;</h3>
+<h4>Max Planck Institute for the Science of Light</h4>
+</div>
+
+
+
+    <div class="slide">
+    <h1>Perl 6 and the Real World - Structure</h1>
+    <ul>
+    <li>  What is a model? When is it a good model?</li>
+    <li>  A simple model</li>
+    <li>  Math: derivatives</li>
+    <li>  Free fall, spring</li>
+    <li>  Resonance
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>What is a Model?</h1>
+    <ul>
+    <li>  physics = striving to understand (parts of) the world</li>
+    <li>  the world is too complicated</li>
+    <li>  models are descriptions that focus on one aspect</li>
+    <li>  so Model = Simplification
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Example Model</h1>
+    
+<center>
+<img src="s-swing.jpg" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Example Model</h1>
+    
+<center>
+<img src="s-swing-model.png" />
+</center>
+
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Model takes into account</h1>
+    <ul>
+    <li>  gravity</li>
+    <li>  inertia</li>
+    <li>  initial motion</li>
+    <li>  connection to anchor point
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Model neglects</h1>
+    <ul>
+    <li>  colors</li>
+    <li>  exact shapes</li>
+    <li>  size of object</li>
+    <li>  friction
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Is it a good model?</h1>
+    <ul>
+    <li>  it's a good model if it can answer a question for us</li>
+    <li>  examples &quot;how fast is the object?&quot;, &quot;What is the swinging period?&quot;,
+       &quot;Does the distance to the anchor point matter?&quot;</li>
+    <li>  accuracy of the answer important</li>
+    <li>  every model needs input data. Is that available?</li>
+    <li>  extensibilty
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Another model: free falling</h1>
+    
+<center>
+<img src="s-free-fall-model.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Free falling: Solved in Perl 6</h1>
+    <pre>
+<span class="synPreProc">use</span> Math::Model<span class="synStatement">;</span>
+
+<span class="synSpecial">my</span> <span class="synIdentifier">$m</span> <span class="synStatement">=</span> Math::Model<span class="synStatement">.</span><span class="synIdentifier">new</span>(
+    <span class="synConstant">derivatives</span> <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">velocity</span>      <span class="synStatement">=&gt;</span> <span class="synSpecial">'</span><span class="synConstant">height</span><span class="synSpecial">'</span><span class="synStatement">,</span>
+        <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> <span class="synSpecial">'</span><span class="synConstant">velocity</span><span class="synSpecial">'</span><span class="synStatement">,</span>
+    }<span class="synStatement">,</span>
+    <span class="synConstant">variables</span>   <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> { <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">gravity</span> }<span class="synStatement">,</span>   <span class="synComment"># m / s**2</span>
+        <span class="synConstant">gravity</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span><span class="synConstant">9.81</span> }<span class="synStatement">,</span>       <span class="synComment"># m / s**2</span>
+    }<span class="synStatement">,</span>
+    <span class="synComment"># ...</span>
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Free falling: Solved in Perl 6</h1>
+    <pre>
+    <span class="synComment"># ...</span>
+    <span class="synConstant">initials</span>    <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">height</span>        <span class="synStatement">=&gt;</span> <span class="synConstant">50</span><span class="synStatement">,</span>              <span class="synComment"># m</span>
+        <span class="synConstant">velocity</span>      <span class="synStatement">=&gt;</span> <span class="synConstant">0</span><span class="synStatement">,</span>               <span class="synComment"># m/s</span>
+    }<span class="synStatement">,</span>
+    <span class="synConstant">captures</span>    <span class="synStatement">=&gt;</span> (<span class="synSpecial">'</span><span class="synConstant">height</span><span class="synSpecial">'</span><span class="synStatement">,</span> <span class="synSpecial">'</span><span class="synConstant">velocity</span><span class="synSpecial">'</span>)<span class="synStatement">,</span>
+)<span class="synStatement">;</span>
+
+<span class="synIdentifier">$m</span><span class="synStatement">.</span>integrate(<span class="synStatement">:</span><span class="synConstant">from</span>(<span class="synConstant">0</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">to</span>(<span class="synConstant">4.2</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">min-resolution</span>(<span class="synConstant">0.2</span>))<span class="synStatement">;</span>
+<span class="synIdentifier">$m</span><span class="synStatement">.</span>render-svg(<span class="synSpecial">'</span><span class="synConstant">free-fall.svg</span><span class="synSpecial">'</span><span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">title</span>(<span class="synSpecial">'</span><span class="synConstant">Free falling</span><span class="synSpecial">'</span>))<span class="synStatement">;</span>
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Model result</h1>
+    
+<center>
+<img src="s-free-fall.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>The model in detail</h1>
+    <pre>
+<span class="synPreProc">use</span> Math::Model<span class="synStatement">;</span>
+
+<span class="synSpecial">my</span> <span class="synIdentifier">$m</span> <span class="synStatement">=</span> Math::Model<span class="synStatement">.</span><span class="synIdentifier">new</span>(
+    <span class="synConstant">derivatives</span> <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">velocity</span>      <span class="synStatement">=&gt;</span> <span class="synSpecial">'</span><span class="synConstant">height</span><span class="synSpecial">'</span><span class="synStatement">,</span>
+        <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> <span class="synSpecial">'</span><span class="synConstant">velocity</span><span class="synSpecial">'</span><span class="synStatement">,</span>
+    }<span class="synStatement">,</span>
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Derivative: slope of another quantity</h1>
+    
+<center>
+<img src="s-derivative.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Common derivatives in Mechanics</h1>
+    <pre>
+Derivative          Of
+
+velocity            position
+angular velocity    angle
+acceleration        velocity
+power               energy
+force               momentum
+                    (= mass * velocity)
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Common derivatives</h1>
+    <pre>
+current             charge
+
+birth rate          population
+    - mortality rate
+
+profit              funds
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Using derivatives</h1>
+    <ul>
+    <li>  with Math::Model, you only need to know the derivatives,
+      note the values derived from</li>
+    <li>  you need an initial value for the derived quantity</li>
+    <li>  (Ordinary Differential Equation, which Math::Model integrates for you)
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Rest of the model</h1>
+    <pre>
+    <span class="synConstant">variables</span>   <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> { <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">gravity</span> }<span class="synStatement">,</span>   <span class="synComment"># m / s**2</span>
+        <span class="synConstant">gravity</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span><span class="synConstant">9.81</span> }<span class="synStatement">,</span>       <span class="synComment"># m / s**2</span>
+    }<span class="synStatement">,</span>
+    <span class="synConstant">initials</span>    <span class="synStatement">=&gt;</span> {
+        <span class="synConstant">height</span>        <span class="synStatement">=&gt;</span> <span class="synConstant">50</span><span class="synStatement">,</span>              <span class="synComment"># m</span>
+        <span class="synConstant">velocity</span>      <span class="synStatement">=&gt;</span> <span class="synConstant">0</span><span class="synStatement">,</span>               <span class="synComment"># m/s</span>
+    }<span class="synStatement">,</span>
+    <span class="synConstant">captures</span>    <span class="synStatement">=&gt;</span> (<span class="synSpecial">'</span><span class="synConstant">height</span><span class="synSpecial">'</span><span class="synStatement">,</span> <span class="synSpecial">'</span><span class="synConstant">velocity</span><span class="synSpecial">'</span>)<span class="synStatement">,</span>
+)<span class="synStatement">;</span>
+
+<span class="synIdentifier">$m</span><span class="synStatement">.</span>integrate(<span class="synStatement">:</span><span class="synConstant">from</span>(<span class="synConstant">0</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">to</span>(<span class="synConstant">4.2</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">min-resolution</span>(<span class="synConstant">0.2</span>))<span class="synStatement">;</span>
+<span class="synIdentifier">$m</span><span class="synStatement">.</span>render-svg(<span class="synSpecial">'</span><span class="synConstant">free-fall.svg</span><span class="synSpecial">'</span><span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">title</span>(<span class="synSpecial">'</span><span class="synConstant">Free falling</span><span class="synSpecial">'</span>))<span class="synStatement">;</span>
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Perl 6 stuff</h1>
+    <ul>
+    <li>  <code>$:height</code> is a named parameter</li>
+    <li>  <code>Math::Model</code> introspects code blocks for arguments</li>
+    <li>  calculates dependencies =&gt; execution order</li>
+    <li>  RungeKutta integration
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Extending the model - Spring, damping</h1>
+    
+<center>
+<img src="s-spring-model.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Spring, gravity, damping: source code</h1>
+    <pre><span class="synComment"># ...</span>
+<span class="synConstant">variables</span>   <span class="synStatement">=&gt;</span> {
+    <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> { <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">gravity</span> <span class="synStatement">+</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">spring</span> <span class="synStatement">+</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">damping</span> }<span class="synStatement">,</span>
+    <span class="synConstant">gravity</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span><span class="synConstant">9.81</span> }<span class="synStatement">,</span>
+    <span class="synConstant">spring</span>        <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span> <span class="synConstant">2</span> <span class="synStatement">*</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">height</span> }<span class="synStatement">,</span>
+    <span class="synConstant">damping</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span> <span class="synConstant">0.2</span> <span class="synStatement">*</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">velocity</span> }<span class="synStatement">,</span>
+}<span class="synStatement">,</span>
+<span class="synComment"># ...</span>
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Spring, gravity, damping: results</h1>
+    
+<center>
+<img src="spring-damping-result.png" />
+</center>
+
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Further extensions</h1>
+    <ul>
+    <li>  Let's add an external, driving force</li>
+    <li>  Example: motor, coupled through a second spring
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>External driving force: Code</h1>
+    <pre>
+<span class="synStatement">sub</span> MAIN(<span class="synIdentifier">$freq</span>) {
+  <span class="synSpecial">my</span> <span class="synIdentifier">$m</span> <span class="synStatement">=</span> Math::Model<span class="synStatement">.</span><span class="synIdentifier">new</span>(
+    <span class="synComment"># ...</span>
+    <span class="synConstant">variables</span>   <span class="synStatement">=&gt;</span> {
+      <span class="synConstant">acceleration</span>  <span class="synStatement">=&gt;</span> { <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">gravity</span> <span class="synStatement">+</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">spring</span>
+                          <span class="synStatement">+</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">damping</span> <span class="synStatement">+</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">ext_force</span> }<span class="synStatement">,</span>
+      <span class="synConstant">gravity</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span><span class="synConstant">9.81</span> }<span class="synStatement">,</span>
+      <span class="synConstant">spring</span>        <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span> <span class="synConstant">2</span> <span class="synStatement">*</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">height</span> }<span class="synStatement">,</span>
+      <span class="synConstant">damping</span>       <span class="synStatement">=&gt;</span> { <span class="synStatement">-</span> <span class="synConstant">0.2</span> <span class="synStatement">*</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">velocity</span> }<span class="synStatement">,</span>
+      <span class="synConstant">ext_force</span>     <span class="synStatement">=&gt;</span> { <span class="synIdentifier">sin</span>(<span class="synConstant">2</span> <span class="synStatement">*</span> <span class="synIdentifier">pi</span> <span class="synStatement">*</span> <span class="synIdentifier">$</span><span class="synSpecial">:</span><span class="synIdentifier">time</span> <span class="synStatement">*</span> <span class="synIdentifier">$freq</span>) }<span class="synStatement">,</span>
+    }<span class="synStatement">,</span>
+    <span class="synComment"># ...</span>
+  )<span class="synStatement">;</span>
+
+  <span class="synSpecial">my</span> <span class="synIdentifier">%h</span> <span class="synStatement">=</span> <span class="synIdentifier">$m</span><span class="synStatement">.</span>integrate(<span class="synStatement">:</span><span class="synConstant">from</span>(<span class="synConstant">0</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">to</span>(<span class="synConstant">70</span>)<span class="synStatement">,</span> <span class="synStatement">:</span><span class="synConstant">min-resolution</span>(<span class="synConstant">5</span>))<span class="synStatement">;</span>
+  <span class="synIdentifier">$m</span><span class="synStatement">.</span>render-svg(<span class="synSpecial">&quot;</span><span class="synConstant">spring-freq-</span><span class="synIdentifier">$freq</span><span class="synConstant">.svg</span><span class="synSpecial">&quot;</span><span class="synStatement">,</span> 
+     <span class="synStatement">:</span><span class="synConstant">title</span>(<span class="synSpecial">&quot;</span><span class="synConstant">Spring with damping, external force at </span><span class="synIdentifier">$freq</span><span class="synSpecial">&quot;</span>))<span class="synStatement">;</span>
+
+</pre>
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: low frequency</h1>
+    
+<center>
+<img src="spring-freq-0.04.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: higher frequency</h1>
+    
+<center>
+<img src="spring-freq-0.06.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: higher frequency</h1>
+    
+<center>
+<img src="spring-freq-0.2.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: higher frequency</h1>
+    
+<center>
+<img src="spring-freq-0.22.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: higher frequency</h1>
+    
+<center>
+<img src="spring-freq-0.26.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Driving force: higher frequency</h1>
+    
+<center>
+<img src="spring-freq-0.48.png" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>External driving force: Observations</h1>
+    <ul>
+    <li>  amplitude low for small frequencies</li>
+    <li>  amplitude high for driving freq = eigen freq</li>
+    <li>  amplitude goes to zero for very high frequencies
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Amplitude vs. Frequency</h1>
+    
+<center>
+<img src="resonance.png" height="440" />
+</center>
+
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Resonance controls ...</h1>
+    <ul>
+    <li>  tune of music instruments</li>
+    <li>  light absorption, thus color of objects</li>
+    <li>  heat transport in solids (phonons are lattice resonances)</li>
+    <li>  everything else :-)
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>String theories</h1>
+    <ul>
+    <li>  some physicists say that particles are just resonances</li>
+    <li>  the things that move are called &quot;strings&quot;</li>
+    <li>  think of it what you want :-)
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Limits of Math::Model</h1>
+    <ul>
+    <li>  some fields of physics require other mathematical techniques</li>
+    <li>  many need partial differential equations</li>
+    <li>  no quantum mechanics</li>
+    <li>  no fluid dynamics
+</li>
+</ul>
+
+
+    
+    </div>
+
+    <div class="slide">
+    <h1>Summary</h1>
+    <ul>
+    <li>  physical models: simplifcation to essentials</li>
+    <li>  <code>Math::Model</code> integrates models for you</li>
+    <li>  oscillator: initial motion + force in opposite direction</li>
+    <li>  resonance if driving frequency is close to eigen frequency</li>
+</ul>
+
+
+    
+    </div>
+
+
+
+</div>
+
+</body>
+</html>
