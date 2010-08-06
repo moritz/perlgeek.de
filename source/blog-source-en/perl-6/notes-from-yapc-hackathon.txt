@@ -7,6 +7,9 @@ results.</p>
 
 <h2 id="attendees">Attendees</h2>
 
+<p>Patrick Michaud, Jonathan Worthington, Carl Mäsak, Moritz Lenz, Gabor
+Szabo, and a fluctuation of other Perl 6 hackers.</p>
+
 <h2 id="speed">Speed</h2>
 <p>What can we do to improve Rakudo's performance?</p>
 <dl>
