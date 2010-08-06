@@ -14,7 +14,7 @@ name="SYNOPSIS"
 <pre>  # file doit.pl
 
   #!/usr/bin/perl6
-  sub MAIN($path, :$force, :$recursive, :$home = glob(&#34;~/&#34;)) {
+  sub MAIN($path, :$force, :$recursive, :$home = &#39;~/&#39;) {
       # do stuff here
   }
 
