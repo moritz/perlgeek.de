@@ -7,7 +7,7 @@
   # file doit.pl
 
   #!/usr/bin/perl6
-  sub MAIN($path, :$force, :$recursive, :$home = glob("~/")) {
+  sub MAIN($path, :$force, :$recursive, :$home = '~/') {
       # do stuff here
   }
 
