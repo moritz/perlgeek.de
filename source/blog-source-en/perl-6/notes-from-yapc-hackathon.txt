@@ -1,0 +1,168 @@
+Notes from the YAPC::EU 2010 Rakudo hackathon
+<!-- 1281106120 -->
+
+<p>At YAPC::EU 2010 we had a long discussion about Perl 6, Rakudo and related
+matters. Here are some (very incomplete) notes of the ongoing discussions and
+results.</p>
+
+<h2 id="attendees">Attendees</h2>
+
+<h2 id="speed">Speed</h2>
+<p>What can we do to improve Rakudo's performance?</p>
+<dl>
+<dt><strong><a name="jnthn_s_grant_proposal_for_a_low_level_meta_object_protocol" class="item">jnthn's grant proposal for a low-level meta object protocol</a></strong></dt>
+
+<dd>
+<p>See
+<a href="http://news.perlfoundation.org/2010/07/hague-grant-application-meta-m.html">http://news.perlfoundation.org/2010/07/hague-grant-application-meta-m.html</a>.
+Will probably bring the biggest speed improvement of all options we have under
+our control</p>
+</dd>
+<dt><strong><a name="rakudo_built_in_optimizations" class="item">Rakudo built-in optimizations</a></strong></dt>
+
+<dd>
+<p>Most Rakudo built-ins are written for correctness first, and without a good
+feeling for what constructs are fast and what aren't. A thorough review (and
+preferably profiling) could bring decent speed improvements, as the case of
+int ranges showed.</p>
+</dd>
+<dt><strong><a name="garbage_collector" class="item">Garbage collector</a></strong></dt>
+
+<dd>
+<p>Parrot's GC is... suboptimal. To be gentle.</p>
+</dd>
+<dt><strong><a name="optimization_framework" class="item">Optimization framework</a></strong></dt>
+
+<dd>
+<p>We will try to convince people that Tyler Curtis' optimization framework for
+PAST and POST should be shipped with parrot (probably compile PIRs in <code>ext/</code>,
+just like NQP-rx does it now). Using that, we can do constant folding</p>
+</dd>
+<dt><strong><a name="moving_stuff_to_compile_time" class="item">Moving stuff to compile time</a></strong></dt>
+
+<dd>
+<p>Number parsing needs to be moved to compile time.</p>
+</dd>
+</dl>
+
+<h2 id="what_do_we_need_to_keep_hacking">What do we need to keep hacking?</h2>
+<p>Brought up by Gabor</p>
+<dl>
+<dt><strong><a name="money" class="item">Money</a></strong></dt>
+
+<dd>
+<p>We do much volunteer work, but when we get funding, we can devote more time to
+hacking</p>
+</dd>
+<dt><strong><a name="travel_conferences" class="item">Travel/Conferences</a></strong></dt>
+
+<dd>
+<p>We'd like to get together a few times (2? 3? 4?) a year, in real life.</p>
+<p>Funding and organization would be very welcome</p>
+</dd>
+<dt><strong><a name="short_time_funding" class="item">Short-time funding</a></strong></dt>
+
+<dd>
+<p>It would be nice to have a way to have funding available much more quickly
+than through the usual grant process, which tends to be longish.</p>
+</dd>
+</dl>
+<p>
+</p>
+<h2 id="rakudo_star_feedback">Rakudo Star feedback</h2>
+<p>Good: It worked. It did what we wanted it to.</p>
+<p>Bad:</p>
+<ul>
+<li>
+<p>It lacked a module installer (It shipped proto, but didn't install it).</p>
+</li>
+<li>
+<p>Compilation takes too much memory. pmichaud will try a hack to split the
+setting, which would solve that problem.</p>
+</li>
+<li>
+<p>There was some discussion about the roles + outer scopes bugs, which was way
+over my head. It seems to be related to the fact that parrot has two outer
+chains for nested blocks: one at compile time, one at runtime. Since role
+methods are flattened into classes, there compile time outer block is actually
+different than where it runs, and that  screws up ... forget it, somebody else must describe it.</p>
+</li>
+<li>
+<p>Lack of modules - doesn't seem to bee a big problem</p>
+</li>
+<li>
+<p>Lack of features: not a big problem.</p>
+<p>Biggest complaints: missing perl6doc. Missing non-blocking IO, binary file
+support.</p>
+</li>
+<li>
+<p>Prefix paths with spaces are not supported :(</p>
+<p>jnthn: &quot;I actually tried to write a C program that binary patches the perl6
+executable to allow spaces in path names. It almost worked.&quot;</p>
+</li>
+<li>
+<p>We will try to advocate compilation to PBC, not PIR - once that's supported.</p>
+</li>
+</ul>
+
+<h2 id="proto_pls">Proto/Pls</h2>
+<p>Proto needs to be end-of-life'd.</p>
+<p>It confuses people that there are two different project lists, and the lists
+diverge.</p>
+<p>We would like to decentralize the module list somehow. Still open how.</p>
+
+<p>People don't release Perl 6 modules, because there's no need so far, and
+it's tedious to add the version name in each .pm/.pm6 file. We might need to
+come up with a clever idea for that.</p>
+
+<h2 id="backend_diversity">Backend diversity</h2>
+<p>Additionally to the parrot backend, we want to run Perl 6 code on other
+virtual machines.</p>
+<p>jnthn will work on a .NET/CLR port. He wants to prototype the new low-level
+class composition code in .NET anyway, which will provide the basic
+foundations for running NQP.</p>
+<p>pmichaud wants to explore javascript on V8 as a possible backend. &quot;I managed
+PIR, I'll certainly manage javascript&quot; :-)</p>
+<ul>
+<li>
+<p>Huge time sink, but still worth doing it</p>
+</li>
+<li>
+<p>Apache runtime library might be worth looking into</p>
+</li>
+<li>
+<p>risks: stalled refactors are dangerous (see: PHP 6, cardinal (the
+ruby-on-parrot compiler))</p>
+<p>We want to avoid fragmentation into many subprojects</p>
+</li>
+<li>
+<p>We want to increase the number of possible contributors to rakudo by
+enabling non-parrot people to contribute.</p>
+</li>
+<li>
+<p>Code for different backends will be maintained as directories in Rakudo and
+NQP, not as branches.</p>
+</li>
+<li>
+<p>pir:: things will be hidden behind an nqp:: abstraction layer</p>
+</li>
+</ul>
+
+<h2 id="attracting_contributors">Attracting contributors</h2>
+<p>Moritz wants to continue with the &quot;weekly&quot; challenges, but runs out of ideas.
+Add ideas to <a href="http://svn.pugscode.org/pugs/misc/helpnow/README">http://svn.pugscode.org/pugs/misc/helpnow/README</a>.</p>
+<p>We will try to apply patches faster, thus encouraging people who already did
+the first step.</p>
+
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li>
+<p>in p5 pod for now, so that people can contribute easily</p>
+</li>
+<li>
+<p>masak and szabgab expressed interest in working on pod6 tools</p>
+</li>
+</ul>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
