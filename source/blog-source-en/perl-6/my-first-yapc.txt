@@ -64,5 +64,5 @@ TCP port 53</li> -->
 
 <p>It was an overwhelming experience, and I look forward to my next YAPC!</p>
 
-[% option no-header %][ %option no-footer %]
+[% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
