@@ -1,5 +1,5 @@
 Perl 6 Questions on Perlmonks
-<-- 1281431922 -->
+<!-- 1281431922 -->
 <p>Since the Rakudo Star release, there has been a noticeable increase in Perl
 6 questions on perlmonks - a good sign, because it means people are using
 it.</p>
