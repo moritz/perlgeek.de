@@ -7,7 +7,7 @@ it.</p>
 <ul>
     <li><a href="http://www.perlmonks.org/?node_id=853975">Array interpolation
         in Rakudo</a></li>
-    <li>a href="http://www.perlmonks.org/?node_id=853727">Rakudo build
+    <li><a href="http://www.perlmonks.org/?node_id=853727">Rakudo build
         problems</a></li>
     <li><a href="http://www.perlmonks.org/?node_id=853573">Perl6, latest
         Rakudo bug or error on my part?</a> (parsing issue related to missing
