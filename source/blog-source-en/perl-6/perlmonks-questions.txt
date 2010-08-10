@@ -1,0 +1,36 @@
+Perl 6 Questions on Perlmonks
+<-- 1281431922 -->
+<p>Since the Rakudo Star release, there has been a noticeable increase in Perl
+6 questions on perlmonks - a good sign, because it means people are using
+it.</p>
+
+<ul>
+    <li><a href="http://www.perlmonks.org/?node_id=853975">Array interpolation
+        in Rakudo</a></li>
+    <li>a href="http://www.perlmonks.org/?node_id=853727">Rakudo build
+        problems</a></li>
+    <li><a href="http://www.perlmonks.org/?node_id=853573">Perl6, latest
+        Rakudo bug or error on my part?</a> (parsing issue related to missing
+        whitespace).</li>
+    <li><a href="http://www.perlmonks.org/?node_id=853149">Perl6, modifying
+        @*INC</a> (another ws parsing issue)</li>
+    <li><a href="http://www.perlmonks.org/?node_id=853113">Perl6's
+        LWP::Simple</a> -- seemingly an installation issue</li>
+    <li><a href="http://www.perlmonks.org/?node_id=852900">Perl 6, defining a
+        hash with interpolated string</a></li>
+</ul>
+
+<p>I've assembled this list by looking through the 100 newest nodes in <a
+href="http://www.perlmonks.org/?node=Seekers%20of%20Perl%20Wisdom">Seekers of
+Perl Wisdom</a>, which makes it 6% of the questions asked, or on average 1 per
+day (used to be around 1 per week).</p>
+
+<p>Most of the questions are related to environmental issues
+(building/installing stuff), or beginner's questions related to syntax.</p>
+
+<p>It's good to see the questions flowing in, and I hope that we'll soon see
+more questions where I can show off cool Perl 6 features in the answers
+:-).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
