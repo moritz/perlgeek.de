@@ -20,7 +20,7 @@ the base class of the object hierarchy. Which kinda worked, but also meant
 that all user-defined classes ended up having some few hundreds methods to
 start with. Not good.</p>
 
-<p>These days, the type <code>Cool</code> fills this role: most built-in types
+<p>These days, the type <code>Cool</code> fills this niche: most built-in types
 (all that are meant to be used in that polymorphic way) inherit from Cool, so
 the <code>uc</code> method is actually defined in class <code>Cool</code>,
 coerces to string, and then re-dispatches to the internal logic that actually
