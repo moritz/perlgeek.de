@@ -1,0 +1,35 @@
+What is the "Cool" class in Perl 6?
+<!-- 1281619719 -->
+
+<p>In Perl, subroutine and operator names determine what happens, usually not
+the type of the arguments. Instead the arguments are coerced to a type on
+which the operation makes sense:</p>
+
+<pre>[% syntax perl6 %]
+say uc 34;      # coerces 34 to a string, and upper-cases it
+say 1 + "2";    # converts "2" to a number before adding
+[% endsyntax %]</pre>
+
+<p>To make things more extensible, the <code>uc</code> function re-dispatches
+to the <code>uc</code> method on its argument. So for the example above to
+work, we need an <code>uc</code> function in Int. And in Array, so that
+<code>@a.uc</code> works. And so on.</p>
+
+<p>The original approach was to stuff all these methods into <code>Any</code>,
+the base class of the object hierarchy. Which kinda worked, but also meant
+that all user-defined classes ended up having some few hundreds methods to
+start with. Not good.</p>
+
+<p>These days, the type <code>Cool</code> fills this role: most built-in types
+(all that are meant to be used in that polymorphic way) inherit from Cool, so
+the <code>uc</code> method is actually defined in class <code>Cool</code>,
+coerces to string, and then re-dispatches to the internal logic that actually
+does the upper-casing.</p>
+
+<p>If users want to write a type that can be used like a built-in type now
+just inherit from <code>Cool</code>, and define coercion methods to other
+built-in types. If the types don't inherit from <code>Cool</code>, they are
+more light-weight, and less magic. There's more than one way to do it.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
