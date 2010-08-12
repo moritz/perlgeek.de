@@ -31,5 +31,10 @@ just inherit from <code>Cool</code>, and define coercion methods to other
 built-in types. If the types don't inherit from <code>Cool</code>, they are
 more light-weight, and less magic. There's more than one way to do it.</p>
 
+<p><code>Cool</code> is a class (and not a role), because classes are mutable;
+so if you want to inject behavior into nearly all built-in types, augmenting
+<code>Cool</code> is an option (though usually considered evil, and should not
+be done lightly).</p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html spell: %]
