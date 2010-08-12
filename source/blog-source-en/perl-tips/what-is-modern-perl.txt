@@ -1,0 +1,52 @@
+What is "Modern Perl"?
+<!-- 1281619052 -->
+
+<p>These days you often hear term <em>Modern Perl</em>, as something new(ish),
+and much improved over the old ways.</p>
+
+<p>But what is it exactly? Well, there's no proper definition, but here is
+what that term means to me:</p>
+
+<p>It's a set of tools, ideas and attitudes that help you to write better Perl
+programs, and allows you to have more fun while writing them.</p>
+
+<p>Here are some aspects of Modern Perl</p>
+
+<ul>
+    <li>Testing: Most modern Perl modules have extensive test suites, that
+    make development sane and robust</li>
+    <li>Some built-ins now come with safer forms: the <a
+    href="http://perldoc.perl.org/functions/open.html">three-argument form
+    of open()</a> allows you to open files safely with arbitrary characters in
+    them, without any extra precautions. Lexical file handles make things safer
+    and easier too.</li>
+    <li><code>use <a
+    href="http://perldoc.perl.org/strict.html">strict</a>; use <a
+    href="http://perldoc.perl.org/perllexwarn.html">warnings</a>;</code></li>
+    <li>Proper OO: with Perl 6 and with <a
+    href="http://www.iinteractive.com/moose/">Moose</a> in Perl 5, we have
+    good object systems, that require less low-level fiddling than the
+    standard Perl 5 object system</li>
+    <li>Following <a href="http://www.linuxjournal.com/article/8567">Best
+        Practices</a></li>
+    <li>(For open source projects) Liberally handing out commit privileges.
+    The source is stored in a version control system anyway, so low-quality
+    changes or vandalism can simply be reverted (but that doesn't happen often
+    in practice).</li>
+    <li>Caring about marketing: do tell people that you built something cool
+    and useful</li>
+    <li>Small handy modules such as <a
+    href="http://search.cpan.org/perldoc?List::Util">List::Util</a> and <a
+    href="http://search.cpan.org/perldoc?Try::Tiny">Try::Tiny</a></li>
+    <li>Development tools such as <a
+    href="http://search.cpan.org/perldoc?Devel::Cover">Devel::Cover</a>
+    and <a
+        href="http://search.cpan.org/perldoc?Devel::NYTProf">Devel::NYTProf</a></li>
+</ul>
+
+<p>All of these techniques help to write scalable Perl programs by making
+proper encapsulation much easier, or by avoiding common errors, identifying
+performance bottlenecks etc.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
