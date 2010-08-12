@@ -26,6 +26,11 @@ the <code>uc</code> method is actually defined in class <code>Cool</code>,
 coerces to string, and then re-dispatches to the internal logic that actually
 does the upper-casing.</p>
 
+<p>The name either stands for <em><strong>C</strong>onvenient
+    <strong>o</strong>bject <strong>o</strong>riented
+    <strong>l</strong>loopback</em>, or just expresses that that most
+built-ins are cool with an argument of that type.</p>
+
 <p>If users want to write a type that can be used like a built-in type now
 just inherit from <code>Cool</code>, and define coercion methods to other
 built-in types. If the types don't inherit from <code>Cool</code>, they are
