@@ -42,6 +42,11 @@ programs, and allows you to have more fun while writing them.</p>
     href="http://search.cpan.org/perldoc?Devel::Cover">Devel::Cover</a>
     and <a
         href="http://search.cpan.org/perldoc?Devel::NYTProf">Devel::NYTProf</a></li>
+    <li>(update) <a
+        href="http://search.cpan.org/dist/App-perlbrew/">perlbrew</a> and <a
+        href="search.cpan.org/perldoc/local::lib">local::lib</a> to help
+        maintain your own perl installation and locally installed
+        modules.</li>
 </ul>
 
 <p>All of these techniques help to write scalable Perl programs by making
