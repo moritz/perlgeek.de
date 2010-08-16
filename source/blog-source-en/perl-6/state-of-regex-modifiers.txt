@@ -1,0 +1,69 @@
+The State of Regex Modifiers in Rakudo
+<!-- 1281971775 -->
+
+<p>During the last one and a half month, I've been working on making regex
+modifiers easily available in Rakudo.</p>
+
+<p>The regex compiler itself has to support only a few of the adverbs that can
+be applied to regexes; those include :ignorecase, :sigspace, :ignoremark and
+:continue/:pos. NQP-rx, the regex engine that Rakudo uses under the hood,
+supports those (except :ignoremark), so previously you could write</p>
+
+<pre>[% syntax perl6 %]
+if 'ABC" ~~ /:i abc/ {
+    say "case insensitive match";
+}
+[% endsyntax %]</pre>
+
+
+<p>But not</p>
+
+<pre>[% syntax perl6 %]
+if 'ABC" ~~ rx:i/abc/ {
+    say "case insensitive match";
+}
+[% endsyntax %]</pre>
+
+<p>nor <code>m:i/abc/</code>, for that matter.</p>
+
+<p>I've patched Rakudo to actually recognize those adverbs outside of the
+regex, and also for <code>s///</code> substitutions.</p>
+
+<p>Another category of adverbs are those that apply to regex calls, not to the
+compilation of a regex. Among those are :global/:g, :overlap/:ov, :nth($n),
+:x. I've implemented those for substitutions, but implementing them for
+<code>m//</code> turns  out to be quite a bit harder.</p>
+
+<p>The reason is the return value: each regex match returns a Match object,
+which can store positional and named parts. <a
+href="http://pugscode.org/syn/S05.html">S05</a> says that regex matches
+with multiple results should return a single match object, with all results as
+positional parts. It can be distinguished from a normal match object by
+evaluating it in slice context... which Rakudo doesn't support yet.</p>
+
+<p>Now the <code>subst</code> method and thus <code>s///</code> are
+implemented by calling <code>.match(:global, ...)</code>, and without slice
+context, it can't distinguish between multiple matches, and a single match
+with subcaptures. And so my changes to the global match broke the
+substitution, and I see no easy way to fix it.</p>
+
+<p>Anyway, here are a few examples of what works today:</p>
+
+<pre>[% syntax perl6 %]
+$_ = 'ab12fg34';
+s:g/\d/X/;
+.say; # output: abXXfgXX
+
+
+$_ = 'Hello, World';
+# :ii is the same as :samecase
+s:ii/world/perl/;
+.say; # output: Hello, Perl
+
+$_ = 'I did not know that that work together';
+s:2nd/that/they/;
+.say; # output: I did not know that they work together
+[% endsyntax %]</pre>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
