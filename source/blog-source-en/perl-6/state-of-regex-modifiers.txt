@@ -10,7 +10,7 @@ be applied to regexes; those include :ignorecase, :sigspace, :ignoremark and
 supports those (except :ignoremark), so previously you could write</p>
 
 <pre>[% syntax perl6 %]
-if 'ABC" ~~ /:i abc/ {
+if 'ABC' ~~ /:i abc/ {
     say "case insensitive match";
 }
 [% endsyntax %]</pre>
@@ -19,7 +19,7 @@ if 'ABC" ~~ /:i abc/ {
 <p>But not</p>
 
 <pre>[% syntax perl6 %]
-if 'ABC" ~~ rx:i/abc/ {
+if 'ABC' ~~ rx:i/abc/ {
     say "case insensitive match";
 }
 [% endsyntax %]</pre>
