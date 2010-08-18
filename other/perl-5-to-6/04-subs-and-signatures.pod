@@ -195,7 +195,7 @@ conversions.
 Instead of modifying the language, you can just introduce a new type
 C<TurkishStr>, and add multi subs for the builtin functions:
 
-    sub uc(TurkishStr $s) { ... }
+    multi uc(TurkishStr $s) { ... }
 
 Now all you have to do is to take care that your strings have the type that
 corresponds to their language, and then you can use C<uc> just like the normal

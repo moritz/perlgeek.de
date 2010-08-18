@@ -53,5 +53,20 @@ programs, and allows you to have more fun while writing them.</p>
 proper encapsulation much easier, or by avoiding common errors, identifying
 performance bottlenecks etc.</p>
 
+<p><strong>Update:</strong> after watching some discussions about this post in
+various media, I should add a few more tools that I forgot about earlier:</p>
+
+<ul>
+    <li><a href="http://search.cpan.org/perldoc?Devel::REPL">Devel::REPL</a>,
+    Read-Evaluation-Print Loop</li>
+    <li><a
+        href="http://search.cpan.org/perldoc?Perl::Critic">Perl::Critic</a>,
+        a code quality and style tester</li>
+    <li><a href="http://search.cpan.org/perldoc?DBIx::Class">DDBIx::Class</a>,
+        a modern and very popular object relational mapper</li>
+    <li><a href="http://search.cpan.org/perldoc?Catalyst">Catalyst</a>,
+        a web framework based on the MVC pattern</li>
+</ul>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell: %]
