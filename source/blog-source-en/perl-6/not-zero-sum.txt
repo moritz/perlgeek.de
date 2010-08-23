@@ -26,7 +26,14 @@ sector is growing, and <a
 href="http://www.bls.gov/oco/ocos303.htm#projections_data">the US
 government expects it to grow</a> further, too.</p>
 
-<p>(I'm pointing to resources about programming jobs, and I fully realize that
+<p>Certainly the <a
+href="http://upload.wikimedia.org/wikipedia/commons/7/77/World-Population-1800-2100.png">growth
+of world population</a> sets a rapidly increasing baseline, and even if we
+assume a constant percentage of all people related to programming in some way,
+the total number of programmers rises, and will continue for quite some
+time.</p>
+
+<p>(I'm pointing to some resources about programming jobs, and I fully realize that
 it's not the same as number of overall programmers; but it's easier to get
 data for jobs, and I do think that the general trend statements are true for
 both).</p>
