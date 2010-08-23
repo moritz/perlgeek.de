@@ -1,0 +1,56 @@
+Programming Languages Are Not Zero Sum
+<!-- 1282553694 -->
+
+<p>From <a href="http://en.wikipedia.org/wiki/Zero-sum">Wikipedia, the free
+    encyclopedia</a>:</p>
+
+<blockquote><p>
+    In game theory and economic theory, zero-sum describes a situation
+    in which a participant's gain or loss is exactly balanced by the losses or
+    gains of the other participant(s). If the total gains of the participants
+    are added up, and the total losses are subtracted, they will sum to zero.
+</p></blockquote>
+
+<p>Being advocate, implementor, tester and co-designer of a <a
+href="http://perl6.org/">new programming language</a>, I often hear objections
+along the lines of <em>you are killing <a
+href="http://www.perl.org/">$other_programming_language</a></em>, combined
+with a mixture of fear and resentment. People are afraid that having a new
+player on the market will decrease
+market share of their own, favorite programming language.</p>
+
+<p>While I can understand these thinking patterns, there is no reason for
+concern. The market for programming languages is not a zero-sum situation.
+While I don't have hard data, I have the impression that the programming job
+sector is growing, and <a
+href="http://www.bls.gov/oco/ocos303.htm#projections_data">the US
+government expects it to grow</a> further, too.</p>
+
+<p>(I'm pointing to resources about programming jobs, and I fully realize that
+it's not the same as number of overall programmers; but it's easier to get
+data for jobs, and I do think that the general trend statements are true for
+both).</p>
+
+<p>So as long as the total number of programmers increases, a decrease in
+relative market share doesn't automatically mean a loss. In fact <a
+    href="http://duartes.org/gustavo/blog/post/programming-language-jobs-and-trends">the
+job trends show an increase for "scripting" languages</a>, and while Ruby is
+certainly the winner in terms of growth, Python, Perl and PHP win too!</p>
+
+<p>Non-job data shows for example a <a
+href="http://stats.cpantesters.org/graphs12.html">noisy but steady growth
+of uploads to the Comprehensive Perl Archive Network (CPAN)</a> -- data from a
+programming language that is often perceived as a loser of ruby's and python's
+success.</p>
+
+<p>A recent <a
+href="http://linuxtrends.com/linux-distribution-popularity-trends/">Linux
+distribution trend analysis</a> fell into the same trap: it shows
+<strong>relative</strong> numbers of search terms, and talks about a decline
+for all distributions except Ubuntu. Again I don't have hard numbers (the
+mirror infrastructure of most Linux distributions makes it nearly impossible
+to get accurate download counts), but I haven't seen any evidence that total
+usage numbers of any of the Linux distributions actually decreased.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
