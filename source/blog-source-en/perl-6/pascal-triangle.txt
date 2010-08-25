@@ -1,0 +1,39 @@
+Pascal's Triangle in Perl 6
+<!-- 1282748612 -->
+
+<p>Today on IRC, Larry Wall showed this piece of Perl 6 code:</p>
+
+<pre>[% syntax perl6 %]
+sub pascal { [1], -> @p { [0, @p Z+ @p, 0] } ... * };
+say pascal[^10].perl
+# output (reformatted for easy readbility):
+# ([1],
+#  [1, 1],
+#  [1, 2, 1],
+#  [1, 3, 3, 1],
+#  [1, 4, 6, 4, 1],
+#  [1, 5, 10, 10, 5, 1],
+#  [1, 6, 15, 20, 15, 6, 1],
+#  [1, 7, 21, 35, 35, 21, 7, 1],
+#  [1, 8, 28, 56, 70, 56, 28, 8, 1],
+#  [1, 9, 36, 84, 126, 126, 84, 36, 9, 1])
+[% endsyntax %]</pre>
+
+<p>That's <a href="http://en.wikipedia.org/wiki/Pascal%27s_triangle">Pascal's
+triangle</a>, generated in one line of Perl 6.</p>
+
+<p>The <code>...</code> is the series operator, which generates lists by
+feeding the previous value(s) to the generating block on its right.</p>
+
+<p>So for example if the previous item was the array <code>[1, 2, 1]</code>,
+the code block evaluates <code>0, 1, 2, 1 Z+ 1, 2, 1, 0</code>. </p>
+
+<p><code>Z</code> is the zip operator, <code>Z+</code> is pairwise addition
+(ie adding the pairs that the zip operator produced). In our example that
+leads to <code>0+1, 1+2, 2+1, 1+0</code> or <code>1, 3, 3, 1</code>.</p>
+
+<p>It takes a while to get used to the meta operators and the series operator,
+but once you've understood them, you can do pretty neat things with them.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
