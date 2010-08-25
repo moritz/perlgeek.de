@@ -1,7 +1,9 @@
 Pascal's Triangle in Perl 6
 <!-- 1282748612 -->
 
-<p>Today on IRC, Larry Wall showed this piece of Perl 6 code:</p>
+<p>Today on IRC, Larry Wall showed this piece of Perl 6 code, which he wrote
+for <a href="http://rosettacode.org/wiki/Pascal%27s_triangle#Perl_6">Rosetta
+Code</a>:</p>
 
 <pre>[% syntax perl6 %]
 sub pascal { [1], -> @p { [0, @p Z+ @p, 0] } ... * };
