@@ -25,7 +25,9 @@ say pascal[^10].perl
 triangle</a>, generated in one line of Perl 6.</p>
 
 <p>The <code>...</code> is the series operator, which generates lists by
-feeding the previous value(s) to the generating block on its right.</p>
+feeding the previous value(s) (here always one array) to the generating
+block on its left, until it reaches the gaol on the right (in this case
+"whatever", which means it returns a lazy, infinite list).</p>
 
 <p>So for example if the previous item was the array <code>[1, 2, 1]</code>,
 the code block evaluates <code>0, 1, 2, 1 Z+ 1, 2, 1, 0</code>. </p>
