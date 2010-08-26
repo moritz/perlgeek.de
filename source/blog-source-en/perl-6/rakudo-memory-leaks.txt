@@ -1,0 +1,31 @@
+Fixing Rakudo Memory Leaks
+<!-- 1282823532 -->
+
+<p>Rakudo has been leaking memory for a few month. The other day, after some
+nagging, Will Coleda identified a memory leak, and Tyler Curtis <a
+href="http://github.com/rakudo/rakudo/commit/3a339ee8ab3a72867fe914ec9c689e1f5a890645">fixed
+it</a>.</p>
+
+<p>Now we can again make long-running processes with Rakudo. For example for
+my talk at YAPC::EU I plotted a <a
+href="http://perlgeek.de/talks/2010/yapceu-p6-realworld/resonance.png">resonance 
+curve</a>. For that I needed to start a new Rakudo process for every data
+point because it would leak so badly that it died after processing a few data
+points. Now I recalculated a whole curve in one process, with memory usage not
+exceeding 200MB of virtual mem.</p>
+
+<p><img src="http://perlgeek.de/images/blog/res2.png" width="702" height="506"
+alt="resonance curve" /></p>
+
+<p>I also had some fun recalculating a mandelbrot fractal in a size that would
+previously make Rakudo segfault or consume too much memory.</p>
+
+<p><img src="http://perlgeek.de/images/blog/mandel-color.png" width="1001"
+height="1001" alt="Mandelbrot fractal, rendered by Rakudo" /></p>
+
+<p>(Rendered with <a href="http://github.com/colomon/mandelbrot/">colomon's
+mandelbrot code)</a>).</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
