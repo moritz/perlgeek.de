@@ -26,7 +26,7 @@ triangle</a>, generated in one line of Perl 6.</p>
 
 <p>The <code>...</code> is the series operator, which generates lists by
 feeding the previous value(s) (here always one array) to the generating
-block on its left, until it reaches the gaol on the right (in this case
+block on its left, until it reaches the goal on the right (in this case
 "whatever", which means it returns a lazy, infinite list).</p>
 
 <p>So for example if the previous item was the array <code>[1, 2, 1]</code>,
