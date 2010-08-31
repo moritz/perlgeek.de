@@ -1,0 +1,136 @@
+[% setvar title How To Debug a Perl 6 Grammar %]
+[% setvar section article %]
+[% menu main article grammardebug %]
+
+<p>Published on 2010-09-01</p>
+<h1>[% readvar title %]</h1>
+
+<p>When a programmer starts to learn his craft, he spends a lot of time making
+small, stupid mistakes that prevent his programs from running. With a bit of
+practice, he learns how to make less errors, and write more runnable code at
+once.</p>
+
+<p>With grammars, it's the same all over again. In the author's experience,
+even expert programmers start with silly mistakes when they begin to write
+grammars. It's just vastly different from writing ordinary code, and requires
+a similar learning experience.</p>
+
+<p>Here are some instructions that help you to write and debug grammars.</p>
+
+<h2>Start with small steps</h2>
+
+<p>... and test along the way.</p>
+
+<p>Start with a simple, single parsing rule, and test cases for it. Keep
+expanding the test cases and the grammar simultaneously. Only add more
+features when all tests that you expect to pass actually do.</p>
+
+<h2>Test rules individually</h2>
+
+<p>If you can't understand certain behavior, test rules individually. That way
+you can figure out if a rule is wrong, wrongly (or never) called, or interacts
+badly with other rules.</p>
+
+<pre>[% syntax perl6 %]
+grammar MyGrammar {
+    token TOP {
+        ^ [ <comment> | <chunk> ]* $
+    }
+
+    token comment {
+        '#' \N* $$
+    }
+    token chunk {
+        ^^(\S+) \= (\S+) $$
+    }
+}
+
+# try to parse the whole thing
+say ?MyGrammar.parse("#a comment\nfoo = bar");          # 0
+# and now one by one
+say ?MyGrammar.parse("#a comment\n", :rule<comment>);   # 1
+say ?MyGrammar.parse("foo = bar", :rule<chunk>);        # 0
+[% endsyntax %]</pre>
+
+<p>The example above shows a simple grammar that doesn't match a test string,
+due to a stupid thinko. The last two lines test the rules individually,
+identifying token <code>chunk</code> as the faulty one.</p>
+
+<h2>Debug with <code>print</code> or <code>say</code></h2>
+
+<p>Just like ordinary code, you can sprinkle your grammar rules with calls to
+<code>say()</code>. You just need to embed them in curly braces, so that they
+get executed as ordinary code.</p>
+
+
+<pre>[% syntax perl6 %]
+grammar MyGrammar {
+    token chunk {
+        { say "chunk: called" }
+        ^^
+        { say "chunk: found start of line" }
+        (\S+) 
+        { say "chunk: found fist identifer: $0" }
+        \= 
+        { say "chunk: found =" }
+        (\S+) $$
+    }
+}
+
+say ?MyGrammar.parse("foo = bar", :rule<chunk>);
+
+# output:
+#
+# chunk: called
+# chunk: found start of line
+# chunk: found fist identifer: foo
+# 0
+[% endsyntax %]</pre>
+
+<p>You can see that the rule matched the start of the line, and
+<code>foo</code>, but not the equals sign. What's between the two? A space.
+For which there is no rule to match it. Making <code>chunk</code> a rule
+instead of a token fixes this problem.</p>
+
+<p>Remember that backtracking can cause a single block to be executed multiple
+times, even if not part of a quantified construct.</p>
+
+<pre>
+$ perl6 -e '"aabcd" ~~ /^ (.*) { say $0 } b /'
+aabcd
+aabc
+aab
+aa
+</pre>
+
+<h2>Be careful with backtracking control</h2>
+
+<p>Programmers who are familiar with Perl 5 regexes or similar regex engines
+are used to backtracking: If the "most obvious" way to match a string does not
+work out, the regex engine tries all possible other ways.</p>
+
+<p>This is what many expect for small regexes, but when writing a grammar that
+has several nesting levels, it can be deeply confusing.</p>
+
+<p>Most day-to-day parsing problems can be formulated in a way that requires
+little or no backtracking, and it should be done that way, both for efficiency
+and programmer sanity.</p>
+
+<p>Some constructs are easier with backtracking, but if you use them, embed
+them in a non-backtracking rule:</p>
+
+<pre>[% syntax perl6 %]
+rule verbatim {
+    '[%' ~ '%]' verbatim
+    # switch off backtracking from here on,
+    # to the bottom of the rule
+    :!ratchet
+    .*? '[%' endvebatim '%]'
+}
+[% endsyntax %]</pre>
+
+<p>This uses backtracking inside the regex, but once it found a possible
+match, it will never try another, because here <code>verbatim</code> is a
+rule, which (like token) suppresses backtracking into itself.</p>
+
+[% comment vim: set spell ft=html: %]
