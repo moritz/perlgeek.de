@@ -7,7 +7,7 @@
 
 <p>When a programmer starts to learn his craft, he spends a lot of time making
 small, stupid mistakes that prevent his programs from running. With a bit of
-practice, he learns how to make less errors, and write more runnable code at
+practice, he learns how to make fewer errors, and write more runnable code at
 once.</p>
 
 <p>With grammars, it's the same all over again. In the author's experience,
@@ -19,7 +19,7 @@ a similar learning experience.</p>
 
 <h2>Start with small steps</h2>
 
-<p>... and test along the way.</p>
+<p>Start with small steps, and test along the way.</p>
 
 <p>Start with a simple, single parsing rule, and test cases for it. Keep
 expanding the test cases and the grammar simultaneously. Only add more
