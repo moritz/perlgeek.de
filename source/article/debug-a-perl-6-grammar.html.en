@@ -133,4 +133,61 @@ rule verbatim {
 match, it will never try another, because here <code>verbatim</code> is a
 rule, which (like token) suppresses backtracking into itself.</p>
 
+<h2>Rakudo's DEBUG rule</h2>
+
+<p>Rakudo has a DEBUG rule (which is not specified, so you shouldn't count on
+its availability in other implementations). If you call with a true argument,
+it enables tracing of subrule calls</p>
+
+
+<pre>[% syntax perl6 %]
+
+grammar MyGrammar {
+    token TOP {
+        <?DEBUG(1)>
+        ^ [ <comment> | <chunk> ]* $
+    }
+    token comment { '#' \N* $$ }
+    rule chunk { ^^ (\S+) \= (\S+) $$ }
+}
+
+MyGrammar.parse("#foobar\nfoo = bar");
+[% endsyntax %]</pre>
+
+<p>Output (line numbers added for later reference):</p>
+
+<pre>[% syntax escape %]
+ 1 1283276995.943950 0/0 START    comment
+ 2 1283276995.944047 0/0 PASS     comment at pos=7
+ 3 1283276995.944158 7/0 START    comment
+ 4 1283276995.944201 7/0 FAIL     comment
+ 5 1283276995.944308 7/0 START    chunk
+ 6 1283276995.944392 8/1 START    
+ 7 1283276995.944433 8/1 PASS      at pos=11
+ 8 1283276995.944523 14/1 START    
+ 9 1283276995.944555 14/1 PASS      at pos=17
+10 1283276995.944640 7/0 PASS     chunk at pos=17
+11 1283276995.944721 17/1 START    comment
+12 1283276995.944757 17/1 FAIL     comment
+13 1283276995.944822 17/1 START    chunk
+14 1283276995.944876 17/1 FAIL     chunk
+[% endsyntax %]</pre>
+
+<p>The first column (excluding the line number, which isn't part of the actual
+output) is a UNIX timestamp, the difference to the previous one tells you how
+much time was spent in that rule.</p>
+
+<p>The first number in the second column shows the starting position of the
+rule. (Where <em>position</em> means <em>number of characters from start of
+the string, starting at 0</em>). The third column is one of
+START, PASS or FAIL. START is printed when a
+rule is entered, PASS or FAIL when it left either successfully, or without a
+match.</p>
+
+<p>The fourth column, if any, shows the name of the rule. The empty rule names
+in the example output stems from the two <code>(\S+)</code> groups.</p>
+
+<p>PASSing rules have and additional <code>at pos=$number</code> marker, which
+shows the end position of the matching rule.</p>
+
 [% comment vim: set spell ft=html: %]
