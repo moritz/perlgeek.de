@@ -70,7 +70,7 @@ grammar MyGrammar {
         ^^
         { say "chunk: found start of line" }
         (\S+) 
-        { say "chunk: found fist identifer: $0" }
+        { say "chunk: found first identifier: $0" }
         \= 
         { say "chunk: found =" }
         (\S+) $$
