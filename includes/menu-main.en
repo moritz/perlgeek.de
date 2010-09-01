@@ -73,6 +73,7 @@
                         [% item mutable <li><a {{class="selected" }}href="/en/article/mutable-grammar-for-perl-6">A Mutable Grammar for Perl 6</a></li>%]
                         [% item ltm     <li><a {{class="selected" }}href="/en/article/longest-token-matching">Longest-Token Matching</a></li>%]
                         [% item 5to6    <li><a {{class="selected" }}href="/en/article/5-to-6">Perl 5 to Perl 6</a></li>%]
+                        [% item grammardebug <li><a {{class="selected" }}href="/en/article/debug-a-perl-6-grammar">How To Debug a Perl 6 Grammar</a></li>%]
                     </ul>
 				</div>
 			</div>
