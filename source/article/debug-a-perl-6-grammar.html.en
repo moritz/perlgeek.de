@@ -123,10 +123,10 @@ which have the <code>:ratchet</code> modifier implicitly set):</p>
 <pre>[% syntax perl6 %]
 rule verbatim {
     '[%' ~ '%]' verbatim
-    # switch off backtracking from here on,
+    # switch on backtracking from here on,
     # to the bottom of the rule
     :!ratchet
-    .*? '[%' endvebatim '%]'
+    .*? '[%' endverbatim '%]'
 }
 [% endsyntax %]</pre>
 
