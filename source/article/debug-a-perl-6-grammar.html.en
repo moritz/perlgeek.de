@@ -176,7 +176,8 @@ MyGrammar.parse("#foobar\nfoo = bar");
 
 <p>The first column (excluding the line number, which isn't part of the actual
 output) is a UNIX timestamp, the difference to the previous one tells the time
-between two regex events.</p>
+between two regex events. (If you use an release of Rakudo older than
+2010.08, you'll not get the timestamps).</p>
 
 <p>The first number in the second column shows the starting position of the
 rule, the second the line number. (Where <em>position</em> means <em>number of
