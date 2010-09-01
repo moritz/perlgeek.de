@@ -117,7 +117,8 @@ little or no backtracking, and it should be done that way, both for efficiency
 and programmer sanity.</p>
 
 <p>Some constructs are easier with backtracking, but if you use them, embed
-them in a non-backtracking rule:</p>
+them in a non-backtracking rule (ie <code>token</code> or <code>rule</code>,
+which have the <code>:ratchet</code> modifier implicitly set):</p>
 
 <pre>[% syntax perl6 %]
 rule verbatim {
@@ -174,8 +175,8 @@ MyGrammar.parse("#foobar\nfoo = bar");
 [% endsyntax %]</pre>
 
 <p>The first column (excluding the line number, which isn't part of the actual
-output) is a UNIX timestamp, the difference to the previous one tells you how
-much time was spent in that rule.</p>
+output) is a UNIX timestamp, the difference to the previous one tells the time
+between two regex events.</p>
 
 <p>The first number in the second column shows the starting position of the
 rule, the second the line number. (Where <em>position</em> means <em>number of
