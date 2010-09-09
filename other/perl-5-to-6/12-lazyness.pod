@@ -10,8 +10,8 @@
         last if $i % 17 == 0;
     }
 
-    my @even = map { 2 * $_ }, 0..*;
-    my @stuff = gather {
+    my @even := map { 2 * $_ }, 0..*;
+    my @stuff := gather {
         for 0 .. Inf {
             take 2 ** $_;
         }
@@ -22,9 +22,14 @@
 Perl programmers tend to be lazy. And so are their lists.
 
 In this case I<lazy> means, that the evaluation is delayed as much as
-possible. When you write something like C<@a = map BLOCK, @b>, the
+possible. When you write something like C<@a := map BLOCK, @b>, the
 block isn't executed at all. Only when you start to access items from C<@a>
 the C<map> actually executes the block and fills C<@a> as much as needed.
+
+Note the use of binding instead of assignment: Assigning to an array might
+force eager evaluation (unless the compiler knows the list is going to be
+infinite; the exact details of figuring this out are still subject to change),
+binding never does.
 
 Laziness allows you to deal with infinite lists: as long as you don't do
 anything to all of its arguments, they take up only as much space as the items
@@ -43,7 +48,7 @@ When you read a file line by line in Perl 5, you don't use
 C<< for (<HANDLE>) >> because it reads all the file into memory, and only then
 starts iterating. With laziness that's not an issue:
 
-    my $file = open '/etc/passwd', :r;
+    my $file = open '/etc/passwd';
     for $file.lines -> $line {
         say $line;
     }
@@ -57,8 +62,8 @@ buffering, of course).
 A very useful construct for creating lazy lists is C<gather { take }>. It is
 used like this:
 
-    my @list = gather {
-        while 1 {
+    my @list := gather {
+        while True {
             # some computations;
             take $result;
         }
@@ -69,7 +74,8 @@ C<BLOCK> is run until C<take> is executed. C<take> is just like return, and
 all C<take>n items are used to construct C<@list>. When more items from
 C<@list> are needed, the execution of the block is resumed after C<take>.
 
-C<gather/take> is dynamically scoped, so this is allowed:
+C<gather/take> is dynamically scoped, so it is possible to call C<take>
+outside of the lexical scope of the C<gather> block:
 
     my @list = gather {
         for 1..10 {
