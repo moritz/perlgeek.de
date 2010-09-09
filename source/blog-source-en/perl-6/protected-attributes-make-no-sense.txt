@@ -33,7 +33,7 @@ is no good reason.</p>
 <p>When seasoned C++ programmers hear that, they often respond with "but if
 I declare my private data as private a subclass doesn't have access to it!
 How can it work properly?". The answer is simple: You must provide a
-sufficiently powerful public API. You users will be grateful.</p>
+sufficiently powerful public API. Your users will be grateful.</p>
 
 <p>One more thing: people often come up with an analogy to the real world, and
 claim that your kids also have access to your house or flat. This analogy is
