@@ -655,7 +655,7 @@ name="MOTIVATION"
 
 <p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>
 
-<pre>    sub uc(TurkishStr $s) { ... }</pre>
+<pre>    multi uc(TurkishStr $s) { ... }</pre>
 
 <p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
 
@@ -1424,8 +1424,8 @@ name="SYNOPSIS"
         last if $i % 17 == 0;
     }
 
-    my @even = map { 2 * $_ }, 0..*;
-    my @stuff = gather {
+    my @even := map { 2 * $_ }, 0..*;
+    my @stuff := gather {
         for 0 .. Inf {
             take 2 ** $_;
         }
@@ -1437,7 +1437,9 @@ name="DESCRIPTION"
 
 <p>Perl programmers tend to be lazy. And so are their lists.</p>
 
-<p>In this case <i>lazy</i> means, that the evaluation is delayed as much as possible. When you write something like <code>@a = map BLOCK, @b</code>, the block isn&#39;t executed at all. Only when you start to access items from <code>@a</code> the <code>map</code> actually executes the block and fills <code>@a</code> as much as needed.</p>
+<p>In this case <i>lazy</i> means, that the evaluation is delayed as much as possible. When you write something like <code>@a := map BLOCK, @b</code>, the block isn&#39;t executed at all. Only when you start to access items from <code>@a</code> the <code>map</code> actually executes the block and fills <code>@a</code> as much as needed.</p>
+
+<p>Note the use of binding instead of assignment: Assigning to an array might force eager evaluation (unless the compiler knows the list is going to be infinite; the exact details of figuring this out are still subject to change), binding never does.</p>
 
 <p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
@@ -1449,7 +1451,7 @@ name="DESCRIPTION"
 
 <p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
-<pre>    my $file = open &#39;/etc/passwd&#39;, :r;
+<pre>    my $file = open &#39;/etc/passwd&#39;;
     for $file.lines -&#62; $line {
         say $line;
     }</pre>
@@ -1462,8 +1464,8 @@ name="gather/take"
 
 <p>A very useful construct for creating lazy lists is <code>gather { take }</code>. It is used like this:</p>
 
-<pre>    my @list = gather {
-        while 1 {
+<pre>    my @list := gather {
+        while True {
             # some computations;
             take $result;
         }
@@ -1471,7 +1473,7 @@ name="gather/take"
 
 <p><code>gather BLOCK</code> returns a lazy list. When items from <code>@list</code> are needed, the <code>BLOCK</code> is run until <code>take</code> is executed. <code>take</code> is just like return, and all <code>take</code>n items are used to construct <code>@list</code>. When more items from <code>@list</code> are needed, the execution of the block is resumed after <code>take</code>.</p>
 
-<p><code>gather/take</code> is dynamically scoped, so this is allowed:</p>
+<p><code>gather/take</code> is dynamically scoped, so it is possible to call <code>take</code> outside of the lexical scope of the <code>gather</code> block:</p>
 
 <pre>    my @list = gather {
         for 1..10 {

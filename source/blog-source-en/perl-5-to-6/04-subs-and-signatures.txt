@@ -184,7 +184,7 @@ name="MOTIVATION"
 
 <p>Instead of modifying the language, you can just introduce a new type <code>TurkishStr</code>, and add multi subs for the builtin functions:</p>
 
-<pre>    sub uc(TurkishStr $s) { ... }</pre>
+<pre>    multi uc(TurkishStr $s) { ... }</pre>
 
 <p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
 
