@@ -1,0 +1,50 @@
+Protected Attributes Make No Sense
+<!-- 1284051754 -->
+
+<p>In C++, you can declare an attribute or a method as "protected".
+Which means that it is private, but subclasses can still access them.</p>
+
+<p>This makes just as much sense as saying <em>you only get access to these
+attributes if you wear a funny yellow hat</em>.</p>
+
+<p>I'll try to explain why.</p>
+
+<p>Encapsulation has the advantage that you can change the implementation of
+a class without changing the API. If you write a library, that means you don't
+break your user's code if you change some internals.</p>
+
+<p>However your users can not only instantiate your classes, but they can also
+inherit from them. Which means they can put a funny yellow hat on. There is no
+restriction as to whom can inherit from your classes. Which makes protected
+attributes part of the public interface.</p>
+
+<p>So, if you want to change the implementation of a class, you can't change
+how a protected attribute or method works, and what data it stores.
+If you do, you break
+all subclasses. Which not only exist in your own source tree, but in your
+user's source tree too. If you think that changing the implementation will
+also change protected attributes or methods, make them private.</p>
+
+<p>So if protected methods are essentially part of the public API anyway,
+why not declare them as public?  Why require your user to wear a funny yellow
+hat (aka declare an inheritance relation) while using your class? There
+is no good reason.</p>
+
+<p>When seasoned C++ programmers hear that, they often respond with "but if
+I declare my private data as private a subclass doesn't have access to it!
+How can it work properly?". The answer is simple: You must provide a
+sufficiently powerful public API. You users will be grateful.</p>
+
+<p>One more thing: people often come up with an analogy to the real world, and
+claim that your kids also have access to your house or flat. This analogy is
+broken, because in the real world the parents have to take actions to get
+children (or give somebody the same status as your children). In the
+programming world, every outsider can write a child class of your classes.</p>
+
+
+<p>(The reason I posted this in the Perl 6 section of this blog is that
+Perl 6 has no protected attributes. Which has spawned many interesting
+discussions, which were the precursor to this blog post.)</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell : %]
