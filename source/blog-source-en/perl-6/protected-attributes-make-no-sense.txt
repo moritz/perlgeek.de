@@ -15,7 +15,7 @@ break your user's code if you change some internals.</p>
 
 <p>However your users can not only instantiate your classes, but they can also
 inherit from them. Which means they can put a funny yellow hat on. There is no
-restriction as to whom can inherit from your classes. Which makes protected
+restriction as to who can inherit from your classes. Which makes protected
 attributes part of the public interface.</p>
 
 <p>So, if you want to change the implementation of a class, you can't change
