@@ -9,7 +9,7 @@ sub start {
 $ads = <<END;
 <div class="ads">
 <h3>Ads</h3>
-<p><a href="http://www.booking.com/general.en.html?tmpl=docs/career_opportunities">30 Perl Developers Needed @ Booking.com in Amsterdam</a>. Join the World's #1 Online Hotel Reservations Company</p>
+<p><a href="http://www5jh.openhire.com/epostings/submit.cfm?fuseaction=app.welcome&category_id=2726&company_id=1006&version=1&startflag=1&parent=IT%20&levelid1=2726">30 Perl Developers Needed @ Booking.com in Amsterdam</a>. Join the World's #1 Online Hotel Reservations Company</p>
 </div>
 END
     }
