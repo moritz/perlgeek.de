@@ -1,0 +1,22 @@
+Announcing try.rakudo.org, an interactive Perl 6 shell in your browser
+<!-- 1285070622 -->
+
+<p>It is my pleasure to announce <a
+href="http://try.rakudo.org/">try.rakudo.org</a>, an interactive Perl 6 shell
+in your browser, based on the <a href="http://rakudo.org/">Rakudo Perl 6
+compiler</a>.</p>
+
+<p>It gives you the opportunity to try out small pieces of Perl 6 code without
+having to install a compiler yourself, and show the results to your
+colleagues.</p>
+
+<p>Future plans for try.rakudo.org include a tutorial, which gives you
+instructions that you can try out immediately.</p>
+
+
+<p>Credits for creating the site go to John "ash" Harrison and cygx; hosting
+is provided by <a href="http://juerd.nl/site.plp/">Juerd Waalboer</a> on <a
+href="http://feather.perl6.nl/">feather</a>.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
