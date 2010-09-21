@@ -45,6 +45,7 @@
             <div id="col1">
                 <div id="col1_content" class="clearfix">
                 $categories::categories
+                $ads::ads
                 $cat_index::cat_index
                 </div>
             </div>
