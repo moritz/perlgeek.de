@@ -18,5 +18,10 @@ instructions that you can try out immediately.</p>
 is provided by <a href="http://juerd.nl/site.plp/">Juerd Waalboer</a> on <a
 href="http://feather.perl6.nl/">feather</a>.</p>
 
+<p><strong>Update:</strong> after publishing this post I've learned that <a
+href="http://greaterthaninfinity.com/2010/09/try-rakudo-in-your-browser/">the
+main author already wrote an announcement</a>, which is also worth
+reading.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html spell: %]
