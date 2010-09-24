@@ -32,10 +32,10 @@ topic.</p>
 
 <h2>The Future</h2>
 
-<p>The next topic is not very exiting, but good to know anyway: how some
+<p>The next topic is not very exicting, but good to know anyway: how some
 operators changed from perl 5 to 6.</p>
 
-<p>After that it gets really interesting: I'll write about lazy list, and then
+<p>After that it gets really interesting: I'll write about lazy lists, and then
 custom operators, one of the coolest features of Perl 6 in my humble
 opinion.</p>
 
@@ -64,7 +64,7 @@ object orientation.</p>
 
 <p>I want to leave that choice mostly to you, to the readers: what would you
 like to read about? After working on Perl 6 for more than a year I have seem
-to lost a sense for what's normal and what's exicting, which is why I need
+to lost a sense for what's normal and what's exciting, which is why I need
 your feedback.</p>
 
 [% option no-header %] [% option no-footer %]
