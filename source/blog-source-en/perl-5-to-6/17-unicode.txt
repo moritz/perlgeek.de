@@ -72,6 +72,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S29.html#Str" class="podlinkurl"
->http://perlcabal.org/syn/S29.html#Str</a> =for time 1227826800 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S29.html#Str</a></p>
 
 [% option no-header %] [% option no-footer %]

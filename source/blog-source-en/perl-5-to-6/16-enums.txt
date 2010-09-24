@@ -66,6 +66,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enums</a> =for time 1227740400 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S12.html#Enums</a></p>
 
 [% option no-header %] [% option no-footer %]

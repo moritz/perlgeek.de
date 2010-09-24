@@ -64,6 +64,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a> =for time 1224194400 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a></p>
 
 [% option no-header %] [% option no-footer %]

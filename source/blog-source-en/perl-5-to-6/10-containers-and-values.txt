@@ -54,6 +54,6 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://perlcabal.org/syn/S03.html#Item_assignment_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a> =for time 1224108000 =for editor vim: spell</p>
+>http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a></p>
 
 [% option no-header %] [% option no-footer %]

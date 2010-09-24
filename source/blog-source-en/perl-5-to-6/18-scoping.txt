@@ -11,26 +11,26 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>  for 1 .. 10 -&#62; $a {
-      # $a visible here
-  }
-  # $a not visible here
+<pre>    for 1 .. 10 -&#62; $a {
+        # $a visible here
+    }
+    # $a not visible here
 
-  while my $b = get_stuff() {
-      # $b visible here
-  }
-  # $b still visible here
+    while my $b = get_stuff() {
+        # $b visible here
+    }
+    # $b still visible here
 
-  my $c = 5;
-  {
-      my $c = $c;
-      # $c is undef here
-  }
-  # $c is 5 here
+    my $c = 5;
+    {
+        my $c = $c;
+        # $c is undef here
+    }
+    # $c is 5 here
 
-  my $y;
-  my $x = $y + 2 while $y = calc();
-  # $x still visible</pre>
+    my $y;
+    my $x = $y + 2 while $y = calc();
+    # $x still visible</pre>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="DESCRIPTION"
@@ -46,17 +46,17 @@ name="Lexical_Scoping"
 
 <p>If you want to limit the scope, you can use formal parameters to the block:</p>
 
-<pre>  if calc() -&#62; $result {
-      # you can use $result here
-  }
-  # $result not visible here</pre>
+<pre>    if calc() -&#62; $result {
+        # you can use $result here
+    }
+    # $result not visible here</pre>
 
 <p>Variables are visible immediately after they are declared, not at the end of the statement as in Perl 5.</p>
 
-<pre>  my $x = .... ;
-          ^^^^^
-          $x visible here in Perl 6
-              but not in Perl 5</pre>
+<pre>    my $x = .... ;
+            ^^^^^
+            $x visible here in Perl 6
+            but not in Perl 5</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Dynamic_scoping"
@@ -74,16 +74,18 @@ name="Context_variables"
 
 <p>This solves an old Problem in Perl 5. In Perl 5 an <code>DESTROY</code> sub can be called at a block exit, and accidentally change the value of a global variable, for example one of the error variables:</p>
 
-<pre>  # Broken Perl 5 code here:
-  sub DESTROY { eval { 1 }; }
-
-  eval {
-      my $x = bless {};
-      die &#34;Death\n&#34;;
-  };
-  print $@ if $@;         # No output here</pre>
+<pre>   # Broken Perl 5 code here:
+   sub DESTROY { eval { 1 }; }
+   
+   eval {
+       my $x = bless {};
+       die &#34;Death\n&#34;;
+   };
+   print $@ if $@;         # No output here</pre>
 
 <p>In Perl 6 this problem is avoided by not implicitly using global variables.</p>
+
+<p>(In Perl 5.14 there is a workaround that protects <code>$@</code> from being modified, thus averting the most harm from this particular example.)</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Pseudo-packages"
