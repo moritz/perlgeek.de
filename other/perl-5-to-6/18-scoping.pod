@@ -4,26 +4,26 @@
 
 =head1 SYNOPSIS
 
-  for 1 .. 10 -> $a {
-      # $a visible here
-  }
-  # $a not visible here
+    for 1 .. 10 -> $a {
+        # $a visible here
+    }
+    # $a not visible here
 
-  while my $b = get_stuff() {
-      # $b visible here
-  }
-  # $b still visible here
+    while my $b = get_stuff() {
+        # $b visible here
+    }
+    # $b still visible here
 
-  my $c = 5;
-  {
-      my $c = $c;
-      # $c is undef here
-  }
-  # $c is 5 here
+    my $c = 5;
+    {
+        my $c = $c;
+        # $c is undef here
+    }
+    # $c is 5 here
 
-  my $y;
-  my $x = $y + 2 while $y = calc();
-  # $x still visible
+    my $y;
+    my $x = $y + 2 while $y = calc();
+    # $x still visible
 
 =head1 DESCRIPTION
 
@@ -42,18 +42,18 @@ afterwards.
 
 If you want to limit the scope, you can use formal parameters to the block:
 
-  if calc() -> $result {
-      # you can use $result here
-  }
-  # $result not visible here
+    if calc() -> $result {
+        # you can use $result here
+    }
+    # $result not visible here
 
 Variables are visible immediately after they are declared, not at the end of
 the statement as in Perl 5.
 
-  my $x = .... ;
-          ^^^^^
-          $x visible here in Perl 6
-              but not in Perl 5
+    my $x = .... ;
+            ^^^^^
+            $x visible here in Perl 6
+            but not in Perl 5
 
 =head2 Dynamic scoping
 
@@ -73,16 +73,19 @@ This solves an old Problem in Perl 5. In Perl 5 an C<DESTROY> sub can be
 called at a block exit, and accidentally change the value of a global
 variable, for example one of the error variables:
 
-  # Broken Perl 5 code here:
-  sub DESTROY { eval { 1 }; }
-
-  eval {
-      my $x = bless {};
-      die "Death\n";
-  };
-  print $@ if $@;         # No output here
+   # Broken Perl 5 code here:
+   sub DESTROY { eval { 1 }; }
+   
+   eval {
+       my $x = bless {};
+       die "Death\n";
+   };
+   print $@ if $@;         # No output here
 
 In Perl 6 this problem is avoided by not implicitly using global variables.
+
+(In Perl 5.14 there is a workaround that protects C<$@> from being modified,
+thus averting the most harm from this particular example.)
 
 =head2 Pseudo-packages
 

@@ -93,5 +93,6 @@ introspection quite easy.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S29.html#Str>
+
 =for time 1227826800
 =for editor vim: spell
