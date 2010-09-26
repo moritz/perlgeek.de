@@ -1676,7 +1676,7 @@ name="DESCRIPTION"
   -name=value             :name&#60;value&#62;
 
   # remember, &#60;...&#62; is like qw(...)
-  -hackers=Larry,Damian   :hackers&#60;Larry Damian&#62;  
+  --hackers=Larry,Damian  :hackers&#60;Larry Damian&#62;  
 
   --good_language         :good_language
   --good_lang=Perl        :good_lang&#60;Perl&#62;
