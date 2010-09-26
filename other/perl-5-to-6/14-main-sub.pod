@@ -34,7 +34,7 @@ Command line options map to subroutine arguments like this:
   -name=value             :name<value>
 
   # remember, <...> is like qw(...)
-  -hackers=Larry,Damian   :hackers<Larry Damian>  
+  --hackers=Larry,Damian  :hackers<Larry Damian>  
 
   --good_language         :good_language
   --good_lang=Perl        :good_lang<Perl>
