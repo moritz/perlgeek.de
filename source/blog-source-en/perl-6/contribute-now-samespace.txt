@@ -1,0 +1,71 @@
+This Week's Contribution to Perl 6 Week 10: Implement samespace for Rakudo
+<!-- 1286550728 -->
+
+<p>For this week's contribution to Perl 6 we ask you to implement the
+<code>Str.samespace</code> method for Rakudo. This method takes a whitespace
+pattern from one string, and transfers it to a second string. It is used for
+smart substitutions.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>The Perl 6 specification includes a variant of the substitution operator
+that preserves the spaces from the source string. This is activated either the
+<code>:ss</code>/<code>:samespace</code> adverb, or by using
+<code>ss///</code> instead of <code>s///</code>.
+</p>
+
+<h2>What you can do</h2>
+
+<p>Implement a <code>samespace</code> method that can act as the backend for
+such an operation.</p>
+
+<p>Since recompiling Rakudo takes a lot of time, you'll have a much easier
+time developing the method in a separate file, and simply run it with
+Rakudo. You can use this template for prototyping:</p>
+
+<pre>[%syntax perl6 %]
+use v6;
+use Test;
+use MONKEY_TYPING;
+augment class Str {
+    method samespace($other as Str) {
+        # replace this by your implementation
+        uc self;
+    }
+}
+
+plan *;
+
+is "a b c d".samespace("x y\n\tz"), "a b\n\tc d";
+[% endsyntax %]</pre>
+
+<p>The <a href="http://perlcabal.org/syn/S05.html#line_358">Specification has
+a few more details</a> on the topic. (Ignore the part about the whitespace
+having to be matched by a <code>&lt;ws&gt;</code> rule). Your implementation
+doesn't have to fulfill the spec totally; a naive implementation of a small
+part is still much better than none at all.</p>
+
+<p>Please also add a few more tests.</p>
+
+<p>For extra karma you can make your submission a real patch (in which case
+the method goes into <code>src/core/Cool-str.pm</code>). More extra karma and
+eternal fame if
+you wire it up with the <code>:ss</code> and <code>:samespace</code> adverbs
+in the <code>subst</code> method (same file).</p>
+
+<h2>Submission</h2>
+
+<p>Please submit your source code to the <a
+href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
+list (and put moritz@faui2k3.org on CC,
+because the mailing list sometimes lack quite a bit).</p>
+
+<p>If you have any questions, feel free to send them to the mailing list, or
+ask <a href="http://perl6.org/community/irc">on our IRC channel"</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]

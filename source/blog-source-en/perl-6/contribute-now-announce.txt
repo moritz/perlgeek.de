@@ -65,6 +65,12 @@ For future challenges, you have to be motivated on your own :-).</p>
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-argfiles.html">Week
         8: implement $*ARGFILES</a>. Status: two submissions, challenge
     closed.</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-hash-pick.html">Week
+        9: implement weighted hash pick</a>. Status: closed</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-samespace.html">Week
+        10: implement space pattern preservation</a>. Status: closed</li>
 </ul>
 
 [% option no-header %][% option no-footer %]
