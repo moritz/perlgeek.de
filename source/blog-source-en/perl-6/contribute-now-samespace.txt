@@ -64,6 +64,12 @@ href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
 list (and put moritz@faui2k3.org on CC,
 because the mailing list sometimes lack quite a bit).</p>
 
+<p><strong>Update:</strong> There has been one submission so far (via IRC),
+but I'm still open to better suggestions. The submission so far uses comb and
+split on the strings, and then uses an match with <code>:nth($n)</code> to
+find the rest of the string - which is quite expensive. A solution with just
+one call to comb or split for each string would be very nice.</p>
+
 <p>If you have any questions, feel free to send them to the mailing list, or
 ask <a href="http://perl6.org/community/irc">on our IRC channel"</a>.</p>
 
