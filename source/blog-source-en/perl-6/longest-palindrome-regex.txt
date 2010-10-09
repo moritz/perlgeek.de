@@ -1,0 +1,62 @@
+Longest Palindrome by Regex
+<!-- 1286638493 -->
+
+<p>A few hours ago colomon <a
+href="http://justrakudoit.wordpress.com/2010/10/09/longest-palindrome/">blogged
+a Perl 6 solution</a> to the <a href="http://challenge.greplin.com/">longest
+palindrome programming challenge</a>. It was a bit slow.</p>
+
+<p>An all-regex solution looks like this:</p>
+
+<pre>[% syntax perl6 %]
+for $string.match(:g, /(\w+) \w? <{ $0.flip }> /) {
+    # process palindrome match here
+    # filter out the longest match
+}
+[% endsyntax %]</pre>
+
+<p>It's also very slow, and it's very wasteful. So, can there be a hybrid
+between manual search a regex?</p>
+
+<p>The regex engine is quite fast, and using it to find the center of a
+palindrome is a good starting point. From there on we can can move to both
+sides, and compare character by character if moving away from the match still
+results in a palindrome:</p>
+
+<pre>[% syntax perl6 %]
+my $s = 'Fourscoreandsevenyearsagoourfaathers...';
+
+my $solution;
+my $longest = 0;
+for $s.match(:g, /(\w)\w?$0/) {
+    # $_ now holds a Match object,
+    my $left = .from - 1;
+    my $right = .to;
+
+    # go to left and right while palindromic
+    while $s.substr($left, 1) eq $s.substr($right, 1) {
+        $left--;
+        $right++;
+    }
+
+    # we move a bit too far
+    $left++;
+    $right;
+
+    # and we're only interested in the longest
+    # palindromic substring
+    my $len = $right - $left;
+    if $len > $longest {
+        $solution = $s.substr($left, $right - $left);
+        $longest = $len;
+    }
+}
+say $solution;
+[% endsyntax %]</pre>
+
+<p>This now runs in under 1.5 seconds on the 1169 characters long <a
+href="http://challenge.greplin.com/static/gettysburg.txt">example input
+string</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
