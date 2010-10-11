@@ -1,5 +1,5 @@
 [%setvar section article %]
-[%setvar title How to set up a clean UTF-8 envirnoment in Linux %]
+[%setvar title How to set up a clean UTF-8 environment in Linux %]
 [% menu main article utf8 %]
 
 <h1>[% readvar title %]</h1>
