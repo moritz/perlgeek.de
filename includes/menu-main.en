@@ -71,6 +71,7 @@
 					<h3>Articles</h3>
                     <ul>
                         [% item unicode <li><a {{class="selected" }}href="/en/article/encodings-and-unicode">Encodings and Unicode</a></li> %]
+                        [% item utf8    <li><a {{class="selected" }}href="/en/article/set-up-a-clean-utf8-environment">Set up a Clean UTF-8 Environment</a></li> %]
                         [% item mutable <li><a {{class="selected" }}href="/en/article/mutable-grammar-for-perl-6">A Mutable Grammar for Perl 6</a></li>%]
                         [% item ltm     <li><a {{class="selected" }}href="/en/article/longest-token-matching">Longest-Token Matching</a></li>%]
                         [% item 5to6    <li><a {{class="selected" }}href="/en/article/5-to-6">Perl 5 to Perl 6</a></li>%]
