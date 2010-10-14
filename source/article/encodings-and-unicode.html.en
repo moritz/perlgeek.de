@@ -508,8 +508,6 @@ use encoding ':locale';[%endsyntax%]</pre>
     Template Toolkit (with the <code>ENCODING</code> option in the constructor
     and an IO layer in the <code>process</code> method).</p>
 
-    <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.</p>
-
     <h2><a name="advanced_topics"></a>Advanced Topics</h2>
 <p>
     With the basic charset and Perl knowledge you can get quite far. For
