@@ -487,7 +487,7 @@ use encoding ':locale';[%endsyntax%]</pre>
 <p>
     CGI.pm also doesn't support character encodings other than UTF-8.
     Therefore you should not to use the <code>charset</code> routine
-    and explicitly decode the parameter strings yourself.</p>
+    and explicitly decode the parameter strings yourself.
 </p>
 
 <p>
@@ -682,7 +682,7 @@ care of all encoding issues.</p>
     for suggesting many improvements to both grammar and spelling.
 </p>
 
-<p>I'd like to acknowledge insightful discussions with
+<p>I'd like to acknowledge insightful discussions with:</p>
 <ul>
     <li><a href="http://www.perlmonks.org/?node=ikegami">ikegami</a></li>
     <li><a href="http://plasmasturm.org/">Aristotle Pagaltzis</a></li>
