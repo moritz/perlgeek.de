@@ -572,7 +572,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     cases, but produces really ugly results where it doesn't work.
 </p>
 
-<h3>Another Broken Example: XML</h3>
+<h3>Another Example: XML</h3>
 
 <p>
     The <a href="http://en.wikipedia.org/wiki/XML">Extensible Markup
@@ -589,7 +589,10 @@ use encoding ':locale';[%endsyntax%]</pre>
 </p>
 
 <ol>
-    <li>The encoding information is optional</li>
+    <li>The encoding information is optional. The specification clearly states
+    that the encoding must be UTF-8 if the encoding information is absent, but
+    sadly many tool authors don't seem to know that, end emit Latin-1. (This
+    is of course only partly the fault of the specification).</li>
     <li>Any XML parser first has to autodetect the encoding to be able to
     parse the encoding information</li>
 </ol>
@@ -600,6 +603,11 @@ first 127 bytes (for example UTF-7, UCS-2 and UTF-16).</p>
 
 <p>So although the encoding information is available, the parser first has to
 guess nearly correctly to extract it.</p>
+
+<p>The appendix to the XML specification contains a <a
+href="http://www.w3.org/TR/2004/REC-xml-20040204/#sec-guessing-no-ext-info">detection
+algorithm</a> than can handle all common cases, but for example lacks UTF-7
+support.</p>
 
 <h3 id="outofband">How to Do it Right: Out-of-band Signaling</h3>
 
@@ -637,29 +645,7 @@ care of all encoding issues.</p>
 
 <p>Then it could just work.</p>
 
-    <hr />
-
-<p>
-    This article is a translation of a <a
-    href="/de/artikel/charsets-unicode">German article of mine</a> written 
-    for <a href="http://foo-magazin.de/">$foo-Magazin 01/2008</a>, a German 
-    Perl magazine. It was enhanced and corrected since then.
-</p>
-
-<p>
-    Many thanks go to <a href="http://juerd.nl">Juerd Waalboer</a>, who 
-    pointed out many smaller and a few
-    not-so-small errors in earlier versions of this article, and contributed
-    greatly to my understanding of Perl's string handling. 
-</p>
-
-<p>
-    I'd also like to thank <a
-    href="http://www.perlmonks.org/?node=ELISHEVA">ELISHEVA</a>
-    for suggesting many improvements to both grammar and spelling.
-</p>
-
-<h2>Further reading</h2>
+<h2 id="further_reading">Further reading</h2>
 
 <ul>
     <li><a
@@ -670,6 +656,36 @@ care of all encoding issues.</p>
         Programming/Unicode UTF-8 wikibook</a></li>
     <li><a href="http://perldoc.perl.org/perlunitut.html">perlunitut, the Perl
         Unicode Tutorial</a></li>
+</ul>
+
+
+<h2 id="acknowledgements">Acknowledgments</h2>
+
+
+<p>
+    This article is a translation of a <a
+    href="/de/artikel/charsets-unicode">German article of mine</a> written
+    for <a href="http://foo-magazin.de/">$foo-Magazin 01/2008</a>, a German
+    Perl magazine. It was enhanced and corrected since then.
+</p>
+
+<p>
+    Many thanks go to <a href="http://juerd.nl">Juerd Waalboer</a>, who
+    pointed out many smaller and a few
+    not-so-small errors in earlier versions of this article, and contributed
+    greatly to my understanding of Perl's string handling.
+</p>
+
+<p>
+    I'd also like to thank <a
+    href="http://www.perlmonks.org/?node=ELISHEVA">ELISHEVA</a>
+    for suggesting many improvements to both grammar and spelling.
+</p>
+
+<p>I'd like to acknowledge insightful discussions with
+<ul>
+    <li><a href="http://www.perlmonks.org/?node=ikegami">ikegami</a></li>
+    <li><a href="http://plasmasturm.org/">Aristotle Pagaltzis</a></li>
 </ul>
 
 [% comment vim: spell ft=html
