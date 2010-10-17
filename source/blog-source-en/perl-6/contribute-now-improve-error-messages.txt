@@ -50,7 +50,7 @@ Sorry, structures on both sides of non-dwimmy hyperop are not of same shape
   left:  3 elements
   right: 2 elements
 at nesting level 2
-[% escape %]</pre>
+[% endsyntax %]</pre>
 
 <p>The source code can be found in <a
     href="http://github.com/rakudo/rakudo/blob/master/src/core/metaops.pm#L48">src/core/metaops.pm</a>,
