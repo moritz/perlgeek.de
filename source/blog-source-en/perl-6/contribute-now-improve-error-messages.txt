@@ -56,18 +56,15 @@ at nesting level 2
     href="http://github.com/rakudo/rakudo/blob/master/src/core/metaops.pm#L48">src/core/metaops.pm</a>,
 spread out over a few multi subs.</p>
 
-<p>You'll need to introduce another (probably named) parameter to track the
-recursion depth.</p>
+<p>You'll need to introduce another (probably named) parameter or a contextual
+variable to track the recursion depth.</p>
 
 <h2>Submission</h2>
 
-<p>Please submit your path to the <a
+<p>Please submit your patch to the <a
 href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
 list (and put moritz@faui2k3.org on CC,
-because the mailing list sometimes lack quite a bit).</p>
-
-<p><strong>Update:</strong> There have been two submissions so far, challenge
-closed.</p>
+because the mailing list sometimes lags quite a bit).</p>
 
 <p>If you have any questions, feel free to send them to the mailing list, or
 ask <a href="http://perl6.org/community/irc">on our IRC channel"</a>.</p>
