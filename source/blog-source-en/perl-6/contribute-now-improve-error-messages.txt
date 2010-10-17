@@ -1,0 +1,76 @@
+This Week's Contribution to Perl 6 Week 11: Improve an error message for Hyper
+Operators
+<!-- 1287321266 -->
+
+<p>For this week's contribution to Perl 6 we ask you to improve the error
+message that Hyper Operators emit when lists are not of equal length.</p>
+
+<p>(<a
+    href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">Introduction
+    to this series of challenges</a>)</p>
+
+<h2>Background</h2>
+
+<p>In Perl 6, operators can be applied to lists; in one version, the lists
+must be of equal length, in the other form one or more lists are automatically
+repeated to be of proper length.</p>
+
+<pre>[% syntax perl6 %]
+# equal length required:
+say join ', ', (1, 2, 3) >>+<< (10, 20, 30);
+# output: 11, 22, 33
+
+# auto-extending the right side by
+# turning the less-then/larger-then signs around:
+say join ', ', (1, 2, 3) >>+>> 10;
+# output: 11, 12, 13
+
+# this correctly produces an error message
+(1, 2, 3) >>+<< (1, 2)
+# output: Sorry, sides are of uneven length and not dwimmy.
+
+# recurses into structures
+((1, 2, [3, 4]) >>+<< (10, 10, [20, 20])).perl
+#output: [11, 12, [23, 24]]
+[% endsyntax %]</pre>
+
+<h2>What you can do</h2>
+
+<p>Please submit a patch that improves the error message. A good better error
+message would be:</p>
+
+<pre>[% syntax escape %]
+# for non-recursive structures:
+Sorry, structures on both sides of non-dwimmy hyperop are not of same shape
+  left:  3 elements
+  right: 2 elements
+
+# for recursive structures:
+Sorry, structures on both sides of non-dwimmy hyperop are not of same shape
+  left:  3 elements
+  right: 2 elements
+at nesting level 2
+[% escape %]</pre>
+
+<p>The source code can be found in <a
+    href="http://github.com/rakudo/rakudo/blob/master/src/core/metaops.pm#L48">src/core/metaops.pm</a>,
+spread out over a few multi subs.</p>
+
+<p>You'll need to introduce another (probably named) parameter to track the
+recursion depth.</p>
+
+<h2>Submission</h2>
+
+<p>Please submit your path to the <a
+href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
+list (and put moritz@faui2k3.org on CC,
+because the mailing list sometimes lack quite a bit).</p>
+
+<p><strong>Update:</strong> There have been two submissions so far, challenge
+closed.</p>
+
+<p>If you have any questions, feel free to send them to the mailing list, or
+ask <a href="http://perl6.org/community/irc">on our IRC channel"</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
