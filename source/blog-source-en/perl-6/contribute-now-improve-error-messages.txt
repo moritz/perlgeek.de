@@ -1,5 +1,4 @@
-This Week's Contribution to Perl 6 Week 11: Improve an error message for Hyper
-Operators
+This Week's Contribution to Perl 6 Week 11: Improve an error message for Hyper Operators
 <!-- 1287321266 -->
 
 <p>For this week's contribution to Perl 6 we ask you to improve the error
