@@ -60,6 +60,9 @@ variable to track the recursion depth.</p>
 
 <h2>Submission</h2>
 
+<p><strong>Update:</strong> I have received one submission, worked a bit on it
+and included it in Rakudo.</p>
+
 <p>Please submit your patch to the <a
 href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
 list (and put moritz@faui2k3.org on CC,

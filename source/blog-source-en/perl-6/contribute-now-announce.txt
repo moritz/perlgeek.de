@@ -71,6 +71,9 @@ For future challenges, you have to be motivated on your own :-).</p>
     <li><a
         href="http://perlgeek.de/blog-en/perl-6/contribute-now-samespace.html">Week
         10: implement space pattern preservation</a>. Status: closed</li>
+    <li><a
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-improve-error-messages.html">11:
+        improve error messages for hyper operators</a>. Status: closed</li>
 </ul>
 
 [% option no-header %][% option no-footer %]
