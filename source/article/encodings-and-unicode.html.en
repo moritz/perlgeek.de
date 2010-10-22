@@ -232,7 +232,7 @@
     is language dependent, so that you need <code>use locale</code> in effect to
     sort strings according the rules of a natural language. For example, in
     German the desired ordering is <code>'a' lt 'ä' and 'ä' lt 'b'</code>,
-    whereas comparison by codepoint number gives <code>'ä' gt ''b'</code>.
+    whereas comparison by codepoint number gives <code>'ä' gt 'b'</code>.
 </p>
 
 <pre>[%syntax perl%]
