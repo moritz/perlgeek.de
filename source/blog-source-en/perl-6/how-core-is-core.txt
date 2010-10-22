@@ -3,7 +3,7 @@ How core is core?
 
 <p>In the Perl 5 world, "core" modules are a big topic. Some people can't (or
 think they can't) install any modules beyond "core", and suggest to add more
-useful modules to "core". Others think that we should have less core modules,
+useful modules to "core". Others think that we should have fewer core modules,
 to reduce the maintenance load on the perl 5 porters.</p>
 
 <p>So, what's the deal in Perl 6? which modules will be "core", and who
