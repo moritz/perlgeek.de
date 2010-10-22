@@ -1,0 +1,57 @@
+How core is core?
+<!-- 1287760856 -->
+
+<p>In the Perl 5 world, "core" modules are a big topic. Some people can't (or
+think they can't) install any modules beyond "core", and suggest to add more
+useful modules to "core". Others think that we should have less core modules,
+to reduce the maintenance load on the perl 5 porters.</p>
+
+<p>So, what's the deal in Perl 6? which modules will be "core", and who
+decides? Will we learn from Perl 5's mistakes, whatever you consider them to
+be?</p>
+
+<p>To answer that question we have to explore what "core" really means. In
+Perl 5, it's just a module that's included in the "perl" package that's
+uploaded to CPAN. In Perl 6, there are several possible meanings:</p>
+
+<ul>
+    <li>A type that's available to any Perl 6 program without loading anything
+    (A)</li>
+    <li>A module that ships with all Perl 6 compilers (B)</li>
+    <li>A module that ships with a Perl 6 distribution (C)</li>
+</ul>
+
+<p>Note that all three concepts known in Perl 5 too - <a
+href="http://perldoc.perl.org/UNIVERSAL.html">UNIVERSAL</a> is category A,
+<a href="http://perldoc.perl.org/perllexwarn.html">warnings</a> is category B,
+and there are some modules that are installed by default by ActiveState Perl
+or <a href="http://strawberryperl.com/">Strawberry Perl</a>.</p>
+
+<p>The Perl 6 specification talks about category A core modules in the
+<em>S32/Setting Library</em> documents. Currently things like DateTime, Date
+and IO::Socket::INET fall into that category. Maybe someday they will be
+automatically loaded on demand, to cause less strain for all programs that
+don't use them.</p>
+
+<p>Category B is currently rather sparse, it only consists of Test.pm (and in
+the case of Rakudo also Set.pm, but that should eventually become a category A
+core module). This is where we learned from old mistakes: keeping compilers
+and distributions separate reduces the maintenance load for the compiler
+writers. Do you as a user want a module installer? then you should be
+installing a distribution, not just a compiler</p>
+
+<p>Everybody can start their own distribution, based on any existing compiler.
+That's a good thing. Whoever maintains a distribution gets to decide what to
+ship with it. Currently the Rakudo developers both write a compiler
+(commonly referred to as <em>Rakudo</em>), and a distribution called
+<em>Rakudo Star</em>. The compiler will continue to ship with very few
+modules, the distribution will adapt to the need of the users.</p>
+
+<p>I fully expect there to be specialized distributions in the next few years
+or decades: maybe a sysadmin distribution, a web developer's distribution and
+so on. Or maybe that specialization will be realized by bundles. We'll
+see.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
