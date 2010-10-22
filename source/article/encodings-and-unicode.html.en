@@ -49,8 +49,8 @@
 
 <p>
     Characters that aren't essential in the day to day life of an American
-    citizen are not defined, like Cyrillic signs, "decorated" Latin characters
-    etc. weren't defined at all.
+    citizen are not defined in ASCII, like Cyrillic letters, "decorated" Latin
+    characters, Greek characters and so on.
 </p>
 
     <h2 id="other_charsets">Other Character Encodings</h2>
@@ -69,7 +69,9 @@
 
 <p>
     In each of the Latin-* charsets the first 128 characters are identical to
-    ASCII, so they can be viewed as ASCII extensions.
+    ASCII, so they can be viewed as ASCII extensions. The second 128 byte
+    values are each mapped to characters needed in the regions where these
+    character sets were used.
 </p>
 
 [% comment more stuff here, and check it
@@ -127,7 +129,8 @@
 <p>
     Note that many pre-composed graphemes exist for characters that are
     defined in other character sets, and these pre-composed are typically
-    better supported by current software than the composed equivalent.
+    better supported by current software than the equivalent written as base
+    character and combining mark.
 </p>
     
 
@@ -140,16 +143,19 @@
 
 <p>
     There are different ways to encode these codepoints, and these mappings
-    from codepoints to bytes are called "Unicode Transformation Formats". 
+    from codepoints to bytes are called "Unicode Transformation Formats".
     The most well known is UTF-8, which is a byte based format that uses all
-    possible byte values from 0 to 255. In Perl land there is also a lax 
+    possible byte values from 0 to 255. In Perl land there is also a lax
     version called UTF8 (without the hyphen). The Perl module <em>Encode</em>
     distinguishes these versions.
 </p>
 
 <p>
     Windows uses mostly UTF-16 which uses at least two bytes per codepoint,
-    for very high codepoints it uses 4 bytes.
+    for very high codepoints it uses 4 bytes. There are two variants of
+    UTF-16, which are marked with the suffix <code>LE</code> for "little
+    endian" and <code>-BE</code> for "big endian" (see <a
+    href="http://en.wikipedia.org/wiki/Endianness">Endianess</a>).
  </p>
 
 <p>
