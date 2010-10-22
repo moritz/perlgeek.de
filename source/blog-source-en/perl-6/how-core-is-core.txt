@@ -52,6 +52,14 @@ or decades: maybe a sysadmin distribution, a web developer's distribution and
 so on. Or maybe that specialization will be realized by bundles. We'll
 see.</p>
 
+<p>Perl 5 also has "dual-life" modules, which are both released to CPAN and
+are part of the core. Since Perl 6 has almost no type B core modules, there
+will be almost no need for dual-life modules either. I expect that most
+distribution makers will rather import modules that are maintained by third
+parties, rather than maintaining them on their own - kinda like Linux
+distributions package popular and useful software, but only actively
+maintain it in rare cases.</p>
+
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html : %]
