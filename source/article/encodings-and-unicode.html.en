@@ -662,6 +662,28 @@ care of all encoding issues.</p>
         Unicode Tutorial</a></li>
 </ul>
 
+<h2 id="tools">Useful Tools</h2>
+
+<ul>
+    <li>
+        <a href="http://live.gnome.org/Gucharmap">gucharmap</a>, the Gnome
+        Unicode character map.
+    </li>
+    <li>
+        <a href="/blog-en/perl-tips/utf8-dump.html">An UTF-8 dumper</a> that
+        shows you the name of non-ASCII characters.
+    </li>
+    <li>
+        <a href="http://www.freebsd.org/cgi/man.cgi?query=hexdump">hexdump
+        never lies</a> (on Debian it's in the <code>bsdmainutils</code>
+        package).
+    </li>
+    <li>
+        <a href="http://www.gnu.org/software/libiconv/documentation/libiconv/iconv.1.html">iconv</a>
+        converts text files from one character encoding to another.
+    </li>
+</ul>
+
 
 <h2 id="acknowledgements">Acknowledgments</h2>
 
