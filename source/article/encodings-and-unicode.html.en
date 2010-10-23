@@ -198,7 +198,7 @@ alt="Character encodings map from a character repertoire to byte sequences"
 Unicode defines a character repertoire of codepoints and their properties.
 Character encodings like UTF-8 and UTF-16 define a way to write them as a
 short sequence of bytes.
-<p>
+</p>
 
 <h2><a name="perl_and_character_encodings"></a>Perl and Character Encodings</h2>
 <p>
