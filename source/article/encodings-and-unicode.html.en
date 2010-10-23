@@ -200,9 +200,11 @@ Character encodings like UTF-8 and UTF-16 define a way to write them as a
 short sequence of bytes.
 </p>
 
-<h2><a name="perl_and_character_encodings"></a>Perl and Character Encodings</h2>
+<h2><a name="perl_and_character_encodings"></a>Perl 5 and Character Encodings</h2>
 <p>
-    Perl Strings can either be used as text strings or as binary data.
+    Perl Strings can either be used to hold text strings or binary data. Given
+    a string, you generally have no mechanism of finding out whether it holds
+    text or binary data - you have to keep track of it yourself.
 </p>
 
 <p>
@@ -275,7 +277,7 @@ print encode($enc, $text_str); # prints 'ä', lc worked as expected
 
 <p>
     Perl offers IO layers, which are easy mechanisms to make these conversions
-    automatically, either global or per file handle.
+    automatically, either globally or per file handle.
 </p>
 
     <pre>[%syntax perl%]
