@@ -1,0 +1,169 @@
+[% setvar title Discovering Metaobject Protocols %]
+[% setvar section article %]
+[% menu main article mop %]
+
+<p>Published on 2010-11-08</p>
+<h1>[% readvar title %]</h1>
+
+<p>Metaobject protocols (short MOP) are APIs that control how objects,
+classes and other object-oriented things work.</p>
+
+<p>If you're not satisfied with such a short explanation, or want to see a MOP
+developed and used, read on.</p>
+
+<h2>A Simple MOP: per-instance methods</h2>
+
+<p>Suppose you write a software that works with lots of objects which mostly
+work the same, but some have special abilities or behavior. You don't want to
+write a different class for each special object. An alternative solution could
+be to allow adding or overriding methods per instance.</p>
+
+<p>Here's an example of how such a thing could work in Perl 5:</p>
+
+<pre>[% syntax perl %]
+use strict;
+use warnings;
+# just needed for say();
+use 5.010;
+
+{
+    package A;
+    sub new {
+        my $class = shift;
+        bless {}, $class;
+    };
+
+    # install a new method per instance
+    sub override_method {
+        my ($self, $name, $meth) = @_;
+        $self->{__methods}{$name} = $meth;
+    }
+
+    sub callmethod {
+        my $self = shift;
+        my $name = shift;
+        # use per-instance method if available
+        if (exists $self->{__methods}{$name}) {
+            goto &{$self->{__methods}{$name}};
+        } else {
+            # fall back to normal dispatch otherwise
+            $self->$name(@_);
+        }
+    }
+
+    # a dummy method for testing
+    sub dummy {
+        say "dummy: $_[1]";
+    }
+}
+
+my $o = A->new();
+$o->callmethod('dummy', 42);
+$o->override_method('dummy', sub { say "dummy overridden" });
+$o->callmethod('dummy', 42);
+A->new->callmethod('dummy', 42);
+</pre>
+
+<p>The output is</p>
+
+<pre>dummy: 42
+dummy overridden
+dummy: 42</pre>
+
+<p>This code introduces a new way to do method calls: instead of
+<code>$obj-&gt;name(arguments)</code> you now do
+<code>$obj-&gt;callmethod('name', arguments)</code>. The
+<code>callmethod</code> method looks into a per-instance hash if an overridden
+method is defined; if yes, it calls the overridden method. If not, it uses the
+normal method dispatch as a fallback.</p>
+
+<p>The new method call syntax could be <a
+href="http://perldoc.perl.org/perlsub.html#Autoloading">avoided by some clever
+tricks</a>, but that really doesn't matter for the description of metaobject
+protocols.</p>
+
+<p>What matters is that with some ordinary Perl code we could implement a
+new object-oriented feature.</p>
+
+<p>To make this customization reusable, <code>callmethod</code> and
+<code>override_method</code> can be put into a separate class (let's call it
+<code>Method::PerInstance</code>), and any class that wants to use it just
+needs to inherit from it.</p>
+
+<p>We call this class a <em>metaclass</em>. <em>class</em> because it is a
+class, and <em>meta</em> because it controls classes again. In fact, you can
+use it control itself, and for example override the
+<code>override_method</code> in an instance of the
+<code>Method::PerInstance</code> class.</p>
+
+<h2>Types of MOPs</h2>
+
+<p>The <code>Method::PerInstance</code> metaclass controls only method
+dispatch. That's a very interesting topic, but certainly not the only one that
+a metaclass can manipulate. Others include</p>
+
+<ul>
+    <li>Attributes, i.e. per-instance storage space</li>
+    <li>Introspection, i.e. asking a class for its methods, attributes,
+    parents and other data</li>
+    <li>Instantiation, i.e. object construction</li>
+</ul>
+
+<h2>Prior Art</h2>
+
+<p>If you design a new programming language, or a new meta object system, you
+should read <a
+    href="http://www.amazon.de/gp/product/0262610744?ie=UTF8&tag=moritzlenz-21&linkCode=as2&camp=1638&creative=19454&creativeASIN=0262610744">The
+    Art of the Metaobject Protocol</a><img
+src="http://www.assoc-amazon.de/e/ir?t=moritzlenz-21&l=as2&o=3&a=0262610744"
+width="1" height="1" border="0" alt="" style="border:none !important;
+margin:0px !important;" /> (referral link). It is the number one resource
+about MOPs.</p>
+
+<p>If you just use a programming language, you usually shouldn't invent your
+own MOP, but use an existing solution.</p>
+
+<p>For Perl 5, <a
+href="http://search.cpan.org/perldoc?Class::MOP">Class::MOP</a> is
+probably the most popular and most complete metaclass protocol. <a
+href="http://iinteractive.com/moose/">Moose</a>, the popular, post-modern
+object system for Perl 5 builds on it.</p>
+
+<p>It was inspired by the development of the <a href="http://perl6.org/">Perl
+6 programming language</a>, so Moose and the Perl 6 MOP share lots of
+ideas.</p>
+
+<h2>A Metaclass in action</h2>
+
+<p>If you write a Perl 6 program like this:</p>
+
+<pre>[% syntax perl6 %]
+class A {
+    method greet($whom = 'world') {
+        say "Hello, $whom!"
+    };
+}
+
+A.new.greet('world');
+[% endsyntax %]</pre>
+
+<p>The compiler will run roughly this code at compile time:</p>
+
+<pre>[% syntax perl6 %]
+my $class = ClassHOW.new_class('A');
+$class.^add_method('greet', method ($whom) {
+        say "Hello, $whom!"
+    });
+$class.^compose;
+
+# and at run time:
+$class.new.greet('world');
+[% endsyntax %]</pre>
+
+<p>... except that it will install the class into the symbol table, instead of
+storing it in variable <code>$class</code>.</p>
+
+<p><strong>TODO</strong>: an example for user space usage of the meta
+class.</p>
+
+[% comment vim: set ft=html spell: %]
