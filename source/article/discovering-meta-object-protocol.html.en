@@ -147,9 +147,10 @@ class A {
 A.new.greet('world');
 [% endsyntax %]</pre>
 
-<p>The compiler will run roughly this code at compile time:</p>
+<p>The compiler will run roughly this code</p>
 
 <pre>[% syntax perl6 %]
+# at compile time:
 my $class = ClassHOW.new_class('A');
 $class.^add_method('greet', method ($whom) {
         say "Hello, $whom!"
