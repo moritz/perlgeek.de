@@ -164,6 +164,10 @@ $class.new.greet('world');
 <p>... except that it will install the class into the symbol table, instead of
 storing it in variable <code>$class</code>.</p>
 
+<p><code>ClassHOW</code> is the name of the meta class for classes (as opposed
+to roles and grammars). HOW stands for <em>High Order Workings</em>, or else
+describes how a class does its work.</p>
+
 <p><strong>TODO</strong>: an example for user space usage of the meta
 class.</p>
 
