@@ -62,7 +62,7 @@ $o->callmethod('dummy', 42);
 $o->override_method('dummy', sub { say "dummy overridden" });
 $o->callmethod('dummy', 42);
 A->new->callmethod('dummy', 42);
-</pre>
+[% endsyntax %]</pre>
 
 <p>The output is</p>
 
