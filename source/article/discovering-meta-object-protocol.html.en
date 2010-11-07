@@ -141,7 +141,7 @@ ideas.</p>
 class A {
     method greet($whom = 'world') {
         say "Hello, $whom!"
-    };
+    }
 }
 
 A.new.greet('world');
@@ -166,7 +166,13 @@ storing it in variable <code>$class</code>.</p>
 
 <p><code>ClassHOW</code> is the name of the meta class for classes (as opposed
 to roles and grammars). HOW stands for <em>High Order Workings</em>, or else
-describes how a class does its work.</p>
+describes how a class does its work. The caret in <code>.^add_method</code>
+and <code>.^compose</code> means it's a call not to the class itself, but to
+the metaclass.</p>
+
+<p>The call to <code>.^compose</code> is necessary because in general, some
+calculations need to be done when a class is fully built (for example if
+multiple roles are mixed in, method name conflicts need to be resolved).</p>
 
 <p><strong>TODO</strong>: an example for user space usage of the meta
 class.</p>
