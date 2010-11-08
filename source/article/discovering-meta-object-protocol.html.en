@@ -78,7 +78,7 @@ method is defined; if yes, it calls the overridden method. If not, it uses the
 normal method dispatch as a fallback.</p>
 
 <p>The new method call syntax could be <a
-href="http://perldoc.perl.org/perlsub.html#Autoloading">avoided by some clever
+href="http://search.cpan.org/perldoc?MRO::Define">avoided by some clever
 tricks</a>, but that really doesn't matter for the description of metaobject
 protocols.</p>
 
