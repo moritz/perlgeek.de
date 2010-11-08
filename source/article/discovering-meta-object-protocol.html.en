@@ -227,4 +227,8 @@ href="https://github.com/timbunce/DBDI/blob/master/lib/DBDI.pm6">DBDI</a>)
 takes an object and a role. It wraps all methods from the role with a simple
 logging facility, and prints the method name to the standard error stream.</p>
 
+<p>It uses introspection to find the methods, and programmatic method
+adding for the wrapping. Both are typical metaclass features, and are put to
+good use for automatic logging.</p>
+
 [% comment vim: set ft=html spell: %]
