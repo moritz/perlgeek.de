@@ -174,7 +174,57 @@ the metaclass.</p>
 calculations need to be done when a class is fully built (for example if
 multiple roles are mixed in, method name conflicts need to be resolved).</p>
 
-<p><strong>TODO</strong>: an example for user space usage of the meta
-class.</p>
+
+<p>But not only the compiler makes good use of the metaclass model; you as a
+programmer can do plenty of nifty stuff. Here's an example that automatically
+adds a wrapper to methods, and logs the nameof the called methods to
+STDERR:</p>
+
+<pre>[% syntax perl6 %]
+sub log-calls($obj, Role $r) {
+    my $wrapper = RoleHOW.new;
+    for $r.^methods -> $m {
+        $wrapper.^add_method($m.name, method (|$c) {
+            # print logging information
+            # note() writes to standard error
+            note ">> $m";
+            # call the next method of the same name,
+            # with the same arguments
+            nextsame;
+        });
+    }
+    $wrapper.^compose();
+    $obj does $wrapper;
+}
+
+role Greet {
+    method greet($x) {
+        say "hello, $x";
+    }
+}
+
+class SomeGreeter does Greet {
+    method LOLGREET($x) {
+        say "OH HAI "~ uc $x;
+    }
+}
+
+my $o = log-calls(SomeGreeter.new, Greet);
+$o.greet('you');
+$o.LOLGREET('u');
+[% endsyntax %]</pre>
+
+<p>Output:</p>
+
+<pre>[% syntax escape %]
+>> greet
+hello, you
+OH HAI U
+[% endsyntax %]</pre>
+
+<p>The sub <code>log-calls</code> (taken from <a
+href="https://github.com/timbunce/DBDI/blob/master/lib/DBDI.pm6">DBDI</a>)
+takes an object and a role. It wraps all methods from the role with a simple
+logging facility, and prints the method name to the standard error stream.</p>
 
 [% comment vim: set ft=html spell: %]
