@@ -1,0 +1,21 @@
+PVC - Perl 6 Vocabulary Coach
+<!-- 1289328346 -->
+
+<p>Hej!</p>
+
+<p>I'm trying to learn Norwegian these days, which is eating many of my <a
+href="http://en.wiktionary.org/wiki/round_tuit">round tuits</a> that were
+previously available for Perl 6 hacking.</p>
+
+<p>On the other hand I'm using Perl 6 to help me learning; I've written <a
+href="https://github.com/moritz/perl6-vocabular-coach">PVC, the Perl 6
+Vocabulary Coach</a>. It uses a word list, and keeps track of how many times
+in a row I entered the Norwegian translation of a word correctly.</p>
+
+<p>The better I know a word, the less frequent I'm being asked for it. Not
+quite the same as <a
+href="http://psycnet.apa.org/journals/edu/55/5/297/">spaced repetition
+learning</a>, but still it feels quite well.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html spell: %]
