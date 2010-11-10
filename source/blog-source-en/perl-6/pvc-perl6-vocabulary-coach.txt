@@ -12,7 +12,7 @@ href="https://github.com/moritz/perl6-vocabular-coach">PVC, the Perl 6
 Vocabulary Coach</a>. It uses a word list, and keeps track of how many times
 in a row I entered the Norwegian translation of a word correctly.</p>
 
-<p>The better I know a word, the less frequent I'm being asked for it. Not
+<p>The better I know a word, the less frequently I'm being asked for it. Not
 quite the same as <a
 href="http://psycnet.apa.org/journals/edu/55/5/297/">spaced repetition
 learning</a>, but still it feels quite well.</p>
