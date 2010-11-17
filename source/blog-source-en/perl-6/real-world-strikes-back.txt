@@ -1,0 +1,50 @@
+The Real World Strikes Back - or why you shouldn't forbid stuff just because you think it's wrong
+<!-- 1289987194 -->
+<p>tl;dr version: arbitrary API limitations do more harm than good, even if
+meant well in the first place.</p>
+
+<p>Most advanced libraries that help you with date calculations have separate
+data types for a point in time, and a time span. That's because those two
+concepts actually have different semantics. It doesn't make sense to add two
+points in time, but it does make sense to add two durations, or add a duration
+to a point in time.</p>
+
+<p>In <a href="http://perl6.org/">Perl 6</a>, those two types are called
+<code>Instant</code> and
+<code>Duration</code>. And obviously it makes sense to multiply a Duration
+with a number, but it doesn't make sense to multiply two Durations, or take a
+power of a Duration. Right?</p>
+
+<p>That's the opinion that both the <a href="http://perlcabal.org/syn/">Perl 6
+specification</a> and the
+implementation in <a href="http://rakudo/">Rakudo</a> reflected. Until
+recently, when <a href="http://strangelyconsistent.org/">somebody</a> started
+to actually use it.</p>
+
+<p>That's when the real world struck back. Carl Mäsak did some timings, and
+then calculated averages and standard deviations. And for calculating standard
+deviations, you actually have to square those durations, add them up, and
+then calculate the square root.</p>
+
+<p>So this perfectly legitimate use case shows that multiplication (and also
+exponentiation) are perfectly fine operations on Durations. Likewise the
+current specification disallows division of two Durations. Why? It's perfectly
+fine to ask for the ratio of two time spans. How much longer (or shorter) are
+my meetings with my current boss, compared to those with my previous boss?
+That's the question that <code>Duration / Duration</code> answers.</p>
+
+<p>So, the real world taught me that putting restrictions on the allowed
+operations is a bad idea. It was meant well, it was supposed to catch
+operations that don't made sense to the designer, and presumably would catch
+some error that a confused beginner might make. But in the end it did more
+harm than good.</p>
+
+<p>Currently the <code>Duration</code> class stores a number, and
+re-dispatches all operations to that number, forbidding some of them. Having
+learned my lesson, I suggest we get rid of it, and have <code>Instant -
+Instant</code> return that number straight away. If some day we want to
+add functionality to <code>Duration</code>, we can still create that class as
+a subclass of the number.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
