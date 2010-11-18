@@ -1,6 +1,7 @@
 The Real World Strikes Back - or why you shouldn't forbid stuff just because you think it's wrong
 <!-- 1289987194 -->
-<p>tl;dr version: arbitrary API limitations do more harm than good, even if
+<p><a href="http://www.urbandictionary.com/define.php?term=tl%3Bdr">tl;dr;;
+version</a>: arbitrary API limitations do more harm than good, even if
 meant well in the first place.</p>
 
 <p>Most advanced libraries that help you with date calculations have separate
