@@ -1,0 +1,23 @@
+Harry Potter and the Methods of Rationality
+<!-- 1290461312 -->
+<p>What if Harry Potter had been raised by a loving stepmother? What if his
+stepfather was a scientist? What happens when somebody tries to analyze magic
+with scientific methods? What happens if an eleven year old boy is too smart
+for his own good?</p>
+
+<p>A piece of fan fiction, <a
+href="http://www.fanfiction.net/s/5782108/1/Harry_Potter_and_the_Methods_of_Rationality">Harry
+Potter and the Methods of Rationality</a> by <a
+href="http://wiki.lesswrong.com/wiki/Sequences">"Less Wrong"</a> answers those
+questions - and makes quite a good read. If you are into fantasy books and
+science, you might really love it. I did.</p>
+
+<p>But be warned: only read this if you've read all seven Harry Potter books
+by J.K.Rowling, because the fan fiction piece contains lots of spoilers.</p>
+
+<p>So far 60 chapters for varying length have been published, and just a few
+more to be written before the first year ends. I look forward to the final
+chapters.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
