@@ -78,7 +78,7 @@ of that is C<False>.
 
 Perl aims to be rather close to natural languages, and in natural language
 you often say things like "if the result is $this or $that" instead of saying
-"if the result is $this or the result $that". Most programming languages only
+"if the result is $this or the result is $that". Most programming languages only
 allow (a translation of) the latter, which feels a bit clumsy. With junctions
 Perl 6 allows the former as well.
 
