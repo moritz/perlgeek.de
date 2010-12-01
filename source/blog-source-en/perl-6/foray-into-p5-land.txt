@@ -1,0 +1,108 @@
+A Foray into Perl 5 land
+<!-- 1291237322 -->
+
+<p>Usually I use <a href="http://perl6.org/">Perl 6</a> as my programming
+language of choice. But about a week ago I started to plan and code an
+application for which the richness of the Perl 5 ecosystem outmatch the design
+weaknesses of Perl 5, compared to Perl 6.</p>
+
+<p>I have quite a bit of Perl 5 experience too, but so far I mostly used it
+for smallish tasks, and didn't have too much use for many frameworks.</p>
+
+<p>Here is a list of some tools I used, and my experience with them. I hope
+that my experiences can help the Perl 5 community to improve some edges here
+and there, and serve as an inspiration for Perl 6 modules authors what
+problems to approach.</p>
+
+<h2>cpanminus - painless module installation.</h2>
+
+<p><a href="http://search.cpan.org/perldoc?App::cpanminus">cpanminus</a> gives
+easy access to the wealth of <a href="http://search.cpan.org/">the CPAN</a>.
+The module installation worked perfectly without any configuration or
+interaction.</p>
+
+<p>Just when a XML parser had a dependency on an external C header
+file (expat.h), a module installation failed. Since Perl modules don't have a
+way to declare external dependencies, that's probably as good as a module
+installer can work. Kudos! The only improvement I can think of is directly
+showing the error message, instead of having it to dig up from a log file. I
+don't know if there's an easy way to automate that though.</p>
+
+<h2>DBIx::Class for the database</h2>
+
+<p>I store data in a postgresql database. From lowest to highest abstraction,
+the Perl modules involved are DBD::Pg (the database driver), DBI (the
+driver-independent database interface) and <a
+href="http://search.cpan.org/perldoc?DBIx::Class">DBIx::Class</a>, an
+object relational mapper.</p>
+
+<p>Postgres itself is fantastic, and DBD::Pg and DBI look rock solid to me.
+I've worked with DBIx::Class before, and liked it. Upon rereading the
+documentation, I found that since my last usage the recommended usage pattern
+has changed. Writing result classes into the <code>Result::MyClass</code>
+namespace and result set into <code>ResultSet::MyClass</code> has made the
+result sets more accessible. Since they are a key feature of DBIx-Class, I
+welcome this change, and adopted it very naturally.</p>
+
+<p>A small left-over from the previous scheme made the transition a tad harder
+than it had to, but upon reporting it on the #dbix-class IRC channel (on
+irc.perl.org), I immediately got commit access, and fixed it in the
+source.</p>
+
+<p>Since I deal with trees, I was happy to discover <a
+href="http://search.cpan.org/perldoc?DBIx::Class::Tree::NestedSet">a
+DBIx::Class plugin for nested sets</a>. I was less happy to discover that it
+broke basic object creation, and had a bug that prevented merging of trees,
+a feature advertised in the documentation. Luckily both were very easy to
+patch, the patches now live <a
+    href="https://rt.cpan.org/Public/Dist/Display.html?Name=DBIx-Class-Tree-NestedSet">in
+    the bug tracker</a>. I hope the maintainer applies them soon.</p>
+
+<p>The nested set extension comes with a good test suite, but it seems it
+hasn't had much real world usage. I think that with some more usage (and maybe
+a few more bug fixes), it'll turn into a very good module.</p>
+
+<h2>Mojolicious for the web frontend</h2>
+
+<p>While waiting for the <a
+href="http://www.catalystframework.org/">Catalyst</a> dependencies to install, I
+decided on a whim to try out <a
+href="http://search.cpan.org/perldoc?Mojolicious">Mojolicious</a>, a new-ish
+web framework. Or more precisely <a
+    href="http://search.cpan.org/perldoc?Mojolicious::Lite">Mojolicious::Lite</a>,
+a simplified API that lets you keep the whole application in a single
+file.</p>
+
+<p>Now there were a lot of small, rough spots in Mojolicious. The community on
+IRC was very helpful, and asked me to record my findings on a wiki page - <a
+href="https://github.com/kraih/mojo/wiki/Newby-Notes">which I did</a>.</p>
+
+<p>What really bugs me about Mojolicious is that the built-in template system
+produces very incomprehensible error messages. It uses a mixture of verbatim
+text and perl code, separated by tags with various semantics (for example tags
+that just execute code, those that execute and insert the result, optionally
+with HTML/XML escaping).</p>
+
+<p>Unfortunately that means that the code you write differs from the code that
+perl executes, which makes the error messages pretty useless.</p>
+
+<p>My first suggestion to improve that situation is to display the generated
+code in the error message, in addition to the template code (and make the generated code as simple as possible.</p>
+
+<p>If the generated code is non-trivial, it would help to add some markup to
+distinguish the user-written code from the code that the generator adds around
+it. I have no idea how easy or hard that would be to implement, though.</p>
+
+<h2>Conclusions</h2>
+
+<p>The Perl 5 modules were mostly very easy to use, and the corresponding
+communities very attentive and helpful.</p>
+
+<p>If there's something the authors can learn from Perl 6, then it's a love
+for better error messages.</p>
+
+<p>The Perl 6 world can aspire for such a rich and easy-to-use module
+system.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
