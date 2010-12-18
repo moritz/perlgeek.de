@@ -183,7 +183,7 @@ einfach und erfordern nur das umsetzen von zwei Zeigern.</p>
 verketteten Listen</a> brauchen sie also weniger Verwaltungsaufwand, bei etwas
 geringerer Flexibilität.</p>
 
-<h2>Weiteres Lesematerial</h2>
+<h2 id="lteratur">Weiteres Lesematerial</h2>
 
 <ul>
     <li><a href="/de/artikel/doppelt-verkettete-listen">doppelt verkettete
@@ -194,19 +194,6 @@ geringerer Flexibilität.</p>
         Verwendung von Datentypen und Datenstrukturen</a></li>
 </ul>
 
-<h3>Bücher</h3>
+[% include books %]
 
-<p>"Algorithmen in C" von Robert Sedgewik ist allgemeinverständlich und
-praktisch. "The Art of Computer Programming" von Donald Knuth ist ein
-Klassiker, und beschreibt für den mathematisch interessierten Leser
-Algorithmen, Datenstrukturen und ihre Vor- und Nachteile im Detail
-(Englisch).</p>
-
-<iframe src="http://rcm-de.amazon.de/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=moritzlenz-21&o=3&p=8&l=as1&m=amazon&f=ifr&md=1M6ABJKN5YT3337HVA02&asins=3893193766" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-
-<iframe src="http://rcm-de.amazon.de/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=moritzlenz-21&o=3&p=8&l=as1&m=amazon&f=ifr&md=1M6ABJKN5YT3337HVA02&asins=0201485419" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-
-[% comment vim: ft=html spell
-%]
+[% comment vim: set ft=html spell: %]

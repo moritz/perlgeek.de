@@ -423,5 +423,14 @@ jeweils sehr schnell, nur der Zugriff auf ein Element mit einer bestimmten
 Nummer - was  die Stärke von Arrays ist - erfordert das Durchlaufen der
 einzelnen Elemente.</p>
 
+<h2 id="lteratur">Weiteres Lesematerial</h2>
+
+<ul>
+    <li><a href="/de/artikel/einfach-verkettete-listen">Einfach verkettete
+        Listen</a>
+    <li><a href="/de/artikel/heap-und-heapsort">Heaps und Heapsort</a></li>
+
+[% include books %]
+
 <!-- vim: spell ft=html
   -->
