@@ -1,0 +1,236 @@
+Perl 6 in 2010
+<!-- 1293663600 -->
+
+<p>2010 has been a busy year for the Perl 6 developers, and came with a
+noticeable distribution release, many new modules and much fun for the people
+involved. Here's a short, subjective reflection of this year's Perl 6 events.</p>
+
+<h2>Specification</h2>
+
+<p>While some specification changes had substantial impact on the compiler
+writers (and were usually in turn triggered by their worries), the user mostly
+saw riping of experimental features, smoothed APIs and some few new
+features.</p>
+
+<h3>Lists, lists, lists</h3>
+
+<p>Just as last year, there were a lot of discussions on how lists and related
+types worked. Much of it was driven by the efforts to implement proper lazy
+lists in <a href="http://rakudo.org/">Rakudo</a>.</p>
+
+<p>The result is a much more solid list model, which uses immutable iterators
+under the hood - a fact that is hidden quite well from the user.</p>
+
+<p>The sequence operator (previously known as "series operator") is a powerful
+tool for creating lazy lists. It has been extensively refactored to solve
+problems both with its implementation and usage. It now takes an optional
+closure left of the <code>...</code> operator, and a limit that terminates the
+sequence if it matches true:</p>
+
+<pre>[% syntax perl6 %]
+# Lazy list of Fibonacci numbers up to (but excluding) 100:
+my @fib := 1, 2, *+* ...^ * >= 100;
+[% endsyntax %]</pre>
+
+<h3>Date and Time</h3>
+
+<p>After several iterations, excessive bikeshedding <!-- TODO: link -->
+and serious hacking, Perl 6 now has built-in classes for handling times and
+dates. They are inspired by the <a
+href="http://search.cpan.org/perldoc?DateTime">DateTime</a> and <a
+href="http://search.cpan.org/perldoc?Date::Simple">Date::Simple</a> Perl 5
+modules. The biggest difference is probably that DateTime objects are
+immutable in Perl 6.</p>
+
+<p>This specification is implemented completely in Rakudo.</p>
+
+
+<h3>Zip meta operator</h3>
+
+<p>The <code>Z</code> zip operator can now also act as a meta operator. Thus
+an easy way to add two lists pairwise and lazily is now</p>
+
+<pre>[% syntax perl6 %]
+my @sum = @l1 Z+ @l2;
+[% endsyntax %]</pre>
+
+
+<h3>Other changes</h3>
+
+<ul>
+    <li>The <code>.pick</code> method, which randomly takes one or more
+    elements from lists and hashes, has been split up into two:
+    <code>@a.pick(3)</code> returns 3 distinct, random items from array
+    <code>@a</code>, while <code>@a.roll(3)</code> does three independent
+    random choices, resulting in possible duplicates in the result list.</li>
+    <li>The scoping of lexical multi routines and their protos has been
+    clarified and overhauled.</li>
+    <li>The numeric roles, buffers and <code>Whatever</code> type have
+    received significant updates</li>
+</ul>
+
+
+<h2 id="community">Community</h2>
+
+<p>In 2010 we had a remarkable influx of friendly, interested, skilled and
+enthused newcomers to the Perl 6 community. This is the result of increased
+marketing outside the perl community, well publicized releases, great
+technology and a friendly community.</p>
+
+<h3>Community expansion</h3>
+
+<p>Two challenges or contests have been announced this year.</p>
+
+<p>Moritz Lenz
+published a series of <a
+href="http://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">"weekly"
+challenges</a>, guided tasks to implement something
+that the Perl 6 community needs: A website for the ecosystem, a feature in a
+compiler and other small things that could be tackled without much prior
+knowledge.</p>
+
+<p>The overall response was very good, and several people used it as a quick
+start into the Perl 6 community, and stayed.</p>
+
+<p>Towards the end of the year, Carl Mäsak announced <!-- TODO: link --> a
+Perl 6 coding contest. The submitter with the best solutions to five well
+known programming tasks is to win 100€ worth of books.</p>
+
+<p>Another far-reaching project was the <a
+href="http://perl6advent.wordpress.com/">Perl 6 advent calendar for 2010</a>
+<!-- TODO: boast with site stats -->.</p>
+
+<p>In an attempt to make Perl 6 compilers easier available to the masses, John
+Harrison <a
+href="http://greaterthaninfinity.com/2010/09/try-rakudo-in-your-browser/">implemented
+a web fronted to the Rakudo REPL</a> and made it available at <a
+href="http://try.rakudo.org/">try.rakudo.org</a>.</p>
+
+<h3>Conferences</h3>
+
+<p>There was a big <a
+href="http://perlgeek.de/blog-en/perl-6/notes-from-yapc-hackathon.html">Perl 6
+hackathon</a> (though we had more discussions than hacking) at <a
+href="http://conferences.yapceurope.org/ye2010/index.html">YAPC::EU 2010 in
+Pisa</a>. Many Perl 6 contributors, compiler writers and users met and
+discussed pressing topics in the realms of specification, implementation
+roadmap, measuring progress and community management. See the <a
+href="http://perlgeek.de/blog-en/perl-6/notes-from-yapc-hackathon.html">meeting
+notes</a> for details.</p>
+
+<p>Of course there were also some Perl 6 talks at YAPC::EU, many of which
+seemed well received by the audience.</p>
+
+<!-- TODO: list of other conferences -->
+
+<h3>Repository changes</h3>
+
+<p>Due to neglected maintenance, the Pugs repository had to be shut down. It
+has been migrated to git, and split up into several repository under the
+<a href="http://github.com/perl6/">perl6 organization on github</a>. Notable
+parts include:</p>
+
+<dl>
+    <dt>roat</dt>
+    <dd>the Perl 6 test suite</dd>
+
+    <dt>specs</dt>
+    <dd>the specification</dd>
+
+    <dt>perl6.org</dt>
+    <dd>the <a href="http://perl6.org/">main Perl 6 website</a></dd>
+
+    <dt>modules.perl6.org</dt>
+    <dd>the <a href="http://modules.perl6.org/">Perl 6  modules website</a></dd>
+
+    <dt>ecosystem</dt>
+    <dd>the module list repository</dd>
+
+    <dt>mu</dt>
+    <dd>the remnants of the old pugs repository</dd>
+</dl>
+
+<p>While the transition was mostly ad-hoc and not really planned for, most of
+the resulting confusion could be resolved fairly quickly.</p>
+
+
+<h2 id="eco">Module ecosystem</h2>
+
+<p>While we still lack a proper module distribution system, <a
+href=http://modules.perl6.org/>we now have a website of known Perl 6
+modules</a> and a <a href="http://github.com/tadzik/neutro/">module
+installer</a>.</p>
+
+<p>But most importantly the number of modules and module authors is steadily
+increasing (82 known Perl 6 modules at the time of writing, compared to 45 last
+year). While we still lack the wealth of the Perl 5 ecosystem, there are now
+database modules, HTTP client and server modules, serialization, file
+handling tools and so on.</p> <!-- TODO: links -->
+
+<h2>Implementations</h2>
+
+<h3>Rakudo</h3>
+
+<p>Most importantly, this year saw the first <a href="<!-- TODO: link
+-->">Rakudo Star</a> release. Rakudo star is a distribution of the Rakudo
+compiler, modules and documentation. While it is still a kind of preview
+release, some production usages of the Rakudo Perl 6 compiler and distribution
+have been spotted in the wake of
+this release.</p>
+
+<p>Also a good part of the Rakudo code based has been replaced during a major
+refactor, which bases Rakudo on top of a new grammar engine.</p> <!-- TODO:
+nqp-rx link -->
+
+<p>Major improvements to the compiler include</p>
+
+<ul>
+    <li>an implementation of lazy lists</li>
+    <li>lexical classes and roles</li>
+    <li>Perl 6 level stack traces</li>
+    <li>much more solid meta object model, which allows the user to create and
+        modify classes programmatically at run time</li>
+        <li>implementation of the <code>s/search/replace/</code> and
+        <code>s[search] = replace()</code> syntactic features, along with
+        several new regex adverbs and variable interpolation into regexes</li>
+    <li>improved interpolation in double-quoted strings: array and hash
+    variables now properly interpolate when the expression ends in a
+    bracketing construct</li>
+    <li>an improved read-evaluation-print loop, which now remembers variables
+    from previous lines, and also automatically prints the result if no output
+    was produced</li>
+    <li>multi level array and hash autovivification</li>
+    <li>binding and read-only binding of variables</li>
+    <li>a solid implementation of the DateTime and Date classes</li>
+    <li><a href="http://perlgeek.de/blog-en/perl-5-to-6/14-main-sub.txt">MAIN
+        and USAGE</a> subroutines</li> <li>the magic <code>$*ARGFILES</code>
+    file handle and <code>get</code> (comparable to <code>while (&lt;&gt;) { ...
+        }</code> in Perl 5)</li>
+    <li>an implementation of basic feed operators</li>
+</ul>
+
+<h3>Niecza</h3>
+
+<p>In June, Stefan O'Rear started taking notes on how to compile Perl 6 to the
+Common Language Runtime (CLR). In November he <a href="<!-- TODO -->">announced
+the Niecza Perl 6 compiler</a>, focused on the generation of efficient
+code.</p>
+
+<p>It already has an impressive list of features, including
+proper Longest Token Matching, a feature of regexes and grammars that no other
+Perl 6 compiler has implemented so far.</p>
+
+<h2>Summary</h2>
+
+<!-- TODO: link 'rewarding' to masak's "10 years Perl 6" post -->
+<p>2010 was a very rewarding year for the Perl 6 community. With Rakudo there
+was a compiler available, with which small and medium scale projects can be
+fun to write. Niecza is quickly catching up.</p>
+
+<p>People experiment with Perl 6, join the community and bring fresh ideas.
+There is still a long road ahead of us, but the author feels that this road is
+getting broader and more accessible with each step.</p>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
