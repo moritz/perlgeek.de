@@ -78,7 +78,7 @@ my @sum = @list1 Z+ @list2;
 
 <p>In 2010 we had a remarkable influx of friendly, interested, skilled and
 enthused newcomers to the Perl 6 community. This is the result of increased
-marketing outside the perl community, well publicized releases, great
+marketing outside the Perl community, well publicized releases, great
 technology and a friendly community.</p>
 
 <h3>Community expansion</h3>
@@ -107,7 +107,7 @@ href="http://perl6advent.wordpress.com/">Perl 6 advent calendar for 2010</a>
 <p>In an attempt to make Perl 6 compilers easier available to the masses, John
 Harrison <a
 href="http://greaterthaninfinity.com/2010/09/try-rakudo-in-your-browser/">implemented
-a web fronted to the Rakudo REPL</a> and made it available at <a
+a web frontend to the Rakudo REPL</a> and made it available at <a
 href="http://try.rakudo.org/">try.rakudo.org</a>.</p>
 
 <h3>Conferences</h3>
