@@ -131,7 +131,7 @@ has been migrated to git, and split up into several repository under the
 parts include:</p>
 
 <dl>
-    <dt>roat</dt>
+    <dt>roast</dt>
     <dd>the Perl 6 test suite</dd>
 
     <dt>specs</dt>
