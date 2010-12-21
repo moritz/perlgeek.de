@@ -64,7 +64,11 @@ my @sum = @list1 Z+ @list2;
     <code>@a</code>, while <code>@a.roll(3)</code> does three independent
     random choices, resulting in possible duplicates in the result list.</li>
     <li>The scoping of lexical multi routines and their protos has been
-    clarified and overhauled.</li>
+    clarified and overhauled (see <a
+    href="http://6guts.wordpress.com/2010/10/17/wrestling-with-dispatch/">this
+    discussion of what was wrong previously</a>, and <a
+    href="https://github.com/perl6/specs/commit/60aef3acd56f47b5a78721ca886b9fd3e22b366e">the
+    resolution</a>).</li>
     <li>The numeric roles, buffers and <code>Whatever</code> type have
     received significant updates</li>
 </ul>
