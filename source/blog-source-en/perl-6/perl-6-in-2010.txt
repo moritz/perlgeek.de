@@ -173,8 +173,7 @@ href="http://github.com/mberends/http-server-simple/">server</a> modules, <a hre
 
 <p>Most importantly, this year saw the first <a href="http://rakudo.org/announce/rakudo-star/2010.07">Rakudo Star</a> release. Rakudo star is a distribution of the Rakudo
 compiler, modules and documentation. While it is still a kind of preview
-release, some production usages of the Rakudo Perl 6 compiler and distribution
-have been spotted in the wake of
+release, some few <a href="http://strangelyconsistent.org/about">production</a> <a href="http://perlgeek.de/blog-en/perl-6/pvc-perl6-vocabulary-coach.html">usages</a> of the Rakudo Perl 6 compiler and distribution have been spotted in the wake of
 this release.</p>
 
 <p>Also a good part of the Rakudo code based has been replaced during a major
