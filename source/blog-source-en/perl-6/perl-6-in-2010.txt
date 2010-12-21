@@ -130,7 +130,7 @@ which the author forgot :-).</p>
 <h3>Repository changes</h3>
 
 <p>Due to neglected maintenance, the Pugs repository had to be shut down. It
-has been migrated to git, and split up into several repository under the
+has been migrated to git, and split up into several repositories under the
 <a href="http://github.com/perl6/">perl6 organization on github</a>. Notable
 parts include:</p>
 
