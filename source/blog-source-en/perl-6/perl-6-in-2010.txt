@@ -34,7 +34,7 @@ my @fib := 1, 2, *+* ...^ * >= 100;
 
 <h3>Date and Time</h3>
 
-<p>After several iterations, excessive bikeshedding <!-- TODO: link -->
+<p>After several iterations, excessive bikeshedding
 and serious hacking, Perl 6 now has built-in classes for handling times and
 dates. They are inspired by the <a
 href="http://search.cpan.org/perldoc?DateTime">DateTime</a> and <a
@@ -42,7 +42,7 @@ href="http://search.cpan.org/perldoc?Date::Simple">Date::Simple</a> Perl 5
 modules. The biggest difference is probably that DateTime objects are
 immutable in Perl 6.</p>
 
-<p>This specification is implemented completely in Rakudo.</p>
+<p>This part of the specification is implemented completely in Rakudo.</p>
 
 
 <h3>Zip meta operator</h3>
@@ -51,7 +51,7 @@ immutable in Perl 6.</p>
 an easy way to add two lists pairwise and lazily is now</p>
 
 <pre>[% syntax perl6 %]
-my @sum = @l1 Z+ @l2;
+my @sum = @list1 Z+ @list2;
 [% endsyntax %]</pre>
 
 
@@ -171,16 +171,15 @@ href="http://github.com/mberends/http-server-simple/">server</a> modules, <a hre
 
 <h3>Rakudo</h3>
 
-<p>Most importantly, this year saw the first <a href="<!-- TODO: link
--->">Rakudo Star</a> release. Rakudo star is a distribution of the Rakudo
+<p>Most importantly, this year saw the first <a href="http://rakudo.org/announce/rakudo-star/2010.07">Rakudo Star</a> release. Rakudo star is a distribution of the Rakudo
 compiler, modules and documentation. While it is still a kind of preview
 release, some production usages of the Rakudo Perl 6 compiler and distribution
 have been spotted in the wake of
 this release.</p>
 
 <p>Also a good part of the Rakudo code based has been replaced during a major
-refactor, which bases Rakudo on top of a new grammar engine.</p> <!-- TODO:
-nqp-rx link -->
+refactor, which bases Rakudo on top of a <a
+    href="https://github.com/perl6/nqp-rx">new grammar engine</a>.</p>
 
 <p>Major improvements to the compiler include</p>
 
@@ -212,7 +211,7 @@ nqp-rx link -->
 <h3>Niecza</h3>
 
 <p>In June, Stefan O'Rear started taking notes on how to compile Perl 6 to the
-Common Language Runtime (CLR). In November he <a href="<!-- TODO -->">announced
+Common Language Runtime (CLR). In November he <a href="http://www.nntp.perl.org/group/perl.perl6.announce/2010/11/msg641.html">announced
 the Niecza Perl 6 compiler</a>, focused on the generation of efficient
 code.</p>
 
@@ -222,8 +221,8 @@ Perl 6 compiler has implemented so far.</p>
 
 <h2>Summary</h2>
 
-<!-- TODO: link 'rewarding' to masak's "10 years Perl 6" post -->
-<p>2010 was a very rewarding year for the Perl 6 community. With Rakudo there
+<p>2010 was a very <a
+    href="http://strangelyconsistent.org/blog/happy-10th-anniversary-perl-6">rewarding</a> year for the Perl 6 community. With Rakudo there
 was a compiler available, with which small and medium scale projects can be
 fun to write. Niecza is quickly catching up.</p>
 
