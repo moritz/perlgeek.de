@@ -121,7 +121,11 @@ notes</a> for details.</p>
 <p>Of course there were also some Perl 6 talks at YAPC::EU, many of which
 seemed well received by the audience.</p>
 
-<!-- TODO: list of other conferences -->
+<p>Perl 6 talks were also held at the Netherlands Perl Workshop, YAPC::Russia,
+Norway Unix User Group and OSDC France, as well as many other conferences
+which the author forgot :-).</p>
+
+<!-- TODO: expand list of other conferences -->
 
 <h3>Repository changes</h3>
 
