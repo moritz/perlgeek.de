@@ -9,7 +9,7 @@ involved. Here's a short, subjective reflection of this year's Perl 6 events.</p
 
 <p>While some specification changes had substantial impact on the compiler
 writers (and were usually in turn triggered by their worries), the user mostly
-saw riping of experimental features, smoothed APIs and some few new
+saw maturing of experimental features, smoothed APIs and some few new
 features.</p>
 
 <h3>Lists, lists, lists</h3>
@@ -92,8 +92,8 @@ knowledge.</p>
 <p>The overall response was very good, and several people used it as a quick
 start into the Perl 6 community, and stayed.</p>
 
-<p>Towards the end of the year, Carl Mäsak announced <!-- TODO: link --> a
-Perl 6 coding contest. The submitter with the best solutions to five well
+<p>Towards the end of the year, Carl Mäsak announced <a href="http://strangelyconsistent.org/blog/masaks-perl-6-coding-contest">his
+    Perl 6 coding contest</a>. The submitter with the best solutions to five well
 known programming tasks is to win 100€ worth of books.</p>
 
 <p>Another far-reaching project was the <a
@@ -164,8 +164,8 @@ installer</a>.</p>
 <p>But most importantly the number of modules and module authors is steadily
 increasing (82 known Perl 6 modules at the time of writing, compared to 45 last
 year). While we still lack the wealth of the Perl 5 ecosystem, there are now
-database modules, HTTP client and server modules, serialization, file
-handling tools and so on.</p> <!-- TODO: links -->
+<a href="http://github.com/mberends/MiniDBI/">database</a> modules, HTTP <a href="http://github.com/cosimo/perl6-lwp-simple/">client</a> and <a
+href="http://github.com/mberends/http-server-simple/">server</a> modules, <a href="http://github.com/moritz/json/">serialization</a>, <a href="http://github.com/tadzik/perl6-File-Tools/">file handling tools</a> and so on.</p>
 
 <h2>Implementations</h2>
 
