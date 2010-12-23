@@ -231,4 +231,18 @@ logging facility, and prints the method name to the standard error stream.</p>
 adding for the wrapping. Both are typical metaclass features, and are put to
 good use for automatic logging.</p>
 
+<h2>Literature</h2>
+
+<p>Literature on meta object protocols seems to be quite sparse. Regarding
+books there is <a href="http://www.amazon.de/gp/product/0262610744?ie=UTF8&tag=moritzlenz-21&linkCode=as2&camp=1638&creative=19454&creativeASIN=0262610744">The
+    Art of the Metaobject Protocol</a><img src="http://www.assoc-amazon.de/e/ir?t=moritzlenz-21&l=as2&o=3&a=0262610744" width="1" height="1" border="0" alt="" style="border:none !important;
+margin:0px !important;" /> by Kiczales, Des Rivieres and Bobrow. It talks
+about the meta object protocol developed for Common Lisp, and is well worth
+reading.</p>
+
+<p>The Class::MOP documentation has a nice <a
+href="http://search.cpan.org/perldoc?Class::MOP#SEE_ALSO">section on
+literature</a>, which holds a few more references.</p>
+
+
 [% comment vim: set ft=html spell: %]
