@@ -215,6 +215,21 @@ refactor, which bases Rakudo on top of a <a
     <li>an implementation of basic feed operators</li>
 </ul>
 
+<p>During YAPC::EU the Rakudo contributors decided to target multiple virtual
+machines: besides the current parrot backend we want to support at least the
+CLR (.NET).</p>
+
+<p>With this goal in mind, and the need for major performance improvements,
+Jonathan Worthington prototyped a <a
+href="http://github.com/jnthn/6model">new, efficient meta object model</a>
+for parrot in C#, and used that as a base for the new CLR backend. He got help
+from Matthew Wilson, and Martin Berends started porting the effort to the
+JVM. Jonathan <a href="http://6guts.wordpress.com/">explained some of his work
+nicely on the 6guts blog</a>.</p>
+
+<p>In 2011 we will likely see a port of the meta object implementation to
+parrot, and the beginnings of a Rakudo port to the CLR and JVM.</p>
+
 <h3>Niecza</h3>
 
 <p>In June, Stefan O'Rear started taking notes on how to compile Perl 6 to the
