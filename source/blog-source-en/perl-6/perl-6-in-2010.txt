@@ -101,8 +101,8 @@ start into the Perl 6 community, and stayed.</p>
 known programming tasks is to win 100€ worth of books.</p>
 
 <p>Another far-reaching project was the <a
-href="http://perl6advent.wordpress.com/">Perl 6 advent calendar for 2010</a>
-<!-- TODO: boast with site stats -->.</p>
+href="http://perl6advent.wordpress.com/2010/12/25/merry-christmas-2/">Perl 6 advent calendar for 2010</a>,
+which attracted more than forty thousand visitors <!-- TODO: maybe update the number -->.</p>
 
 <p>In an attempt to make Perl 6 compilers easier available to the masses, John
 Harrison <a
