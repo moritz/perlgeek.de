@@ -1,5 +1,5 @@
 Perl 6 in 2010
-<!-- 1293663600 -->
+<!-- 1293512400 -->
 
 <p>2010 has been a busy year for the Perl 6 developers, and came with a
 noticeable distribution release, many new modules and much fun for the people
