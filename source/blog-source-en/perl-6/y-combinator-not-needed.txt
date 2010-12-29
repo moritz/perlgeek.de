@@ -7,7 +7,7 @@ href="http://use.perl.org/~Aristotle/journal/30896">excellent article</a>
 about the Y combinator in Perl.</p>
 
 <p>In short it's a rather involved construction that allows you to write
-anonymous recursive subs that truely have no name.</p>
+anonymous recursive subs that truly have no name.</p>
 
 <p>If you read about it the first time, you might become scared by its
 complexity, and ask yourself "do I have to understand such things to become a

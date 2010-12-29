@@ -126,7 +126,7 @@ notes</a> for details.</p>
 seemed well received by the audience.</p>
 
 <p>Perl 6 talks were also held at the Netherlands Perl Workshop, YAPC::Russia,
-Norway Unix User Group and OSDC France, as well as many other conferences
+Norwegian Unix User Group and OSDC France, as well as many other conferences
 which the author forgot :-).</p>
 
 <!-- TODO: expand list of other conferences -->
