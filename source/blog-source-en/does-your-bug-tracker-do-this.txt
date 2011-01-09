@@ -1,0 +1,25 @@
+Does Your Bug Tracker Do This For You?
+<!-- 1294568537 -->
+
+<p>While working on a <a href="http://rakudo.org/">fast moving Open Source
+project</a>, we sometimes get some platform specific bug reports. And even if
+nobody explicitly works on the problem, sometimes they go away due to general
+improvements of robustness.</p>
+
+<p>So sometimes an intrepid volunteer goes through the list of old bugs, and
+asks the reporter if these platform specific bugs still persist. Quite often,
+we don't get a reply. Then the reports aren't very useful to us, and should be
+closed. Which requires a second pass through the bug queue. With more than
+600 open bugs this quite a bit of work.</p>
+
+<p>So I'd like to have an option to automatically close a bug within a given
+time span (say, four weeks or two months) if no feedback occurs.
+<a href="http://bestpractical.com/rt/">Our bug tracker</a> (or at least our
+installation) doesn't have such a button.</p>
+
+<p>Does your favorite bug tracker have it? Would you also sometimes like such
+a button?</a>
+
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell tw=78 : %]
