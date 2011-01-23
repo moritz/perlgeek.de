@@ -1,0 +1,86 @@
+Thoughts on masak's Perl 6 Coding Contest
+<!-- 1295807928 -->
+
+<p><a
+href="http://strangelyconsistent.org/blog/masaks-perl-6-coding-contest">Masak's
+Perl 6 Coding Contest</a> (short p6cc) is now in its final stage - the public
+commentary of solutions. So far masak has commented on <a
+    href="http://strangelyconsistent.org/blog/p1-best-way-to-multiply-a-chain-of-matrices">p1</a>, <a
+    href="http://strangelyconsistent.org/blog/p2-is-the-point-in-the-polygon">p2,</a>
+and <a
+    href="http://strangelyconsistent.org/blog/p3-is-the-integer-in-the-rangeset">p3</a>.
+I enjoyed the reviews and explanations so far, and look forward to more
+(except to the p4 review, because I botched the solution to this one).</p>
+
+<p>The reviews made a good read, and here are only a few very minor points
+that I find worth mentioning. No criticism intended (neither to the author nor
+the reviewer).</p>
+
+<ul>
+    <li><a
+        href="http://strangelyconsistent.org/p6cc2010/p1-matthias/">Matthias'
+        p1 solution</a> uses side effects in subroutine named
+        <code>to-string</code>. I would avoid that in "production" code (for
+        whatever I might mean with that word...), since it's not what I would
+        expect from the name. Instead of a counter, the array indexes could be
+        used to identify which matrix to stringify.
+    </li>
+    <li>Masak's review of <a
+        href="http://strangelyconsistent.org/p6cc2010/p1-fox/">fox' p1
+        solution</a> contains the question <em>I wonder why the @items array
+        deserved a plural but the @matrix only a singular...</em>. I'd say
+        that's because <code>@matrix</code> holds one matrix, but
+        <code>@items</code> holds many items. Speaking of which, I don't like
+        the name <code>@matrix</code> - it describe a structure rather than
+        the contents. The structure becomes pretty obvious through the access,
+        but what is in the matrix?
+     </li>
+     <li>
+        After viewing <a
+        href="http://strangelyconsistent.org/p6cc2010/p1-moritz/">my own p1
+        submission</a> without syntax hilighting, I wonder why I chose so many
+        double blank lines. My vim color scheme uses a dark blue for comments,
+        which means that comment blocks need more visual distance from code,
+        in my personal opinion. But when sharing code, I shouldn't make layout
+        decisions based on non-shared syntax hilighting.
+    </li>
+    <li>
+        <a href="http://strangelyconsistent.org/p6cc2010/p2-colomon/">colomon's
+        p2 submission</a> uses complex numbers for coordinates. I considered
+        that myself, and there's nothing wrong with it. Just strange that he
+        then reinvented subtraction of two complex numbers in sub
+        <code>lines-intersect</code>. Maybe he didn't want to come up with
+        names for the intermediate results, <code>$slope</code> and
+        <code>$axes-intercept</code> might have been viable ones.
+    </li>
+    <li>
+        <a
+            href="http://strangelyconsistent.org/p6cc2010/p2-matthias/">Matthias</a>
+        could have simplified <code>comb: /&lt;&amp;number&gt;/</code> to just
+        <code>comb: &amp;number</code> -- a regex is just a callable, and when
+        it's explicit in the current scope, you can just use a hard reference
+        to it.
+    </li>
+    <li>
+        <a
+        href="http://strangelyconsistent.org/p6cc2010/p3-colomon/">colomon's
+        p3 solution</a> could, as far as I can tell, replace all regexes with
+        tokens - less backtracking, fewer surprises.
+    </li>
+    <li>Reviewing <a
+        href="http://strangelyconsistent.org/p6cc2010/p3-moritz/">my own p3
+        solution</a>, masak asked <em>I wonder what stopped moritz from,
+        rather than doing $_ && .including on line 39, doing .?including
+        instead. Either he considered that too cute, or he didn't consider
+        it.</em> I did consider it, but I decided against it, because the two
+        things are subtly different.  Mine only calls the method if the topic is
+        true, whereas <code>.?including</code> always tries the call - even on a
+        type object, where accessing an attribute leads to a fatal error. I
+        think in my code that case doesn't show up, but it did appear during
+        debugging in earlier versions.
+    </li>
+
+</ul>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
