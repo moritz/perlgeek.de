@@ -35,7 +35,20 @@
                     <div id="col1_content" class="clearfix">
 					<h3>Software</h3>
                     <ul>
-                        [% item mowyw <li><a {{class="selected"}}href="/en/software/mowyw">mowyw</a></li> %]
+                        [% item mowyw <li><a {{class="selected"}}href="/en/software/mowyw">mowyw</a>
+                        {{
+                        <ul>
+                            <li><a href="#what-is">What is mowyw</a></li>
+                            <li><a href="#what-not">What is it not?</a></li>
+                            <li><a href="#syntax-example">Syntax example</a></li>
+                            <li><a href="#navigation">Navigation</a></li>
+                            <li><a href="#documentation">Documentation</a></li>
+                            <li><a href="#warning">Warning</a></li>
+                            <li><a href="#download">Download</a></li>
+                            <li><a href="#sites_using_mowyw">Sites that use mowyw</a></li>
+                            <li><a href="#history">Release History/ Changelog</a></li>
+                        </ul>
+                        }} </li> %]
                         [% item yasss <li><a {{class="selected"}}href="http://moritz.faui2k3.org/en/yasss">YasSS</a> %]
                     </ul>
                     </div>

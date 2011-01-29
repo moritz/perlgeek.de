@@ -108,7 +108,7 @@
 
 <h2 id="warning">Warning</h2>
 <p>
-    mowyw is in an early stage of development, so don't expect too much.
+    mowyw is in active development, so don't expect too much.
     Use this program at your own risk, and read the accompanied README file
     before running it.
 </p>
@@ -138,6 +138,15 @@
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.3.tar.gz">mowyw-0.0.3</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.2.tar.gz">mowyw-0.0.2</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.0.1.tar.gz">mowyw-0.0.1</a></li>
+</ul>
+
+<h2 id="sites_using_mowyw">Sites that use mowyw</h2>
+
+<p>The following sites are built with mowyw:</p>
+
+<ul>
+    <li><a href="http://perl6.org/">perl6.org</a></li>
+    <li><a href="http://perlgeek.de/">perlgeek.de (this site)</a></li>
 </ul>
 
 <h2 id="history">Release History/Changelog</h2>
