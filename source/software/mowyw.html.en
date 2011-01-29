@@ -158,6 +158,7 @@
 
 [% verbatim changelog %]
 <ul>
+    <li>2011-01-28, mowyw-0.6.1 Remove a warning from <code>readvar</code></li>
     <li>2009-01-05, mowyw-0.6.0 Report line numbers in error messages</li>
     <li>2008-07-27, mowyw-0.5.2 Configurable regexes that determine which
     files to process</li>
