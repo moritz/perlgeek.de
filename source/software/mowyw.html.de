@@ -148,6 +148,20 @@
 [% verbatim changelog %]
 <ul>
     <li>
+        2011-01-28, mowyw-0.6.1: Warning in readvar entfernt
+    </li>
+    <li>
+        2009-01-05, mowyw-0.6.0: Zeilennummern in Fehlermeldungen
+    </li>
+    <li>
+        2008-07-27, mowyw-0.5.2: Konfigurierbare Regexes die entscheiden,
+        welche Dateien beareitet werden.
+    </li>
+    <li>
+        2008-04-12, mowyw-0.5.0: Datenquellen, <code>bind</code> und
+        <code>for</code> statements; interne Reorganization.
+    </li>
+    <li>
         2007-06-06, mowyw-0.4.0: Optionale [% ...  %]-Syntax hinzugefügt.
         Inzwischen kann mowyw auch Syntax-Hilighting.
      </li>
