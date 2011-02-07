@@ -10,8 +10,8 @@ is still valuable later on, so we have <a
 logs</a> was written especially for #perl6, but works fine for other channels
 too. Among the other users are <a href="http://www.testml.org/">TestML</a>,
 <a
-href="http://sourceforge.net/apps/mediawiki/cdk/index.php?title=Main_Page">cdk
-(Chemistry Development Toolkit)</a>, <a href="http://darcs.net/">darcs</a>,
+href="http://sourceforge.net/apps/mediawiki/cdk/index.php?title=Main_Page">CDK
+(Chemistry Development Kit)</a>, <a href="http://darcs.net/">darcs</a>,
 <a href="http://mojolicio.us/">mojo</a>, <a
 href="http://padre.perlide.org/">Padre, the Perl IDE</a>, <a
 href="http://www.parrot.org/">Parrot</a> and <a
