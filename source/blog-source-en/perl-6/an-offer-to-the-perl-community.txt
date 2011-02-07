@@ -1,0 +1,35 @@
+An offer for software developers: free IRC logging
+<!-- 1297099243 -->
+
+<p>The <a href="http://perl6.org/">Perl 6 developers</a> communicate a lot
+through <abbr title="Internet Relay Chat">IRC</abbr>. Some of the conversation
+is still valuable later on, so we have <a
+    href="http://irclog.perlgeek.de/perl6/today">public IRC logs</a>.</p>
+
+<p>The <a href="http://moritz.faui2k3.org/en/ilbot">software powering these
+logs</a> was written especially for #perl6, but works fine for other channels
+too. Among the other users are <a href="http://www.testml.org/">TestML</a>,
+<a
+href="http://sourceforge.net/apps/mediawiki/cdk/index.php?title=Main_Page">cdk
+(Chemistry Development Toolkit)</a>, <a href="http://darcs.net/">darcs</a>,
+<a href="http://mojolicio.us/">mojo</a>, <a
+href="http://padre.perlide.org/">Padre, the Perl IDE</a>, <a
+href="http://www.parrot.org/">Parrot</a> and <a
+href="http://rosettacode.org/wiki/Welcome_to_Rosetta_Code">Rosetta
+Code</a>.</p>
+
+<p>If you are also developing software, and would like public logs for your
+channel (either on freenode or irc.perl.org; other servers might be added on
+demand), feel free to contact me (<code>moritz_</code> on freenode, or per
+email: moritz at faui2k3.org)</p>
+
+<p>Features include: linking to individual lines, permanent URLs and volatile
+URLs for the current day, automatic linking of URLs and readable color
+schemes.</p>
+
+<p>A current limitation is that you can't have two channels with the same name
+from different networks, in case of conflict "first come, first served"
+holds.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
