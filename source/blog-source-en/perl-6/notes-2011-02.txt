@@ -1,0 +1,40 @@
+Perl 6 notes from February 2011
+<!-- 1297694709 -->
+<p>Lately real life has prevented me from blogging, so here are just a few
+random notes from the Perl 6 developers:</p>
+
+
+<p>The <a href="http://rt.perl.org/rt3/">Perl bug tracker</a> now has tags
+<code>testneeded</code> and <code>testcommitted</code>, which can mark tests
+that need or have tests in the spectest suite. Since the URLs for querying
+these tags are unwieldy and non-obvious, I've created some aliases:
+<a href="http://rakudo.de/testneeded">http://rakudo.de/testneeded</a>
+and
+<a href="http://rakudo.de/testcommitted">http://rakudo.de/testcommitted</a>.
+</p>
+
+<p>Development of <a
+href="http://pmthium.com/2011/02/08/new-nqp-repository-new-nom-rakudo-branch/">the
+new nqp and rakudo-on-the-new-object-model</a> is progressing nicely. I had
+some fun porting some PIR code to NQP, and writing some new code. Most
+interesting to read is the <a
+href="https://github.com/rakudo/rakudo/tree/nom/src/metamodel">source of the
+new meta model</a>, much of which is written in a subset of Perl 6 (so quite
+readable, if you happen to know Perl 6. For example you can see how <a
+href="https://github.com/rakudo/rakudo/blob/nom/src/metamodel/RoleToClassApplier.nqp">roles
+are applied to classes</a>.</p>
+
+<p>There is a parrot branch that adds a generation garbage collector to
+parrot. Its release is planned for shortly after the 3.1.0 release due
+tomorrow. Initial benchmarks show that Rakudo is between 25% and 30% faster on
+that parrot, as measured by a spectest run. I very much look forward to having
+that in the parrot main line.</p>
+
+<p>Writing code for <a href="https://github.com/sorear/niecza">niecza</a>
+is quite a nice experience. It still has a big startup cost, but then runs
+much faster than rakudo (at least it feels that way). There are still lots of
+features missing (for example non-integer number literals), but feature
+requests are usually implement quite quickly.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
