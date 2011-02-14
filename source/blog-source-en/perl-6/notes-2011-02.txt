@@ -1,5 +1,5 @@
 Perl 6 notes from February 2011
-<!-- 1297694709 -->
+<!-- 1297702755 -->
 <p>Lately real life has prevented me from blogging, so here are just a few
 random notes from the Perl 6 developers:</p>
 
