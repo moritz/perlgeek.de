@@ -18,11 +18,11 @@ href="http://pmthium.com/2011/02/08/new-nqp-repository-new-nom-rakudo-branch/">t
 new nqp and rakudo-on-the-new-object-model</a> is progressing nicely. I had
 some fun porting some PIR code to NQP, and writing some new code. Most
 interesting to read is the <a
-href="https://github.com/rakudo/rakudo/tree/nom/src/metamodel">source of the
+href="https://github.com/rakudo/rakudo/tree/nom/src/Perl6/Metamodel">source of the
 new meta model</a>, much of which is written in a subset of Perl 6 (so quite
 readable, if you happen to know Perl 6. For example you can see how <a
-href="https://github.com/rakudo/rakudo/blob/nom/src/metamodel/RoleToClassApplier.nqp">roles
-are applied to classes</a>.</p>
+    href="https://github.com/rakudo/rakudo/blob/nom/src/Perl6/Metamodel/MultipleInheritance.pm">the
+    method resolution order for multiple inheritance is calculated.</a></p>
 
 <p>There is a parrot branch that adds a generation garbage collector to
 parrot. Its release is planned for shortly after the 3.1.0 release due
