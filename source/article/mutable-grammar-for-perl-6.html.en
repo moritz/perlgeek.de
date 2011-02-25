@@ -160,7 +160,7 @@ distinguished nonetheless.</p>
 grammar</a> uses this construct:</p>
 
 <pre>[% syntax perl6 %]
-proto token sigil {...}
+proto token sigil {*}
 # ...
 token sigil:sym<$>  { <sym> }
 token sigil:sym<@>  { <sym> }
