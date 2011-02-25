@@ -21,6 +21,9 @@ RewriteRule .* - [F]
 RewriteEngine on
 SetEnvIf Request_URI ^(de|en) prefer-language=$1
 
+# somehow automatica links suck, and add punctuation at the end
+RewriteRule ^/en/article/5-to-6.$ /en/article/5-to-6 [R=301,L]
+
 # top level
 RewriteRule ^(de|en)/?$         /index.html.$1    [L]
 
