@@ -91,7 +91,7 @@ methods are flattened into classes, there compile time outer block is actually
 different than where it runs, and that  screws up ... forget it, somebody else must describe it.</p>
 </li>
 <li>
-<p>Lack of modules - doesn't seem to bee a big problem</p>
+<p>Lack of modules - doesn't seem to be a big problem</p>
 </li>
 <li>
 <p>Lack of features: not a big problem.</p>
