@@ -129,6 +129,7 @@
 
 <p>Ältere Versionen sind ebenfalls verfügbar:</p>
 <ul>
+    <li><a href="http://moritz.faui2k3.org/files/mowyw/mowyw-0.6.2.tar.gz">mowyw-0.6.2</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw/mowyw-0.6.1.tar.gz">mowyw-0.6.1</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw/mowyw-0.6.0.tar.gz">mowyw-0.6.0</a></li>
     <li><a href="http://moritz.faui2k3.org/files/mowyw-0.5.2.tar.gz">mowyw-0.5.2</a></li>
@@ -147,6 +148,10 @@
 
 [% verbatim changelog %]
 <ul>
+    <li>
+        2011-03-30, mowyw-0.6.2: Fehlende Beispieldateien nachgeliefert,
+        robustere XML-Verarbeitung.
+    </li>
     <li>
         2011-01-28, mowyw-0.6.1: Warning in readvar entfernt
     </li>
