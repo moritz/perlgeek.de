@@ -20,7 +20,7 @@ Code</a>.</p>
 
 <p>If you are also developing software, and would like public logs for your
 channel (either on freenode or irc.perl.org; other servers might be added on
-demand), feel free to contact me (<code>moritz_</code> on freenode, or per
+demand), feel free to contact me (<code>moritz</code> on freenode, or per
 email: moritz at faui2k3.org)</p>
 
 <p>Features include: linking to individual lines, permanent URLs and volatile
