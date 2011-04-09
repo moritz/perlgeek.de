@@ -106,7 +106,7 @@ name="Hashes"
 name="Final_Notes"
 >Final Notes</a></h4>
 
-<p>Most builtin methods exists both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
+<p>Most builtin methods exist both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
 
 <p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
 

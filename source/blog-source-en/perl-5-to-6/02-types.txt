@@ -44,7 +44,7 @@ name="DESCRIPTION"
 
 <p>A type declaration on an Array applies to its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
 
-<p>Some types stand for whole family of more specific types, for example integers, rationals and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
+<p>Some types stand for a whole family of more specific types, for example integers, rationals and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Introspection"
