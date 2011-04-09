@@ -44,7 +44,7 @@ C<unless> is still there, but no C<else> branch is allowed after C<unless>.
     }
 
 You can also use C<if> and C<unless> as a statement modifier, i.e. after a
-statements:
+statement:
 
     say "you won" if $answer == 42;
 
