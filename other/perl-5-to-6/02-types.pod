@@ -40,7 +40,7 @@ It is an error to try to put a value into a variable that is of a "wrong" type
 A type declaration on an Array applies to its contents, so C<my Str @s> is
 an array that can only contain strings.
 
-Some types stand for whole family of more specific types, for example
+Some types stand for a whole family of more specific types, for example
 integers, rationals and floating-point numbers (type C<Num>) conform to the
 C<Numeric> type.
 

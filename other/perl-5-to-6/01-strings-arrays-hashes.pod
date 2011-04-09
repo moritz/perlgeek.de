@@ -103,7 +103,7 @@ different syntax:
 
 =head2 Final Notes
 
-Most builtin methods exists both as a method and as a sub. So you can write
+Most builtin methods exist both as a method and as a sub. So you can write
 both C<sort @array> and C<@array.sort>.
 
 Finally you should know that both C<[..]> and C<{...}> (occurring directly

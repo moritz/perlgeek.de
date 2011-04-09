@@ -6,7 +6,7 @@
 
     # bit wise operators
     5   +| 3;       # 7
-    6   +^ 3        # 6
+    5   +^ 3        # 6
     5   +& 3;       # 1
     "b" ~| "d"      # 'f'
  
@@ -54,7 +54,7 @@ and it does what you mean.
 =head1 MOTIVATION
 
 Many changes to the operators aim at a better Huffman coding, ie give often
-use things short names (like C<.> for method calls) and seldom used
+used things short names (like C<.> for method calls) and seldom used
 operators a longer name (like C<~&> for string bit-wise AND).
 
 The chaining comparison operators are another step towards making the language
