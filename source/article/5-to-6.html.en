@@ -256,7 +256,7 @@ name="Hashes"
 name="Final_Notes"
 >Final Notes</a></h4>
 
-<p>Most builtin methods exists both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
+<p>Most builtin methods exist both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
 
 <p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
 
@@ -320,7 +320,7 @@ name="DESCRIPTION"
 
 <p>A type declaration on an Array applies to its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
 
-<p>Some types stand for whole family of more specific types, for example integers, rationals and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
+<p>Some types stand for a whole family of more specific types, for example integers, rationals and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Introspection"
@@ -1351,7 +1351,7 @@ name="SYNOPSIS"
 
 <pre>    # bit wise operators
     5   +| 3;       # 7
-    6   +^ 3        # 6
+    5   +^ 3        # 6
     5   +&#38; 3;       # 1
     &#34;b&#34; ~| &#34;d&#34;      # &#39;f&#39;
  
@@ -1393,7 +1393,7 @@ name="DESCRIPTION"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Many changes to the operators aim at a better Huffman coding, ie give often use things short names (like <code>.</code> for method calls) and seldom used operators a longer name (like <code>~&#38;</code> for string bit-wise AND).</p>
+<p>Many changes to the operators aim at a better Huffman coding, ie give often used things short names (like <code>.</code> for method calls) and seldom used operators a longer name (like <code>~&#38;</code> for string bit-wise AND).</p>
 
 <p>The chaining comparison operators are another step towards making the language more natural, and allowing things that are commonly used in mathematical notation.</p>
 
