@@ -424,7 +424,7 @@ name="Branches"
         say &#34;A herd, how lovely!&#34;;
     }</pre>
 
-<p>You can also use <code>if</code> and <code>unless</code> as a statement modifier, i.e. after a statements:</p>
+<p>You can also use <code>if</code> and <code>unless</code> as a statement modifier, i.e. after a statement:</p>
 
 <pre>    say &#34;you won&#34; if $answer == 42;</pre>
 
