@@ -1,0 +1,37 @@
+First Grant Report: Structured Error Messages
+<!-- 1302435091 -->
+<p>My <a href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">Hague
+    Grant proposal</a> for designing, implementing and testing structured
+error messages for Perl 6 <a
+href="http://news.perlfoundation.org/2011/04/structured-error-message-grant.html">has
+been acceepted</a>, and I've started my work on it in <a
+href="http://www.catb.org/jargon/html/C/copious-free-time.html">my copious
+free time</a>.</p>
+
+<p>Before the grant started I've <a
+    href="https://github.com/perl6/std/commit/430e3d68b0321e96b5ae1586329b0caa74dc8ca8">unified</a>
+<a href="https://github.com/rakudo/rakudo/commit/76425aba89d4fbd742abbf0d1278380ec21f9ce5">the
+error messages</a> of <a
+href="https://github.com/sorear/niecza/commit/d6ca04a1aaee2f180454f77f14af4b647c65b1ff">several</a>
+<a
+    href="https://github.com/masak/yapsi/commit/423894a104f4b10a2122ba7dc2e3160b0481654c">compilers</a>
+to use "Cannot" instead of a wild mixture of "Cannot", "Can not" and
+"Can't".</p>
+
+<p>In the past week I created a <a
+href="https://github.com/perl6/errors/">repository for the initial work on the
+error message spec</a>, and added a list of existing error messages across
+different compilers, and some notes regarding the upcoming spec.</p>
+
+<p>So far I've outlined some thoughts about separation of concerns,
+classification of the error messages, testing error messages for certain
+properties, and calling syntax for <code>die()</code> and
+<code>fail()</code>.</p>
+
+<p>Any constructive feedback on it is very welcome.</p>
+
+<p>Thanks go to Ian Hague and The Perl Foundation for supporting my work
+financially.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
