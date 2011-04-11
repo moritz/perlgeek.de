@@ -40,7 +40,7 @@ name="DESCRIPTION"
 
 <p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
-<p>Laziness prevents unnecessary computations, and can therefor boost performance while keeping code simple.</p>
+<p>Laziness prevents unnecessary computations, and can therefore boost performance while keeping code simple.</p>
 
 <p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
