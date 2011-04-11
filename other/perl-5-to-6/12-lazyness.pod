@@ -41,7 +41,7 @@ kills laziness - if the list is infinite, it will likely loop infinitely.
 In general all conversions to a scalar (like C<List.join>) are I<eager>, i.e.
 non-lazy.
 
-Laziness prevents unnecessary computations, and can therefor boost performance
+Laziness prevents unnecessary computations, and can therefore boost performance
 while keeping code simple.
 
 When you read a file line by line in Perl 5, you don't use

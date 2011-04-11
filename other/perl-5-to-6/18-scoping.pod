@@ -111,7 +111,7 @@ scope they must be declared with C<is context>.
 
 It is now common knowledge that global variables are really bad, and cause
 lots of problems. We also have the resources to implement better scoping
-mechanism. Therefor global variables are only used for inherently global data
+mechanism. Therefore global variables are only used for inherently global data
 (like C<%*ENV> or C<$*PID>).
 
 The block scoping rules haven been greatly simplified.
