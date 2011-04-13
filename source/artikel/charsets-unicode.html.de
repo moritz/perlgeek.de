@@ -4,14 +4,13 @@
 [%setvar en /en/article/encodings-and-unicode %]
 <!-- INDEX BEGIN -->
 
-    <h1><a name="charsets_oder_warum_funktionieren_meine_umlaute_nicht"></a>
-    [%readvar title%]</h1>
+<h1 name="charsets_oder_warum_funktionieren_meine_umlaute_nicht">[%readvar title%]</h1>
 
     <p>Dieser Artikel beschreibt die verschiedenen Zeichenkodierungen, wie sie
     zu Problemen führen können, und wie man sie in Perl-Programmen korrekt
     berücksichtigt.</p>
 
-    <h3>Inhaltsverzeichnis</h3>
+    <h3 name="toc">Inhaltsverzeichnis</h3>
     <ul>
 		<li><a href="#einfuehrung">Einführung</a></li>
 		<li><a href="#ascii">ASCII</a></li>
@@ -31,13 +30,13 @@
     </ul>
 <!-- INDEX END -->
 
-    <h2><a name="einfuehrung"></a>Einführung</h2>
+<h2 name="einfuehrung">Einführung</h2>
     <p>Jeder hat es schon mindestens einmal erlebt: Ein Programm, das mit Text
     arbeitet, funktioniert wunderbar, solange man keine Umlaute eingibt. Sonst
     kommt nur noch Zeichenmüll heraus und ein bis zwei nicht korrekt 
     dargestellte Zeichen pro Umlaut.</p>
 
-    <h2><a name="ascii"></a>ASCII</h2>
+    <h2 name="ascii">ASCII</h2>
     <p>Um zu verstehen, warum es dazu kommt, muss man sich anschauen, wie 
     „normaler” Text und wie Umlaute binär abgespeichert werden.</p>
     <p>Angefangen hat es 1963 mit ASCII, einem Standard, der 128 Zeichen 
@@ -50,7 +49,7 @@
     <p>Da ein Byte aus 8 Bits besteht, ist bei ASCII das erste, „most significant” Bit
     immer 0.</p>
 
-    <h2><a name="andere_zeichenkodierungen"></a>Andere Zeichenkodierungen</h2>
+    <h2 name="andere_zeichenkodierungen">Andere Zeichenkodierungen</h2>
     <p>Als man in Europa anfing Computer zu benutzen, mussten die benötigten Zeichen
     irgendwie im Computer gespeichert werden und dazu benutzte man die
     verbleibenden 128 Zeichen pro Byte. So entstanden die Kodierungen Latin-1 für
@@ -70,7 +69,7 @@
     enthält).
 </p>
 
-<h2><a name="unicode"></a>Unicode</h2>
+<h2 name="unicode">Unicode</h2>
 <p>
     Die bisherigen Zeichenkodierungen konnten jeweils nur einen kleinen, lokal
     sinnvollen Bereich aller möglicher Zeichen darstellen - sobald man Texte mit
@@ -89,7 +88,7 @@
     Zeichen folgen, bilden mehrer Codepoints ein logischen Buchstaben, ein
     sogenanntes Grapheme.</p>
 
-    <h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
+    <h3 name="unicode_transformation_formats">Unicode Transformation Formats</h3>
     <p>Die bisher vorgestellten Unicode-Konzepte stehen vollständig unabhängig davon,
     wie die Unicode-Zeichen kodiert werden.</p>
     <p>Dafür wurden die „Unicode Transformation Formats” definiert,
@@ -131,7 +130,7 @@
     asiatische Schriftarten installiert haben.)
 </p>
 
-    <h2><a name="was_sind_charsets"></a>Was sind „Charsets”?</h2>
+    <h2 name="was_sind_charsets">Was sind „Charsets”?</h2>
 
 <p>
     Das Wort <em>charset</em> wird mit zwei verschiedenen, zum Teil
@@ -154,7 +153,7 @@
 </p>
 
 
-    <h2><a name="perl_und_zeichenkodierungen"></a>Perl und Zeichenkodierungen</h2>
+    <h2 name="perl_und_zeichenkodierungen">Perl und Zeichenkodierungen</h2>
 <p>
     Perl unterscheidet bei Operationen auf Strings zwischen solchen, die
     die Strings als Text betrachten (wie z.B. <code>uc</code>, 
@@ -267,7 +266,7 @@ use open ':locale';
     Unicode-Zeichen mit der Tastatur einzugeben.
 </p>
     
-    <h2><a name="die_arbeitsumgebung_testen"></a>Die Arbeitsumgebung testen</h2>
+    <h2 name="die_arbeitsumgebung_testen">Die Arbeitsumgebung testen</h2>
     <p>Ausgestattet mit diesem Wissen kann man testen, ob das Terminal und locales
     auf die gleiche Kodierung eingestellt sind, und auf welche:</p>
     <pre>[%syntax perl%]
@@ -312,7 +311,7 @@ for (@charsets){
     oder
     einem entsprechenden Output-Layer zu kodieren.</p>
 
-<h3>Strings Untersuchen</h3>
+<h3 id="strings-untersuchen">Strings Untersuchen</h3>
 
 <p>
     Leider dokumentieren viele Module nicht, welche Art von Daten sie
@@ -373,7 +372,7 @@ LEN = 4</pre>
     annimmt.
 </p>
 
-<h3>Fehlerhafte Module</h3>
+<h3 id="fehlerhafte-module">Fehlerhafte Module</h3>
     <p>Weitere Probleme können durch fehlerhafte Module entstehen. So ist die
     Funktionalität des Pragmas <em>encoding</em> sehr verlockend:</p>
     <pre>[%syntax perl%]
@@ -383,7 +382,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     AUTOLOAD-Funktionen nicht mehr, und das Modul funktioniert nicht im
     Zusammenspiel mit Threads.</p>
 
-<h2><a name="kodierungen_im_www"></a>Kodierungen im WWW</h2>
+<h2 name="kodierungen_im_www">Kodierungen im WWW</h2>
     <p>Beim Schreiben von CGI-Scripten muss man sich überlegen in welcher Kodierung
     die Daten ausgegeben werden sollen und das entsprechend im HTTP-Header
     vermerken.</p>
@@ -432,7 +431,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     <a href="http://search.cpan.org/perldoc?Template::Provider::Encoding">Template::Provider::Encoding</a>.
  </p>
 
-    <h2><a name="weiterfuehrende_themen"></a>Weiterführende Themen</h2>
+    <h2 name="weiterfuehrende_themen">Weiterführende Themen</h2>
     <p>Mit den Grundlagen zu den Themen Zeichenkodierungen und Perl kommt man schon
     sehr weit, zum Beispiel kann man Webanwendunen „Unicode-Safe” machen, also
     dafür sorgen, dass alle möglichen Zeichen vom Benutzer eingegeben und
