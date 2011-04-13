@@ -17,7 +17,7 @@ a similar learning experience.</p>
 
 <p>Here are some instructions that help you to write and debug grammars.</p>
 
-<h2>Start with small steps</h2>
+<h2 id="small-steps" name="small-steps">Start with small steps</h2>
 
 <p>Start with small steps, and test along the way.</p>
 
@@ -25,7 +25,7 @@ a similar learning experience.</p>
 expanding the test cases and the grammar simultaneously. Only add more
 features when all tests that you expect to pass actually do.</p>
 
-<h2>Test rules individually</h2>
+<h2 id="individual-tests" name="individual-tests">Test rules individually</h2>
 
 <p>If you can't understand certain behavior, test rules individually. That way
 you can figure out if a rule is wrong, wrongly (or never) called, or interacts
@@ -56,7 +56,7 @@ say ?MyGrammar.parse("foo = bar", :rule<chunk>);        # 0
 due to a stupid thinko. The last two lines test the rules individually,
 identifying token <code>chunk</code> as the faulty one.</p>
 
-<h2>Debug with <code>print</code> or <code>say</code></h2>
+<h2 id="debug-with-print" name="debug-with-print">Debug with <code>print</code> or <code>say</code></h2>
 
 <p>Just like ordinary code, you can sprinkle your grammar rules with calls to
 <code>say()</code>. You just need to embed them in curly braces, so that they
@@ -103,7 +103,7 @@ aab
 aa
 </pre>
 
-<h2>Be careful with backtracking control</h2>
+<h2 id="backtracking-control" name="backtracking-control">Be careful with backtracking control</h2>
 
 <p>Programmers who are familiar with Perl 5 regexes or similar regex engines
 are used to backtracking: If the "most obvious" way to match a string does not
@@ -134,7 +134,7 @@ rule verbatim {
 match, it will never try another, because here <code>verbatim</code> is a
 rule, which (like token) suppresses backtracking into itself.</p>
 
-<h2>Rakudo's DEBUG rule</h2>
+<h2 id="debug-rule" name="debug-rule">Rakudo's DEBUG rule</h2>
 
 <p>Rakudo has a DEBUG rule (which is not specified, so you shouldn't count on
 its availability in other implementations). If you call with a true argument,

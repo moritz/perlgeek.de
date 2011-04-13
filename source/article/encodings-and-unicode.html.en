@@ -371,7 +371,7 @@ for (@charsets){
 
 <h2><a name="troubleshooting"></a>Troubleshooting</h2>
 
-<h3>"Wide Character in print"</h3>
+<h3 id="wide-character" name="wide-character">"Wide Character in print"</h3>
 
 <p>
     Sometimes you might see the <code>Wide character in print</code> warning.
@@ -384,7 +384,7 @@ for (@charsets){
     piping the offending string through <code>Encode::encode</code> first.
 </p>
 
-<h3>Inspecting Strings</h3>
+<h3 id="inspecting-strings" name="inspecting-strings">Inspecting Strings</h3>
 
 <p>
     Sometimes you want to inspect if a string from an unknown source has
@@ -445,7 +445,7 @@ LEN = 4</pre>
     anyway.
 </p>
 
-<h3>Buggy Modules</h3>
+<h3 id="buggy-modules" name="buggy-modules">Buggy Modules</h3>
 
 <p>
     A common source of errors are buggy modules. The pragma
@@ -461,7 +461,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     functions stop working, and the module isn't thread safe.
 </p>
 
-<h2><a name="charsets_in_the_www"></a>Charsets in the WWW</h2>
+<h2 name="charsets_in_the_www" id="charsets_in_the_www">Character Encodings in the WWW</h2>
 <p>
     When you write a CGI script you have to chose a character encoding,
     print all your data in that encoding, and write it in the HTTP headers.
@@ -525,10 +525,10 @@ use encoding ':locale';[%endsyntax%]</pre>
     Template Toolkit (with the <code>ENCODING</code> option in the constructor
     and an IO layer in the <code>process</code> method).</p>
 
-    <h2><a name="advanced_topics"></a>Advanced Topics</h2>
+    <h2 name="advanced_topics" id="advanced_topics">Advanced Topics</h2>
 <p>
     With the basic charset and Perl knowledge you can get quite far. For
-    example, you can make a web application "Unicode safe", i.e. you can 
+    example, you can make a web application "Unicode safe", i.e. you can
     take care
     that all possible user inputs are displayed correctly, in any script the
     user happens to use.
@@ -564,7 +564,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     many systems are broken by design regarding character sets and encodings.
 </p>
 
-<h3>Broken by Design</h3>
+<h3 id="broken-by-design" name="broken-by-design">Broken by Design</h3>
 
 <p>
     "Broken by Design" most of the time means that a document format, and API
@@ -587,7 +587,7 @@ use encoding ':locale';[%endsyntax%]</pre>
     cases, but produces really ugly results where it doesn't work.
 </p>
 
-<h3>Another Example: XML</h3>
+<h3 id="broekn-xml" name="broken-xml">Another Example: XML</h3>
 
 <p>
     The <a href="http://en.wikipedia.org/wiki/XML">Extensible Markup
@@ -660,7 +660,7 @@ care of all encoding issues.</p>
 
 <p>Then it could just work.</p>
 
-<h2 id="further_reading">Further reading</h2>
+<h2 id="further_reading" name="further_reading">Further reading</h2>
 
 <ul>
     <li><a
@@ -673,7 +673,7 @@ care of all encoding issues.</p>
         Unicode Tutorial</a></li>
 </ul>
 
-<h2 id="tools">Useful Tools</h2>
+<h2 id="tools" name="tools">Useful Tools</h2>
 
 <ul>
     <li>
@@ -696,7 +696,7 @@ care of all encoding issues.</p>
 </ul>
 
 
-<h2 id="acknowledgements">Acknowledgments</h2>
+<h2 id="acknowledgements" name="acknowledgements">Acknowledgments</h2>
 
 
 <p>

@@ -11,7 +11,7 @@ classes and other object-oriented things work.</p>
 <p>If you're not satisfied with such a short explanation, or want to see a MOP
 developed and used, read on.</p>
 
-<h2>A Simple MOP: per-instance methods</h2>
+<h2 id="per-instance-methods" name="per-instance-methods">A Simple MOP: per-instance methods</h2>
 
 <p>Suppose you write a software that works with lots of objects which mostly
 work the same, but some have special abilities or behavior. You don't want to
@@ -96,7 +96,7 @@ use it control itself, and for example override the
 <code>override_method</code> in an instance of the
 <code>Method::PerInstance</code> class.</p>
 
-<h2>Types of MOPs</h2>
+<h2 name="mop-types" id="mop-types">Types of MOPs</h2>
 
 <p>The <code>Method::PerInstance</code> metaclass controls only method
 dispatch. That's a very interesting topic, but certainly not the only one that
@@ -109,7 +109,7 @@ a metaclass can manipulate. Others include</p>
     <li>Instantiation, i.e. object construction</li>
 </ul>
 
-<h2>Prior Art</h2>
+<h2 id="prior-art" name="prior-art">Prior Art</h2>
 
 <p>If you design a new programming language, or a new meta object system, you
 should read <a
@@ -133,7 +133,7 @@ object system for Perl 5 builds on it.</p>
 6 programming language</a>, so Moose and the Perl 6 MOP share lots of
 ideas.</p>
 
-<h2>A Metaclass in action</h2>
+<h2 id="example" name="example">A Metaclass in action</h2>
 
 <p>If you write a Perl 6 program like this:</p>
 
@@ -231,7 +231,7 @@ logging facility, and prints the method name to the standard error stream.</p>
 adding for the wrapping. Both are typical metaclass features, and are put to
 good use for automatic logging.</p>
 
-<h2>Literature</h2>
+<h2 id="literature" name="literature">Literature</h2>
 
 <p>Literature on meta object protocols seems to be quite sparse. Regarding
 books there is <a href="http://www.amazon.de/gp/product/0262610744?ie=UTF8&tag=moritzlenz-21&linkCode=as2&camp=1638&creative=19454&creativeASIN=0262610744">The

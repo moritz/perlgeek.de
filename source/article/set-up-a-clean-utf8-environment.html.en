@@ -16,7 +16,7 @@ if you can trust your terminal to correctly display correct UTF-8.</p>
 most things work independently of the distribution, and parts of it even work
 on other Unix-flavored operating systems like MacOS X.</p>
 
-<h2>Choosing an encoding</h2>
+<h2 id="chose-encoding">Choosing an encoding</h2>
 
 <p>In the end the used character encoding doesn't matter much, as long as it's
 a Unicode encoding, i.e. one which can be used to encode all Unicode
@@ -35,7 +35,7 @@ applications (mutt, slrn, vim, irssi, ...).</p>
 similarly for other character encodings.</p>
 
 
-<h2>Locales: installing</h2>
+<h2 id="install-locales">Locales: installing</h2>
 
 <p>Check that you have the <code>locales</code> package installed. On Debian
 you can do that with.</p>
@@ -80,7 +80,7 @@ locales the default. Picking a default UTF-8 locale as default is usually a
 good idea, though it might change how some programs work, and thus shouldn't
 be done servers hosting sensitive applications.</p>
 
-<h2>Locales: configuration</h2>
+<h2 id="configure-locales">Locales: configuration</h2>
 
 <p>If you chose a default locale in the previous step, log out completely and
 then log in again. In any case you can configure your per-user environment
@@ -109,7 +109,7 @@ $ source ~/.bashrc
 
 <p>All newly started interactive bash processes will respect these settings.</p>
 
-<h2>Locales: check</h2>
+<h2 id="check-locales">Locales: check</h2>
 
 <p>Run the <code>locale</code> program. The output should be similar to
 this:</p>
@@ -135,7 +135,7 @@ LC_ALL=en_US.UTF-8
 <p>If not you've made a mistake in one of the previous steps, and need to
 recheck what you did.</p>
 
-<h2>Setting up the terminal emulator</h2>
+<h2 id="setup-terminal-emulator">Setting up the terminal emulator</h2>
 
 <p>Setting up the terminal emulator for your terminal emulator strongly
 depends on what you actually use. If you use <code>xterm</code>, you can start
@@ -143,7 +143,7 @@ it as <code>xterm -en utf-8</code>, <a
 href="http://konsole.kde.org/">konsole</a> and the Gnome Terminal can be
 configured in their respective configuration menus.</p>
 
-<h2>Testing the terminal emulator</h2>
+<h2 id="check-terminal-emulator">Testing the terminal emulator</h2>
 
 <p>To test if you terminal emulator works, copy and paste this line in your
 shell:</p>
@@ -158,13 +158,13 @@ single question mark instead, your fonts might not contain it. Try installing
 additional fonts. If multiple different (nonsensical) characters are shown,
 the wrong character encoding is configured. Keep trying :-).</p>
 
-<h2>SSH</h2>
+<h2 id="ssh">SSH</h2>
 
 <p>If you use SSH to log in into another machine, repeat the previous steps,
 making sure that the locale is set correctly, and that you can view a
 non-ASCII character like the Euro sign.</p>
 
-<h2>Screen</h2>
+<h2 id="screen">Screen</h2>
 
 <p>The <a href="http://www.gnu.org/software/screen/">screen</a> program can
 work with UTF-8 if you tell it to.</p>
