@@ -111,7 +111,7 @@ Elements auf der rechten Seite des neu eingefügten Elements.</p>
 
 <div style="clear:left;margin-bottom:1ex"></div>
 
-<h3>Noch ein Beispiel für das Einfügen</h3>
+<h3 id="beispiel-einfuegen">Noch ein Beispiel für das Einfügen</h3>
 
 <p>Da das vorherige Beispiel ein Spezialfall einer Liste mit nur einem
 Element war, hier noch ein Beispiel, diesmal mit einer zweielementigen
@@ -244,7 +244,7 @@ läuft durch die Liste, in diesem Fall nach rechts.</p>
 <p>Wenn beide wieder gleich sind, d.h. die Liste einmal
 vollständig durchlaufen ist, wird die Schleife beendet.</p>
 
-<h3>Ein kleines Testprogramm</h3>
+<h3 id="testprogramm">Ein kleines Testprogramm</h3>
 <p>Zeit, die geschriebenen Funktionen zu testen:</p>
 
 <pre>[% syntax c %]
@@ -298,7 +298,7 @@ Liste nach Wiederherstellen des Kopfes:
 <p>Hier sei noch auf ein paar Fehler hingewiesen, die man vermeiden
 sollte:</p>
 
-<h3>Endlosschleifen</h3>
+<h3 id="endlosschleifen">Endlosschleifen</h3>
 
 <p>Was macht folgender Code?</p>
 
@@ -325,7 +325,7 @@ abbricht.</p>
 <p><strong>Mit entfernten Elementen einer Liste darf man nichts
 anderes machen, als <code>restore</code> aufzurufen.</strong></p>
 
-<h3>Memory Leaks</h3>
+<h3 id="memory-leaks">Memory Leaks</h3>
 
 <p>Was macht folgender Code?</p>
 
@@ -377,7 +377,7 @@ anbietet.</p>
 <p>Allerdings verliert man damit auch ein wenig
 Funktionalität.</p>
 
-<h3>Löschen und wiederherstellen mehrerer Elemente</h3>
+<h3 id="delete-restore">Löschen und wiederherstellen mehrerer Elemente</h3>
 
 <p>Man betrachte eine Liste aus einem Kopf und drei Elementen
 <code>node1</code>, <code>node2</code> und <code>node3</code>, aus der

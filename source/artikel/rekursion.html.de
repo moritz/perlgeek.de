@@ -75,7 +75,7 @@ reine Zahl zurück, sondern <code>2 * fakultaet(1)</code>, und
  = 3 * 2 * 1
  = 6</pre>
 
-<h3>Wozu das ganze?</h3>
+<h3 id="wozu">Wozu das ganze?</h3>
 
 <p>Wer dieses Beispiel gesehen hat, fragt sich sicher, was die
 Rekursion denn soll. Schließlich tut es ein ganz einfaches,

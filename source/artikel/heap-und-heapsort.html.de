@@ -133,7 +133,7 @@ Quicksort schnell, aber für die Cache-Architekturen moderner Computer
 nicht unbedingt optimal, weshalb für große Datenmengen üblicherweise
 Mergesort oder Quicksort einsetzt.</p>
 
-<h2>Implementierung</h2>
+<h2 id="implementierung">Implementierung</h2>
 
 <p>Auch wenn man einen Heap mit Zeigern aufbauen kann, so ist es doch
 sehr viel Aufwand, und das Einfügen und Entfernen von Elementen ist
@@ -157,7 +157,7 @@ man vorher die Größe kennt ist das Array am besten geeignet.</p>
 <code>heap</code> gibt sowie ein integer <code>heap_p</code>, der auf
 das letzte Element des Heaps zeigt.</p>
 
-<h3>Element einfügen</h3>
+<h3 id="insert-element">Element einfügen</h3>
 
 <p>Zum Einfügen wird das Element einfach an das Ende kopiert, und
 dann die Heapbedindung wieder hergestellt:</p>
@@ -186,7 +186,7 @@ void reheap_up(int pointer){
     beiden übereinanderliegenden Elemente, falls das obere Element
     größer ist als das untere.</p>
 
-    <h3>Wurzelknoten löschen</h3>
+    <h3 id="delete-root">Wurzelknoten löschen</h3>
 
     <p>Auch das Löschen des Wurzelelements ist nicht sehr
     kompliziert:</p>
@@ -223,7 +223,7 @@ void reheap_down(int pointer){
     }
 }[% endsyntax %]</pre>
 
-<h2>Implementierung in C++</h2>
+<h2 id="impl-cpp">Implementierung in C++</h2>
 
 <p>Einen Heap kann man sehr schön in einer Klasse kapseln, wofür sich C++
 wiederum eignet. Hier eine sehr einfache Implementierung.</p>
@@ -268,7 +268,7 @@ class myheap {
 <p>Die Funktion <code>check_heap_condition</code> dient nur der
 Kontrolle der Implementierung und kann auch weggelassen werden.</p>
     
-      <h3>myheap.cpp</h3>
+<h3 id="impl-myheap-cpp">myheap.cpp</h3>
 
 <pre>[% syntax cpp %]
 #include "myheap.hpp"
@@ -360,7 +360,7 @@ void myheap::check_heap_condition(void){
 
 }[% endsyntax %]</pre>
 
-    <h3>Ein kleines Testprogramm</h3>
+    <h3 id="test-prog">Ein kleines Testprogramm</h3>
     <p>Ein kleines Programm soll demonstrieren, dass der Heap
     tatsächnlich funktioniert:</p>
 
@@ -401,7 +401,7 @@ clean:
 	rm -f $(OBJECTS) $(BIN) core
 </pre>
 
-	<h2>Download</h2>
+	<h2 id="download">Download</h2>
 
 	<p>Die obigen Dateien gibt es auch zum <a
 	href="/static/heap.tar.gz">herunterladen (als .tar.gz Archiv)</a>.</p>
