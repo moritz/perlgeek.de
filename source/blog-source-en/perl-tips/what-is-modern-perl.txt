@@ -44,7 +44,7 @@ programs, and allows you to have more fun while writing them.</p>
         href="http://search.cpan.org/perldoc?Devel::NYTProf">Devel::NYTProf</a></li>
     <li>(update) <a
         href="http://search.cpan.org/dist/App-perlbrew/">perlbrew</a> and <a
-        href="search.cpan.org/perldoc/local::lib">local::lib</a> to help
+        href="http://search.cpan.org/perldoc/local::lib">local::lib</a> to help
         maintain your own perl installation and locally installed
         modules.</li>
 </ul>
@@ -62,7 +62,7 @@ various media, I should add a few more tools that I forgot about earlier:</p>
     <li><a
         href="http://search.cpan.org/perldoc?Perl::Critic">Perl::Critic</a>,
         a code quality and style tester</li>
-    <li><a href="http://search.cpan.org/perldoc?DBIx::Class">DDBIx::Class</a>,
+    <li><a href="http://search.cpan.org/perldoc?DBIx::Class">DBIx::Class</a>,
         a modern and very popular object relational mapper</li>
     <li><a href="http://search.cpan.org/perldoc?Catalyst">Catalyst</a>,
         a web framework based on the MVC pattern</li>
