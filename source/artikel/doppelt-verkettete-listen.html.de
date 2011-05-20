@@ -54,9 +54,9 @@ erzeugen:</p>
 <pre>[% syntax c %]
 struct node * new_list(){
 	struct node *new = (struct node*) malloc(sizeof(struct node));
-	new->data = -1;
+	new->data  = -1;
 	new->right = new;
-	new->left = new;
+	new->left  = new;
 	return new;
 }[% endsyntax %]</pre>
 
@@ -250,11 +250,11 @@ vollständig durchlaufen ist, wird die Schleife beendet.</p>
 <pre>[% syntax c %]
 int main(int argc, char** argv){
 	/* erstelle eine neue Liste: */
-	struct node *head = new_list();
+	struct node *head    = new_list();
 	struct node *current = head;
 	int i;
 
-	/* Bevoelkere die List mit den Zahlen 1 bis 10 */
+	/* Befuelle die List mit den Zahlen 1 bis 10 */
 	for(i = 1; i <= 10; i++){
 		current = insert_right(current, i);
 	}
@@ -349,11 +349,11 @@ löschen und den Speicher an das Betriebssystem
 zurückzugeben:</p>
 
 <pre>[%syntax c %]
-current = insert_right(current, 2);
-node * tmp = current;
-current = delete(current);
+current           = insert_right(current, 2);
+struct node * tmp = current;
+current           = delete(current);
 free(tmp);
-tmp = NULL;
+tmp        = NULL;
 [%endsyntax%]</pre>
 
 <p>Wenn das häufiger vorkommt, ist es sinnvoll eine Funktion
@@ -364,7 +364,7 @@ Element automatisch frei gibt:</p>
 struct node * delete_and_free(struct node *list){
 	list->right->left = list->left;
 	list->left->right = list->right;
-	struct node *res = list->left;
+	struct node *res  = list->left;
 	free(list);
 	return list->left;
 }[%endsyntax%]</pre>
