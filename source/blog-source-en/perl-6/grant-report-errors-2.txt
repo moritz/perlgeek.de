@@ -1,0 +1,20 @@
+Second Grant Report: Structured Error Messages
+<!-- 1306045701 -->
+<p>Progress on my <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">grant
+for error message</a> is slower than expected, as expected :-). Life and work,
+though rewarding, take their toll. Also many of my original ideas turned out
+to be not very good, and got shot down by @Larry (with good reason).</p>
+
+<p>However I did get around to lay out some specification for exceptions in <a
+href="https://github.com/perl6/specs/blob/master/S32-setting-library/Exception.pod">S32::Exception</a>
+(<a href="http://perlcabal.org/syn/S32/Exception.html">rendered</a>) - some
+basic roles, and the relationships between exception, <code>Failure</code>
+(lazy/unthrown exceptions) and backtraces.</p>
+
+<p>More importantly I think I'm at a point where I could start to actually
+implement some of that stuff, and use that experience to update the
+specification.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
