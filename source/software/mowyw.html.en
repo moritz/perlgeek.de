@@ -10,6 +10,15 @@
     System (CMS).
 </p>
 
+<p>
+    <strong>News:</strong> mowyw is on its way to the <a
+    href="http://search.cpan.org">Comprehensive Perl Archive Network
+    (CPAN)</a> under the name <a
+    href="http://search.cpan.org/dist/App-Mowyw">App::Mowyw</a>. Please help
+by testing the distribution, and by reporting any problems you encounter with
+it.
+</p>
+
 <h2 id="what-is">What is mowyw?</h2>
 
 <p>
