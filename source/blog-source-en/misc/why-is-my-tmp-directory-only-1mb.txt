@@ -1,0 +1,43 @@
+Why is my /tmp/ directory suddenly only 1MB big?
+<!-- 1308070080 -->
+
+<p>Today I got a really weird error on my Debian "Squeeze" Linux box --
+a processes tried to write a temp file, and it complained that there was
+<code>No space left on device</code>.</p>
+
+<p>The weird thing is, just yesterday my root parition was full, and I had
+made about 7GB free space in it.</p>
+
+<p>I checked, there was still plenty of room today. But behold:</p>
+
+<pre>
+$ df -h /tmp/
+Filesystem            Size  Used Avail Use% Mounted on
+overflow              1.0M  632K  392K  62% /tmp
+</pre>
+
+<p>So, suddenly my /tmp/ directory was a ram disc with just 1MB of space. And
+it didn't show up in <code>/etc/fstab</code>, so I had no idea what cause
+it.</p>
+
+<p>After googling a bit around, I found the likely reason: <a
+href="http://lists.alioth.debian.org/pipermail/pkg-sysvinit-devel/2007-June/001973.html">as
+a protection against low disc space, some daemon automatically "shadows" the
+current /tmp/ dir with a ram disc if the the root partition runs out of disc
+space</a>. Sadly there's no automatic reversion of that process once enough
+disc space is free again.</p>
+
+<p>To remove the mount, you can say (as root)</p>
+
+<pre>
+umount -l /tmp/
+</pre>
+
+<p>And to permanently disable this feature, use</p>
+
+<pre>
+echo 'MINTMPKB=0' &gt; /etc/default/mountoverflowtmp
+</pre>
+
+[% options no-header %] [% options no-footer %]
+[% comment vim: set ft=html: %]
