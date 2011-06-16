@@ -57,7 +57,7 @@ it.
     Entire files can be included via the <code>[%include name%]</code>
     or <code>[% include name %]</code> directive.</p>
     <p>A menu <code>foo</code> can be included with the item
-    <code>bar</code> as the active item via <code>[%menu foo bar%]</code>. 
+    <code>bar</code> as the active item via <code>[%menu foo bar%]</code>.
     The corresponding menu file might look like this:
 </p>
 [% endverbatim syn%]
