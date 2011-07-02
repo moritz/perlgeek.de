@@ -1,0 +1,21 @@
+Introducing my new project: Quelology organizes books
+<!-- 1309084783 -->
+<p>For about half a year I've been working on a website called <a
+href="http://quelology.org/">quelology</a>, which collects book series and
+translations.</p>
+
+<p>It is intended to answer questions of the form:
+<a href="http://quelology.org/t/9684">I've now read "Harry Potter and the Order of the Phoenix",
+which is the next book in that series?</a> or
+<a href="http://quelology.org/t/9681">What's the name of the French translation of that book?</a></p>
+
+<p>The website and data mining behind it are written in Perl, and it is based on book meta data by <a href="http://www.isfdb.org/cgi-bin/index.cgi">isfdb</a>, amazon and <a href="http://www.worldcat.org/">worldcat</a>.</p>
+
+<p>I'm working on importing data from more sources, next up will be the
+<a href="http://libris.kb.se/">Swedish National Library</a>.</p>
+
+<p>After completing the data mining stage, I'll add an interfaces that allows
+the visitor to edit the book, series and translations data, so that users can extend the data body.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: se ft=html: %]
