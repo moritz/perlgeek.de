@@ -1,0 +1,55 @@
+How fast is Rakudo's "nom" branch?
+<!-- 1309588981 -->
+<p>Nearly one year ago, the <a href="http://rakudo.org/">Rakudo Perl 6</a>
+developers proudly released the first <a
+href="http://rakudo.org/2010/07/29/rakudo-star-2010-07/">Rakudo Star</a>, a
+distribution aimed at showing the world what Perl 6 can look like, and in turn
+get feedback from more early adaptors.</p>
+
+<p>And feedback we got. While the overall response was very positive, people
+had one main concern: it was too slow. That didn't come as a surprise,
+considering that we had focused on features first. Now it was time to change
+that, and work on massive performance improvements.</p>
+
+<p>That is easier said than done. One of the reasons is that Rakudo is tightly
+coupled to <a href="http://parrot.org/">the parrot virtual machine</a>, but
+there is a lot of mismatch between the two. For example parrot provides multi
+dispatch built-in, but not quite with the semantics that Perl 6 needs. Same
+for parameter binding, objects and a number of other areas.</p>
+
+<p>In the following year, parrot got a new, faster garbage collector, and
+Jonathan Worthington came up with a cache for type checks at routine call
+time.</p>
+
+<p>This sped up this simple <a href="https://github.com/colomon/mandelbrot/blob/master/bin/mandelbrot-color.pl">mandelbrot fractal
+generator</a> at size 201x201 from 18 minutes to 16 minutes 14 seconds.
+Actually the speedup was better than that, but we paid a performance penalty
+for new features, bug fixes and parrot performance regressions.</p>
+
+<p>But it was clear that more substantial improvements where needed.
+One of the most promising candidates for
+speedups is a
+<a href="http://6guts.wordpress.com/">complete redesign of the object
+model</a>, resulting in the <a
+href="http://pmthium.com/2011/02/08/new-nqp-repository-new-nom-rakudo-branch/">"nom"
+(new object model) branch</a> of Rakudo. Additionally to providing much more
+well suited OO primitives than parrot can offer right now, it also allows to
+share more information between compile time and run time, making a lot of
+optimizations possible.</p>
+
+<p>Yesterday I <a
+href="https://github.com/rakudo/rakudo/commit/437675e330460d0cf801d48a635c413d532e062f">sped
+up some operations on Complex numbers</a>, and implemented a built-in that was
+missing to run the mandelbrot script. And today I timed it: 3 Minutes. From
+originally 18 Minutes.</p>
+
+<p>Now that's a speedup by more than a factor of 5. I'm not sure if it will
+extend to other operators, but it sure is encouraging.</p>
+
+<p>And that's without the optimizations that will now be possible, for example
+inlining operators. So after a literally slow start, Rakudo Perl 6 has a
+bright and fast future ahead. And it's already here, just not evenly
+distributed.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html: %]
