@@ -69,10 +69,10 @@ name="Associativity"
     }</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
-name="Postfcircumfix_and_Circumfix"
->Postfcircumfix and Circumfix</a></h4>
+name="Postcircumfix_and_Circumfix"
+>Postcircumfix and Circumfix</a></h4>
 
-<p>Postfcircumfix operators are method calls:</p>
+<p>Postcircumfix operators are method calls:</p>
 
 <pre>    class OrderedHash is Hash {
         method postcircumfix:&#60;{ }&#62;(Str $key) {
@@ -80,7 +80,7 @@ name="Postfcircumfix_and_Circumfix"
         }
     }</pre>
 
-<p>If you call that as <code>$object[$stuff]</code>, <code>$stuff</code> will be passed as an argument to the method, and <code>$object</code> is available as <code>self</code>.</p>
+<p>If you call that as <code>$object{$stuff}</code>, <code>$stuff</code> will be passed as an argument to the method, and <code>$object</code> is available as <code>self</code>.</p>
 
 <p>Circumfix operators usually imply a different syntax (like in <code>my @list = &#60;a b c&#62;;</code>), and are thus implemented as macros:</p>
 
