@@ -74,9 +74,9 @@ C<< $a < $b < $c >> translates to C<($a < $b) && ($b < $c)>.
         ...
     }
 
-=head2 Postfcircumfix and Circumfix 
+=head2 Postcircumfix and Circumfix 
 
-Postfcircumfix operators are method calls:
+Postcircumfix operators are method calls:
 
     class OrderedHash is Hash {
         method postcircumfix:<{ }>(Str $key) {
@@ -84,7 +84,7 @@ Postfcircumfix operators are method calls:
         }
     }
 
-If you call that as C<$object[$stuff]>, C<$stuff> will be passed as an
+If you call that as C<$object{$stuff}>, C<$stuff> will be passed as an
 argument to the method, and C<$object> is available as C<self>.
 
 Circumfix operators usually imply a different syntax (like in
