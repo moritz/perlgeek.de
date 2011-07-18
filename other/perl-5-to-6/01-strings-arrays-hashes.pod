@@ -72,7 +72,7 @@ Since everything is an object, you can call methods on arrays:
     @b.end                      # number of last index. Replaces $#array
     my @c = @b.map({$_ * 2 });  # map is also a method, yes
 
-There is a short form for the old C<qw(..)> quoting construct:
+There is a short form for the old C<qw/../> quoting construct:
 
     my @methods = <shift unshift push pop end delete sort map>;
 

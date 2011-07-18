@@ -47,7 +47,7 @@ Perl 6 has a "compare everything" operator, called "smart match" operator, and
 spelled C<~~>.
 
 For immutable types it is a simple equality comparison. A smart match against
-a type checks for type conformance. A smart match against a regex matches the
+a type object checks for type conformance. A smart match against a regex matches the
 regex. Matching a scalar against a C<Range> object checks if that scalar is
 included in the range.
 
@@ -60,7 +60,7 @@ formulated as a smart match in Perl 6.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence>
+L<http://perlcabal.org/syn/S03.html#Smart_matching>
 
 =for time 1222554000
 =for editor vim: spell

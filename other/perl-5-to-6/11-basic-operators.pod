@@ -14,13 +14,13 @@
     'a' ~ 'b'       # 'ab'
 
     # file tests
-    if '/etc/passwd' ~~ :e { say "exists" }
+    if '/etc/passwd'.IO ~~ :e { say "exists" }
 
     # repetition
     'a' x 3         # 'aaa'
     'a' xx 3        # 'a', 'a', 'a'
 
-    # ternary op
+    # ternary, conditional op
     $a == $b ?? 2 * $a !! $b - $a
 
     # chained comparisons
@@ -32,7 +32,7 @@ All the numeric operators (C<+>, C<->, C</>, C<*>, C<**>, C<%>) remain
 unchanged.
 
 Since C<|>, C<^> and C<&> now construct junctions, the bit wise operators have
-a changed syntax. They now contain a data prefix, so for example C<+|> is bit
+a changed syntax. They now contain a context prefix, so for example C<+|> is bit
 wise OR with numeric context, and C<~^> is one's complement on a string. Bit
 shift operators changed in the same way.
 
@@ -40,7 +40,7 @@ String concatenation is now C<~>, the dot C<.> is used for method calls.
 
 File tests are now formulated in C<Pair> notation, Perl 5 C<-e> is now
 C<:e>. If something other than C<$_> should be used as the file name, it can
-be supplied via C<$filename.io ~~ :e>.
+be supplied via C<$filename.IO ~~ :e>.
 
 The repetition operator C<x> is now split into two operators: C<x> replicates
 strings, C<xx> lists.

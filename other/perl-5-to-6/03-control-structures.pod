@@ -29,6 +29,10 @@ difference is that you don't need a pair of parenthesis after C<if>, C<while>,
 C<for> etc.
 
 In fact you are discouraged from using parenthesis around the conditions.
+The reason is that any identifier followed immediately (ie. without
+whitespace) by an opening parenthesis is parsed as a subroutine call,
+so C<if($x < 3)</c> tries to call a function named C<if>. While a space
+after the C<if> fixes that, it is safer to just omit the parens.
 
 =head2 Branches
 
@@ -53,7 +57,7 @@ statement:
 You can manipulate loops with C<next> and C<last> just like in Perl 5.
 
 The C<for>-Loop is now only used to iterate over lists. By default the
-standard variable C<$_> is used, unless an explicit loop variable is given.
+topic variable C<$_> is used, unless an explicit loop variable is given.
 
     for 1..10 -> $x {
         say $x;

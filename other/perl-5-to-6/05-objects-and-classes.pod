@@ -66,7 +66,7 @@ takes arguments.
         method foo {
             return self;
         }
-        method bar($s: ) {
+        method bar(SomeClass $s: ) {
             return $s;
         }
     }
@@ -142,7 +142,7 @@ the type of a child class is conforming to that of a parent class:
 
         class Bar { }
         class Foo is Bar { }
-        my Bar $x = Foo.new();
+        my Bar $x = Foo.new();   # ok, since Foo ~~ Bar
 
 In this example the type of C<$x> is C<Bar>, and it is allowed to assign an
 object of type C<Foo> to it, because "every C<Foo> is a C<Bar>".
@@ -153,12 +153,19 @@ Classes can inherit from multiple other classes:
         ...
     }
 
+Though multiple inheritance also comes with multiple problems, and people
+usually advise against it. Roles are often a safer choice.
+
 =head2 Roles and Composition
 
 In general the world isn't hierarchical, and thus sometimes it's hard to press
 everything into an inheritance hierarchy. Which is one of the reasons why Perl
 6 has Roles. Roles are quite similar to classes, except you can't create
-objects directly from them. While classes are intended primarily for type
+objects directly from them, and that composition of multiple roles with the
+same method names generate conflicts, instead of silently resolving to one of
+them, like multiple inheritance does.
+
+While classes are intended primarily for type
 conformance, roles are the primary means for code reuse in Perl 6.
 
     role Paintable {
@@ -181,6 +188,8 @@ conformance, roles are the primary means for code reuse in Perl 6.
 
 L<http://perlcabal.org/syn/S12.html>
 L<http://perlcabal.org/syn/S14.html>
+L<http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf>
+L<http://en.wikipedia.org/wiki/Perl_6#Roles>
 
 =for time 1222208400
 =for editor vim: spell

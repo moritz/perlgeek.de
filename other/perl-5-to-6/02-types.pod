@@ -15,7 +15,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 has types. Everything is an Object in some way, and has a type.
+Perl 6 has types. Everything is an object in some way, and has a type.
 Variables can have type constraints, but they don't need to have one.
 
 There are some basic types that you should know about:
@@ -26,7 +26,7 @@ There are some basic types that you should know about:
     (1, 2, 3)       # Seq
 
 All "normal" built-in types begin with an upper case letter. All "normal" types
-inherit from C<Any>, and absolutely everything inherits from C<Object>.
+inherit from C<Any>, and absolutely everything inherits from C<Mu>.
 
 You can restrict the type of values that a variable can hold by adding the
 type name to the declaration.
@@ -41,8 +41,8 @@ A type declaration on an Array applies to its contents, so C<my Str @s> is
 an array that can only contain strings.
 
 Some types stand for a whole family of more specific types, for example
-integers, rationals and floating-point numbers (type C<Num>) conform to the
-C<Numeric> type.
+integers (type C<Int>), rationals (type C<Rat>) and floating-point
+numbers (type C<Num>) conform to the C<Numeric> type.
 
 =head2 Introspection
 

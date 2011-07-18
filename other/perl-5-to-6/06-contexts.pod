@@ -58,13 +58,14 @@ You can force slice context with C<@@( stuff )>.
 More specific contexts are a way to delay design choices. For example it seems
 premature to decide what a list should return in scalar context - a reference
 to the list would preserve all information, but isn't very useful in numeric
-comparisons. So every possible choice disappoints somebody.
+comparisons. On the other hand a string representation might be most useful
+for debugging purposes. So every possible choice disappoints somebody.
 
 With more specific context you don't need to make this choice - it returns some
 sensible default, and all operators that don't like this choice can simply
-propagate a more specific context.
+evaluate the object a more specific context.
 
-For some things like the match object the different contexts really enhance
+For some things (like the Match object), the different contexts really enhance
 their usefulness and beauty.
 
 =head1 SEE ALSO

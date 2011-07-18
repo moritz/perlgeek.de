@@ -36,7 +36,8 @@ anything to all of its arguments, they take up only as much space as the items
 need that have already been evaluated.
 
 There are pitfalls, though: determining the length of a list or sorting it
-kills laziness - if the list is infinite, it will likely loop infinitely.
+kills laziness - if the list is infinite, it will likely loop infinitely, or
+fail if the infiniteness can be detected.
 
 In general all conversions to a scalar (like C<List.join>) are I<eager>, i.e.
 non-lazy.
@@ -53,9 +54,8 @@ starts iterating. With laziness that's not an issue:
         say $line;
     }
 
-Since C<$file.lines> is an iterator or a lazy list (it doesn't really matter
-which), the lines are only physically read from disk as needed (besides
-buffering, of course).
+Since C<$file.lines> is a lazy list, the lines are only physically read
+from disk as needed (besides buffering, of course).
 
 =head2 gather/take
 
@@ -85,6 +85,12 @@ outside of the lexical scope of the C<gather> block:
 
     sub do_some_computation($x) {
         take $x * ($x + 1);
+    }
+
+Note that C<gather> can act on a single statement instead of a block too:
+
+    my @list = gather for 1..10 {
+        do_some_computation($_);
     }
 
 =head2 Controlling Laziness

@@ -4,7 +4,7 @@
 
 =head1 SYNOPSIS
 
-    if $x eq 3|4 {
+    if $x == 3|4 {
         say '$x is either 3 or 4'
     }
     say ((2|3|4)+7).perl        # (9|10|11)
@@ -32,11 +32,11 @@ C<1 | 2 | 3> is the same as C<any(1..3)>.
     }
 
 In this example the C<eq> operator is called with each pair C<$day, 'Monday'>,
-C<$day, 'Tuesday'> etc. and the result is put in an C<any>-junction again. As
+C<$day, 'Tuesday'> etc. and the result is put into an C<any>-junction again. As
 soon as the result is determined (in this case, as soon as one comparison
 returns C<True>) it can abort the execution of the other comparisons.
 
-This works not only for operators, but also for subs:
+This works not only for operators, but also for routines:
 
     if 2 == sqrt(4 | 9 | 16) {
         say "YaY";
@@ -54,7 +54,7 @@ bit):
 
 If you want to write a sub that takes a junction and doesn't autothread over
 it, you have to declare the type of the parameter either as C<Mu> or
-C<junction>
+C<Junction>
 
     sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
@@ -109,6 +109,17 @@ In Perl 6 that is short and sweet:
 
     my @items = get_data();
     if all(@items) >= 0 { ... }
+
+=head1 A Word of Warning
+
+Many people get all excited about junctions, and try to do too much with them.
+
+Junctions are not sets; if you try to extract items from a junction, you are
+doing it wrong, and should be using a C<Set> instead.
+
+It is a good idea to use junctions as smart conditions, but trying to build a
+solver for equations based on the junction autothreading rules is on
+over-extortion and usually results in frustration.
 
 =head1 SEE ALSO
 

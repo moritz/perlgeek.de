@@ -43,15 +43,15 @@ these parameters can have type constraints.
 Parameters are read-only by default. That can be changed with so-called
 "traits":
 
-    sub foo($bar) {
+    sub try-to-reset($bar) {
         $bar = 2;       # forbidden
     }
 
     my $x = 2;
-    sub baz($bar is rw) {
+    sub reset($bar is rw) {
         $bar = 0;         # allowed
     }
-    baz($x); say $x;    # 0
+    reset($x); say $x;    # 0
 
     sub quox($bar is copy){
         $bar = 3;
@@ -63,7 +63,7 @@ by supplying a default value.
 
     sub foo($x, $y?) {
         if $y.defined {
-            say "WE CAN HAZ $y"
+            say "Second parameter was supplied and defined";
         }
     }
 
@@ -110,15 +110,7 @@ You can use a different name, though:
     }
     area(width => 2,  height => 3);
 
-
-Named arguments can only be passed by name, not by position. On the other
-hand, positional arguments can be passed by name.
-
-    sub sqrt($number) { ... };
-    sqrt(3);
-    sqrt(number => 3); # also works
-
-=head2 Slurpy Arguments
+=head2 Slurpy Parameters
 
 Just because you give your sub a signature doesn't mean you have to know the
 number of arguments in advance. You can define so-called I<slurpy> parameters
@@ -129,6 +121,16 @@ number of arguments in advance. You can define so-called I<slurpy> parameters
         say "Rest: @rest[]";
     }
     tail(1, 2, 3, 4);           # "First: 1\nRest: 2 3 4\n"
+
+Named slurpy parameters are declared by using an asterisk in front of a hash
+parameter:
+
+    sub order-meal($name, *%extras) {
+        say "I'd like some $name, but with a few modifications:";
+        say %extras.keys.join(', ');
+    }
+
+    order-meal('beef steak', :vegetarian, :well-done);
 
 =head2 Interpolation
 
@@ -145,7 +147,7 @@ you can write something like this:
 That also means that by default you can't use a list as an argument list:
 
     my @indexes = 1, 4;
-    say "abc".substr(@indexes)       # error!
+    say "abc".substr(@indexes)       # doesn't do what you want
 
 You can achieve the desired behavior with a prefix C<|>
 
@@ -183,7 +185,7 @@ It also allows useful introspection. For example when you pass a block or a
 subroutine to C<Array.sort>, and that piece of code expects exactly one
 argument, a Schwartzian Transform (see
 L<http://en.wikipedia.org/wiki/Schwartzian_transform>) is automatically done
-for you - such a functionality would be impossible in Perl 5, because the lack
+for you - such a functionality would be impossible in Perl 5, because the lack
 of explicit signatures means that C<sort> can never find out how many
 arguments the code block expects.
 
@@ -201,7 +203,7 @@ Now all you have to do is to take care that your strings have the type that
 corresponds to their language, and then you can use C<uc> just like the normal
 builtin function.
 
-Since operators are also subs, these refinements works for operators too.
+Since operators are also subs, these refinements work for operators too.
 
 =head1 SEE ALSO
 

@@ -51,14 +51,15 @@ matches any character now, the old semantics (anything but newlines) can be
 achieved with C<\N>.
 
 Modifiers now go at the start of a regex, and non-capturing groups are
-C<[..]>, which are a lot easier to write than the old C<(?:...)>.
+C<[...]>, which are a lot easier to read and write than the old C<(?:...)>.
 
 =item Nested captures and match object
 
 In Perl 5, a regex like this C<(a(b))(c)> would put C<ab> into C<$1>, C<b>
 into C<$2> and C<c> into C<$3> upon successful match. This has changed. Now
 C<$0> (enumeration starts at zero) contains C<ab>, and C<$0[0]> or C<$/[0][0]>
-contains C<b>. C<$1> holds C<c>.
+contains C<b>. C<$1> holds C<c>. So each nesting level of parenthesis is
+reflected in a new nesting level in the result match object.
 
 All the match variables are aliases into C<$/>, which is the so-called
 I<Match object>, and it actually contains a full match tree.
@@ -72,8 +73,8 @@ inheritance and composition
 
 =back
 
-These changes make rules much easier to write and maintain than Perl 5
-regexes.
+These changes make Perl 6 regexes and grammars much easier to write and
+maintain than Perl 5 regexes.
 
 All of these changes go quite deep, and only the surface can be scratched
 here.
@@ -158,7 +159,7 @@ parse trees with rules.
 
 =head2 Named Regexes and Grammars
 
-Rules can either be used with the old style C<m/.../>, or be declared like
+Regexes can either be used with the old style C<m/.../>, or be declared like
 subs and methods.
 
     regex a { ... }
@@ -198,6 +199,10 @@ not changeable at parse time.
 =head1 SEE ALSO
 
 L<http://perlcabal.org/syn/S05.html>
+
+L<http://perlgeek.de/en/article/mutable-grammar-for-perl-6>
+
+L<http://perlgeek.de/en/article/longest-token-matching>
 
 =for time 1222381200
 =for editor vim: spell
