@@ -49,15 +49,15 @@ name="DESCRIPTION"
 
 <p>Parameters are read-only by default. That can be changed with so-called &#34;traits&#34;:</p>
 
-<pre>    sub foo($bar) {
+<pre>    sub try-to-reset($bar) {
         $bar = 2;       # forbidden
     }
 
     my $x = 2;
-    sub baz($bar is rw) {
+    sub reset($bar is rw) {
         $bar = 0;         # allowed
     }
-    baz($x); say $x;    # 0
+    reset($x); say $x;    # 0
 
     sub quox($bar is copy){
         $bar = 3;
@@ -68,7 +68,7 @@ name="DESCRIPTION"
 
 <pre>    sub foo($x, $y?) {
         if $y.defined {
-            say &#34;WE CAN HAZ $y&#34;
+            say &#34;Second parameter was supplied and defined&#34;;
         }
     }
 
@@ -110,15 +110,9 @@ name="Named_Parameters"
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<p>Named arguments can only be passed by name, not by position. On the other hand, positional arguments can be passed by name.</p>
-
-<pre>    sub sqrt($number) { ... };
-    sqrt(3);
-    sqrt(number =&#62; 3); # also works</pre>
-
 <h4><a class='u' href='#___top' title='click to go to top of document'
-name="Slurpy_Arguments"
->Slurpy Arguments</a></h4>
+name="Slurpy_Parameters"
+>Slurpy Parameters</a></h4>
 
 <p>Just because you give your sub a signature doesn&#39;t mean you have to know the number of arguments in advance. You can define so-called <i>slurpy</i> parameters (after all the regular ones) which use up any remaining arguments:</p>
 
@@ -127,6 +121,15 @@ name="Slurpy_Arguments"
         say &#34;Rest: @rest[]&#34;;
     }
     tail(1, 2, 3, 4);           # &#34;First: 1\nRest: 2 3 4\n&#34;</pre>
+
+<p>Named slurpy parameters are declared by using an asterisk in front of a hash parameter:</p>
+
+<pre>    sub order-meal($name, *%extras) {
+        say &#34;I&#39;d like some $name, but with a few modifications:&#34;;
+        say %extras.keys.join(&#39;, &#39;);
+    }
+
+    order-meal(&#39;beef steak&#39;, :vegetarian, :well-done);</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Interpolation"
@@ -144,7 +147,7 @@ name="Interpolation"
 <p>That also means that by default you can&#39;t use a list as an argument list:</p>
 
 <pre>    my @indexes = 1, 4;
-    say &#34;abc&#34;.substr(@indexes)       # error!</pre>
+    say &#34;abc&#34;.substr(@indexes)       # doesn&#39;t do what you want</pre>
 
 <p>You can achieve the desired behavior with a prefix <code>|</code></p>
 
@@ -188,7 +191,7 @@ name="MOTIVATION"
 
 <p>Now all you have to do is to take care that your strings have the type that corresponds to their language, and then you can use <code>uc</code> just like the normal builtin function.</p>
 
-<p>Since operators are also subs, these refinements works for operators too.</p>
+<p>Since operators are also subs, these refinements work for operators too.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

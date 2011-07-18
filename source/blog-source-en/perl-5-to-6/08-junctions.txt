@@ -11,7 +11,7 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    if $x eq 3|4 {
+<pre>    if $x == 3|4 {
         say &#39;$x is either 3 or 4&#39;
     }
     say ((2|3|4)+7).perl        # (9|10|11)</pre>
@@ -37,9 +37,9 @@ name="DESCRIPTION"
         say &#34;See you on $day&#34;;
     }</pre>
 
-<p>In this example the <code>eq</code> operator is called with each pair <code>$day, &#39;Monday&#39;</code>, <code>$day, &#39;Tuesday&#39;</code> etc. and the result is put in an <code>any</code>-junction again. As soon as the result is determined (in this case, as soon as one comparison returns <code>True</code>) it can abort the execution of the other comparisons.</p>
+<p>In this example the <code>eq</code> operator is called with each pair <code>$day, &#39;Monday&#39;</code>, <code>$day, &#39;Tuesday&#39;</code> etc. and the result is put into an <code>any</code>-junction again. As soon as the result is determined (in this case, as soon as one comparison returns <code>True</code>) it can abort the execution of the other comparisons.</p>
 
-<p>This works not only for operators, but also for subs:</p>
+<p>This works not only for operators, but also for routines:</p>
 
 <pre>    if 2 == sqrt(4 | 9 | 16) {
         say &#34;YaY&#34;;
@@ -54,7 +54,7 @@ name="DESCRIPTION"
                /  |  \
             All other types</pre>
 
-<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>junction</code></p>
+<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>Junction</code></p>
 
 <pre>    sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
@@ -101,6 +101,16 @@ name="MOTIVATION"
 
 <pre>    my @items = get_data();
     if all(@items) &#62;= 0 { ... }</pre>
+
+<h3><a class='u' href='#___top' title='click to go to top of document'
+name="A_Word_of_Warning"
+>A Word of Warning</a></h3>
+
+<p>Many people get all excited about junctions, and try to do too much with them.</p>
+
+<p>Junctions are not sets; if you try to extract items from a junction, you are doing it wrong, and should be using a <code>Set</code> instead.</p>
+
+<p>It is a good idea to use junctions as smart conditions, but trying to build a solver for equations based on the junction autothreading rules is on over-extortion and usually results in frustration.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

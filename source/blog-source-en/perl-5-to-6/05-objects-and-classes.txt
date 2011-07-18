@@ -67,7 +67,7 @@ name="Methods"
         method foo {
             return self;
         }
-        method bar($s: ) {
+        method bar(SomeClass $s: ) {
             return $s;
         }
     }
@@ -136,7 +136,7 @@ name="Inheritance"
 
 <pre>        class Bar { }
         class Foo is Bar { }
-        my Bar $x = Foo.new();</pre>
+        my Bar $x = Foo.new();   # ok, since Foo ~~ Bar</pre>
 
 <p>In this example the type of <code>$x</code> is <code>Bar</code>, and it is allowed to assign an object of type <code>Foo</code> to it, because &#34;every <code>Foo</code> is a <code>Bar</code>&#34;.</p>
 
@@ -146,11 +146,15 @@ name="Inheritance"
         ...
     }</pre>
 
+<p>Though multiple inheritance also comes with multiple problems, and people usually advise against it. Roles are often a safer choice.</p>
+
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="Roles_and_Composition"
 >Roles and Composition</a></h4>
 
-<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them. While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
+<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance does.</p>
+
+<p>While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
 
 <pre>    role Paintable {
         has $.colour is rw;
@@ -174,6 +178,8 @@ name="SEE_ALSO"
 
 <p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
 >http://perlcabal.org/syn/S12.html</a> <a href="http://perlcabal.org/syn/S14.html" class="podlinkurl"
->http://perlcabal.org/syn/S14.html</a></p>
+>http://perlcabal.org/syn/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
+>http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf</a> <a href="http://en.wikipedia.org/wiki/Perl_6#Roles" class="podlinkurl"
+>http://en.wikipedia.org/wiki/Perl_6#Roles</a></p>
 
 [% option no-header %] [% option no-footer %]

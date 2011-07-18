@@ -60,11 +60,11 @@ name="Slice_Context"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>More specific contexts are a way to delay design choices. For example it seems premature to decide what a list should return in scalar context - a reference to the list would preserve all information, but isn&#39;t very useful in numeric comparisons. So every possible choice disappoints somebody.</p>
+<p>More specific contexts are a way to delay design choices. For example it seems premature to decide what a list should return in scalar context - a reference to the list would preserve all information, but isn&#39;t very useful in numeric comparisons. On the other hand a string representation might be most useful for debugging purposes. So every possible choice disappoints somebody.</p>
 
-<p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply propagate a more specific context.</p>
+<p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply evaluate the object a more specific context.</p>
 
-<p>For some things like the match object the different contexts really enhance their usefulness and beauty.</p>
+<p>For some things (like the Match object), the different contexts really enhance their usefulness and beauty.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="SEE_ALSO"

@@ -36,7 +36,7 @@ name="DESCRIPTION"
 
 <p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
-<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely.</p>
+<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely, or fail if the infiniteness can be detected.</p>
 
 <p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
@@ -49,7 +49,7 @@ name="DESCRIPTION"
         say $line;
     }</pre>
 
-<p>Since <code>$file.lines</code> is an iterator or a lazy list (it doesn&#39;t really matter which), the lines are only physically read from disk as needed (besides buffering, of course).</p>
+<p>Since <code>$file.lines</code> is a lazy list, the lines are only physically read from disk as needed (besides buffering, of course).</p>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'
 name="gather/take"
@@ -76,6 +76,12 @@ name="gather/take"
 
     sub do_some_computation($x) {
         take $x * ($x + 1);
+    }</pre>
+
+<p>Note that <code>gather</code> can act on a single statement instead of a block too:</p>
+
+<pre>    my @list = gather for 1..10 {
+        do_some_computation($_);
     }</pre>
 
 <h4><a class='u' href='#___top' title='click to go to top of document'

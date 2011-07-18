@@ -47,7 +47,7 @@ name="Smart_matching"
 
 <p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>.</p>
 
-<p>For immutable types it is a simple equality comparison. A smart match against a type checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
+<p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
 
 <p>There are other, more advanced forms of matching: for example you can check if an argument list (<code>Capture</code>) fits to the parameter list (<code>Signature</code>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
 
@@ -57,7 +57,7 @@ name="Smart_matching"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Nonchaining_binary_precedence</a></p>
+<p><a href="http://perlcabal.org/syn/S03.html#Smart_matching" class="podlinkurl"
+>http://perlcabal.org/syn/S03.html#Smart_matching</a></p>
 
 [% option no-header %] [% option no-footer %]

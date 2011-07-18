@@ -78,7 +78,7 @@ name="Arrays"
     @b.end                      # number of last index. Replaces $#array
     my @c = @b.map({$_ * 2 });  # map is also a method, yes</pre>
 
-<p>There is a short form for the old <code>qw(..)</code> quoting construct:</p>
+<p>There is a short form for the old <code>qw/../</code> quoting construct:</p>
 
 <pre>    my @methods = &#60;shift unshift push pop end delete sort map&#62;;</pre>
 

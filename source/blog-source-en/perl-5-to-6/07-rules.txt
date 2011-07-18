@@ -56,13 +56,13 @@ name="DESCRIPTION"
 <dd>
 <p>Many small changes make rules easier to write. For example the dot <code>.</code> matches any character now, the old semantics (anything but newlines) can be achieved with <code>\N</code>.</p>
 
-<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[..]</code>, which are a lot easier to write than the old <code>(?:...)</code>.</p>
+<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[...]</code>, which are a lot easier to read and write than the old <code>(?:...)</code>.</p>
 
 <dt><a name="Nested_captures_and_match_object"
 >Nested captures and match object</a></dt>
 
 <dd>
-<p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>.</p>
+<p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>. So each nesting level of parenthesis is reflected in a new nesting level in the result match object.</p>
 
 <p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
 
@@ -74,7 +74,7 @@ name="DESCRIPTION"
 </dd>
 </dl>
 
-<p>These changes make rules much easier to write and maintain than Perl 5 regexes.</p>
+<p>These changes make Perl 6 regexes and grammars much easier to write and maintain than Perl 5 regexes.</p>
 
 <p>All of these changes go quite deep, and only the surface can be scratched here.</p>
 
@@ -143,7 +143,7 @@ name="The_Match_Object"
 name="Named_Regexes_and_Grammars"
 >Named Regexes and Grammars</a></h4>
 
-<p>Rules can either be used with the old style <code>m/.../</code>, or be declared like subs and methods.</p>
+<p>Regexes can either be used with the old style <code>m/.../</code>, or be declared like subs and methods.</p>
 
 <pre>    regex a { ... }
     token b { ... }
@@ -173,5 +173,11 @@ name="SEE_ALSO"
 
 <p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
 >http://perlcabal.org/syn/S05.html</a></p>
+
+<p><a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
+>http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a></p>
+
+<p><a href="http://perlgeek.de/en/article/longest-token-matching" class="podlinkurl"
+>http://perlgeek.de/en/article/longest-token-matching</a></p>
 
 [% option no-header %] [% option no-footer %]
