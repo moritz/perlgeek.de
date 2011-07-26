@@ -1,0 +1,25 @@
+Perl 6 Compiler Feature Matrix
+<!-- 1311674857 -->
+
+<p>We now have a <a href="http://perl6.org/compilers/features">nice table that
+tells you which Perl 6 compiler implements what.</a>.</p>
+
+<p>Such a thing was long overdue. When the topic came up in the past, people
+have suggested mostly automated solutions that compared test coverage of
+compiles to generate such a table. Nothing came out of it, it would have been
+a rather large endeavor. Now Eevee blogged about <a
+href="http://me.veekun.com/blog/2011/07/22/perls-of-wisdom/#fixing-perl-6">the
+lack of some easy overview that tells you what is implemented in Rakudo.</a>,
+and I thought it was time to tackle the problem.</p>
+
+<p>Instead of some advanced automated system, we now have a <a
+href="https://github.com/perl6/features/blob/master/features.txt">simple text
+file</a>, and a <a
+href="https://github.com/perl6/features/blob/master/process.pl">short perl
+script</a> that converts it to a HTML page.</p>
+
+<p>I'd like to thanks Will Coleda, Patrick Michaud and Stefan O'Rear for their
+contributions, and encourage everybody to keep the data up to date.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
