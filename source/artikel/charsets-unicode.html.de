@@ -27,6 +27,7 @@
 		<li><a href="#troubleshooting">Troubleshooting</a></li>
 		<li><a href="#kodierungen_im_www">Kodierungen im WWW</a></li>
 		<li><a href="#weiterfuehrende_themen">Weiterführende Themen</a></li>
+		<li><a href="#links">Links</a></li>
     </ul>
 <!-- INDEX END -->
 
@@ -451,6 +452,16 @@ use encoding ':locale';[%endsyntax%]</pre>
     Ein guter Einstiegspunkt in die Locales ist das Dokument
     <!-- TODO: link-->
     <em>perllocale</em>.</p>
+
+    <h2 name="links">Links</h2>
+    <ul>
+        <li><a
+            href="http://toscho.de/2008/grundlagen-zeichenkodierung/">Grundlagen
+            der Zeichenkokdierungen ausführlich erklärt</a></li>
+        <li>Das selfhtml-wiki <a
+            href="http://wiki.selfhtml.org/wiki/Themen:Zeichencodierung/Webserver">diskutiert
+            Zeichensatz im Zusammenhang mit HTTP und HTML</a>.</li>
+    </ul>
     
     <hr />
 
