@@ -363,7 +363,7 @@ LEN = 4</pre>
     Der String <code>UTF8</code> in der Zeile <code>FLAGS =</code> zeigt, 
     dass der String intern als UTF-8 gespeichert wird und bereits dekodiert
     wurde.  In der Zeile <code>PV =</code> sieht man bei solchen Strings die
-    Bytes und in Klammer eckigen Klammern die Codepoints.
+    Bytes und in eckigen Klammern die Codepoints.
 </p>
 
 <p>
