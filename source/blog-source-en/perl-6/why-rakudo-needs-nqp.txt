@@ -81,7 +81,7 @@ compiler.</p>
     regex engine</a> is implemented as a role in NQP. It is mixed into an NQP
 class which allows us to build Rakudo, but it is also mixed in a Perl 6 class,
 which allows the generation of <a
-href="http://perlcabal.org/syn/S05.html#Match_objects">Perl 6-level Matc
+href="http://perlcabal.org/syn/S05.html#Match_objects">Perl 6-level Match
 objects</a> without any need to wrap NQP-level match objects first.</p>
 
 <p>To summarize, the intrinsic metacircularity of the Perl 6 language means;
