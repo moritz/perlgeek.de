@@ -28,7 +28,8 @@ and NQP compiles those part to bytecode, which can then compile the rest of
 the compiler.</p>
 
 <p>This is not just because we have a fancy for Perl 6, and thus want to write
-as much of the code in Perl 6, but there are solid reasons for that.</p>
+as much of the code in Perl 6, but there are solid technicals reasons for
+writing the compiler in Perl 6.</p>
 
 <p>In Perl 6, the boundary between run time and compile time is blurred, as
 well as the boundary between the compiler, the run time library and user-space
