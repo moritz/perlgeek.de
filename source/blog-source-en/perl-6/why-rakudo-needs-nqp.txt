@@ -32,7 +32,7 @@ as much of the code in Perl 6, but there are solid reasons for that.</p>
 
 <p>In Perl 6, the boundary between run time and compile time is blurred, as
 well as the boundary between the compiler, the run time library and user-space
-code. For example you alter the grammar with which your source code is, by
+code. For example you alter the grammar with which your source code is parsed, by
 injecting your own grammar rules.</p>
 
 <p>"Your own grammar rules" above refer to user-space code, while the grammar
@@ -42,7 +42,7 @@ difficult to inject user-space Perl 6 code into compiled code from a different
 language.</p>
 
 <p>And the code not only needs to be injected, but the data passed back
-and forth the compiler and the user space need to Perl 6 objects, so all
+and forth between the compiler and the user space need to Perl 6 objects, so all
 important data structures in the compiler need to be Perl 6 based anyway.</p>
 
 <p>And it's not just for grammar modifications: At its heart, Perl 6 is an
