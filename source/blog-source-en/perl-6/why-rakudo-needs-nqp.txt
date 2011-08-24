@@ -37,7 +37,7 @@ code. For example you alter the grammar with which your source code is parsed, b
 injecting your own grammar rules.</p>
 
 <p>"Your own grammar rules" above refers to user-space code, while the grammar
-that is being altered is part of the compiler. If we had written the Compiler
+that is being altered is part of the compiler. If we had written the compiler
 in something else than Perl 6 (for example Java), it would be horribly
 difficult to inject user-space Perl 6 code into compiled code from a different
 language.</p>
@@ -60,12 +60,12 @@ then you'd have lots of interactions between run time and compile time. For
 example consider a number literal like <code>42</code>. Obviously that needs
 to be constructed of type <code>Int</code>. What's less obvious is that it
 needs to be constructed to be of type Int at compile time already, because
-Perl 6 code can run interleaved with the compiler. So the compiler needs to
+Perl 6 code can run interleaved with the compilation. So the compiler needs to
 be able to handle Perl 6 objects in all their generality, which is a huge pain
 if the compiler is not written in Perl 6.</p>
 
-<p>Rakudo has cheated on that front in the past, and we consequently
-we had lots of bugs and limitations due to non-Perl 6 object leaking out at
+<p>Rakudo has cheated on that front in the past, and has consequently
+had lots of bugs and limitations due to non-Perl 6 object leaking out at
 unexpected ends. If you ever got a "Null PMC Access" from Rakudo, you know what I
 mean.</p>
 
