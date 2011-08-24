@@ -8,7 +8,7 @@ compiler called "NQP", short for <em>Not Quite Perl</em>.</p>
 <p>Reading through a <a
     href="http://www.modernperlbooks.com/mt/2011/08/no-policy-can-save-wrong-code.html">recent
     ramble by chromatic</a>, I felt like he said "Rakudo needs NQP to be able
-to ditch parrot, once NQP runs on a different platform" (NQP is the "another
+to ditch Parrot, once NQP runs on a different platform" (NQP is the "another
 layer", which sits between Rakudo and Parrot, mentioned in the next-to-final
 paragraph).</p>
 
@@ -19,16 +19,16 @@ real importance of NQP for Rakudo here.</p>
 <p>The short version is just a single word: <a
     href="http://en.wikipedia.org/wiki/Bootstrapping_%28compilers%29">bootstrapping</a>.</p>
 
-<p>The longer version is that large parts of Rakudo are written in Perl 6 (or
-a subset thereof) itself, and something is needed to break the
+<p>The longer version is that large parts of Rakudo are written in Perl 6
+itself (or a subset thereof), and something is needed to break the
 circularity.</p>
 
 <p>In particular the base of the compiler is written in a subset of Perl 6,
-and NQP compiles those part to bytecode, which can then compile the rest of
+and NQP compiles those parts to bytecode, which can then compile the rest of
 the compiler.</p>
 
 <p>This is not just because we have a fancy for Perl 6, and thus want to write
-as much of the code in Perl 6, but there are solid technicals reasons for
+as much of the code in Perl 6, but there are solid technical reasons for
 writing the compiler in Perl 6.</p>
 
 <p>In Perl 6, the boundary between run time and compile time is blurred, as
@@ -36,21 +36,21 @@ well as the boundary between the compiler, the run time library and user-space
 code. For example you alter the grammar with which your source code is parsed, by
 injecting your own grammar rules.</p>
 
-<p>"Your own grammar rules" above refer to user-space code, while the grammar
+<p>"Your own grammar rules" above refers to user-space code, while the grammar
 that is being altered is part of the compiler. If we had written the Compiler
 in something else than Perl 6 (for example Java), it would be horribly
 difficult to inject user-space Perl 6 code into compiled code from a different
 language.</p>
 
 <p>And the code not only needs to be injected, but the data passed back
-and forth between the compiler and the user space need to Perl 6 objects, so all
+and forth between the compiler and the user space need to be Perl 6 objects, so all
 important data structures in the compiler need to be Perl 6 based anyway.</p>
 
 <p>And it's not just for grammar modifications: At its heart, Perl 6 is an
 object oriented language. When the compiler sees a class definition, it
 translates them to a series of method calls on the <a
 href="http://en.wikipedia.org/wiki/Metaobject">metaobject</a>, which again
-needs to be Perl 6 object, otherwise it wouldn't be easily usable and
+needs to be a Perl 6 object, otherwise it wouldn't be easily usable and
 extensible from the user space.</p>
 
 <p>Now you might think that grammar modifications and changes to the
