@@ -57,7 +57,7 @@ extensible from the user space.</p>
 Metaobject are pretty obscure features, and you could get along just fine
 with an incomplete Perl 6 compiler that neglected those two areas. But even
 then you'd have lots of interactions between run time and compile time. For
-example consider a number literal like <code>42</code>. Obviously that needs
+example consider a numeric literal like <code>42</code>. Obviously that needs
 to be constructed of type <code>Int</code>. What's less obvious is that it
 needs to be constructed to be of type Int at compile time already, because
 Perl 6 code can run interleaved with the compilation. So the compiler needs to
@@ -65,7 +65,7 @@ be able to handle Perl 6 objects in all their generality, which is a huge pain
 if the compiler is not written in Perl 6.</p>
 
 <p>Rakudo has cheated on that front in the past, and has consequently
-had lots of bugs and limitations due to non-Perl 6 object leaking out at
+had lots of bugs and limitations due to non-Perl 6 objects leaking out at
 unexpected ends. If you ever got a "Null PMC Access" from Rakudo, you know what I
 mean.</p>
 
