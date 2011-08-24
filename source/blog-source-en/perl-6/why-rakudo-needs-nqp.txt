@@ -83,6 +83,9 @@ which allows the generation of <a
 href="http://perlcabal.org/syn/S05.html#Match_objects">Perl 6-level Matc
 objects</a> without any need to wrap NQP-level match objects first.</p>
 
+<p>To summarize, the intrinsic metacircularity of the Perl 6 language means;
+that we need NQP to be able to implement Perl 6. Mentioning political
+reasons for NQP doesn't do the topic any justice.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html : %]
