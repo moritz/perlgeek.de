@@ -73,8 +73,6 @@ mean.</p>
 implement a Perl 6 compiler</strong>, even if that first Perl 6 compiler can
 handle only a rather limited subset of Perl 6.</p>
 
-<p>That's what NQP does for us. It allows us to actually write a Perl 6
-compiler.</p>
 
 <p>And there are also quite some benefits to this approach. For example <a
     href="http://pmthium.com/2011/07/14/new-regex-engine-for-nqp-and-nom-now-passing-7k-spectests/">NQP's new
@@ -84,9 +82,8 @@ which allows the generation of <a
 href="http://perlcabal.org/syn/S05.html#Match_objects">Perl 6-level Match
 objects</a> without any need to wrap NQP-level match objects first.</p>
 
-<p>To summarize, the intrinsic metacircularity of the Perl 6 language means;
-that we need NQP to be able to implement Perl 6. Mentioning political
-reasons for NQP doesn't do the topic any justice.</p>
+<p>That's what NQP does for us. It allows us to actually write a Perl 6
+compiler.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html : %]
