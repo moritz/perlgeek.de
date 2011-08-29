@@ -1,0 +1,54 @@
+Third Grant Report: Structured Error Messages
+<!-- 1314608201 -->
+<p>Progress on my <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">grant
+for error message</a> is slower than expected, as expected :-). Yes, you've
+read that sentence before.</p>
+
+<p>In the past months, general hacking on the nom branch of Rakudo was just
+too much fun -- and partially a prerequisite for the exceptions work.</p>
+
+<p>I did manage to redo the backtraces that are generated from error
+messages.</p>
+
+<p>Backtraces are now generated mostly in Perl 6 code, making them much more
+hackable. There's a <code>Bactrace</code> class, which is a list of
+<code>Backtrace::Frame</code> objects, each knowing the code object associated
+with it, as well as line number and file. (This is both specced and works in
+Rakudo)</p>
+
+<p>Routines can have the <code>is hidden_from_backtrace</code> trait, which
+makes them not show up in the default backtrace stringification (one can still
+request a <code>.full</code> string representation). This is useful for
+routines which are internally used to generate exceptions, like
+<code>die()</code>.</p>
+
+<p>Rakudo also has a <code>--ll-exceptions</code> command line option which
+provides PIR-level backtraces, in the rare case the Perl 6 level backtraces
+hide too much information.</p>
+
+<p>I've also started the <code>nom-exceptions</code> branch in Rakudo, which
+aims at lifting current limitations in Rakudo's exception handling. Currently
+<code>die()</code> and friends generate a parrot exception, and then there's a
+routine that fills the error variable <code>$!</code>. This routine generates
+a new <code>Exception</code> object, and sticks the parrot exception into
+it.</p>
+
+<p>This practice means that if you create a subclass of
+<code>Exception</code>, instantiate it and throw it, you still only get an
+<code>Exception</code> in the error handler, not an object of the subclass.
+Since the actual exception type is very important for the ongoing work, that
+has to change. The branch mentioned earlier allows one to generate a Perl 6
+exception, and pass that on as the payload of the parrot exception, which is
+then unwrapped when filling <code>$!</code>.</p>
+
+<p>As a proof of concept this works, but it suffers from not being robust
+enough -- as it is, we could accidentally unwrap the payload of a
+<code>CONTROL</code> exception, placing meaningless junk into <code>$!</code>.
+So this needs a bit more work, which I plan to do this week (or next, if it
+proves to be more difficult than anticipated).</p>
+
+<p>As always, your feedback is very welcome.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
