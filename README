@@ -1,0 +1,12 @@
+Sources for perlgeek.de.
+
+To build the static HTML, you need App::mowyw from CPAN, and run
+
+    mowyw
+
+in the root directory where you can also find this README file.
+It reads the pages sources from source/ and headers/foooters/menus
+from includes/ and puts the generated HTML files into online/
+
+The blog (URL /blog-en/) is based on blosxom (patched), and is found in
+source/blog-en.cgi. It reads the data from source/blog-source-en/*/*.txt
