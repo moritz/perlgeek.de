@@ -11,7 +11,7 @@
     lead to problems, and how they can be handled in Perl programs.
 </p>
 
-<h2><a name="intro"></a>Introduction</h2>
+<h2><a id="intro"></a>Introduction</h2>
 
 <p>
     It happens far too often: a program works fine with latin characters, but
@@ -96,7 +96,7 @@
     expressed in the traditional character encodings.
 </p>
 
-<h2><a name="unicode"></a>Unicode</h2>
+<h2><a id="unicode"></a>Unicode</h2>
 
 <p>
     The charsets mentioned so far can encode only a small part of all possible
@@ -134,7 +134,7 @@
 </p>
     
 
-<h3><a name="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
+<h3><a id="unicode_transformation_formats"></a>Unicode Transformation Formats</h3>
 
 <p>
     The concept of Unicode codepoints and graphemes is completely independent
@@ -200,7 +200,7 @@ Character encodings like UTF-8 and UTF-16 define a way to write them as a
 short sequence of bytes.
 </p>
 
-<h2><a name="perl_and_character_encodings"></a>Perl 5 and Character Encodings</h2>
+<h2><a id="perl_and_character_encodings"></a>Perl 5 and Character Encodings</h2>
 <p>
     Perl Strings can either be used to hold text strings or binary data. Given
     a string, you generally have no mechanism of finding out whether it holds
@@ -326,7 +326,7 @@ use open ':locale';
     you use them in your code.
 </p>
 
-    <h2><a name="testing_your_environment"></a>Testing your Environment</h2>
+    <h2><a id="testing_your_environment"></a>Testing your Environment</h2>
 <p>
     You can use the following short script to your terminal, locales and
     fonts. It is very European centric, but you should be able to modify it to
@@ -369,9 +369,9 @@ for (@charsets){
 </p>
 
 
-<h2><a name="troubleshooting"></a>Troubleshooting</h2>
+<h2><a id="troubleshooting"></a>Troubleshooting</h2>
 
-<h3 id="wide-character" name="wide-character">"Wide Character in print"</h3>
+<h3 id="wide-character">"Wide Character in print"</h3>
 
 <p>
     Sometimes you might see the <code>Wide character in print</code> warning.
@@ -384,7 +384,7 @@ for (@charsets){
     piping the offending string through <code>Encode::encode</code> first.
 </p>
 
-<h3 id="inspecting-strings" name="inspecting-strings">Inspecting Strings</h3>
+<h3 id="inspecting-strings">Inspecting Strings</h3>
 
 <p>
     Sometimes you want to inspect if a string from an unknown source has
@@ -675,7 +675,7 @@ care of all encoding issues.</p>
         Unicode Tutorial</a></li>
 </ul>
 
-<h2 id="tools" name="tools">Useful Tools</h2>
+<h2 id="tools">Useful Tools</h2>
 
 <ul>
     <li>
@@ -698,7 +698,7 @@ care of all encoding issues.</p>
 </ul>
 
 
-<h2 id="acknowledgements" name="acknowledgements">Acknowledgments</h2>
+<h2 id="acknowledgements">Acknowledgments</h2>
 
 
 <p>
