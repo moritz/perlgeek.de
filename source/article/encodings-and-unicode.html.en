@@ -440,8 +440,10 @@ LEN = 4</pre>
 
 <p>
     That also implies that if your program is written in Perl only (and has no
-    XS components) it's almost certainly an error to rely on the presence or
-    absence of that flag. You shouldn't care how perl stores its strings
+    XS components) it is <a
+    href="fhttp://blogs.perl.org/users/aristotle/2011/08/utf8-flag.html">almost
+    certainly an error to rely on the presence or
+    absence of that flag.</a> You shouldn't care how perl stores its strings
     anyway.
 </p>
 
