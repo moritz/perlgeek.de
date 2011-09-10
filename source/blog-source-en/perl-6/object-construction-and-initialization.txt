@@ -2,10 +2,10 @@ Let's build an object
 <!-- 1251031086 -->
 <p>Building an object in Perl 6 is rather easy. As the author of a class you
 don't really have to care (at least in the simplest case), you inherit a
-default constructor from class <code>Object</code>. As a consumer of that
+default constructor from class <code>Mu</code>. As a consumer of that
 class you just write <code>YourClass.new(attrib1 =&gt; $value1)</code> to
 create an object of class <code>YourClass</code>, at the same time
-initializing an attribute.</p>
+initializing a public attribute.</p>
 
 <h2>Running initializations code</h2>
 
@@ -27,7 +27,7 @@ C.new();
 do any initialization that's necessary. It also receives the named arguments
 that the user passes on to <code>new()</code>.</p>
 
-<p>(In case you wonder, a submethod is a public method that's not inherited to
+<p>(In case you wonder, a submethod is a method that's not inherited to
 child classes).</p>
 
 <h2>Custom constructors</h2>
