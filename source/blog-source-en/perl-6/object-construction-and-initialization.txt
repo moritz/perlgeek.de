@@ -99,7 +99,7 @@ class Window {
 }[% endsyntax %]</pre>
 
 <p>The default value will only be used if the underlying attribute has not been
-touched by <code>new</code> or <code>build</code>.</p>
+touched by <code>new</code> or <code>BUILD</code>.</p>
 
 <h2>Understanding object initialization</h2>
 
