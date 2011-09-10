@@ -30,6 +30,27 @@ that the user passes on to <code>new()</code>.</p>
 <p>(In case you wonder, a submethod is a method that's not inherited to
 child classes).</p>
 
+<p>Since <code>BUILD</code> is run on an object which is not yet fully
+constructed, attributes are only accessible if they are declared as named
+parameters like <code>submethod BUILD(:$!attr1, :$!attr2) { # can use $!attr1
+and $!attr2 here }</code>. This syntax also automatically initializes the
+attributes with the value of the named parameter to <code>new</code> of the
+same name.</p>
+
+<p>So the following class declarations behave the same:</p>
+
+<pre>[% syntax perl6 %]
+class D {
+    has $.x;
+}
+# and
+class D {
+    has $!x;                  # private attribute
+    submethod BUILD(:$!x) { } # allow D.new(x => $value)
+    method x() { $!x }        # accessor
+}
+[% endsyntax %]</pre>
+
 <h2>Custom constructors</h2>
 
 <p>Suppose you're not a big fan of named arguments, and you want to write a
@@ -56,7 +77,7 @@ it to create an empty object itself.</p>
 <pre>[% syntax perl6 %]
 class C {
     has $.size;
-    method new($x, %n) {
+    method new($x, *%n) {
         self.bless(*, size => 2 * $x, |%n);
     }
 }
@@ -64,6 +85,21 @@ class C {
 
 <p>Note that these two concepts (custom new() and BUILD() (sub)methods) are
 orthogonal; you can use both at once, and both peacefully coexist.</p>
+
+<h2 id="attribute_init">Default values of attributes</h2>
+
+<p>The most convenient way to provide defaults to attributes is at the point
+of attribute declaration:</p>
+
+<pre>[% syntax perl6 %]
+class Window {
+    has $.height = 600;
+    has $.width  = $.height * 1.618;
+    ...
+}[% endsyntax %]</pre>
+
+<p>The default value will only be used if the underlying attribute has not been
+touched by <code>new</code> or <code>build</code>.</p>
 
 <h2>Understanding object initialization</h2>
 
