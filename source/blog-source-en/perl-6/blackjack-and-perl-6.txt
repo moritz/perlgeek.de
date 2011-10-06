@@ -46,7 +46,7 @@ reduction manually:</p>
 
 <pre>[% syntax escape %]
 > my @cards = [1, 11], 4, [1, 11];
-  say [max] @cards.reduce({ @($^a) X+ @($^b) }).grep: { $_ <= 21 }
+  say [max] @cards.reduce({ @^a X+ @^b }).grep: { $_ <= 21 }
 16
 [% endsyntax %]</pre>
 
@@ -68,7 +68,8 @@ all such variables in the block.</p>
 
 <p>Since <code>X+</code> operates on lists and not on array references, the
 arguments needs to be derefences. In Perl 5 you'd write that as
-<code>@{...}</code>, in Perl 6 it's <code>@(...)</code> - with the slight
+<code>@{...}</code>, in Perl 6 you can simply bind to a <code>@</code>-sigiled
+variable - with the slight
 difference that the derefencing on a number is not an error, but simply
 returns a list of that number.</p>
 
