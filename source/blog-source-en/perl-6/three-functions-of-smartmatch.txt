@@ -30,6 +30,11 @@ special cases to go away. It also nicely unified with
 <code>given $topic { when $matcher  { ... } }</code>, which was
 already specified as being a topicalizer.</p>
 
+<p>In the new model, <code>MATCH ~~ PAT</code> becomes something like
+<code>do { $_ = MATCH; PAT.ACCEPTS($_) }</code> -- which means that if
+<code>MATCH</code> accesses <code>$_</code>, it automatically does what the
+user wants.</p>
+
 <p>Awesomeness reigned, and it worked out great.</p>
 
 <p>Until the compiler writers actually started to implement a few more
