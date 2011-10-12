@@ -16,7 +16,7 @@ for special syntactic forms on the right hand side of the smart match
 operator to cover some cases. Those were limited and hard to
 implement. There was also the fact that now we had two different ways
 to invoke regexes: smart matching, and direct invocation as
-<code>m/.../<code>, which matches against the topic variable
+<code>m/.../</code>, which matches against the topic variable
 <code>$_</code>. That wasn't really a problem as such, but it was an
 indicator of design smell.</p>
 
