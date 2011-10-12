@@ -1,0 +1,86 @@
+The Three-Fold Function of the Smart Match Operator
+<!-- 1318412228 -->
+<p>In Perl 5, if you want to match a regex against a particular
+string, you write <code>$string =~ $regex</code>.</p>
+
+<p>In the design process of Perl 6, people have realized that you cannot
+only match against regexes, but lots of other things can act as
+patterns too: types (checking type conformance), numbers, strings,
+junctions (composites of values), subroutine signatures and so on. So
+<em>smart matching</em> was born, and it's now written as
+<code>$topic ~~ $pattern</code>. Being a general comparison mechanism
+is the first function of the smart match operator.</p>
+
+<p>But behold, there were problems. One of them was the perceived need
+for special syntactic forms on the right hand side of the smart match
+operator to cover some cases. Those were limited and hard to
+implement. There was also the fact that now we had two different ways
+to invoke regexes: smart matching, and direct invocation as
+<code>m/.../<code>, which matches against the topic variable
+<code>$_</code>. That wasn't really a problem as such, but it was an
+indicator of design smell.</p>
+
+<p>And that's where the second function of the smart match operator
+originated: topicalization. Previously, <code>$a ~~ $b</code> mostly
+turned into a method call, <code>$b.ACCEPTS($a)</code>. The new idea
+was to <a
+href="https://github.com/perl6/specs/commit/f2dff276c272399a92a841818842ad663d70f23b">set
+the topic variable to $a in a small scope</a>, which allowed many
+special cases to go away. It also nicely unified with
+<code>given $topic { when $matcher  { ... } }</code>, which was
+already specified as being a topicalizer.</p>
+
+<p>Awesomeness reigned, and it worked out great.</p>
+
+<p>Until the compiler writers actually started to implement a few more
+cases of regex matching. The first thing we noticed was that
+<code>if $str ~~ $regex { ... }</code> behaved quite unexpectedly.
+What happend was that <code>$_</code> got set to <code>$str</code>,
+the match was conducted and returned a Match object. And then called
+<code>$match.ACCEPTS($str)</code>, which failed. A quick hack around
+that was to modify <code>Match.ACCEPTS</code> to always return the
+invocant (ie the Match on which it was called), but of course that was
+only a stop gap solution.</p>
+
+<p>The reason it doesn't work for other, more involved cases of regex
+invocations is that they don't fit into the "does $a match $b?"
+schema. Two examples:</p>
+
+<pre>[% syntax escape %]
+# :g for "global", all matches
+my @matches = $str ~~ m:g/pattern/; 
+
+if $str ~~ s/pattern/substitution/ { ... }
+[% endsyntax %]</pre>
+
+<p>People expect those to work. But global matching of a regex isn't a
+simple conformance check, and that is reflected in the return value: a
+list. So should we special-cases smart-matching against a list, just
+because we can't get global matching to work in smart-matching
+otherwise? (People have also proposed to return a kind of aggregate
+Match object instead of a list; that comes with the problem that Match
+objects aren't lazy, but lists are. You could "solve" that with a
+LazyMatch type; watch the pattern of workarounds unfold...)</p>
+
+<p>A substitution is also not a simple matching operation. In Perl 5,
+a s/// returns the number of successful substitutions. In Perl 6, that
+wouldn't work with the current setup of the smart match operator,
+where it would then smart-match the string against the returned number
+of matches.</p>
+
+<p>So to summarize, the smart match operator has three functions:
+comparing values to patterns, topicalization, and conducting regex
+matches.</p>
+
+<p>These three functions are distinct enough to start to interact in
+weird ways, which limits the flexibility in choice of return values
+from regex matches and substitutions.</p>
+
+<p>I don't know what the best way forward is. Maybe it is to
+reintroduce a dedicated operator for regex matching, which seems to be
+the main feature with which topicalization interacts badly. Maybe
+there are other good ideas out there. If so, I'd love to hear about
+them.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
