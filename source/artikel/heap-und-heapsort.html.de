@@ -129,7 +129,7 @@ braucht <code>O(n*log(n))</code> Operationen.</p>
 <p>Damit ist die asymptotische Laufzeit optimal (das Problem des
 vergleichsbasierten Sortierens lässt sich nicht schneller als in
 <code>O(n * log(n))</code> Schritten lösen). Auch in der Praxis ist
-Quicksort schnell, aber für die Cache-Architekturen moderner Computer
+Heapsort schnell, aber für die Cache-Architekturen moderner Computer
 nicht unbedingt optimal, weshalb für große Datenmengen üblicherweise
 Mergesort oder Quicksort einsetzt.</p>
 
