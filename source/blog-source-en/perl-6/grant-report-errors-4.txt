@@ -1,0 +1,53 @@
+Fourth Grant Report: Structured Error Messages
+<!-- 1324286928 -->
+<p>Progress on my <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">grant
+for error message</a> is slow but steady. Since my last report, I've done the
+following things:</p>
+
+<ul>
+    <li>Merged the <code>nom-exceptions</code> Rakudo  branch, so now you
+    can reliably throw Perl 6 objects as exceptions.</li>
+    <li>Implemented several error classes and roles in Rakudo</li>
+    <li>Started to throw typed errors both from runtime libraries and from
+        inside the compiler</li>
+    <li>Hacked the default exception printer Rakudo to be much more flexible,
+        for example you can now write exception classes that supress
+        backtraces from the standard handler.</li>
+    <li>Wrote tests for typed run time and compile time errors, and at the
+        same time developed a test function that makes it easy to write such
+        tests.</li>
+</ul>
+
+<p>It's time for a quick review of how far I am along the various deliverables
+in the original grant proposal.</p>
+
+<ul>
+    <li>D1: Specification. I think the hard work here is done already,
+        what remains to do is finding good default and how to manipulate them
+        (for example, how to generally switch on/off printing of
+        backtraces?).</li>
+    <li>D2: Error catalogue, tests: I've not worked on this one too much.
+        The error classes and roles so far mostly served to exercise the
+        implementation; going through the existing errors from the various
+        compilers and formalizing them will be quite a bit of work, but only
+        moderately complicated.</li>
+    <li>D3: Implementation, documentation. Like D1, the hard part is mostly 
+        done. We can now
+       throw errors from within the compiler actions and from the setting,
+       next up will be the grammar. Then all places where errors are thrown
+       need to be changed to use the new error classes. Again that'll be much
+       work, but easy to do. Documentation is still missing.</li>
+</ul>
+
+<p>All in all I feel I'm well on the way, and most complex decisions have been
+made. </p>
+
+
+<p>For a more user oriented view of the new exception system I'd like to
+point you to my <a
+    href="http://perl6advent.wordpress.com/2011/12/15/day-15-something-exceptional/">Perl
+    6 advent calendar post on exceptions</a>.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html : %]
