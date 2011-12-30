@@ -1,13 +1,13 @@
 Perl 6 in 2011 - A Retrospection
 
 <p>The change of year is a good occasion to look back. Here I want to
-reflect on the development of Perl 6, its compiler and ecosystem.</p>
+reflect on the development of Perl 6, its compilers and ecosystem.</p>
 
 <p>At the start of the year, masak's <a
 href="http://strangelyconsistent.org/p6cc2010/">Perl 6 Coding Contest</a>
 continued from 2010, concluding in the <a
 href="http://strangelyconsistent.org/blog/announcing-the-winner-of-p6cc2010">announcement
-of the winner</a>. I must admit that I still haven't read all the books I've
+of the winner</a>. I must admit that I still haven't read all the books I
 won :-)</p>
 
 <h2>Specification</h2>
