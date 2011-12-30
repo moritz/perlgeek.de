@@ -1,5 +1,5 @@
 Perl 6 in 2011 - A Retrospection
-
+<!-- 1325322000 -->
 <p>The change of year is a good occasion to look back. Here I want to
 reflect on the development of Perl 6, its compilers and ecosystem.</p>
 
