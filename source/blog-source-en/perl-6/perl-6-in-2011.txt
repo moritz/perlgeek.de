@@ -1,0 +1,123 @@
+Perl 6 in 2011 - A Retrospection
+
+<p>The change of year is a good occasion to look back. Here I want to
+reflect on the development of Perl 6, its compiler and ecosystem.</p>
+
+<p>At the start of the year, masak's <a
+href="http://strangelyconsistent.org/p6cc2010/">Perl 6 Coding Contest</a>
+continued from 2010, concluding in the <a
+href="http://strangelyconsistent.org/blog/announcing-the-winner-of-p6cc2010">announcement
+of the winner</a>. I must admit that I still haven't read all the books I've
+won :-)</p>
+
+<h2>Specification</h2>
+
+<p>2011 was a rather quiet year in terms of spec changes; they were a
+mixture of responses to compiler writer and user feedback, and
+some simplifications and cleanups.</p>
+
+<p>Positional parameters used to be allowed to be called by name; this
+feature is now gone. That both makes the signature binder simpler, and
+removes accidental dependencies on names that weren't meant to be public.
+Read the <a href="https://gist.github.com/984783">full justification</a>
+for more background.</p>
+
+<p>A small change that illustrates the cleanup of old, p5-inherited features
+was the change that <a
+href="https://github.com/perl6/specs/commit/e84b11137cc55ecd9f17f58976c08d361054ea05">made
+&amp;eval stop catching exceptions</a>. There is really no good reason for it
+to catch them, except Perl 5 legacy.</p>
+
+<p><code>say</code> now uses a different stringification than
+<code>print</code>. The reasoning is that <code>print</code> is aimed at
+computer-readable output, whereas <code>say</code> is often used for
+debugging. As an example, undefined values stringify to the empty string
+(and produce a warning), whereas <code>say</code> calls the <code>.gist</code>
+method on the object to be said, which produces the type name on undefined
+values.</p>
+
+<p>An area that has been greatly solidified due to implementation progress is
+<em>Plain Old Documentation</em> or <em>Pod</em>. Tadeusz Sośnierz' Google
+Summer of Code project ironed out many wrinkles and inconsistencies, and
+changed my perception of this part of the spec from "speculative" to "under
+development".</p>
+
+<h2>Rakudo</h2>
+
+<p><a href="http://rakudo.org/">Rakudo</a> underwent a huge refactoring this year; it is now <a
+href="http://pmthium.com/2011/02/08/new-nqp-repository-new-nom-rakudo-branch/">bootstrapped
+by a new compiler called "nqp", and uses a new object model</a> (nom).</p>
+
+<p>It allows us to gain speed and memory advantages from gradual typing; for
+example the <a
+href="https://github.com/colomon/mandelbrot/blob/master/bin/mandelbrot-color.pl">mandelbrot
+fractral generator</a> used to take 18 minutes to run on a machine of mine,
+and now takes less than 40 seconds. Speedups in other areas are not as big,
+but there is still much room for improvement in the optimizer.</p>
+
+<p>Tadeusz' work on Pod gave Rakudo support for converting Pod to plain text
+and HTML, and attach documentation objects to routines and other objects.</p>
+
+<p>Rakudo now also has lazy lists, much better role handling, <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">typed
+exceptions for a few errors</a>, the <code>-n</code> and <code>-p</code> command
+line options, support for big integers, NFA-based support for proto regexes
+and improvements to many built-in functions, methods and operators.</p>
+
+
+<h2>Niecza</h2>
+
+<p>It is hard to accurately summarize the development of <a
+href="https://github.com/sorear/niecza/">Niecza</a> in a few
+sentences; instead of listing the many, many new features I should give
+an impression on how it feels and felt for the user.</p>
+
+<p>At the start of 2011, programming in niecza was a real adventure. Running 
+some random piece of Perl 6 code that worked with Rakudo rarely worked, most
+of the time it hit a missing built-in, feature or bug.</p>
+
+<p>Now it often just works, and usually much faster than in Rakudo. There are
+still some missing features, but Stefan O'Rear and his fellow contributors
+work tirelessly on catching up to Rakudo, and it some areas Niecza is clearly
+ahead (for example Unicode support in regexes, and longest-token
+matching).</p>
+
+<h2>Perlito</h2>
+
+<p><a href="http://www.perlito.org/">Perlito</a> aims to be a minimal compiler
+with multiple backends, which can be used for embedding and experimenting with
+Perl 6. It had several releases in 2011, and has interesting features like a
+Javascript backend.</p>
+
+<h2>Ecosystem</h2>
+
+<p>The presence of two usable compilers (and in the case of Rakudo, two viable
+but very different branches) has led to many questions about the different
+compilers. The new <a href="http://perl6.org/compilers/features">Perl 6
+Compiler Feature matrix</a> tries to answer the questions about the state of
+the implemented features in the compilers.</p>
+
+<p>With <a href="https://github.com/tadzik/panda/">Panda</a> we now have a
+module installer that actually works with Rakudo. It still has some lengths to
+go in terms of stability and feature completeness, but it is fun to work
+with.</p>
+
+<p>The new <a href="http://modules.perl6.org/">Perl 6 Modules</a> page gives
+an overview of existing Perl 6 modules; we hope to evolve it into a real CPAN
+equivalent.</p>
+
+<h2>Community</h2>
+
+<p>This year we had another <a
+href="http://perl6advent.wordpress.com/2011/12/01/perl-6-advent-calendar-2011/">Perl
+6 Advent Calendar</a>, with much positive feedback both from the Perl 6
+community and the wider programming community.</p>
+
+<p>We were also happy to welcome several new prolific contributors to the Perl
+6 compilers and modules. The atmosphere in the community still feels relaxed,
+friendly and productive -- I quite enjoy it.</p>
+
+<p>The year ends like it started: with a <a
+href="http://strangelyconsistent.org/blog/the-2011-perl-6-coding-contest">Perl
+6 Coding Contest</a>. This is a good opportunity to dive into Perl 6, provide
+feedback to compiler writers, and most of all have fun.</p>
