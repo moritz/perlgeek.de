@@ -55,6 +55,12 @@ fractral generator</a> used to take 18 minutes to run on a machine of mine,
 and now takes less than 40 seconds. Speedups in other areas are not as big,
 but there is still much room for improvement in the optimizer.</p>
 
+<p>With the nom branch came support for different object representations. It
+makes it possible to store object attributes in simple C-like structs, which
+in turn makes it much easier and more convenient to <a
+href="https://github.com/jnthn/zavolaj/">interoperate with C
+libraries</a>.</p>
+
 <p>Tadeusz' work on Pod gave Rakudo support for converting Pod to plain text
 and HTML, and attach documentation objects to routines and other objects.</p>
 
@@ -81,6 +87,14 @@ still some missing features, but Stefan O'Rear and his fellow contributors
 work tirelessly on catching up to Rakudo, and it some areas Niecza is clearly
 ahead (for example Unicode support in regexes, and longest-token
 matching).</p>
+
+<p>Since Niecza is implemented on top of the Common Language Runtime (CLR)
+(which means .NET or mono), it makes it easy to use existing CLR-based
+libraries. Examples include <a
+href="http://perl6advent.wordpress.com/2011/12/17/day-17-gtk-mandelbrot/">an
+interactive fractal generator</a> and a small <a
+href="http://perl6advent.wordpress.com/2011/12/05/tetris-on-niecza/">Tetris
+game in Perl 6.</a></p>
 
 <h2>Perlito</h2>
 
