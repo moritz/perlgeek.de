@@ -199,7 +199,7 @@ int pop(void){
     return res;
 }[% endsyntax %]</pre>
 
-    <p>Die hier verwendete Funktion <code>reheap_down(int)</code> start
+    <p>Die hier verwendete Funktion <code>reheap_down(int)</code> startet
     von einem gegebenen Element aus, und geht von dort aus nach unten
     durch den Baum und stellt dabei die Heap-Bedingung wieder her:</p>
 
