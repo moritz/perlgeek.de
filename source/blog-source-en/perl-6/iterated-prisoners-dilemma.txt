@@ -26,6 +26,17 @@ February.</p>
 strategies and a harness here</a>. It runs on both newest Rakudo and
 Niecza.</p>
 
+<p>The scoring is as follows, where <code>True</code> means cooperate and
+<code>False</code> means defect:</p>
+
+<pre>[% syntax escape %]
+my %scoring =
+    'True True' => [4, 4],
+    'True False' => [0, 6],
+    'False True' => [6, 0],
+    'False False' => [1, 1],
+[% endsyntax %]</pre>
+
 <p>Your strategy should be a subroutine or block that accepts the named
 parameters <code>my</code> and <code>theirs</code>, which are lists
 of previous decisions of your own algorithm and of its opponents, and
