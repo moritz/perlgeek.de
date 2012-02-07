@@ -1,0 +1,58 @@
+Mini-Challenge: Write Your Prisoner's Dilemma Strategy
+<!-- 1328600502 -->
+
+<p>Here is a small task we considered for the <a
+href="http://strangelyconsistent.org/blog/the-2011-perl-6-coding-contest">Perl
+6 Coding Contest</a>, but not chose to not pursue. But it's a nice little
+challenge for your leisure time.</p>
+
+<p>In the <a
+href="http://en.wikipedia.org/wiki/Prisoner%27s_dilemma">Prisoner's
+Dilemma</a>, two suspected criminals can chose to not betray each other
+(which we call "cooperate"), or betraying the other ("defecting").
+If only one suspect betrays the other, the traitor gets released and
+the betrayed on gets a long sentence; if both betray each other, both get a
+rather long sentence. If both cooperate, both get rather short sentences.</p>
+
+<p>It becomes more interesting when the dilemma is repeated multiple times.
+Now instead of prison sentences the contestants are assigned scores, which
+add up over multiple rounds.</p>
+
+<p>I challenge you to write one or two strategies for the iterated prisoner's
+dilemma, and send them to moritz@faui2k3.org no later than Friday 17's
+February.</p>
+
+<p>You'll find <a href="https://gist.github.com/1710688">some basic
+strategies and a harness here</a>. It runs on both newest Rakudo and
+Niecza.</p>
+
+<p>Your strategy should be a subroutine or block that accepts the named
+parameters <code>my</code> and <code>theirs</code>, which are lists
+of previous decisions of your own algorithm and of its opponents, and
+<code>total</code>, which is the number of laps to be played. It should
+return <code>True</code> if it wishes to cooperate, and <code>False</code> to
+defect.</p>
+
+<p>Here is an example strategy that starts off with cooperating, and then
+randomly chooses a previous reaction of the current opponent:</p>
+
+<pre>
+sub example-strategy(:@theirs, *%) {
+    @theirs.roll // True;
+}
+</pre>
+
+<p>Your strategy or strategies will play against each other and against the
+example strategies in the gist above. It is not allowed to submit strategies
+that commit suicide to actively support another strategy.</p>
+
+<p>I too have written two strategies that will take participate in the
+contest. Here is the checksum to convince you I won't alter the strategies
+in response to the submissions:</p>
+
+<pre>
+6d4ba99b66e4963a658c8dcfc72922dd0f74e0ad  prisoner-moritz.pl
+</pre>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
