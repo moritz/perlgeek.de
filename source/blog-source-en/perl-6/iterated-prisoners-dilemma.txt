@@ -38,7 +38,7 @@ my %scoring =
 [% endsyntax %]</pre>
 
 <p>Your strategy should be a subroutine or block that accepts the named
-parameters <code>my</code> and <code>theirs</code>, which are lists
+parameters <code>mine</code> and <code>theirs</code>, which are lists
 of previous decisions of your own algorithm and of its opponents, and
 <code>total</code>, which is the number of laps to be played. It should
 return <code>True</code> if it wishes to cooperate, and <code>False</code> to
