@@ -19,8 +19,8 @@ Now instead of prison sentences the contestants are assigned scores, which
 add up over multiple rounds.</p>
 
 <p>I challenge you to write one or two strategies for the iterated prisoner's
-dilemma, and send them to moritz@faui2k3.org no later than Friday 17's
-February.</p>
+dilemma, and send them to moritz@faui2k3.org no later than Friday
+February 17.</p>
 
 <p>You'll find <a href="https://gist.github.com/1710688">some basic
 strategies and a harness here</a>. It runs on both newest Rakudo and
