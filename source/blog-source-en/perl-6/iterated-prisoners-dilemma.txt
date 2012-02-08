@@ -8,10 +8,10 @@ challenge for your leisure time.</p>
 
 <p>In the <a
 href="http://en.wikipedia.org/wiki/Prisoner%27s_dilemma">Prisoner's
-Dilemma</a>, two suspected criminals can chose to not betray each other
+Dilemma</a>, two suspected criminals can choose to not betray each other
 (which we call "cooperate"), or betraying the other ("defecting").
 If only one suspect betrays the other, the traitor gets released and
-the betrayed on gets a long sentence; if both betray each other, both get a
+the betrayed one gets a long sentence; if both betray each other, both get a
 rather long sentence. If both cooperate, both get rather short sentences.</p>
 
 <p>It becomes more interesting when the dilemma is repeated multiple times.
