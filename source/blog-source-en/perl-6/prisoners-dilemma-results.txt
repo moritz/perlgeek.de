@@ -40,7 +40,7 @@ them.</p>
     return False unless $they-coop;             # Screw you too!
     return $shy >= (2 ** ($bitten-1)).rand      # Once-bitten rand() shy
 };
-[% endsyntax perl6 %]
+[% endsyntax %]
 </pre>
 
 <h3>Inevitable Betrayal</h3>
@@ -76,7 +76,7 @@ many rounds are being played, just to avoid this behavior.</p>
 %strategies<watch-for-random> = -> :@theirs, *% {
     @theirs > 10 && @theirs.grep(* == False) > 5 ?? False !! (@theirs[*-1] // True)
 };
-[% endsyntax perl6 %]</pre>
+[% endsyntax %]</pre>
 
 <p><em>tit-for-doh</em> is the same as <em>inevitable-betrayal</em>.
 <em>watch-for-random</em> defects forever once the opponent has defected too
@@ -90,7 +90,7 @@ often.</p>
     my role Me {};
     (@theirs[*-1] // Me).does(Me) but Me
 };
-[% endsyntax perl6 %]</pre>
+[% endsyntax %]</pre>
 
 <p>This strategy uses a mixin in its returned boolean values to find out when
 it plays against itself. This games the system, though doesn't explicitly
@@ -118,7 +118,7 @@ imperfect sandboxing:</p>
        @mine = @theirs = ();
        $rv;
    },
-[% endsyntax perl6 %]</pre>
+[% endsyntax %]</pre>
 
 <p>Those two strategies did not compete in the tournament</p>
 
@@ -151,7 +151,7 @@ sub moritz-ectft(:@theirs, :$total,  *%) {
     @theirs[*-1];
 };
 %strategies<moritz-ectft> = &moritz-ectft;
-[% endsyntax perl6 %]</pre>
+[% endsyntax %]</pre>
 
 <h2>Results</h2>
 
