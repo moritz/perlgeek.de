@@ -1,0 +1,248 @@
+Results from the Prisoner's Dilemma Challenge
+<!-- 1329562800 -->
+
+<p>The <a
+href="http://perlgeek.de/blog-en/perl-6/iterated-prisoners-dilemma.html">Iterated
+Prisoner's Dilemma Challenge</a> is now closed; several interesting solutions
+have been submitted.</p>
+
+<p>Of the <a href="https://gist.github.com/1710688">basic strategies</a>,
+<em>tit-for-tat</em> (doing what the opponent did the last time, starting off
+with cooperating) is usually the strongest. Since the <em>random</em>
+strategy is, well, random, the results fluctuate a bit.</p>
+
+<p>Most submitted strategies are a variation on <em>tit-for-tat</em>,
+modified in some way or another to make it stronger. All submissions
+contained a strategy that is stronger than <em>tit-for-tat</em> when tested
+against the basic strategies only, though the interaction with other new
+strategies made some of them come out weaker than <em>tit-for-tat</em>.</p>
+
+<h2>Submitted Strategies</h2>
+
+<p>Without any further ado, here are the strategies and a few comments on
+them.</p>
+
+<h3>Turn the Other Cheek</h3>
+
+<pre>[% syntax perl6 %]
+## Dean Serenevy; received on 2012-02-07
+%strategies<turn-other-cheek-no-deal-with-devil-once-bit-twice-shy-variety-is-the-spice-o-life> = sub (:@mine, :@theirs, *%) {
+    my ($bitten, $shy, $they-coop) = (0, 0, False);
+
+    for @mine Z @theirs -> $me, $them {
+        if $them          { $they-coop = True; }
+        if $me and !$them { $bitten++; $shy = 0; }
+        if !$me           { $shy++ }
+    }
+
+    return True  if 0 == $bitten;               # Cooperate if we have never been bitten
+    return True  if 1 == $bitten and 0 == $shy; # Turn the other cheek once
+    return False unless $they-coop;             # Screw you too!
+    return $shy >= (2 ** ($bitten-1)).rand      # Once-bitten rand() shy
+};
+[% endsyntax perl6 %]
+</pre>
+
+<h3>Inevitable Betrayal</h3>
+
+<pre>[% syntax perl6 %]
+## Andrew Egeler, received 2012-02-09
+
+%strategies<inevitable-betrayal> = &inevitable-betrayal;
+sub inevitable-betrayal (:@theirs, :$total, *%) { +@theirs <
+($total-1) ?? @theirs[*-1] // True !! False }
+
+%strategies<evil-inevitable-betrayal> = &evil-inevitable-betrayal;
+sub evil-inevitable-betrayal (:@theirs, :$total, *%) { +@theirs <
+($total-1) ?? @theirs[*-1] // False !! False }
+[% endsyntax %]</pre>
+
+<p>These are variations on <em>tit-for-tat</em> and <em>evil-tit-for-tat</em>
+which always defect in the last round, because then the opponent can't
+retaliate anymore.</p>
+
+<p>In a typical Iterated Prisoner's Dilemma contest, strategies don't know how
+many rounds are being played, just to avoid this behavior.</p>
+
+<h3>Tit for D'oh and Watch for Random</h3>
+
+<pre>[% syntax perl6 %]
+## Solomon Foster, receievd 2012-02-10
+
+%strategies<tit-for-doh> = -> :@theirs, :$total, *% {
+    @theirs < $total - 1 ??  (@theirs[*-1] // True) !! False
+}
+
+%strategies<watch-for-random> = -> :@theirs, *% {
+    @theirs > 10 && @theirs.grep(* == False) > 5 ?? False !! (@theirs[*-1] // True)
+};
+[% endsyntax perl6 %]</pre>
+
+<p><em>tit-for-doh</em> is the same as <em>inevitable-betrayal</em>.
+<em>watch-for-random</em> defects forever once the opponent has defected too
+often.</p>
+
+<h3>Me</h3>
+
+<pre>[% syntax perl6 %]
+## Audrey Tang, received 2012-02-17
+%strategies<me> = -> :@theirs, *% {
+    my role Me {};
+    (@theirs[*-1] // Me).does(Me) but Me
+};
+[% endsyntax perl6 %]</pre>
+
+<p>This strategy uses a mixin in its returned boolean values to find out when
+it plays against itself. This games the system, though doesn't explicitly
+violates the stated rules.</p>
+
+<p>Audrey also deserves two dishonorable mentions for two solutions that game
+the test harness or the other strategies by exploiting the technically
+imperfect sandboxing:</p>
+
+<pre>[% syntax perl6 %]
+   au => -> :@theirs, *% {
+       use MONKEY_TYPING;
+       my role TRUE {};
+       augment class Bool {
+           method Stringy(Bool:D:) {
+               self.^does(TRUE) ?? 'True' !! 'False'
+           }
+       }
+       False but TRUE;
+   }, 
+
+   amnesia => -> :@mine, :@theirs, *% {
+       my role Uh {};
+       my $rv = (@theirs[*-1] // Uh).does(Uh) but Uh;
+       @mine = @theirs = ();
+       $rv;
+   },
+[% endsyntax perl6 %]</pre>
+
+<p>Those two strategies did not compete in the tournament</p>
+
+<h3>Lenient in the Beginning, Then Strict</h3>
+
+<p>I've written my own two strategies before the tournament started. <a
+href="http://moritz.faui2k3.org/files/prisoner-moritz.pl.txt">Here is the
+original</a>, I've only changed the signatures to run under current
+Niecza:</p>
+
+<pre>[% syntax perl6 %]
+# a tit for tat, but a bit more friendly at the beginning
+# to avoid hacking on forever on evil-tit-for-tat,
+# but be very stringent when the other one defects too often
+sub moritz-ctft(:@theirs, :$total,  *%) {
+    return True if @theirs < 3;
+    return False if @theirs.grep(*.not).elems > ($total / 10);
+
+    @theirs[*-1];
+};
+%strategies<moritz-ctft> = &moritz-ctft;
+
+# the evil clone...
+sub moritz-ectft(:@theirs, :$total,  *%) {
+    return True if @theirs < 3;
+    return False if @theirs.grep(*.not).elems > ($total / 10);
+    # did you believe in happy ends?
+    return False if @theirs + 1 == $total;
+
+    @theirs[*-1];
+};
+%strategies<moritz-ectft> = &moritz-ectft;
+[% endsyntax perl6 %]</pre>
+
+<h2>Results</h2>
+
+<p>The results vary quite a bit between runs, mostly because of the
+<em>random</em> strategy.</p>
+
+<p>Here is the output from a sample run. Please don't use this for
+determining the "winner", because it is just a random sample with no
+statistical significance.</p>
+
+<pre>
+SUMMARY
+2588    moritz-ectft
+2577    me
+2560    moritz-ctft
+2491    inevitable-betrayal
+2483    tit-for-tat
+2480    tit-for-doh
+2399    turn-other-cheek-no-deal-with-devil-once-bit-twice-shy-variety-is-the-spice-o-life
+2319    watch-for-random
+2272    good
+1876    evil-inevitable-betrayal
+1862    evil-tit-for-tat
+1538    random
+1145    bad
+</pre>
+
+<p>You see, <em>inevitable-betrayal</em> and <em>tit-for-doh</em> are exactly
+the same strategy, but the random fluctuations place them on different sides
+of <em>tit-for-tat</em>. Which is why I won't declare a winner at all, there
+is simply no fair way to determine one.</p>
+
+<p>At first I was surprised how well the <em>me</em> strategy performed. But
+then I noticed that with the given game harness, a strategy fighting against
+itself counts double (once for the first copy, once for the second copy). With
+only 13 strategies participating, and such close results, harmonizing
+perfectly with yourself gives you a critical advantage.</p>
+
+<h3>Visualizations</h3>
+
+<p>For each strategy you can find an image that shows how it worked with or
+against another strategy. Green means cooperate, red means defect, and the
+height of the bar is proportional to the resulting score.</p>
+
+<ul>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/bad.png">bad</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/evil-inevitable-betrayal.png" width="566" height="1248">evil-inevitable-betrayal</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/evil-tit-for-tat.png">evil-tit-for-tat</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/good.png">good</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/inevitable-betrayal.png">inevitable-betrayal</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/me.png">me</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/moritz-ctft.png">moritz-ctft</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/moritz-ectft.png">moritz-ectft</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/random.png">random</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/tit-for-doh.png">tit-for-doh</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/tit-for-tat.png">tit-for-tat</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/turn-other-cheek-no-deal.png">turn-the-other-cheek-no-deal...</a></li>
+    <li><a href="http://perlgeek.de/images/blog/prisoner/watch-for-random.png">watch-for-random</a></li>
+</ul>
+
+<h3>Trying to Be Fair</h3>
+
+<p>In an attempt to reduce the impact of the <em>random</em> strategy, I've
+changed it to use the same random sequence against each player (and of course
+against itself, which totally skews that particular result).</p>
+
+<p>Again the rankings vary between different runs of the same program, but now
+at least same strategies produce mostly the same result
+(<em>turn-the-other-cheek</em> also has a random component). An example output
+from such a run is</p>
+
+<pre>
+SUMMARY
+2558    moritz-ectft
+2543    moritz-ctft
+2532    me
+2457    inevitable-betrayal
+2457    tit-for-doh
+2445    tit-for-tat
+2387    turn-other-cheek-no-deal-with-devil-once-bit-twice-shy-variety-is-the-spice-o-life
+2314    watch-for-random
+2248    good
+1856    evil-inevitable-betrayal
+1844    evil-tit-for-tat
+1359    random
+1100    bad
+</pre>
+
+<h2>TL;DR</h2>
+
+<p>It was a lot of fun! Thanks to everybody who submitted a strategy.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
