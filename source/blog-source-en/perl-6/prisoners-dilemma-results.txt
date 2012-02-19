@@ -93,8 +93,9 @@ often.</p>
 [% endsyntax %]</pre>
 
 <p>This strategy uses a mixin in its returned boolean values to find out when
-it plays against itself. This games the system, though doesn't explicitly
-violates the stated rules.</p>
+it plays against itself, or against a strategy that copies its values from
+<code>@theirs</code> (ie tit-for-tat derivatives), in which case it cooperates.
+This games the system, though doesn't explicitly violates the stated rules.</p>
 
 <p>Audrey also deserves two dishonorable mentions for two solutions that game
 the test harness or the other strategies by exploiting the technically
