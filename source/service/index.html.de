@@ -6,16 +6,16 @@
 <h1>[%readvar title%]</h1>
 
 <p>
-    Wer wissen will, was die <a href="http://www.parrotcode.org/">Parrot</a>- 
+    Wer wissen will, was die <a href="http://www.parrot.org/">Parrot</a>- 
     und <a href="http://perl-6.de/">Perl 6</a>-Entwickler diskutieren und
     früher diskutiert haben, kann sich die <a
-    href="http://irclog.perlgeek.de/">IRC-Logs</a> durchlesen. Außerdem wird
-    noch der #bioclipse Channel und ein paar andere mitgeschrieben.
+    href="http://irclog.perlgeek.de/">IRC-Logs</a> durchlesen. Auch die
+    IRC-Kanäle anderer Softwareentwickler und -Benutzer werden geloggt, zur
+    Zeit (Februar 2012) über 20 verschiedene.
 </p>
 
 <p>
-    Die Commit-Messages im <a
-    href="http://www.pugscode.org/">pugs</a>-Repository kann man <a
-    href="http://moritz.faui2k3.org/svn-search/search.pl">hier
-    durchsuchen</a>.
+    Wer einen IRC-Channel auf irc.perl.org (aka "magnet") oder freenode
+    geloggt haben will, kann gerne den Author kontaktieren (siehe <a
+    href="/imporessum">Impressum</a>).
 </p>

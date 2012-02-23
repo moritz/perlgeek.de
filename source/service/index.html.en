@@ -6,12 +6,11 @@
 <h1>[%readvar title%]</h1>
 
 <p>
-    I offer some services here for free, for example <a
-    href="http://irclog.perlgeek.de/">IRC logs</a>, mostly of Perl or 
-    Perl 6 related channels.
+    I <a href="http://irclog.perlgeek.de/">publicly log IRC channels</a>,
+    usually related to free software development or usage.
 </p>
 
 <p>
-    You can also search in the commit logs of the <a
-    href="http://www.pugscode.org/">pugs</a> subversion repository.
+    If you want a channel logged (either on freenode or irc.perl.org), feel
+    free to contact me.
 </p>
