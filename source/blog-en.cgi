@@ -113,7 +113,7 @@ while ($path_info[0] and $path_info[0] =~ /^[a-zA-Z].*$/ and $path_info[0] !~ /(
 # Flavour specified by ?flav={flav} or index.{flav}
 $flavour = '';
 
-if ( $path_info[$#path_info] =~ /(.+)\.(.+)$/ ) {
+if ( $path_info[$#path_info] =~ /(.+)\.([a-zA-Z0-9_-])$/ ) {
   $flavour = $2;
   $1 ne 'index' and $path_info .= "/$1.$2";
   pop @path_info;
