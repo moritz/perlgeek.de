@@ -68,7 +68,7 @@ OH NOEZ
 href="http://irclog.perlgeek.de/perl6/2012-02-27#i_5216391">walk through a
 change to throw a typed exception</a>, we've received a <a
 href="https://github.com/rakudo/rakudo/pull/59">pull request by a new
-developer</a> which also changes an exception from X::AdHoc to a dedicated;
+developer</a> which also changes an exception from X::AdHoc to a dedicated
 type.</p>
 
 
