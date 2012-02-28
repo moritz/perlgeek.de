@@ -1,0 +1,76 @@
+Current State of Exceptions in Rakudo and Perl 6
+<!-- 1330426465 -->
+<p>It's been a while since my last update on my grant work on exceptions for
+Perl 6 and Rakudo, and I can report lots of progress.</p>
+
+<p>The work on Rakudo's exception system made me realize that we conflated two
+concepts in the base exception type: on the one hand the infrastructure for
+reporting errors and backtraces, and on the other hand holding some sort of
+error message as an attribute.</p>
+
+<p>As a result, we now have a base class called <code>Exception</code> from
+which all exception types must inherit. When a non-<code>Exception</code>
+object is passed to <code>die()</code>, it is wrapped in an object of class
+<code>X::AdHoc</code>. Other error classes can decide to generate the error
+message without having an attribute for it (for example hard-coded in a
+method).</p>
+
+<p>Typed exceptions are now thrown not only from the setting, but also from
+the compiler itself, namely the grammar and the action methods. In fact the
+majority of errors from these two parts of the compiler are now handled with
+dedicated exception types.</p>
+
+
+<p>The most user-visible change is a new and improved backtrace printer, which
+produces usually much shorter and more readable backtraces. The old one is
+still available on demand. Consider the program</p>
+
+<pre>[% syntax perl6 %]
+sub f {
+    g() for 1..10;
+}
+sub g { die 'OH NOEZ' }
+f;
+[% endsyntax %]</pre>
+
+<p>The old backtrace printer produced:
+
+<pre>[% syntax escape %]
+OH NOEZ
+  in sub g at /home/moritz/p6/rakudo/ex.pl:4
+  in block <anon> at /home/moritz/p6/rakudo/ex.pl:2
+  in method reify at src/gen/CORE.setting:4471
+  in method reify at src/gen/CORE.setting:4376
+  in method reify at src/gen/CORE.setting:4376
+  in method gimme at src/gen/CORE.setting:4740
+  in method eager at src/gen/CORE.setting:4715
+  in method eager at src/gen/CORE.setting:1028
+  in sub eager at src/gen/CORE.setting:5000
+  in sub f at /home/moritz/p6/rakudo/ex.pl:2
+  in block <anon> at /home/moritz/p6/rakudo/ex.pl:5
+  in <anon> at /home/moritz/p6/rakudo/ex.pl:1
+[% endsyntax %]</pre>
+
+<p>Where the eager, gimme and reify methods come from the 'for' lop, which is
+compiled to the equivalent of <code>eager (1..10).map: { g() }</code>.</p>
+
+<p>The new backtrace printer produces</p>
+
+<pre>[% syntax escape %]
+OH NOEZ
+  in sub g at ex.pl:4
+  in sub f at ex.pl:2
+  in block <anon> at ex.pl:5
+[% endsyntax %]</pre>
+
+
+<p>It is also a special please to report that after a <a
+href="http://irclog.perlgeek.de/perl6/2012-02-27#i_5216391">walk through a
+change to throw a typed exception</a>, we've received a <a
+href="https://github.com/rakudo/rakudo/pull/59">pull request by a new
+developer</a> which also changes an exception from X::AdHoc to a dedicated;
+type.</p>
+
+
+[% options no-header %][%options no-footer %]
+[% comment vim: set ft=html spell: %]
