@@ -64,7 +64,7 @@ OH NOEZ
 [% endsyntax %]</pre>
 
 
-<p>It is also a special please to report that after a <a
+<p>It is also a special pleasure to report that after a <a
 href="http://irclog.perlgeek.de/perl6/2012-02-27#i_5216391">walk through a
 change to throw a typed exception</a>, we've received a <a
 href="https://github.com/rakudo/rakudo/pull/59">pull request by a new
