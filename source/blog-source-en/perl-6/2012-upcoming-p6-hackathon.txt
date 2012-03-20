@@ -1,0 +1,35 @@
+Upcoming Perl 6 Hackathon in Oslo, Norway
+<!-- 1332263752 -->
+
+<p>The Oslo Perl Mongers are <a
+href="https://gist.github.com/1711730">inviting to the Perl 6 Patterns
+Hackathon in Oslo</a> in one month, and I very much look forward to being
+there.</p>
+
+<p>Hackathons can be quite fun and productive if many programmers focus on the
+same goal. So to make the hackathon a success, I'm willing to work on whatever
+we decide to set as our goal(s).</p>
+
+<p>One topic that is dear to me, and that is approachable by a horde of
+programmers (and guided by one or two Rakudo core hackers) is bringing
+database access into a usable state.</p>
+
+<p>With <a
+href="http://6guts.wordpress.com/2012/01/29/this-months-rakudo-star-release-and-whats-coming-next/">muchly
+    improved support for calling C functions</a> and <a
+href="https://github.com/jnthn/zavolaj/">NativeCall.pm</a> we should have
+enough infrastructure for access mysql, postgres and SQLite databases. <a
+href="https://github.com/mberends/MiniDBI">MiniDBI</a> aims to provide some
+basic convenience, but currently only the mysql driver partially works.</p>
+
+<p>I believe that with concentrated effort, MiniDBI and the rest of the
+infrastructure can be improved to the point that it is usable, and other
+modules can start to rely on it. Databases usable in Perl 6, doesn't that
+sound good?</p>
+
+<p>I'll see what kind of feedback I get on this idea, and if it's positive,
+I'll follow up with instructions on how to install the prerequisites for
+hacking on MiniDBI and its drivers.</p>
+
+[% option no-header %][% option no-footer %]
+[% vim: set ft=html: %]
