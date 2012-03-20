@@ -32,4 +32,4 @@ I'll follow up with instructions on how to install the prerequisites for
 hacking on MiniDBI and its drivers.</p>
 
 [% option no-header %][% option no-footer %]
-[% vim: set ft=html: %]
+[% comment vim: set ft=html: %]
