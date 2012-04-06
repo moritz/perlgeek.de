@@ -141,6 +141,8 @@ collection of ideas.</p>
     driver name, database name, db host name and so on, and then the driver
     parses it again. One could change that to pass all the information as
     named parameters instead.</li>
+    <li>Improve test coverage. For example test that numbers round-trip with
+    the correct types.</li>
     <li>Write a small application that uses a database. That's the best way to
     see if MiniDBI and the backends work.</li>
 </ul>
