@@ -1,8 +1,8 @@
 Perl 6 Hackathon in Oslo: Be Prepared!
 <!-- 1333740816 -->
 
-<p>The Oslo Perl Mongers are <a
-href="https://gist.github.com/1711730">inviting to the Perl 6 Patterns
+<p>The Oslo Perl Mongers <a
+href="https://gist.github.com/1711730">invite to the Perl 6 Patterns
 Hackathon in Oslo</a>. I have <a
 href="http://perlgeek.de/blog-en/perl-6/2012-upcoming-p6-hackathon.html">previously
 suggested that we hack on database connectivity</a>, and so far only got
@@ -21,7 +21,7 @@ prepared:</p>
 fixes, you should obtain Rakudo, NativeCall and MiniDBI from their git source
 repositories -- that last release is already outdated.</p>
 
-<p>Here are the instructions in detail. If at point you run into problems,
+<p>Here are the instructions in detail. If at any point you run into problems,
 feel free to ask <a href="http://perl6.org/community/irc">on the #perl6 IRC
 channel</a> or the perl6-users@perl.org mailing list.</p>
 
