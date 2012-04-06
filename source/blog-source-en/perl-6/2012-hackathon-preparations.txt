@@ -1,0 +1,151 @@
+Perl 6 Hackathon in Oslo: Be Prepared!
+<!-- 1333740816 -->
+
+<p>The Oslo Perl Mongers are <a
+href="https://gist.github.com/1711730">inviting to the Perl 6 Patterns
+Hackathon in Oslo</a>. I have <a
+href="http://perlgeek.de/blog-en/perl-6/2012-upcoming-p6-hackathon.html">previously
+suggested that we hack on database connectivity</a>, and so far only got
+positive feedback. If you want to help, here is what you can do to be
+prepared:</p>
+
+<ul>
+    <li>Get a github account</li>
+    <li>Build and install Rakudo</li>
+    <li>Build and install zavolaj/NativeCall</li>
+    <li>download MiniDBI</li>
+    <li>install and prepare databases to talk to</li>
+</ul>
+
+<p>To hack efficiently on those projects, and to benefit from last-minute
+fixes, you should obtain Rakudo, NativeCall and MiniDBI from their git source
+repositories -- that last release is already outdated.</p>
+
+<p>Here are the instructions in detail. If at point you run into problems,
+feel free to ask <a href="http://perl6.org/community/irc">on the #perl6 IRC
+channel</a> or the perl6-users@perl.org mailing list.</p>
+
+<h2>Get a Github account</h2>
+
+<p>All the interesting Perl 6 code lives in git repositories on <a
+href="https://github.com/">github</a>. If you don't have an account already, <a
+href="https://github.com/plans">sign up -- it's free</a>.</p>
+
+<h2>Build and install Rakudo</h2>
+
+<p>This step <a href="http://rakudo.org/how-to-get-rakudo/">is described well
+    on the Rakudo homepage</a>. Please follow the instruction in section
+"Building the compiler from source".</p>
+
+<p>For the following steps it is important that you have a fresh
+<code>perl6</code> executable file in your $PATH. If you have downloaded
+rakudo to <code>/home/you/p6/rakudo/</code>, you can run the command
+
+<pre>
+PATH=$PATH:/home/you/p6/rakudo/install/bin
+</pre>
+
+<p>(and put it in your ~/.bashrc file if you want it permanently available,
+not just in this shell).</p>
+
+<h2>Build and install zavolaj/NativeCall</h2>
+
+<p>NativeCall.pm is the high-level interface for calling C functions from
+Perl 6 code. Install it:</p>
+
+<pre>
+$ git clone git://github.com/jnthn/zavolaj.git
+$ cd zavolaj
+$ make install
+</pre>
+
+<p>You should also run <code>make test</code>. On Linux it might not find the
+test libraries (which is mostly harmless, because you usually call libraries
+that are installed into your operating system, like those from mysql or
+postgres). In this case you should run <code>LD_LIBRARY_PATH=. make
+test</code> instead.</p>
+
+<h2>Download MiniDBI</h2>
+
+<p>That's not hard at all:</p>
+
+<pre>
+$ git clone git://github.com/mberends/MiniDBI.git
+</pre>
+
+<h2>Install and Prepare Databases</h2>
+
+<p>So far, MiniDBI has (somewhat limited) support for mysql and postgres.
+Since it is always easiest to start from (at least somewhat) working code, I
+strongly recommend that you install at least one of those database
+engines.</p>
+
+<p>Most modern Linux systems allow an easy installation via the package
+manager, and there are installers available for other operating systems. Be
+sure to also install the headers or development files if they come as extra
+packages.</p>
+
+<h3>Mysql</h3>
+
+<p>As mysql <code>root</code> user, run these statements:</p>
+
+<pre>
+CREATE DATABASE zavolaj;
+CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'testpass';
+GRANT SELECT         ON   mysql.* TO 'testuser'@'localhost';
+GRANT CREATE         ON zavolaj.* TO 'testuser'@'localhost';
+GRANT DROP           ON zavolaj.* TO 'testuser'@'localhost';
+GRANT INSERT         ON zavolaj.* TO 'testuser'@'localhost';
+GRANT DELETE         ON zavolaj.* TO 'testuser'@'localhost';
+GRANT LOCK TABLES    ON zavolaj.* TO 'testuser'@'localhost';
+GRANT SELECT         ON zavolaj.* TO 'testuser'@'localhost';
+</pre>
+
+<h3>Postgres</h3>
+
+<p>Launch <code>psql</code> as the <code>postgres</code> user and run these
+statements:</p>
+
+<pre>
+CREATE DATABASE zavolaj;
+CREATE ROLE testuser LOGIN PASSWORD 'testpass';
+GRANT ALL PRIVILEGES ON DATABASE zavolaj TO testuser;
+</pre>
+
+<p>You should now be able to connect with:</p>
+
+<pre>psql --host=localhost --dbname=zavolaj --username=testuser --password
+</pre>
+
+<p>(psql will ask you for the password. Enter <code>testpass</code>).</p>
+
+<h3>Other Databases</h3>
+
+<p>If you want to work on a backend for another database, it helps to have
+that database installed. <a href="http://sqlite.org/">Sqlite</a> is
+an obvious choice (easy to install, zero setup), but of course there are
+other free database too, like <a href=http://firebirdsql.org/">firebird</a>.</p>
+
+<h2>Project ideas</h2>
+
+<p>There is a lot of stuff to do. What follows is only a loose, incomplete
+collection of ideas.</p>
+
+<ul>
+    <li>Fix the postgres backend to actually pass its tests</li>
+    <li>Both mysql and postgres backends don't implement placeholders
+    properly; change them (or one of them) to pass the placeholder values out
+    of band.</li>
+    <li>Write an sqlite backend</li>
+    <li>Currently the user builds a DSN ("data source name") string out of the
+    driver name, database name, db host name and so on, and then the driver
+    parses it again. One could change that to pass all the information as
+    named parameters instead.</li>
+    <li>Write a small application that uses a database. That's the best way to
+    see if MiniDBI and the backends work.</li>
+</ul>
+
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
