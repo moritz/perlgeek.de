@@ -29,7 +29,7 @@ channel</a> or the perl6-users@perl.org mailing list.</p>
 
 <p>All the interesting Perl 6 code lives in git repositories on <a
 href="https://github.com/">github</a>. If you don't have an account already, <a
-href="https://github.com/plans">sign up -- it's free</a>.</p>
+href="https://github.com/signup/free">sign up -- it's free</a>.</p>
 
 <h2>Build and install Rakudo</h2>
 
