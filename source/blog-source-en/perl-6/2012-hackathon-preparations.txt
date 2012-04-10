@@ -1,5 +1,5 @@
 Perl 6 Hackathon in Oslo: Be Prepared!
-<!-- 1333740816 -->
+<!-- 1334091128 -->
 
 <p>The Oslo Perl Mongers <a
 href="https://gist.github.com/1711730">invite to the Perl 6 Patterns
