@@ -1,4 +1,4 @@
-Rakudo Hack: Generate Exported Subroutines On The Fly
+Rakudo Hack: Dynamic Export Lists
 <!-- 1334257183 -->
 
 <p>Rakudo's meta programming capabilities are very good when it comes to
