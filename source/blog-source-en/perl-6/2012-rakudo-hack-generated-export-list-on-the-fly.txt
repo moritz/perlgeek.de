@@ -1,0 +1,52 @@
+Rakudo Hack: Generate Exported Subroutines On The Fly
+<!-- 1334257183 -->
+
+<p>Rakudo's meta programming capabilities are very good when it comes to
+objects, classes and methods. But sometimes people want to generate
+subroutines on the fly and use them, and can't seem to find a way to do
+it.</p>
+
+<p>The problem is that subroutines are usually stored (and looked up from) in
+the lexical pad (ie the same as <code>my</code>-variables), and those lexpads
+are immutable at run time.</p>
+
+<p>Today I found a solution that lets you dynamically install subroutines with
+a computed name into a module, and you can then <code>use</code> that module
+from elsewhere, and have all the generated subroutines available.</p>
+
+<pre>[% syntax perl6 %]
+module A {
+    BEGIN {
+        my $name = 'foo';
+        my $x = sub { say 'OH HAI from &foo' }
+                but role { method name { $name } };
+        trait_mod:<is>(:export, $x);
+    }
+}[% endsyntax %]</pre>
+
+<p>Inside the module first we need a <code>BEGIN</code> block, so that the
+<code>is export</code> trait will run while the module is being compiled, and
+thus knows which module to associate the subroutine to.</p>
+
+<p>Next comes the actual code object that is to be installed. Since the
+<code>export</code> trait inspects the name of the subroutine, we need to give
+it one. Doing that dynamically can be done by overriding the <code>name</code>
+method, here by mixing in a role with such a method into the code object.</p>
+
+<p>Finally comes the part where the export trait is applied. The code here
+uses knowledge of the calling conventions that hide behind a trait.</p>
+
+<p>A different script can then write</p>
+
+<pre>[% syntax perl6 %]
+use A;
+foo();
+[% endsyntax %]</pre>
+
+<p>And access the dynamically exported sub just like any other.</p>
+
+<p>In future there will hopefully be much nicer APIs for this kind of
+fiddling, but for now I'm glad that a workaround has been found.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
