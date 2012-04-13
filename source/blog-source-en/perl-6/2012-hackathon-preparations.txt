@@ -56,10 +56,12 @@ Perl 6 code. Install it:</p>
 <pre>
 $ git clone git://github.com/jnthn/zavolaj.git
 $ cd zavolaj
-$ make install
+$ cp lib/NativeCall.pm6 ~/.perl6/lib/
 </pre>
 
-<p>You should also run <code>make test</code>. On Linux it might not find the
+<p>If you download and install <a
+href="https://github.com/masak/ufo/">ufo</a>, you can use it create a
+Makefile for zavolaj. Then you can also run <code>make test</code>. On Linux it might not find the
 test libraries (which is mostly harmless, because you usually call libraries
 that are installed into your operating system, like those from mysql or
 postgres). In this case you should run <code>LD_LIBRARY_PATH=. make
