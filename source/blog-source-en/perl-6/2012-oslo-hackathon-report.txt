@@ -1,0 +1,57 @@
+Perl 6 Hackathon in Oslo: Report From The First Day
+<!-- 1335039048 -->
+
+<p>Yesterday I arrived in the beautiful city of Oslo to attend the <a
+href="https://gist.github.com/1711730">Perl 6 Patterns Hackathono</a>.
+Yesterday we visited a pub, had great discussions, food and beverages, and
+generally a very good time.</p>
+
+<p>Today we met at 10 am, and got straight to hacking. We are located in an
+office in the 6th floor of a big building, with a nice view over the center of
+town, harbor, and even the Holmenkollen.</p>
+
+<p>I worked on the backtrace printer, which in alarmingly many cases reported
+<code>Error while creating error string: Method 'message' not found for
+invocant of class 'Any'</code>, which wasn't too helpful.</p>
+
+<p>It turns out there were actually two causes. One was a subtle error in the
+backtrace printer that was triggered by <a
+    href="https://github.com/rakudo/rakudo/commit/6ef66c9521b14f33ded88c3da8569032488d2442">stricter
+    implementation of the specification</a>, which was easy to find. The
+second bug was harder to find, considering that you don't get easily get
+backtraces from errors within the backtrace printer. In the end it was the
+usage of a code object in boolean context, which turned out to be harmful.
+Because regexes are also code objects, and in boolean context they search for
+the outer <code>$_</code> variable and try to match the regex against it.
+Which failed. Hard to find, but easy to fix.</p>
+
+<p>My second big project today was database connectivity. Part of it was
+pestering Jonathan to fix the issues that arose from module precompilation
+mixed with calling C modules, and testing all the iterations he produced. I'm
+happy to report that it now works fine, which speeds up development quite a
+bit.</p>
+
+<p>I also fixed the postgres driver. The root cause for the failing tests
+turned out to be rather simple too (a missing initialization), so simple that
+it's embarrassing how long it took me to find out. On the plus side I improved
+the code quite a bit in passing.</p>
+
+<p>So now all tests in <a
+href="https://github.com/mberends/MiniDBI">MiniDBI</a> pass, which is a nice
+milestone, and an indication that we need more tests.</p>
+
+<p>Tomorrow I plan to change the postgres driver to use proper prepared
+statments.</p>
+
+<p>But the real value of such hackathon comes from interacting with the other
+hackers. I'm very happy about lots of discussions with other core hackers, as
+well as feedback and patches from new users and hackers.</p>
+
+<p>At this occasion I'd also like to thank the organizers, Salve J. Nilsen,
+Karl Rune Nilsen and Jan Ingvoldstad. It has been a great event so far, both fun and productive. You are
+doing a great service to the Perl 6 community, and to the hackers you have
+invited.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
