@@ -2,7 +2,7 @@ Perl 6 Hackathon in Oslo: Report From The First Day
 <!-- 1335039048 -->
 
 <p>Yesterday I arrived in the beautiful city of Oslo to attend the <a
-href="https://gist.github.com/1711730">Perl 6 Patterns Hackathono</a>.
+href="https://gist.github.com/1711730">Perl 6 Patterns Hackathon</a>.
 Yesterday we visited a pub, had great discussions, food and beverages, and
 generally a very good time.</p>
 
