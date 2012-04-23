@@ -1,0 +1,44 @@
+Perl 6 Hackathon in Oslo: Report From The Second Day
+<!-- 1335165870 -->
+
+<p>Second day of the <a href="https://gist.github.com/1711730">Perl 6 Patterns
+Hackathon</a>. My plans to get the rest of placeholders and prepared
+statements working in the Postgresql backend for MiniDBI succeed about 10
+minutes after midnight. I just wanted to give them a very quick try before
+going to bed, and was successful. Then I went to sleep.</p>
+
+<p>It was night, and it was morning. Second day.</p>
+
+<p>Next I wrote an SQLite backend for MiniDBI. It blocked on missing features
+in our native call infrastructure, on which arnsholt worked in parallel. So I
+haven't had a chance to try the SQLite backend yet. It probably requires some
+substantial amount of work before it will run, but at least it compiles.</p>
+
+<p>I also investigated prepared statements and placeholders for the mysql
+backend. This is much less straight forward, because it requires filling in
+members of structs, not just function calls. This by itself wouldn't be much a
+problem, our native call infrastructure supports that. The problem is that
+it's a struct of mixed "private" and "public" members, so modelling the
+structure in Perl 6 requires modeling private data of the mysql client
+library. While possible, I don't find it desirable, because it is rather
+fragile.</p>
+
+<p>Another notable event was the hacking dojo, where about 8 of us
+collaborated to write a roman numeral conversion, using pair programming, and
+fixed cycles of first writing a failing test, then getting it to run in the
+simplest possible way, and finally refactoring it. It was quite an interesting
+and fun experience.</p>
+
+<p>I spent much of the rest of the hackathon discussing things. For example
+Patrick Michaud gave a quick walk through of how lists and related types are
+implemented and iterated in Rakudo.</p>
+
+<p>In the evening we had very tasty Vietnamese food, and generally a good
+time.</p>
+
+<p>Again it was a very productive and enjoyable day, and I'm very grateful for
+being invited to the Hackathon.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
