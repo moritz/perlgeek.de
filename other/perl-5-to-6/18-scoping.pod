@@ -38,7 +38,10 @@ an C<our> declaration introduces a lexical alias for a package variable.
 But there are subtle differences: variables are exactly visible in the rest
 of the block where they are declared, variables declared in block headers (for
 example in the condition of a C<while> loop) are not limited to the block
-afterwards. 
+afterwards.
+
+Also Perl 6 only ever looks up unqualified names (variables and subroutines)
+in lexical scopes.
 
 If you want to limit the scope, you can use formal parameters to the block:
 
