@@ -1,0 +1,40 @@
+Meet DBIish, a Perl 6 Database Interface
+<!-- 1335607390 -->
+
+<p>In the aftermath of the Oslo Perl 6 hackathon 2012, I have decided to fork
+and rename MiniDBI. MiniDBI is intended as a compatible port of Perl 5's
+excellent DBI module to Perl 6. While working on the MiniDBI backends, I
+noticed that I became more and more unhappy with that. Perl 6 is sufficiently
+different from Perl 5 to warrant different design decisions in the database
+interface layer.</p>
+
+<p>Meet <a href="https://github.com/perl6/DBIish/">DBIish</a>. It started with
+MiniDBI's code base, but has some substantial deviations from MiniDBI:</p>
+
+<ul>
+    <li>Connection information is passed by named arguments to the driver
+    (instead of a single DSN string)</li>
+    <li>Different naming of several methods. There's not much point in having
+    both <code>fetchrow_array</code> and <code>fetchrow_arrayref</code> in
+    Rakudo. <code>fetchrow</code> simply returns an array or a list, and the
+    caller decides what to do with it.</li>
+    <li>Backends only need to implement <code>fetchrow</code> and
+    <code>column_names</code>, and get all the other fetching methods (like
+    <code>fetchrow-hash</code>, <code>fetchall-hash</code>) for free.</li>
+    <li>Error handling from DB connection and statement handle are unified
+    into a single row</li>
+</ul>
+
+<p>The latter two changes brought quite a reduction in backend code size.</p>
+
+<p>My plans for the future include experimenting with different names and
+maybe totally different APIs. When a language has lazy lists, one can simply
+return all rows lazily, instead of encouraging the user to fetch the rows one
+by one.</p>
+
+<p>Currently the Postgresql and mysql backends support basic CRUD operations,
+Postgresql with proper prepared statements and placeholders. An SQLite backend
+is under way, but still needs better support from our native call interface.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
