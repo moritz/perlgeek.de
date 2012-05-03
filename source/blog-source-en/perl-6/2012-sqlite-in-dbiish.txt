@@ -1,0 +1,35 @@
+SQLite support for DBIish
+<!-- 1336035767 -->
+
+<p><a href="https://github.com/perl6/DBIish/">DBIish</a>, the new database
+interface for Rakudo Perl 6, now has a working SQLite backend. It uses
+prepared statements and placeholders, and supports standard CRUD
+operations.</p>
+
+<p>Previously the SQLite driver would randomly report "Malformed UTF-8 string"
+or segfault, but usually worked pretty well when run under valgrind. The
+problem turned out to be a mismatch between the caller's and the callee's
+ideas about memory management.</p>
+
+<p>In particular, parrot's garbage collector would deallocate strings passed
+to <a href="http://www.sqlite.org/c3ref/bind_blob.html">sqlite3_bind_text</a>
+after the call was done, but sqlite wants such values to stay around until
+the next call to <a
+href="http://www.sqlite.org/c3ref/step.html">sqlite3_step</a> in the very
+least.</p>
+
+<p>Fixing this mismatch was enabled <a
+    href="https://github.com/jnthn/zavolaj/commit/e94f45ca4dd5df3010ecb84051980f506e3cbe6d">by
+this patch</a>, which lets you mark strings as explicitly managed. Such
+strings keep their marshalled C string equivalent around until they are
+garbage-collected themselves. So now <a
+    href="https://github.com/perl6/DBIish/commit/9b339432405228a895c76bf1193bdba3f935b99b">the
+sqlite driver keeps a copy of the strings</a> as long as necessary, and the SQLite
+tests pass reliably.</p>
+
+<p>Currently it still needs the <code>cstr</code> branches in the nqp and
+zavolaj repositories, but they will be merged soon -- certainly before the May
+release of Rakudo.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
