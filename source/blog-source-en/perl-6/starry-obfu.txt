@@ -29,6 +29,11 @@ release.</p>
 <p><strong>Update:</strong> Since it has caused a bit of confusion on #perl6,
 it does not print the usual obfu text, but rather a minor variation.</p>
 
+<p><strong>Second update:</strong> Newer Rakudo versions implement a slightly
+updated specification regarding the Whatever-star, which requires some
+updates. <a href="https://gist.github.com/2134734">Here is an updated
+version</a> which works on Rakudo 2012.03 to 2012.05.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: ft=html spell tw=78
 %]
