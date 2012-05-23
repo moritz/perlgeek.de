@@ -1,0 +1,70 @@
+News in the Rakudo 2012.05 release
+<!-- 1337761546 -->
+
+<p>The <a
+href="http://rakudo.org/2012/05/23/rakudo-star-2012-05-released/">Rakudo
+Star release 2012.05</a> comes with many improvements to the compiler. Some
+people have asked what they mean, so I want to explain some of them here.</p>
+
+<p>The new <b>-I</b> and <b>-M</b> allow manipulation of the library search
+path and loading of modules, similar <a
+href="http://perldoc.perl.org/perlrun.html">to Perl 5</a>.</p>
+
+<pre>
+perl6 -Ilib t/yourtest.t  # finds your module under lib/
+</pre>
+
+<p>If you want to manipulate the search path from inside a script
+or module, you can now use the new <b>lib</b> module, again
+<a href="http://perldoc.perl.org/lib.html">known from Perl 5</a>.</p>
+
+<pre>[% syntax perl6 %]
+# file t/yourtest.t;
+use v6;
+use lib 't/lib'; # now can load testing modules from t/lib/Yourmodule/Test.pm
+use Yourmodule::Test;
+...
+[% endsyntax %]</pre>
+
+<p>If you look at how <a
+href="https://github.com/rakudo/rakudo/blob/nom/lib/lib.pm">lib.pm is
+implemented</a>, you'll notice another new feature: the ability to write a
+custom <code>EXPORT</code> subroutine -- necessary exactly for things like
+lib.pm.</p>
+
+<p>But normal exporting and importing is now handled quite well from Rakudo.
+You can now mark routines as being exported to certain tag names:</p>
+
+<pre>[% syntax perl6 %]
+module CGI {
+    sub h1($text) is export(:HTML) { '<h1>' ~ $text ~ '</h1>' }
+    sub param($key) is epxort { ... };
+}
+[% endsyntax %]</pre>
+
+<p>If you want to get only the HTML generating function(s), you can write</p>
+
+<pre>[% syntax perl6 %]
+use CGI :HTML;
+[% endsyntax %]</pre>
+
+<p><a href="http://perlcabal.org/syn/S11.html">S11</a> has more details on the
+exporting and importing mechanism.</p>
+
+<p>You can also import from within a single file by using <code>import</code>
+instead of <code>use</code>:</p>
+
+<pre>[% syntax perl6 %]
+module Greeter {
+    sub hello($who) is export {
+        say "Hello $who";
+    }
+}
+
+import Greeter; # make sub hello available in the current scope
+hello('Perl 6 fans');
+[% endsyntax %]</pre>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
