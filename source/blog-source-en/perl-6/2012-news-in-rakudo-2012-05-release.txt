@@ -38,7 +38,7 @@ You can now mark routines as being exported to certain tag names:</p>
 <pre>[% syntax perl6 %]
 module CGI {
     sub h1($text) is export(:HTML) { '<h1>' ~ $text ~ '</h1>' }
-    sub param($key) is epxort { ... };
+    sub param($key) is export { ... };
 }
 [% endsyntax %]</pre>
 
