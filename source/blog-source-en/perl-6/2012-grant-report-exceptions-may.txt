@@ -65,6 +65,7 @@ which might serve as a starting point for such documentation.</p>
 <p>So in summary, still missing are</p>
 
 <ul>
+    <li>Finish changing text based exceptions to typed exceptions in CORE</li>
     <li>Documenting the error catalog in S32::Exception</li>
     <li>Documentation for compiler writers and test writers</li>
 </ul>
