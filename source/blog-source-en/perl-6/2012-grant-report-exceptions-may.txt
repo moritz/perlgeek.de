@@ -1,0 +1,91 @@
+Exceptions Grant Report for May 2012
+<!-- 1338142273 -->
+
+<p>It seems quite a long time since I started working on my <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">grant
+    on exceptions</a>, and I until quite recently I felt that I still had
+quite a long way to go. And then I read the deliverables again, and found that
+I have actually achieved quite a bit of them already. I also noticed that some
+of them are quite ambiguously formulated.</p>
+
+<p>Also when I wrote the grant application I had a clever system in the back
+of my mind that lets you categorize exceptions with different tags. After
+presenting that idea to the #perl6 channel, they uniformly told me that it was
+a (bad) reinvention of the existing type system. They were right, of course.
+So instead exceptions use the "real" type system now, which means that some
+aspects of the grant application do not make so much sense now.</p>
+
+<p>Let's look at the deliverables in detail:</p>
+
+<blockquote>D1: Specification</blockquote>
+
+<p><a href="http://perlcabal.org/syn/S32/Exception.html">S32::Exception</a>
+contains my work in this area.</a>.</p>
+
+<p>Since exceptions use the normal Perl 6 type system, the amount of work I
+had to do was less than I had expected. I consider it done, in the sense
+that everything is there that we need to throw typed exceptions and work with
+them in a meaningful and intuitive way.</p>
+
+<p>There are certainly still open design question in the general space of
+exceptions (like, how do we indicate that an exception should or should not
+print its backtrace by default? There are ways to achieve this right now,
+but it's not as easy as it it should be for the end user). However those open
+questions are well outside the realm of this grant. I still plan to tackle
+them in due time.</p>
+
+<blockquote>D2: Error catalog, tests</blockquote>
+
+<p>The error catalog is compiled and in Rakudo's <a
+href="https://github.com/rakudo/rakudo/blob/nom/src/core/Exception.pm">src/core/Exception.pm</a>.
+It is not comprehensive (ie doesn't cover all possible errors that are thrown
+from current compilers), but the grant request only required an "initial"
+catalog. It is certainly enough to demonstrate the feasibility of the design,
+and to handle many very common cases. I will certainly summarize it in the
+S32::Exception document.</p>
+
+<p>Tests are in <a
+href="https://github.com/perl6/roast/blob/master/S32-exceptions/misc.t">the
+roast repository</a>. At the time of writing there are 343 tests, of which
+Rakudo passes nearly all (the few failures are due to misparses, which cause
+wrong parse errors to be generated). They cover both the exceptions API and
+the individual exception types.</p>
+
+<blockquote>D3: Implementation, tests, documentation</blockquote>
+
+<p>The meat of the implementation is done. Not all exceptions thrown from the
+setting are typed yet, about 30 remain (plus a few for internal errors that
+don't make sense to improve much). The tests mentioned above already cover
+several RT tickets where people complained about wrong or less-than-awesome
+errors. Documentation is still missing, though I have <a
+href="http://irclog.perlgeek.de/perl6/2012-02-27#i_5216391">given a
+walk through the process of adding a new typed exception to Rakudo</a> on IRC,
+which might serve as a starting point for such documentation.</p>
+
+<p>So in summary, still missing are</p>
+
+<ul>
+    <li>Documenting the error catalog in S32::Exception</li>
+    <li>Documentation for compiler writers and test writers</li>
+</ul>
+
+<p>A surprisingly short list :-)</p>
+
+<p>I'd also like to mention that I did several things related to exceptions
+which were not covered by this grant report:</p>
+
+<ul>
+    <li><a href="http://perlgeek.de/blog-en/perl-6/2011-02-exceptions.writeback">greatly improved backtrace printer</a></li>
+    <li>Many exceptions from within the compilation process (such as parse
+    errors, redeclarations etc.) are now typed.</li>
+    <li>I enabled typed exceptions thrown from C code, and as a proof of
+    concept I ported all user-visible exceptions in <a
+    href="https://github.com/rakudo/rakudo/blob/nom/src/ops/perl6.ops">perl6.ops</a>
+    to their intended types.</li>
+    <li><a href="https://github.com/rakudo/rakudo/commit/ecf355fa54492999de368a4ca1aed21a016470ec">Exceptions
+    from within the meta model</a> can now be caught in the "actions" part of
+the compiler, augmented with line numbers and file name and re-thrown</li>
+</ul>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
