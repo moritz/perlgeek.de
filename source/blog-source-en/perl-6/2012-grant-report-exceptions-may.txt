@@ -46,7 +46,8 @@ S32::Exception document.</p>
 
 <p>Tests are in <a
 href="https://github.com/perl6/roast/blob/master/S32-exceptions/misc.t">the
-roast repository</a>. At the time of writing there are 343 tests, of which
+roast repository</a>. At the time of writing there are 343 tests <em>(Update
+2012-06-04: 411 tests)</em>, of which
 Rakudo passes nearly all (the few failures are due to misparses, which cause
 wrong parse errors to be generated). They cover both the exceptions API and
 the individual exception types.</p>
@@ -55,7 +56,9 @@ the individual exception types.</p>
 
 <p>The meat of the implementation is done. Not all exceptions thrown from the
 setting are typed yet, about 30 remain (plus a few for internal errors that
-don't make sense to improve much). The tests mentioned above already cover
+don't make sense to improve much). <em>(Update 2012-06-04: all of these 30
+    errors now throw typed exceptions too).</em>
+The tests mentioned above already cover
 several RT tickets where people complained about wrong or less-than-awesome
 errors. Documentation is still missing, though I have <a
 href="http://irclog.perlgeek.de/perl6/2012-02-27#i_5216391">given a
