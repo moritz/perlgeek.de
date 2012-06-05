@@ -1,0 +1,32 @@
+Exceptions Grant Report -- Final update
+<!-- 1338918568 -->
+
+<p>In my <a
+href="http://perlgeek.de/blog-en/perl-6/2012-grant-report-exceptions-may.html">previous
+blog post</a> I mentioned that I'm nearly done with my <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">exceptions
+Hague grant</a>. I have since done all the things that I identified as still
+missing.</p>
+
+<p>In particular I <a href="http://search.cpan.org/perldoc?ack">ack</a>
+through the setting for remaining uses of <code>die</code>, and the only thing
+left are internal errors, error messages about not-yet-implemented things and
+the actual declaration of <code>die</code>. Which means that everything that
+should be a typed exception is now.</p>
+
+<p>The error catalogue can be found in <a
+href="http://perlcabal.org/syn/S32/Exception.html">S32::Exception</a>.
+Documentation for <a
+href="https://github.com/perl6/mu/blob/master/docs/exceptions.pod">compiler
+writers is in a separate document</a>, and the promised <a
+href="https://github.com/perl6/roast/blob/master/packages/Test/Util.pm#L177">documentation
+for test authors is in the POD of Test::Util</a> in the "roast"
+repository.</p>
+
+<p>Now I wait for review of my work by the grant manager (thanks Will) and the
+grant committee.</p>
+
+<p>I'd like to thank everybody who was involved with the grant.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
