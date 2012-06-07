@@ -34,7 +34,7 @@ does the whole idea of overriding methods.</p>
 <p>Perl 6 provides built-in types and routines in an outer lexical scope known
 as a "setting". The default setting is called CORE.
 Due to the lexical nature of almost all lookups in Perl 6,
-one "override" almost anything by providing a symbol of the same name in a
+one can "override" almost anything by providing a symbol of the same name in a
 lexical scope.</p>
 
 <p>One way to use that for localization is to add another setting between the
