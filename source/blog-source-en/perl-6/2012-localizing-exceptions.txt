@@ -1,0 +1,121 @@
+Localization for Exception Messages
+<!-- 1339085238 -->
+
+<p>Ok, my previous blog post wasn't <a
+href="http://perlgeek.de/blog-en/perl-6/2012-grant-report-final-status-update.html">quite
+as final as I thought.</a>. My <a
+href="http://news.perlfoundation.org/2011/02/hague-grant-application-struct.html">exceptions
+grant</a> said that the design should make it easy to enable localization and
+internationalization hooks. I want to discuss some possible approaches and
+thereby demonstrate that the design is flexible enough as it is.</p>
+
+<p>At this point I'd like to mention that much of the flexibility comes from
+either Perl 6 itself, or from the separation of stringifying and exception and
+generating the actual error message.</p>
+
+<h2>Mixins: the sledgehammer</h2>
+       
+<p>One can always override a method in an object by mixing in a role which
+contains the method on question. When the user requests error messages in a
+different language, one can replace method <code>Str</code> or method
+<code>message</code> with one that generates the error message in a different
+language.</p>
+
+<p>Where should that happen? The code throws exceptions is fairly scattered
+over the code base, but there is a central piece of code in Rakudo that
+turns Parrot-level exceptions into Perl 6 level exceptions. That would be an
+obvious place to muck with exceptions, but it would mean that exceptions that
+are created but not thrown don't get the localization. I suspect that's a
+fairly small problem in the real world, but it still carries code smell. As
+does the whole idea of overriding methods.</p>
+
+<h2>Another sledgehammer: alternative setting</h2>
+
+<p>Perl 6 provides built-in types and routines in an outer lexical scope known
+as a "setting". The default setting is called CORE.
+Due to the lexical nature of almost all lookups in Perl 6,
+one "override" almost anything by providing a symbol of the same name in a
+lexical scope.</p>
+
+<p>One way to use that for localization is to add another setting between the
+user's code and CORE. For example a file <code>DE.setting</code>:</p>
+
+<pre>[% syntax perl6 %]
+my class X::Signature::Placeholder does X::Comp {
+    method message() {
+        'Platzhaltervariablen können keine bestehenden Signaturen überschreiben';
+    }
+}
+[% endsyntax %]</pre>
+
+<p>After compiling, we can load the setting:</p>
+
+<pre>[% syntax escape %]
+$ ./perl6 --target=pir --output=DE.setting.pir DE.setting
+$ ./install/bin/parrot -o DE.setting.pbc DE.setting.pir
+$ ./perl6 --setting=DE -e 'sub f() { $^x }'
+===SORRY!===
+Platzhaltervariablen können keine bestehenden Signaturen überschreiben
+at -e:1
+[% endsyntax %]</pre>
+
+<p>That works beautifully for exceptions that the compiler throws, because
+they look up exception types in the scope where the error occurs. Exceptions
+from within the setting are a different beast, they'd need special lookup
+rules (though the setting throws far fewer exceptions than the compiler, so
+that's probably manageable).</p>
+
+<p>But while this looks quite simple, it comes with a problem: if a module is
+precompiled without the custom setting, and it contains a reference to an
+exception type, and then the l10n setting redefines it, other programs will
+contain references to a different class with the same name. Which means that
+our precompiled module might only catch the English version of
+<code>X::Signature::Placeholder</code>, and lets our localized exception pass
+through. Oops.</p>
+
+<h2>Tailored solutions</h2>
+
+<p>A better approach is probably to simply hack up the string conversion in
+type <code>Exception</code> to consider a translator routine if present, and
+pass the invocant to that routine. The translator routine can look up the
+error message keyed by the type of the exception, and has access to all data
+carried in the exception. In untested Perl 6 code, this might look like
+this:</p>
+
+<pre>[% syntax perl6 %]
+# required change in CORE
+my class Exception {
+    multi method Str(Exception:D:) {
+        return self.message unless defined $*LANG;
+        if %*TRANSLATIONS{$*LANG}{self.^name} -> $translator {
+            return $translator(self);
+        }
+        return self.message; # fallback
+    }
+}
+
+# that's what a translator could write:
+
+%*TRANSLATIONS<de><X::TypeCheck::Assignment> = {
+        "Typenfehler bei Zuweisung zu '$_.symbol()': "
+        ~ "'{$_.expected.^name}' erwartet, aber '{$_.got.^name} bekommen"
+    }
+}
+[% endsyntax %]</pre>
+
+<p>And setting the dynamic language <code>$*LANG</code> to <code>'de'</code>
+would give a German error message for type check failures in assignment.</p>
+
+<p>Another approach is to augment existing error classes and add methods that
+generate the error message in different languages, for example <code>method
+message-fr</code> for French, and check their existence in
+<code>Exception.Str</code> if a different language is requested.</p>
+
+<h2>Conclusion</h2>
+
+<p>In conclusion there are many bad and enough good approaches; we will decide
+which one to take when the need arises (ie when people actually start to
+translate error messages).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
