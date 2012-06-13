@@ -1,0 +1,107 @@
+News in the Rakudo 2012.06 release
+<!-- 1340355600 -->
+
+<p>Rakudo development continues to progress nicely, and so there are a few
+changes in this month's release worth explaining.</p>
+
+<h2>Longest Token Matching, List Iteration</h2>
+
+<p>The largest chunk of development effort went into <a
+href="http://6guts.wordpress.com/2012/06/07/ltm-for-alternations/">Longest-Token
+Matching for alternations in Regexes</a>, about which Jonathan already
+blogged. Another significant piece was Patrick's refactor of list iteration.
+You probably won't notice much of that, except that for-loops are now a bit
+faster (maybe 10%), and laziness works more reliably in a couple of cases.</p>
+
+<h2>String to Number Conversion</h2>
+
+<p>String to number conversion is now stricter than before. Previously an
+expression like <code>+"foo"</code> would simply return 0. Now it fails, ie
+returns an unthrown exception. If you treat that unthrown exception like a
+normal value, it blows up with a helpful error message, saying that the
+conversion to a number has failed. If that's not what you want, you can still
+write <code>+$str // 0</code>.</p>
+
+<h2><code>require</code> With Argument Lists</h2>
+
+<p><code>require</code> now supports argument lists, and that needs a bit more
+explaining. In Perl 6 routines are by default only looked up in lexical
+scopes, and lexical scopes are immutable at run time. So, when loading a
+module at run time, how do you make functions available to the code that loads
+the module? Well, you determine at compile time which symbols you want to
+import, and then do the actual importing at run time:</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+require Test <&plan &ok &is>;
+#            ^^^^^^^^^^^^^^^ evaluated at compile time,
+#                            declares symbols &plan, &ok and &is
+#       ^^^                  loaded at run time
+[% endsyntax %]</pre>
+
+<h2>Module Load Debugging</h2>
+
+<p>Rakudo had some trouble when modules were precompiled, but its
+dependencies were not. This happens more often than it sounds, because Rakudo
+checks timestamps of the involved files, and loads the source version if it is
+newer than the compiled file. Since many file operations (including simple
+copying) change the time stamp, that could happen very easily.</p>
+
+<p>To make debugging of such errors easier, you can set the
+<code>RAKUDO_MODULE_DEBUG</code> environment variable to 1 (or any positive
+number; currently there is only one debugging level, in the future higher
+numbers might lead to more output).</p>
+
+<pre>[% syntax escape %]
+$ RAKUDO_MODULE_DEBUG=1 ./perl6 -Ilib t/spec/S11-modules/require.t
+MODULE_DEBUG: loading blib/Perl6/BOOTSTRAP.pbc
+MODULE_DEBUG: done loading blib/Perl6/BOOTSTRAP.pbc
+MODULE_DEBUG: loading lib/Test.pir
+MODULE_DEBUG: done loading lib/Test.pir
+1..5
+MODULE_DEBUG: loading t/spec/packages/Fancy/Utilities.pm
+MODULE_DEBUG: done loading t/spec/packages/Fancy/Utilities.pm
+ok 1 - can load Fancy::Utilities at run time
+ok 2 - can call our-sub from required module
+MODULE_DEBUG: loading t/spec/packages/A.pm
+MODULE_DEBUG: loading t/spec/packages/B.pm
+MODULE_DEBUG: loading t/spec/packages/B/Grammar.pm
+MODULE_DEBUG: done loading t/spec/packages/B/Grammar.pm
+MODULE_DEBUG: done loading t/spec/packages/B.pm
+MODULE_DEBUG: done loading t/spec/packages/A.pm
+ok 3 - can require with variable name
+ok 4 - can call subroutines in a module by name
+ok 5 - require with import list
+[% endsyntax %]</pre>
+
+<h2>Module Loading Traces in Compile-Time Errors</h2>
+
+<p>If module myA loads module myB, and myB dies during compilation, you now
+get a backtrace which indicates through which path the erroneous module was
+loaded:</p>
+
+<pre>[% syntax escape %]
+$ ./perl6 -Ilib -e 'use myA'
+===SORRY!===
+Placeholder variable $^x may not be used here because the surrounding block
+takes no signature
+at lib/myB.pm:1
+  from module myA (lib/myA.pm:3)
+  from -e:1
+[% endsyntax %]</pre>
+
+<h2>Improved autovivification</h2>
+
+<p>Perl allows you to treat not-yet-existing array and hash elements as arrays
+or hashes, and automatically creates those elements for you. This is called
+autovivification.</p>
+
+<pre>[% syntax perl6 %]
+my %h;
+%h<x>.push: 1, 2, 3; # worked in the previous release too
+push %h<y>, 4, 5, 6; # newly works in the 2012.06
+[% endsyntax %]</pre>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
