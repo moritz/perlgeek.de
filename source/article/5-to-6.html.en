@@ -45,13 +45,13 @@ read in the chronological order.</p>
 <h2 id="post_00">Introduction</h2>
 <p>Sat Sep 20 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; - Introduction</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -59,7 +59,7 @@ name="SYNOPSIS"
     Learn to love Perl 6
     Understand why</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -75,7 +75,7 @@ name="DESCRIPTION"
 
 <p>Perhaps the lessons are too short to learn a programming language from them, but I hope that they draw an outline of the language design, which allows you to see its beauty without having to learn the language.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="IT&#39;S_NOT"
 >IT&#39;S NOT</a></h3>
 
@@ -84,7 +84,7 @@ name="IT&#39;S_NOT"
 
 <p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="ROADMAP"
 >ROADMAP</a></h3>
 
@@ -133,14 +133,14 @@ name="ROADMAP"
 
 <p>I&#39;ll also update these lessons from time to time make sure they are not too outdated.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="AUTHOR"
 >AUTHOR</a></h3>
 
 <p>Moritz Lenz, <a href="http://perlgeek.de/" class="podlinkurl"
 >http://perlgeek.de/</a>, <code>moritz@faui2k3.org</code></p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="LINKS"
 >LINKS</a></h3>
 
@@ -151,7 +151,7 @@ name="LINKS"
 <h2 id="post_01">Strings, Arrays, Hashes;</h2>
 <p>Sat Sep 20 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
@@ -159,7 +159,7 @@ name="NAME"
 Arrays,
 Hashes;</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -181,7 +181,7 @@ name="SYNOPSIS"
     # this is an error: %hash{bar}
     # (it tries to call the subroutine bar(), which is not declared</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -189,7 +189,7 @@ name="DESCRIPTION"
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Strings"
 >Strings</a></h4>
 
@@ -208,7 +208,7 @@ name="Strings"
 
 <p>A block in curly braces is executed as code, and the result is interpolated.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Arrays"
 >Arrays</a></h4>
 
@@ -232,7 +232,7 @@ name="Arrays"
 
 <pre>    my @methods = &#60;shift unshift push pop end delete sort map&#62;;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Hashes"
 >Hashes</a></h4>
 
@@ -252,7 +252,7 @@ name="Hashes"
 
 <pre>    say %drinks&#60;Bavaria&#62;;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Final_Notes"
 >Final Notes</a></h4>
 
@@ -265,7 +265,7 @@ name="Final_Notes"
 
 <p>This implies that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -277,13 +277,13 @@ name="SEE_ALSO"
 <h2 id="post_02">Types</h2>
 <p>Sat Sep 20 22:40:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 02 - Types</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -296,7 +296,7 @@ name="SYNOPSIS"
         say &#39;$x contains an Int&#39;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -322,7 +322,7 @@ name="DESCRIPTION"
 
 <p>Some types stand for a whole family of more specific types, for example integers (type <code>Int</code>), rationals (type <code>Rat</code>) and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Introspection"
 >Introspection</a></h4>
 
@@ -336,7 +336,7 @@ name="Introspection"
         say &#39;Variable $x contains an integer&#39;;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -363,7 +363,7 @@ name="MOTIVATION"
 </dd>
 </dl>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -374,13 +374,13 @@ name="SEE_ALSO"
 <h2 id="post_03">Basic Control Structures</h2>
 <p>Sat Sep 20 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 03 - Basic Control Structures</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -402,7 +402,7 @@ name="SYNOPSIS"
 
     die &#34;Access denied&#34; unless $password eq &#34;Secret&#34;;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -410,7 +410,7 @@ name="DESCRIPTION"
 
 <p>In fact you are discouraged from using parenthesis around the conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)&#60;/c</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Branches"
 >Branches</a></h4>
 
@@ -428,7 +428,7 @@ name="Branches"
 
 <pre>    say &#34;you won&#34; if $answer == 42;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Loops"
 >Loops</a></h4>
 
@@ -461,7 +461,7 @@ name="Loops"
         say $x;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -472,13 +472,13 @@ name="SEE_ALSO"
 <h2 id="post_04">Subroutines and Signatures</h2>
 <p>Sat Sep 20 23:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 04 - Subroutines and Signatures</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -512,7 +512,7 @@ name="SYNOPSIS"
     doit(:when&#60;noon&#62;, :what(&#39;more stuff&#39;)); # &#39;doing more stuff at noon&#39;
     # illegal: doit(&#34;stuff&#34;, &#34;now&#34;)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -547,7 +547,7 @@ name="DESCRIPTION"
         ...
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Named_Parameters"
 >Named Parameters</a></h4>
 
@@ -581,7 +581,7 @@ name="Named_Parameters"
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Slurpy_Parameters"
 >Slurpy Parameters</a></h4>
 
@@ -602,7 +602,7 @@ name="Slurpy_Parameters"
 
     order-meal(&#39;beef steak&#39;, :vegetarian, :well-done);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Interpolation"
 >Interpolation</a></h4>
 
@@ -624,7 +624,7 @@ name="Interpolation"
 
 <pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Multi_Subs"
 >Multi Subs</a></h4>
 
@@ -645,7 +645,7 @@ name="Multi_Subs"
     frob(&#34;x&#34;)       # Frobbing String x
     frob(2)         # Frobbing Integer 2</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -664,7 +664,7 @@ name="MOTIVATION"
 
 <p>Since operators are also subs, these refinements work for operators too.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -675,13 +675,13 @@ name="SEE_ALSO"
 <h2 id="post_05">Objects and Classes</h2>
 <p>Tue Sep 23 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 05 - Objects and Classes</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -708,7 +708,7 @@ name="SYNOPSIS"
     say $x.colour;              # black
     $x.colour = &#39;blue&#39;;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -726,7 +726,7 @@ name="DESCRIPTION"
     }
     # more classes or other code here</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Methods"
 >Methods</a></h4>
 
@@ -766,7 +766,7 @@ name="Methods"
 
 <p>Private methods can&#39;t be called from outside the class.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Attributes"
 >Attributes</a></h4>
 
@@ -795,7 +795,7 @@ name="Attributes"
     $x.b = 2;       # ERROR!
     $x.c = 3;       # ok</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Inheritance"
 >Inheritance</a></h4>
 
@@ -822,7 +822,7 @@ name="Inheritance"
 
 <p>Though multiple inheritance also comes with multiple problems, and people usually advise against it. Roles are often a safer choice.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Roles_and_Composition"
 >Roles and Composition</a></h4>
 
@@ -846,7 +846,7 @@ name="Roles_and_Composition"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -860,13 +860,13 @@ name="SEE_ALSO"
 <h2 id="post_06">Contexts</h2>
 <p>Wed Sep 24 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 06 - Contexts</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -877,7 +877,7 @@ name="SYNOPSIS"
     say +@a;            # 3
     if @a &#60; 10 { say &#34;short array&#34;; }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -902,7 +902,7 @@ name="DESCRIPTION"
     %( stuff )   Hash context
     @@( stuff )  Slice context</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Slice_Context"
 >Slice Context</a></h4>
 
@@ -915,7 +915,7 @@ name="Slice_Context"
 
 <p>You can force slice context with <code>@@( stuff )</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -925,7 +925,7 @@ name="MOTIVATION"
 
 <p>For some things (like the Match object), the different contexts really enhance their usefulness and beauty.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -937,13 +937,13 @@ name="SEE_ALSO"
 <h2 id="post_07">Regexes (also called &quot;rules&quot;)</h2>
 <p>Thu Sep 25 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called &#34;rules&#34;)</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -977,7 +977,7 @@ name="SYNOPSIS"
     my $match = URL.parse(&#39;http://perl6.org/documentation/&#39;);
     say $match&#60;hostname&#62;;       # perl6.org</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1014,7 +1014,7 @@ name="DESCRIPTION"
 
 <p>All of these changes go quite deep, and only the surface can be scratched here.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Syntax_clean_up"
 >Syntax clean up</a></h4>
 
@@ -1058,7 +1058,7 @@ name="Syntax_clean_up"
 
 <p>(There are more new modifiers, but probably not as important as the listed ones).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="The_Match_Object"
 >The Match Object</a></h4>
 
@@ -1075,7 +1075,7 @@ name="The_Match_Object"
 
 <p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Named_Regexes_and_Grammars"
 >Named Regexes and Grammars</a></h4>
 
@@ -1095,7 +1095,7 @@ name="Named_Regexes_and_Grammars"
         token schema { &#39;http&#39; }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1103,7 +1103,7 @@ name="MOTIVATION"
 
 <p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the Perl 5 one, which is written in C and not changeable at parse time.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1120,13 +1120,13 @@ name="SEE_ALSO"
 <h2 id="post_08">Junctions</h2>
 <p>Fri Sep 26 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Junctions</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1135,7 +1135,7 @@ name="SYNOPSIS"
     }
     say ((2|3|4)+7).perl        # (9|10|11)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1189,7 +1189,7 @@ name="DESCRIPTION"
 
 <p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparison returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1221,7 +1221,7 @@ name="MOTIVATION"
 <pre>    my @items = get_data();
     if all(@items) &#62;= 0 { ... }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="A_Word_of_Warning"
 >A Word of Warning</a></h3>
 
@@ -1231,7 +1231,7 @@ name="A_Word_of_Warning"
 
 <p>It is a good idea to use junctions as smart conditions, but trying to build a solver for equations based on the junction autothreading rules is on over-extortion and usually results in frustration.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1242,13 +1242,13 @@ name="SEE_ALSO"
 <h2 id="post_09">Comparing and Matching</h2>
 <p>Sat Sep 27 22:20:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 09 - Comparing and Matching</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1272,7 +1272,7 @@ name="SYNOPSIS"
     1       ~~      0..4    True
     -3      ~~      0..4    False</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1282,7 +1282,7 @@ name="DESCRIPTION"
 
 <p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. Two identically constructed data structures are equivalent.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Smart_matching"
 >Smart matching</a></h4>
 
@@ -1294,7 +1294,7 @@ name="Smart_matching"
 
 <p>What you should remember is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1305,13 +1305,13 @@ name="SEE_ALSO"
 <h2 id="post_10">Containers and Values</h2>
 <p>Wed Oct 15 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 10 - Containers and Values</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="Synopsis"
 >Synopsis</a></h3>
 
@@ -1323,7 +1323,7 @@ name="Synopsis"
         say &#39;$x and $y are different names for the same thing&#39;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1347,13 +1347,13 @@ name="DESCRIPTION"
 
 <p>You can check if two things are bound together the <code>=:=</code> comparison operator.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>Exporting and importing subs, types and variables is done via aliasing. Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple operator.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1364,13 +1364,13 @@ name="SEE_ALSO"
 <h2 id="post_11">Changes to Perl 5 Operators</h2>
 <p>Thu Oct 16 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 11 - Changes to Perl 5 Operators</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1396,7 +1396,7 @@ name="SYNOPSIS"
     # chained comparisons
     if 0 &#60;= $angle &#60; 2 * pi { ... }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1414,7 +1414,7 @@ name="DESCRIPTION"
 
 <p>Comparison operators can now be chained, so you can write <code>$a &#60; $b &#60; $c</code> and it does what you mean.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1422,7 +1422,7 @@ name="MOTIVATION"
 
 <p>The chaining comparison operators are another step towards making the language more natural, and allowing things that are commonly used in mathematical notation.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1433,13 +1433,13 @@ name="SEE_ALSO"
 <h2 id="post_12">Laziness</h2>
 <p>Fri Oct 17 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 12 - Laziness</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1456,7 +1456,7 @@ name="SYNOPSIS"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1483,7 +1483,7 @@ name="DESCRIPTION"
 
 <p>Since <code>$file.lines</code> is a lazy list, the lines are only physically read from disk as needed (besides buffering, of course).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="gather/take"
 >gather/take</a></h4>
 
@@ -1516,7 +1516,7 @@ name="gather/take"
         do_some_computation($_);
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Controlling_Laziness"
 >Controlling Laziness</a></h4>
 
@@ -1528,7 +1528,7 @@ name="Controlling_Laziness"
 
 <pre>    my $ls = lazy { $expansive_computation };</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1538,7 +1538,7 @@ name="MOTIVATION"
 
 <p>In general laziness makes programming easier because you don&#39;t have to know if the result of a computation will be used at all - you just make it lazy, and if it&#39;s not used the computation isn&#39;t executed at all. If it&#39;s used, you lost nothing.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1549,13 +1549,13 @@ name="SEE_ALSO"
 <h2 id="post_13">Custom Operators</h2>
 <p>Sat Oct 18 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 13 - Custom Operators</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1567,7 +1567,7 @@ name="SYNOPSIS"
     
     say 5!;                     # 120</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1590,7 +1590,7 @@ name="DESCRIPTION"
     }
     say &#8364;4;                         # 8</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Precedence"
 >Precedence</a></h4>
 
@@ -1602,7 +1602,7 @@ name="Precedence"
     mutli sub infix:&#60;bar&#62; is tighter(&#38;infix:&#60;+&#62;) { ... }
     mutli sub infix:&#60;baz&#62; is looser(&#38;infix:&#60;+&#62;) { ... }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Associativity"
 >Associativity</a></h4>
 
@@ -1616,7 +1616,7 @@ name="Associativity"
         ...
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Postcircumfix_and_Circumfix"
 >Postcircumfix and Circumfix</a></h4>
 
@@ -1638,7 +1638,7 @@ name="Postcircumfix_and_Circumfix"
 
 <p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurrences of a regex and returns a list of the text of all matches.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 
@@ -1649,7 +1649,7 @@ name="&#34;Overload&#34;_existing_operators"
 
 <p>This means that you can write objects that behave just like the built in &#34;special&#34; objects like <code>Str</code>, <code>Int</code> etc.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1657,7 +1657,7 @@ name="MOTIVATION"
 
 <p>It also removes the gap between using a language and modifying the language.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1671,13 +1671,13 @@ name="SEE_ALSO"
 <h2 id="post_14">The MAIN sub</h2>
 <p>Sun Oct 19 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 14 - The MAIN sub</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1691,7 +1691,7 @@ name="SYNOPSIS"
   # command line
   $ ./doit.pl --force --home=/home/someoneelse file_to_process</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1720,13 +1720,13 @@ name="DESCRIPTION"
 
 <p>So for simple (and some not quite simple) cases you don&#39;t need an external command line processor, but you can just use sub <code>MAIN</code> for that.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>The motivation behind this should be quite obvious: it makes simple things easier, similar things similar, and in many cases reduces command line processing to a single line of code: the signature of <code>MAIN</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1737,13 +1737,13 @@ name="SEE_ALSO"
 <h2 id="post_15">Twigils</h2>
 <p>Mon Oct 20 22:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 15 - Twigils</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1760,7 +1760,7 @@ name="SYNOPSIS"
 
   say &#34;A CGI script&#34; if %*ENV.exists(&#39;DOCUMENT_ROOT&#39;);</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1797,7 +1797,7 @@ name="DESCRIPTION"
 
 <p>A pseudo twigil is <code>&#60;</code>, which is used in a construct like <code>$&#60;capture&#62;</code>, where it is a shorthand for <code>$/&#60;capture&#62;</code>, which accesses the Match object after a regex match.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1811,13 +1811,13 @@ name="MOTIVATION"
 <h2 id="post_16">Enums</h2>
 <p>Wed Nov 26 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 16 - Enums</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1832,7 +1832,7 @@ name="SYNOPSIS"
       say &#34;Weekend&#34;;
   }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1863,7 +1863,7 @@ name="DESCRIPTION"
 
 <p>Note that you can specify the name of the value only (like <code>Fri</code>) if that&#39;s unambiguous, if it&#39;s ambiguous you have to provide the full name <code>Day::Fri</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1871,30 +1871,30 @@ name="MOTIVATION"
 
 <p>Enums also provide the power and flexibility of attaching arbitrary meta data for debugging or tracing.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enums</a></p>
+<p><a href="http://perlcabal.org/syn/S12.html#Enumerations" class="podlinkurl"
+>http://perlcabal.org/syn/S12.html#Enumerations</a></p>
 
 
 <h2 id="post_17">Unicode</h2>
 <p>Thu Nov 27 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 17 - Unicode</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
 <pre>  (none)    </pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -1922,7 +1922,7 @@ name="DESCRIPTION"
             &#34;&#187; with byte string &#171;$b&#187;\n&#34;;
   }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Encoding_and_Decoding"
 >Encoding and Decoding</a></h4>
 
@@ -1930,7 +1930,7 @@ name="Encoding_and_Decoding"
 
 <pre>  my $handle = open($filename, :r, :encoding&#60;UTF-8&#62;);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Regexes_and_Unicode"
 >Regexes and Unicode</a></h4>
 
@@ -1938,7 +1938,7 @@ name="Regexes_and_Unicode"
 
 <p>Character classes like <code>\w</code> (match a word character) behave accordingly to the Unicode standard. There are modifiers that ignore case (<code>:i</code>) and accents (<code>:a</code>), and modifiers for the substitution operators that can carry case information to the substitution string (<code>:samecase</code> and <code>:sameaccent</code>, short <code>:ii</code>, <code>:aa</code>).</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -1948,7 +1948,7 @@ name="MOTIVATION"
 
 <p>The separate data types for text and byte strings make debugging and introspection quite easy.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -1959,13 +1959,13 @@ name="SEE_ALSO"
 <h2 id="post_18">Scoping</h2>
 <p>Fri Nov 28 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 18 - Scoping</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -1990,17 +1990,19 @@ name="SYNOPSIS"
     my $x = $y + 2 while $y = calc();
     # $x still visible</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Lexical_Scoping"
 >Lexical Scoping</a></h4>
 
 <p>Scoping in Perl 6 is quite similar to that of Perl 5. A Block introduces a new lexical scope. A variable name is searched in the innermost lexical scope first, if it&#39;s not found it is then searched for in the next outer scope and so on. Just like in Perl 5 a <code>my</code> variable is a proper lexical variable, and an <code>our</code> declaration introduces a lexical alias for a package variable.</p>
 
 <p>But there are subtle differences: variables are exactly visible in the rest of the block where they are declared, variables declared in block headers (for example in the condition of a <code>while</code> loop) are not limited to the block afterwards.</p>
+
+<p>Also Perl 6 only ever looks up unqualified names (variables and subroutines) in lexical scopes.</p>
 
 <p>If you want to limit the scope, you can use formal parameters to the block:</p>
 
@@ -2016,7 +2018,7 @@ name="Lexical_Scoping"
             $x visible here in Perl 6
             but not in Perl 5</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Dynamic_scoping"
 >Dynamic scoping</a></h4>
 
@@ -2024,7 +2026,7 @@ name="Dynamic_scoping"
 
 <p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception, then the previous value of the variable is restored. If not, it is kept.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Context_variables"
 >Context variables</a></h4>
 
@@ -2045,7 +2047,7 @@ name="Context_variables"
 
 <p>(In Perl 5.14 there is a workaround that protects <code>$@</code> from being modified, thus averting the most harm from this particular example.)</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Pseudo-packages"
 >Pseudo-packages</a></h4>
 
@@ -2061,7 +2063,7 @@ name="Pseudo-packages"
 
 <p>Likewise a function can access variables from its caller with the <code>CALLER</code> and <code>CONTEXT</code> pseudo packages. The difference is that <code>CALLER</code> only accesses the scope of the immediate caller, <code>CONTEXT</code> works like UNIX environment variables (and should only be used internally by the compiler for handling <code>$_</code>, <code>$!</code> and the like). To access variables from the outer dynamic scope they must be declared with <code>is context</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2078,7 +2080,7 @@ name="MOTIVATION"
  it.  Future versions of perl might do something different from the
  version of perl you try it out on.  Here be dragons.</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2092,13 +2094,13 @@ name="SEE_ALSO"
 <h2 id="post_19">Regexes strike back</h2>
 <p>Sat Nov 29 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 19 - Regexes strike back</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2117,13 +2119,13 @@ name="SYNOPSIS"
     $x ~~ ss/c d/x y/;
     say $x;                     # abx     yefg</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
 <p>Since the basics of regexes are already covered in lesson 07, here are some useful (but not very structured) additional facts about Regexes.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Matching"
 >Matching</a></h4>
 
@@ -2148,7 +2150,7 @@ name="Matching"
     $x ~~ s :s :ii /brown.*/perl 6 developer/;
     # $x is now &#39;The Quick Perl 6 Developer&#39;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Alternations"
 >Alternations</a></h4>
 
@@ -2216,13 +2218,13 @@ name="Alternations"
 <h2 id="post_20">A grammar for (pseudo) XML</h2>
 <p>Fri Dec  5 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 20 - A grammar for (pseudo) XML</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2240,7 +2242,7 @@ name="SYNOPSIS"
         token attributes { \w+ &#39;=&#34;&#39; &#60;-[&#34;&#60;&#62;]&#62;* &#39;&#34;&#39; };
     };</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -2249,7 +2251,7 @@ name="DESCRIPTION"
 <p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo</a> to obtain and build Rakudo, and try it out yourself.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Our_idea_of_XML"
 >Our idea of XML</a></h4>
 
@@ -2287,7 +2289,7 @@ name="Our_idea_of_XML"
 
 <p>(As you can see from test 1 we don&#39;t require a single root tag, but it would be trivial to add this restriction).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Developing_the_grammar"
 >Developing the grammar</a></h4>
 
@@ -2416,7 +2418,7 @@ name="Developing_the_grammar"
 
 <p>All tests pass, we&#39;re happy, our first grammar works well.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="More_hacking"
 >More hacking</a></h4>
 
@@ -2438,13 +2440,13 @@ name="More_hacking"
 
 <p>Have fun hacking.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>It&#39;s powerful and fun</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2458,13 +2460,13 @@ name="SEE_ALSO"
 <h2 id="post_21">Subset Types</h2>
 <p>Sat Dec  6 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 21 - Subset Types</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2477,7 +2479,7 @@ name="SYNOPSIS"
         return $x.sqrt;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -2497,7 +2499,7 @@ name="DESCRIPTION"
     # or with the variable at the front:
     sub foo ($x of Int where { ... } ) { ... }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2509,19 +2511,19 @@ name="MOTIVATION"
 <h2 id="post_22">The State of the implementations</h2>
 <p>Sun Dec  7 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 22 - The State of the implementations</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
 <pre>    (none)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -2530,7 +2532,7 @@ name="DESCRIPTION"
 
 <p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Pugs"
 >Pugs</a></h4>
 
@@ -2552,7 +2554,7 @@ name="Pugs"
 
 <p>Pugs can parse most common constructs, implements object orientation, basic regexes, nearly(?) all control structures, basic user defined operators and macros, many builtins, contexts (except slice context), junctions, basic multi dispatch and the reduction meta operator - based on the syntax of three years past.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Rakudo"
 >Rakudo</a></h4>
 
@@ -2568,7 +2570,7 @@ name="Rakudo"
 
 <p>If you want to experiment with Perl 6 today, Rakudo is the recommended choice.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Elf"
 >Elf</a></h4>
 
@@ -2580,7 +2582,7 @@ name="Elf"
 
 <p>It parses more than 70% of the test suite, but implements mostly features that are easy to emulate with Perl 5, and passes about 700 tests from the test suite.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="KindaPerl6"
 >KindaPerl6</a></h4>
 
@@ -2588,13 +2590,13 @@ name="KindaPerl6"
 
 <p>Kp6 implements object orientation, grammars and a few distinct features like lazy gather/take. It also implements <code>BEGIN</code> blocks, which was one of the design goals.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="v6.pm"
 >v6.pm</a></h4>
 
 <p><code>v6</code> is a source filter for Perl 5. It was written by Flavio Glock, and supports basic Perl 6 plus grammars. It is fairly stable and fast, and is occasionally enhanced. It lives on the CPAN and in the pugs repository in <code>perl5/*/</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="SMOP"
 >SMOP</a></h4>
 
@@ -2604,7 +2606,7 @@ name="SMOP"
 
 <p>It will then be used as a backend for either elf or kp6, and perhaps also for pugs.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="STD.pm"
 >STD.pm</a></h4>
 
@@ -2619,7 +2621,7 @@ name="STD.pm"
 
 <p>It correctly parses custom operators and warns about non-existent subs, undeclared variables and multiple declarations of the same variable as well as about some Perl 5isms.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2633,7 +2635,7 @@ name="MOTIVATION"
 
 <p>The third answer is that we don&#39;t want a single point of failure. If we had just one implementation, and had severe problems with one of them for unforeseeable reasons (technical, legal, personal, ...) we have possible fallbacks.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2660,13 +2662,13 @@ name="SEE_ALSO"
 <h2 id="post_23">Quoting and Parsing</h2>
 <p>Mon Dec  8 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 23 - Quoting and Parsing</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2685,11 +2687,11 @@ name="SYNOPSIS"
     }
     if();</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Quoting"
 >Quoting</a></h4>
 
@@ -2741,7 +2743,7 @@ name="Quoting"
 
 <p>However there is one form that does not work, and some Perl 5 programmers will miss it: you can&#39;t write <code>qw(...)</code> with the round parenthesis in Perl 6. It is interpreted as a call to sub <code>qw</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Parsing"
 >Parsing</a></h4>
 
@@ -2759,7 +2761,7 @@ name="Parsing"
 
 <p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are only special if used in a special syntax.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2767,7 +2769,7 @@ name="MOTIVATION"
 
 <p>And when you limit the specialty of keywords, you have far less troubles with backwards compatibility if you want to change what you consider a &#34;keyword&#34;.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2778,13 +2780,13 @@ name="SEE_ALSO"
 <h2 id="post_24">The Reduction Meta Operator</h2>
 <p>Tue Dec  9 23:00:00 2008</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 24 - The Reduction Meta Operator</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2800,7 +2802,7 @@ name="SYNOPSIS"
         say &#34;ascending order&#34;;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="Description"
 >Description</a></h3>
 
@@ -2823,7 +2825,7 @@ name="Description"
 
 <p>Note that <code>[...]</code> always returns a scalar, so <code>[,] @list</code> is actually the same as <code>[@list]</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Getting_partial_results"
 >Getting partial results</a></h4>
 
@@ -2839,7 +2841,7 @@ name="Getting_partial_results"
 
 <pre>    [~] [\**] 1..3;     # &#34;381&#34;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2847,7 +2849,7 @@ name="MOTIVATION"
 
 <p>If you&#39;re not convinced, play a bit with it (pugs mostly implements it), it&#39;s real fun.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2859,13 +2861,13 @@ name="SEE_ALSO"
 <h2 id="post_25">The Cross Meta Operator</h2>
 <p>Tue May 26 22:00:00 2009</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 25 - The Cross Meta Operator</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2878,7 +2880,7 @@ name="SYNOPSIS"
     # output: a1\n a2\n b1\n b2\n c1\n c2\n
     # (with real newlines instead of \n)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -2886,7 +2888,7 @@ name="DESCRIPTION"
 
 <p>If an operator follows the <code>X</code>, then this operator is applied to all tuple items, and the result is returned instead. So <code>1, 2 X+ 3, 6</code> will return the values <code>1+3, 1+6, 2+3, 2+6</code> (evaluated as <code>4, 7, 5, 8</code> of course).</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2894,7 +2896,7 @@ name="MOTIVATION"
 
 <p>The usage as a meta operator can sometimes eliminate the loops altogether.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
@@ -2905,13 +2907,13 @@ name="SEE_ALSO"
 <h2 id="post_26">Exceptions and control exceptions</h2>
 <p>Thu Jul  9 09:00:02 2009</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 26 - Exceptions and control exceptions</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -2923,7 +2925,7 @@ name="SYNOPSIS"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -2955,7 +2957,7 @@ name="DESCRIPTION"
 
 <p>Contrary to what other programming languages do, the <code>CATCH</code>/<code>CONTROL</code> blocks are within the scope in which the error is caught (not on the outside), giving it full access to the lexical variables, which makes it easier to generate useful error message, and also prevents DESTROY blocks from being run before the error is handled.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Unthrown_exceptions"
 >Unthrown exceptions</a></h4>
 
@@ -2970,7 +2972,7 @@ name="Unthrown_exceptions"
 
 <p>If you don&#39;t like soft exceptions, you say <code>use fatal;</code> at the start of the program and cause all exceptions from <code>fail()</code> to be thrown immediately.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -2982,13 +2984,13 @@ name="MOTIVATION"
 <h2 id="post_27">Common Perl 6 data processing idioms</h2>
 <p>Thu Jul 22 13:34:26 2010</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 27 - Common Perl 6 data processing idioms</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -3020,7 +3022,7 @@ name="SYNOPSIS"
   Something.new(required =&#62; 2); # no error
   Something.new()               # BOOM</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -3028,7 +3030,7 @@ name="DESCRIPTION"
 
 <p>So here a some common Perl 6 idioms, dealing with data structures.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Hashes"
 >Hashes</a></h4>
 
@@ -3046,7 +3048,7 @@ name="Hashes"
 
 <p>which uses a lazy, infinite list of 1s on the right-hand side, and relies on the fact that <code>Z</code> ends when the shorter list is exhausted.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Numbers"
 >Numbers</a></h4>
 
@@ -3063,7 +3065,7 @@ name="Numbers"
 <pre> $x max= 0;
  $x min= 10;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Debugging"
 >Debugging</a></h4>
 
@@ -3071,7 +3073,7 @@ name="Debugging"
 
 <p><code>:$var</code> generates a Pair (&#34;colonpair&#34;), using the variable name as key (but with sigil stripped). So it&#39;s the same as <code>var =&#62; $var</code>. <code>note()</code> writes to the standard error stream, appending a newline. So <code>note :$var.perl</code> is quick way of obtaining the value of a variable for debugging; purposes, along with its name.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Sorting"
 >Sorting</a></h4>
 
@@ -3094,7 +3096,7 @@ name="Sorting"
 
 <pre>    my @sorted = sort &#38;transform, @values;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Mandatory_Attributes"
 >Mandatory Attributes</a></h4>
 
@@ -3106,7 +3108,7 @@ name="Mandatory_Attributes"
 
 <p>This exploits the default value mechanism. When a value is supplied, the code for generating the default value is never executed, and the <code>die</code> never triggers. If any constructor fails to set it, an exception is thrown.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -3116,13 +3118,13 @@ name="MOTIVATION"
 <h2 id="post_28">Currying</h2>
 <p>Sun Jul 25 09:17:10 2010</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 28 - Currying</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -3139,7 +3141,7 @@ name="SYNOPSIS"
       print &#60;R G B&#62;.[$_ % *]; # RGBRGBRGBR
   }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -3151,7 +3153,7 @@ name="DESCRIPTION"
       substr(&#39;Hello, World&#39;, |@a)
   }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Currying_with_assuming"
 >Currying with <code>assuming</code></a></h4>
 
@@ -3167,7 +3169,7 @@ name="Currying_with_assuming"
 
 <p>But that&#39;s tedious to write, so there&#39;s another option.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Currying_with_the_Whatever-Star"
 >Currying with the Whatever-Star</a></h4>
 
@@ -3202,7 +3204,7 @@ name="Currying_with_the_Whatever-Star"
 
 <p>involves a closure that calls the <code>uc</code> method on its argument.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -3210,7 +3212,7 @@ name="MOTIVATION"
 
 <p>Perl 6 strives to make it even easier, and thus provides tools to make typical constructs in functional programming easily available. Currying and easy construction of closures is a key to functional programming, and makes it very easy to write transformation for your data, for example together with <code>map</code> or <code>grep</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

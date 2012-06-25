@@ -1,13 +1,13 @@
 Basic Control Structures
 <!-- 1221951600 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 03 - Basic Control Structures</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -29,7 +29,7 @@ name="SYNOPSIS"
 
     die &#34;Access denied&#34; unless $password eq &#34;Secret&#34;;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -37,7 +37,7 @@ name="DESCRIPTION"
 
 <p>In fact you are discouraged from using parenthesis around the conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)&#60;/c</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Branches"
 >Branches</a></h4>
 
@@ -55,7 +55,7 @@ name="Branches"
 
 <pre>    say &#34;you won&#34; if $answer == 42;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Loops"
 >Loops</a></h4>
 
@@ -88,7 +88,7 @@ name="Loops"
         say $x;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

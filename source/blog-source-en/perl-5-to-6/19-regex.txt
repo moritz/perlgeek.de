@@ -1,13 +1,13 @@
 Regexes strike back
 <!-- 1227999600 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 19 - Regexes strike back</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -26,13 +26,13 @@ name="SYNOPSIS"
     $x ~~ ss/c d/x y/;
     say $x;                     # abx     yefg</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
 <p>Since the basics of regexes are already covered in lesson 07, here are some useful (but not very structured) additional facts about Regexes.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Matching"
 >Matching</a></h4>
 
@@ -57,7 +57,7 @@ name="Matching"
     $x ~~ s :s :ii /brown.*/perl 6 developer/;
     # $x is now &#39;The Quick Perl 6 Developer&#39;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Alternations"
 >Alternations</a></h4>
 

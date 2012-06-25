@@ -1,19 +1,19 @@
 Unicode
 <!-- 1227826800 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 17 - Unicode</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
 <pre>  (none)    </pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -41,7 +41,7 @@ name="DESCRIPTION"
             &#34;&#187; with byte string &#171;$b&#187;\n&#34;;
   }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Encoding_and_Decoding"
 >Encoding and Decoding</a></h4>
 
@@ -49,7 +49,7 @@ name="Encoding_and_Decoding"
 
 <pre>  my $handle = open($filename, :r, :encoding&#60;UTF-8&#62;);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Regexes_and_Unicode"
 >Regexes and Unicode</a></h4>
 
@@ -57,7 +57,7 @@ name="Regexes_and_Unicode"
 
 <p>Character classes like <code>\w</code> (match a word character) behave accordingly to the Unicode standard. There are modifiers that ignore case (<code>:i</code>) and accents (<code>:a</code>), and modifiers for the substitution operators that can carry case information to the substitution string (<code>:samecase</code> and <code>:sameaccent</code>, short <code>:ii</code>, <code>:aa</code>).</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -67,7 +67,7 @@ name="MOTIVATION"
 
 <p>The separate data types for text and byte strings make debugging and introspection quite easy.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

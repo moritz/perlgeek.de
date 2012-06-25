@@ -1,13 +1,13 @@
 Regexes (also called "rules")
 <!-- 1222381200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called &#34;rules&#34;)</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -41,7 +41,7 @@ name="SYNOPSIS"
     my $match = URL.parse(&#39;http://perl6.org/documentation/&#39;);
     say $match&#60;hostname&#62;;       # perl6.org</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -78,7 +78,7 @@ name="DESCRIPTION"
 
 <p>All of these changes go quite deep, and only the surface can be scratched here.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Syntax_clean_up"
 >Syntax clean up</a></h4>
 
@@ -122,7 +122,7 @@ name="Syntax_clean_up"
 
 <p>(There are more new modifiers, but probably not as important as the listed ones).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="The_Match_Object"
 >The Match Object</a></h4>
 
@@ -139,7 +139,7 @@ name="The_Match_Object"
 
 <p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Named_Regexes_and_Grammars"
 >Named Regexes and Grammars</a></h4>
 
@@ -159,7 +159,7 @@ name="Named_Regexes_and_Grammars"
         token schema { &#39;http&#39; }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -167,7 +167,7 @@ name="MOTIVATION"
 
 <p>Finally grammars are so powerful that you can parse about every programming language with them, including Perl 6 itself. That makes the Perl 6 grammar easier to maintain and to change than the Perl 5 one, which is written in C and not changeable at parse time.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

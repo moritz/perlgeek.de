@@ -1,13 +1,13 @@
 Junctions
 <!-- 1222467600 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Junctions</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -16,7 +16,7 @@ name="SYNOPSIS"
     }
     say ((2|3|4)+7).perl        # (9|10|11)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -70,7 +70,7 @@ name="DESCRIPTION"
 
 <p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparison returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -102,7 +102,7 @@ name="MOTIVATION"
 <pre>    my @items = get_data();
     if all(@items) &#62;= 0 { ... }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="A_Word_of_Warning"
 >A Word of Warning</a></h3>
 
@@ -112,7 +112,7 @@ name="A_Word_of_Warning"
 
 <p>It is a good idea to use junctions as smart conditions, but trying to build a solver for equations based on the junction autothreading rules is on over-extortion and usually results in frustration.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

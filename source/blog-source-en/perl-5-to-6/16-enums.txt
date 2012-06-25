@@ -1,13 +1,13 @@
 Enums
 <!-- 1227740400 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 16 - Enums</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -22,7 +22,7 @@ name="SYNOPSIS"
       say &#34;Weekend&#34;;
   }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -53,7 +53,7 @@ name="DESCRIPTION"
 
 <p>Note that you can specify the name of the value only (like <code>Fri</code>) if that&#39;s unambiguous, if it&#39;s ambiguous you have to provide the full name <code>Day::Fri</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -61,11 +61,11 @@ name="MOTIVATION"
 
 <p>Enums also provide the power and flexibility of attaching arbitrary meta data for debugging or tracing.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html#Enums" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enums</a></p>
+<p><a href="http://perlcabal.org/syn/S12.html#Enumerations" class="podlinkurl"
+>http://perlcabal.org/syn/S12.html#Enumerations</a></p>
 
 [% option no-header %] [% option no-footer %]

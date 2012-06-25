@@ -1,13 +1,13 @@
 Common Perl 6 data processing idioms
 <!-- 1279805666 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 27 - Common Perl 6 data processing idioms</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -39,7 +39,7 @@ name="SYNOPSIS"
   Something.new(required =&#62; 2); # no error
   Something.new()               # BOOM</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -47,7 +47,7 @@ name="DESCRIPTION"
 
 <p>So here a some common Perl 6 idioms, dealing with data structures.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Hashes"
 >Hashes</a></h4>
 
@@ -65,7 +65,7 @@ name="Hashes"
 
 <p>which uses a lazy, infinite list of 1s on the right-hand side, and relies on the fact that <code>Z</code> ends when the shorter list is exhausted.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Numbers"
 >Numbers</a></h4>
 
@@ -82,7 +82,7 @@ name="Numbers"
 <pre> $x max= 0;
  $x min= 10;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Debugging"
 >Debugging</a></h4>
 
@@ -90,7 +90,7 @@ name="Debugging"
 
 <p><code>:$var</code> generates a Pair (&#34;colonpair&#34;), using the variable name as key (but with sigil stripped). So it&#39;s the same as <code>var =&#62; $var</code>. <code>note()</code> writes to the standard error stream, appending a newline. So <code>note :$var.perl</code> is quick way of obtaining the value of a variable for debugging; purposes, along with its name.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Sorting"
 >Sorting</a></h4>
 
@@ -113,7 +113,7 @@ name="Sorting"
 
 <pre>    my @sorted = sort &#38;transform, @values;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Mandatory_Attributes"
 >Mandatory Attributes</a></h4>
 
@@ -125,7 +125,7 @@ name="Mandatory_Attributes"
 
 <p>This exploits the default value mechanism. When a value is supplied, the code for generating the default value is never executed, and the <code>die</code> never triggers. If any constructor fails to set it, an exception is thrown.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 

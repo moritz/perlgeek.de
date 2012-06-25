@@ -1,13 +1,13 @@
 Laziness
 <!-- 1224280800 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 12 - Laziness</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -24,7 +24,7 @@ name="SYNOPSIS"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -51,7 +51,7 @@ name="DESCRIPTION"
 
 <p>Since <code>$file.lines</code> is a lazy list, the lines are only physically read from disk as needed (besides buffering, of course).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="gather/take"
 >gather/take</a></h4>
 
@@ -84,7 +84,7 @@ name="gather/take"
         do_some_computation($_);
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Controlling_Laziness"
 >Controlling Laziness</a></h4>
 
@@ -96,7 +96,7 @@ name="Controlling_Laziness"
 
 <pre>    my $ls = lazy { $expansive_computation };</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -106,7 +106,7 @@ name="MOTIVATION"
 
 <p>In general laziness makes programming easier because you don&#39;t have to know if the result of a computation will be used at all - you just make it lazy, and if it&#39;s not used the computation isn&#39;t executed at all. If it&#39;s used, you lost nothing.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

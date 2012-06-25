@@ -1,13 +1,13 @@
 Exceptions and control exceptions
 <!-- 1247130002 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 26 - Exceptions and control exceptions</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -19,7 +19,7 @@ name="SYNOPSIS"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -51,7 +51,7 @@ name="DESCRIPTION"
 
 <p>Contrary to what other programming languages do, the <code>CATCH</code>/<code>CONTROL</code> blocks are within the scope in which the error is caught (not on the outside), giving it full access to the lexical variables, which makes it easier to generate useful error message, and also prevents DESTROY blocks from being run before the error is handled.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Unthrown_exceptions"
 >Unthrown exceptions</a></h4>
 
@@ -66,7 +66,7 @@ name="Unthrown_exceptions"
 
 <p>If you don&#39;t like soft exceptions, you say <code>use fatal;</code> at the start of the program and cause all exceptions from <code>fail()</code> to be thrown immediately.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 

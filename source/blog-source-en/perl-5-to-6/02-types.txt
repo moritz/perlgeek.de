@@ -1,13 +1,13 @@
 Types
 <!-- 1221950400 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 02 - Types</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -20,7 +20,7 @@ name="SYNOPSIS"
         say &#39;$x contains an Int&#39;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -46,7 +46,7 @@ name="DESCRIPTION"
 
 <p>Some types stand for a whole family of more specific types, for example integers (type <code>Int</code>), rationals (type <code>Rat</code>) and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Introspection"
 >Introspection</a></h4>
 
@@ -60,7 +60,7 @@ name="Introspection"
         say &#39;Variable $x contains an integer&#39;;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -87,7 +87,7 @@ name="MOTIVATION"
 </dd>
 </dl>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

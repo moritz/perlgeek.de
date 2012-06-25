@@ -1,7 +1,7 @@
 Strings, Arrays, Hashes;
 <!-- 1221949200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
@@ -9,7 +9,7 @@ name="NAME"
 Arrays,
 Hashes;</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -31,7 +31,7 @@ name="SYNOPSIS"
     # this is an error: %hash{bar}
     # (it tries to call the subroutine bar(), which is not declared</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -39,7 +39,7 @@ name="DESCRIPTION"
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Strings"
 >Strings</a></h4>
 
@@ -58,7 +58,7 @@ name="Strings"
 
 <p>A block in curly braces is executed as code, and the result is interpolated.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Arrays"
 >Arrays</a></h4>
 
@@ -82,7 +82,7 @@ name="Arrays"
 
 <pre>    my @methods = &#60;shift unshift push pop end delete sort map&#62;;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Hashes"
 >Hashes</a></h4>
 
@@ -102,7 +102,7 @@ name="Hashes"
 
 <pre>    say %drinks&#60;Bavaria&#62;;</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Final_Notes"
 >Final Notes</a></h4>
 
@@ -115,7 +115,7 @@ name="Final_Notes"
 
 <p>This implies that you don&#39;t need special dereferencing syntax, and that you can create objects that can act as arrays, hashes and subs at the same time.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

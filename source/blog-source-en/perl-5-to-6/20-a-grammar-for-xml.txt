@@ -1,13 +1,13 @@
 A grammar for (pseudo) XML
 <!-- 1228518000 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 20 - A grammar for (pseudo) XML</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -25,7 +25,7 @@ name="SYNOPSIS"
         token attributes { \w+ &#39;=&#34;&#39; &#60;-[&#34;&#60;&#62;]&#62;* &#39;&#34;&#39; };
     };</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -34,7 +34,7 @@ name="DESCRIPTION"
 <p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo</a> to obtain and build Rakudo, and try it out yourself.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Our_idea_of_XML"
 >Our idea of XML</a></h4>
 
@@ -72,7 +72,7 @@ name="Our_idea_of_XML"
 
 <p>(As you can see from test 1 we don&#39;t require a single root tag, but it would be trivial to add this restriction).</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Developing_the_grammar"
 >Developing the grammar</a></h4>
 
@@ -201,7 +201,7 @@ name="Developing_the_grammar"
 
 <p>All tests pass, we&#39;re happy, our first grammar works well.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="More_hacking"
 >More hacking</a></h4>
 
@@ -223,13 +223,13 @@ name="More_hacking"
 
 <p>Have fun hacking.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>It&#39;s powerful and fun</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

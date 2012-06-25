@@ -1,13 +1,13 @@
 Scoping
 <!-- 1227913200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 18 - Scoping</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -32,17 +32,19 @@ name="SYNOPSIS"
     my $x = $y + 2 while $y = calc();
     # $x still visible</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Lexical_Scoping"
 >Lexical Scoping</a></h4>
 
 <p>Scoping in Perl 6 is quite similar to that of Perl 5. A Block introduces a new lexical scope. A variable name is searched in the innermost lexical scope first, if it&#39;s not found it is then searched for in the next outer scope and so on. Just like in Perl 5 a <code>my</code> variable is a proper lexical variable, and an <code>our</code> declaration introduces a lexical alias for a package variable.</p>
 
 <p>But there are subtle differences: variables are exactly visible in the rest of the block where they are declared, variables declared in block headers (for example in the condition of a <code>while</code> loop) are not limited to the block afterwards.</p>
+
+<p>Also Perl 6 only ever looks up unqualified names (variables and subroutines) in lexical scopes.</p>
 
 <p>If you want to limit the scope, you can use formal parameters to the block:</p>
 
@@ -58,7 +60,7 @@ name="Lexical_Scoping"
             $x visible here in Perl 6
             but not in Perl 5</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Dynamic_scoping"
 >Dynamic scoping</a></h4>
 
@@ -66,7 +68,7 @@ name="Dynamic_scoping"
 
 <p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception, then the previous value of the variable is restored. If not, it is kept.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Context_variables"
 >Context variables</a></h4>
 
@@ -87,7 +89,7 @@ name="Context_variables"
 
 <p>(In Perl 5.14 there is a workaround that protects <code>$@</code> from being modified, thus averting the most harm from this particular example.)</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Pseudo-packages"
 >Pseudo-packages</a></h4>
 
@@ -103,7 +105,7 @@ name="Pseudo-packages"
 
 <p>Likewise a function can access variables from its caller with the <code>CALLER</code> and <code>CONTEXT</code> pseudo packages. The difference is that <code>CALLER</code> only accesses the scope of the immediate caller, <code>CONTEXT</code> works like UNIX environment variables (and should only be used internally by the compiler for handling <code>$_</code>, <code>$!</code> and the like). To access variables from the outer dynamic scope they must be declared with <code>is context</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -120,7 +122,7 @@ name="MOTIVATION"
  it.  Future versions of perl might do something different from the
  version of perl you try it out on.  Here be dragons.</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

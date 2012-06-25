@@ -1,13 +1,13 @@
 Objects and Classes
 <!-- 1222208400 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 05 - Objects and Classes</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -34,7 +34,7 @@ name="SYNOPSIS"
     say $x.colour;              # black
     $x.colour = &#39;blue&#39;;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -52,7 +52,7 @@ name="DESCRIPTION"
     }
     # more classes or other code here</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Methods"
 >Methods</a></h4>
 
@@ -92,7 +92,7 @@ name="Methods"
 
 <p>Private methods can&#39;t be called from outside the class.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Attributes"
 >Attributes</a></h4>
 
@@ -121,7 +121,7 @@ name="Attributes"
     $x.b = 2;       # ERROR!
     $x.c = 3;       # ok</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Inheritance"
 >Inheritance</a></h4>
 
@@ -148,7 +148,7 @@ name="Inheritance"
 
 <p>Though multiple inheritance also comes with multiple problems, and people usually advise against it. Roles are often a safer choice.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Roles_and_Composition"
 >Roles and Composition</a></h4>
 
@@ -172,7 +172,7 @@ name="Roles_and_Composition"
         }
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

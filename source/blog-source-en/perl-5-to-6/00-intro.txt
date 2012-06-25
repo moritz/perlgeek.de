@@ -1,13 +1,13 @@
 Introduction
 <!-- 1221948000 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; - Introduction</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -15,7 +15,7 @@ name="SYNOPSIS"
     Learn to love Perl 6
     Understand why</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -31,7 +31,7 @@ name="DESCRIPTION"
 
 <p>Perhaps the lessons are too short to learn a programming language from them, but I hope that they draw an outline of the language design, which allows you to see its beauty without having to learn the language.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="IT&#39;S_NOT"
 >IT&#39;S NOT</a></h3>
 
@@ -40,7 +40,7 @@ name="IT&#39;S_NOT"
 
 <p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="ROADMAP"
 >ROADMAP</a></h3>
 
@@ -89,14 +89,14 @@ name="ROADMAP"
 
 <p>I&#39;ll also update these lessons from time to time make sure they are not too outdated.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="AUTHOR"
 >AUTHOR</a></h3>
 
 <p>Moritz Lenz, <a href="http://perlgeek.de/" class="podlinkurl"
 >http://perlgeek.de/</a>, <code>moritz@faui2k3.org</code></p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="LINKS"
 >LINKS</a></h3>
 

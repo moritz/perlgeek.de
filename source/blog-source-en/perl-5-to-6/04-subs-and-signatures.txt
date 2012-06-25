@@ -1,13 +1,13 @@
 Subroutines and Signatures
 <!-- 1221952800 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 04 - Subroutines and Signatures</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -41,7 +41,7 @@ name="SYNOPSIS"
     doit(:when&#60;noon&#62;, :what(&#39;more stuff&#39;)); # &#39;doing more stuff at noon&#39;
     # illegal: doit(&#34;stuff&#34;, &#34;now&#34;)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -76,7 +76,7 @@ name="DESCRIPTION"
         ...
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Named_Parameters"
 >Named Parameters</a></h4>
 
@@ -110,7 +110,7 @@ name="Named_Parameters"
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Slurpy_Parameters"
 >Slurpy Parameters</a></h4>
 
@@ -131,7 +131,7 @@ name="Slurpy_Parameters"
 
     order-meal(&#39;beef steak&#39;, :vegetarian, :well-done);</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Interpolation"
 >Interpolation</a></h4>
 
@@ -153,7 +153,7 @@ name="Interpolation"
 
 <pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Multi_Subs"
 >Multi Subs</a></h4>
 
@@ -174,7 +174,7 @@ name="Multi_Subs"
     frob(&#34;x&#34;)       # Frobbing String x
     frob(2)         # Frobbing Integer 2</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -193,7 +193,7 @@ name="MOTIVATION"
 
 <p>Since operators are also subs, these refinements work for operators too.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

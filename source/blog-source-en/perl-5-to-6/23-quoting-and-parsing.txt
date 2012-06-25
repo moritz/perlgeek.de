@@ -1,13 +1,13 @@
 Quoting and Parsing
 <!-- 1228777200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 23 - Quoting and Parsing</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -26,11 +26,11 @@ name="SYNOPSIS"
     }
     if();</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Quoting"
 >Quoting</a></h4>
 
@@ -82,7 +82,7 @@ name="Quoting"
 
 <p>However there is one form that does not work, and some Perl 5 programmers will miss it: you can&#39;t write <code>qw(...)</code> with the round parenthesis in Perl 6. It is interpreted as a call to sub <code>qw</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Parsing"
 >Parsing</a></h4>
 
@@ -100,7 +100,7 @@ name="Parsing"
 
 <p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are only special if used in a special syntax.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -108,7 +108,7 @@ name="MOTIVATION"
 
 <p>And when you limit the specialty of keywords, you have far less troubles with backwards compatibility if you want to change what you consider a &#34;keyword&#34;.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

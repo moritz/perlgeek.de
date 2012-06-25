@@ -1,13 +1,13 @@
 The Reduction Meta Operator
 <!-- 1228863600 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 24 - The Reduction Meta Operator</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -23,7 +23,7 @@ name="SYNOPSIS"
         say &#34;ascending order&#34;;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="Description"
 >Description</a></h3>
 
@@ -46,7 +46,7 @@ name="Description"
 
 <p>Note that <code>[...]</code> always returns a scalar, so <code>[,] @list</code> is actually the same as <code>[@list]</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Getting_partial_results"
 >Getting partial results</a></h4>
 
@@ -62,7 +62,7 @@ name="Getting_partial_results"
 
 <pre>    [~] [\**] 1..3;     # &#34;381&#34;</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -70,7 +70,7 @@ name="MOTIVATION"
 
 <p>If you&#39;re not convinced, play a bit with it (pugs mostly implements it), it&#39;s real fun.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

@@ -1,13 +1,13 @@
 Containers and Values
 <!-- 1224108000 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 10 - Containers and Values</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="Synopsis"
 >Synopsis</a></h3>
 
@@ -19,7 +19,7 @@ name="Synopsis"
         say &#39;$x and $y are different names for the same thing&#39;
     }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -43,13 +43,13 @@ name="DESCRIPTION"
 
 <p>You can check if two things are bound together the <code>=:=</code> comparison operator.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
 <p>Exporting and importing subs, types and variables is done via aliasing. Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple operator.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

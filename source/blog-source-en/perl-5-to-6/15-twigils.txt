@@ -1,13 +1,13 @@
 Twigils
 <!-- 1224540000 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 15 - Twigils</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -24,7 +24,7 @@ name="SYNOPSIS"
 
   say &#34;A CGI script&#34; if %*ENV.exists(&#39;DOCUMENT_ROOT&#39;);</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -61,7 +61,7 @@ name="DESCRIPTION"
 
 <p>A pseudo twigil is <code>&#60;</code>, which is used in a construct like <code>$&#60;capture&#62;</code>, where it is a shorthand for <code>$/&#60;capture&#62;</code>, which accesses the Match object after a regex match.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 

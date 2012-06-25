@@ -1,13 +1,13 @@
 Changes to Perl 5 Operators
 <!-- 1224194400 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 11 - Changes to Perl 5 Operators</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -33,7 +33,7 @@ name="SYNOPSIS"
     # chained comparisons
     if 0 &#60;= $angle &#60; 2 * pi { ... }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -51,7 +51,7 @@ name="DESCRIPTION"
 
 <p>Comparison operators can now be chained, so you can write <code>$a &#60; $b &#60; $c</code> and it does what you mean.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -59,7 +59,7 @@ name="MOTIVATION"
 
 <p>The chaining comparison operators are another step towards making the language more natural, and allowing things that are commonly used in mathematical notation.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

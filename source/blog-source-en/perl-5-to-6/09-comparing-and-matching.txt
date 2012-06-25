@@ -1,13 +1,13 @@
 Comparing and Matching
 <!-- 1222554000 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 09 - Comparing and Matching</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -31,7 +31,7 @@ name="SYNOPSIS"
     1       ~~      0..4    True
     -3      ~~      0..4    False</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -41,7 +41,7 @@ name="DESCRIPTION"
 
 <p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. Two identically constructed data structures are equivalent.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Smart_matching"
 >Smart matching</a></h4>
 
@@ -53,7 +53,7 @@ name="Smart_matching"
 
 <p>What you should remember is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

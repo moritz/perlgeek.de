@@ -1,13 +1,13 @@
 Contexts
 <!-- 1222294800 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 06 - Contexts</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -18,7 +18,7 @@ name="SYNOPSIS"
     say +@a;            # 3
     if @a &#60; 10 { say &#34;short array&#34;; }</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -43,7 +43,7 @@ name="DESCRIPTION"
     %( stuff )   Hash context
     @@( stuff )  Slice context</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Slice_Context"
 >Slice Context</a></h4>
 
@@ -56,7 +56,7 @@ name="Slice_Context"
 
 <p>You can force slice context with <code>@@( stuff )</code>.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -66,7 +66,7 @@ name="MOTIVATION"
 
 <p>For some things (like the Match object), the different contexts really enhance their usefulness and beauty.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

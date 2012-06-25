@@ -1,13 +1,13 @@
 Custom Operators
 <!-- 1224367200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 13 - Custom Operators</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -19,7 +19,7 @@ name="SYNOPSIS"
     
     say 5!;                     # 120</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -42,7 +42,7 @@ name="DESCRIPTION"
     }
     say &#8364;4;                         # 8</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Precedence"
 >Precedence</a></h4>
 
@@ -54,7 +54,7 @@ name="Precedence"
     mutli sub infix:&#60;bar&#62; is tighter(&#38;infix:&#60;+&#62;) { ... }
     mutli sub infix:&#60;baz&#62; is looser(&#38;infix:&#60;+&#62;) { ... }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Associativity"
 >Associativity</a></h4>
 
@@ -68,7 +68,7 @@ name="Associativity"
         ...
     }</pre>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Postcircumfix_and_Circumfix"
 >Postcircumfix and Circumfix</a></h4>
 
@@ -90,7 +90,7 @@ name="Postcircumfix_and_Circumfix"
 
 <p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurrences of a regex and returns a list of the text of all matches.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 
@@ -101,7 +101,7 @@ name="&#34;Overload&#34;_existing_operators"
 
 <p>This means that you can write objects that behave just like the built in &#34;special&#34; objects like <code>Str</code>, <code>Int</code> etc.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -109,7 +109,7 @@ name="MOTIVATION"
 
 <p>It also removes the gap between using a language and modifying the language.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

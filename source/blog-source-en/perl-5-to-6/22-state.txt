@@ -1,19 +1,19 @@
 The State of the implementations
 <!-- 1228690800 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 22 - The State of the implementations</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
 <pre>    (none)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -22,7 +22,7 @@ name="DESCRIPTION"
 
 <p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Pugs"
 >Pugs</a></h4>
 
@@ -44,7 +44,7 @@ name="Pugs"
 
 <p>Pugs can parse most common constructs, implements object orientation, basic regexes, nearly(?) all control structures, basic user defined operators and macros, many builtins, contexts (except slice context), junctions, basic multi dispatch and the reduction meta operator - based on the syntax of three years past.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Rakudo"
 >Rakudo</a></h4>
 
@@ -60,7 +60,7 @@ name="Rakudo"
 
 <p>If you want to experiment with Perl 6 today, Rakudo is the recommended choice.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="Elf"
 >Elf</a></h4>
 
@@ -72,7 +72,7 @@ name="Elf"
 
 <p>It parses more than 70% of the test suite, but implements mostly features that are easy to emulate with Perl 5, and passes about 700 tests from the test suite.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="KindaPerl6"
 >KindaPerl6</a></h4>
 
@@ -80,13 +80,13 @@ name="KindaPerl6"
 
 <p>Kp6 implements object orientation, grammars and a few distinct features like lazy gather/take. It also implements <code>BEGIN</code> blocks, which was one of the design goals.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="v6.pm"
 >v6.pm</a></h4>
 
 <p><code>v6</code> is a source filter for Perl 5. It was written by Flavio Glock, and supports basic Perl 6 plus grammars. It is fairly stable and fast, and is occasionally enhanced. It lives on the CPAN and in the pugs repository in <code>perl5/*/</code>.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="SMOP"
 >SMOP</a></h4>
 
@@ -96,7 +96,7 @@ name="SMOP"
 
 <p>It will then be used as a backend for either elf or kp6, and perhaps also for pugs.</p>
 
-<h4><a class='u' href='#___top' title='click to go to top of document'
+<h4><a class='u'
 name="STD.pm"
 >STD.pm</a></h4>
 
@@ -111,7 +111,7 @@ name="STD.pm"
 
 <p>It correctly parses custom operators and warns about non-existent subs, undeclared variables and multiple declarations of the same variable as well as about some Perl 5isms.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -125,7 +125,7 @@ name="MOTIVATION"
 
 <p>The third answer is that we don&#39;t want a single point of failure. If we had just one implementation, and had severe problems with one of them for unforeseeable reasons (technical, legal, personal, ...) we have possible fallbacks.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 

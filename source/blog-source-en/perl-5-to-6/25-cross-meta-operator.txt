@@ -1,13 +1,13 @@
 The Cross Meta Operator
 <!-- 1243375200 -->
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 25 - The Cross Meta Operator</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -20,7 +20,7 @@ name="SYNOPSIS"
     # output: a1\n a2\n b1\n b2\n c1\n c2\n
     # (with real newlines instead of \n)</pre>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
@@ -28,7 +28,7 @@ name="DESCRIPTION"
 
 <p>If an operator follows the <code>X</code>, then this operator is applied to all tuple items, and the result is returned instead. So <code>1, 2 X+ 3, 6</code> will return the values <code>1+3, 1+6, 2+3, 2+6</code> (evaluated as <code>4, 7, 5, 8</code> of course).</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
@@ -36,7 +36,7 @@ name="MOTIVATION"
 
 <p>The usage as a meta operator can sometimes eliminate the loops altogether.</p>
 
-<h3><a class='u' href='#___top' title='click to go to top of document'
+<h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
