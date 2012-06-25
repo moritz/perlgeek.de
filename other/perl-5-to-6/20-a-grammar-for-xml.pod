@@ -26,7 +26,7 @@ fantasy language, and to demonstrate the power of grammars, this lesson shows
 you the development of a grammar that parses basic XML, and that runs with
 Rakudo.
 
-Please follow the instructions on L<http://rakudo.org/how-to-get-rakudo> to
+Please follow the instructions on L<http://rakudo.org/how-to-get-rakudo/> to
 obtain and build Rakudo, and try it out yourself.
 
 =head2 Our idea of XML

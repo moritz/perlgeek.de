@@ -168,7 +168,7 @@ L<http://pugs.blogs.com/pugs/2008/07/pugshs-is-back.html>,
 L<http://pugs.blogspot.com>, source:
 L<http://svn.pugscode.org/pugs>.
 
-Rakudo:  L<http://www.rakudo.org/>, L<http://www.parrot.org/>,
+Rakudo:  L<http://rakudo.org/>, L<http://www.parrot.org/>,
 
 Elf: L<http://perl.net.au/wiki/Elf> source: see pugs, C<misc/elf/>.
 
