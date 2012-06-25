@@ -53,8 +53,7 @@ name="Rakudo"
 <p>It is hosted on github, you can find build instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo</a>.</p>
 
-<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 17,000 tests from the official test suite (July 2009). Its progress in the test suite is monitored on <a href="http://rakudo.org/status" class="podlinkurl"
->http://rakudo.org/status</a> .</p>
+<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 17,000 tests from the official test suite (July 2009).</p>
 
 <p>It implements most control structures, most syntaxes for number literals, interpolation of scalars and closures, chained operators, <code>BEGIN</code>- and <code>END</code> blocks, pointy blocks, named, optional and slurpy arguments, sophisticated multi dispatch, large parts of the object system, regexes and grammars, Junctions, generic types, parametric roles, typed arrays and hashes, importing and exporting of subroutines and basic meta operators.</p>
 
@@ -135,8 +134,8 @@ name="SEE_ALSO"
 >http://pugs.blogspot.com</a>, source: <a href="http://svn.pugscode.org/pugs" class="podlinkurl"
 >http://svn.pugscode.org/pugs</a>.</p>
 
-<p>Rakudo: <a href="http://www.rakudo.org/" class="podlinkurl"
->http://www.rakudo.org/</a>, <a href="http://www.parrot.org/" class="podlinkurl"
+<p>Rakudo: <a href="http://rakudo.org/" class="podlinkurl"
+>http://rakudo.org/</a>, <a href="http://www.parrot.org/" class="podlinkurl"
 >http://www.parrot.org/</a>,</p>
 
 <p>Elf: <a href="http://perl.net.au/wiki/Elf" class="podlinkurl"

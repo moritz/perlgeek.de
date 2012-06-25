@@ -71,7 +71,7 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S29.html#Str" class="podlinkurl"
->http://perlcabal.org/syn/S29.html#Str</a></p>
+<p><a href="http://perlcabal.org/syn/S32/Str.html" class="podlinkurl"
+>http://perlcabal.org/syn/S32/Str.html</a></p>
 
 [% option no-header %] [% option no-footer %]

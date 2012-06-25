@@ -31,8 +31,8 @@ name="DESCRIPTION"
 
 <p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
 
-<p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
->http://rakudo.org/how-to-get-rakudo</a> to obtain and build Rakudo, and try it out yourself.</p>
+<p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo/" class="podlinkurl"
+>http://rakudo.org/how-to-get-rakudo/</a> to obtain and build Rakudo, and try it out yourself.</p>
 
 <h4><a class='u'
 name="Our_idea_of_XML"
@@ -236,7 +236,7 @@ name="SEE_ALSO"
 <p>Regexes are specified in great detail in S05: <a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
 >http://perlcabal.org/syn/S05.html</a>.</p>
 
-<p>More working (!) examples of regexes and grammars can be found in the <i>November</i> project, a wiki engine written in Perl 6. See <a href="http://github.com/viklund/november/" class="podlinkurl"
->http://github.com/viklund/november/</a>.</p>
+<p>More working examples for grammars can be found at <a href="https://github.com/moritz/json/" class="podlinkurl"
+>https://github.com/moritz/json/</a> (check file lib/JSON/Tiny/Grammar.pm).</p>
 
 [% option no-header %] [% option no-footer %]

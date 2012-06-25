@@ -79,8 +79,7 @@ name="DESCRIPTION"
 name="IT&#39;S_NOT"
 >IT&#39;S NOT</a></h3>
 
-<p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences. See <a href="http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod" class="podlinkurl"
->http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod</a> Perl6::Perl5::Differences instead if you&#39;re looking for something like that.</p>
+<p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences.</p>
 
 <p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
 
@@ -1952,8 +1951,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S29.html#Str" class="podlinkurl"
->http://perlcabal.org/syn/S29.html#Str</a></p>
+<p><a href="http://perlcabal.org/syn/S32/Str.html" class="podlinkurl"
+>http://perlcabal.org/syn/S32/Str.html</a></p>
 
 
 <h2 id="post_18">Scoping</h2>
@@ -2248,8 +2247,8 @@ name="DESCRIPTION"
 
 <p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
 
-<p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
->http://rakudo.org/how-to-get-rakudo</a> to obtain and build Rakudo, and try it out yourself.</p>
+<p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo/" class="podlinkurl"
+>http://rakudo.org/how-to-get-rakudo/</a> to obtain and build Rakudo, and try it out yourself.</p>
 
 <h4><a class='u'
 name="Our_idea_of_XML"
@@ -2453,8 +2452,8 @@ name="SEE_ALSO"
 <p>Regexes are specified in great detail in S05: <a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
 >http://perlcabal.org/syn/S05.html</a>.</p>
 
-<p>More working (!) examples of regexes and grammars can be found in the <i>November</i> project, a wiki engine written in Perl 6. See <a href="http://github.com/viklund/november/" class="podlinkurl"
->http://github.com/viklund/november/</a>.</p>
+<p>More working examples for grammars can be found at <a href="https://github.com/moritz/json/" class="podlinkurl"
+>https://github.com/moritz/json/</a> (check file lib/JSON/Tiny/Grammar.pm).</p>
 
 
 <h2 id="post_21">Subset Types</h2>
@@ -2563,8 +2562,7 @@ name="Rakudo"
 <p>It is hosted on github, you can find build instructions on <a href="http://rakudo.org/how-to-get-rakudo" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo</a>.</p>
 
-<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 17,000 tests from the official test suite (July 2009). Its progress in the test suite is monitored on <a href="http://rakudo.org/status" class="podlinkurl"
->http://rakudo.org/status</a> .</p>
+<p>Rakudo development is very active, it&#39;s the most active Perl 6 compiler today. It passes a bit more than 17,000 tests from the official test suite (July 2009).</p>
 
 <p>It implements most control structures, most syntaxes for number literals, interpolation of scalars and closures, chained operators, <code>BEGIN</code>- and <code>END</code> blocks, pointy blocks, named, optional and slurpy arguments, sophisticated multi dispatch, large parts of the object system, regexes and grammars, Junctions, generic types, parametric roles, typed arrays and hashes, importing and exporting of subroutines and basic meta operators.</p>
 
@@ -2645,8 +2643,8 @@ name="SEE_ALSO"
 >http://pugs.blogspot.com</a>, source: <a href="http://svn.pugscode.org/pugs" class="podlinkurl"
 >http://svn.pugscode.org/pugs</a>.</p>
 
-<p>Rakudo: <a href="http://www.rakudo.org/" class="podlinkurl"
->http://www.rakudo.org/</a>, <a href="http://www.parrot.org/" class="podlinkurl"
+<p>Rakudo: <a href="http://rakudo.org/" class="podlinkurl"
+>http://rakudo.org/</a>, <a href="http://www.parrot.org/" class="podlinkurl"
 >http://www.parrot.org/</a>,</p>
 
 <p>Elf: <a href="http://perl.net.au/wiki/Elf" class="podlinkurl"
