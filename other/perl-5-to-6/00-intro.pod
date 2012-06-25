@@ -37,8 +37,7 @@ to see its beauty without having to learn the language.
 =head1 IT'S NOT
 
 This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a
-comprehensive list of differences. See
-L<http://svn.pugscode.org/pugs/docs/Perl6/Perl5/Differences.pod> Perl6::Perl5::Differences instead if you're looking for something like that.
+comprehensive list of differences.
 
 It is also not oriented on the current state of the implementations, but on
 the ideal language as specified.

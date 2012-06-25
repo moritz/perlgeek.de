@@ -92,7 +92,7 @@ introspection quite easy.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S29.html#Str>
+L<http://perlcabal.org/syn/S32/Str.html>
 
 =for time 1227826800
 =for editor vim: spell

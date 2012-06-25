@@ -55,8 +55,6 @@ L<http://rakudo.org/how-to-get-rakudo>.
 
 Rakudo development is very active, it's the most active Perl 6 compiler today.
 It passes a bit more than 17,000 tests from the official test suite (July 2009).
-Its progress in the test suite is monitored
-on L<http://rakudo.org/status> .
 
 It implements most control structures, most syntaxes for number
 literals, interpolation of scalars and closures, chained operators, C<BEGIN>-

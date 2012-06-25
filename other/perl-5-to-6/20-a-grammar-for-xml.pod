@@ -260,9 +260,8 @@ It's powerful and fun
 Regexes are specified in great detail in S05:
 L<http://perlcabal.org/syn/S05.html>.
 
-More working (!) examples of regexes and grammars can be found in the
-I<November> project, a wiki engine written in Perl 6. See
-L<http://github.com/viklund/november/>.
+More working examples for grammars can be found at
+L<https://github.com/moritz/json/> (check file lib/JSON/Tiny/Grammar.pm).
 
 =for time 1228518000
 =for editor vim: spell
