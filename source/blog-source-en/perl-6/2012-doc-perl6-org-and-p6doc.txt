@@ -1,0 +1,64 @@
+doc.perl6.org and p6doc
+<!-- 1341389519 -->
+
+<h2>Background</h2>
+
+<p>Earlier this year I tried to assess the readiness of the Perl 6
+language, compilers, modules, documentation and so on. While I never
+got around to publish my findings, one thing was painfully obvious:
+there is a huge gap in the area of documentation.</p>
+
+<p>There are quite a few resources, but none of them comprehensive
+(most comprehensive are the
+<a href="http://perlcabal.org/syn/">synopsis</a>, but they are not meant
+for the end user), and no single location we can point people to.</p>
+
+<h2>Announcement</h2>
+
+<p>So, in the spirit of <a href="http://xkcd.com/927/">xkcd</a>, I
+present yet another incomplete documentation project:
+<a href="http://doc.perl6.org/">doc.perl6.org</a> and <code>p6doc</code>.</p>
+
+<p>The idea is to take the same approach as perldoc for Perl 5: create
+user-level documentation in Pod format (here the Perl 6 Pod), and make it
+available both on a website and via a command line tool. The source
+(documentation, command line tool, HTML generator) lives at <a
+href="https://github.com/perl6/doc/">https://github.com/perl6/doc/</a>.
+The website is <a href="http://doc.perl6.org/">doc.perl6.org</a>.</p>
+
+<p>Oh, and the last Rakudo Star release (2012.06) already shipped;
+p6doc.</p>
+
+<h2>Status and Plans</h2>
+
+<p>Documentation, website and command line tool are all in very early
+stages of development.</p>
+
+<p>In the future, I want both
+<code>p6doc SOMETHING</code> and
+<code>http://doc.perl6.org/SOMETHING</code> to either document or link to
+documentation of SOMETHING, be it a built-in variable, an operator, a
+type name, routine name, phaser, constant or... all the other possible
+constructs that occur in Perl 6. URLs and command line arguments
+specific to each type of construct will also be available
+(<code>/type/SOMETHING</code> URLs already work).</p>
+
+<p>Finally I want some way to get a "full" view of a type, ie providing
+all methods from superclasses and roles too.</p>
+
+<h2>Help Wanted</h2>
+
+<p>All of that is going to be a lot of work, though the most work will
+be to write the documentation. You too can help! You can write new
+documentation, gather and incorporate already existing documentation
+with compatible licenses (for example synopsis, perl 6 advent calendar,
+examples from rosettacode), add more examples, proof-read the
+documentation or improve the HTML generation or the command line tool.</p>
+
+<p>If you have any questions about contributing, feel free to ask in <a
+href="http://perl6.org/community/irc">#perl6</a>. Of course you can
+also;
+create pull requests right away :-).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
