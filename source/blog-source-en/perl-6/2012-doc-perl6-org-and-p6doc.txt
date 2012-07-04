@@ -26,7 +26,7 @@ available both on a website and via a command line tool. The source
 href="https://github.com/perl6/doc/">https://github.com/perl6/doc/</a>.
 The website is <a href="http://doc.perl6.org/">doc.perl6.org</a>.</p>
 
-<p>Oh, and the last Rakudo Star release (2012.06) already shipped;
+<p>Oh, and the last Rakudo Star release (2012.06) already shipped
 p6doc.</p>
 
 <h2>Status and Plans</h2>
