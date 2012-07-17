@@ -37,8 +37,7 @@ that you can build it robust enough to support a whole stack of third-party
 modules?</p>
 
 <p>Curiously this piece of advice occasionally comes from people who otherwise
-know a thing or two about software development methodology. Must be some kind
-of cognitive dissonance.</p>
+know a thing or two about software development methodology.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
