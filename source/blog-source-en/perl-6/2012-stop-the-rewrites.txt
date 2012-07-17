@@ -1,0 +1,44 @@
+Stop The Rewrites!
+<!-- 1342543924 -->
+<p>What follows is a rant. If you're not in the mood to read a rant right now,
+please stop and come back in an hour or two.</p>
+
+<p>The Internet is full of people who know better than you how to manage
+your open source project, even if they only know some bits and pieces about
+it. News at 11.</p>
+
+<p>But there is one particular instance of that advice that I hear often
+applied to <a href="http://rakudo.org/">Rakudo Perl 6</a>: <a
+href="http://www.perlmonks.org/?node_id=982243">Stop the rewrites</a>.</p>
+
+<p>To be honest, I can fully understand the sentiment behind that advice.
+People see that it has taken us several years to get where we are now, and in
+their opinion, that's too long. And now we shouldn't waste our time with
+rewrites, but get the darn thing running already!</p>
+
+<p>But Software development simply doesn't work that way. Especially not if
+your target is moving, as is Perl 6. (Ok, Perl 6 isn't moving that much
+anymore, but there are still areas we don't understand very well, so our
+current understanding of Perl 6 is a moving target).</p>
+
+<p>At some point or another, you realize that with your current design, you
+can only pile workaround on top of workaround, and hope that the whole thing
+never collapses.</p>
+
+<p><img src="/images/blog/jenga.jpg" width="522" height="1024" alt="Picture of
+a Jenga tower" /><br />
+<em>Image couretsy by <a
+href="http://www.flickr.com/photos/sermoa/2353990935/">sermoa</a></em></p>
+
+<p>Those people who spread the good advice to never do any major rewrites
+again, they never address what you <b>should</b> do when you face such a
+situation. Build the tower of workarounds even higher, and pray to Cthulhu
+that you can build it robust enough to support a whole stack of third-party
+modules?</p>
+
+<p>Curiously this piece of advice occasionally comes from people who otherwise
+know a thing or two about software development methodology. Must be some kind
+of cognitive dissonance.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
