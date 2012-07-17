@@ -27,7 +27,7 @@ never collapses.</p>
 
 <p><img src="/images/blog/jenga.jpg" width="522" height="1024" alt="Picture of
 a Jenga tower" /><br />
-<em>Image couretsy by <a
+<em>Image courtesy of <a
 href="http://www.flickr.com/photos/sermoa/2353990935/">sermoa</a></em></p>
 
 <p>Those people who spread the good advice to never do any major rewrites
