@@ -39,5 +39,13 @@ modules?</p>
 <p>Curiously this piece of advice occasionally comes from people who otherwise
 know a thing or two about software development methodology.</p>
 
+<p>I should also add that since the famous "nom" switchover, which admittedly
+caused lots of fallout, we had three major rewrites of subsystems
+(longest-token matching of alternative, bounded serialization and qbootstrap),
+All three of which caused no new test failures, and two of which caused no
+fallout from the module ecosystem at all. In return, we have much faster
+startup (factor 3 to 4 faster) and a much more correct regex engine.</p>
+
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
