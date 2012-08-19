@@ -1,0 +1,65 @@
+Quo Vadis Perl?
+<!-- 1345379437 -->
+
+<p>The last two days we had a gathering in town named Perl (yes, a place with
+that name exists). It's a lovely little town next to the borders to France and
+Luxembourg, and our meeting was titled "Perl Reunification Summit".</p>
+
+<p>Sadly I only managed to arrive in Perl on Friday late in the night, so I
+missed the first day. Still it was totally worth it.</p>
+
+<p>We tried to answer the question of how to make the Perl 5 and the Perl 6
+community converge on a social level. While we haven't found the one true
+answer to that, we did find that discussing the future together, both on a
+technical and on a social level, already brought us closer together.</p>
+
+<p>It was quite a touching moment when Merijn "Tux" Brand explained that he
+was skeptic of Perl 6 before the summit, and now sees it as the future.</p>
+
+<p>We also concluded that copying API design is a good way to converge on a
+technical level. For example Perl 6's IO subsystem is in desperate need of
+a cohesive design. However none of the Perl 6 specification and the Rakudo
+development team has much experience in that area, and copying from
+successful Perl 5 modules is a viable approach here. Class::Path and IO::All
+(excluding the crazy parts) were mentioned as targets worth looking at.</p>
+
+<p>There is now also an IRC channel to continue our discussions -- join
+<code>#p6p5</code> on irc.perl.org if you are interested.</p>
+
+<p>We also discussed ways to bring parallel programming to both perls. I
+missed most of the discussion, but did hear that one approach is to make
+easier to send other processes some serialized objects, and thus distribute
+work among several cores.</p>
+
+<p>Patrick Michaud gave a short ad-hoc presentation on implicit parallelism in
+Perl 6. There are several constructs where the language allows parallel
+execution, for example for <a
+href="http://perl6advent.wordpress.com/2009/12/06/day-6-going-into-hyperspace/">Hyper
+operators</a>, <a href="http://doc.perl6.org/type/Junction">junctions</a> and
+feeds (think of feeds as UNIX pipes, but ones that allow passing of objects
+and not just strings). Rakudo doesn't implement any of them in parallel right
+now, because the Parrot Virtual Machine does not provide the necessary
+primitives yet.</p>
+
+<p>Besides the "official" program, everybody used the time in meat space
+to discuss their favorite projects with everybody else. For example I took
+some time to discuss the future of <a
+href="http://doc.perl6.org/">doc.perl6.org</a> with Patrick and Gabor Szabgab,
+and the relation to <a href="http://perl6maven.com/">perl6maven</a> with the
+latter. The Rakudo team (which was nearly completely present) also discussed
+several topics, and I was happy to talk about the relation between Rakudo and
+Parrot with Reini Urban.</p>
+
+<p>Prior to the summit my expectations were quite vague. That's why it's hard
+for me to tell if we achieved what we and the organizers
+wanted. Time will tell, and we want to summarize the result in six to nine
+months. But I am certain that many participants have changed some of their
+views in positive ways, and left the summit with a warm, fuzzy feeling.</p>
+
+<p>I am very grateful to have been invited to such a meeting, and enjoyed it
+greatly. Our host and organizers, Liz and Wendy, took care of all of our
+needs  -- travel, food, drinks, space, wifi, accommodation, more food,
+entertainment, food for thought, you name it. Thank you very much!</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
