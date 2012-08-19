@@ -61,5 +61,9 @@ greatly. Our host and organizers, Liz and Wendy, took care of all of our
 needs  -- travel, food, drinks, space, wifi, accommodation, more food,
 entertainment, food for thought, you name it. Thank you very much!</p>
 
+<p><b>Update:</b> Follow the <a
+href="https://twitter.com/#!/search/?q=%23p6p5">#p6p5</a> hash tag on twitter
+if you want to read more, I'm sure other participants will blog too.</p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
