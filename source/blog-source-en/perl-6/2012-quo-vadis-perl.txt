@@ -20,7 +20,7 @@ was skeptic of Perl 6 before the summit, and now sees it as the future.</p>
 technical level. For example Perl 6's IO subsystem is in desperate need of
 a cohesive design. However none of the Perl 6 specification and the Rakudo
 development team has much experience in that area, and copying from
-successful Perl 5 modules is a viable approach here. Class::Path and IO::All
+successful Perl 5 modules is a viable approach here. Path::Class and IO::All
 (excluding the crazy parts) were mentioned as targets worth looking at.</p>
 
 <p>There is now also an IRC channel to continue our discussions -- join
