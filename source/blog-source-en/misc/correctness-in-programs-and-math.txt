@@ -1,0 +1,34 @@
+Correctness in Computer Programs and Mathematical Proofs
+<!-- 1345727922 -->
+
+<p>While reading <a href="">On Proof and Progress in Mathematics</a>
+by Fields Medal winner Bill Thurston (recevently <a
+href="http://terrytao.wordpress.com/2012/08/22/bill-thurston/">deceased</a> I
+was sorry to hear)</p>, I came across this gem:</p>
+
+<blockquote>The standard
+of correctness and completeness necessary to get a computer program to work at
+all is a couple of orders of magnitude higher than the mathematical
+community’s
+standard of valid proofs. Nonetheless, large computer programs, even when they
+have been very carefully written and very carefully tested, always seem to
+have
+bugs.</blockquote>
+
+<p>I noticed that mathematicians are often sloppy about the scope of
+their symbols. Sometimes they use the same symbol for two different meanings,
+and you have to guess from context which on is meant.</p>
+
+
+<p>This kind of sloppiness generally doesn't have an impact on the validity of
+the ideas that are communicated, as long as it's still understandable to the
+reader.</p>
+
+<p>I guess on reason is that most mathematical publications still stick to
+one-letter symbol names, and there aren't that many letters in the alphabets
+that are generally accepted for usage (Latin, Greek, a few letters from
+Hebrew). And in the programming world we snort derisively at FORTRAN 77 that
+limited variable names to a length of 6 characters.</p>
+
+[% option no-header %][% option no-footer %]
+
