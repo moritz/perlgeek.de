@@ -65,5 +65,9 @@ entertainment, food for thought, you name it. Thank you very much!</p>
 href="https://twitter.com/#!/search/?q=%23p6p5">#p6p5</a> hash tag on twitter
 if you want to read more, I'm sure other participants will blog too.</p>
 
+<p>Other blogs posts on this topic: <a
+href="http://mdk.per.ly/2012/08/20/prs2012-perl5-perl6-reunification-summit/"><i>PRS2012 – Perl5-Perl6 Reunification Summit</i> by mdk</a> and
+<a href="http://blogs.perl.org/users/theorbtwo/2012/08/post-yapc.html"><i>post-yapc</i> by theorbtwo</a></p>
+
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
