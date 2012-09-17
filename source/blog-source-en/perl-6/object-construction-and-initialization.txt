@@ -129,12 +129,10 @@ the BUILD method of class <code>C</code> at last.</p>
 effort, and especially writing custom <code>new</code> and <code>BUILD</code>
 methods very easily.</p>
 
-<p>Instead of passing a <code>*</code> to <code>bless</code>, you can also
-pass along an object of different storage type, which means that you can
-instruct Perl 6 to store your objects by a different mechanism, for example by
-the gnome library <a
-href="http://library.gnome.org/devel/gobject/unstable/">GObject</a> or similar
-(though that's not yet implemented in Rakudo).</p>
+<h2>See Also</h2>
+
+<p><a href="http://doc.perl6.org/language/objects#Object+Construction">Perl 6
+Reference Documentation on object construction</a>.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: ft=html sw=4 ts=4 tw=78 spell
