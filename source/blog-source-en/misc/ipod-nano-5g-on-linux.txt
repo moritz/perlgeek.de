@@ -1,0 +1,25 @@
+iPod nano 5g on linux -- works!
+<!-- 1356952647 -->
+<p>For Christmas I got an iPod nano (5th generation). Since I use only Linux
+on my home computers, I searched the Internet for how well it is
+supported by Linux-based tools. The results looked bleak, but they were mostly from 2009.</p>
+
+<p>Now (December 2012) on my Debian/Wheezy system, it just worked.</p>
+
+<p>The iPod nano 5g presents itself as an ordinary USB storage device, which you can mount without problems. However simply copying files on it won't make the iPod show those files in the play lists, because there is some meta data stored on the device that must be updated too.</p>
+
+<p>There are several user-space programs that allow you to import and export music from and to the iPod, and update those meta data files as necessary. The first one I tried, <a href="http://www.gtkpod.org/wiki/Home">gtkpod</a> 2.1.2, worked fine.</p>
+
+<p>Other user-space programs reputed to work with the iPod are rhythmbox and amarok (which both not only organize but also play music).</p>
+
+<p>Although I don't think anything really depends on some particular versions here (except that you need a new enough version of gtkpod), here is what I used:</p>
+
+<ul>
+    <li>Architecture: amd64</li>
+    <li>Linux: 3.2.0-4-amd64 #1 SMP Debian 3.2.35-2</li>
+    <li>Userland: Debian GNU/Linux "Wheezy" (currently "testing")</li>
+    <li>gtkpod: 2.1.2-1</li>
+</ul>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
