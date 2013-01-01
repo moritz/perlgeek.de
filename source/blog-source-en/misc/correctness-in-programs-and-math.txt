@@ -2,7 +2,7 @@ Correctness in Computer Programs and Mathematical Proofs
 <!-- 1345727922 -->
 
 <p>While reading <a href="">On Proof and Progress in Mathematics</a>
-by Fields Medal winner Bill Thurston (recevently <a
+by Fields Medal winner Bill Thurston (recently <a
 href="http://terrytao.wordpress.com/2012/08/22/bill-thurston/">deceased</a> I
 was sorry to hear), I came across this gem:</p>
 
