@@ -125,7 +125,8 @@ And run it:
     (rest unchanged)
 
 Why in the seven hells did the second test stop working? The answer is that
-Rakudo doesn't do longest token matching yet, but matches sequentially.
+Rakudo doesn't do longest token matching yet (update 2013-01: it does now),
+but matches sequentially.
 C<< <text> >> matches the empty string (and thus always), so
 C<< <text> | <tag> >> never even tries to match C<< <tag> >>.
 Reversing the order of the two alternations would help.

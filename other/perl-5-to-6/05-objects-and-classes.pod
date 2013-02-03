@@ -74,7 +74,7 @@ takes arguments.
     $x.foo.bar                      # same as $x
 
 (The C<my SomeClass $x .= new> is actually a shorthand for
-C<my SomeClass $x .= SomeClass.new>. It works because the type declaration
+C<my SomeClass $x = SomeClass.new>. It works because the type declaration
 fills the variable with a "typo object" of C<SomeClass>, which is an object
 representing the class.)
 
