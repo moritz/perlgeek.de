@@ -747,7 +747,7 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x .= SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x = SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
@@ -2342,7 +2342,7 @@ name="Developing_the_grammar"
     not ok 2 - &#39;&#60;a&#62;&#60;/a&#62;&#39;
     (rest unchanged)</pre>
 
-<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t do longest token matching yet, but matches sequentially. <code>&#60;text&#62;</code> matches the empty string (and thus always), so <code>&#60;text&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>. Reversing the order of the two alternations would help.</p>
+<p>Why in the seven hells did the second test stop working? The answer is that Rakudo doesn&#39;t do longest token matching yet (update 2013-01: it does now), but matches sequentially. <code>&#60;text&#62;</code> matches the empty string (and thus always), so <code>&#60;text&#62; | &#60;tag&#62;</code> never even tries to match <code>&#60;tag&#62;</code>. Reversing the order of the two alternations would help.</p>
 
 <p>But we don&#39;t just want to match either plain text or a tag anyway, but random combinations of both of them:</p>
 
