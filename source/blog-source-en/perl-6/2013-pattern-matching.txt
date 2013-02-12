@@ -1,0 +1,102 @@
+Pattern Matching and Unpacking
+<!-- 1360702153 -->
+<p>When talking about <em>pattern matching</em> in the context of Perl 6,
+people usually think about regex or grammars. Those are indeed very powerful
+tools for pattern matching, but not the only one.</p>
+
+<p>Another powerful tool for pattern matching and for unpacking data
+structures uses signatures.</p>
+
+<p>Signatures are "just" argument lists:</p>
+
+<pre>[% syntax perl6 %]
+sub repeat(Str $s, Int $count) {
+    #     ^^^^^^^^^^^^^^^^^^^^  the signature
+    # $s and $count are the parameters
+    return $x x $count
+}
+[% endsyntax %]</pre>
+
+<p>Nearly all modern programming languages have signatures, so you might say:
+nothing special, move along. But there are two features that make them more useful
+than signatures in other languages.</p>
+
+<p>The first is <em>multi dispatch</em>, which allows you to write several
+routines with the name, but with different signatures. While extremely
+powerful and helpful, I don't want to dwell on them. Look at Chapter 6 of
+the <a href="https://github.com/downloads/perl6/book/2012.05.23.a4.pdf">"Using
+Perl 6" book</a> for more details.</p>
+
+<p>The second feature is <em>sub-signatures</em>. It allows you to write a
+signature for a sigle parameter.</p>
+
+<p>Which sounds pretty boring at first, but for example it
+allows you to do declarative validation of data structures. Perl 6 has no
+built-in type for an array where each slot must be of a specific but different
+type. But you can still check for that in a sub-signature</p>
+
+<pre>[% syntax perl6 %]
+sub f(@array [Int, Str]) {
+    say @array.join: ', ';
+}
+f [42, 'str'];      # 42, str
+f [42, 23];         # Nominal type check failed for parameter '';
+                    # expected Str but got Int instead in sub-signature
+                    # of parameter @array
+[% endsyntax %]</pre>
+
+<p>Here we have a parameter called <code>@array</code>, and it is followed by
+a square brackets, which introduce a sub-signature for an array. When calling
+the function, the array is checked against the signature <code>(Int,
+Str)</code>, and so if the array doesn't contain of exactly one Int and one
+Str in this order, a type error is thrown.</p>
+
+<p>The same mechanism can be used not only for validation, but also for
+<em>unpacking</em>, which means extracting some parts of the data structure.
+This simply works by using variables in the inner signature:</p>
+
+<pre>[% syntax perl6 %]
+sub head(*@ [$head, *@]) {
+    $head;
+}
+sub tail(*@ [$, *@tail]) {
+    @tail;
+}
+say head <a b c >;      # a
+say tail <a b c >;      # b c
+[% endsyntax %]</pre>
+
+<p>Here the outer parameter is anonymous (the <code>@</code>), though it's
+entirely possible to use variables for both the inner and the outer
+parameter.</p>
+
+<p>Sub-signatures are not limited to arrays. For working on arbitrary objects,
+you surround them with parenthesis instead of brackets, and use named
+parameters inside:</p>
+
+<pre>[% syntax perl6 %]
+multi key-type ($ (Numeric :$key, *%)) { "Number" }
+multi key-type ($ (Str     :$key, *%)) { "String" }
+for (42 => 'a', 'b' => 42) -> $pair {
+    say key-type $pair;
+}
+# Output:
+# Number
+# String
+[% endsyntax %]</pre>
+
+<p>This works because the <code>=&gt;</code> constructs a <a
+href="http://doc.perl6.org/type/Pair">Pair</a>, which has a
+<code>key</code> and a <code>value</code> attribute. The named parameter
+<code>:$key</code> in the sub-signature extracts the attribute
+<code>key</code>.</p>
+
+<p>You can build quite impressive things with this feature, for example <a
+href="http://rosettacode.org/wiki/Pattern_matching#Perl_6">red-black tree
+balancing based on multi dispatch and signature unpacking</a>. Most use
+cases aren't this impressive, but still it is very useful to have
+occasionally.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
