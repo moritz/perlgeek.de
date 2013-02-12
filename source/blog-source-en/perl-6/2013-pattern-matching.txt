@@ -95,8 +95,9 @@ href="http://doc.perl6.org/type/Pair">Pair</a>, which has a
 href="http://rosettacode.org/wiki/Pattern_matching#Perl_6">red-black tree
 balancing based on multi dispatch and signature unpacking</a>. Most use
 cases aren't this impressive, but still it is very useful to have
-occasionally.</p>
-
+occasionally. Like for <a
+href="https://gist.github.com/masak/ca5a82ae76951cc387cc">this small
+evaluator.</a></p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
