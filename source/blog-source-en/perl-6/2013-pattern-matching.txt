@@ -13,7 +13,7 @@ structures uses signatures.</p>
 sub repeat(Str $s, Int $count) {
     #     ^^^^^^^^^^^^^^^^^^^^  the signature
     # $s and $count are the parameters
-    return $x x $count
+    return $s x $count
 }
 [% endsyntax %]</pre>
 
