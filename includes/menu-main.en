@@ -25,6 +25,11 @@
                         <li><a href="/blog-en/">Blog</a></li>
                         <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a>
                     </ul>
+                    <h3>Job Ad</h3>
+                    <p>
+                    <a href="http://www.booking.com/jobs.en-gb.html?sid=d0e9c689cd0e0805f626ee9229be7b51;dcid=1;st=details;job_id=10771">Now hiring 25 Perl Developers at Booking.com in Amsterdam (relocation + visa included).</a>
+
+                    </p>
                     </div>
                 </div>
             }} %]
