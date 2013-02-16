@@ -527,6 +527,40 @@ use encoding ':locale';[%endsyntax%]</pre>
     Template Toolkit (with the <code>ENCODING</code> option in the constructor
     and an IO layer in the <code>process</code> method).</p>
 
+    <h2 id="modules">Modules</h2>
+
+    <p>There are a plethora of Perl modules out there that handle text, so
+    here are only a few notable ones, and what you have to do to make them
+    Unicode-aware:</p>
+
+    <h3>LWP::UserAgent and WWW::Mechanize</h3>
+
+    <p>Use the <code>$response-&gt;decode_content</code> instead of just
+    <code>$response->content</code>. That way the character encoding
+    information sent in the HTTP response header is used to decode the
+    body of the response.</p>
+
+    <h3>DBI</h3>
+
+    <p>DBI leaves handling of character encodings to the DBD:: (driver)
+    modules, so what you have to do depends on which database backend you are
+    using. What most of them have in common is that UTF-8 is better supported
+    than other encodings.</p>
+
+    <p>For <strong>Mysql</strong> and <a
+    href="http://search.cpan.org/perldoc?DBD%3A%3Amysql">DBD::mysql</a>
+    pass the <code>mysql_enable_utf8 =&gt; 1</code> option to the
+    <code>DBI-&gt;connect</code> call.</p>
+
+    <p>For <strong>Postgresql</strong> and <a
+        href="http://search.cpan.org/perldoc?DBD%3A%3APg">DBD::Pg</a>, set the
+    <code>pg_enable_utf8</code> attribute to 1</p>
+
+    <p>For <strong>SQLite</strong> and <a
+        href="http://search.cpan.org/perldoc?DBD%3A%3ASQLite">DBD::SQLite</a>, set the
+    <code>sqlite_unicode</code> attribute to 1</p>
+
+
     <h2 id="advanced_topics">Advanced Topics</h2>
 <p>
     With the basic charset and Perl knowledge you can get quite far. For
