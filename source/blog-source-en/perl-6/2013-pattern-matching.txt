@@ -96,7 +96,8 @@ href="http://doc.perl6.org/type/Pair">Pair</a>, which has a
 
 <p>You can build quite impressive things with this feature, for example <a
 href="http://rosettacode.org/wiki/Pattern_matching#Perl_6">red-black tree
-balancing based on multi dispatch and signature unpacking</a>. Most use
+balancing based on multi dispatch and signature unpacking</a>. (<a
+href="http://blogs.perl.org/users/ovid/2013/02/red-black-trees-in-perl-6-explained.html">More verbose explanation of the code</a>.) Most use
 cases aren't this impressive, but still it is very useful to have
 occasionally. Like for <a
 href="https://gist.github.com/masak/ca5a82ae76951cc387cc">this small
