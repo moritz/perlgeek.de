@@ -70,6 +70,9 @@ say tail <a b c >;      # b c
 entirely possible to use variables for both the inner and the outer
 parameter.</p>
 
+<p>The anonymous parameter can even be omitted, and you can write <code>sub
+tail( [$, *@tail] )</code> directly.</p>
+
 <p>Sub-signatures are not limited to arrays. For working on arbitrary objects,
 you surround them with parenthesis instead of brackets, and use named
 parameters inside:</p>
