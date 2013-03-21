@@ -4,9 +4,11 @@
 [% setvar en /en/ %]
 [% setvar more_header 
     <meta name="verify-v1" content="C7A9XlZl4p3+BhzykrL6QhcngxVKE+lt6wMoWhmppj0=" />
-    <link rel="openid.server" href="http://server.myid.net/server" />
-    <link rel="openid.delegate" href="http://perlgeek.myid.net/" />
-    <meta http-equiv="X-XRDS-Location" content="http://perlgeek.myid.net/xrds" />
+    <link rel="openid.server" href="http://www.myopenid.com/server" />
+    <link rel="openid.delegate" href="http://perlgeek.myopenid.com/" />
+    <link rel="openid2.local_id" href="http://perlgeek.myopenid.com" />
+    <link rel="openid2.provider" href="http://www.myopenid.com/server" />
+    <meta http-equiv="X-XRDS-Location" content="http://www.myopenid.com/xrds?username=perlgeek.myopenid.com" />
 %]
 
 <h1>Willkommen auf Perlgeek.de</h1>
