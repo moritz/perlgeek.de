@@ -21,6 +21,7 @@ and context), and a bit of extra infrastructure.</p>
 
 <p>The most important node classes are the following:</p>
 
+<p>
 <dl>
     <dt>QAST::Stmts</dt>
     <dd>A list of statements. Each child of the node is considered a separate
@@ -42,6 +43,7 @@ and context), and a bit of extra infrastructure.</p>
     <dd>A node that can evaluate to different child nodes, depending on the
     context it is compiled it.</dd>
 <dl>
+</p>
 
 <p>To give you a bit of a feel of how those node types interact, I want to
 give a few examples of Perl 6 examples, and what AST they could produce. (It
