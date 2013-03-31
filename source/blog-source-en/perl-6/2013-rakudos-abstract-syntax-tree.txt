@@ -69,7 +69,8 @@ hold the operands of the low-level operation <code>add</code>.</p>
 
 <p>Now the low-level <code>add</code> operation is not polymorphic, it always
 adds two floating-point values, and the result is a floating-point value
-again. That's not the desired semantics for Perl 6; actually the operator
+again. Since the arguments are integers and not floating point values, they
+are automatically converted to float first. That's not the desired semantics for Perl 6; actually the operator
 <code>+</code> is implemented as a subroutine of name
 <code>&amp;infix:&lt;+&gt;</code>, so the real generated code is closer to</p>
 
