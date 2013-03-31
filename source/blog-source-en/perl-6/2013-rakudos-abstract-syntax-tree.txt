@@ -30,7 +30,7 @@ and context), and a bit of extra infrastructure.</p>
     underlying platform, like adding two integers, or calling a routine.</dd>
     <dt>QAST::IVal, QAST::NVal, QAST::SVal</dt>
     <dd>Those hold integer, float ("numeric") and string constants
-    respectively.</p>
+    respectively.</dd>
     <dt>QAST::WVal</dt>
     <dd>Holds a reference to a more complex object (for example a class) which
     is serialized separately.</dd>
