@@ -35,7 +35,7 @@ and context), and a bit of extra infrastructure.</p>
     <dd>Holds a reference to a more complex object (for example a class) which
     is serialized separately.</dd>
     <dt>QAST::Block</dt>
-    <dd>A list of statements that introduces a separate lexical scope.</dt>
+    <dd>A list of statements that introduces a separate lexical scope.</dd>
     <dt>QAST::Var</dt>
     <dd>A variable</dd>
     <dt>QAST::Want</dt>
