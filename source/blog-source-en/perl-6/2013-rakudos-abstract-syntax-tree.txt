@@ -82,7 +82,7 @@ QAST::Op.new(
 );
 [% endsyntax %]</pre>
 
-<h2>Variables and BLocks</h2>
+<h2>Variables and Blocks</h2>
 
 <p>Using a variable is as simple as writing
 <code>QAST::Var.new(:name('name-of-the-variable'))</code>, but it must be declared
