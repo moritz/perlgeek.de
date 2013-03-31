@@ -1,0 +1,164 @@
+Rakudo's Abstract Syntax Tree
+<!-- 1364743379 -->
+
+<p>After or while a compiler parses a program, the compiler usually translates
+the source code into a tree format called <em>Abstract Syntax Tree</em>, or
+<em>AST</em> for short.</p>
+
+<p>The optimizer works on this program representation, and then the code
+generation stage turns it into a format that the platform underneath it
+can understand. Actually I wanted to write about the optimizer, but noticed
+that understanding the AST is crucial to understanding the optimizer, so let's
+talk about the AST first.</p>
+
+<p>The <a href="http://rakudo.org/">Rakudo Perl 6 Compiler</a> uses an AST
+format called <em>QAST</em>. QAST nodes derive from the common superclass
+<code>QAST::Node</code>, which sets up the basic structure of all QAST
+classes. Each QAST node has a list of child nodes, possibly a hash map for
+unstructured annotations, an attribute (confusingly) named <code>node</code>
+for storing the lower-level parse tree (which is used to extract line numbers
+and context), and a bit of extra infrastructure.</p>
+
+<p>The most important node classes are the following:</p>
+
+<dl>
+    <dt>QAST::Stmts</dt>
+    <dd>A list of statements. Each child of the node is considered a separate
+    statement.</dd>
+    <dt>QAST::Op</dt>
+    <dd>A single operation that usually maps to a primitive operation of the
+    underlying platform, like adding two integers, or calling a routine.</dd>
+    <dt>QAST::IVal, QAST::NVal, QAST::SVal</dt>
+    <dd>Those hold integer, float ("numeric") and string constants
+    respectively.</p>
+    <dt>QAST::WVal</dt>
+    <dd>Holds a reference to a more complex object (for example a class) which
+    is serialized separately.</dd>
+    <dt>QAST::Block</dt>
+    <dd>A list of statements that introduces a separate lexical scope.</dt>
+    <dt>QAST::Var</dt>
+    <dd>A variable</dd>
+    <dt>QAST::Want</dt>
+    <dd>A node that can evaluate to different child nodes, depending on the
+    context it is compiled it.</dd>
+<dl>
+
+<p>To give you a bit of a feel of how those node types interact, I want to
+give a few examples of Perl 6 examples, and what AST they could produce. (It
+turns out that Perl 6 is quite a complex language under the hood, and usually
+produces a more complicated AST than the obvious one; I'll ignore that for
+now, in order to introduce you to the basics.)</p>
+
+<h2>Ops and Constants</h2>
+
+<p>The expression <code>23 + 42</code> could, in the simplest case, produce
+this AST:</p>
+
+<pre>
+QAST::Op.new(
+    :op('add'),
+    QAST::IVal.new(:value(23)),
+    QAST::IVal.new(:value(42)),
+);
+</pre>
+
+<p>Here an <code>QAST::Op</code> encodes a primitive operation, an addition of
+two numbers. The <code>:op</code> argument specifies which operation to use.
+The child nodes are two constants, both of type <code>QAST::IVal</code>, which
+hold the operands of the low-level operation <code>add</code>.</p>
+
+<p>Now the low-level <code>add</code> operation is not polymorphic, it always
+adds two floating-point values, and the result is a floating-point value
+again. That's not the desired semantics for Perl 6; actually the operator
+<code>+</code> is implemented as a subroutine of name
+<code>&amp;infix:&lt;+&gt;</code>, so the real generated code is closer to</p>
+
+<pre>[% syntax escape %]
+QAST::Op.new(
+    :op('call'),
+    :name('&infix:<+>'),    # name of the subroutine to call
+    QAST::IVal.new(:value(23)),
+    QAST::IVal.new(:value(42)),
+);
+[% endsyntax %]</pre>
+
+<h2>Variables and BLocks</h2>
+
+<p>Using a variable is as simple as writing
+<code>QAST::Var.new(:name('name-of-the-variable'))</code>, but it must be declared
+first. This is done with <code>QAST::Var.new(:name('name-of-the-variable'),
+    :decl('var'), :scope('lexical'))</code>.</p>
+
+<p>But there is a slight caveat: in Perl 6 a variable is always scoped to a
+block. So while you can't ordinarily mention a variable prior to its
+declaration, there are indirect ways to achieve that (lookup by name, and
+<code>eval()</code>, to name just two).</p>
+
+<p>So in Rakudo there is a convention to create <code>QAST::Block</code> nodes
+with two <code>QAST::Stmts</code> children. The first holds all the
+declarations, and the second all the actual code. That way all the declaration
+always come before the rest of the code.</p>
+
+<p>So <code>my $x = 42; say $x</code> compiles to roughly this:</p>
+
+<pre>[% syntax escape %]
+QAST::Block.new(
+    QAST::Stmts.new(
+        QAST::Var.new(:name('$x'), :decl('var'), :scope('lexical')),
+    ),
+    QAST::Stmts.new(
+        QAST::Op.new(
+            :op('p6store'),
+            QAST::Var.new(:name('$x')),
+            QAST::IVal.new(:value(42)),
+        ),
+        QAST::Op.new(
+            :op('call'),
+            :name('&say'),
+            QAST::Var.new(:name('$x')),
+        ),
+    ),
+);
+[% endsyntax %]</pre>
+
+<h2>Polymorphism and QAST::Want</h2>
+
+<p>Perl 6 distinguishes between native types and reference types. Native types
+are closer to the machine, and their type name is always lower case in Perl
+6.</p>
+
+<p>Integer literals are polymorphic in that they can be either a native
+<code>int</code> or a "boxed" reference type <code>Int</code>.</p>
+
+<p>To model this in the AST, <code>QAST::Want</code> nodes can contain
+multiple child nodes. The compile-time context decides which of those is
+acutally used.</p>
+
+<p>So the integer literal <code>42</code> actually produces not just a simple
+<code>QAST::IVal</code> node but rather this:</p>
+
+<pre>
+QAST::Want.new(
+    QAST::WVal(Int.new(42)),
+    'Ii',
+    QAST::Ival(42),
+)
+</pre>
+
+<p>(Note that <code>Int.new(42)</code> is just a nice notation to indicate a
+boxed integer object; it doesn't quite work like this in the code that
+translate Perl 6 source code into ASTs).</p>
+
+<p>The first child of a <code>QAST::Want</code> node is the one used by
+default, if no other alternative matches. The comes a list where the elements
+with odd indexes  are format specifications (here <code>Ii</code> for
+integers) and the elements at even-side indexes are the AST to use in that
+case.</p>
+
+<p>An interesting format specification is <code>'v'</code> for void context,
+which is always chosen when the return value from the current expression isn't
+used at all. In Perl 6 this is used to eagerly evaluate lazy lists that are
+used in void context, and for several optimizations.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
