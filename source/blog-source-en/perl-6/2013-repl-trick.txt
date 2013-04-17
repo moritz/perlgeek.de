@@ -1,0 +1,40 @@
+Pattern Matching and Unpacking
+<!-- 1366228482 -->
+
+<p>A recent <a
+href="http://irclog.perlgeek.de/perl6/2013-04-15#i_6706783">discussion on
+IRC</a> prompted me to share a small but neat trick with you.</p>
+
+<p>If there are things you want to do quite often in the Rakudo
+REPL (the interactive "Read-Evaluate-Print Loop"), it makes sense to create a
+shortcut for them. And creating shortcuts for often-used stuff is what
+programming languages excel at, so you do it right in Perl module:</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+module REPLHelper;
+
+sub p(Mu \x) is export {
+    x.^mro.map: *.^name;
+}
+
+[% endsyntax %]</pre>
+
+<p>I have placed mine in <code>$HOME/.perl6/repl</code>.</p>
+
+<p>And then you make sure it's loaded automatically:</p>
+
+<pre>[% syntax escape %]
+$ alias p6repl="perl6 -I$HOME/.perl6/repl/ -MREPLHelper"
+$ p6repl
+> p Int
+Int Cool Any Mu
+>
+[% endsyntax %]</pre>
+
+<p>Now you have a neat one-letter function which tells you the parents of an
+object or a type, in method resolution order. And a way to add more shortcuts
+when you need them.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
