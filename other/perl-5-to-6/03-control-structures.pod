@@ -31,7 +31,7 @@ C<for> etc.
 In fact you are discouraged from using parenthesis around the conditions.
 The reason is that any identifier followed immediately (ie. without
 whitespace) by an opening parenthesis is parsed as a subroutine call,
-so C<if($x < 3)</c> tries to call a function named C<if>. While a space
+so C<if($x < 3)> tries to call a function named C<if>. While a space
 after the C<if> fixes that, it is safer to just omit the parens.
 
 =head2 Branches
