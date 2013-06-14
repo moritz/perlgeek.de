@@ -109,6 +109,20 @@ $ source ~/.bashrc
 
 <p>All newly started interactive bash processes will respect these settings.</p>
 
+<h3 id="non-interactive">A Warning about Non-Interactive Processes</h3>
+
+<p>There are certain processes that don't get those environment variables,
+typically because they are started by some sort of daemon in the
+background.</p>
+
+<p>Those include processes started from
+<a href="http://linuxcommand.org/man_pages/cron8.html">cron</a>,
+<a href="http://linuxcommand.org/man_pages/at1.html">at</a>, init scripts, or
+indirectly spawned from init scripts, like through a web server.</p>
+
+<p>You might need to take additional steps to ensure that those programs get
+the proper environment variables.</p>
+
 <h2 id="check-locales">Locales: check</h2>
 
 <p>Run the <code>locale</code> program. The output should be similar to
