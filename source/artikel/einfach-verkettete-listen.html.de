@@ -112,7 +112,7 @@ node insert_right(node list, int data){
 
       <h2 id="loeschen">Elemente löschen</h2>
 
-      <p>Auch das löschen eines Elements ist einfach, wenn man einen
+      <p>Auch das Löschen eines Elements ist einfach, wenn man einen
       Zeiger auf das Element links des zu löschenden Elements hat.</p>
 
       <p>Dazu muss man nur den <code>next</code>-Zeiger des linken Elements
