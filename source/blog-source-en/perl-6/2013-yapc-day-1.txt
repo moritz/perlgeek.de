@@ -1,0 +1,33 @@
+First day at YAPC::Europe 2013 in Kiev
+<!-- 1376332663 -->
+
+<p>Today was the first "real" day of <a href="http://act.yapc.eu/ye2013/">YAPC
+Europe</a> 2013 in Kiev. In the same sense that it was the first real day, we had quite a nice "unreal" conference day yesterday, with a day-long Perl 6 hackathon, and in the evening a pre-conference meeting a Sovjet-style restaurant with tasty food and beverages.</p>
+
+<p>The talks started with a few words of welcome, and then the announcement that the YAPC Europe next year <a href="http://www.yapceurope.org/news.html#20130812">will be in Sofia, Bulgaria</a>, with the small side note that there were actually three cities competing for that honour. Congratulations to Sofia!</p>
+
+<p>Larry's traditional keynote was quite emotional, and he had to fight tears a few times. Having had cancer and related surgeries in the past year, he still does his perceived duty to the Perl community, which I greatly appreciate.</p>
+
+<p>Afterwards Dave Cross talked about <a href="http://act.yapc.eu/ye2013/talk/4505">25 years of Perl in 25 minutes</a>, which was a nice walk through some significant developments in the Perl world, though a bit hasty. Maybe picking fewer events and spending a bit more time on the selected few would give a smoother experience.</p>
+
+<p>Another excellent talk that ran out of time was <a href="http://act.yapc.eu/ye2013/talk/4933">on Redis</a>. Having experimented a wee bit with Redis in the past month, this was a real eye-opener on the wealth of features we might have used at work, but in the didn't. Maybe we will eventually revise that decision.</p>
+
+<p>Ribasushi talked about <a href="http://act.yapc.eu/ye2013/talk/4922">how hard benchmarking really is</a>, and while I was (in principle) aware of that fact that it's hard to get right, there were still several significant factors that I overlooked (like the CPU's tendency to scale frequency in response to thermal and power-management considerations). I also learned that I should use <a href="https://metacpan.org/module/Dumbbench">Dumbbench</a> instead of the Benchmark.pm core module. Sadly it didn't install for me (Capture::Tiny tests failing on Mac OS X).</p>
+
+<p>The <a href="http://act.yapc.eu/ye2013/talk/4943">Perl 6 is dead, long live Perl 5</a> talk was much less inflammatory than the title would suggest (maybe due to Larry touching on the subject briefly during the keynote). It was mostly about how Perl 5 is used in the presenter's company, which was mildly interesting.</p>
+
+<p>After tasty free lunch I attended jnthn's talk <a href="http://act.yapc.eu/ye2013/talk/4912">on Rakudo on the JVM</a>, which was (as is typical for jnthn's talk) both entertaining and taught me something, even though I had followed the project quite a bit.</p>
+
+<p>Thomas Klasuner's <a href="http://act.yapc.eu/ye2013/talk/4850">Bread::Board by example</a> made me want to refactor the OTRS internals very badly, because it is full of the anti-patterns that Bread::Board can solve in a much better way. I think that the OTRS code base is big enough to warrant the usage of Bread::Board.</p>
+
+<p>I enjoyed Denis' talk on <a href="http://act.yapc.eu/ye2013/talk/4898">Method::Signatures</a>, and was delighted to see that most syntax is directly copied from Perl 6 signature syntax. Talk about Perl 6 sucking creativity out of Perl 5 development.</p>
+
+<p>The conference ended with a session of lighning talks, something which I always enjoy. Many lightning talks had a slightly funny tone or undertone, while still talking about interesting stuff.</p>
+
+<p>Finally there was the "kick-off party", beverages and snacks sponsored by booking.com. There (and really the whole day, and yesterday too) I not only had conversations with my "old" Perl 6 friends, but also talked with many interesting people I never met before, or only met online before.</p>
+
+<p>So all in all it was a nice experience, both from the social side, and from quality and contents of the talks. Venue and food are good, and the wifi too, except when it stops working for a few minutes.</p>
+
+<p>I'm looking forward to two more days of conference!</p>
+
+[% option no-header %][% option no-footer %]
