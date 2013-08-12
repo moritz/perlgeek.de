@@ -10,7 +10,10 @@ Europe</a> 2013 in Kiev. In the same sense that it was the first real day, we ha
 
 <p>Afterwards Dave Cross talked about <a href="http://act.yapc.eu/ye2013/talk/4505">25 years of Perl in 25 minutes</a>, which was a nice walk through some significant developments in the Perl world, though a bit hasty. Maybe picking fewer events and spending a bit more time on the selected few would give a smoother experience.</p>
 
-<p>Another excellent talk that ran out of time was <a href="http://act.yapc.eu/ye2013/talk/4933">on Redis</a>. Having experimented a wee bit with Redis in the past month, this was a real eye-opener on the wealth of features we might have used at work, but in the didn't. Maybe we will eventually revise that decision.</p>
+<p>Another excellent talk that ran out of time was <a
+href="http://act.yapc.eu/ye2013/talk/4933">on Redis</a>. Having experimented a
+wee bit with Redis in the past month, this was a real eye-opener on the wealth
+of features we might have used for a project at work, but in the end we didn't. Maybe we will eventually revise that decision.</p>
 
 <p>Ribasushi talked about <a href="http://act.yapc.eu/ye2013/talk/4922">how hard benchmarking really is</a>, and while I was (in principle) aware of that fact that it's hard to get right, there were still several significant factors that I overlooked (like the CPU's tendency to scale frequency in response to thermal and power-management considerations). I also learned that I should use <a href="https://metacpan.org/module/Dumbbench">Dumbbench</a> instead of the Benchmark.pm core module. Sadly it didn't install for me (Capture::Tiny tests failing on Mac OS X).</p>
 
