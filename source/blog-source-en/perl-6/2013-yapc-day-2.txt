@@ -1,0 +1,22 @@
+YAPC Europe 2013 Day 2
+<!-- 1376399330 -->
+
+<p>The second day of <a href="http://act.yapc.eu/ye2013/main">YAPC Europe</a>
+was enjoyable and informative.</p>
+
+<p>I learned about <a href="http://act.yapc.eu/ye2013/user/116">ZeroMQ</a>, which is a bit like sockets on steriods. Interesting stuff. Sadly <a href="http://act.yapc.eu/ye2013/talk/4636">Design decisions on p2</a> didn't quite qualify as interesting.</p>
+
+<p><a href="http://act.yapc.eu/ye2013/talk/4506">Matt's PSGI archive</a> is a project to rewrite Matt's infamous script archive in modern Perl. Very promising, and a bit entertaining too.</p>
+
+<p>Lunch was very tasty, more so than the usual mass catering. Kudos to the organizers!</p>
+
+<p>After lunch, <a href="http://act.yapc.eu/ye2013/talk/4925">jnthn talked about concurrency, parallelism and asynchrony in Perl 6</a>. It was a great talk, backed by great work on the compiler and runtime. Jonathans talk are always to be recommended.</p>
+
+<p>I think I didn't screw up <a href="http://act.yapc.eu/ye2013/talk/4928">my own talk</a> too badly, at least the timing worked fine. I just forgot to show the last slide. No real harm done.</p>
+
+<p>I also enjoyed mst's <a href="http://act.yapc.eu/ye2013/talk/4971">State of the Velociraptor</a>, which was a summary of what went on in the Perl world in the last year. (Much better than the YAPC::EU 2010 talk with the same title).</p>
+
+<p>The <a href="http://act.yapc.eu/ye2013/talk/4538">Lightning talks</a> were as enjoyable as those from the previous day. So all fine!</p>
+
+<p>Next up is the river cruise, I hope to blog about that later on.</p>
+[% option no-header %] [% option no-footer %]
