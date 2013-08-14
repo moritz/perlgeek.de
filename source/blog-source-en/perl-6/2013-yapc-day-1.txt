@@ -21,7 +21,7 @@ of features we might have used for a project at work, but in the end we didn't. 
 
 <p>After tasty free lunch I attended jnthn's talk <a href="http://act.yapc.eu/ye2013/talk/4912">on Rakudo on the JVM</a>, which was (as is typical for jnthn's talk) both entertaining and taught me something, even though I had followed the project quite a bit.</p>
 
-<p>Thomas Klasuner's <a href="http://act.yapc.eu/ye2013/talk/4850">Bread::Board by example</a> made me want to refactor the OTRS internals very badly, because it is full of the anti-patterns that Bread::Board can solve in a much better way. I think that the OTRS code base is big enough to warrant the usage of Bread::Board.</p>
+<p>Thomas Klausner's <a href="http://act.yapc.eu/ye2013/talk/4850">Bread::Board by example</a> made me want to refactor the OTRS internals very badly, because it is full of the anti-patterns that Bread::Board can solve in a much better way. I think that the OTRS code base is big enough to warrant the usage of Bread::Board.</p>
 
 <p>I enjoyed Denis' talk on <a href="http://act.yapc.eu/ye2013/talk/4898">Method::Signatures</a>, and was delighted to see that most syntax is directly copied from Perl 6 signature syntax. Talk about Perl 6 sucking creativity out of Perl 5 development.</p>
 
@@ -32,5 +32,7 @@ of features we might have used for a project at work, but in the end we didn't. 
 <p>So all in all it was a nice experience, both from the social side, and from quality and contents of the talks. Venue and food are good, and the wifi too, except when it stops working for a few minutes.</p>
 
 <p>I'm looking forward to two more days of conference!</p>
+
+<p>(Updated: Fixed Thomas' last name)</p>
 
 [% option no-header %][% option no-footer %]
