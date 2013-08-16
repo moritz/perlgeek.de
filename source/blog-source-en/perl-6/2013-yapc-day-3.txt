@@ -1,0 +1,30 @@
+YAPC Europe 2013 Day 3
+<!-- 1376463961 -->
+
+<p>The second day of <a href="http://act.yapc.eu/ye2013/main">YAPC Europe</a> climaxed in the river boat cruise, Kiev's version of the traditional conference dinner. It was a largish boat traveling on the Dnipro river, with food, drinks and lots of Perl folks. Not having fixed tables, and having to get up to fetch food and drinks led to a lot of circulation, and thus meeting many more people than at traditionally dinners. I loved it.</p>
+
+<p>Day 3 started with a video message from next year's YAPC Europe organizers, advertising for the upcoming conference and talking a bit about the oppurtunities that Sofia offers. Tempting :-).</p>
+
+<p><a href="http://act.yapc.eu/ye2013/talk/4909">Monitoring with Perl and Unix::Statgrab</a> was more about the metrics that are available for monitoring, and less about doing stuff with Perl. I was a bit disappointed. </p>
+
+<p><a href="http://act.yapc.eu/ye2013/talk/4573">The "Future Perl Versioning" Discussion</a> was a very civilized discussion, with solid arguments. Whether anybody changed their minds remain to be seen.
+</p>
+
+<p>Carl Mäsak gave two great talks: one on <a href="http://act.yapc.eu/ye2013/talk/4798">reactive programming</a>, and one on <a href=http://act.yapc.eu/ye2013/talk/4797"">regular expressions</a>. I learned quite a bit in the first one, and simply enjoyed the second one.</p>
+
+<p>After the lunch (tasty again), I attended Jonathan Worthington's third talk, <a href="http://act.yapc.eu/ye2013/talk/4926">MoarVM: a metamodel-focused runtime for NQP and Rakudo</a>. Again this was a great talk, based on great work done by Jonathan and others during the last 12 months or so. Moarvm is a virtual machine designed for Perl 6's needs, as we understand them now (as opposed to parrot, which was designed towards Perl 6 as it was understood around 2003 or so, which is considerably different).</p>
+
+<p><a href="http://act.yapc.eu/ye2013/talk/4860">How to speak manager</a> was both amusing and offered a nice perspective on interactions between managers and programmers. Some of this advice assumed a non-tech-savy manager, and thus didn't quite apply to much current work situation, but still interesting.</p> 
+
+<p>I must confess I don't remember too much of the rest of the talks that evening. I blame five days of traveling, hackathon and conference taking their toll on me.</p>
+
+<p>The third session of lightning talks was again an interesting mix, containing interesting technical tidbits, the usual "we are hiring" slogans, some <a href="">touching and thoughtful moments</a>, and finally a song by Piers Cawley. He had written the lyrics in the previous 18 hours (including sleep), to (afaict) a traditional irish song. Standing up in front of ~300 people and singing a song that you haven't really had time to practise takes a huge amount of courage, and I admire Piers both for his courage and his great performance. I hope it was recorded, and makes it way to the public soon.</p>
+
+<p>Finally the organizers spoke some closing words, and received their well-deserved share of applause.</p>
+
+<p>As you might have guess from this and the previous blog posts, I enjoyed this year's YAPC Europe very much, and found it well worth attending, and well organized. I'd like to give my heart-felt thanks to everybody who helped to make it happen, and to <a href="http://noris.net">my employer</a> for sending me there.</p>
+
+<p>This being only my second YAPC, I can't make any far-reaching comparisons, but compared to YAPC::EU 2010 in Pisa I had an easier time making acquaintances. I cannot tell what the big difference was, but the buffet-style dinners at the pre-conference meeting and the river boat cruise certainly helped to increase the circulation and thus the number of people I talked to.</p>
+
+
+[% option no-header %] [% option no-footer %]
