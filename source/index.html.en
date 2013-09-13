@@ -55,7 +55,7 @@ me, and which are covered on this site are:</p>
 <p>Most of my programs end up being Open Source software. You can follow my <a
 href="http://github.com/moritz/">github account</a> to see what I'm working
 on, although many of my commits go to repositories under the <a
-href="http://github.com/perl6/">perl6 accountM</a>.</p>
+href="http://github.com/perl6/">perl6 account</a>.</p>
 
 [% comment
     vim: syn=html ts=4 sw=4 expandtab spell
