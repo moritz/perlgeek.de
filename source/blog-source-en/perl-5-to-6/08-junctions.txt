@@ -11,7 +11,8 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    if $x == 3|4 {
+<pre>    my $x = 4;
+    if $x == 3|4 {
         say &#39;$x is either 3 or 4&#39;
     }
     say ((2|3|4)+7).perl        # (9|10|11)</pre>

@@ -67,9 +67,9 @@ name="DESCRIPTION"
 
 <p>Unfortunately that means that it&#39;s not easy to learn Perl 6, and that you have to have a profound interest in Perl 6 to actually find the motivation to learn it from the specification, IRC channels or from the test suite.</p>
 
-<p>This project, which I&#39;ll preliminary call &#34;Perl 5 to 6&#34; (in lack of a better name) attempts to fill that gap with a series of short articles.</p>
+<p>This project, which I&#39;ll preliminary call &#34;Perl 5 to 6&#34; (for lack of a better name) attempts to fill that gap with a series of short articles.</p>
 
-<p>Each lesson has a rather limited topic, and tries to explain the two or three most important points with very short examples. It also tries to explain why things changed from Perl 5 to 6, and why this is important. I also hope that the knowledge you gain from reading these lessons is enough to basically understand the Synopsis, which are the canonical source of all Perl 6 wisdom.</p>
+<p>Each lesson has a rather limited scope, and tries to explain the two or three most important points with very short examples. It also tries to explain why things changed from Perl 5 to 6, and why this is important. I also hope that the knowledge you gain from reading these lessons is enough to basically understand the Synopses, which are the canonical source of all Perl 6 wisdom.</p>
 
 <p>To keep the reading easy, each lesson should not exceed 200 lines or 1000 words (but it&#39;s a soft limit).</p>
 
@@ -101,7 +101,7 @@ name="ROADMAP"
     09 Comparisons and Smartmatching
     10 Containers and Binding
     11 Basic Operators
-    12 Lazyness (-)
+    12 Laziness (-)
     13 Custom Operators (-)
     14 the MAIN sub
     15 Twigils
@@ -224,7 +224,7 @@ name="Arrays"
 <pre>    my @b = @a.sort;
     @b.elems;                   # number of items
     if @b &#62; 2 { say &#34;yes&#34; }     # still works
-    @b.end                      # number of last index. Replaces $#array
+    @b.end;                     # number of last index. Replaces $#array
     my @c = @b.map({$_ * 2 });  # map is also a method, yes</pre>
 
 <p>There is a short form for the old <code>qw/../</code> quoting construct:</p>
@@ -407,7 +407,7 @@ name="DESCRIPTION"
 
 <p>Most Perl 5 control structures are quite similar in Perl 6. The biggest visual difference is that you don&#39;t need a pair of parenthesis after <code>if</code>, <code>while</code>, <code>for</code> etc.</p>
 
-<p>In fact you are discouraged from using parenthesis around the conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
+<p>In fact you are discouraged from using parenthesis around conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
 
 <h4><a class='u'
 name="Branches"
@@ -415,7 +415,8 @@ name="Branches"
 
 <p><code>if</code> is mostly unchanged, you can still add <code>elsif</code> and <code>else</code> branches. <code>unless</code> is still there, but no <code>else</code> branch is allowed after <code>unless</code>.</p>
 
-<pre>    if $sheep == 0 {
+<pre>    my $sheep = 42;
+    if $sheep == 0 {
         say &#34;How boring&#34;;
     } elsif $sheep == 1 {
         say &#34;One lonely sheep&#34;;
@@ -447,16 +448,16 @@ name="Loops"
         say &#34;Even: $even \t Odd: $odd&#34;;
     }</pre>
 
-<p>This is also how you iterate over hashes:</p>
+<p>This is also a good way to iterate over hashes:</p>
 
 <pre>    my %h = a =&#62; 1, b =&#62; 2, c =&#62; 3;
     for %h.kv -&#62; $key, $value {
         say &#34;$key: $value&#34;;
     }</pre>
 
-<p>The C-style for-loop is now called <code>loop</code> (and the only looping construct that requires parenthesis):</p>
+<p>The C-style for-loop is now called <code>loop</code> (and the only looping construct that requires parentheses):</p>
 
-<pre>    loop (my $x = 1; $x &#60; 100; $x = $x**2) {
+<pre>    loop (my $x = 2; $x &#60; 100; $x = $x**2) {
         say $x;
     }</pre>
 
@@ -515,7 +516,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Subroutines are declared with the <code>sub</code> key word, and can have a list of formal parameters, just like in C, Java and most other languages. Optionally these parameters can have type constraints.</p>
+<p>Subroutines are declared with the <code>sub</code> keyword, and can have a list of formal parameters, just like in C, Java and most other languages. Optionally these parameters can have type constraints.</p>
 
 <p>Parameters are read-only by default. That can be changed with so-called &#34;traits&#34;:</p>
 
@@ -573,7 +574,12 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>In these the variable name is also used as the name of the parameter. You can use a different name, though:</p>
+<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the name results in the value being <code>True</code>, and negating it results in the value being <code>False</code>:</p>
+
+<pre>    :draw-perimeter                 # same as &#34;draw-perimeter =&#62; True&#34;
+    :!transparent                   # same as &#34;transparent =&#62; False&#34;</pre>
+
+<p>In the declaration of named parameters, the variable name is also used as the name of the parameter. You can use a different name, though:</p>
 
 <pre>    sub area(:width($w), :height($h)){
         return $w * $h;
@@ -607,7 +613,7 @@ name="Interpolation"
 
 <p>By default arrays aren&#39;t interpolated in argument lists, so unlike in Perl 5 you can write something like this:</p>
 
-<pre>    sub a($scalar1, @list, $scalar2){
+<pre>    sub a($scalar1, @list, $scalar2) {
         say $scalar2;
     }
 
@@ -619,9 +625,11 @@ name="Interpolation"
 <pre>    my @indexes = 1, 4;
     say &#34;abc&#34;.substr(@indexes)       # doesn&#39;t do what you want</pre>
 
+<p>(What actually happens is that the first argument is supposed to be an <code>Int</code>, and is coerced to an Int. Which is the same as if you had written <code>&#34;abc.&#34;substr(@indexes.end)</code> in the first place).</p>
+
 <p>You can achieve the desired behavior with a prefix <code>|</code></p>
 
-<pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde</pre>
+<pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde, same as &#34;abcdefgh&#34;.substr(1, 4)</pre>
 
 <h4><a class='u'
 name="Multi_Subs"
@@ -718,7 +726,7 @@ name="DESCRIPTION"
 <pre>    class ClassName;
     # class definition goes here</pre>
 
-<p>The first one begins with <code>class ClassName;</code> and stretches to the end of the file. In the second one the class name is followed by a block, and all that is inside the blocks is considered to be the class definition.</p>
+<p>The first one begins with <code>class ClassName;</code> and stretches to the end of the file. In the second one the class name is followed by a block, and all that is inside the block is considered to be the class definition.</p>
 
 <pre>    class YourClass {
         # class definition goes here
@@ -729,7 +737,7 @@ name="DESCRIPTION"
 name="Methods"
 >Methods</a></h4>
 
-<p>Methods are declared with the <code>method</code> key word. Inside the method you can use the <code>self</code> keyword to refer to the object on which the method is called (the <i>invocant</i>).</p>
+<p>Methods are declared with the <code>method</code> keyword. Inside the method you can use the term <code>self</code> to refer to the object on which the method is called (the <i>invocant</i>).</p>
 
 <p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
 
@@ -769,7 +777,7 @@ name="Methods"
 name="Attributes"
 >Attributes</a></h4>
 
-<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So if you want to modify the attribute, you need to use the <code>!</code> sigil to access the actual attribute, and not the accessor (unless the accessor is marked <code>is rw</code>).</p>
+<p>Attributes are declared with the <code>has</code> keyword, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So if you want to modify the attribute, you need to use the <code>!</code> sigil to access the actual attribute, and not the accessor (unless the accessor is marked <code>is rw</code>).</p>
 
 <pre>    class SomeClass {
         has $!a;
@@ -843,7 +851,14 @@ name="Roles_and_Composition"
         method area {
             $!width * $!height;
         }
-    }</pre>
+        method paint() {
+            for 1..$.height {
+                say &#39;x&#39; x $.width;
+            }
+        }
+    }
+
+    Rectangle.new(width =&#62; 8, height =&#62; 3).paint;</pre>
 
 <h3><a class='u'
 name="SEE_ALSO"
@@ -869,10 +884,10 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    my @a = &#60;a b c&#62;
+<pre>    my @a = &#60;a b c&#62;;
     my $x = @a;
     say $x[2];          # c
-    say (~2).WHAT       # Str()
+    say (~2).WHAT;      # (Str)
     say +@a;            # 3
     if @a &#60; 10 { say &#34;short array&#34;; }</pre>
 
@@ -899,20 +914,36 @@ name="DESCRIPTION"
     $( stuff )   Generic item context
     @( stuff )   List context
     %( stuff )   Hash context
-    @@( stuff )  Slice context</pre>
+     stuff.tree  Tree context</pre>
 
 <h4><a class='u'
-name="Slice_Context"
->Slice Context</a></h4>
+name="Tree_Context"
+>Tree Context</a></h4>
 
-<p>There&#39;s also a new context called <i>slice context</i>. It is a list context in which sublists don&#39;t interpolate.</p>
+<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that return a list of arrays.</p>
 
-<pre>     @( &#60;a b&#62; Z &#60;c d&#62; )     # &#60;a c b d&#62;
-    @@( &#60;a b&#62; Z &#60;c d&#62; )     # ([&#39;a&#39;, &#39;c&#39;], [&#39;b&#39;, &#39;d&#39;])</pre>
+<p>Now this is solved by returning a list of <code>Parcel</code> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
 
-<p>This was introduced after the observation that many built in list functions had two versions - one that returned a flat list, and one that returned a list of lists.</p>
+<p>Consider the infix <code>Z</code> (short for <i>zip</i>) operator, which interleaves the elements from two lists:</p>
 
-<p>You can force slice context with <code>@@( stuff )</code>.</p>
+<pre>    my @a = &#60;a b c&#62; Z &#60;1 2 3&#62;;
+    say @a.join;                # a1b2c3</pre>
+
+<p>What happened here is that the right-hand side of the first statement returned <code>(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 3)</code>, and assignment to an array, which provides list context, flattened out the inner parcels. On the other hand if you write</p>
+
+<pre>    my @t = (&#60;a b c&#62; Z &#60;1 2 3&#62;).tree;</pre>
+
+<p>then <code>@t</code> now contains three elements, each of which are arrays that don&#39;t flatten out.</p>
+
+<pre>    for @t -&#62; @inner {
+        say &#34;first: @inner[0]  second: @inner[1]&#34;
+    }</pre>
+
+<p>Produces the output</p>
+
+<pre>    first: a  second: 1
+    first: b  second: 2
+    first: c  second: 3</pre>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -1029,13 +1060,15 @@ name="Syntax_clean_up"
 
 <pre>    m/&#39;a literal text: $#@!!&#39;/</pre>
 
-<p>The changed semantics of <code>.</code> has already been mentioned, and that <code>[...]</code> are now non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
+<p>The changed semantics of <code>.</code> has already been mentioned, and also that <code>[...]</code> now construct non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string respectively, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
 
-<p>This means that the <code>/s</code> and <code>/m</code> modifiers are gone. Modifiers are now given at the start of a regex, and are spelled as pairs.</p>
+<p>This means that the <code>/s</code> and <code>/m</code> modifiers are gone. Modifiers are now given at the start of a regex, and are given in this notation:</p>
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
         say &#34;Match&#34;;
-    }</pre>
+    }
+... which happens to be the same as the I&#60;colon pair&#62; notation that you can
+use for passing named arguments to routines.</pre>
 
 <p>Modifiers have a short and a long form. The old <code>/x</code> modifier is now the default, i.e. white spaces are ignored.</p>
 
@@ -1053,7 +1086,7 @@ name="Syntax_clean_up"
     :ex     :exhaustive     Match in all possible ways
             :ratchet        Don&#39;t backtrack</pre>
 
-<p>The <code>:sigspace</code> needs a bit more explanation. It replace all whitespace in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more white spaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
+<p>The <code>:sigspace</code> needs a bit more explanation. It replaces all whitespace in the pattern with <code>&#60;.ws&#62;</code> (that is it calls the rule <code>ws</code> without keeping its result). You can override that rule. By default it matches one or more whitespaces if it&#39;s enclosed in word characters, and zero or more otherwise.</p>
 
 <p>(There are more new modifiers, but probably not as important as the listed ones).</p>
 
@@ -1061,7 +1094,7 @@ name="Syntax_clean_up"
 name="The_Match_Object"
 >The Match Object</a></h4>
 
-<p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contains the first and last string positions of the match.</p>
+<p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contain the first and last string positions of the match.</p>
 
 <pre>    if &#39;abcdefg&#39; ~~ m/(.(.)) (e | bla ) $&#60;foo&#62; = (.) / {
         say $/[0][0];           # d
@@ -1072,7 +1105,7 @@ name="The_Match_Object"
 
 <p><code>$0</code>, <code>$1</code> etc are just aliases for <code>$/[0]</code>, <code>$/[1]</code> etc. Likewise <code>$/&#60;x&#62;</code> and <code>$/{&#39;x&#39;}</code> are aliased to <code>$&#60;x&#62;</code>.</p>
 
-<p>Note that anything that you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
+<p>Note that anything you access via <code>$/[...]</code> and <code>$/{...}</code> is a match object (or a list of Match objects) again. This allows you to build real parse trees with rules.</p>
 
 <h4><a class='u'
 name="Named_Regexes_and_Grammars"
@@ -1129,7 +1162,8 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    if $x == 3|4 {
+<pre>    my $x = 4;
+    if $x == 3|4 {
         say &#39;$x is either 3 or 4&#39;
     }
     say ((2|3|4)+7).perl        # (9|10|11)</pre>
@@ -1253,7 +1287,7 @@ name="SYNOPSIS"
 
 <pre>    &#34;ab&#34;    eq      &#34;ab&#34;    True
     &#34;1.0&#34;   eq      &#34;1&#34;     False
-    &#34;a&#34;     ==      &#34;b&#34;     True
+    &#34;a&#34;     ==      &#34;b&#34;     failure, because &#34;a&#34; isn&#39;t numeric
     &#34;1&#34;     ==      1.0     True
     1       ===     1       True
     [1, 2]  ===     [1, 2]  False
@@ -1263,7 +1297,7 @@ name="SYNOPSIS"
     [1, 2]  eqv     [1, 2]  True
     1.0     eqv     1       False
 
-    &#39;abc&#39;   ~~      m/a/    True
+    &#39;abc&#39;   ~~      m/a/    Match object, True in boolean context
     &#39;abc&#39;   ~~      Str     True
     &#39;abc&#39;   ~~      Int     False
     Str     ~~      Any     True
@@ -1279,13 +1313,13 @@ name="DESCRIPTION"
 
 <p>Since objects are more than blessed references, a new way for comparing them is needed. <code>===</code> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
 
-<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. Two identically constructed data structures are equivalent.</p>
+<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <code>Array</code> or <code>Hash</code>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
 
 <h4><a class='u'
 name="Smart_matching"
 >Smart matching</a></h4>
 
-<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>.</p>
+<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
 <p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
 
@@ -1373,26 +1407,28 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    # bit wise operators
+<pre>    # bitwise operators
     5   +| 3;       # 7
-    5   +^ 3        # 6
+    5   +^ 3;       # 6
     5   +&#38; 3;       # 1
-    &#34;b&#34; ~| &#34;d&#34;      # &#39;f&#39;
+    &#34;b&#34; ~| &#34;d&#34;;     # &#39;f&#39;
  
     # string concatenation
-    &#39;a&#39; ~ &#39;b&#39;       # &#39;ab&#39;
+    &#39;a&#39; ~ &#39;b&#39;;      # &#39;ab&#39;
 
     # file tests
-    if &#39;/etc/passwd&#39;.IO ~~ :e { say &#34;exists&#34; }
+    if &#39;/etc/passwd&#39;.path ~~ :e { say &#34;exists&#34; }
 
     # repetition
-    &#39;a&#39; x 3         # &#39;aaa&#39;
-    &#39;a&#39; xx 3        # &#39;a&#39;, &#39;a&#39;, &#39;a&#39;
+    &#39;a&#39; x 3;        # &#39;aaa&#39;
+    &#39;a&#39; xx 3;       # &#39;a&#39;, &#39;a&#39;, &#39;a&#39;
 
     # ternary, conditional op
-    $a == $b ?? 2 * $a !! $b - $a
+    my ($a, $b) = 2, 2;
+    say $a == $b ?? 2 * $a !! $b - $a;
 
     # chained comparisons
+    my $angle = 1.41;
     if 0 &#60;= $angle &#60; 2 * pi { ... }</pre>
 
 <h3><a class='u'
@@ -1401,11 +1437,11 @@ name="DESCRIPTION"
 
 <p>All the numeric operators (<code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>**</code>, <code>%</code>) remain unchanged.</p>
 
-<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bit wise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
+<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.IO ~~ :e</code>.</p>
+<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.path ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 

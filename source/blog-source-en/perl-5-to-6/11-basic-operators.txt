@@ -11,26 +11,28 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    # bit wise operators
+<pre>    # bitwise operators
     5   +| 3;       # 7
-    5   +^ 3        # 6
+    5   +^ 3;       # 6
     5   +&#38; 3;       # 1
-    &#34;b&#34; ~| &#34;d&#34;      # &#39;f&#39;
+    &#34;b&#34; ~| &#34;d&#34;;     # &#39;f&#39;
  
     # string concatenation
-    &#39;a&#39; ~ &#39;b&#39;       # &#39;ab&#39;
+    &#39;a&#39; ~ &#39;b&#39;;      # &#39;ab&#39;
 
     # file tests
-    if &#39;/etc/passwd&#39;.IO ~~ :e { say &#34;exists&#34; }
+    if &#39;/etc/passwd&#39;.path ~~ :e { say &#34;exists&#34; }
 
     # repetition
-    &#39;a&#39; x 3         # &#39;aaa&#39;
-    &#39;a&#39; xx 3        # &#39;a&#39;, &#39;a&#39;, &#39;a&#39;
+    &#39;a&#39; x 3;        # &#39;aaa&#39;
+    &#39;a&#39; xx 3;       # &#39;a&#39;, &#39;a&#39;, &#39;a&#39;
 
     # ternary, conditional op
-    $a == $b ?? 2 * $a !! $b - $a
+    my ($a, $b) = 2, 2;
+    say $a == $b ?? 2 * $a !! $b - $a;
 
     # chained comparisons
+    my $angle = 1.41;
     if 0 &#60;= $angle &#60; 2 * pi { ... }</pre>
 
 <h3><a class='u'
@@ -39,11 +41,11 @@ name="DESCRIPTION"
 
 <p>All the numeric operators (<code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>**</code>, <code>%</code>) remain unchanged.</p>
 
-<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bit wise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
+<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.IO ~~ :e</code>.</p>
+<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.path ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 

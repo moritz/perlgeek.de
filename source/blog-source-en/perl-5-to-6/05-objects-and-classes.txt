@@ -45,7 +45,7 @@ name="DESCRIPTION"
 <pre>    class ClassName;
     # class definition goes here</pre>
 
-<p>The first one begins with <code>class ClassName;</code> and stretches to the end of the file. In the second one the class name is followed by a block, and all that is inside the blocks is considered to be the class definition.</p>
+<p>The first one begins with <code>class ClassName;</code> and stretches to the end of the file. In the second one the class name is followed by a block, and all that is inside the block is considered to be the class definition.</p>
 
 <pre>    class YourClass {
         # class definition goes here
@@ -56,7 +56,7 @@ name="DESCRIPTION"
 name="Methods"
 >Methods</a></h4>
 
-<p>Methods are declared with the <code>method</code> key word. Inside the method you can use the <code>self</code> keyword to refer to the object on which the method is called (the <i>invocant</i>).</p>
+<p>Methods are declared with the <code>method</code> keyword. Inside the method you can use the term <code>self</code> to refer to the object on which the method is called (the <i>invocant</i>).</p>
 
 <p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
 
@@ -96,7 +96,7 @@ name="Methods"
 name="Attributes"
 >Attributes</a></h4>
 
-<p>Attributes are declared with the <code>has</code> key word, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So if you want to modify the attribute, you need to use the <code>!</code> sigil to access the actual attribute, and not the accessor (unless the accessor is marked <code>is rw</code>).</p>
+<p>Attributes are declared with the <code>has</code> keyword, and have a &#34;twigil&#34;, that is a special character after the sigil. For private attributes that&#39;s a bang <code>!</code>, for public attributes it&#39;s the dot <code>.</code>. Public attributes are just private attributes with a public accessor. So if you want to modify the attribute, you need to use the <code>!</code> sigil to access the actual attribute, and not the accessor (unless the accessor is marked <code>is rw</code>).</p>
 
 <pre>    class SomeClass {
         has $!a;
@@ -170,7 +170,14 @@ name="Roles_and_Composition"
         method area {
             $!width * $!height;
         }
-    }</pre>
+        method paint() {
+            for 1..$.height {
+                say &#39;x&#39; x $.width;
+            }
+        }
+    }
+
+    Rectangle.new(width =&#62; 8, height =&#62; 3).paint;</pre>
 
 <h3><a class='u'
 name="SEE_ALSO"

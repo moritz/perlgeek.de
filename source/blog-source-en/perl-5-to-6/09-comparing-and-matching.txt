@@ -13,7 +13,7 @@ name="SYNOPSIS"
 
 <pre>    &#34;ab&#34;    eq      &#34;ab&#34;    True
     &#34;1.0&#34;   eq      &#34;1&#34;     False
-    &#34;a&#34;     ==      &#34;b&#34;     True
+    &#34;a&#34;     ==      &#34;b&#34;     failure, because &#34;a&#34; isn&#39;t numeric
     &#34;1&#34;     ==      1.0     True
     1       ===     1       True
     [1, 2]  ===     [1, 2]  False
@@ -23,7 +23,7 @@ name="SYNOPSIS"
     [1, 2]  eqv     [1, 2]  True
     1.0     eqv     1       False
 
-    &#39;abc&#39;   ~~      m/a/    True
+    &#39;abc&#39;   ~~      m/a/    Match object, True in boolean context
     &#39;abc&#39;   ~~      Str     True
     &#39;abc&#39;   ~~      Int     False
     Str     ~~      Any     True
@@ -39,13 +39,13 @@ name="DESCRIPTION"
 
 <p>Since objects are more than blessed references, a new way for comparing them is needed. <code>===</code> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
 
-<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. Two identically constructed data structures are equivalent.</p>
+<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <code>Array</code> or <code>Hash</code>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
 
 <h4><a class='u'
 name="Smart_matching"
 >Smart matching</a></h4>
 
-<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>.</p>
+<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
 <p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
 

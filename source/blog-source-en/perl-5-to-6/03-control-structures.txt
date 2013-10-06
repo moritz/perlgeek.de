@@ -35,7 +35,7 @@ name="DESCRIPTION"
 
 <p>Most Perl 5 control structures are quite similar in Perl 6. The biggest visual difference is that you don&#39;t need a pair of parenthesis after <code>if</code>, <code>while</code>, <code>for</code> etc.</p>
 
-<p>In fact you are discouraged from using parenthesis around the conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
+<p>In fact you are discouraged from using parenthesis around conditions. The reason is that any identifier followed immediately (ie. without whitespace) by an opening parenthesis is parsed as a subroutine call, so <code>if($x &#60; 3)</code> tries to call a function named <code>if</code>. While a space after the <code>if</code> fixes that, it is safer to just omit the parens.</p>
 
 <h4><a class='u'
 name="Branches"
@@ -43,7 +43,8 @@ name="Branches"
 
 <p><code>if</code> is mostly unchanged, you can still add <code>elsif</code> and <code>else</code> branches. <code>unless</code> is still there, but no <code>else</code> branch is allowed after <code>unless</code>.</p>
 
-<pre>    if $sheep == 0 {
+<pre>    my $sheep = 42;
+    if $sheep == 0 {
         say &#34;How boring&#34;;
     } elsif $sheep == 1 {
         say &#34;One lonely sheep&#34;;
@@ -75,16 +76,16 @@ name="Loops"
         say &#34;Even: $even \t Odd: $odd&#34;;
     }</pre>
 
-<p>This is also how you iterate over hashes:</p>
+<p>This is also a good way to iterate over hashes:</p>
 
 <pre>    my %h = a =&#62; 1, b =&#62; 2, c =&#62; 3;
     for %h.kv -&#62; $key, $value {
         say &#34;$key: $value&#34;;
     }</pre>
 
-<p>The C-style for-loop is now called <code>loop</code> (and the only looping construct that requires parenthesis):</p>
+<p>The C-style for-loop is now called <code>loop</code> (and the only looping construct that requires parentheses):</p>
 
-<pre>    loop (my $x = 1; $x &#60; 100; $x = $x**2) {
+<pre>    loop (my $x = 2; $x &#60; 100; $x = $x**2) {
         say $x;
     }</pre>
 

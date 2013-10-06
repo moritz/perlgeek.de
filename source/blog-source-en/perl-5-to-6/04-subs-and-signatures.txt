@@ -45,7 +45,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Subroutines are declared with the <code>sub</code> key word, and can have a list of formal parameters, just like in C, Java and most other languages. Optionally these parameters can have type constraints.</p>
+<p>Subroutines are declared with the <code>sub</code> keyword, and can have a list of formal parameters, just like in C, Java and most other languages. Optionally these parameters can have type constraints.</p>
 
 <p>Parameters are read-only by default. That can be changed with so-called &#34;traits&#34;:</p>
 
@@ -103,7 +103,12 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>In these the variable name is also used as the name of the parameter. You can use a different name, though:</p>
+<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the name results in the value being <code>True</code>, and negating it results in the value being <code>False</code>:</p>
+
+<pre>    :draw-perimeter                 # same as &#34;draw-perimeter =&#62; True&#34;
+    :!transparent                   # same as &#34;transparent =&#62; False&#34;</pre>
+
+<p>In the declaration of named parameters, the variable name is also used as the name of the parameter. You can use a different name, though:</p>
 
 <pre>    sub area(:width($w), :height($h)){
         return $w * $h;
@@ -137,7 +142,7 @@ name="Interpolation"
 
 <p>By default arrays aren&#39;t interpolated in argument lists, so unlike in Perl 5 you can write something like this:</p>
 
-<pre>    sub a($scalar1, @list, $scalar2){
+<pre>    sub a($scalar1, @list, $scalar2) {
         say $scalar2;
     }
 
@@ -149,9 +154,11 @@ name="Interpolation"
 <pre>    my @indexes = 1, 4;
     say &#34;abc&#34;.substr(@indexes)       # doesn&#39;t do what you want</pre>
 
+<p>(What actually happens is that the first argument is supposed to be an <code>Int</code>, and is coerced to an Int. Which is the same as if you had written <code>&#34;abc.&#34;substr(@indexes.end)</code> in the first place).</p>
+
 <p>You can achieve the desired behavior with a prefix <code>|</code></p>
 
-<pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde</pre>
+<pre>    say &#34;abcdefgh&#34;.substr(|@indexes) # bcde, same as &#34;abcdefgh&#34;.substr(1, 4)</pre>
 
 <h4><a class='u'
 name="Multi_Subs"
