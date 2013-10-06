@@ -1,3 +1,5 @@
+=encoding UTF-8
+
 =head1 NAME
 
 "Perl 5 to 6" Lesson 11 - Changes to Perl 5 Operators
