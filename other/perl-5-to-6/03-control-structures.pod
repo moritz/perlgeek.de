@@ -28,7 +28,7 @@ Most Perl 5 control structures are quite similar in Perl 6. The biggest visual
 difference is that you don't need a pair of parenthesis after C<if>, C<while>,
 C<for> etc.
 
-In fact you are discouraged from using parenthesis around the conditions.
+In fact you are discouraged from using parenthesis around conditions.
 The reason is that any identifier followed immediately (ie. without
 whitespace) by an opening parenthesis is parsed as a subroutine call,
 so C<if($x < 3)> tries to call a function named C<if>. While a space
@@ -39,6 +39,7 @@ after the C<if> fixes that, it is safer to just omit the parens.
 C<if> is mostly unchanged, you can still add C<elsif> and C<else> branches.
 C<unless> is still there, but no C<else> branch is allowed after C<unless>.
 
+    my $sheep = 42;
     if $sheep == 0 {
         say "How boring";
     } elsif $sheep == 1 {
@@ -72,7 +73,7 @@ You can also use more than one loop variable:
         say "Even: $even \t Odd: $odd";
     }
 
-This is also how you iterate over hashes:
+This is also a good way to iterate over hashes:
 
     my %h = a => 1, b => 2, c => 3;
     for %h.kv -> $key, $value {
@@ -80,9 +81,9 @@ This is also how you iterate over hashes:
     }
 
 The C-style for-loop is now called C<loop> (and the only looping construct
-that requires parenthesis):
+that requires parentheses):
 
-    loop (my $x = 1; $x < 100; $x = $x**2) {
+    loop (my $x = 2; $x < 100; $x = $x**2) {
         say $x;
     }
 

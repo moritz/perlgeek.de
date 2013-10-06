@@ -41,7 +41,7 @@ There are two ways to declare classes
 
 The first one begins with C<class ClassName;> and stretches to the end of the
 file. In the second one the class name is followed by a block, and all that is
-inside the blocks is considered to be the class definition.
+inside the block is considered to be the class definition.
 
     class YourClass {
         # class definition goes here
@@ -50,8 +50,8 @@ inside the blocks is considered to be the class definition.
 
 =head2 Methods
 
-Methods are declared with the C<method> key word. Inside the method you
-can use the C<self> keyword to refer to the object on which the method is
+Methods are declared with the C<method> keyword. Inside the method you
+can use the term C<self> to refer to the object on which the method is
 called (the I<invocant>).
 
 You can also give the invocant a different name by adding a first parameter to
@@ -97,7 +97,7 @@ Private methods can't be called from outside the class.
 
 =head2 Attributes
 
-Attributes are declared with the C<has> key word, and have a "twigil", that is
+Attributes are declared with the C<has> keyword, and have a "twigil", that is
 a special character after the sigil. For private attributes that's a bang C<!>,
 for public attributes it's the dot C<.>. Public attributes are just private
 attributes with a public accessor. So if you want to modify the attribute, you
@@ -182,7 +182,14 @@ conformance, roles are the primary means for code reuse in Perl 6.
         method area {
             $!width * $!height;
         }
+        method paint() {
+            for 1..$.height {
+                say 'x' x $.width;
+            }
+        }
     }
+
+    Rectangle.new(width => 8, height => 3).paint;
 
 =head1 SEE ALSO
 

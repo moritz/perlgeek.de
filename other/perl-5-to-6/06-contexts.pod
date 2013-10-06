@@ -4,10 +4,10 @@
 
 =head1 SYNOPSIS
 
-    my @a = <a b c>
+    my @a = <a b c>;
     my $x = @a;
     say $x[2];          # c
-    say (~2).WHAT       # Str()
+    say (~2).WHAT;      # (Str)
     say +@a;            # 3
     if @a < 10 { say "short array"; }
 
@@ -37,21 +37,40 @@ You can force contexts with special syntax.
     $( stuff )   Generic item context
     @( stuff )   List context
     %( stuff )   Hash context
-    @@( stuff )  Slice context
+     stuff.tree  Tree context
 
-=head2 Slice Context
+=head2 Tree Context
 
-There's also a new context called I<slice context>. It is a list context in
-which sublists don't interpolate.
+In the early days of Perl 6, there were lots of builtins of which two versions
+existed, one that returned a flat list, one that return a list of arrays.
 
-     @( <a b> Z <c d> )     # <a c b d>
-    @@( <a b> Z <c d> )     # (['a', 'c'], ['b', 'd'])
+Now this is solved by returning a list of C<Parcel> objects, where the
+C<Parcel> objects might or might not flatten out depending on the context.
 
-This was introduced after the observation that many built in list functions
-had two versions - one that returned a flat list, and one that returned a list
-of lists.
+Consider the infix C<Z> (short for I<zip>) operator, which interleaves the
+elements from two lists:
 
-You can force slice context with C<@@( stuff )>.
+    my @a = <a b c> Z <1 2 3>;
+    say @a.join;                # a1b2c3
+
+What happened here is that the right-hand side of the first statement returned
+C<('a', 1), ('b', 2), ('c', 3)>, and assignment to an array, which provides
+list context, flattened out the inner parcels. On the other hand if you write
+
+    my @t = (<a b c> Z <1 2 3>).tree;
+
+then C<@t> now contains three elements, each of which are arrays that don't
+flatten out.
+
+    for @t -> @inner {
+        say "first: @inner[0]  second: @inner[1]"
+    }
+
+Produces the output
+
+    first: a  second: 1
+    first: b  second: 2
+    first: c  second: 3
 
 =head1 MOTIVATION
 

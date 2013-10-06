@@ -36,7 +36,7 @@
 
 =head1 DESCRIPTION
 
-Subroutines are declared with the C<sub> key word, and can have a list of
+Subroutines are declared with the C<sub> keyword, and can have a list of
 formal parameters, just like in C, Java and most other languages. Optionally
 these parameters can have type constraints.
 
@@ -102,7 +102,15 @@ in the signature list:
     area(height => 3, width => 2 ); # the same
     area(:height(3), :width(2));    # the same
 
-In these the variable name is also used as the name of the parameter.
+The last example uses the so-called I<colon pair syntax>. Leaving off the name
+results in the value being C<True>, and negating it results in the value being
+C<False>:
+
+    :draw-perimeter                 # same as "draw-perimeter => True"
+    :!transparent                   # same as "transparent => False"
+
+In the declaration of named parameters, the variable name is also used as the name
+of the parameter.
 You can use a different name, though:
 
     sub area(:width($w), :height($h)){
@@ -137,7 +145,7 @@ parameter:
 By default arrays aren't interpolated in argument lists, so unlike in Perl 5
 you can write something like this:
 
-    sub a($scalar1, @list, $scalar2){
+    sub a($scalar1, @list, $scalar2) {
         say $scalar2;
     }
 
@@ -149,9 +157,13 @@ That also means that by default you can't use a list as an argument list:
     my @indexes = 1, 4;
     say "abc".substr(@indexes)       # doesn't do what you want
 
+(What actually happens is that the first argument is supposed to be an C<Int>,
+and is coerced to an Int. Which is the same as if you had written
+C<"abc."substr(@indexes.end)> in the first place).
+
 You can achieve the desired behavior with a prefix C<|>
 
-    say "abcdefgh".substr(|@indexes) # bcde
+    say "abcdefgh".substr(|@indexes) # bcde, same as "abcdefgh".substr(1, 4)
 
 =head2 Multi Subs
 

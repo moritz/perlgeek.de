@@ -4,26 +4,28 @@
 
 =head1 SYNOPSIS
 
-    # bit wise operators
+    # bitwise operators
     5   +| 3;       # 7
-    5   +^ 3        # 6
+    5   +^ 3;       # 6
     5   +& 3;       # 1
-    "b" ~| "d"      # 'f'
+    "b" ~| "d";     # 'f'
  
     # string concatenation
-    'a' ~ 'b'       # 'ab'
+    'a' ~ 'b';      # 'ab'
 
     # file tests
-    if '/etc/passwd'.IO ~~ :e { say "exists" }
+    if '/etc/passwd'.path ~~ :e { say "exists" }
 
     # repetition
-    'a' x 3         # 'aaa'
-    'a' xx 3        # 'a', 'a', 'a'
+    'a' x 3;        # 'aaa'
+    'a' xx 3;       # 'a', 'a', 'a'
 
     # ternary, conditional op
-    $a == $b ?? 2 * $a !! $b - $a
+    my ($a, $b) = 2, 2;
+    say $a == $b ?? 2 * $a !! $b - $a;
 
     # chained comparisons
+    my $angle = 1.41;
     if 0 <= $angle < 2 * pi { ... }
 
 =head1 DESCRIPTION
@@ -31,7 +33,7 @@
 All the numeric operators (C<+>, C<->, C</>, C<*>, C<**>, C<%>) remain
 unchanged.
 
-Since C<|>, C<^> and C<&> now construct junctions, the bit wise operators have
+Since C<|>, C<^> and C<&> now construct junctions, the bitwise operators have
 a changed syntax. They now contain a context prefix, so for example C<+|> is bit
 wise OR with numeric context, and C<~^> is one's complement on a string. Bit
 shift operators changed in the same way.
@@ -40,7 +42,7 @@ String concatenation is now C<~>, the dot C<.> is used for method calls.
 
 File tests are now formulated in C<Pair> notation, Perl 5 C<-e> is now
 C<:e>. If something other than C<$_> should be used as the file name, it can
-be supplied via C<$filename.IO ~~ :e>.
+be supplied via C<$filename.path ~~ :e>.
 
 The repetition operator C<x> is now split into two operators: C<x> replicates
 strings, C<xx> lists.

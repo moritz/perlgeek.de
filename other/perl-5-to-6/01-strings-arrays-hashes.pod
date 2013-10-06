@@ -69,7 +69,7 @@ Since everything is an object, you can call methods on arrays:
     my @b = @a.sort;
     @b.elems;                   # number of items
     if @b > 2 { say "yes" }     # still works
-    @b.end                      # number of last index. Replaces $#array
+    @b.end;                     # number of last index. Replaces $#array
     my @c = @b.map({$_ * 2 });  # map is also a method, yes
 
 There is a short form for the old C<qw/../> quoting construct:

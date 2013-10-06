@@ -4,6 +4,7 @@
 
 =head1 SYNOPSIS
 
+    my $x = 4;
     if $x == 3|4 {
         say '$x is either 3 or 4'
     }

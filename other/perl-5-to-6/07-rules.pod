@@ -97,17 +97,19 @@ There is another way to escape strings in regexes: with quotes.
 
     m/'a literal text: $#@!!'/
 
-The changed semantics of C<.> has already been mentioned, and that C<[...]>
-are now non-capturing groups. Char classes are C<< <[...]> >>, and negated
+The changed semantics of C<.> has already been mentioned, and also that C<[...]>
+now construct non-capturing groups. Char classes are C<< <[...]> >>, and negated
 char classes C<< <-[...]> >>. C<^> and C<$> always match begin and end of the
-string, to match begin and end of lines use C<^^> and C<$$>.
+string respectively, to match begin and end of lines use C<^^> and C<$$>.
 
 This means that the C</s> and C</m> modifiers are gone. Modifiers are now
-given at the start of a regex, and are spelled as pairs.
+given at the start of a regex, and are given in this notation:
 
     if "abc" ~~ m:i/B/ {
         say "Match";
     }
+... which happens to be the same as the I<colon pair> notation that you can
+use for passing named arguments to routines.
 
 Modifiers have a short and a long form. The old C</x> modifier is now the
 default, i.e. white spaces are ignored.
@@ -126,10 +128,10 @@ default, i.e. white spaces are ignored.
     :ex     :exhaustive     Match in all possible ways
             :ratchet        Don't backtrack
 
-The C<:sigspace> needs a bit more explanation. It replace all whitespace in
+The C<:sigspace> needs a bit more explanation. It replaces all whitespace in
 the pattern with C<< <.ws> >> (that is it calls the rule C<ws> without keeping
 its result). You can override that rule. By default it matches one or more
-white spaces if it's enclosed in word characters, and zero or more otherwise.
+whitespaces if it's enclosed in word characters, and zero or more otherwise.
 
 (There are more new modifiers, but probably not as important as the listed
 ones).
@@ -141,7 +143,7 @@ variable C<$/>. It is a versatile thing. In boolean context it returns
 C<Bool::True> if the match succeeded. In string context it returns the matched
 string, when used as a list it contains the positional captures, and when used
 as a hash it contains the named captures. The C<.from> and C<.to> methods
-contains the first and last string positions of the match.
+contain the first and last string positions of the match.
 
     if 'abcdefg' ~~ m/(.(.)) (e | bla ) $<foo> = (.) / {
         say $/[0][0];           # d
@@ -153,7 +155,7 @@ contains the first and last string positions of the match.
 C<$0>, C<$1> etc are just aliases for C<$/[0]>, C<$/[1]> etc. Likewise
 C<< $/<x> >> and C<$/{'x'}> are aliased to C<< $<x> >>.
 
-Note that anything that you access via C<$/[...]> and C<$/{...}> is a match
+Note that anything you access via C<$/[...]> and C<$/{...}> is a match
 object (or a list of Match objects) again. This allows you to build real
 parse trees with rules.
 

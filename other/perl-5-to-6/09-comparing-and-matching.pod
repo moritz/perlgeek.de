@@ -6,7 +6,7 @@
 
     "ab"    eq      "ab"    True
     "1.0"   eq      "1"     False
-    "a"     ==      "b"     True
+    "a"     ==      "b"     failure, because "a" isn't numeric
     "1"     ==      1.0     True
     1       ===     1       True
     [1, 2]  ===     [1, 2]  False
@@ -16,7 +16,7 @@
     [1, 2]  eqv     [1, 2]  True
     1.0     eqv     1       False
 
-    'abc'   ~~      m/a/    True
+    'abc'   ~~      m/a/    Match object, True in boolean context
     'abc'   ~~      Str     True
     'abc'   ~~      Int     False
     Str     ~~      Any     True
@@ -38,13 +38,15 @@ only returns C<True> if both variables refer to the same object (like
 comparing memory addresses in C++).
 
 C<eqv> tests if two things are equivalent, ie if they are of the same type and
-have the same value. Two identically constructed data structures are
+have the same value. In the case of containers (like C<Array> or C<Hash>), the
+contents are compared with C<eqv>. Two identically constructed data structures are
 equivalent.
 
 =head2 Smart matching
 
 Perl 6 has a "compare everything" operator, called "smart match" operator, and
-spelled C<~~>.
+spelled C<~~>. It is asymmetrical, and generally the type of the right operand
+determines the kind of comparison that is made.
 
 For immutable types it is a simple equality comparison. A smart match against
 a type object checks for type conformance. A smart match against a regex matches the
