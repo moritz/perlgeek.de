@@ -27,7 +27,7 @@
 =head1 DESCRIPTION
 
 Most Perl 5 control structures are quite similar in Perl 6. The biggest visual
-difference is that you don't need a pair of parenthesis after C<if>, C<while>,
+difference is that you don't need a pair of parentheses after C<if>, C<while>,
 C<for> etc.
 
 In fact you are discouraged from using parenthesis around conditions.

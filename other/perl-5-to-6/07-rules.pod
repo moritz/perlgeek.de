@@ -110,6 +110,7 @@ given at the start of a regex, and are given in this notation:
     if "abc" ~~ m:i/B/ {
         say "Match";
     }
+
 ... which happens to be the same as the I<colon pair> notation that you can
 use for passing named arguments to routines.
 
@@ -145,7 +146,7 @@ variable C<$/>. It is a versatile thing. In boolean context it returns
 C<Bool::True> if the match succeeded. In string context it returns the matched
 string, when used as a list it contains the positional captures, and when used
 as a hash it contains the named captures. The C<.from> and C<.to> methods
-contain the first and last string positions of the match.
+contain the first and last string position of the match respectively.
 
     if 'abcdefg' ~~ m/(.(.)) (e | bla ) $<foo> = (.) / {
         say $/[0][0];           # d

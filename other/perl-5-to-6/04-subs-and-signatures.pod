@@ -161,7 +161,7 @@ That also means that by default you can't use a list as an argument list:
 
 (What actually happens is that the first argument is supposed to be an C<Int>,
 and is coerced to an Int. Which is the same as if you had written
-C<"abc."substr(@indexes.end)> in the first place).
+C<"abc."substr(@indexes.elems)> in the first place).
 
 You can achieve the desired behavior with a prefix C<|>
 
@@ -186,8 +186,8 @@ can also differ in the type of the parameters:
     multi sub frob(Str $s) { say "Frobbing String $s"  }
     multi sub frob(Int $i) { say "Frobbing Integer $i" }
 
-    frob("x")       # Frobbing String x
-    frob(2)         # Frobbing Integer 2
+    frob("x");      # Frobbing String x
+    frob(2);        # Frobbing Integer 2
 
 =head1 MOTIVATION
 
