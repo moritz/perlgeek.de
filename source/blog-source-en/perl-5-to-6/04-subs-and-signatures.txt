@@ -154,7 +154,7 @@ name="Interpolation"
 <pre>    my @indexes = 1, 4;
     say &#34;abc&#34;.substr(@indexes)       # doesn&#39;t do what you want</pre>
 
-<p>(What actually happens is that the first argument is supposed to be an <code>Int</code>, and is coerced to an Int. Which is the same as if you had written <code>&#34;abc.&#34;substr(@indexes.end)</code> in the first place).</p>
+<p>(What actually happens is that the first argument is supposed to be an <code>Int</code>, and is coerced to an Int. Which is the same as if you had written <code>&#34;abc.&#34;substr(@indexes.elems)</code> in the first place).</p>
 
 <p>You can achieve the desired behavior with a prefix <code>|</code></p>
 
@@ -178,8 +178,8 @@ name="Multi_Subs"
 <pre>    multi sub frob(Str $s) { say &#34;Frobbing String $s&#34;  }
     multi sub frob(Int $i) { say &#34;Frobbing Integer $i&#34; }
 
-    frob(&#34;x&#34;)       # Frobbing String x
-    frob(2)         # Frobbing Integer 2</pre>
+    frob(&#34;x&#34;);      # Frobbing String x
+    frob(2);        # Frobbing Integer 2</pre>
 
 <h3><a class='u'
 name="MOTIVATION"

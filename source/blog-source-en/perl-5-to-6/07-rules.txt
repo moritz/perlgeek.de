@@ -100,9 +100,9 @@ name="Syntax_clean_up"
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
         say &#34;Match&#34;;
-    }
-... which happens to be the same as the I&#60;colon pair&#62; notation that you can
-use for passing named arguments to routines.</pre>
+    }</pre>
+
+<p>... which happens to be the same as the <i>colon pair</i> notation that you can use for passing named arguments to routines.</p>
 
 <p>Modifiers have a short and a long form. The old <code>/x</code> modifier is now the default, i.e. white spaces are ignored.</p>
 
@@ -128,7 +128,7 @@ use for passing named arguments to routines.</pre>
 name="The_Match_Object"
 >The Match Object</a></h4>
 
-<p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contain the first and last string positions of the match.</p>
+<p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contain the first and last string position of the match respectively.</p>
 
 <pre>    if &#39;abcdefg&#39; ~~ m/(.(.)) (e | bla ) $&#60;foo&#62; = (.) / {
         say $/[0][0];           # d
