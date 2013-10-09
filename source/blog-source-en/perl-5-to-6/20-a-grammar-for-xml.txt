@@ -29,7 +29,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
+<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
 
 <p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo/" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo/</a> to obtain and build Rakudo, and try it out yourself.</p>
@@ -136,7 +136,7 @@ name="Developing_the_grammar"
 
 <p>And low and behold, the first two tests both pass.</p>
 
-<p>The third test, <code>.&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary XML, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
+<p>The third test, <code>..&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary XML, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
 
 <pre>    token tag   {
         &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
@@ -152,7 +152,7 @@ name="Developing_the_grammar"
     not ok 5 - &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
     (rest unchanged)</pre>
 
-<p>We can now focus attributes (the <code>href=&#34;foo&#34;</code> stuff):</p>
+<p>We can now focus on attributes (the <code>href=&#34;foo&#34;</code> stuff):</p>
 
 <pre>    token tag   {
         &#39;&#60;&#39; (\w+) &#60;attribute&#62;* &#39;&#62;&#39;

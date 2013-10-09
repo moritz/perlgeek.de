@@ -86,16 +86,16 @@ name="Alternations"
 <p>There are other ways to write alternations, for example if you &#34;interpolate&#34; an array, it will match as an alternation of its values:</p>
 
 <pre>    $_ = &#39;12 oranges&#39;;
-    my @fruits = &#60;apple organge banana kiwi&#62;;
+    my @fruits = &#60;apple orange banana kiwi&#62;;
     if m:i:s/ (\d+) (@fruits)s? / {
-        say &#34;You&#39;ve got $0 $1, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
+        say &#34;You&#39;ve got $0 $1s, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
     }</pre>
 
 <p>There is yet another construct that automatically matches the longest alternation: multi regexes. They can be either written as <code>multi token name</code> or with a <code>proto</code>:</p>
 
 <pre>    grammar Perl {
         ...
-        proto token sigil { ... }
+        proto token sigil { * }
         token sigil:sym&#60;$&#62; { &#60;sym&#62; }
         token sigil:sym&#60;@&#62; { &#60;sym&#62; }
         token sigil:sym&#60;%&#62; { &#60;sym&#62; }

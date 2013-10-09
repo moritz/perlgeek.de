@@ -30,9 +30,9 @@ name="DESCRIPTION"
     # Even can now be used like every other type name
 
     my Even $x = 2;
-    my Even $y = 3; # type missmatch error</pre>
+    my Even $y = 3; # type mismatch error</pre>
 
-<p>(Try it out, Rakudo implements subset types already, but not yet mulit dispatch based on subset types).</p>
+<p>(Try it out, Rakudo implements subset types).</p>
 
 <p>You can also use anonymous subtypes in signatures:</p>
 
@@ -44,8 +44,8 @@ name="DESCRIPTION"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Allowing arbitrary type constraints in the form of code allows ultimate extensibility: if you don&#39;t the current type system, you can just roll your own based on subset types.</p>
+<p>Allowing arbitrary type constraints in the form of code allows ultimate extensibility: if you don&#39;t like the current type system, you can just roll your own based on subset types.</p>
 
-<p>It also makes libraries easier to extend: instead of dying on data that can&#39;t be handled, the subs and methods can simple declare their types in a way that &#34;bad&#34; data is rejected by the multi dispatcher. If somebody wants to handle data that the previous implementation rejected as &#34;bad&#34;, he can simple add a multi sub with the same name that accepts the data. For example a math library that handles real numbers could be enhanced this way to also handle complex numbers.</p>
+<p>It also makes libraries easier to extend: instead of dying on data that can&#39;t be handled, the subs and methods can simply declare their types in a way that &#34;bad&#34; data is rejected by the multi dispatcher. If somebody wants to handle data that the previous implementation rejected as &#34;bad&#34;, he can simple add a multi sub with the same name that accepts the data. For example a math library that handles real numbers could be enhanced this way to also handle complex numbers.</p>
 
 [% option no-header %] [% option no-footer %]

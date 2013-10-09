@@ -2214,16 +2214,16 @@ name="Alternations"
 <p>There are other ways to write alternations, for example if you &#34;interpolate&#34; an array, it will match as an alternation of its values:</p>
 
 <pre>    $_ = &#39;12 oranges&#39;;
-    my @fruits = &#60;apple organge banana kiwi&#62;;
+    my @fruits = &#60;apple orange banana kiwi&#62;;
     if m:i:s/ (\d+) (@fruits)s? / {
-        say &#34;You&#39;ve got $0 $1, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
+        say &#34;You&#39;ve got $0 $1s, I&#39;ve got { $0 + 2 } of them. You lost.&#34;;
     }</pre>
 
 <p>There is yet another construct that automatically matches the longest alternation: multi regexes. They can be either written as <code>multi token name</code> or with a <code>proto</code>:</p>
 
 <pre>    grammar Perl {
         ...
-        proto token sigil { ... }
+        proto token sigil { * }
         token sigil:sym&#60;$&#62; { &#60;sym&#62; }
         token sigil:sym&#60;@&#62; { &#60;sym&#62; }
         token sigil:sym&#60;%&#62; { &#60;sym&#62; }
@@ -2281,7 +2281,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows you the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
+<p>So far the focus of these articles has been the Perl 6 language, independently of what has been implemented so far. To show you that it&#39;s not a purely fantasy language, and to demonstrate the power of grammars, this lesson shows the development of a grammar that parses basic XML, and that runs with Rakudo.</p>
 
 <p>Please follow the instructions on <a href="http://rakudo.org/how-to-get-rakudo/" class="podlinkurl"
 >http://rakudo.org/how-to-get-rakudo/</a> to obtain and build Rakudo, and try it out yourself.</p>
@@ -2388,7 +2388,7 @@ name="Developing_the_grammar"
 
 <p>And low and behold, the first two tests both pass.</p>
 
-<p>The third test, <code>.&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary XML, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
+<p>The third test, <code>..&#60;ab&#62;foo&#60;/ab&#62;dd</code>, has text between opening and closing tag, so we have to allow that next. But not only text is allowed between tags, but arbitrary XML, so let&#39;s just call <code>&#60;xml&#62;</code> there:</p>
 
 <pre>    token tag   {
         &#39;&#60;&#39; (\w+) &#39;&#62;&#39;
@@ -2404,7 +2404,7 @@ name="Developing_the_grammar"
     not ok 5 - &#39;&#60;a href=&#34;foo&#34;&#62;&#60;b&#62;c&#60;/b&#62;&#60;/a&#62;&#39;
     (rest unchanged)</pre>
 
-<p>We can now focus attributes (the <code>href=&#34;foo&#34;</code> stuff):</p>
+<p>We can now focus on attributes (the <code>href=&#34;foo&#34;</code> stuff):</p>
 
 <pre>    token tag   {
         &#39;&#60;&#39; (\w+) &#60;attribute&#62;* &#39;&#62;&#39;
@@ -2524,9 +2524,9 @@ name="DESCRIPTION"
     # Even can now be used like every other type name
 
     my Even $x = 2;
-    my Even $y = 3; # type missmatch error</pre>
+    my Even $y = 3; # type mismatch error</pre>
 
-<p>(Try it out, Rakudo implements subset types already, but not yet mulit dispatch based on subset types).</p>
+<p>(Try it out, Rakudo implements subset types).</p>
 
 <p>You can also use anonymous subtypes in signatures:</p>
 
@@ -2538,9 +2538,9 @@ name="DESCRIPTION"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Allowing arbitrary type constraints in the form of code allows ultimate extensibility: if you don&#39;t the current type system, you can just roll your own based on subset types.</p>
+<p>Allowing arbitrary type constraints in the form of code allows ultimate extensibility: if you don&#39;t like the current type system, you can just roll your own based on subset types.</p>
 
-<p>It also makes libraries easier to extend: instead of dying on data that can&#39;t be handled, the subs and methods can simple declare their types in a way that &#34;bad&#34; data is rejected by the multi dispatcher. If somebody wants to handle data that the previous implementation rejected as &#34;bad&#34;, he can simple add a multi sub with the same name that accepts the data. For example a math library that handles real numbers could be enhanced this way to also handle complex numbers.</p>
+<p>It also makes libraries easier to extend: instead of dying on data that can&#39;t be handled, the subs and methods can simply declare their types in a way that &#34;bad&#34; data is rejected by the multi dispatcher. If somebody wants to handle data that the previous implementation rejected as &#34;bad&#34;, he can simple add a multi sub with the same name that accepts the data. For example a math library that handles real numbers could be enhanced this way to also handle complex numbers.</p>
 
 
 <h2 id="post_22">The State of the implementations</h2>
@@ -2565,7 +2565,7 @@ name="DESCRIPTION"
 <p><b>Note:</b> This lesson is long outdated, and preserved for historical interest only. The best way to stay informed about various Perl 6 compilers is to follow the blogs at <a href="http://planetsix.perl.org/" class="podlinkurl"
 >http://planetsix.perl.org/</a>.</p>
 
-<p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
+<p>Perl 6 is a language specification, and multiple compilers are being written that aim to implement Perl 6, and partially they already do.</p>
 
 <h4><a class='u'
 name="Pugs"
@@ -2634,7 +2634,7 @@ name="v6.pm"
 name="SMOP"
 >SMOP</a></h4>
 
-<p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implements it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
+<p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implementations it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
 
 <p>It is implemented in C and various domain specific languages. It was designed and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and Pawe&#322; Murias (implementation, DSLs). A grant from The Perl Foundation supports its development, and it currently approaches the stage where one could begin to emit code for it from another compiler.</p>
 

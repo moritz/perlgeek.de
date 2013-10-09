@@ -20,7 +20,7 @@ name="DESCRIPTION"
 <p><b>Note:</b> This lesson is long outdated, and preserved for historical interest only. The best way to stay informed about various Perl 6 compilers is to follow the blogs at <a href="http://planetsix.perl.org/" class="podlinkurl"
 >http://planetsix.perl.org/</a>.</p>
 
-<p>Perl 6 is a language specification, and there are multiple compilers being written that aim to implement Perl 6, and partially they already do.</p>
+<p>Perl 6 is a language specification, and multiple compilers are being written that aim to implement Perl 6, and partially they already do.</p>
 
 <h4><a class='u'
 name="Pugs"
@@ -89,7 +89,7 @@ name="v6.pm"
 name="SMOP"
 >SMOP</a></h4>
 
-<p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implements it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
+<p>Smop stands for <i>Simple Meta Object Programming</i> and doesn&#39;t plan to implement all of Perl 6, it is designed as a backend (a little bit like parrot, but very different in both design and feature set). Unlike the other implementations it aims explicitly at implementing Perl 6&#39;s powerful meta object programming facilities, ie the ability to plug in different object systems.</p>
 
 <p>It is implemented in C and various domain specific languages. It was designed and implemented by Daniel Ruoso, with help from Yuval Kogman (design) and Pawe&#322; Murias (implementation, DSLs). A grant from The Perl Foundation supports its development, and it currently approaches the stage where one could begin to emit code for it from another compiler.</p>
 
