@@ -25,7 +25,7 @@
 So far the focus of these articles has been the Perl 6 language, independently
 of what has been implemented so far. To show you that it's not a purely
 fantasy language, and to demonstrate the power of grammars, this lesson shows
-you the development of a grammar that parses basic XML, and that runs with
+the development of a grammar that parses basic XML, and that runs with
 Rakudo.
 
 Please follow the instructions on L<http://rakudo.org/how-to-get-rakudo/> to
@@ -142,7 +142,7 @@ combinations of both of them:
 
 And low and behold, the first two tests both pass.
 
-The third test, C<< .<ab>foo</ab>dd >>, has text between opening and closing
+The third test, C<< ..<ab>foo</ab>dd >>, has text between opening and closing
 tag, so we have to allow that next. But not only text is allowed between tags,
 but arbitrary XML, so let's just call C<< <xml> >> there:
 
@@ -160,7 +160,7 @@ but arbitrary XML, so let's just call C<< <xml> >> there:
     not ok 5 - '<a href="foo"><b>c</b></a>'
     (rest unchanged)
 
-We can now focus attributes (the C<href="foo"> stuff):
+We can now focus on attributes (the C<href="foo"> stuff):
 
     token tag   {
         '<' (\w+) <attribute>* '>'

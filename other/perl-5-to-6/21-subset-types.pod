@@ -30,10 +30,9 @@ general one, and is called a I<subset> type:
     # Even can now be used like every other type name
 
     my Even $x = 2;
-    my Even $y = 3; # type missmatch error
+    my Even $y = 3; # type mismatch error
 
-(Try it out, Rakudo implements subset types already, but not yet mulit
-dispatch based on subset types).
+(Try it out, Rakudo implements subset types).
 
 You can also use anonymous subtypes in signatures:
 
@@ -44,11 +43,11 @@ You can also use anonymous subtypes in signatures:
 =head1 MOTIVATION
 
 Allowing arbitrary type constraints in the form of code allows ultimate
-extensibility: if you don't the current type system, you can just roll your
+extensibility: if you don't like the current type system, you can just roll your
 own based on subset types.
 
 It also makes libraries easier to extend: instead of dying on data that can't
-be handled, the subs and methods can simple declare their types in a way that
+be handled, the subs and methods can simply declare their types in a way that
 "bad" data is rejected by the multi dispatcher. If somebody wants to handle
 data that the previous implementation rejected as "bad", he can simple add a
 multi sub with the same name that accepts the data. For example a math library

@@ -100,9 +100,9 @@ There are other ways to write alternations, for example if you "interpolate"
 an array, it will match as an alternation of its values:
 
     $_ = '12 oranges';
-    my @fruits = <apple organge banana kiwi>;
+    my @fruits = <apple orange banana kiwi>;
     if m:i:s/ (\d+) (@fruits)s? / {
-        say "You've got $0 $1, I've got { $0 + 2 } of them. You lost.";
+        say "You've got $0 $1s, I've got { $0 + 2 } of them. You lost.";
     }
 
 There is yet another construct that automatically matches the longest
@@ -111,7 +111,7 @@ C<multi token name> or with a C<proto>:
 
     grammar Perl {
         ...
-        proto token sigil { ... }
+        proto token sigil { * }
         token sigil:sym<$> { <sym> }
         token sigil:sym<@> { <sym> }
         token sigil:sym<%> { <sym> }

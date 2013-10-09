@@ -14,7 +14,7 @@ B<Note:> This lesson is long outdated, and preserved for historical interest
 only. The best way to stay informed about various Perl 6 compilers is to
 follow the blogs at L<http://planetsix.perl.org/>.
 
-Perl 6 is a language specification, and there are multiple compilers being
+Perl 6 is a language specification, and multiple compilers are being
 written that aim to implement Perl 6, and partially they already do.
 
 =head2 Pugs
@@ -106,7 +106,7 @@ C<perl5/*/>.
 Smop stands for I<Simple Meta Object Programming> and doesn't plan to
 implement all of Perl 6, it is designed as a backend (a little bit like
 parrot, but very different in both design and feature set). Unlike the other
-implements it aims explicitly at implementing Perl 6's powerful meta object
+implementations it aims explicitly at implementing Perl 6's powerful meta object
 programming facilities, ie the ability to plug in different object systems.
 
 It is implemented in C and various domain specific languages. It was designed
