@@ -165,8 +165,8 @@ loop that increments the cursor position (<code>$looplabel</code>), one for doin
 that position (<code>$scanlabel</code>), and <code>$donelabel</code> for
 jumping to when the whole thing has finished.</p>
 
-<p>Inside the loop the there is an increment (inc) of the register the holds
-the current position (<code>%*REG&lt;cur&gt;</code>), that position is
+<p>Inside the loop there is an increment (inc) of the register the holds
+the current position (<code>%*REG&lt;pos&gt;</code>), that position is
 compared to the end-of-string position (<code>%*REG&lt;eos&gt;</code>), and if
 is larger, the cursor is marked as failed.</p>
 
