@@ -225,5 +225,12 @@ information to fail faster.</p>
 possible in a single evening without any black magic, or too intimate
 knowledge of the code generation.</p>
 
+<p><strong>Update:</strong> the code generation for MoarVM <a
+href="https://github.com/perl6/nqp/commit/8dacbf60a5457577e44f7ae9a137111d14c3eaca">now
+also uses the index op</a>. The logic is the same as for the parrot backend,
+the only difference is that the literal needs to be loaded into a register
+(whose name <code>fresh_s</code> returns) before <code>index_s</code> can use
+it.</p>
+
 [% option no-header %] [% option no-footer %]
 [% comment vim: set ft=html: %]
