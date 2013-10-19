@@ -1,0 +1,229 @@
+A small regex optimization for NQP and Rakudo
+<!-- 1382167372 -->
+
+<p>Recently I read the <a
+href="https://github.com/edumentab/rakudo-and-nqp-internals-course">course
+material</a> of the <a
+href="http://6guts.wordpress.com/2013/09/17/material-from-the-rakudo-and-nqp-internals-course/">Rakudo
+and NQP Internals Workshop</a>, and had an idea for a small optimization for
+the regex engine. Yesterday night I implemented it, and I'd like to walk you
+through the process.</p>
+
+<p>As a bit of background, the regex engine that Rakudo uses is actually
+implemented in NQP, and used by NQP too. The code I am about to discuss all
+lives in the NQP repository, but Rakudo profits from it too.</p>
+
+<p>In addition one should note that the regex engine is mostly used for
+parsing grammar, a process which involves nearly no scanning. Scanning is the
+process where the regex engine first tries to match the regex at the start of
+the string, and if it fails there, moves to the second character in the
+string, tries again etc. until it succeeds.</p>
+
+<p>But regexes that users write often involve scanning, and so my idea was to
+speed up regexes that scan, and where the first thing in the regex is a
+literal. In this case it makes sense to find possible start positions with a
+fast string search algorithm, for example the
+<a href="http://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string_search_algorithm">Boyer-Moore
+algorithm</a>. The virtual machine backends for NQP already implement that as
+the <code>index</code> opcode, which can be invoked as <code>start = index
+    haystack, needle, startpos</code>, where the string <code>haystack</code>
+is searched for the substring <code>needle</code>, starting from position
+<code>startpos</code>.</p>
+
+<p>From reading the course material I knew I had to search for a regex type
+called <code>scan</code>, so that's what I did:</p>
+
+<pre>[% syntax escape %]
+$ git grep --word scan
+3rdparty/libtommath/bn_error.c:   /* scan the lookup table for the given message
+3rdparty/libtommath/bn_mp_cnt_lsb.c:   /* scan lower digits until non-zero */
+3rdparty/libtommath/bn_mp_cnt_lsb.c:   /* now scan this digit until a 1 is found
+3rdparty/libtommath/bn_mp_prime_next_prime.c:                   /* scan upwards 
+3rdparty/libtommath/changes.txt:       -- Started the Depends framework, wrote d
+src/QRegex/P5Regex/Actions.nqp:                     QAST::Regex.new( :rxtype<sca
+src/QRegex/P6Regex/Actions.nqp:                     QAST::Regex.new( :rxtype<sca
+src/vm/jvm/QAST/Compiler.nqp:    method scan($node) {
+src/vm/moar/QAST/QASTRegexCompilerMAST.nqp:    method scan($node) {
+Binary file src/vm/moar/stage0/NQPP6QRegexMoar.moarvm matches
+Binary file src/vm/moar/stage0/QASTMoar.moarvm matches
+src/vm/parrot/QAST/Compiler.nqp:    method scan($node) {
+src/vm/parrot/stage0/P6QRegex-s0.pir:    $P5025 = $P5024."new"("scan" :named("rx
+src/vm/parrot/stage0/QAST-s0.pir:.sub "scan" :subid("cuid_135_1381944260.6802") 
+src/vm/parrot/stage0/QAST-s0.pir:    push $P5004, "scan"
+[% endsyntax %]</pre>
+
+<p>The binary files and .pir files are generated code included just for
+bootstrapping, and not interesting for us. The files in
+<code>3rdparty/libtommath</code> are there for bigint handling, thus not
+interesting for us either. The rest are good matches:
+<code>src/QRegex/P6Regex/Actions.nqp</code> is responsible for compiling Perl
+6 regexes to an abstract syntax tree (AST), and
+<code>src/vm/parrot/QAST/Compiler.nqp</code> compiles that AST down to PIR,
+the assembly language that the Parrot Virtual Machine understands.</p>
+
+<p>So, looking at <code>src/QRegex/P6Regex/Actions.nqp</code> the place that
+mentions <code>scan</code> looked like this:</p>
+
+<pre>[% syntax perl6 %]
+    $block<orig_qast> := $qast;
+    $qast := QAST::Regex.new( :rxtype<concat>,
+                 QAST::Regex.new( :rxtype<scan> ),
+                 $qast,
+                 ($anon
+                      ?? QAST::Regex.new( :rxtype<pass> )
+                      !! (nqp::substr(%*RX<name>, 0, 12) ne '!!LATENAME!!'
+                            ?? QAST::Regex.new( :rxtype<pass>, :name(%*RX<name>) )
+                            !! QAST::Regex.new( :rxtype<pass>,
+                                   QAST::Var.new(
+                                       :name(nqp::substr(%*RX<name>, 12)),
+                                       :scope('lexical')
+                                   ) 
+                               )
+                          )));
+[% endsyntax %]</pre>
+
+<p>So to make the regex scan, the AST (in <code>$qast</code>) is wrapped in
+<code>QAST::Regex.new(:rxtype&lt;concat&gt;,QAST::Regex.new(
+:rxtype&lt;scan&gt; ), $qast, ...)</code>, plus some stuff I don't care
+about.</p>
+
+<p>To make the optimization work, the <code>scan</code> node needs to know
+what to scan for, if the first thing in the regex is indeed a constant string,
+aka literal. If it is, <code>$qast</code> is either directly of rxtype
+<code>literal</code>, or a <code>concat</code> node where the first child is a
+literal. As a patch, it looks like this:</p>
+
+<pre>[% syntax diff %]
+--- a/src/QRegex/P6Regex/Actions.nqp
++++ b/src/QRegex/P6Regex/Actions.nqp
+@@ -667,9 +667,21 @@ class QRegex::P6Regex::Actions is HLL::Actions {
+     self.store_regex_nfa($code_obj, $block, QRegex::NFA.new.addnode($qast))
+     self.alt_nfas($code_obj, $block, $qast);
+ 
++    my $scan := QAST::Regex.new( :rxtype<scan> );
++    {
++        my $q := $qast;
++        if $q.rxtype eq 'concat' && $q[0] {
++            $q := $q[0]
++        }
++        if $q.rxtype eq 'literal' {
++            nqp::push($scan, $q[0]);
++            $scan.subtype($q.subtype);
++        }
++    }
++
+     $block<orig_qast> := $qast;
+     $qast := QAST::Regex.new( :rxtype<concat>,
+-                 QAST::Regex.new( :rxtype<scan> ),
++                 $scan,
+                  $qast,
+[% endsyntax %]</pre>
+
+<p>Since <code>concat</code> nodes have always been empty so far, the code
+generators don't look at their child nodes, and adding one with
+<code>nqp::push($scan, $q[0]);</code> won't break anything on backends that
+don't support this optimization yet (which after just this patch were all of
+them). Running <code>make test</code> confirmed that.</p>
+
+<p>My original patch did not contain the line
+<code>$scan.subtype($q.subtype);</code>, and later on some unit tests started
+to fail, because regex matches can be case insensitive, but the
+<code>index</code> op works only case sensitive. For case insensitive matches,
+the <code>$q.subtype</code> of the literal regex node would be
+<code>ignorecase</code>, so that information needs to be carried on to the
+code generation backend.</p>
+
+<p>Once that part was in place, and some debug <code>nqp::say()</code>
+statements confirmed that it worked indeed, it was time to look at the code
+generation. For the parrot backend, it looked like this:</p>
+
+<pre>[% syntax perl6 %]
+    method scan($node) {
+        my $ops := self.post_new('Ops', :result(%*REG<cur>));
+        my $prefix := self.unique('rxscan');
+        my $looplabel := self.post_new('Label', :name($prefix ~ '_loop'));
+        my $scanlabel := self.post_new('Label', :name($prefix ~ '_scan'));
+        my $donelabel := self.post_new('Label', :name($prefix ~ '_done'));
+        $ops.push_pirop('repr_get_attr_int', '$I11', 'self', %*REG<curclass>, '"$!from"');
+        $ops.push_pirop('ne', '$I11', -1, $donelabel);
+        $ops.push_pirop('goto', $scanlabel);
+        $ops.push($looplabel);
+        $ops.push_pirop('inc', %*REG<pos>);
+        $ops.push_pirop('gt', %*REG<pos>, %*REG<eos>, %*REG<fail>);
+        $ops.push_pirop('repr_bind_attr_int', %*REG<cur>, %*REG<curclass>, '"$!from"', %*REG<pos>);
+        $ops.push($scanlabel);
+        self.regex_mark($ops, $looplabel, %*REG<pos>, 0);
+        $ops.push($donelabel);
+        $ops;
+    }
+[% endsyntax %]</pre>
+
+<p>While a bit intimidating at first, staring at it for a while quickly made
+clear what kind of code it emits. First three labels are generated, to which
+the code can jump with <code>goto $label</code>: One as a jump target for the
+loop that increments the cursor position (<code>$looplabel</code>), one for doing the regex match at
+that position (<code>$scanlabel</code>), and <code>$donelabel</code> for
+jumping to when the whole thing has finished.</p>
+
+<p>Inside the loop the there is an increment (inc) of the register the holds
+the current position (<code>%*REG&lt;cur&gt;</code>), that position is
+compared to the end-of-string position (<code>%*REG&lt;eos&gt;</code>), and if
+is larger, the cursor is marked as failed.</p>
+
+<p>So the idea is to advance the position by one, and then instead of doing
+the regex match immediately, call the <code>index</code> op to find the next
+position where the regex might succeed:</p>
+
+<pre>[% syntax diff %]
+--- a/src/vm/parrot/QAST/Compiler.nqp
++++ b/src/vm/parrot/QAST/Compiler.nqp
+@@ -1564,7 +1564,13 @@ class QAST::Compiler is HLL::Compiler {
+         $ops.push_pirop('goto', $scanlabel);
+         $ops.push($looplabel);
+         $ops.push_pirop('inc', %*REG<pos>);
+-        $ops.push_pirop('gt', %*REG<pos>, %*REG<eos>, %*REG<fail>);
++        if nqp::elems($node.list) && $node.subtype ne 'ignorecase' {
++            $ops.push_pirop('index', %*REG<pos>, %*REG<tgt>, self.rxescape($node[0]), %*REG<pos>);
++            $ops.push_pirop('eq', %*REG<pos>, -1, %*REG<fail>);
++        }
++        else {
++            $ops.push_pirop('gt', %*REG<pos>, %*REG<eos>, %*REG<fail>);
++        }
+         $ops.push_pirop('repr_bind_attr_int', %*REG<cur>, %*REG<curclass>, '"$!from"', %*REG<pos>);
+         $ops.push($scanlabel);
+         self.regex_mark($ops, $looplabel, %*REG<pos>, 0);
+[% endsyntax %]</pre>
+
+<p>The <code>index</code> op returns -1 on failure, so the condition for a
+cursor fail are slightly different than before.</p>
+
+<p>And as mentioned earlier, the optimization can only be safely done for
+matches that don't ignore case. Maybe with some additional effort that could
+be remedied, but it's not as simple as case-folding the target string, because some
+case folding operations can change the string length (for example ß becomes SS
+while uppercasing).</p>
+
+<p>After successfully testing the patch, I came up with a <a
+href="https://gist.github.com/moritz/7047280">small, artifical
+benchmark</a> designed to show a difference in performance for this particular
+case. And indeed, it sped it up from 647 ± 28 µs to 161 ± 18 µs, which is
+roughly a factor of four.</p>
+
+<p>You can see the whole thing as <a
+href="https://github.com/perl6/nqp/commit/71c142a34f2fcac2383f5ff05a683ff6222c8b36">two</a>
+<a href="https://github.com/perl6/nqp/commit/b8a7bbba70516d73cb068fe583366ed24c53c6cf">commits</a>
+on github.</p>
+
+<p>What remains to do is implementing the same optimization on the JVM and MoarVM
+backends, and of course other optimizations. For example the Perl 5 regex
+engine keeps track of minimal and maximal string lengths for each subregex,
+and can anchor a regex like <code>/a?b?longliteral/</code> to 0..2 characters
+before a match of <code>longliteral</code>, and generally use that meta
+information to fail faster.</p>
+
+<p>But for now I am mostly encouraged that doing a worthwhile optimization was
+possible in a single evening without any black magic, or too intimate
+knowledge of the code generation.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html: %]
