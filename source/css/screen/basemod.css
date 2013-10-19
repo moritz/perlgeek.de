@@ -29,8 +29,7 @@
 
     /*  Layout: width, background, borders */
     #page_margins {
-/*        min-width: 740px; */
-        max-width: 65em;
+        max-width: 75em;
         margin: 0 auto;
         border: 0px #889 solid;
     }
