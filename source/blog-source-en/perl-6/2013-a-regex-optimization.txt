@@ -134,7 +134,7 @@ the <code>$q.subtype</code> of the literal regex node would be
 code generation backend.</p>
 
 <p>Once that part was in place, and some debug <code>nqp::say()</code>
-statements confirmed that it worked indeed, it was time to look at the code
+statements confirmed that it indeed worked, it was time to look at the code
 generation. For the parrot backend, it looked like this:</p>
 
 <pre>[% syntax perl6 %]
