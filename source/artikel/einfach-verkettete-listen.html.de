@@ -190,6 +190,25 @@ das folgende:</p>
 ist oder das nächste Element größer als das
 einzufügende ist, und füge dann das Element davor ein.</p>
 
+<h2 id="suche">Suche</h2>
+
+<p>Um ein Element in der Liste zu suchen, hangelt man sich von einem
+Listenelement zum nächsten, entweder bis man die gesuchte Element gefunden
+hat, oder bis man <code>NULL</code> erreicht:</p>
+
+<pre>[% syntax c %]
+node search_for(node list, int data) {
+    while (list != NULL) {
+        if (list->data == data)
+            return list;
+        list = list->next;
+    }
+    return NULL;
+}[% endsyntax %]</pre>
+
+<p>Wenn man erst mal den <code>node</code> pointer hat, kann man z.B. rechts
+davon einfügen oder löschen.</p>
+
 <h2 id="zusammenfassung">Zusammenfassung</h2>
 
 <p>Eine einfach verkettete Liste speichert pro Element einen Zeiger auf das
