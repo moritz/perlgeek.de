@@ -42,7 +42,7 @@ struct list_node {
 man eine Abkürzung definieren:</p>
 
 <pre>[% syntax c %]
-typedef struct list_node node;[%endsyntax%]</pre>
+typedef struct list_node* node;[%endsyntax%]</pre>
 
 <p>Eine leere Liste besteht aus einem Kopf (Head) und nichts sonst:</p>
 
