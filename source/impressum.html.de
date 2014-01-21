@@ -5,8 +5,13 @@
 
 <h1>[%readvar title%]</h1>
 
+<p>Dieses Impressum ist gültig für die Seiten
+<a href="http://perlgeek.de/">perlgeek.de</a> und Subdomains sowie für
+<a href="http://konzertgeek.de/">konzertgeek.de</a>.
+</p>
+
 <p>
-    Verantwortlich für den Inhalt dieser Seiten ist
+    Verantwortlich für diese Seiten ist
 </p>
 
 <p>
@@ -21,12 +26,24 @@
     Telefon: 0911 97900470
 </p>
 
+<p>
+    Im Falle von Inhalten, die von Benutzern beigesteuert wurden, sind
+    die jeweiligen Benutzer für ihre Inhalte verantwortlich.
+</p>
+
 <h2>Disclaimer</h2>
 <p>
     Ich bemühe mich, keine Urheberrechte zu verletzen, auf illegale Inhalt zu
     verlinken und auch sonst keinen Unfug zu bauen. Sollten Sie der Ansicht
     sein, dass ich damit keinen Erfolg hatte, teilen Sie mir das bitte per
     E-Mail mit - ich werden dann Abhilfe schaffen.
+</p>
+
+<p>
+    Ebenfalls bemühe ich mich um die korrekte Wiedergabe von Fakten,
+    übernehme aber keine Haftung für eventuell inakkurate oder gefährliche
+    Inhalte -- benutzen Sie die Anleitungen und Fakten auf meinen Seiten auf
+    eigene Gefahr.
 </p>
 
 <h2>Datenschutz</h2>
