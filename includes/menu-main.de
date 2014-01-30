@@ -24,6 +24,11 @@
                     <li><a href="/blog-en/">Blog (Englisch)</a></li>
                     <li><a href="http://irclog.perlgeek.de/perl6/today">#perl6 IRC logs</a></li>
                 </ul>
+                <h3>Partner</h3>
+                <ul>
+                    <li><a href="http://www.bioapotheke.de" target="_blank">Versandapotheke & Bioapo</a>
+                    </li>
+                </ul>
                 </div>
             </div>
             }} %]
