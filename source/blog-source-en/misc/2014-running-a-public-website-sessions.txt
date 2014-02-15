@@ -1,0 +1,89 @@
+The Fun of Running a Public Web Service, and Session Storage
+<!-- 1392460064 -->
+
+<p>One of my websites, <a href="http://sudokugarden.de/">Sudokugarden</a>,
+recently surged in traffic, from about 30k visitors per month to more than 100k
+visitors per month. Here's the tale of what that meant for the server
+side.</p>
+
+<p>As a bit of background, I built the website in 2007, when I knew a lot less
+about the web and programming. It runs on a host that I share with a few
+friends; I don't have root access on that machine, though when the admin is
+available, I can generally ask him to install stuff for me.</p>
+
+<p>Most parts of the websites are built as static HTML files, with Server Side
+Includes. Parts of those SSIs are Perl CGI scripts. The most popular part
+though, which allows you to solve Sudoku in the browser and keeps hiscores, is
+written as a collection of Perl scripts, backed by a mysql database.</p>
+
+<p>When at peak times the site had more than 10k visitors a day, lots of
+visitors would get a nasty <code>mysql: Cannot connect: Too many open
+connections</code> error. The admin wasn't available for bumping the
+connection limit, so I looked for other solutions.</p>
+
+<p>My first action was to check the logs for spammers and crawlers that might
+hammered the page, and I found and banned some; but the bulk of the traffic
+looked completely legitimate, and the problem persisted.</p>
+
+<p>Looking at the seven year old code, I realized that most pages didn't
+actually need a database connection, if only I could remove the session
+storage from the database. And, in fact, I could. I used <a
+href="#">CGI::Session</a>, which has pluggable backend. Switching to a
+file-based session backend was just a matter of changing the connection string
+and adding a directory for session storage. Luckily the code was clean enough
+that this only affected a single subroutine. Everything was fine.</p>
+
+<p>For a while.</p>
+
+<p>Then, about a month later, the host ran out of free disk space. Since it is
+used for other stuff too (like email, and web hosting for other users) it took
+me a while to make the connection to the file-based session storage. What
+happened was 3 million session files on a ext3 file system with a block size
+of 4 kilobyte. A session is only about 400 byte, but since a file uses up a
+multiple of the block size, the session storage amounted to 12 gigabyte of
+used-up disk space, which was all that was left on that machine.</p>
+
+<p>Deleting those sessions turned out to be a problem; I could only log in as
+my own user, which doesn't have write access to the session files (which are
+owned by <code>www-data</code>, the Apache user). The solution was to upload a
+CGI script that deleted the session, but of course that wasn't possible at
+first, because the disk was full. In the end I had to delete several gigabyte
+of data from my home directory before I could upload anything again.
+(Processes running as root were still writing to reserved-to-root portions of
+the file system, which is why I had to delete so much data before I was able
+to write again).</p>
+
+<p>Even when I was able to upload the deletion script, it took quite some time
+to actually delete the session files; mostly because the directory was too
+large, and deleting files on ext3 is slow. When the files were gone, the empty
+session directory still used up 200MB of disk space, because the directory
+index doesn't shrink on file deletion.</p>
+
+<p>Clearly a better solution to session storage was needed. But first I
+investigated where all those sessions came from, and banned a few spamming
+IPs. I also changed the code to only create sessions when somebody logs in,
+not give every visitor a session from the start.</p>
+
+<p>My next attempt was to write the sessions to an <a
+href="https://sqlite.org/">SQLite</a> database. It uses about 400 bytes per
+session (plus a fixed overhead for the db file itself), so it uses only a
+tenth of storage space that the file-based storage used.
+The SQLite database has no connection limit,
+though the old-ish version that was installed on the server doesn't seem to
+have very fine-grained locking either; within a few days I could errors that
+the session database was locked.</p>
+
+<p>So I added another layer of workaround: creating a separate session
+database per leading IP octet. So now there are up to 255 separate session
+database (plus a 256th for all IPv6 addresses; a decision that will have to be
+revised when IPv6 usage rises). After a few days of operation, it seems that
+this setup works well enough. But suspicious as I am, I'll continue monitoring
+both disk usage and errors from Apache.</p>
+
+<p>So, what happens if this solution fails to work out? I can see basically
+two approaches: move the site to a server that's fully under my control, and
+use redis or memcached for session storage; or implement sessions with signed
+cookies that are stored purely on the client side.</p>
+
+[% option no-header %] [% option no-footer %]
+[% comment vim: set ft=html spell: %]
