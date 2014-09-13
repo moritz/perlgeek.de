@@ -31,8 +31,8 @@ one. All the declarative atoms at the start are the declarative prefix.</p>
 
 <pre>[% syntax escape %]
  # declarative prefix
- #   +-----+
- #  /       \
+ #   +------------+
+ #  /              \
  | 'foo' \d+ [ <bar> || <baz> ]
  | \s* [ \w & b ] [ c | d]
  # \                   /
@@ -40,7 +40,8 @@ one. All the declarative atoms at the start are the declarative prefix.</p>
  #  declarative prefix
 [% endsyntax %]</pre>
 
-<p>Subrule calls are notionally inlined for LTM, recursive calls (also by mutual
+<p>Subrule calls are notionally inlined for LTM, but recursive calls
+(also by mutual
 recursion) end the declarative prefix (and are thus considered procedural
 for this matter).</p>
 
