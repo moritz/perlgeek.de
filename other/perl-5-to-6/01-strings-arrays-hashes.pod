@@ -26,7 +26,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 is just like Perl 5 - only better. Statements are terminated by
+Perl 6 is just like Perl 5 - only better. Statements are separated by
 semicolons. After the last statement in a block and after a closing curly
 brace at the end of a line the semicolon is optional.
 
@@ -109,7 +109,7 @@ Most builtin methods exist both as a method and as a sub. So you can write
 both C<sort @array> and C<@array.sort>.
 
 Finally you should know that both C<[..]> and C<{...}> (occurring directly
-after a term) are just method calls
+after a term) are just subroutine calls
 with a special syntax, not something tied to arrays and hashes. That means
 that they are also not tied to a particular sigil.
 

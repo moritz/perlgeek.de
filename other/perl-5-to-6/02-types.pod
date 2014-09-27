@@ -8,7 +8,7 @@
 
     my Int $x = 3;
     $x = "foo";         # error
-    say $x.WHAT;        # 'Int()'
+    say $x.WHAT;        # '(Int)'
  
     # check for a type:
     if $x ~~ Int {
@@ -25,7 +25,7 @@ There are some basic types that you should know about:
     'a string'      # Str
     2               # Int
     3.14            # Rat (rational number)
-    (1, 2, 3)       # Seq
+    (1, 2, 3)       # Parcel
 
 All "normal" built-in types begin with an upper case letter. All "normal" types
 inherit from C<Any>, and absolutely everything inherits from C<Mu>.
@@ -50,7 +50,7 @@ numbers (type C<Num>) conform to the C<Numeric> type.
 
 You can learn about the direct type of a thing by calling its C<.WHAT> method.
 
-    say "foo".WHAT;     # Str()
+    say "foo".WHAT;     # (Str)
 
 However if you want to check if something is of a specific type, there is a
 different way, which also takes inheritance into account and is therefore

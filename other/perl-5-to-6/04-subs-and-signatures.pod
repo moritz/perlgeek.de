@@ -86,9 +86,9 @@ has named parameters:
     my $r = Rectangle.new( 
             x       => 100, 
             y       => 200, 
-            height => 23,
-            width  => 42,
-            color  => 'black'
+            height  => 23,
+            width   => 42,
+            color   => 'black'
     );
 
 When you see something like this, you immediately know what the specific
@@ -119,6 +119,15 @@ You can use a different name, though:
         return $w * $h;
     }
     area(width => 2,  height => 3);
+
+Named parameters are optional by default, so the proper way to write the sub
+above would be
+
+    sub area(:$width!, :$height!) {
+        return $width * $height;
+    }
+
+The bang C<!> after the parameter name makes it mandatory.
 
 =head2 Slurpy Parameters
 

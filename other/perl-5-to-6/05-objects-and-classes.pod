@@ -115,6 +115,7 @@ accessor (unless the accessor is marked C<is rw>).
             $!a = 1;    # ok, writing to attribute from within the clas
             $!b = 2;    # same
             $.b = 3;    # ERROR, can't write to ro-accessor
+            $.c = 4;    # ok, the accessor is rw
         }
 
         method do_stuff {
