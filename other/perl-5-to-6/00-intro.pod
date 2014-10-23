@@ -102,5 +102,8 @@ Moritz Lenz, L<http://perlgeek.de/>, C<moritz@faui2k3.org>
 Other documentation efforts can be found on
 L<http://perl6.org/documentation/>.
 
+A (partial) French translation is available at
+L<http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/>.
+
 =for time 1221948000
 =for editor vim: spell
