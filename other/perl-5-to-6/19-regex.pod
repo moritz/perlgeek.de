@@ -12,11 +12,11 @@
     }
 
     # match with implicit :sigspace modifier
-    if 'ab cd ef'  ~~ mm/ (..) ** 2 / {
-        say $1;                 # cd
+    if 'ab cd ef'  ~~ ms/ (..) ** 2 / {
+        say $0[1];              # cd
     }
 
-    # substitute with the :sigspace modifier
+    # substitute with the :samespace modifier
     my $x = "abc     defg";
     $x ~~ ss/c d/x y/;
     say $x;                     # abx     yefg
@@ -29,23 +29,23 @@ useful (but not very structured) additional facts about Regexes.
 =head2 Matching
 
 You don't need to write grammars to match regexes, the traditional form
-C<m/.../> still works, and has a new brother, the C<mm/.../> form, which
+C<m/.../> still works, and has a new brother, the C<ms/.../> form, which
 implies the C<:sigspace> modifier. Remember, that means that whitespaces
-in the regex are substituted by the C<< <.ws> >> rule. 
+in the regex are substituted by the C<< <.ws> >> rule.
 
 The default for the rule is to match C<\s+> if it is surrounded by two
 word-characters (ie those matching those C<\w>), and C<\s*> otherwise.
 
 In substitutions the C<:samespace> modifier takes care that whitespaces
 matched with the C<ws> rule are preserved. Likewise the C<:samecase> modifier,
-short C<:ii> (since it's a variant of C<:i>) preserve case.
+short C<:ii> (since it's a variant of C<:i>) preserves case.
 
     my $x = 'Abcd';
     $x ~~ s:ii/^../foo/;
     say $x;                     # Foocd
-    $x = 'ABC'
+    $x = 'ABC';
     $x ~~ s:ii/^../foo/;
-    say $x                      # FOO
+    say $x                      # FOOC
 
 This is very useful if you want to globally rename your module C<Foo>, to
 C<Bar>, but for example in environment variables it is written as all
