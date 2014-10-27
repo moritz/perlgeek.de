@@ -39,7 +39,7 @@
 =head1 DESCRIPTION
 
 Regexes are one of the areas that has been improved and revamped most in
-Perl 6. We don't call them I<regular expressions> anymore because they are even
+Perl 6. We don't call them I<regular expressions> anymore because they are even
 less regular than they are in Perl 5.
 
 There are three large changes and enhancements to the regexes
@@ -75,7 +75,7 @@ inheritance and composition
 
 =back
 
-These changes make Perl 6 regexes and grammars much easier to write and
+These changes make Perl 6 regexes and grammars much easier to write and
 maintain than Perl 5 regexes.
 
 All of these changes go quite deep, and only the surface can be scratched
@@ -99,8 +99,8 @@ There is another way to escape strings in regexes: with quotes.
 
     m/'a literal text: $#@!!'/
 
-The changed semantics of C<.> has already been mentioned, and also that C<[...]>
-now construct non-capturing groups. Char classes are C<< <[...]> >>, and negated
+The change in semantics of C<.> has already been mentioned, and also that C<[...]>
+now construct non-capturing groups. Character classes are C<< <[...]> >>, and negated
 char classes C<< <-[...]> >>. C<^> and C<$> always match begin and end of the
 string respectively, to match begin and end of lines use C<^^> and C<$$>.
 
@@ -108,7 +108,7 @@ This means that the C</s> and C</m> modifiers are gone. Modifiers are now
 given at the start of a regex, and are given in this notation:
 
     if "abc" ~~ m:i/B/ {
-        say "Match";
+        say "Matched a B.";
     }
 
 ... which happens to be the same as the I<colon pair> notation that you can
@@ -182,6 +182,9 @@ and stores the result in the match object in C<< $/<a> >>, ie it's a named
 capture. You can also call a rule without capturing its result by prefixing
 its name with a dot: C<< <.a> >>.
 
+If you want to refer to a rule outside of a Grammar, you need to call them
+with a routine sigil, like C<< <&other> >>.
+
 A grammar is a group of rules, just like a class (see the SYNOPSIS for an
 example). Grammars can inherit, override rules and so on.
 
@@ -197,7 +200,7 @@ the rules more self-documenting, and many things are now much more consistent
 than they were before.
 
 Finally grammars are so powerful that you can parse about every programming
-language with them, including Perl 6 itself. That makes the Perl 6 grammar
+language with them, including Perl 6 itself. That makes the Perl 6 grammar
 easier to maintain and to change than the Perl 5 one, which is written in C and
 not changeable at parse time.
 

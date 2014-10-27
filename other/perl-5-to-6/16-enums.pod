@@ -6,7 +6,7 @@
 
 =head1 SYNOPSIS
 
-  enum bit Bool <False True>;
+  enum Bool <False True>;
   my $value = $arbitrary_value but True;
   if $value {
       say "Yes, it's true";       # will be printed
@@ -42,7 +42,7 @@ C<Day>:
 The value of first constant is 0, the next 1 and so on, unless you explicitly
 provide another value with pair notation:
 
-  Enum Hackers (:Larry<Perl>, :Guido<Python>, :Paul<Lisp>);
+  enum Hackers (:Larry<Perl>, :Guido<Python>, :Paul<Lisp>);
 
 You can check if a specific value was mixed in by using the versatile smart
 match operator, or with C<.does>:

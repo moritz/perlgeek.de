@@ -104,9 +104,9 @@ in the signature list:
     area(height => 3, width => 2 ); # the same
     area(:height(3), :width(2));    # the same
 
-The last example uses the so-called I<colon pair syntax>. Leaving off the name
-results in the value being C<True>, and negating it results in the value being
-C<False>:
+The last example uses the so-called I<colon pair syntax>. Leaving off the value
+results in the value being C<True>, and putting a negation in front of the name
+results in the value being C<False>:
 
     :draw-perimeter                 # same as "draw-perimeter => True"
     :!transparent                   # same as "transparent => False"
@@ -213,7 +213,7 @@ of explicit signatures means that C<sort> can never find out how many
 arguments the code block expects.
 
 Multi subs are very useful because they allow builtins to be overridden for
-new types. Let's assume you want a version of Perl 6 which is localized to
+new types. Let's assume you want a version of Perl 6 which is localized to
 handle Turkish strings correctly, which have unusual rules for case
 conversions.
 

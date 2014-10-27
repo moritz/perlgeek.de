@@ -38,13 +38,12 @@ unchanged.
 Since C<|>, C<^> and C<&> now construct junctions, the bitwise operators have
 a changed syntax. They now contain a context prefix, so for example C<+|> is bit
 wise OR with numeric context, and C<~^> is one's complement on a string. Bit
-shift operators changed in the same way.
+shift operators changed in the same way, ie C<< +< >> and C<< +> >>.
 
 String concatenation is now C<~>, the dot C<.> is used for method calls.
 
-File tests are now formulated in C<Pair> notation, Perl 5 C<-e> is now
-C<:e>. If something other than C<$_> should be used as the file name, it can
-be supplied via C<$filename.path ~~ :e>.
+File tests are now done by smart matching a path object against a simple C<Pair>;
+Perl 5 C<-e> would now be C<$_.path ~~ :e>.
 
 The repetition operator C<x> is now split into two operators: C<x> replicates
 strings, C<xx> lists.

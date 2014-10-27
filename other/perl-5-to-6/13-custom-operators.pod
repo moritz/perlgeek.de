@@ -64,7 +64,7 @@ expression is parsed as C<(1 / 2) / 4>. for a right associative operator like
 C<< infix:<**> >> (exponentiation) C<2 ** 2 ** 4> is parsed as
 C<2 ** (2 ** 4)>.
 
-Perl 6 has more associativities: C<none> forbids chaining of operators of the
+Perl 6 has more associativities: C<none> forbids chaining of operators of the
 same precedence (for example C<< 2 <=> 3 <=> 4 >> is forbidden), and
 C<< infix:<,> >> has C<list> associativity. C<1, 2, 3> is translated to
 C<< infix:<,>(1; 2; 3) >>. Finally there's the C<chain> associativity:
@@ -75,32 +75,6 @@ C<< $a < $b < $c >> translates to C<($a < $b) && ($b < $c)>.
                           ($a, $b) {
         ...
     }
-
-=head2 Postcircumfix and Circumfix 
-
-Postcircumfix operators are method calls:
-
-    class OrderedHash is Hash {
-        method postcircumfix:<{ }>(Str $key) {
-            ...
-        }
-    }
-
-If you call that as C<$object{$stuff}>, C<$stuff> will be passed as an
-argument to the method, and C<$object> is available as C<self>.
-
-Circumfix operators usually imply a different syntax (like in
-C<< my @list = <a b c>; >>), and are thus implemented as macros:
-
-    macro circumfix:«< >»($text) is parsed / <-[>]>+ / {
-        return $text.comb(rx/\S+/);
-    }
-
-The C<is parsed> trait is followed by a regex that parses everything between
-the delimiters. If no such rule is given, it is parsed as normal Perl 6 code
-(which is usually not what you want if you introduce a new syntax).
-C<Str.comb> searches for occurrences of a regex and returns a list of the text
-of all matches. 
 
 =head2 "Overload" existing operators
 
@@ -127,7 +101,7 @@ It also removes the gap between using a language and modifying the language.
 
 L<http://perlcabal.org/syn/S06.html#Operator_overloading>
 
-If you are interested in the technical background, ie how Perl 6 can implement
+If you are interested in the technical background, ie how Perl 6 can implement
 such operator changes and other grammar changes, read
 L<http://perlgeek.de/en/article/mutable-grammar-for-perl-6>.
 

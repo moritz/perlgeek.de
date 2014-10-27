@@ -17,7 +17,7 @@
 
   say "This is file $?FILE on line $?LINE"
 
-  say "A CGI script" if %*ENV.exists('DOCUMENT_ROOT');
+  say "A CGI script" if %*ENV<DOCUMENT_ROOT>:exists;
 
 =head1 DESCRIPTION
 
@@ -35,7 +35,7 @@ The C<^> twigil removes a special case from perl 5. To be able to write
   sort { $a <=> $b } @array
 
 the variables C<$a> and C<$b> are special cased by the C<strict> pragma. In
-Perl 6, there's a concept named I<self-declared positional parameter>, and
+Perl 6, there's a concept named I<self-declared positional parameter>, and
 these parameters have the C<^> twigil. It means that they are positional
 parameters of the current block, without being listed in a signature. The
 variables are filled in lexicographic (alphabetic) order:
@@ -57,6 +57,9 @@ does the same for named parameters, so these lines are roughly equivalent:
 
   my $block = { say $:stuff }
   my $sub   = sub (:$stuff) { say $stuff }
+
+Using both I<self-declared parameters> and a signature will result in an error,
+as you can only have one of the two.
 
 The C<?> twigil stands for variables and constants that are known at compile
 time, like C<$?LINE> for the current line number (formerly C<__LINE__>), and
