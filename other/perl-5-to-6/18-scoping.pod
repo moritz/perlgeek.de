@@ -66,8 +66,25 @@ The C<local> adjective is now called C<temp>, and if it's not followed by an
 initialization the previous value of that variable is used (not C<undef>).
 
 There's also a new kind of dynamically scoped variable called a
-I<hypothetical> variable. If the block is left with an exception, then the
-previous value of the variable is restored. If not, it is kept.
+I<hypothetical> variable. If the block is left with an exception or a false
+value,, then the previous value of the variable is restored. If not, it is kept:
+
+    use v6;
+
+    my $x = 0;
+
+    sub tryit($success) {
+        let $x = 42;
+        die "Not like this!" unless $success;
+        return True;
+    }
+
+    tryit True;
+    say $x;             # 42
+
+    $x = 0;
+    try tryit False;
+    say $x;             # 0
 
 =head2 Context variables
 
