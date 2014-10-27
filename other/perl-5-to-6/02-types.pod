@@ -75,7 +75,7 @@ can perform certain operations on it. No need to check.
 =item Optimizability
 
 When you have type informations at compile time, you can perform certain
-optimizations. Perl 6 doesn't have to be slower than C, in principle.
+optimizations. Perl 6 doesn't have to be slower than C, in principle.
 
 =item Extensibility
 

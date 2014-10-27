@@ -83,7 +83,7 @@ Perl aims to be rather close to natural languages, and in natural language
 you often say things like "if the result is $this or $that" instead of saying
 "if the result is $this or the result is $that". Most programming languages only
 allow (a translation of) the latter, which feels a bit clumsy. With junctions
-Perl 6 allows the former as well.
+Perl 6 allows the former as well.
 
 It also allows you to write many comparisons very easily that otherwise
 require loops.
@@ -108,7 +108,7 @@ Or if you happen to know about C<List::MoreUtils>
     my @items = get_data;
     if (all { $_ >= 0 } @items) { ...  }
 
-In Perl 6 that is short and sweet:
+In Perl 6 that is short and sweet:
 
     my @items = get_data();
     if all(@items) >= 0 { ... }

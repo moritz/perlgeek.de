@@ -31,10 +31,10 @@
 
 =head1 DESCRIPTION
 
-Perl 6 has an object model that is much more fleshed out than the Perl 5 one.
+Perl 6 has an object model that is much more fleshed out than the Perl 5 one.
 It has keywords for creating classes, roles, attributes and methods, and has
 encapsulated private attributes and methods. In fact it's much closer to the
-C<Moose> Perl 5 module (which was inspired by the Perl 6 object system).
+C<Moose> Perl 5 module (which was inspired by the Perl 6 object system).
 
 There are two ways to declare classes
 
@@ -57,10 +57,10 @@ can use the term C<self> to refer to the object on which the method is
 called (the I<invocant>).
 
 You can also give the invocant a different name by adding a first parameter to
-the signature list and append a colon C<:> to it.
+the signature list and appending a colon C<:> to it.
 
 Public methods can be called with the syntax C<$object.method> if it takes no
-arguments, and C<$object.method(@args)> or C<$object.method: @args> if it
+arguments, and C<$object.method($arg, $foo)> or C<$object.method: $arg, $foo> if it
 takes arguments.
 
     class SomeClass {
@@ -77,7 +77,7 @@ takes arguments.
 
 (The C<my SomeClass $x .= new> is actually a shorthand for
 C<my SomeClass $x = SomeClass.new>. It works because the type declaration
-fills the variable with a "typo object" of C<SomeClass>, which is an object
+fills the variable with a "type object" of C<SomeClass>, which is an object
 representing the class.)
 
 Methods can also take additional arguments just like subs.
@@ -95,7 +95,8 @@ C<self!method_name>.
         }
     }
 
-Private methods can't be called from outside the class.
+Private methods can't be called from outside the class and private methods are
+only looked up in the current class, not its parent classes.
 
 =head2 Attributes
 
@@ -112,7 +113,7 @@ accessor (unless the accessor is marked C<is rw>).
         has $.c is rw;
 
         method set_stuff {
-            $!a = 1;    # ok, writing to attribute from within the clas
+            $!a = 1;    # ok, writing to attribute from within the class
             $!b = 2;    # same
             $.b = 3;    # ERROR, can't write to ro-accessor
             $.c = 4;    # ok, the accessor is rw
@@ -120,14 +121,14 @@ accessor (unless the accessor is marked C<is rw>).
 
         method do_stuff {
             # you can use the private name instead of the public one
-            # $!b and $.b are really the same thing
+            # $!b and $.b do the same thing by default
             return $!a + $!b + $!c;
         }
     }
     my $x = SomeClass.new;
-    say $x.a;       # ERROR!
+    say $x.a;       # ERROR!  a is private
     say $x.b;       # ok
-    $x.b = 2;       # ERROR!
+    $x.b = 2;       # ERROR!  b is not declared "rw"
     $x.c = 3;       # ok
 
 =head2 Inheritance
@@ -139,7 +140,7 @@ Inheritance is done through an C<is> trait.
         ...
     }
 
-All the usual inheritance rules apply - methods are first looked up on the
+All the usual inheritance rules apply - public methods are first looked up on the
 direct type, and if that fails, on the parent class (recursively). Likewise
 the type of a child class is conforming to that of a parent class:
 
@@ -162,18 +163,18 @@ usually advise against it. Roles are often a safer choice.
 =head2 Roles and Composition
 
 In general the world isn't hierarchical, and thus sometimes it's hard to press
-everything into an inheritance hierarchy. Which is one of the reasons why Perl
-6 has Roles. Roles are quite similar to classes, except you can't create
+everything into an inheritance hierarchy. Which is one of the reasons why Perl 6
+has Roles. Roles are quite similar to classes, except you can't create
 objects directly from them, and that composition of multiple roles with the
 same method names generate conflicts, instead of silently resolving to one of
-them, like multiple inheritance does.
+them, like multiple inheritance would do.
 
 While classes are intended primarily for type
-conformance, roles are the primary means for code reuse in Perl 6.
+conformance, roles are the primary means for code reuse in Perl 6.
 
     role Paintable {
         has $.colour is rw;
-        method paint { ... }
+        method paint { ... } # literal ...
     }
     class Shape {
         method area { ... }

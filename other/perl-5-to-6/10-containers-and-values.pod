@@ -16,7 +16,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 distinguishes between containers, and values that can be stored in
+Perl 6 distinguishes between containers, and values that can be stored in
 containers.
 
 A normal scalar variable is a container, and can have some properties like
@@ -46,7 +46,7 @@ operator.
 =head1 MOTIVATION
 
 Exporting and importing subs, types and variables is done via aliasing.
-Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple
+Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple
 operator.
 
 =head1 SEE ALSO

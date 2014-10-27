@@ -43,7 +43,7 @@ Command line options map to subroutine arguments like this:
   --bad_lang PHP          :bad_lang<PHP>
 
   +stuff                  :!stuff
-  +stuff=healty           :stuff<healthy> but False
+  +stuff=healthy					:stuff<healthy> but False
 
 The C<$x = $obj but False> means that C<$x> is a copy of C<$obj>, but gives
 C<Bool::False> in boolean context.

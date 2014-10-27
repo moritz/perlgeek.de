@@ -28,7 +28,7 @@
 
 =head1 DESCRIPTION
 
-Perl 6 still has string comparison operators (C<eq>, C<lt>, C<gt>, C<le>,
+Perl 6 still has string comparison operators (C<eq>, C<lt>, C<gt>, C<le>,
 C<ge>, C<ne>; C<cmp> is now called C<leg>) that evaluate their operands in
 string context. Similarly all the numeric operators from Perl 5 are still
 there.
@@ -46,7 +46,7 @@ equivalent.
 
 =head2 Smart matching
 
-Perl 6 has a "compare everything" operator, called "smart match" operator, and
+Perl 6 has a "compare anything" operator, called "smart match" operator, and
 spelled C<~~>. It is asymmetrical, and generally the type of the right operand
 determines the kind of comparison that is made.
 
@@ -60,7 +60,7 @@ an argument list (C<Capture>) fits to the parameter list (C<Signature>) of a
 subroutine, or apply file test operators (like C<-e> in Perl 5).
 
 What you should remember is that any "does $x fit to $y?"-Question will be
-formulated as a smart match in Perl 6.
+formulated as a smart match in Perl 6.
 
 =head1 SEE ALSO
 
