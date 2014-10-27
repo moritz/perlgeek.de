@@ -44,7 +44,7 @@ name="DESCRIPTION"
   --bad_lang PHP          :bad_lang&#60;PHP&#62;
 
   +stuff                  :!stuff
-  +stuff=healty           :stuff&#60;healthy&#62; but False</pre>
+  +stuff=healthy                                        :stuff&#60;healthy&#62; but False</pre>
 
 <p>The <code>$x = $obj but False</code> means that <code>$x</code> is a copy of <code>$obj</code>, but gives <code>Bool::False</code> in boolean context.</p>
 

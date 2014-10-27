@@ -36,11 +36,11 @@ name="DESCRIPTION"
 
 <p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
-<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely, or fail if the infiniteness can be detected.</p>
+<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely, or fail early if the infiniteness can be detected.</p>
 
-<p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
+<p>In general conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
-<p>Laziness prevents unnecessary computations, and can therefore boost performance while keeping code simple.</p>
+<p>Laziness prevents unnecessary computations, and can therefore boost performance while keeping code simple. Keep in mind that there is some overhead to switching between the producing and consuming code paths.</p>
 
 <p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
@@ -92,7 +92,7 @@ name="Controlling_Laziness"
 
 <pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
 
-<p>On the other hand only lists are lazy by default. But you can also make lazy scalars:</p>
+<p>On the other hand only lists are lazy by default. But you can also make lazy scalars (though none of our compilers implement that feature yet):</p>
 
 <pre>    my $ls = lazy { $expansive_computation };</pre>
 

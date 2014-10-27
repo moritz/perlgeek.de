@@ -35,7 +35,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
+<p>Perl 6 is just like Perl 5 - only better. Statements are separated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
@@ -54,7 +54,7 @@ name="Strings"
     say &#34;@array[1]&#34;;            # &#39;2&#39;
     say &#34;Code: { $scalar * 2 }&#34; # &#39;Code: 12&#39;</pre>
 
-<p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), empty indexes interpolate the whole data structure.</p>
+<p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), an empty index will interpolate the whole data structure.</p>
 
 <p>A block in curly braces is executed as code, and the result is interpolated.</p>
 
@@ -62,13 +62,13 @@ name="Strings"
 name="Arrays"
 >Arrays</a></h4>
 
-<p>Arrays variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
+<p>Array variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
 
 <pre>    my @a = 5, 1, 2;            # no parens needed anymore
     say @a[0];                  # yes, it starts with @
     say @a[0, 2];               # slices also work</pre>
 
-<p>Lists are constructed with the Comma operator. <code>1,</code> is a list, <code>(1)</code> isn&#39;t.</p>
+<p>Lists are constructed with the Comma operator. <code>1,</code> is a list, <code>(1)</code> isn&#39;t. A special case is <code>()</code> which is how you spell the empty list.</p>
 
 <p>Since everything is an object, you can call methods on arrays:</p>
 
@@ -108,7 +108,7 @@ name="Final_Notes"
 
 <p>Most builtin methods exist both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
 
-<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
+<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just subroutine calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
 
 <pre>    my $a = [1, 2, 3];
     say $a[2];          # 3</pre>

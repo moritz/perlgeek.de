@@ -45,7 +45,7 @@ name="DESCRIPTION"
 name="Smart_matching"
 >Smart matching</a></h4>
 
-<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
+<p>Perl 6 has a &#34;compare anything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
 <p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
 

@@ -102,4 +102,7 @@ name="LINKS"
 <p>Other documentation efforts can be found on <a href="http://perl6.org/documentation/" class="podlinkurl"
 >http://perl6.org/documentation/</a>.</p>
 
+<p>A (partial) French translation is available at <a href="http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/" class="podlinkurl"
+>http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/</a>.</p>
+
 [% option no-header %] [% option no-footer %]

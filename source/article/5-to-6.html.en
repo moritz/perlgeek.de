@@ -146,6 +146,9 @@ name="LINKS"
 <p>Other documentation efforts can be found on <a href="http://perl6.org/documentation/" class="podlinkurl"
 >http://perl6.org/documentation/</a>.</p>
 
+<p>A (partial) French translation is available at <a href="http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/" class="podlinkurl"
+>http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/</a>.</p>
+
 
 <h2 id="post_01">Strings, Arrays, Hashes;</h2>
 <p>Sat Sep 20 22:20:00 2008</p>
@@ -184,7 +187,7 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Perl 6 is just like Perl 5 - only better. Statements are terminated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
+<p>Perl 6 is just like Perl 5 - only better. Statements are separated by semicolons. After the last statement in a block and after a closing curly brace at the end of a line the semicolon is optional.</p>
 
 <p>Variables still begin with a sigil (like <code>$</code>, <code>@</code>, <code>%</code>), and many Perl 5 builtins are still mostly unchanged in Perl 6.</p>
 
@@ -203,7 +206,7 @@ name="Strings"
     say &#34;@array[1]&#34;;            # &#39;2&#39;
     say &#34;Code: { $scalar * 2 }&#34; # &#39;Code: 12&#39;</pre>
 
-<p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), empty indexes interpolate the whole data structure.</p>
+<p>Arrays and hashes only interpolate if followed by an index (or a method call that ends in parenthesis, like <code>&#34;some $obj.method()&#34;</code>), an empty index will interpolate the whole data structure.</p>
 
 <p>A block in curly braces is executed as code, and the result is interpolated.</p>
 
@@ -211,13 +214,13 @@ name="Strings"
 name="Arrays"
 >Arrays</a></h4>
 
-<p>Arrays variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
+<p>Array variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
 
 <pre>    my @a = 5, 1, 2;            # no parens needed anymore
     say @a[0];                  # yes, it starts with @
     say @a[0, 2];               # slices also work</pre>
 
-<p>Lists are constructed with the Comma operator. <code>1,</code> is a list, <code>(1)</code> isn&#39;t.</p>
+<p>Lists are constructed with the Comma operator. <code>1,</code> is a list, <code>(1)</code> isn&#39;t. A special case is <code>()</code> which is how you spell the empty list.</p>
 
 <p>Since everything is an object, you can call methods on arrays:</p>
 
@@ -257,7 +260,7 @@ name="Final_Notes"
 
 <p>Most builtin methods exist both as a method and as a sub. So you can write both <code>sort @array</code> and <code>@array.sort</code>.</p>
 
-<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just method calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
+<p>Finally you should know that both <code>[..]</code> and <code>{...}</code> (occurring directly after a term) are just subroutine calls with a special syntax, not something tied to arrays and hashes. That means that they are also not tied to a particular sigil.</p>
 
 <pre>    my $a = [1, 2, 3];
     say $a[2];          # 3</pre>
@@ -288,7 +291,7 @@ name="SYNOPSIS"
 
 <pre>    my Int $x = 3;
     $x = &#34;foo&#34;;         # error
-    say $x.WHAT;        # &#39;Int()&#39;
+    say $x.WHAT;        # &#39;(Int)&#39;
  
     # check for a type:
     if $x ~~ Int {
@@ -306,7 +309,7 @@ name="DESCRIPTION"
 <pre>    &#39;a string&#39;      # Str
     2               # Int
     3.14            # Rat (rational number)
-    (1, 2, 3)       # Seq</pre>
+    (1, 2, 3)       # Parcel</pre>
 
 <p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Mu</code>.</p>
 
@@ -327,7 +330,7 @@ name="Introspection"
 
 <p>You can learn about the direct type of a thing by calling its <code>.WHAT</code> method.</p>
 
-<pre>    say &#34;foo&#34;.WHAT;     # Str()</pre>
+<pre>    say &#34;foo&#34;.WHAT;     # (Str)</pre>
 
 <p>However if you want to check if something is of a specific type, there is a different way, which also takes inheritance into account and is therefore recommended:</p>
 
@@ -558,9 +561,9 @@ name="Named_Parameters"
 <pre>    my $r = Rectangle.new( 
             x       =&#62; 100, 
             y       =&#62; 200, 
-            height =&#62; 23,
-            width  =&#62; 42,
-            color  =&#62; &#39;black&#39;
+            height  =&#62; 23,
+            width   =&#62; 42,
+            color   =&#62; &#39;black&#39;
     );</pre>
 
 <p>When you see something like this, you immediately know what the specific arguments mean.</p>
@@ -574,7 +577,7 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the name results in the value being <code>True</code>, and negating it results in the value being <code>False</code>:</p>
+<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the value results in the value being <code>True</code>, and putting a negation in front of the name results in the value being <code>False</code>:</p>
 
 <pre>    :draw-perimeter                 # same as &#34;draw-perimeter =&#62; True&#34;
     :!transparent                   # same as &#34;transparent =&#62; False&#34;</pre>
@@ -585,6 +588,14 @@ name="Named_Parameters"
         return $w * $h;
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
+
+<p>Named parameters are optional by default, so the proper way to write the sub above would be</p>
+
+<pre>    sub area(:$width!, :$height!) {
+        return $width * $height;
+    }</pre>
+
+<p>The bang <code>!</code> after the parameter name makes it mandatory.</p>
 
 <h4><a class='u'
 name="Slurpy_Parameters"
@@ -739,9 +750,9 @@ name="Methods"
 
 <p>Methods are declared with the <code>method</code> keyword. Inside the method you can use the term <code>self</code> to refer to the object on which the method is called (the <i>invocant</i>).</p>
 
-<p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
+<p>You can also give the invocant a different name by adding a first parameter to the signature list and appending a colon <code>:</code> to it.</p>
 
-<p>Public methods can be called with the syntax <code>$object.method</code> if it takes no arguments, and <code>$object.method(@args)</code> or <code>$object.method: @args</code> if it takes arguments.</p>
+<p>Public methods can be called with the syntax <code>$object.method</code> if it takes no arguments, and <code>$object.method($arg, $foo)</code> or <code>$object.method: $arg, $foo</code> if it takes arguments.</p>
 
 <pre>    class SomeClass {
         # these two methods do nothing but return the invocant
@@ -755,7 +766,7 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x = SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x = SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;type object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
@@ -771,7 +782,7 @@ name="Methods"
         }
     }</pre>
 
-<p>Private methods can&#39;t be called from outside the class.</p>
+<p>Private methods can&#39;t be called from outside the class and private methods are only looked up in the current class, not its parent classes.</p>
 
 <h4><a class='u'
 name="Attributes"
@@ -785,21 +796,22 @@ name="Attributes"
         has $.c is rw;
 
         method set_stuff {
-            $!a = 1;    # ok, writing to attribute from within the clas
+            $!a = 1;    # ok, writing to attribute from within the class
             $!b = 2;    # same
             $.b = 3;    # ERROR, can&#39;t write to ro-accessor
+            $.c = 4;    # ok, the accessor is rw
         }
 
         method do_stuff {
             # you can use the private name instead of the public one
-            # $!b and $.b are really the same thing
+            # $!b and $.b do the same thing by default
             return $!a + $!b + $!c;
         }
     }
     my $x = SomeClass.new;
-    say $x.a;       # ERROR!
+    say $x.a;       # ERROR!  a is private
     say $x.b;       # ok
-    $x.b = 2;       # ERROR!
+    $x.b = 2;       # ERROR!  b is not declared &#34;rw&#34;
     $x.c = 3;       # ok</pre>
 
 <h4><a class='u'
@@ -813,7 +825,7 @@ name="Inheritance"
         ...
     }</pre>
 
-<p>All the usual inheritance rules apply - methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conforming to that of a parent class:</p>
+<p>All the usual inheritance rules apply - public methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conforming to that of a parent class:</p>
 
 <pre>        class Bar { }
         class Foo is Bar { }
@@ -833,13 +845,13 @@ name="Inheritance"
 name="Roles_and_Composition"
 >Roles and Composition</a></h4>
 
-<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance does.</p>
+<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance would do.</p>
 
 <p>While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
 
 <pre>    role Paintable {
         has $.colour is rw;
-        method paint { ... }
+        method paint { ... } # literal ...
     }
     class Shape {
         method area { ... }
@@ -920,7 +932,7 @@ name="DESCRIPTION"
 name="Tree_Context"
 >Tree Context</a></h4>
 
-<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that return a list of arrays.</p>
+<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
 
 <p>Now this is solved by returning a list of <code>Parcel</code> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
 
@@ -1060,12 +1072,12 @@ name="Syntax_clean_up"
 
 <pre>    m/&#39;a literal text: $#@!!&#39;/</pre>
 
-<p>The changed semantics of <code>.</code> has already been mentioned, and also that <code>[...]</code> now construct non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string respectively, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
+<p>The change in semantics of <code>.</code> has already been mentioned, and also that <code>[...]</code> now construct non-capturing groups. Character classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string respectively, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
 
 <p>This means that the <code>/s</code> and <code>/m</code> modifiers are gone. Modifiers are now given at the start of a regex, and are given in this notation:</p>
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
-        say &#34;Match&#34;;
+        say &#34;Matched a B.&#34;;
     }</pre>
 
 <p>... which happens to be the same as the <i>colon pair</i> notation that you can use for passing named arguments to routines.</p>
@@ -1120,6 +1132,8 @@ name="Named_Regexes_and_Grammars"
 <p>The difference is that <code>token</code> implies the <code>:ratchet</code> modifier (which means no backtracking, like a <code>(?&#62; ... )</code> group around each part of the regex in perl 5), and <code>rule</code> implies both <code>:ratchet</code> and <code>:sigspace</code>.</p>
 
 <p>To call such a rule (we&#39;ll call them all rules, independently with which keyword they were declared) you put the name in angle brackets: <code>&#60;a&#62;</code>. This implicitly anchors the sub rule to its current position in the string, and stores the result in the match object in <code>$/&#60;a&#62;</code>, ie it&#39;s a named capture. You can also call a rule without capturing its result by prefixing its name with a dot: <code>&#60;.a&#62;</code>.</p>
+
+<p>If you want to refer to a rule outside of a Grammar, you need to call them with a routine sigil, like <code>&#60;&#38;other&#62;</code>.</p>
 
 <p>A grammar is a group of rules, just like a class (see the SYNOPSIS for an example). Grammars can inherit, override rules and so on.</p>
 
@@ -1319,7 +1333,7 @@ name="DESCRIPTION"
 name="Smart_matching"
 >Smart matching</a></h4>
 
-<p>Perl 6 has a &#34;compare everything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
+<p>Perl 6 has a &#34;compare anything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
 <p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
 
@@ -1437,11 +1451,11 @@ name="DESCRIPTION"
 
 <p>All the numeric operators (<code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>**</code>, <code>%</code>) remain unchanged.</p>
 
-<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
+<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way, ie <code>+&#60;</code> and <code>+&#62;</code>.</p>
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.path ~~ :e</code>.</p>
+<p>File tests are now done by smart matching a path object against a simple <code>Pair</code>; Perl 5 <code>-e</code> would now be <code>$_.path ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 
@@ -1503,11 +1517,11 @@ name="DESCRIPTION"
 
 <p>Laziness allows you to deal with infinite lists: as long as you don&#39;t do anything to all of its arguments, they take up only as much space as the items need that have already been evaluated.</p>
 
-<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely, or fail if the infiniteness can be detected.</p>
+<p>There are pitfalls, though: determining the length of a list or sorting it kills laziness - if the list is infinite, it will likely loop infinitely, or fail early if the infiniteness can be detected.</p>
 
-<p>In general all conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
+<p>In general conversions to a scalar (like <code>List.join</code>) are <i>eager</i>, i.e. non-lazy.</p>
 
-<p>Laziness prevents unnecessary computations, and can therefore boost performance while keeping code simple.</p>
+<p>Laziness prevents unnecessary computations, and can therefore boost performance while keeping code simple. Keep in mind that there is some overhead to switching between the producing and consuming code paths.</p>
 
 <p>When you read a file line by line in Perl 5, you don&#39;t use <code>for (&#60;HANDLE&#62;)</code> because it reads all the file into memory, and only then starts iterating. With laziness that&#39;s not an issue:</p>
 
@@ -1559,7 +1573,7 @@ name="Controlling_Laziness"
 
 <pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
 
-<p>On the other hand only lists are lazy by default. But you can also make lazy scalars:</p>
+<p>On the other hand only lists are lazy by default. But you can also make lazy scalars (though none of our compilers implement that feature yet):</p>
 
 <pre>    my $ls = lazy { $expansive_computation };</pre>
 
@@ -1652,28 +1666,6 @@ name="Associativity"
     }</pre>
 
 <h4><a class='u'
-name="Postcircumfix_and_Circumfix"
->Postcircumfix and Circumfix</a></h4>
-
-<p>Postcircumfix operators are method calls:</p>
-
-<pre>    class OrderedHash is Hash {
-        method postcircumfix:&#60;{ }&#62;(Str $key) {
-            ...
-        }
-    }</pre>
-
-<p>If you call that as <code>$object{$stuff}</code>, <code>$stuff</code> will be passed as an argument to the method, and <code>$object</code> is available as <code>self</code>.</p>
-
-<p>Circumfix operators usually imply a different syntax (like in <code>my @list = &#60;a b c&#62;;</code>), and are thus implemented as macros:</p>
-
-<pre>    macro circumfix:&#171;&#60; &#62;&#187;($text) is parsed / &#60;-[&#62;]&#62;+ / {
-        return $text.comb(rx/\S+/);
-    }</pre>
-
-<p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurrences of a regex and returns a list of the text of all matches.</p>
-
-<h4><a class='u'
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 
@@ -1749,7 +1741,7 @@ name="DESCRIPTION"
   --bad_lang PHP          :bad_lang&#60;PHP&#62;
 
   +stuff                  :!stuff
-  +stuff=healty           :stuff&#60;healthy&#62; but False</pre>
+  +stuff=healthy                                        :stuff&#60;healthy&#62; but False</pre>
 
 <p>The <code>$x = $obj but False</code> means that <code>$x</code> is a copy of <code>$obj</code>, but gives <code>Bool::False</code> in boolean context.</p>
 
@@ -1793,7 +1785,7 @@ name="SYNOPSIS"
 
   say &#34;This is file $?FILE on line $?LINE&#34;
 
-  say &#34;A CGI script&#34; if %*ENV.exists(&#39;DOCUMENT_ROOT&#39;);</pre>
+  say &#34;A CGI script&#34; if %*ENV&#60;DOCUMENT_ROOT&#62;:exists;</pre>
 
 <h3><a class='u'
 name="DESCRIPTION"
@@ -1826,6 +1818,8 @@ name="DESCRIPTION"
 <pre>  my $block = { say $:stuff }
   my $sub   = sub (:$stuff) { say $stuff }</pre>
 
+<p>Using both <i>self-declared parameters</i> and a signature will result in an error, as you can only have one of the two.</p>
+
 <p>The <code>?</code> twigil stands for variables and constants that are known at compile time, like <code>$?LINE</code> for the current line number (formerly <code>__LINE__</code>), and <code>$?DATA</code> is the file handle to the <code>DATA</code> section.</p>
 
 <p>Contextual variables can be accessed with the <code>*</code> twigil, so <code>$*IN</code> and <code>$*OUT</code> can be overridden dynamically.</p>
@@ -1856,7 +1850,7 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>  enum bit Bool &#60;False True&#62;;
+<pre>  enum Bool &#60;False True&#62;;
   my $value = $arbitrary_value but True;
   if $value {
       say &#34;Yes, it&#39;s true&#34;;       # will be printed
@@ -1887,7 +1881,7 @@ name="DESCRIPTION"
 
 <p>The value of first constant is 0, the next 1 and so on, unless you explicitly provide another value with pair notation:</p>
 
-<pre>  Enum Hackers (:Larry&#60;Perl&#62;, :Guido&#60;Python&#62;, :Paul&#60;Lisp&#62;);</pre>
+<pre>  enum Hackers (:Larry&#60;Perl&#62;, :Guido&#60;Python&#62;, :Paul&#60;Lisp&#62;);</pre>
 
 <p>You can check if a specific value was mixed in by using the versatile smart match operator, or with <code>.does</code>:</p>
 

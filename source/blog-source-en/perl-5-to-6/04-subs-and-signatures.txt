@@ -87,9 +87,9 @@ name="Named_Parameters"
 <pre>    my $r = Rectangle.new( 
             x       =&#62; 100, 
             y       =&#62; 200, 
-            height =&#62; 23,
-            width  =&#62; 42,
-            color  =&#62; &#39;black&#39;
+            height  =&#62; 23,
+            width   =&#62; 42,
+            color   =&#62; &#39;black&#39;
     );</pre>
 
 <p>When you see something like this, you immediately know what the specific arguments mean.</p>
@@ -103,7 +103,7 @@ name="Named_Parameters"
     area(height =&#62; 3, width =&#62; 2 ); # the same
     area(:height(3), :width(2));    # the same</pre>
 
-<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the name results in the value being <code>True</code>, and negating it results in the value being <code>False</code>:</p>
+<p>The last example uses the so-called <i>colon pair syntax</i>. Leaving off the value results in the value being <code>True</code>, and putting a negation in front of the name results in the value being <code>False</code>:</p>
 
 <pre>    :draw-perimeter                 # same as &#34;draw-perimeter =&#62; True&#34;
     :!transparent                   # same as &#34;transparent =&#62; False&#34;</pre>
@@ -114,6 +114,14 @@ name="Named_Parameters"
         return $w * $h;
     }
     area(width =&#62; 2,  height =&#62; 3);</pre>
+
+<p>Named parameters are optional by default, so the proper way to write the sub above would be</p>
+
+<pre>    sub area(:$width!, :$height!) {
+        return $width * $height;
+    }</pre>
+
+<p>The bang <code>!</code> after the parameter name makes it mandatory.</p>
 
 <h4><a class='u'
 name="Slurpy_Parameters"

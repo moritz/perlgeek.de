@@ -47,7 +47,7 @@ name="DESCRIPTION"
 name="Tree_Context"
 >Tree Context</a></h4>
 
-<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that return a list of arrays.</p>
+<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
 
 <p>Now this is solved by returning a list of <code>Parcel</code> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
 

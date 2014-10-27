@@ -69,28 +69,6 @@ name="Associativity"
     }</pre>
 
 <h4><a class='u'
-name="Postcircumfix_and_Circumfix"
->Postcircumfix and Circumfix</a></h4>
-
-<p>Postcircumfix operators are method calls:</p>
-
-<pre>    class OrderedHash is Hash {
-        method postcircumfix:&#60;{ }&#62;(Str $key) {
-            ...
-        }
-    }</pre>
-
-<p>If you call that as <code>$object{$stuff}</code>, <code>$stuff</code> will be passed as an argument to the method, and <code>$object</code> is available as <code>self</code>.</p>
-
-<p>Circumfix operators usually imply a different syntax (like in <code>my @list = &#60;a b c&#62;;</code>), and are thus implemented as macros:</p>
-
-<pre>    macro circumfix:&#171;&#60; &#62;&#187;($text) is parsed / &#60;-[&#62;]&#62;+ / {
-        return $text.comb(rx/\S+/);
-    }</pre>
-
-<p>The <code>is parsed</code> trait is followed by a regex that parses everything between the delimiters. If no such rule is given, it is parsed as normal Perl 6 code (which is usually not what you want if you introduce a new syntax). <code>Str.comb</code> searches for occurrences of a regex and returns a list of the text of all matches.</p>
-
-<h4><a class='u'
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 

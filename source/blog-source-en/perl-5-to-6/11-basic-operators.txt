@@ -41,11 +41,11 @@ name="DESCRIPTION"
 
 <p>All the numeric operators (<code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>**</code>, <code>%</code>) remain unchanged.</p>
 
-<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way.</p>
+<p>Since <code>|</code>, <code>^</code> and <code>&#38;</code> now construct junctions, the bitwise operators have a changed syntax. They now contain a context prefix, so for example <code>+|</code> is bit wise OR with numeric context, and <code>~^</code> is one&#39;s complement on a string. Bit shift operators changed in the same way, ie <code>+&#60;</code> and <code>+&#62;</code>.</p>
 
 <p>String concatenation is now <code>~</code>, the dot <code>.</code> is used for method calls.</p>
 
-<p>File tests are now formulated in <code>Pair</code> notation, Perl 5 <code>-e</code> is now <code>:e</code>. If something other than <code>$_</code> should be used as the file name, it can be supplied via <code>$filename.path ~~ :e</code>.</p>
+<p>File tests are now done by smart matching a path object against a simple <code>Pair</code>; Perl 5 <code>-e</code> would now be <code>$_.path ~~ :e</code>.</p>
 
 <p>The repetition operator <code>x</code> is now split into two operators: <code>x</code> replicates strings, <code>xx</code> lists.</p>
 

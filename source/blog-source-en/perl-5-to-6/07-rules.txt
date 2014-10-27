@@ -94,12 +94,12 @@ name="Syntax_clean_up"
 
 <pre>    m/&#39;a literal text: $#@!!&#39;/</pre>
 
-<p>The changed semantics of <code>.</code> has already been mentioned, and also that <code>[...]</code> now construct non-capturing groups. Char classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string respectively, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
+<p>The change in semantics of <code>.</code> has already been mentioned, and also that <code>[...]</code> now construct non-capturing groups. Character classes are <code>&#60;[...]&#62;</code>, and negated char classes <code>&#60;-[...]&#62;</code>. <code>^</code> and <code>$</code> always match begin and end of the string respectively, to match begin and end of lines use <code>^^</code> and <code>$$</code>.</p>
 
 <p>This means that the <code>/s</code> and <code>/m</code> modifiers are gone. Modifiers are now given at the start of a regex, and are given in this notation:</p>
 
 <pre>    if &#34;abc&#34; ~~ m:i/B/ {
-        say &#34;Match&#34;;
+        say &#34;Matched a B.&#34;;
     }</pre>
 
 <p>... which happens to be the same as the <i>colon pair</i> notation that you can use for passing named arguments to routines.</p>
@@ -154,6 +154,8 @@ name="Named_Regexes_and_Grammars"
 <p>The difference is that <code>token</code> implies the <code>:ratchet</code> modifier (which means no backtracking, like a <code>(?&#62; ... )</code> group around each part of the regex in perl 5), and <code>rule</code> implies both <code>:ratchet</code> and <code>:sigspace</code>.</p>
 
 <p>To call such a rule (we&#39;ll call them all rules, independently with which keyword they were declared) you put the name in angle brackets: <code>&#60;a&#62;</code>. This implicitly anchors the sub rule to its current position in the string, and stores the result in the match object in <code>$/&#60;a&#62;</code>, ie it&#39;s a named capture. You can also call a rule without capturing its result by prefixing its name with a dot: <code>&#60;.a&#62;</code>.</p>
+
+<p>If you want to refer to a rule outside of a Grammar, you need to call them with a routine sigil, like <code>&#60;&#38;other&#62;</code>.</p>
 
 <p>A grammar is a group of rules, just like a class (see the SYNOPSIS for an example). Grammars can inherit, override rules and so on.</p>
 

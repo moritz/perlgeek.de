@@ -58,9 +58,9 @@ name="Methods"
 
 <p>Methods are declared with the <code>method</code> keyword. Inside the method you can use the term <code>self</code> to refer to the object on which the method is called (the <i>invocant</i>).</p>
 
-<p>You can also give the invocant a different name by adding a first parameter to the signature list and append a colon <code>:</code> to it.</p>
+<p>You can also give the invocant a different name by adding a first parameter to the signature list and appending a colon <code>:</code> to it.</p>
 
-<p>Public methods can be called with the syntax <code>$object.method</code> if it takes no arguments, and <code>$object.method(@args)</code> or <code>$object.method: @args</code> if it takes arguments.</p>
+<p>Public methods can be called with the syntax <code>$object.method</code> if it takes no arguments, and <code>$object.method($arg, $foo)</code> or <code>$object.method: $arg, $foo</code> if it takes arguments.</p>
 
 <pre>    class SomeClass {
         # these two methods do nothing but return the invocant
@@ -74,7 +74,7 @@ name="Methods"
     my SomeClass $x .= new;
     $x.foo.bar                      # same as $x</pre>
 
-<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x = SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;typo object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
+<p>(The <code>my SomeClass $x .= new</code> is actually a shorthand for <code>my SomeClass $x = SomeClass.new</code>. It works because the type declaration fills the variable with a &#34;type object&#34; of <code>SomeClass</code>, which is an object representing the class.)</p>
 
 <p>Methods can also take additional arguments just like subs.</p>
 
@@ -90,7 +90,7 @@ name="Methods"
         }
     }</pre>
 
-<p>Private methods can&#39;t be called from outside the class.</p>
+<p>Private methods can&#39;t be called from outside the class and private methods are only looked up in the current class, not its parent classes.</p>
 
 <h4><a class='u'
 name="Attributes"
@@ -104,21 +104,22 @@ name="Attributes"
         has $.c is rw;
 
         method set_stuff {
-            $!a = 1;    # ok, writing to attribute from within the clas
+            $!a = 1;    # ok, writing to attribute from within the class
             $!b = 2;    # same
             $.b = 3;    # ERROR, can&#39;t write to ro-accessor
+            $.c = 4;    # ok, the accessor is rw
         }
 
         method do_stuff {
             # you can use the private name instead of the public one
-            # $!b and $.b are really the same thing
+            # $!b and $.b do the same thing by default
             return $!a + $!b + $!c;
         }
     }
     my $x = SomeClass.new;
-    say $x.a;       # ERROR!
+    say $x.a;       # ERROR!  a is private
     say $x.b;       # ok
-    $x.b = 2;       # ERROR!
+    $x.b = 2;       # ERROR!  b is not declared &#34;rw&#34;
     $x.c = 3;       # ok</pre>
 
 <h4><a class='u'
@@ -132,7 +133,7 @@ name="Inheritance"
         ...
     }</pre>
 
-<p>All the usual inheritance rules apply - methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conforming to that of a parent class:</p>
+<p>All the usual inheritance rules apply - public methods are first looked up on the direct type, and if that fails, on the parent class (recursively). Likewise the type of a child class is conforming to that of a parent class:</p>
 
 <pre>        class Bar { }
         class Foo is Bar { }
@@ -152,13 +153,13 @@ name="Inheritance"
 name="Roles_and_Composition"
 >Roles and Composition</a></h4>
 
-<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance does.</p>
+<p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance would do.</p>
 
 <p>While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
 
 <pre>    role Paintable {
         has $.colour is rw;
-        method paint { ... }
+        method paint { ... } # literal ...
     }
     class Shape {
         method area { ... }
