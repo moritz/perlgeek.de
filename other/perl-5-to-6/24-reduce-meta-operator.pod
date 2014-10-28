@@ -29,13 +29,14 @@ This is a very powerful construct that promotes the plus C<+> operator into a
 C<sum> function, C<~> into a C<join> (with empty separator) and so on. It is
 somewhat similar to the C<List.reduce> function, and if you had some exposure
 to functional programming, you'll probably know about C<foldl> and C<foldr>
-(in Lisp or Haskell). Unlike those C<[...]> respects the associativity of the
+(in Lisp or Haskell). Unlike those, C<[...]> respects the associativity of the
 enclosed operator, so C<[/] 1, 2, 3> is interpreted as C<(1 / 2) / 3> (left
 associative), C<[**] 1, 2, 3> is handled correctly as C<1 ** (2**3)> (right
 associative).
 
-Like all other operators whitespaces are forbidden, so you while you can write
-C<[+]>, you can't say C<[ + ]>.
+Like all other operators, whitespace are forbidden, so you while you can write
+C<[+]>, you can't say C<[ + ]>. (This also helps to disambiguate it from array
+literals).
 
 Since comparison operators can be chained, you can also write things like
 
@@ -43,14 +44,10 @@ Since comparison operators can be chained, you can also write things like
     elsif [<]  @nums { say "@nums is in strict ascending order" }
     elsif [<=] @nums { say "@nums is in ascending order"}
 
-You can even reduce the assignment operator:
+However you cannot reduce the assignment operator:
 
     my @a = 1..3;
-    [=] @a, 4;          # same as @a[0] = @a[1] = @a[2] = 4;
-
-Note that C<[...]> always returns a scalar, so C<[,] @list> is actually the
-same as C<[@list]>.
-
+    [=] @a, 4;          # Cannot reduce with = because list assignment operators are too fiddly
 
 =head2 Getting partial results
 
@@ -74,10 +71,11 @@ Multiple reduction operators can be combined:
 Programmers are lazy, and don't want to write a loop just to apply a binary
 operator to all elements of a list. C<List.reduce> does something similar, but
 it's not as terse as the meta operator (C<[+] @list> would be
-C<< @list.reduce(&infix:<+>) >>), and takes care of the associativity of the
-operator.
+C<< @list.reduce(&infix:<+>) >>).
+Also with reduce you have to takes care of the associativity of the operator
+yourself, whereas the meta operator handles it for you.
 
-If you're not convinced, play a bit with it (pugs mostly implements it), it's
+If you're not convinced, play a bit with it (rakudo implements it), it's
 real fun.
 
 =head1 SEE ALSO
