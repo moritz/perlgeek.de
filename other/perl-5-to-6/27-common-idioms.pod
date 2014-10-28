@@ -14,7 +14,7 @@
 
   # create a hash from an array, with
   # true value for each array item:
-  my %exists = @keys Z=> 1 xx *;
+  my %exists = @keys X=> True;
 
   # limit a value to a given range, here 0..10.
   my $x = -2;
@@ -64,10 +64,10 @@ For existence checks, the values in a hash often doesn't matter, as long as
 they all evaluate to C<True> in boolean context. In that case, a nice way to
 initialize the hash from a given array or list of keys is
 
-  my %exists = @keys Z=> 1 xx *;
+  my %exists = @keys X=> True;
 
-which uses a lazy, infinite list of 1s on the right-hand side, and relies on
-the fact that C<Z> ends when the shorter list is exhausted.
+which uses the cross meta operator to use the single value C<True> for
+every item in C<@keys>.
 
 =head2 Numbers
 
