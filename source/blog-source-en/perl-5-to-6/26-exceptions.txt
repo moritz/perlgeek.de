@@ -25,9 +25,9 @@ name="DESCRIPTION"
 
 <p>Exceptions are, contrary to their name, nothing exceptional. In fact they are part of the normal control flow of programs in Perl 6.</p>
 
-<p>Exceptions are generated either by implicit errors (for example dividing by zero, calling a non-existing method, type check failures) or by explicitly calling <code>die</code> or other functions.</p>
+<p>Exceptions are generated either by implicit errors (for example calling a non-existing method, or type check failures) or by explicitly calling <code>die</code> or other functions.</p>
 
-<p>When an exception is thrown, the program searches for <code>CATCH</code> statements or <code>try</code> blocks in the caller frames, unwinding the stack all the way (that means it forcibly returns from all routines called so far). If no <code>CATCH</code> or <code>try</code> is found, the program terminates, and prints out a hopefully helpful error message. If one was found, the error message is stored in the special variable <code>$!</code>, and the <code>CATCH</code> block is executed (or in the case of a <code>try</code> without a CATCH block the try block returns <code>undef</code>).</p>
+<p>When an exception is thrown, the program searches for <code>CATCH</code> statements or <code>try</code> blocks in the caller frames, unwinding the stack all the way (that means it forcibly returns from all routines called so far). If no <code>CATCH</code> or <code>try</code> is found, the program terminates, and prints out a hopefully helpful error message. If one was found, the error message is stored in the special variable <code>$!</code>, and the <code>CATCH</code> block is executed (or in the case of a <code>try</code> without a CATCH block the try block returns <code>Any</code>).</p>
 
 <p>So far exceptions might still sound exceptional, but error handling is integral part of each non-trivial application. But even more, normal <code>return</code> statements also throw exceptions!</p>
 
@@ -36,18 +36,18 @@ name="DESCRIPTION"
 <p>Consider this example:</p>
 
 <pre>    use v6;
-    my $block = -&#62; { return &#34;block&#34;; say &#34;still here&#34; };
 
     sub s {
-        $block.();
+        my $block = -&#62; { return &#34;block&#34;; say &#34;still here&#34; };
+        $block();
         return &#34;sub&#34;;
     }
 
-    say s();</pre>
+    say s();    # block</pre>
 
 <p>Here the <code>return &#34;block&#34;</code> throws a control exception, causing it to not only exit the current block (and thus not printing <code>still here</code> on the screen), but also exiting the subroutine, where it is caught by the <code>sub s...</code> declaration. The payload, here a string, is handed back as the return value, and the <code>say</code> in the last line prints it to the screen.</p>
 
-<p>Embedding the call <code>$block.()</code> in a <code>try { ... }</code> block or adding a <code>CONTROL { ... }</code> block to the body of the routine causes it to catch the exception.</p>
+<p>Adding a <code>CONTROL { ... }</code> block to the scope in which <code>$block</code> is called causes it to catch the control exception.</p>
 
 <p>Contrary to what other programming languages do, the <code>CATCH</code>/<code>CONTROL</code> blocks are within the scope in which the error is caught (not on the outside), giving it full access to the lexical variables, which makes it easier to generate useful error message, and also prevents DESTROY blocks from being run before the error is handled.</p>
 
@@ -60,7 +60,7 @@ name="Unthrown_exceptions"
 <p>When a function calls <code>fail($obj)</code>, it returns a special value of <code>undef</code>, which contains the payload <code>$obj</code> (usually an error message) and the back trace (file name and line number). Processing that special undefined value without check if it&#39;s undefined causes a normal exception to be thrown.</p>
 
 <pre>    my @files = &#60;/etc/passwd /etc/shadow nonexisting&#62;;
-    my @handles = hyper map { open($_) }, @files;</pre>
+    my @handles = hyper map { open($_) }, @files; # hyper not yet implement</pre>
 
 <p>In this example the <code>hyper</code> operator tells <code>map</code> to parallelize its actions as far as possible. When the opening of the <code>nonexisting</code> file fails, an ordinary <code>die &#34;No such file or directory&#34;</code> would also abort the execution of all other <code>open</code> operations. But since a failed open calls <code>fail(&#34;No such file or directory&#34;</code> instead, it gives the caller the possibility to check the contents of <code>@handles</code>, and it <i>still has access to the full error message</i>.</p>
 

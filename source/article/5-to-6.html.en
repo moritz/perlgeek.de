@@ -2053,7 +2053,24 @@ name="Dynamic_scoping"
 
 <p>The <code>local</code> adjective is now called <code>temp</code>, and if it&#39;s not followed by an initialization the previous value of that variable is used (not <code>undef</code>).</p>
 
-<p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception, then the previous value of the variable is restored. If not, it is kept.</p>
+<p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception or a false value,, then the previous value of the variable is restored. If not, it is kept:</p>
+
+<pre>    use v6;
+
+    my $x = 0;
+
+    sub tryit($success) {
+        let $x = 42;
+        die &#34;Not like this!&#34; unless $success;
+        return True;
+    }
+
+    tryit True;
+    say $x;             # 42
+
+    $x = 0;
+    try tryit False;
+    say $x;             # 0</pre>
 
 <h4><a class='u'
 name="Context_variables"
@@ -2139,11 +2156,11 @@ name="SYNOPSIS"
     }
 
     # match with implicit :sigspace modifier
-    if &#39;ab cd ef&#39;  ~~ mm/ (..) ** 2 / {
-        say $1;                 # cd
+    if &#39;ab cd ef&#39;  ~~ ms/ (..) ** 2 / {
+        say $0[1];              # cd
     }
 
-    # substitute with the :sigspace modifier
+    # substitute with the :samespace modifier
     my $x = &#34;abc     defg&#34;;
     $x ~~ ss/c d/x y/;
     say $x;                     # abx     yefg</pre>
@@ -2158,18 +2175,18 @@ name="DESCRIPTION"
 name="Matching"
 >Matching</a></h4>
 
-<p>You don&#39;t need to write grammars to match regexes, the traditional form <code>m/.../</code> still works, and has a new brother, the <code>mm/.../</code> form, which implies the <code>:sigspace</code> modifier. Remember, that means that whitespaces in the regex are substituted by the <code>&#60;.ws&#62;</code> rule.</p>
+<p>You don&#39;t need to write grammars to match regexes, the traditional form <code>m/.../</code> still works, and has a new brother, the <code>ms/.../</code> form, which implies the <code>:sigspace</code> modifier. Remember, that means that whitespaces in the regex are substituted by the <code>&#60;.ws&#62;</code> rule.</p>
 
 <p>The default for the rule is to match <code>\s+</code> if it is surrounded by two word-characters (ie those matching those <code>\w</code>), and <code>\s*</code> otherwise.</p>
 
-<p>In substitutions the <code>:samespace</code> modifier takes care that whitespaces matched with the <code>ws</code> rule are preserved. Likewise the <code>:samecase</code> modifier, short <code>:ii</code> (since it&#39;s a variant of <code>:i</code>) preserve case.</p>
+<p>In substitutions the <code>:samespace</code> modifier takes care that whitespaces matched with the <code>ws</code> rule are preserved. Likewise the <code>:samecase</code> modifier, short <code>:ii</code> (since it&#39;s a variant of <code>:i</code>) preserves case.</p>
 
 <pre>    my $x = &#39;Abcd&#39;;
     $x ~~ s:ii/^../foo/;
     say $x;                     # Foocd
-    $x = &#39;ABC&#39;
+    $x = &#39;ABC&#39;;
     $x ~~ s:ii/^../foo/;
-    say $x                      # FOO</pre>
+    say $x                      # FOOC</pre>
 
 <p>This is very useful if you want to globally rename your module <code>Foo</code>, to <code>Bar</code>, but for example in environment variables it is written as all uppercase. With the <code>:ii</code> modifier the case is automatically preserved.</p>
 
@@ -2499,12 +2516,12 @@ name="NAME"
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
-<pre>    subset Squares of Int where { .sqrt.Int**2 == $_ };
+<pre>    subset Squares of Real where { .sqrt.Int**2 == $_ };
 
     multi sub square_root(Squares $x --&#62; Int) {
         return $x.sqrt.Int;
     }
-    multi sub square_root(Num $x --&#62; Num) {
+    multi sub square_root(Real $x --&#62; Real) {
         return $x.sqrt;
     }</pre>
 
@@ -2733,7 +2750,7 @@ name="Quoting"
 
 <pre>    my $stuff = &#34;honey&#34;;
     my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
-    say @list[*-1];                     # prints with\nfunny\nescapes</pre>
+    say @list[*-1];                     # with\nfunny\nescapes</pre>
 
 <p>Here&#39;s a list of what modifiers are available, mostly stolen from S02 directly. All of these also have long names, which I omitted here.</p>
 
@@ -2779,7 +2796,7 @@ name="Parsing"
 
 <pre>    if($x&#60;3)</pre>
 
-<p>is parsed as a call to sub <code>if</code>. You can disambiguate with whitespaces:</p>
+<p>is parsed as a call to sub <code>if</code>. You can disambiguate with whitespace:</p>
 
 <pre>    if ($x &#60; 3) { say &#39;&#60;3&#39; }</pre>
 
@@ -2787,7 +2804,7 @@ name="Parsing"
 
 <pre>    if $x &#60; 3 { say &#39;&#60;3&#39; }</pre>
 
-<p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are only special if used in a special syntax.</p>
+<p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are not reserved in the sense that identifiers are restricted to non-keywords.</p>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -2836,9 +2853,9 @@ name="Description"
 
 <p>The reduction meta operator <code>[...]</code> can enclose any associative infix operator, and turn it into a list operator. This happens as if the operator was just put between the items of the list, so <code>[op] $i1, $i2, @rest</code> returns the same result as if it was written as <code>$i1 op $i2 op @rest[0] op @rest[1] ...</code>.</p>
 
-<p>This is a very powerful construct that promotes the plus <code>+</code> operator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
+<p>This is a very powerful construct that promotes the plus <code>+</code> operator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those, <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
 
-<p>Like all other operators whitespaces are forbidden, so you while you can write <code>[+]</code>, you can&#39;t say <code>[ + ]</code>.</p>
+<p>Like all other operators, whitespace are forbidden, so you while you can write <code>[+]</code>, you can&#39;t say <code>[ + ]</code>. (This also helps to disambiguate it from array literals).</p>
 
 <p>Since comparison operators can be chained, you can also write things like</p>
 
@@ -2846,12 +2863,10 @@ name="Description"
     elsif [&#60;]  @nums { say &#34;@nums is in strict ascending order&#34; }
     elsif [&#60;=] @nums { say &#34;@nums is in ascending order&#34;}</pre>
 
-<p>You can even reduce the assignment operator:</p>
+<p>However you cannot reduce the assignment operator:</p>
 
 <pre>    my @a = 1..3;
-    [=] @a, 4;          # same as @a[0] = @a[1] = @a[2] = 4;</pre>
-
-<p>Note that <code>[...]</code> always returns a scalar, so <code>[,] @list</code> is actually the same as <code>[@list]</code>.</p>
+    [=] @a, 4;          # Cannot reduce with = because list assignment operators are too fiddly</pre>
 
 <h4><a class='u'
 name="Getting_partial_results"
@@ -2873,9 +2888,9 @@ name="Getting_partial_results"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Programmers are lazy, and don&#39;t want to write a loop just to apply a binary operator to all elements of a list. <code>List.reduce</code> does something similar, but it&#39;s not as terse as the meta operator (<code>[+] @list</code> would be <code>@list.reduce(&#38;infix:&#60;+&#62;)</code>), and takes care of the associativity of the operator.</p>
+<p>Programmers are lazy, and don&#39;t want to write a loop just to apply a binary operator to all elements of a list. <code>List.reduce</code> does something similar, but it&#39;s not as terse as the meta operator (<code>[+] @list</code> would be <code>@list.reduce(&#38;infix:&#60;+&#62;)</code>). Also with reduce you have to takes care of the associativity of the operator yourself, whereas the meta operator handles it for you.</p>
 
-<p>If you&#39;re not convinced, play a bit with it (pugs mostly implements it), it&#39;s real fun.</p>
+<p>If you&#39;re not convinced, play a bit with it (rakudo implements it), it&#39;s real fun.</p>
 
 <h3><a class='u'
 name="SEE_ALSO"
@@ -2905,8 +2920,8 @@ name="SYNOPSIS"
     # output: a: 1  a: 2  a: 3  b: 1  b: 2  b: 3
 
     .say for &#60;a b c&#62; X 1, 2;
-    # output: a1\n a2\n b1\n b2\n c1\n c2\n
-    # (with real newlines instead of \n)</pre>
+    # output: a 1 a 2 b 1 b 2 c 1 c 2
+    # (with newlines instead of spaces)</pre>
 
 <h3><a class='u'
 name="DESCRIPTION"
@@ -2959,9 +2974,9 @@ name="DESCRIPTION"
 
 <p>Exceptions are, contrary to their name, nothing exceptional. In fact they are part of the normal control flow of programs in Perl 6.</p>
 
-<p>Exceptions are generated either by implicit errors (for example dividing by zero, calling a non-existing method, type check failures) or by explicitly calling <code>die</code> or other functions.</p>
+<p>Exceptions are generated either by implicit errors (for example calling a non-existing method, or type check failures) or by explicitly calling <code>die</code> or other functions.</p>
 
-<p>When an exception is thrown, the program searches for <code>CATCH</code> statements or <code>try</code> blocks in the caller frames, unwinding the stack all the way (that means it forcibly returns from all routines called so far). If no <code>CATCH</code> or <code>try</code> is found, the program terminates, and prints out a hopefully helpful error message. If one was found, the error message is stored in the special variable <code>$!</code>, and the <code>CATCH</code> block is executed (or in the case of a <code>try</code> without a CATCH block the try block returns <code>undef</code>).</p>
+<p>When an exception is thrown, the program searches for <code>CATCH</code> statements or <code>try</code> blocks in the caller frames, unwinding the stack all the way (that means it forcibly returns from all routines called so far). If no <code>CATCH</code> or <code>try</code> is found, the program terminates, and prints out a hopefully helpful error message. If one was found, the error message is stored in the special variable <code>$!</code>, and the <code>CATCH</code> block is executed (or in the case of a <code>try</code> without a CATCH block the try block returns <code>Any</code>).</p>
 
 <p>So far exceptions might still sound exceptional, but error handling is integral part of each non-trivial application. But even more, normal <code>return</code> statements also throw exceptions!</p>
 
@@ -2970,18 +2985,18 @@ name="DESCRIPTION"
 <p>Consider this example:</p>
 
 <pre>    use v6;
-    my $block = -&#62; { return &#34;block&#34;; say &#34;still here&#34; };
 
     sub s {
-        $block.();
+        my $block = -&#62; { return &#34;block&#34;; say &#34;still here&#34; };
+        $block();
         return &#34;sub&#34;;
     }
 
-    say s();</pre>
+    say s();    # block</pre>
 
 <p>Here the <code>return &#34;block&#34;</code> throws a control exception, causing it to not only exit the current block (and thus not printing <code>still here</code> on the screen), but also exiting the subroutine, where it is caught by the <code>sub s...</code> declaration. The payload, here a string, is handed back as the return value, and the <code>say</code> in the last line prints it to the screen.</p>
 
-<p>Embedding the call <code>$block.()</code> in a <code>try { ... }</code> block or adding a <code>CONTROL { ... }</code> block to the body of the routine causes it to catch the exception.</p>
+<p>Adding a <code>CONTROL { ... }</code> block to the scope in which <code>$block</code> is called causes it to catch the control exception.</p>
 
 <p>Contrary to what other programming languages do, the <code>CATCH</code>/<code>CONTROL</code> blocks are within the scope in which the error is caught (not on the outside), giving it full access to the lexical variables, which makes it easier to generate useful error message, and also prevents DESTROY blocks from being run before the error is handled.</p>
 
@@ -2994,7 +3009,7 @@ name="Unthrown_exceptions"
 <p>When a function calls <code>fail($obj)</code>, it returns a special value of <code>undef</code>, which contains the payload <code>$obj</code> (usually an error message) and the back trace (file name and line number). Processing that special undefined value without check if it&#39;s undefined causes a normal exception to be thrown.</p>
 
 <pre>    my @files = &#60;/etc/passwd /etc/shadow nonexisting&#62;;
-    my @handles = hyper map { open($_) }, @files;</pre>
+    my @handles = hyper map { open($_) }, @files; # hyper not yet implement</pre>
 
 <p>In this example the <code>hyper</code> operator tells <code>map</code> to parallelize its actions as far as possible. When the opening of the <code>nonexisting</code> file fails, an ordinary <code>die &#34;No such file or directory&#34;</code> would also abort the execution of all other <code>open</code> operations. But since a failed open calls <code>fail(&#34;No such file or directory&#34;</code> instead, it gives the caller the possibility to check the contents of <code>@handles</code>, and it <i>still has access to the full error message</i>.</p>
 
@@ -3030,7 +3045,7 @@ name="SYNOPSIS"
 
   # create a hash from an array, with
   # true value for each array item:
-  my %exists = @keys Z=&#62; 1 xx *;
+  my %exists = @keys X=&#62; True;
 
   # limit a value to a given range, here 0..10.
   my $x = -2;
@@ -3072,9 +3087,9 @@ name="Hashes"
 
 <p>For existence checks, the values in a hash often doesn&#39;t matter, as long as they all evaluate to <code>True</code> in boolean context. In that case, a nice way to initialize the hash from a given array or list of keys is</p>
 
-<pre>  my %exists = @keys Z=&#62; 1 xx *;</pre>
+<pre>  my %exists = @keys X=&#62; True;</pre>
 
-<p>which uses a lazy, infinite list of 1s on the right-hand side, and relies on the fact that <code>Z</code> ends when the shorter list is exhausted.</p>
+<p>which uses the cross meta operator to use the single value <code>True</code> for every item in <code>@keys</code>.</p>
 
 <h4><a class='u'
 name="Numbers"

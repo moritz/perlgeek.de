@@ -29,9 +29,9 @@ name="Description"
 
 <p>The reduction meta operator <code>[...]</code> can enclose any associative infix operator, and turn it into a list operator. This happens as if the operator was just put between the items of the list, so <code>[op] $i1, $i2, @rest</code> returns the same result as if it was written as <code>$i1 op $i2 op @rest[0] op @rest[1] ...</code>.</p>
 
-<p>This is a very powerful construct that promotes the plus <code>+</code> operator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
+<p>This is a very powerful construct that promotes the plus <code>+</code> operator into a <code>sum</code> function, <code>~</code> into a <code>join</code> (with empty separator) and so on. It is somewhat similar to the <code>List.reduce</code> function, and if you had some exposure to functional programming, you&#39;ll probably know about <code>foldl</code> and <code>foldr</code> (in Lisp or Haskell). Unlike those, <code>[...]</code> respects the associativity of the enclosed operator, so <code>[/] 1, 2, 3</code> is interpreted as <code>(1 / 2) / 3</code> (left associative), <code>[**] 1, 2, 3</code> is handled correctly as <code>1 ** (2**3)</code> (right associative).</p>
 
-<p>Like all other operators whitespaces are forbidden, so you while you can write <code>[+]</code>, you can&#39;t say <code>[ + ]</code>.</p>
+<p>Like all other operators, whitespace are forbidden, so you while you can write <code>[+]</code>, you can&#39;t say <code>[ + ]</code>. (This also helps to disambiguate it from array literals).</p>
 
 <p>Since comparison operators can be chained, you can also write things like</p>
 
@@ -39,12 +39,10 @@ name="Description"
     elsif [&#60;]  @nums { say &#34;@nums is in strict ascending order&#34; }
     elsif [&#60;=] @nums { say &#34;@nums is in ascending order&#34;}</pre>
 
-<p>You can even reduce the assignment operator:</p>
+<p>However you cannot reduce the assignment operator:</p>
 
 <pre>    my @a = 1..3;
-    [=] @a, 4;          # same as @a[0] = @a[1] = @a[2] = 4;</pre>
-
-<p>Note that <code>[...]</code> always returns a scalar, so <code>[,] @list</code> is actually the same as <code>[@list]</code>.</p>
+    [=] @a, 4;          # Cannot reduce with = because list assignment operators are too fiddly</pre>
 
 <h4><a class='u'
 name="Getting_partial_results"
@@ -66,9 +64,9 @@ name="Getting_partial_results"
 name="MOTIVATION"
 >MOTIVATION</a></h3>
 
-<p>Programmers are lazy, and don&#39;t want to write a loop just to apply a binary operator to all elements of a list. <code>List.reduce</code> does something similar, but it&#39;s not as terse as the meta operator (<code>[+] @list</code> would be <code>@list.reduce(&#38;infix:&#60;+&#62;)</code>), and takes care of the associativity of the operator.</p>
+<p>Programmers are lazy, and don&#39;t want to write a loop just to apply a binary operator to all elements of a list. <code>List.reduce</code> does something similar, but it&#39;s not as terse as the meta operator (<code>[+] @list</code> would be <code>@list.reduce(&#38;infix:&#60;+&#62;)</code>). Also with reduce you have to takes care of the associativity of the operator yourself, whereas the meta operator handles it for you.</p>
 
-<p>If you&#39;re not convinced, play a bit with it (pugs mostly implements it), it&#39;s real fun.</p>
+<p>If you&#39;re not convinced, play a bit with it (rakudo implements it), it&#39;s real fun.</p>
 
 <h3><a class='u'
 name="SEE_ALSO"

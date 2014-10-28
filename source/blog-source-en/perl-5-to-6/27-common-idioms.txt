@@ -19,7 +19,7 @@ name="SYNOPSIS"
 
   # create a hash from an array, with
   # true value for each array item:
-  my %exists = @keys Z=&#62; 1 xx *;
+  my %exists = @keys X=&#62; True;
 
   # limit a value to a given range, here 0..10.
   my $x = -2;
@@ -61,9 +61,9 @@ name="Hashes"
 
 <p>For existence checks, the values in a hash often doesn&#39;t matter, as long as they all evaluate to <code>True</code> in boolean context. In that case, a nice way to initialize the hash from a given array or list of keys is</p>
 
-<pre>  my %exists = @keys Z=&#62; 1 xx *;</pre>
+<pre>  my %exists = @keys X=&#62; True;</pre>
 
-<p>which uses a lazy, infinite list of 1s on the right-hand side, and relies on the fact that <code>Z</code> ends when the shorter list is exhausted.</p>
+<p>which uses the cross meta operator to use the single value <code>True</code> for every item in <code>@keys</code>.</p>
 
 <h4><a class='u'
 name="Numbers"

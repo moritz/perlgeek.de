@@ -17,11 +17,11 @@ name="SYNOPSIS"
     }
 
     # match with implicit :sigspace modifier
-    if &#39;ab cd ef&#39;  ~~ mm/ (..) ** 2 / {
-        say $1;                 # cd
+    if &#39;ab cd ef&#39;  ~~ ms/ (..) ** 2 / {
+        say $0[1];              # cd
     }
 
-    # substitute with the :sigspace modifier
+    # substitute with the :samespace modifier
     my $x = &#34;abc     defg&#34;;
     $x ~~ ss/c d/x y/;
     say $x;                     # abx     yefg</pre>
@@ -36,18 +36,18 @@ name="DESCRIPTION"
 name="Matching"
 >Matching</a></h4>
 
-<p>You don&#39;t need to write grammars to match regexes, the traditional form <code>m/.../</code> still works, and has a new brother, the <code>mm/.../</code> form, which implies the <code>:sigspace</code> modifier. Remember, that means that whitespaces in the regex are substituted by the <code>&#60;.ws&#62;</code> rule.</p>
+<p>You don&#39;t need to write grammars to match regexes, the traditional form <code>m/.../</code> still works, and has a new brother, the <code>ms/.../</code> form, which implies the <code>:sigspace</code> modifier. Remember, that means that whitespaces in the regex are substituted by the <code>&#60;.ws&#62;</code> rule.</p>
 
 <p>The default for the rule is to match <code>\s+</code> if it is surrounded by two word-characters (ie those matching those <code>\w</code>), and <code>\s*</code> otherwise.</p>
 
-<p>In substitutions the <code>:samespace</code> modifier takes care that whitespaces matched with the <code>ws</code> rule are preserved. Likewise the <code>:samecase</code> modifier, short <code>:ii</code> (since it&#39;s a variant of <code>:i</code>) preserve case.</p>
+<p>In substitutions the <code>:samespace</code> modifier takes care that whitespaces matched with the <code>ws</code> rule are preserved. Likewise the <code>:samecase</code> modifier, short <code>:ii</code> (since it&#39;s a variant of <code>:i</code>) preserves case.</p>
 
 <pre>    my $x = &#39;Abcd&#39;;
     $x ~~ s:ii/^../foo/;
     say $x;                     # Foocd
-    $x = &#39;ABC&#39;
+    $x = &#39;ABC&#39;;
     $x ~~ s:ii/^../foo/;
-    say $x                      # FOO</pre>
+    say $x                      # FOOC</pre>
 
 <p>This is very useful if you want to globally rename your module <code>Foo</code>, to <code>Bar</code>, but for example in environment variables it is written as all uppercase. With the <code>:ii</code> modifier the case is automatically preserved.</p>
 

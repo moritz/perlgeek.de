@@ -66,7 +66,24 @@ name="Dynamic_scoping"
 
 <p>The <code>local</code> adjective is now called <code>temp</code>, and if it&#39;s not followed by an initialization the previous value of that variable is used (not <code>undef</code>).</p>
 
-<p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception, then the previous value of the variable is restored. If not, it is kept.</p>
+<p>There&#39;s also a new kind of dynamically scoped variable called a <i>hypothetical</i> variable. If the block is left with an exception or a false value,, then the previous value of the variable is restored. If not, it is kept:</p>
+
+<pre>    use v6;
+
+    my $x = 0;
+
+    sub tryit($success) {
+        let $x = 42;
+        die &#34;Not like this!&#34; unless $success;
+        return True;
+    }
+
+    tryit True;
+    say $x;             # 42
+
+    $x = 0;
+    try tryit False;
+    say $x;             # 0</pre>
 
 <h4><a class='u'
 name="Context_variables"

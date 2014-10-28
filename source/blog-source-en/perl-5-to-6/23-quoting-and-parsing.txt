@@ -44,7 +44,7 @@ name="Quoting"
 
 <pre>    my $stuff = &#34;honey&#34;;
     my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
-    say @list[*-1];                     # prints with\nfunny\nescapes</pre>
+    say @list[*-1];                     # with\nfunny\nescapes</pre>
 
 <p>Here&#39;s a list of what modifiers are available, mostly stolen from S02 directly. All of these also have long names, which I omitted here.</p>
 
@@ -90,7 +90,7 @@ name="Parsing"
 
 <pre>    if($x&#60;3)</pre>
 
-<p>is parsed as a call to sub <code>if</code>. You can disambiguate with whitespaces:</p>
+<p>is parsed as a call to sub <code>if</code>. You can disambiguate with whitespace:</p>
 
 <pre>    if ($x &#60; 3) { say &#39;&#60;3&#39; }</pre>
 
@@ -98,7 +98,7 @@ name="Parsing"
 
 <pre>    if $x &#60; 3 { say &#39;&#60;3&#39; }</pre>
 
-<p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are only special if used in a special syntax.</p>
+<p>This implies that Perl 6 has no keywords. Actually there are keywords like <code>use</code> or <code>if</code>, but they are not reserved in the sense that identifiers are restricted to non-keywords.</p>
 
 <h3><a class='u'
 name="MOTIVATION"

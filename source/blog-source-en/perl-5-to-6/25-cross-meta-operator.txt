@@ -17,8 +17,8 @@ name="SYNOPSIS"
     # output: a: 1  a: 2  a: 3  b: 1  b: 2  b: 3
 
     .say for &#60;a b c&#62; X 1, 2;
-    # output: a1\n a2\n b1\n b2\n c1\n c2\n
-    # (with real newlines instead of \n)</pre>
+    # output: a 1 a 2 b 1 b 2 c 1 c 2
+    # (with newlines instead of spaces)</pre>
 
 <h3><a class='u'
 name="DESCRIPTION"
