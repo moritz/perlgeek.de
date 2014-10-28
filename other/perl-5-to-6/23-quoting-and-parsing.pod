@@ -43,7 +43,7 @@ form of C<qw/../> that interpolates only scalars, but nothing else? No problem:
 
     my $stuff = "honey";
     my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
-    say @list[*-1];                     # prints with\nfunny\nescapes
+    say @list[*-1];                     # with\nfunny\nescapes
 
 Here's a list of what modifiers are available, mostly stolen from S02
 directly. All of these also have long names, which I omitted here.
@@ -92,7 +92,7 @@ C<identifier(...)> is parsed as sub call. Yes, every.
 
     if($x<3)
 
-is parsed as a call to sub C<if>. You can disambiguate with whitespaces:
+is parsed as a call to sub C<if>. You can disambiguate with whitespace:
 
     if ($x < 3) { say '<3' }
 
@@ -101,7 +101,8 @@ Or just omit the parens altogether:
     if $x < 3 { say '<3' }
 
 This implies that Perl 6 has no keywords. Actually there are keywords like
-C<use> or C<if>, but they are only special if used in a special syntax.
+C<use> or C<if>, but they are not reserved in the sense that identifiers are
+restricted to non-keywords.
 
 =head1 MOTIVATION
 
@@ -111,7 +112,7 @@ sense to expose these also to the user, who gains flexibility, and can very
 easily write macros that provide a shortcut for the exact quoting semantics he
 wants.
 
-And when you limit the specialty of keywords, you have far less troubles 
+And when you limit the specialty of keywords, you have far less troubles
 with backwards compatibility if you want to change what you consider a
 "keyword".
 
