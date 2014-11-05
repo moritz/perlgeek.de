@@ -1,0 +1,73 @@
+A new Perl 6 community server - call for funding
+<!-- 1415205190 -->
+<p>So far, many Perl 6 developers have used <a
+href="http://feather.perl6.nl">feather</a> as a generic development server.
+Juerd, who has genereously provided this server for us for free for many
+years, has announced that it will be shut down at the end of the year.</p>
+
+<p>My daytime job is at a b2b <a href="http://www.noris.de">IT outsourcing and
+hosting company called noris network</a>, and they have agreed to sponsor the
+hosting/housing of a 1U 19" server in one of their state-of-the-art data
+centers in Nürnberg, Germany.</p>
+
+<p>What's missing is the actual hardware. Some folks in the community have
+already agreed to participate in funding the hardware, though I have few
+concrete pledges.</p>
+
+<p>So here is the call to action: <b>If you want to help the Perl 6 community
+with a one-time donation towards a new community server</b>, please send me an
+e-mail to <code>moritz at faui2k3 dot org</code>, specifying the amount you're
+willing do pledge. I accept money transfer by paypal and wire transfer
+(SWIFT). Direct hardware donations are also welcome. (Though actual money will
+be deferred until the final decision what hardware to buy, and thus the total
+amount required).</p>
+
+<h2>How much do we need?</h2>
+
+<p>Decent, used 1U servers seem to start at about <a
+href="https://www.servershop24.de/server/hp/dl-series/hp-proliant-dl360-g5-2x-xeon-e5420-2-5-ghz-8-gb-146-gb/a-103757/">250€</a>,
+though <a
+href="https://www.servershop24.de/server/hp/se-serie/hp-proliant-se316m1-server-xeon-l5520-quad-core-2-27-ghz-16-gb-ram-2x-1-tb-3-5-sata/a-111307/">350€</a>
+would get us a lot more bang (mostly RAM and hard disk space). And in general,
+the more the merrier. (Cheaper offers exist, for example on ebay, but usually
+they are without hard disks, so the need for extra drives makes them more
+expensive in total).</p>
+
+<p>With more money, even beefier hardware and/or spare parts and/or
+a maintainance contract and/new hardware would be an option.</p>
+
+<h2>What do we need it for?</h2>
+
+<p>The main tasks for the server are:</p>
+
+<ul>
+    <li>Hosting websites like <a href="http://perl6.org/">perl6.org</a> and
+    the <a href="http://perlcabal.org/syn/">synopses</a></li>
+    <li>Hosting infrastructure like the panda metadata server</li>
+    <li>Be available for smoke runs of the compilers, star distributions and
+    module ecosystem.</li>
+    <li>Be available as a general development machine for people who don't
+    have linux available and/or not enough resources to build some Perl 6
+    compilers on their own machines comfortably.</li>
+    <li>A place for IRC sessions for community memebers</li>
+    <li>A backup location for community services like the <a
+    href="http://irclog.perlgeek.de/">IRC logs</a>, the camelia IRC eval bot
+    etc. Those resources are currently hosted elswewhere, though having
+    another option for hosting would be very valuable.</li>
+    <li>A webspace for people who want to host Perl 6-related material.</li>
+</li>
+
+<p>It is explicitly <i>not</i> meant as a general hosting platform, nor as a
+mail server.</p>
+
+<h2>Configuration</h2>
+
+<p>If the hardware we get is beefy enough, I'd like to virtualize the server
+into two to three components. One for hosting the perl6.org and related
+websites that should be rather stable, and one for the rest of the system. If
+resources allow it, and depending on feedback I get, maybe a third virtual
+system for high-risk stuff like evalbot.</p>
+
+<p>As operating system I'll install Debian Jessie (the current testing),
+simply because I'll end up maintaing the system, and it's the system I'm most
+familiar with.</p>
