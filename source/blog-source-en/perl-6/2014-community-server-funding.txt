@@ -71,3 +71,6 @@ system for high-risk stuff like evalbot.</p>
 <p>As operating system I'll install Debian Jessie (the current testing),
 simply because I'll end up maintaing the system, and it's the system I'm most
 familiar with.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
