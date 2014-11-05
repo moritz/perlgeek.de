@@ -17,7 +17,8 @@ concrete pledges.</p>
 <p>So here is the call to action: <b>If you want to help the Perl 6 community
 with a one-time donation towards a new community server</b>, please send me an
 e-mail to <code>moritz at faui2k3 dot org</code>, specifying the amount you're
-willing do pledge. I accept money transfer by paypal and wire transfer
+willing do pledge, and whether you want to stay private as a donor.
+I accept money transfer by paypal and wire transfer
 (SWIFT). Direct hardware donations are also welcome. (Though actual money will
 be deferred until the final decision what hardware to buy, and thus the total
 amount required).</p>
