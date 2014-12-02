@@ -1,0 +1,38 @@
+A new Perl 6 community server - update
+<!-- 1417538144 -->
+<p>In my <a href="http://perlgeek.de/blog-en/perl-6/2014-community-server-funding.html">previous post</a> I announced my plans for a new
+Perl 6 community server (successor to feather.perl6.nl), and now I'd like to
+share some updates.</p>
+
+<p>Thanks to the generosity of the Perl 6 community, the server has been
+ordered and payed. I am now in the process of contacting those donors who
+haven't payed yet, leaving them the choice to re-purpose their pledge to
+ongoing costs (traffic, public IPv4 addresses, domain(s), SSL certs if
+necessary) and maintenance, or withdraw their pledges.</p>
+
+<p>Some details of the hardware we'll get:</p>
+
+<ul>
+    <li>CPU: Intel® Xeon® Haswell-EP Series Processor
+E5-2620 v3, 2.40 GHz, 6-Core Socket 2011-3, 15MB
+Cache, with hyperthreading (so 12 virtual CPUs)</li>
+    <li>RAM: 4x8GB DDR4 DDR4 PC2133 Reg. ECC 2R</li>
+    <li>HD: 2x 2TB SATA3-HD</li>
+</ul>
+
+<p>The vendor has told me that all parts have arrived, and will be assembled
+today or tomorrow.</p>
+
+<p>Currently I lean towards using KVM to create three virtual hosts: one for
+websites (*.perl6.org, perlcabal.syn), one for general hacking and IRC
+activity, and one for high-risk stuff (evalbots, try.rakudo.org, ...).</p>
+
+<p>I've secured the domain p6c.org (for "perl 6 community"), and the
+IPv4 range 213.95.82.52 - 213.95.82.62 and the IPv6 net
+2001:780:101:ff00::/64.</p>
+
+<p>So the infrastructure is in place, now I'm waiting for the delivery of the
+hardware.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
