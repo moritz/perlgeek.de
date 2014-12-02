@@ -5,8 +5,8 @@ Perl 6 community server (successor to feather.perl6.nl), and now I'd like to
 share some updates.</p>
 
 <p>Thanks to the generosity of the Perl 6 community, the server has been
-ordered and payed. I am now in the process of contacting those donors who
-haven't payed yet, leaving them the choice to re-purpose their pledge to
+ordered and paid. I am now in the process of contacting those donors who
+haven't paid yet, leaving them the choice to re-purpose their pledge to
 ongoing costs (traffic, public IPv4 addresses, domain(s), SSL certs if
 necessary) and maintenance, or withdraw their pledges.</p>
 
