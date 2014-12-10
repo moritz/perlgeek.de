@@ -12,6 +12,7 @@ New Perl 6 community server now live, accepting signups
     <li>Your desired username</li>
     <li>What you want to do on the machine(s) (not necessary for #perl6 regulars)</li>
     <li>Which of the machine(s) you need access to</li>
+    <li>Optionally an openssh public key</li>
     <li>Whether you'd be willing to help a bit with sysadmin tasks (mostly <code>apt-get update &amp;&amp; apt-get dist-upgrade</code>, restarting hung services, killing huge processes)</li>
     <li>Software you need installed (it's OK to not know this up-front)</li>
 </ol>
