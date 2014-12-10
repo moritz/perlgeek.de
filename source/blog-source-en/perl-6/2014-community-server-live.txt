@@ -16,6 +16,8 @@ New Perl 6 community server now live, accepting signups
     <li>Software you need installed (it's OK to not know this up-front)</li>
 </ol>
 
+<p>Note that <strong>feather.perl6.nl will shut down soon</strong> (no fixed date yet, but "end of 2014" is expected), so if you rely on feather now, you should consider migrating to the new server.</p>
+
 <p>The <strong>code of conduct</strong> is pretty simple:</p>
 
 <ol>
