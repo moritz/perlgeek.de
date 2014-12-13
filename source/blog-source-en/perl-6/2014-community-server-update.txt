@@ -15,7 +15,7 @@ necessary) and maintenance, or withdraw their pledges.</p>
 <ul>
     <li>CPU: Intel® Xeon® Haswell-EP Series Processor
 E5-2620 v3, 2.40 GHz, 6-Core Socket 2011-3, 15MB
-Cache, with hyperthreading (so 12 virtual CPUs)</li>
+Cache</li>
     <li>RAM: 4x8GB DDR4 DDR4 PC2133 Reg. ECC 2R</li>
     <li>HD: 2x 2TB SATA3-HD</li>
 </ul>
