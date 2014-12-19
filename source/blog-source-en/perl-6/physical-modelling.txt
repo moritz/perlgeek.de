@@ -96,7 +96,7 @@ mass of 1 kg experiences at the latitude where I live (Germany).</p>
 <p>The programmer in you might ask what the heck the : in <code>$:force</code>
 means. It's a variable that is automatically a named parameter to the current
 block. Math::Model uses <a
-href="http://perlcabal.org/syn/S06.html#Signature_Introspection">Signature
+href="http://design.perl6.org/S06.html#Signature_Introspection">Signature
 introspection</a> to find out which variables such a block depends on, and
 topologically sorts all variables into an order of execution that satisfies
 all the dependencies.</p>

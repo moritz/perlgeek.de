@@ -107,7 +107,7 @@ or C<grep>.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S02.html#Built-In_Data_Types>
+L<http://design.perl6.org/S02.html#Built-In_Data_Types>
 
 L<http://hop.perl.plover.com/>
 

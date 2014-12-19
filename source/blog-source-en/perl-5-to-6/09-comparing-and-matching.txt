@@ -57,7 +57,7 @@ name="Smart_matching"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Smart_matching" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Smart_matching</a></p>
+<p><a href="http://design.perl6.org/S03.html#Smart_matching" class="podlinkurl"
+>http://design.perl6.org/S03.html#Smart_matching</a></p>
 
 [% option no-header %] [% option no-footer %]

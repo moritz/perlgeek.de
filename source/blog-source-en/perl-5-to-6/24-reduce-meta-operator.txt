@@ -72,8 +72,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Reduction_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Reduction_operators</a>, <a href="http://www.perlmonks.org/?node_id=716497" class="podlinkurl"
+<p><a href="http://design.perl6.org/S03.html#Reduction_operators" class="podlinkurl"
+>http://design.perl6.org/S03.html#Reduction_operators</a>, <a href="http://www.perlmonks.org/?node_id=716497" class="podlinkurl"
 >http://www.perlmonks.org/?node_id=716497</a></p>
 
 [% option no-header %] [% option no-footer %]

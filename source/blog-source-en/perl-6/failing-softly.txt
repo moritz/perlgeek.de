@@ -50,7 +50,7 @@ doesn't have to abort the whole operation, and neither is information lost</p>
 
 <p>The API for accessing the <code>Failure</code> objects isn't very mature
 yet, but the concept stands. See <a
-href="http://perlcabal.org/syn/S04.html#Exceptions">S04/Exceptions</a> for the
+href="http://design.perl6.org/S04.html#Exceptions">S04/Exceptions</a> for the
 gory details, as they stand today.</p>
 
 [% option no-footer %][% option no-header %]

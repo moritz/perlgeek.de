@@ -43,7 +43,7 @@ plan *;
 is "a b c d".samespace("x y\n\tz"), "a b\n\tc d";
 [% endsyntax %]</pre>
 
-<p>The <a href="http://perlcabal.org/syn/S05.html#line_358">Specification has
+<p>The <a href="http://design.perl6.org/S05.html#line_358">Specification has
 a few more details</a> on the topic. (Ignore the part about the whitespace
 having to be matched by a <code>&lt;ws&gt;</code> rule). Your implementation
 doesn't have to fulfill the spec totally; a naive implementation of a small

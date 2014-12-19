@@ -143,10 +143,10 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p>S04 discusses block scoping: <a href="http://perlcabal.org/syn/S04.html" class="podlinkurl"
->http://perlcabal.org/syn/S04.html</a>.</p>
+<p>S04 discusses block scoping: <a href="http://design.perl6.org/S04.html" class="podlinkurl"
+>http://design.perl6.org/S04.html</a>.</p>
 
-<p>S02 lists all pseudo packages and explains context scoping: <a href="http://perlcabal.org/syn/S02.html#Names" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Names</a>.</p>
+<p>S02 lists all pseudo packages and explains context scoping: <a href="http://design.perl6.org/S02.html#Names" class="podlinkurl"
+>http://design.perl6.org/S02.html#Names</a>.</p>
 
 [% option no-header %] [% option no-footer %]

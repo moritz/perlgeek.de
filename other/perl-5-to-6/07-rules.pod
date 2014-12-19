@@ -206,7 +206,7 @@ not changeable at parse time.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S05.html>
+L<http://design.perl6.org/S05.html>
 
 L<http://perlgeek.de/en/article/mutable-grammar-for-perl-6>
 

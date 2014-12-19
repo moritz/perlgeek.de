@@ -10,7 +10,7 @@ there is a huge gap in the area of documentation.</p>
 
 <p>There are quite a few resources, but none of them comprehensive
 (most comprehensive are the
-<a href="http://perlcabal.org/syn/">synopsis</a>, but they are not meant
+<a href="http://design.perl6.org/">synopsis</a>, but they are not meant
 for the end user), and no single location we can point people to.</p>
 
 <h2>Announcement</h2>

@@ -151,10 +151,10 @@ in Perl 6:
 
 =head1 SEE ALSO
 
-S04 discusses block scoping: L<http://perlcabal.org/syn/S04.html>.
+S04 discusses block scoping: L<http://design.perl6.org/S04.html>.
 
 S02 lists all pseudo packages and explains context scoping:
-L<http://perlcabal.org/syn/S02.html#Names>.
+L<http://design.perl6.org/S02.html#Names>.
 
 =for time 1227913200
 =for editor vim: spell

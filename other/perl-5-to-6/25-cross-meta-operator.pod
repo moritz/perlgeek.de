@@ -35,7 +35,7 @@ The usage as a meta operator can sometimes eliminate the loops altogether.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Cross_operators>,
+L<http://design.perl6.org/S03.html#Cross_operators>,
 
 =for time 1243375200
 =for editor vim: spell

@@ -19,7 +19,7 @@ aspects of the grant application do not make so much sense now.</p>
 
 <blockquote>D1: Specification</blockquote>
 
-<p><a href="http://perlcabal.org/syn/S32/Exception.html">S32::Exception</a>
+<p><a href="http://design.perl6.org/S32/Exception.html">S32::Exception</a>
 contains my work in this area.</a>.</p>
 
 <p>Since exceptions use the normal Perl 6 type system, the amount of work I

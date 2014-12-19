@@ -66,7 +66,7 @@ notation.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators>
+L<http://design.perl6.org/S03.html#Changes_to_Perl_5_operators>
 
 =for time 1224194400
 =for editor vim: spell

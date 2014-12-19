@@ -65,7 +65,7 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html#Enumerations" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enumerations</a></p>
+<p><a href="http://design.perl6.org/S12.html#Enumerations" class="podlinkurl"
+>http://design.perl6.org/S12.html#Enumerations</a></p>
 
 [% option no-header %] [% option no-footer %]

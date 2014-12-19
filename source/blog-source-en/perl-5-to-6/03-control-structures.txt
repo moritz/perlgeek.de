@@ -93,7 +93,7 @@ name="Loops"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S04.html#Conditional_statements" class="podlinkurl"
->http://perlcabal.org/syn/S04.html#Conditional_statements</a></p>
+<p><a href="http://design.perl6.org/S04.html#Conditional_statements" class="podlinkurl"
+>http://design.perl6.org/S04.html#Conditional_statements</a></p>
 
 [% option no-header %] [% option no-footer %]

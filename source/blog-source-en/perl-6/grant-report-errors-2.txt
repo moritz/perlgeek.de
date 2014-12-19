@@ -8,7 +8,7 @@ to be not very good, and got shot down by @Larry (with good reason).</p>
 
 <p>However I did get around to lay out some specification for exceptions in <a
 href="https://github.com/perl6/specs/blob/master/S32-setting-library/Exception.pod">S32::Exception</a>
-(<a href="http://perlcabal.org/syn/S32/Exception.html">rendered</a>) - some
+(<a href="http://design.perl6.org/S32/Exception.html">rendered</a>) - some
 basic roles, and the relationships between exception, <code>Failure</code>
 (lazy/unthrown exceptions) and backtraces.</p>
 

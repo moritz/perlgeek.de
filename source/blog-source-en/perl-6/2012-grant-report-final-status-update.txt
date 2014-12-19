@@ -15,7 +15,7 @@ the actual declaration of <code>die</code>. Which means that everything that
 should be a typed exception is now.</p>
 
 <p>The error catalogue can be found in <a
-href="http://perlcabal.org/syn/S32/Exception.html">S32::Exception</a>.
+href="http://design.perl6.org/S32/Exception.html">S32::Exception</a>.
 Documentation for <a
 href="https://github.com/perl6/mu/blob/master/docs/exceptions.pod">compiler
 writers is in a separate document</a>, and the promised <a

@@ -3,7 +3,7 @@ Perl 6 Tidings from January 2009
 <h2>Specification</h2>
 
 <p>Jerry Gay continued his work on <a
-href="http://perlcabal.org/syn/S19.html">S19 - Command Line Interface</a> with
+href="http://design.perl6.org/S19.html">S19 - Command Line Interface</a> with
 various improvements and corrections.</p>
 
 <p>Larry Wall <a
@@ -25,7 +25,7 @@ that separation didn't make it into the specs yet.</p>
 
 <p>Carl Mäsak published a <a
 href="http://use.perl.org/~masak/journal/38170">S29 laundry list</a>, and both
-encouraged other to work on <a href="http://perlcabal.org/syn/S29.html">S29 -
+encouraged other to work on <a href="http://design.perl6.org/S29.html">S29 -
 Built-in Functions and Methods</a>, and announced that he would try to tackle
 at least some of the missing items himself.</p>
 

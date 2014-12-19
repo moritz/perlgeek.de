@@ -12,7 +12,7 @@ href="http://svn.pugscode.org/pugs/docs/Perl6/Spec/">http://svn.pugscode.org/pug
 The main reason was the wish to encourage contributions to the specs.</p>
 
 <p>It worked promptly: Daniel Ruoso and Tim Nelson checked in their first
-draft of <a href="http://perlcabal.org/syn/S07.html">Synopsis 7: Iterators and
+draft of <a href="http://design.perl6.org/S07.html">Synopsis 7: Iterators and
 Laziness</a>. It's based on Ruoso's <a
 href="http://www.perlfoundation.org/perl6/index.cgi?smop_map_operator">notes
 on the lazy <code>map</code> function in SMOP</a> and IRC discussions with 

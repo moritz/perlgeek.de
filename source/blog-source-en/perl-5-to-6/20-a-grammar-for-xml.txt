@@ -233,8 +233,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p>Regexes are specified in great detail in S05: <a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a>.</p>
+<p>Regexes are specified in great detail in S05: <a href="http://design.perl6.org/S05.html" class="podlinkurl"
+>http://design.perl6.org/S05.html</a>.</p>
 
 <p>More working examples for grammars can be found at <a href="https://github.com/moritz/json/" class="podlinkurl"
 >https://github.com/moritz/json/</a> (check file lib/JSON/Tiny/Grammar.pm).</p>

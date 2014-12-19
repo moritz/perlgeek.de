@@ -66,7 +66,7 @@ data for debugging or tracing.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S12.html#Enumerations>
+L<http://design.perl6.org/S12.html#Enumerations>
 
 =for time 1227740400
 =for editor vim: spell

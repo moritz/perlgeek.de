@@ -29,7 +29,7 @@ href="http://github.com/rakudo/rakudo/blob/master/src/core/Any-list.pm#L165">imp
 through several multi methods in Rakudo</a>.</p>
 
 <p>Now the specification <a
-href="http://perlcabal.org/syn/S32/Containers.html#Bag">describes such a
+href="http://design.perl6.org/S32/Containers.html#Bag">describes such a
 method for hashes too</a> (actually it talks about Bags, but Rakudo doesn't
 have Bags yet. Pretend it says "Hash" instead). It assumes that each value in
 the hash is numeric, and that the value is a weight that determines the

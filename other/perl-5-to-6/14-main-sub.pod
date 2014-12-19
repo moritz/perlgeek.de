@@ -59,7 +59,7 @@ processing to a single line of code: the signature of C<MAIN>.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine> contains the
+L<http://design.perl6.org/S06.html#Declaring_a_MAIN_subroutine> contains the
 specification.
 
 =cut

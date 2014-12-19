@@ -197,8 +197,8 @@ conformance, roles are the primary means for code reuse in Perl 6.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S12.html>
-L<http://perlcabal.org/syn/S14.html>
+L<http://design.perl6.org/S12.html>
+L<http://design.perl6.org/S14.html>
 L<http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf>
 L<http://en.wikipedia.org/wiki/Perl_6#Roles>
 

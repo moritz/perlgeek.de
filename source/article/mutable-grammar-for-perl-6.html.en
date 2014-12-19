@@ -341,7 +341,7 @@ particular grammar rule.</p>
 
 <p>Also it would be nice to make macros work on the AST level rather than on
 the source code directly. <a
-href="http://perlcabal.org/syn/S06.html#Quasiquoting">Quasiquotes</a> seem to
+href="http://design.perl6.org/S06.html#Quasiquoting">Quasiquotes</a> seem to
 tackle that problem, but so far I don't see how it actually solves it.</p>
 
 <p>The biggest open problem is, of course, that you have to actually execute

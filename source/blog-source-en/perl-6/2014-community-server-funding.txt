@@ -43,7 +43,7 @@ a maintainance contract and/new hardware would be an option.</p>
 
 <ul>
     <li>Hosting websites like <a href="http://perl6.org/">perl6.org</a> and
-    the <a href="http://perlcabal.org/syn/">synopses</a></li>
+    the <a href="http://design.perl6.org/">synopses</a></li>
     <li>Hosting infrastructure like the panda metadata server</li>
     <li>Be available for smoke runs of the compilers, star distributions and
     module ecosystem.</li>

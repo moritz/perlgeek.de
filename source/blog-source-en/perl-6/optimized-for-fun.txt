@@ -12,7 +12,7 @@ we <a href="http://use.perl.org/~masak/journal/39483">still get things
 done</a> and <a href="http://www.arcamax.com/garfield/s-590852-357951">avoid
 the planning trap</a>.</p>
 
-<p>We also have fun <a href="http://perlcabal.org/syn/S26.html">in our
+<p>We also have fun <a href="http://design.perl6.org/S26.html">in our
 specification</a>:</p>
 
 <blockquote>

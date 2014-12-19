@@ -99,7 +99,7 @@ It also removes the gap between using a language and modifying the language.
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S06.html#Operator_overloading>
+L<http://design.perl6.org/S06.html#Operator_overloading>
 
 If you are interested in the technical background, ie how Perl 6 can implement
 such operator changes and other grammar changes, read

@@ -23,7 +23,7 @@ href="http://rakudo.org/">Rakudo</a> is not much harder than implementing a
 function: all you have to do more is to add it to <a
 href="http://github.com/rakudo/rakudo/blob/1b06df80900096dab8a9f74467f504f73a6115dd/src/parser/grammar-oper.pg">src/parser/grammar-oper.pg</a>
 including precedence and associativity (both of which can be found in <a
-href="http://perlcabal.org/syn/S03.html">the spec</a>.</p>
+href="http://design.perl6.org/S03.html">the spec</a>.</p>
 
 <p>For quite a while now built-in functions and methods can be written in Perl
 6 now, so I also decided to write the new operator in Perl 6. Since lazy lists

@@ -175,8 +175,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a></p>
+<p><a href="http://design.perl6.org/S05.html" class="podlinkurl"
+>http://design.perl6.org/S05.html</a></p>
 
 <p><a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
 >http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a></p>

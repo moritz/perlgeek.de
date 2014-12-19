@@ -91,7 +91,7 @@ that requires parentheses):
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S04.html#Conditional_statements>
+L<http://design.perl6.org/S04.html#Conditional_statements>
 
 =for time 1221951600
 =for editor vim: spell

@@ -91,7 +91,7 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Built-In_Data_Types" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Built-In_Data_Types</a>,</p>
+<p><a href="http://design.perl6.org/S02.html#Built-In_Data_Types" class="podlinkurl"
+>http://design.perl6.org/S02.html#Built-In_Data_Types</a>,</p>
 
 [% option no-header %] [% option no-footer %]

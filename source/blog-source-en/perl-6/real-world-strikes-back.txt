@@ -16,7 +16,7 @@ to a point in time.</p>
 with a number, but it doesn't make sense to multiply two Durations, or take a
 power of a Duration. Right?</p>
 
-<p>That's the opinion that both the <a href="http://perlcabal.org/syn/">Perl 6
+<p>That's the opinion that both the <a href="http://design.perl6.org/">Perl 6
 specification</a> and the
 implementation in <a href="http://rakudo.org/">Rakudo</a> reflected. Until
 recently, when <a href="http://strangelyconsistent.org/">somebody</a> started

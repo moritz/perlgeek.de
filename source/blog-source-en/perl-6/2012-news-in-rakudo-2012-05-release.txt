@@ -48,7 +48,7 @@ module CGI {
 use CGI :HTML;
 [% endsyntax %]</pre>
 
-<p><a href="http://perlcabal.org/syn/S11.html">S11</a> has more details on the
+<p><a href="http://design.perl6.org/S11.html">S11</a> has more details on the
 exporting and importing mechanism.</p>
 
 <p>You can also import from within a single file by using <code>import</code>

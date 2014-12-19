@@ -118,7 +118,7 @@ with backwards compatibility if you want to change what you consider a
 
 =head1 SEE ALSO
 
-L<http://perlcabal.org/syn/S02.html#Literals>
+L<http://design.perl6.org/S02.html#Literals>
 
 =for time 1228777200
 =for editor vim: spell

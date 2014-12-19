@@ -184,9 +184,9 @@ name="Roles_and_Composition"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
->http://perlcabal.org/syn/S12.html</a> <a href="http://perlcabal.org/syn/S14.html" class="podlinkurl"
->http://perlcabal.org/syn/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
+<p><a href="http://design.perl6.org/S12.html" class="podlinkurl"
+>http://design.perl6.org/S12.html</a> <a href="http://design.perl6.org/S14.html" class="podlinkurl"
+>http://design.perl6.org/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
 >http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf</a> <a href="http://en.wikipedia.org/wiki/Perl_6#Roles" class="podlinkurl"
 >http://en.wikipedia.org/wiki/Perl_6#Roles</a></p>
 

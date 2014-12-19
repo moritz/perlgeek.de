@@ -12,7 +12,7 @@ href="http://rakudo.org/">Rakudo Perl</a>. This is the backend for the
 
 <h2>Background</h2>
 
-<p>The <a href="http://perlcabal.org/syn/S05.html#Transliteration">Perl 6
+<p>The <a href="http://design.perl6.org/S05.html#Transliteration">Perl 6
 transliteration operator</a> is also available as a method. It replaces all
 occurrences of some characters (or regexes) with a substitution string. The
 easiest case is:</p>
@@ -35,7 +35,7 @@ in the official test suite</a> for .trans.</p>
 <h2>What you can do</h2>
 
 <p>Please write a method <code>trans</code> that implements part of the
-<a href="http://perlcabal.org/syn/S05.html#Transliteration">specification</a>.
+<a href="http://design.perl6.org/S05.html#Transliteration">specification</a>.
 Since it's quite a lot to do, it's OK to only do parts. For example I
 recommend to omit regexes altogether for now, and only implement literal string
 patterns. The easiest approach is probably to create a hash that maps each

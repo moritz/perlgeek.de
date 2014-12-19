@@ -261,7 +261,7 @@ It's powerful and fun
 =head1 SEE ALSO
 
 Regexes are specified in great detail in S05:
-L<http://perlcabal.org/syn/S05.html>.
+L<http://design.perl6.org/S05.html>.
 
 More working examples for grammars can be found at
 L<https://github.com/moritz/json/> (check file lib/JSON/Tiny/Grammar.pm).

@@ -35,7 +35,7 @@ week:</p>
 </ul>
 
 <p>The smart links in the synopsis documents at <a
-href="http://perlcabal.org/syn/">http://perlcabal.org/syn/</a> now contains
+href="http://design.perl6.org/">http://design.perl6.org/</a> now contains
 syntax hilighted code.</p>
 
 <h2>Implementations</h2>

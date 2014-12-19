@@ -21,7 +21,7 @@ aggregator anyway.</p>
     <li>Stubbed classes are now documented (<a
             href="http://perlcabal.org/svn/pugs/revision/?rev=28196">r28196</a>,
             <a href="http://perlcabal.org/svn/pugs/revision/?rev=28197">r28197</a>).</li>
-    <li>The new <a href="http://perlcabal.org/syn/S08.html">S08</a> documents
+    <li>The new <a href="http://design.perl6.org/S08.html">S08</a> documents
     Parcels and Captures.</li>
     <li>The numeric types have been cleaned up a lot (<a href="http://perlcabal.org/svn/pugs/revision/?rev=28502">r28502</a> and later commits
     up to <a href="http://perlcabal.org/svn/pugs/revision/?rev=28597">r28597</a>).</li>

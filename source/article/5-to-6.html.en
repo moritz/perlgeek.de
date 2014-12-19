@@ -271,9 +271,9 @@ name="Final_Notes"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html" class="podlinkurl"
->http://perlcabal.org/syn/S02.html</a>, <a href="http://perlcabal.org/syn/S29.html" class="podlinkurl"
->http://perlcabal.org/syn/S29.html</a></p>
+<p><a href="http://design.perl6.org/S02.html" class="podlinkurl"
+>http://design.perl6.org/S02.html</a>, <a href="http://design.perl6.org/S29.html" class="podlinkurl"
+>http://design.perl6.org/S29.html</a></p>
 
 
 <h2 id="post_02">Types</h2>
@@ -369,8 +369,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Built-In_Data_Types" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Built-In_Data_Types</a>,</p>
+<p><a href="http://design.perl6.org/S02.html#Built-In_Data_Types" class="podlinkurl"
+>http://design.perl6.org/S02.html#Built-In_Data_Types</a>,</p>
 
 
 <h2 id="post_03">Basic Control Structures</h2>
@@ -468,8 +468,8 @@ name="Loops"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S04.html#Conditional_statements" class="podlinkurl"
->http://perlcabal.org/syn/S04.html#Conditional_statements</a></p>
+<p><a href="http://design.perl6.org/S04.html#Conditional_statements" class="podlinkurl"
+>http://design.perl6.org/S04.html#Conditional_statements</a></p>
 
 
 <h2 id="post_04">Subroutines and Signatures</h2>
@@ -686,8 +686,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S06.html" class="podlinkurl"
->http://perlcabal.org/syn/S06.html</a></p>
+<p><a href="http://design.perl6.org/S06.html" class="podlinkurl"
+>http://design.perl6.org/S06.html</a></p>
 
 
 <h2 id="post_05">Objects and Classes</h2>
@@ -876,9 +876,9 @@ name="Roles_and_Composition"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html" class="podlinkurl"
->http://perlcabal.org/syn/S12.html</a> <a href="http://perlcabal.org/syn/S14.html" class="podlinkurl"
->http://perlcabal.org/syn/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
+<p><a href="http://design.perl6.org/S12.html" class="podlinkurl"
+>http://design.perl6.org/S12.html</a> <a href="http://design.perl6.org/S14.html" class="podlinkurl"
+>http://design.perl6.org/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
 >http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf</a> <a href="http://en.wikipedia.org/wiki/Perl_6#Roles" class="podlinkurl"
 >http://en.wikipedia.org/wiki/Perl_6#Roles</a></p>
 
@@ -971,8 +971,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Context" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Context</a> <a href="http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html" class="podlinkurl"
+<p><a href="http://design.perl6.org/S02.html#Context" class="podlinkurl"
+>http://design.perl6.org/S02.html#Context</a> <a href="http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html" class="podlinkurl"
 >http://perlgeek.de/blog-en/perl-6/immutable-sigils-and-context.html</a></p>
 
 
@@ -1153,8 +1153,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a></p>
+<p><a href="http://design.perl6.org/S05.html" class="podlinkurl"
+>http://design.perl6.org/S05.html</a></p>
 
 <p><a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
 >http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a></p>
@@ -1282,8 +1282,8 @@ name="A_Word_of_Warning"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Junctive_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Junctive_operators</a></p>
+<p><a href="http://design.perl6.org/S03.html#Junctive_operators" class="podlinkurl"
+>http://design.perl6.org/S03.html#Junctive_operators</a></p>
 
 
 <h2 id="post_09">Comparing and Matching</h2>
@@ -1345,8 +1345,8 @@ name="Smart_matching"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Smart_matching" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Smart_matching</a></p>
+<p><a href="http://design.perl6.org/S03.html#Smart_matching" class="podlinkurl"
+>http://design.perl6.org/S03.html#Smart_matching</a></p>
 
 
 <h2 id="post_10">Containers and Values</h2>
@@ -1404,8 +1404,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Item_assignment_precedence" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Item_assignment_precedence</a></p>
+<p><a href="http://design.perl6.org/S03.html#Item_assignment_precedence" class="podlinkurl"
+>http://design.perl6.org/S03.html#Item_assignment_precedence</a></p>
 
 
 <h2 id="post_11">Changes to Perl 5 Operators</h2>
@@ -1475,8 +1475,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Changes_to_Perl_5_operators</a></p>
+<p><a href="http://design.perl6.org/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
+>http://design.perl6.org/S03.html#Changes_to_Perl_5_operators</a></p>
 
 
 <h2 id="post_12">Laziness</h2>
@@ -1591,8 +1591,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Lists" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Lists</a></p>
+<p><a href="http://design.perl6.org/S02.html#Lists" class="podlinkurl"
+>http://design.perl6.org/S02.html#Lists</a></p>
 
 
 <h2 id="post_13">Custom Operators</h2>
@@ -1688,8 +1688,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S06.html#Operator_overloading" class="podlinkurl"
->http://perlcabal.org/syn/S06.html#Operator_overloading</a></p>
+<p><a href="http://design.perl6.org/S06.html#Operator_overloading" class="podlinkurl"
+>http://design.perl6.org/S06.html#Operator_overloading</a></p>
 
 <p>If you are interested in the technical background, ie how Perl 6 can implement such operator changes and other grammar changes, read <a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
 >http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a>.</p>
@@ -1757,8 +1757,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine" class="podlinkurl"
->http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine</a> contains the specification.</p>
+<p><a href="http://design.perl6.org/S06.html#Declaring_a_MAIN_subroutine" class="podlinkurl"
+>http://design.perl6.org/S06.html#Declaring_a_MAIN_subroutine</a> contains the specification.</p>
 
 
 <h2 id="post_15">Twigils</h2>
@@ -1904,8 +1904,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S12.html#Enumerations" class="podlinkurl"
->http://perlcabal.org/syn/S12.html#Enumerations</a></p>
+<p><a href="http://design.perl6.org/S12.html#Enumerations" class="podlinkurl"
+>http://design.perl6.org/S12.html#Enumerations</a></p>
 
 
 <h2 id="post_17">Unicode</h2>
@@ -1981,8 +1981,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S32/Str.html" class="podlinkurl"
->http://perlcabal.org/syn/S32/Str.html</a></p>
+<p><a href="http://design.perl6.org/S32/Str.html" class="podlinkurl"
+>http://design.perl6.org/S32/Str.html</a></p>
 
 
 <h2 id="post_18">Scoping</h2>
@@ -2130,11 +2130,11 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p>S04 discusses block scoping: <a href="http://perlcabal.org/syn/S04.html" class="podlinkurl"
->http://perlcabal.org/syn/S04.html</a>.</p>
+<p>S04 discusses block scoping: <a href="http://design.perl6.org/S04.html" class="podlinkurl"
+>http://design.perl6.org/S04.html</a>.</p>
 
-<p>S02 lists all pseudo packages and explains context scoping: <a href="http://perlcabal.org/syn/S02.html#Names" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Names</a>.</p>
+<p>S02 lists all pseudo packages and explains context scoping: <a href="http://design.perl6.org/S02.html#Names" class="podlinkurl"
+>http://design.perl6.org/S02.html#Names</a>.</p>
 
 
 <h2 id="post_19">Regexes strike back</h2>
@@ -2496,8 +2496,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p>Regexes are specified in great detail in S05: <a href="http://perlcabal.org/syn/S05.html" class="podlinkurl"
->http://perlcabal.org/syn/S05.html</a>.</p>
+<p>Regexes are specified in great detail in S05: <a href="http://design.perl6.org/S05.html" class="podlinkurl"
+>http://design.perl6.org/S05.html</a>.</p>
 
 <p>More working examples for grammars can be found at <a href="https://github.com/moritz/json/" class="podlinkurl"
 >https://github.com/moritz/json/</a> (check file lib/JSON/Tiny/Grammar.pm).</p>
@@ -2818,8 +2818,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Literals" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Literals</a></p>
+<p><a href="http://design.perl6.org/S02.html#Literals" class="podlinkurl"
+>http://design.perl6.org/S02.html#Literals</a></p>
 
 
 <h2 id="post_24">The Reduction Meta Operator</h2>
@@ -2896,8 +2896,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Reduction_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Reduction_operators</a>, <a href="http://www.perlmonks.org/?node_id=716497" class="podlinkurl"
+<p><a href="http://design.perl6.org/S03.html#Reduction_operators" class="podlinkurl"
+>http://design.perl6.org/S03.html#Reduction_operators</a>, <a href="http://www.perlmonks.org/?node_id=716497" class="podlinkurl"
 >http://www.perlmonks.org/?node_id=716497</a></p>
 
 
@@ -2943,8 +2943,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S03.html#Cross_operators" class="podlinkurl"
->http://perlcabal.org/syn/S03.html#Cross_operators</a>,</p>
+<p><a href="http://design.perl6.org/S03.html#Cross_operators" class="podlinkurl"
+>http://design.perl6.org/S03.html#Cross_operators</a>,</p>
 
 
 <h2 id="post_26">Exceptions and control exceptions</h2>
@@ -3259,8 +3259,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S02.html#Built-In_Data_Types" class="podlinkurl"
->http://perlcabal.org/syn/S02.html#Built-In_Data_Types</a></p>
+<p><a href="http://design.perl6.org/S02.html#Built-In_Data_Types" class="podlinkurl"
+>http://design.perl6.org/S02.html#Built-In_Data_Types</a></p>
 
 <p><a href="http://hop.perl.plover.com/" class="podlinkurl"
 >http://hop.perl.plover.com/</a></p>

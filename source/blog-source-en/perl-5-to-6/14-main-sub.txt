@@ -60,7 +60,7 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine" class="podlinkurl"
->http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine</a> contains the specification.</p>
+<p><a href="http://design.perl6.org/S06.html#Declaring_a_MAIN_subroutine" class="podlinkurl"
+>http://design.perl6.org/S06.html#Declaring_a_MAIN_subroutine</a> contains the specification.</p>
 
 [% option no-header %] [% option no-footer %]

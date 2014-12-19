@@ -91,8 +91,8 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://perlcabal.org/syn/S06.html#Operator_overloading" class="podlinkurl"
->http://perlcabal.org/syn/S06.html#Operator_overloading</a></p>
+<p><a href="http://design.perl6.org/S06.html#Operator_overloading" class="podlinkurl"
+>http://design.perl6.org/S06.html#Operator_overloading</a></p>
 
 <p>If you are interested in the technical background, ie how Perl 6 can implement such operator changes and other grammar changes, read <a href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6" class="podlinkurl"
 >http://perlgeek.de/en/article/mutable-grammar-for-perl-6</a>.</p>

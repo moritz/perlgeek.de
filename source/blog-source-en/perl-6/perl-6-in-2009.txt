@@ -8,7 +8,7 @@ contact me, I'll try to add it.</p>
 <h2>Specification</h2>
 
 <p>The year started with lots of improvements to <a
-href="http://perlcabal.org/syn/S19.html">S19</a>. In January we also learned
+href="http://design.perl6.org/S19.html">S19</a>. In January we also learned
 that <code>*-1</code> constructs a closure, which means that Perl 6 has
 semi-automatic currying features built into most operators.</p>
 
