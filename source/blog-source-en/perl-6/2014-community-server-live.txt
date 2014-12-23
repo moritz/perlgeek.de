@@ -4,6 +4,8 @@ New Perl 6 community server now live, accepting signups
 
 <p>As <a href="http://perlgeek.de/blog-en/perl-6/2014-community-server-update.html">planned</a>, I've set up KVM virtualization, and so far there are two guest systems. <em>hack.p6c.org</em> is meant for general Perl 6 development activity (which also includes irssi/weechat sessions), and is equipped with 20GB RAM to handle multiple concurrent rakudo-jvm compilations :-). It runs a pretty bare-bones Debian Jessie.</p>
 
+<p><strong>Update:</strong> there is now a <a href="http://www.p6c.org/">website for the new server</a>.</p>
+
 <p><em>www.p6c.org</em> is the web server where I plan to host perl6.org and related (sub-)domains. It's not as beefy as <em>hack</em>, but sufficiently large to compile and run Rakudo, in preparation for future Perl 6-based web hosting. Currently I'm running a copy of several perl6.org subdomains on it (with the domain name <code>p6c</code> instead of <code>perl6</code> for test purposes); the plan is to switch the perl6.org DNS over once all of the websites have been copied/migrated.</p>
 
 <p>If you have a Perl 6 related use for a shell account or for serving websites, please request an account by email (moritz@faui2k3.org) or IRC (moritz on freenode and magnet), including:</p>
