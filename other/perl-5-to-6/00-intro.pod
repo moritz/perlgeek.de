@@ -95,7 +95,7 @@ outdated.
 
 =head1 AUTHOR
 
-Moritz Lenz, L<http://perlgeek.de/>, C<moritz@faui2k3.org>
+Moritz Lenz, L<http://perlgeek.de/>, C<moritz.lenz@gmail.com>
 
 =head1 LINKS
 

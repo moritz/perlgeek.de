@@ -43,7 +43,7 @@ access to that repository.</p>
 
 <p>Then fill in any parts you want, primarily concerning the front-end. If you
 have any questions, don't hesitate to ask either on the IRC channel, or on the
-perl6-compiler@perl.org mailing list (and put moritz@faui2k3.org on CC,
+perl6-compiler@perl.org mailing list (and put moritz.lenz@gmail.com on CC,
 because the mailing list sometimes lack quite a bit).</p>
 
 <p><strong>Update</strong>: We now have a frontend and parts of the backend,

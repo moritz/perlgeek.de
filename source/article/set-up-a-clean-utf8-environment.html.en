@@ -219,5 +219,19 @@ $ screen -U
 on&lt;return&gt;</code>. If that doesn't work, exit your screen and start a
 new one with -U</p>
 
+<h2 id="irssi">Irssi</h2>
+
+<p>There's a <a
+href="http://xkr47.outerspace.dyndns.org/howtos/irssi-utf-8-guide.txt">complete
+guide for setting up irssi to use UTF-8</a>, which partially overlaps with
+this one. The gist is:</p>
+
+<pre>
+/set term_charset utf-8
+/set recode_autodetect_utf8 ON
+/set recode_fallback ISO-8859-15
+/set recode ON
+</pre>
+
 [% comment vim: spell ft=html
 %]

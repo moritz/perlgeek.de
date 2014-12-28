@@ -65,7 +65,7 @@ and included it in Rakudo.</p>
 
 <p>Please submit your patch to the <a
 href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
-list (and put moritz@faui2k3.org on CC,
+list (and put moritz.lenz@gmail.com on CC,
 because the mailing list sometimes lags quite a bit).</p>
 
 <p>If you have any questions, feel free to send them to the mailing list, or

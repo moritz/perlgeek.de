@@ -19,7 +19,7 @@ Now instead of prison sentences the contestants are assigned scores, which
 add up over multiple rounds.</p>
 
 <p>I challenge you to write one or two strategies for the iterated prisoner's
-dilemma, and send them to moritz@faui2k3.org no later than Friday
+dilemma, and send them to moritz.lenz@gmail.com no later than Friday
 February 17.</p>
 
 <p>You'll find <a href="https://gist.github.com/1710688">some basic

@@ -78,7 +78,7 @@ in a normal source file first, and only later move it into src/core/Hash.pm.</p>
 
 <p>Please submit your source code to the <a
 href="mailto:perl6-compiler@perl.org">perl6-compiler@perl.org</a> mailing
-list (and put moritz@faui2k3.org on CC,
+list (and put moritz.lenz@gmail.com on CC,
 because the mailing list sometimes lack quite a bit).</p>
 
 <p><strong>Update:</strong> there's one submission on the perl6-compiler

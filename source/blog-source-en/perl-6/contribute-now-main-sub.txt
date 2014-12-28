@@ -77,7 +77,7 @@ href="http://rakudo.org/">Rakudo</a> Perl 6 compiler - bonus points if you
 also provide some tests.</p>
 
 <p>Please send your submission to the perl6-compiler@perl.org mailing list,
-and set me (moritz@faui2k3.org) as CC, because the mailing list sometimes has
+and set me (moritz.lenz@gmail.com) as CC, because the mailing list sometimes has
 a large delay.</p>
 
 <p><strong>Update:</strong>: patrickas has submitted one implementation to <a
