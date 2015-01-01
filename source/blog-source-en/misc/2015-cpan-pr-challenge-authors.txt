@@ -27,10 +27,14 @@ requirements.</p>
 
 <p>And of course, be civil. But that goes without saying, right? :-)</p>
 
+<p>(And to those CPAN authors who haven't done it yet: <a
+    href="http://blogs.perl.org/users/neilb/2014/08/put-your-cpan-distributions-on-github.html">put
+your distributions on github</a>, so that you're not left out of the fun!</p>
+
 <p>Happy New Year everybody, and have a great deal of fun!</p>
 
 <p>See also: <a
-href="http://blogs.perl.org/users/sawyer_x/2015/01/cpan-pull-request-challenge---resources-available.html">CPAN Pull Request Challenge - resources availablea/a>.</p>
+href="http://blogs.perl.org/users/sawyer_x/2015/01/cpan-pull-request-challenge---resources-available.html">CPAN Pull Request Challenge - resources available</a>.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
