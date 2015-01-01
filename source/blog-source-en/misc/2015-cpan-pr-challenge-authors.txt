@@ -13,7 +13,7 @@ that you want to be excluded.</p>
 
 <p>How to be supportive? The first step is to act on pull requests. If you
 don't have time for a review, please say so; getting some response, even if
-it's "it'll be some time 'till I get around to reviewing this" is much better
+it's <em>"it'll be some time 'till I get around to reviewing this"</em> is much better
 than none.</p>
 
 <p>The volunteers have varied backgrounds; some are seasoned veterans, others
