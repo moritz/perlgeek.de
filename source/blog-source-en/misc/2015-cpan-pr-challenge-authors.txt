@@ -6,15 +6,19 @@ CPAN Pull Request Challenge</a> is ramping up, and so far nearly two hundred
 volunteers have signed up, pledging to make one pull request for a CPAN
 distribution for each month of the year.</p>
 
-<p>So here's a call to the all CPAN authors: please be supportive, and if you
+<p>So here's a call to the all the CPAN authors: please be supportive, and if you
 don't like for your CPAN distributions to be part of the challenge, please
-send an email to neil at bowers dot com, stating your PAUSE ID and the fact
+send an email to <code>neil at bowers dot com</code>, stating your PAUSE ID and the fact
 that you want to be excluded.</p>
 
 <p>How to be supportive? The first step is to act on pull requests. If you
 don't have time for a review, please say so; getting some response, even if
 it's "it'll be some time 'till I get around to reviewing this" is much better
 than none.</p>
+
+<p>The volunteers have varied backgrounds; some are seasoned veterans, others
+are beginners who will make their first contribution to Open Source. So please
+be patient and encouraging.</p>
 
 <p>If you have specific requirements for contributions, add a <a
 href="https://github.com/blog/1184-contributing-">file called CONTRIBUTING or
@@ -24,6 +28,9 @@ requirements.</p>
 <p>And of course, be civil. But that goes without saying, right? :-)</p>
 
 <p>Happy New Year everybody, and have a great deal of fun!</p>
+
+<p>See also: <a
+href="http://blogs.perl.org/users/sawyer_x/2015/01/cpan-pull-request-challenge---resources-available.html">CPAN Pull Request Challenge - resources availablea/a>.</p>
 
 [% option no-header %][% option no-footer %]
 [% comment vim: set ft=html: %]
