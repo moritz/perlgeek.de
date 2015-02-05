@@ -1,0 +1,71 @@
+All Perl 6 modules in a box
+<!-- 1423152711 -->
+<p>Sometimes when we change things in the <a href="http://perl6.org/">Perl 6
+language</a> or the <a href="http://rakudo.org/">Rakudo Perl 6 compiler</a>
+that implements it, we want to know if the planned changes will cause fallout
+in the <a href="http://modules.perl6.org/">library modules out there</a>, and
+how much.</p>
+
+<p>To get a quick estimate, we can now do a <code>git grep</code> in the <a
+href="https://github.com/moritz/perl6-all-module">experimental
+perl6-all-modules</a> repository.</p>
+
+<p>This is an attempt to get all the published module into a single git
+repository. It is built using <a href=https://ithub.com/ingydotnet/git-subrepo/>git
+subrepo</a>, an unofficial git extension module that I've been wanting to try
+for some time, and that seems to have some advantages over submodules in some
+cases. The notable one in this case being that <code>git grep</code> ignores
+submodules, but descends into subrepos just fine.</p>
+
+<p>Here is the use case that made me create this repository: Rakudo accesses low-level
+operations through the <code>nqp::</code> pseudo namespace. For example
+<code>nqp::concat_s('a', 'b')</code> is a low-level way to concatenate two
+strings. User-level programs can also use nqp:: ops, though it is generally a
+bad idea, because it ties the program to the particular compiler used, and
+what's more, the nqp:: ops are not part of the public API, and thus neither
+documented in the <a href="http://doc.perl6.org/">same place as the rest of
+Perl 6</a>, nor are there any promises for stability attached.</p>
+
+<p>So we want to require module authors to use a pragma, <code>use nqp;</code>
+in order to make their use of compiler internal explicit and deliberate. And
+of course, where possible, we want them to not use them at all :-)</p>
+
+<p>To find out how many files in the ecosystem use nqp:: ops, a simple
+command, combined with the power of the standard UNIX tools, will help:</p>
+
+<pre>[% syntax escape %]
+$ git grep -l 'nqp::'|wc -l
+32
+[% endsyntax %]</pre>
+
+<p>That's not too bad, considering we have... how many modules/distributions again?</p>
+
+<p>Since they are added in <code>author/repo</code> structure, counting them
+with ls and wc isn't hard:</p>
+
+<pre>[% syntax escape %]
+ls -1d */*/|wc -l
+282
+[% endsyntax %]</pre>
+
+
+<p>Ok, but number of files in relation to distributions isn't really useful.
+So let's ask: how many distributions directly use nqp:: ops?</p>
+
+<pre>[% syntax escape %]
+$ git grep -l nqp:: | cut -d/ -f1,2 |sort -u|wc -l
+23
+[% endsyntax %]</pre>
+
+<p>23 out of 282 (or about 8%) distributions use the nqp:: syntax.</p>
+
+<p>By the way, there is a tool (written in Perl 6, of course) to generate and
+update the repository. Not perfect yet, very much a work in progress. It's in
+the <code>_tools</code> folder, so you should probably filter out that
+directory in your queries (though in the examples above, it doesn't make a
+difference).</p>
+
+<p>So, have fun with this new toy!</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
