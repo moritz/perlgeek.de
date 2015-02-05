@@ -7,11 +7,11 @@ in the <a href="http://modules.perl6.org/">library modules out there</a>, and
 how much.</p>
 
 <p>To get a quick estimate, we can now do a <code>git grep</code> in the <a
-href="https://github.com/moritz/perl6-all-module">experimental
+href="https://github.com/moritz/perl6-all-modules/">experimental
 perl6-all-modules</a> repository.</p>
 
 <p>This is an attempt to get all the published module into a single git
-repository. It is built using <a href=https://ithub.com/ingydotnet/git-subrepo/>git
+repository. It is built using <a href=https://github.com/ingydotnet/git-subrepo/>git
 subrepo</a>, an unofficial git extension module that I've been wanting to try
 for some time, and that seems to have some advantages over submodules in some
 cases. The notable one in this case being that <code>git grep</code> ignores
