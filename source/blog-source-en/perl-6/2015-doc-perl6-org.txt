@@ -1,0 +1,90 @@
+doc.perl6.org: some stats, future directions
+<!-- 1423248840 -->
+<p>In June 2012 I started the <a href="https://github.com/perl6/doc/">perl6/doc</a>
+repository with the intent to collect/write API documentation for Perl 6
+built-in types and routines. Not long afterwards, <a
+href="http://doc.perl6.org/">the website doc.perl6.org</a> was born, generated
+from the aforementioned repository.</p>
+
+<p>About 2.5 years later, the repository has seen more than one thousand
+commits from more than 40 contributors, 14 of which contributed ten patches or
+more. The documentation encompasses about 550 routines in 195 types, with 15
+documents for other things than built-in types (for example <a
+href="http://doc.perl6.org/language/regexes">an introduction to regexes</a>,
+<a href="http://doc.perl6.org/language/variables">descriptions of how
+variables work</a>).</p>
+
+<p>In terms of subjective experience, I observed an increase in the number of
+questions on our IRC channel and otherwise that could be answered by pointing
+to the appropriate pages of doc.perl6.org, or augmenting the answer with a
+statement like "for more info, see ..."</p>
+
+<p>While it's far from perfect, I think both the numbers and the experience is
+very encouraging, and I'd like to thank everybody who helped make that happen,
+often by contributing skills I'm not good at: front-end design, good English
+and gentle encouragement.</p>
+
+<h2>Plans for the Future</h2>
+
+<p>Being a  community-driven project, I can't plan anybody else's time on it,
+so these are my own plans for the future of doc.perl6.org.</p>
+
+<h3>Infrastructural improvements</h3>
+
+<p>There are several unsolved problems with the web interface, with how we
+store our documents, and how information can be found. I plan to address them
+slowly but steadily.</p>
+
+<ul>
+    <li>The search is too much centered around types and routines, searching
+    for variables, syntactic constructs and keywords isn't easily
+    possible. I want it to find many more things than right now.</li>
+
+    <li>Currently we store the docs for each type in a separate file called
+    <code>Type.pod</code>. Which will break when we start to document native
+    types, which being with lower case letters. Having <code>int.pod</code>
+    and <code>Int.pod</code> is completely unworkable on case-insensitive or
+    case-preserving file system. I want to come up with a solution for that,
+    though I don't yet know what it will look like.</li>
+
+    <li>doc.perl6.org is served from static pages, which leads to some
+    problems with file names conflicting with UNIX conventions. You can't name
+    a file <code>infix:&lt;/&gt;.html</code>, and files with two consecutive
+    dots in their names are also weird. So in the long run, we'll have
+    to switch to some kind of dynamic URL dispatching, or a name escaping
+    scheme that is capable of handling all of Perl 6's syntax.</li>
+
+    <li>Things like the <a href="http://doc.perl6.org/type/Cool">list of
+    methods and what they coerce to in class Cool</a> don't show up in derived
+    types; either the tooling needs to be improved for that, or they need to
+    be rewritten to use the usual one-heading-per-method approach.</li>
+
+</ul>
+
+<h3>Content</h3>
+
+<p>Of course my plan is to improve coverage of the built-in types and
+routines, and add more examples. In addition, I want to improve and expand
+on the language documentation (for example syntax, OO, regexes, MOP), ideally
+documenting every Perl 6 feature.</p>
+
+<p>Once the language features are covered in sufficient breadth and depth
+(though I won't wait for 100% coverage), I want to add three <em>tutorial
+tracks</em>:</p>
+
+<ul>
+    <li>A track for beginners</li>
+    <li>A quick-start for programmers from other languages</li>
+    <li>A series of intermediate to advanced guides covering
+    topics such as parsing, how to structure a bigger application, the
+    responsible use of meta programming, or reactive programming.</li>
+</ul>
+
+<p>Of course I won't be able to do that all on my own, so I hope to convince
+my fellow and future contributors that those are good ideas.</p>
+
+<p>Time to stop rambling about the future, and off to writing some docs, this
+is yours truly signing off.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
