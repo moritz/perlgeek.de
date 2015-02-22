@@ -1,0 +1,70 @@
+Profiling Perl 6 code on IRC
+<!-- 1424631112 -->
+<p>On the <a href="http://perl6.org/community/irc">#perl6 IRC channel</a>, we
+have a bot called <em>camelia</em> that executes small snippets of Perl 6
+code, and prints the output that it produces. This is a pretty central part of
+our culture, and we use it to explain or demonstrate features or even bugs in
+the compiler.</p>
+
+<p>Here is <a href="http://irclog.perlgeek.de/perl6/2015-02-22#i_10156151">an
+example:</a></p>
+
+<pre>[% syntax escape %]
+10:35 < Kristien> Can a class contain classes?
+10:35 < Kristien> m: class A { class B { } }; say A.new.B.new
+10:35 <+camelia> rakudo-moar 114659: OUTPUT«No such method 'B' for invocant of 
+                 type 'A'␤  in block <unit> at /tmp/g81K8fr9eY:1␤␤»
+10:35 < Kristien> :(
+10:36 < raydiak> m: class A { class B { } }; say A::B.new
+10:36 <+camelia> rakudo-moar 114659: OUTPUT«B.new()␤»
+[% endsyntax %]</pre>
+
+<p>Yesterday and today I spent some time teaching this IRC bot to not only run
+the code, but optionally also run it through a profiler, to make it possible
+to determine where the virtual machine spends its time running the code. <a
+href="http://irclog.perlgeek.de/perl6/2015-02-22#i_10156401">an example:</a></p>
+
+<pre>[% syntax escape %]
+12:21 < moritz> prof-m: Date.today for ^100; say "done"
+12:21 <+camelia> prof-m 9fc66c: OUTPUT«done␤»
+12:21 <+camelia> .. Prof: http://p.p6c.org/453bbe
+[% endsyntax %]</pre>
+
+<p>The <a href="http://rakudo.org/">Rakudo Perl 6 Compiler</a> on the <a
+href="http://moarvm.org/">MoarVM</a> backend has a profile, which produces a
+fancy HTML + Javascript page, and this is what is done. It is automatically
+uploaded to a webserver, producing <a href="http://p.p6c.org/453bbe">this
+profile</a>.</p>
+
+<p>Under the hood, it started with <a
+href="https://github.com/perl6/nqp/commit/edd4dc99796480b9fcf915706fcfaf4e1d35c880">a
+patch that makes it possible to specify the output filename for a profile
+run</a>, and <a
+href="https://github.com/perl6/nqp/commit/4526709f37f1c59a5acc07ce3853a564648a549a">another
+one to clear up the fallout from the previous patch</a>.</p>
+
+<p>Then came the bigger part: setting up the <a
+href="https://httpd.apache.org/">Apache</a> virtual host that serves the
+web files, including a restricted user that only allows up- and downloads via
+scp. Since the IRC bot can execute arbitrary code, it is very likely that an
+attacker can steal the private SSH keys used for authentication against the
+webserver. So it is essential that if those keys are stolen, the attacker
+can't do much more than uploading more files.</p>
+
+<p> I used <a href="http://www.pizzashack.org/rssh/">rssh</a> for this. It
+is the login shell for the upload user, and configured to only allow scp.
+Since I didn't want the attacker to be able to modify the
+<code>authorized_keys</code> file, I configured rssh to use a chroot below the
+home directory (which sadly in turn requires a setuid-root wrapper around
+chroot, because ordinary users can't execute it. Well, nothing is
+perfect).</p>
+
+<p>Some <a
+href="https://github.com/perl6/evalbot/commit/c0a1331e7588fbf69db56202e6c6f6b51d9adecc">more
+patching and debugging later</a>, the bot was ready.</p>
+
+<p>The whole thing feels a bit bolted on; if usage warrants it, I'll see if I
+can make the code a bit prettier.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
