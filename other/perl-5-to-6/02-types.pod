@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 02 - Types
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     my Int $x = 3;
@@ -28,7 +32,8 @@ There are some basic types that you should know about:
     (1, 2, 3)       # Parcel
 
 All "normal" built-in types begin with an upper case letter. All "normal" types
-inherit from C<Any>, and absolutely everything inherits from C<Mu>.
+inherit from L<Any|http://doc.perl6.org/type/Any>, and absolutely everything
+inherits from L<Mu|http://doc.perl6.org/type/Mu>.
 
 You can restrict the type of values that a variable can hold by adding the
 type name to the declaration.
@@ -43,8 +48,10 @@ A type declaration on an Array applies to its contents, so C<my Str @s> is
 an array that can only contain strings.
 
 Some types stand for a whole family of more specific types, for example
-integers (type C<Int>), rationals (type C<Rat>) and floating-point
-numbers (type C<Num>) conform to the C<Numeric> type.
+integers (type L<Int|http://doc.perl6.org/type/Int>), rationals (type
+L<Rat|http://doc.perl6.org/type/Rat>) and floating-point
+numbers (type L<Num|http://doc.perl6.org/type/Num>) conform to the
+L<Numeric|http://doc.perl6.org/type/Numeric> type.
 
 =head2 Introspection
 
@@ -87,6 +94,7 @@ for particular types.
 =head1 SEE ALSO
 
 L<http://design.perl6.org/S02.html#Built-In_Data_Types>,
+L<http://doc.perl6.org/type>
 
 =for time 1221950400
 =for editor vim: spell

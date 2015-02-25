@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 04 - Subroutines and Signatures
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     # sub without a signature - perl 5 like
@@ -230,7 +234,8 @@ Since operators are also subs, these refinements work for operators too.
 
 =head1 SEE ALSO
 
-L<http://design.perl6.org/S06.html>
+L<http://design.perl6.org/S06.html>,
+L<http://doc.perl6.org/language/functions>
 
 =for time 1221952800
 =for editor vim: spell

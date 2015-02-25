@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 05 - Objects and Classes
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     class Shape {
@@ -170,7 +174,7 @@ same method names generate conflicts, instead of silently resolving to one of
 them, like multiple inheritance would do.
 
 While classes are intended primarily for type
-conformance, roles are the primary means for code reuse in Perl 6.
+conformance and instance management, roles are the primary means for code reuse in Perl 6.
 
     role Paintable {
         has $.colour is rw;
@@ -197,6 +201,7 @@ conformance, roles are the primary means for code reuse in Perl 6.
 
 =head1 SEE ALSO
 
+L<http://doc.perl6.org/language/objects>
 L<http://design.perl6.org/S12.html>
 L<http://design.perl6.org/S14.html>
 L<http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf>
