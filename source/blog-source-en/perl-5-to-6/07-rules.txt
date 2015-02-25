@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called &#34;rules&#34;)</p>
 
 <h3><a class='u'
+name="LAST_UPDATE"
+>LAST UPDATE</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -56,7 +62,7 @@ name="DESCRIPTION"
 <dd>
 <p>Many small changes make rules easier to write. For example the dot <code>.</code> matches any character now, the old semantics (anything but newlines) can be achieved with <code>\N</code>.</p>
 
-<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[...]</code>, which are a lot easier to read and write than the old <code>(?:...)</code>.</p>
+<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[...]</code>, which are a lot easier to read and write than Perl 5 <code>(?:...)</code>.</p>
 
 <dt><a name="Nested_captures_and_match_object"
 >Nested captures and match object</a></dt>
@@ -64,7 +70,8 @@ name="DESCRIPTION"
 <dd>
 <p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>. So each nesting level of parenthesis is reflected in a new nesting level in the result match object.</p>
 
-<p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
+<p>All the match variables are aliases into <code>$/</code>, which is the so-called <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match object</a>, and it actually contains a full match tree.</p>
 
 <dt><a name="Named_regexes_and_grammars"
 >Named regexes and grammars</a></dt>
@@ -126,7 +133,8 @@ name="Syntax_clean_up"
 
 <h4><a class='u'
 name="The_Match_Object"
->The Match Object</a></h4>
+>The <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match</a> Object</a></h4>
 
 <p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contain the first and last string position of the match respectively.</p>
 
@@ -174,6 +182,9 @@ name="MOTIVATION"
 <h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
+
+<p><a href="http://doc.perl6.org/language/regexes" class="podlinkurl"
+>http://doc.perl6.org/language/regexes</a></p>
 
 <p><a href="http://design.perl6.org/S05.html" class="podlinkurl"
 >http://design.perl6.org/S05.html</a></p>

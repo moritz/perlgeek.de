@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 09 - Comparing and Matching</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -37,9 +43,13 @@ name="DESCRIPTION"
 
 <p>Perl 6 still has string comparison operators (<code>eq</code>, <code>lt</code>, <code>gt</code>, <code>le</code>, <code>ge</code>, <code>ne</code>; <code>cmp</code> is now called <code>leg</code>) that evaluate their operands in string context. Similarly all the numeric operators from Perl 5 are still there.</p>
 
-<p>Since objects are more than blessed references, a new way for comparing them is needed. <code>===</code> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
+<p>Since objects are more than blessed references, a new way for comparing them is needed. <a href="http://doc.perl6.org/routine/%3D%3D%3D" class="podlinkurl"
+>===</a> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
 
-<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <code>Array</code> or <code>Hash</code>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
+<p><a href="http://doc.perl6.org/routine/eqv" class="podlinkurl"
+>eqv</a> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <a href="http://doc.perl6.org/type/Array" class="podlinkurl"
+>Array</a> or <a href="http://doc.perl6.org/type/Hash" class="podlinkurl"
+>Hash</a>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
 
 <h4><a class='u'
 name="Smart_matching"
@@ -47,9 +57,12 @@ name="Smart_matching"
 
 <p>Perl 6 has a &#34;compare anything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
-<p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
+<p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <a href="http://doc.perl6.org/type/Range" class="podlinkurl"
+>Range</a> object checks if that scalar is included in the range.</p>
 
-<p>There are other, more advanced forms of matching: for example you can check if an argument list (<code>Capture</code>) fits to the parameter list (<code>Signature</code>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
+<p>There are other, more advanced forms of matching: for example you can check if an argument list (<a href="http://doc.perl6.org/type/Capture" class="podlinkurl"
+>Capture</a>) fits to the parameter list (<a href="http://doc.perl6.org/type/Signature" class="podlinkurl"
+>Signature</a>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
 
 <p>What you should remember is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
 

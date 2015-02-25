@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 06 - Contexts</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -28,7 +34,7 @@ name="DESCRIPTION"
 
 <p>in Perl 5, <code>$x</code> contains less information than <code>@a</code> - it contains only the number of items in <code>@a</code>. To preserve all information, you have to explicitly take a reference: <code>$x = \@a</code>.</p>
 
-<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called <i>scalar</i> in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
+<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called <i>scalar</i> in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged, though void context is now called <i>sink</i> context.</p>
 
 <p>You can force contexts with special syntax.</p>
 
@@ -49,7 +55,8 @@ name="Tree_Context"
 
 <p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
 
-<p>Now this is solved by returning a list of <code>Parcel</code> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
+<p>Now this is solved by returning a list of <a href="http://doc.perl6.org/type/Parcel" class="podlinkurl"
+>Parcel</a> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
 
 <p>Consider the infix <code>Z</code> (short for <i>zip</i>) operator, which interleaves the elements from two lists:</p>
 
@@ -80,7 +87,8 @@ name="MOTIVATION"
 
 <p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply evaluate the object a more specific context.</p>
 
-<p>For some things (like the Match object), the different contexts really enhance their usefulness and beauty.</p>
+<p>For some things (like the <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match</a> object), the different contexts really enhance their usefulness and beauty.</p>
 
 <h3><a class='u'
 name="SEE_ALSO"

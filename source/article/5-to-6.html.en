@@ -957,6 +957,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 06 - Contexts</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -977,7 +983,7 @@ name="DESCRIPTION"
 
 <p>in Perl 5, <code>$x</code> contains less information than <code>@a</code> - it contains only the number of items in <code>@a</code>. To preserve all information, you have to explicitly take a reference: <code>$x = \@a</code>.</p>
 
-<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called <i>scalar</i> in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged.</p>
+<p>In Perl 6 it&#39;s the other way round: by default you don&#39;t lose anything, the scalar just stores the array. This was made possible by introducing a generic item context (called <i>scalar</i> in Perl 5) and more specialized numeric, integer and string contexts. Void and List context remain unchanged, though void context is now called <i>sink</i> context.</p>
 
 <p>You can force contexts with special syntax.</p>
 
@@ -998,7 +1004,8 @@ name="Tree_Context"
 
 <p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
 
-<p>Now this is solved by returning a list of <code>Parcel</code> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
+<p>Now this is solved by returning a list of <a href="http://doc.perl6.org/type/Parcel" class="podlinkurl"
+>Parcel</a> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
 
 <p>Consider the infix <code>Z</code> (short for <i>zip</i>) operator, which interleaves the elements from two lists:</p>
 
@@ -1029,7 +1036,8 @@ name="MOTIVATION"
 
 <p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply evaluate the object a more specific context.</p>
 
-<p>For some things (like the Match object), the different contexts really enhance their usefulness and beauty.</p>
+<p>For some things (like the <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match</a> object), the different contexts really enhance their usefulness and beauty.</p>
 
 <h3><a class='u'
 name="SEE_ALSO"
@@ -1048,6 +1056,12 @@ name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 07 - Regexes (also called &#34;rules&#34;)</p>
+
+<h3><a class='u'
+name="LAST_UPDATE"
+>LAST UPDATE</a></h3>
+
+<p>2015-02-25</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -1098,7 +1112,7 @@ name="DESCRIPTION"
 <dd>
 <p>Many small changes make rules easier to write. For example the dot <code>.</code> matches any character now, the old semantics (anything but newlines) can be achieved with <code>\N</code>.</p>
 
-<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[...]</code>, which are a lot easier to read and write than the old <code>(?:...)</code>.</p>
+<p>Modifiers now go at the start of a regex, and non-capturing groups are <code>[...]</code>, which are a lot easier to read and write than Perl 5 <code>(?:...)</code>.</p>
 
 <dt><a name="Nested_captures_and_match_object"
 >Nested captures and match object</a></dt>
@@ -1106,7 +1120,8 @@ name="DESCRIPTION"
 <dd>
 <p>In Perl 5, a regex like this <code>(a(b))(c)</code> would put <code>ab</code> into <code>$1</code>, <code>b</code> into <code>$2</code> and <code>c</code> into <code>$3</code> upon successful match. This has changed. Now <code>$0</code> (enumeration starts at zero) contains <code>ab</code>, and <code>$0[0]</code> or <code>$/[0][0]</code> contains <code>b</code>. <code>$1</code> holds <code>c</code>. So each nesting level of parenthesis is reflected in a new nesting level in the result match object.</p>
 
-<p>All the match variables are aliases into <code>$/</code>, which is the so-called <i>Match object</i>, and it actually contains a full match tree.</p>
+<p>All the match variables are aliases into <code>$/</code>, which is the so-called <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match object</a>, and it actually contains a full match tree.</p>
 
 <dt><a name="Named_regexes_and_grammars"
 >Named regexes and grammars</a></dt>
@@ -1168,7 +1183,8 @@ name="Syntax_clean_up"
 
 <h4><a class='u'
 name="The_Match_Object"
->The Match Object</a></h4>
+>The <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+>Match</a> Object</a></h4>
 
 <p>Every match generates a so-called match object, which is stored in the special variable <code>$/</code>. It is a versatile thing. In boolean context it returns <code>Bool::True</code> if the match succeeded. In string context it returns the matched string, when used as a list it contains the positional captures, and when used as a hash it contains the named captures. The <code>.from</code> and <code>.to</code> methods contain the first and last string position of the match respectively.</p>
 
@@ -1217,6 +1233,9 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
+<p><a href="http://doc.perl6.org/language/regexes" class="podlinkurl"
+>http://doc.perl6.org/language/regexes</a></p>
+
 <p><a href="http://design.perl6.org/S05.html" class="podlinkurl"
 >http://design.perl6.org/S05.html</a></p>
 
@@ -1250,7 +1269,8 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Junctions are superpositions of unordered values. Operations on junctions are executed for each item of the junction separately (and maybe even in parallel), and the results are assembled in a junction of the same type.</p>
+<p><a href="http://doc.perl6.org/type/Junction" class="podlinkurl"
+>Junctions</a> are superpositions of unordered values. Operations on junctions are executed for each item of the junction separately (and maybe even in parallel), and the results are assembled in a junction of the same type.</p>
 
 <p>The junction types only differ when evaluated in boolean context. The types are <code>any</code>, <code>all</code>, <code>one</code> and <code>none</code>.</p>
 
@@ -1284,21 +1304,13 @@ name="DESCRIPTION"
                /  |  \
             All other types</pre>
 
-<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>Junction</code></p>
+<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <a href="http://doc.perl6.org/type/Mu" class="podlinkurl"
+>Mu</a> or <code>Junction</code></p>
 
 <pre>    sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
         ....
     }</pre>
-
-<p>A word of warning: junctions can behave counter-intuitive sometimes. With non-junction types <code>$a != $b</code> and <code>!($a == $b)</code> always mean the same thing. If one of these variables is a junction, that might be different:</p>
-
-<pre>    my Junction $b = 3 | 2;
-    my $a = 2; 
-    say &#34;Yes&#34; if   $a != $b ;       # Yes
-    say &#34;Yes&#34; if !($a == $b);       # no output</pre>
-
-<p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparison returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -1321,7 +1333,8 @@ name="MOTIVATION"
     }
     if ($all_non_neg) { ... }</pre>
 
-<p>Or if you happen to know about <code>List::MoreUtils</code></p>
+<p>Or if you happen to know about <a href="https://metacpan.org/pod/List::MoreUtils" class="podlinkurl"
+>List::MoreUtils</a></p>
 
 <pre>    use List::MoreUtils qw(all);
     my @items = get_data;
@@ -1338,7 +1351,8 @@ name="A_Word_of_Warning"
 
 <p>Many people get all excited about junctions, and try to do too much with them.</p>
 
-<p>Junctions are not sets; if you try to extract items from a junction, you are doing it wrong, and should be using a <code>Set</code> instead.</p>
+<p>Junctions are not sets; if you try to extract items from a junction, you are doing it wrong, and should be using a <a href="http://doc.perl6.org/type/Set" class="podlinkurl"
+>Set</a> instead.</p>
 
 <p>It is a good idea to use junctions as smart conditions, but trying to build a solver for equations based on the junction autothreading rules is on over-extortion and usually results in frustration.</p>
 
@@ -1349,6 +1363,9 @@ name="SEE_ALSO"
 <p><a href="http://design.perl6.org/S03.html#Junctive_operators" class="podlinkurl"
 >http://design.perl6.org/S03.html#Junctive_operators</a></p>
 
+<p><a href="http://doc.perl6.org/language/setbagmix" class="podlinkurl"
+>Possible alternatives to Junctions</a>.</p>
+
 
 <h2 id="post_09">Comparing and Matching</h2>
 <p>Sat Sep 27 22:20:00 2008</p>
@@ -1358,6 +1375,12 @@ name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 09 - Comparing and Matching</p>
+
+<h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -1389,9 +1412,13 @@ name="DESCRIPTION"
 
 <p>Perl 6 still has string comparison operators (<code>eq</code>, <code>lt</code>, <code>gt</code>, <code>le</code>, <code>ge</code>, <code>ne</code>; <code>cmp</code> is now called <code>leg</code>) that evaluate their operands in string context. Similarly all the numeric operators from Perl 5 are still there.</p>
 
-<p>Since objects are more than blessed references, a new way for comparing them is needed. <code>===</code> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
+<p>Since objects are more than blessed references, a new way for comparing them is needed. <a href="http://doc.perl6.org/routine/%3D%3D%3D" class="podlinkurl"
+>===</a> returns only true for identical values. For immutable types like numbers or Strings that is a normal equality tests, for other objects it only returns <code>True</code> if both variables refer to the same object (like comparing memory addresses in C++).</p>
 
-<p><code>eqv</code> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <code>Array</code> or <code>Hash</code>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
+<p><a href="http://doc.perl6.org/routine/eqv" class="podlinkurl"
+>eqv</a> tests if two things are equivalent, ie if they are of the same type and have the same value. In the case of containers (like <a href="http://doc.perl6.org/type/Array" class="podlinkurl"
+>Array</a> or <a href="http://doc.perl6.org/type/Hash" class="podlinkurl"
+>Hash</a>), the contents are compared with <code>eqv</code>. Two identically constructed data structures are equivalent.</p>
 
 <h4><a class='u'
 name="Smart_matching"
@@ -1399,9 +1426,12 @@ name="Smart_matching"
 
 <p>Perl 6 has a &#34;compare anything&#34; operator, called &#34;smart match&#34; operator, and spelled <code>~~</code>. It is asymmetrical, and generally the type of the right operand determines the kind of comparison that is made.</p>
 
-<p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <code>Range</code> object checks if that scalar is included in the range.</p>
+<p>For immutable types it is a simple equality comparison. A smart match against a type object checks for type conformance. A smart match against a regex matches the regex. Matching a scalar against a <a href="http://doc.perl6.org/type/Range" class="podlinkurl"
+>Range</a> object checks if that scalar is included in the range.</p>
 
-<p>There are other, more advanced forms of matching: for example you can check if an argument list (<code>Capture</code>) fits to the parameter list (<code>Signature</code>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
+<p>There are other, more advanced forms of matching: for example you can check if an argument list (<a href="http://doc.perl6.org/type/Capture" class="podlinkurl"
+>Capture</a>) fits to the parameter list (<a href="http://doc.perl6.org/type/Signature" class="podlinkurl"
+>Signature</a>) of a subroutine, or apply file test operators (like <code>-e</code> in Perl 5).</p>
 
 <p>What you should remember is that any &#34;does $x fit to $y?&#34;-Question will be formulated as a smart match in Perl 6.</p>
 

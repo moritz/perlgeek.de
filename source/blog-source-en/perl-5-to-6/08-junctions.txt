@@ -21,7 +21,8 @@ name="SYNOPSIS"
 name="DESCRIPTION"
 >DESCRIPTION</a></h3>
 
-<p>Junctions are superpositions of unordered values. Operations on junctions are executed for each item of the junction separately (and maybe even in parallel), and the results are assembled in a junction of the same type.</p>
+<p><a href="http://doc.perl6.org/type/Junction" class="podlinkurl"
+>Junctions</a> are superpositions of unordered values. Operations on junctions are executed for each item of the junction separately (and maybe even in parallel), and the results are assembled in a junction of the same type.</p>
 
 <p>The junction types only differ when evaluated in boolean context. The types are <code>any</code>, <code>all</code>, <code>one</code> and <code>none</code>.</p>
 
@@ -55,21 +56,13 @@ name="DESCRIPTION"
                /  |  \
             All other types</pre>
 
-<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <code>Mu</code> or <code>Junction</code></p>
+<p>If you want to write a sub that takes a junction and doesn&#39;t autothread over it, you have to declare the type of the parameter either as <a href="http://doc.perl6.org/type/Mu" class="podlinkurl"
+>Mu</a> or <code>Junction</code></p>
 
 <pre>    sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
         ....
     }</pre>
-
-<p>A word of warning: junctions can behave counter-intuitive sometimes. With non-junction types <code>$a != $b</code> and <code>!($a == $b)</code> always mean the same thing. If one of these variables is a junction, that might be different:</p>
-
-<pre>    my Junction $b = 3 | 2;
-    my $a = 2; 
-    say &#34;Yes&#34; if   $a != $b ;       # Yes
-    say &#34;Yes&#34; if !($a == $b);       # no output</pre>
-
-<p><code>2 != 3</code> is true, thus <code>$a != 2|3</code> is also true. On the other hand the <code>$a == $b</code> comparison returns a single Bool value (<code>True</code>), and the negation of that is <code>False</code>.</p>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -92,7 +85,8 @@ name="MOTIVATION"
     }
     if ($all_non_neg) { ... }</pre>
 
-<p>Or if you happen to know about <code>List::MoreUtils</code></p>
+<p>Or if you happen to know about <a href="https://metacpan.org/pod/List::MoreUtils" class="podlinkurl"
+>List::MoreUtils</a></p>
 
 <pre>    use List::MoreUtils qw(all);
     my @items = get_data;
@@ -109,7 +103,8 @@ name="A_Word_of_Warning"
 
 <p>Many people get all excited about junctions, and try to do too much with them.</p>
 
-<p>Junctions are not sets; if you try to extract items from a junction, you are doing it wrong, and should be using a <code>Set</code> instead.</p>
+<p>Junctions are not sets; if you try to extract items from a junction, you are doing it wrong, and should be using a <a href="http://doc.perl6.org/type/Set" class="podlinkurl"
+>Set</a> instead.</p>
 
 <p>It is a good idea to use junctions as smart conditions, but trying to build a solver for equations based on the junction autothreading rules is on over-extortion and usually results in frustration.</p>
 
@@ -119,5 +114,8 @@ name="SEE_ALSO"
 
 <p><a href="http://design.perl6.org/S03.html#Junctive_operators" class="podlinkurl"
 >http://design.perl6.org/S03.html#Junctive_operators</a></p>
+
+<p><a href="http://doc.perl6.org/language/setbagmix" class="podlinkurl"
+>Possible alternatives to Junctions</a>.</p>
 
 [% option no-header %] [% option no-footer %]
