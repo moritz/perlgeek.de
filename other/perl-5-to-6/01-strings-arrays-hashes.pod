@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 01 - Strings, Arrays, Hashes;
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     my $five = 5;
@@ -35,8 +39,9 @@ builtins are still mostly unchanged in Perl 6.
 
 =head2 Strings
 
-Strings are surrounded by double quotes (in which case they are interpolating),
-or with single quotes. Backslash escapes work just like in Perl 5.
+L<String|http://doc.perl6.org/type/Str> literals are surrounded by double quotes
+(in which case they are interpolating),
+or with single quotes. Basic backslash escapes like C<\n> work just like in Perl 5.
 
 However the interpolation rules have changed a bit. The following things
 interpolate
@@ -57,7 +62,7 @@ interpolated.
 
 =head2 Arrays
 
-Array variables still begin with the C<@> sigil. And they always do,
+L<Array|http://doc.perl6.org/type/Array> variables still begin with the C<@> sigil. And they always do,
 even when accessing stored items, ie. when an index is present.
 
     my @a = 5, 1, 2;            # no parens needed anymore
@@ -82,7 +87,7 @@ There is a short form for the old C<qw/../> quoting construct:
 =head2 Hashes
 
 While Perl 5 hashes are even sized lists when viewed in list context,
-Perl 6 hashes are lists of pairs in that context.
+L<Perl 6 hashes|http://doc.perl6.org/type/Hash> are lists of pairs in that context.
 Pairs are also used for other things, like named arguments for subroutines,
 but more on that later.
 
@@ -123,7 +128,10 @@ create objects that can act as arrays, hashes and subs at the same time.
 =head1 SEE ALSO
 
 L<http://design.perl6.org/S02.html>,
-L<http://design.perl6.org/S29.html>
+L<http://design.perl6.org/S29.html>,
+L<http://doc.perl6.org/type/Str>,
+L<http://doc.perl6.org/type/Array>,
+L<http://doc.perl6.org/type/Hash>
 
 =for time 1221949200
 =for editor vim: spell

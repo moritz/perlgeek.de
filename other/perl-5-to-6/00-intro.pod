@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" - Introduction
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     Learn Perl 6 (if you already know Perl 5)
@@ -38,7 +42,8 @@ to see its beauty without having to learn the language.
 
 =head1 IT'S NOT
 
-This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a
+This is not a L<guide for converting Perl 5 to Perl 6
+programs|http://doc.perl6.org/language/5to6>. It is also not a
 comprehensive list of differences.
 
 It is also not oriented on the current state of the implementations, but on
@@ -61,7 +66,7 @@ Already written or in preparation:
     10 Containers and Binding
     11 Basic Operators
     12 Laziness (-)
-    13 Custom Operators (-)
+    13 Custom Operators
     14 the MAIN sub
     15 Twigils
     16 Enums
@@ -101,6 +106,8 @@ Moritz Lenz, L<http://perlgeek.de/>, C<moritz.lenz@gmail.com>
 
 Other documentation efforts can be found on
 L<http://perl6.org/documentation/>.
+
+L<Perl 6 reference documentation|http://doc.perl6.org/>.
 
 A (partial) French translation is available at
 L<http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/>.
