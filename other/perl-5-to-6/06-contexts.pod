@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 06 - Contexts
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     my @a = <a b c>;
@@ -26,7 +30,8 @@ take a reference: C<$x = \@a>.
 In Perl 6 it's the other way round: by default you don't lose anything, the
 scalar just stores the array. This was made possible by introducing a generic
 item context (called I<scalar> in Perl 5) and more specialized numeric, integer
-and string contexts. Void and List context remain unchanged.
+and string contexts. Void and List context remain unchanged, though void
+context is now called I<sink> context.
 
 You can force contexts with special syntax.
 
@@ -46,7 +51,8 @@ You can force contexts with special syntax.
 In the early days of Perl 6, there were lots of builtins of which two versions
 existed, one that returned a flat list, one that returned a list of arrays.
 
-Now this is solved by returning a list of C<Parcel> objects, where the
+Now this is solved by returning a list of
+L<Parcel|http://doc.perl6.org/type/Parcel> objects, where the
 C<Parcel> objects might or might not flatten out depending on the context.
 
 Consider the infix C<Z> (short for I<zip>) operator, which interleaves the
@@ -86,7 +92,8 @@ With more specific context you don't need to make this choice - it returns some
 sensible default, and all operators that don't like this choice can simply
 evaluate the object a more specific context.
 
-For some things (like the Match object), the different contexts really enhance
+For some things (like the L<Match|http://doc.perl6.org/type/Match> object), the
+different contexts really enhance
 their usefulness and beauty.
 
 =head1 SEE ALSO

@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 07 - Regexes (also called "rules")
 
+=head1 LAST UPDATE
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     grammar URL {
@@ -53,7 +57,7 @@ matches any character now, the old semantics (anything but newlines) can be
 achieved with C<\N>.
 
 Modifiers now go at the start of a regex, and non-capturing groups are
-C<[...]>, which are a lot easier to read and write than the old C<(?:...)>.
+C<[...]>, which are a lot easier to read and write than Perl 5 C<(?:...)>.
 
 =item Nested captures and match object
 
@@ -64,7 +68,7 @@ contains C<b>. C<$1> holds C<c>. So each nesting level of parenthesis is
 reflected in a new nesting level in the result match object.
 
 All the match variables are aliases into C<$/>, which is the so-called
-I<Match object>, and it actually contains a full match tree.
+L<Match object|http://doc.perl6.org/type/Match>, and it actually contains a full match tree.
 
 =item Named regexes and grammars
 
@@ -205,6 +209,8 @@ easier to maintain and to change than the Perl 5 one, which is written in C and
 not changeable at parse time.
 
 =head1 SEE ALSO
+
+L<http://doc.perl6.org/language/regexes>
 
 L<http://design.perl6.org/S05.html>
 
