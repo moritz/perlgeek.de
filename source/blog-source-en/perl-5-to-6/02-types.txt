@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 02 - Types</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -33,7 +39,9 @@ name="DESCRIPTION"
     3.14            # Rat (rational number)
     (1, 2, 3)       # Parcel</pre>
 
-<p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <code>Any</code>, and absolutely everything inherits from <code>Mu</code>.</p>
+<p>All &#34;normal&#34; built-in types begin with an upper case letter. All &#34;normal&#34; types inherit from <a href="http://doc.perl6.org/type/Any" class="podlinkurl"
+>Any</a>, and absolutely everything inherits from <a href="http://doc.perl6.org/type/Mu" class="podlinkurl"
+>Mu</a>.</p>
 
 <p>You can restrict the type of values that a variable can hold by adding the type name to the declaration.</p>
 
@@ -44,7 +52,11 @@ name="DESCRIPTION"
 
 <p>A type declaration on an Array applies to its contents, so <code>my Str @s</code> is an array that can only contain strings.</p>
 
-<p>Some types stand for a whole family of more specific types, for example integers (type <code>Int</code>), rationals (type <code>Rat</code>) and floating-point numbers (type <code>Num</code>) conform to the <code>Numeric</code> type.</p>
+<p>Some types stand for a whole family of more specific types, for example integers (type <a href="http://doc.perl6.org/type/Int" class="podlinkurl"
+>Int</a>), rationals (type <a href="http://doc.perl6.org/type/Rat" class="podlinkurl"
+>Rat</a>) and floating-point numbers (type <a href="http://doc.perl6.org/type/Num" class="podlinkurl"
+>Num</a>) conform to the <a href="http://doc.perl6.org/type/Numeric" class="podlinkurl"
+>Numeric</a> type.</p>
 
 <h4><a class='u'
 name="Introspection"
@@ -92,6 +104,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://design.perl6.org/S02.html#Built-In_Data_Types" class="podlinkurl"
->http://design.perl6.org/S02.html#Built-In_Data_Types</a>,</p>
+>http://design.perl6.org/S02.html#Built-In_Data_Types</a>, <a href="http://doc.perl6.org/type" class="podlinkurl"
+>http://doc.perl6.org/type</a></p>
 
 [% option no-header %] [% option no-footer %]

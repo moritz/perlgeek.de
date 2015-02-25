@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; - Introduction</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -35,7 +41,8 @@ name="DESCRIPTION"
 name="IT&#39;S_NOT"
 >IT&#39;S NOT</a></h3>
 
-<p>This is not a guide for converting Perl 5 to Perl 6 programs. It is also not a comprehensive list of differences.</p>
+<p>This is not a <a href="http://doc.perl6.org/language/5to6" class="podlinkurl"
+>guide for converting Perl 5 to Perl 6 programs</a>. It is also not a comprehensive list of differences.</p>
 
 <p>It is also not oriented on the current state of the implementations, but on the ideal language as specified.</p>
 
@@ -58,7 +65,7 @@ name="ROADMAP"
     10 Containers and Binding
     11 Basic Operators
     12 Laziness (-)
-    13 Custom Operators (-)
+    13 Custom Operators
     14 the MAIN sub
     15 Twigils
     16 Enums
@@ -101,6 +108,9 @@ name="LINKS"
 
 <p>Other documentation efforts can be found on <a href="http://perl6.org/documentation/" class="podlinkurl"
 >http://perl6.org/documentation/</a>.</p>
+
+<p><a href="http://doc.perl6.org/" class="podlinkurl"
+>Perl 6 reference documentation</a>.</p>
 
 <p>A (partial) French translation is available at <a href="http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/" class="podlinkurl"
 >http://laurent-rosenfeld.developpez.com/tutoriels/perl/perl6/les-bases/</a>.</p>

@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 04 - Subroutines and Signatures</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -213,6 +219,7 @@ name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
 <p><a href="http://design.perl6.org/S06.html" class="podlinkurl"
->http://design.perl6.org/S06.html</a></p>
+>http://design.perl6.org/S06.html</a>, <a href="http://doc.perl6.org/language/functions" class="podlinkurl"
+>http://doc.perl6.org/language/functions</a></p>
 
 [% option no-header %] [% option no-footer %]

@@ -10,6 +10,12 @@ Arrays,
 Hashes;</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -43,7 +49,8 @@ name="DESCRIPTION"
 name="Strings"
 >Strings</a></h4>
 
-<p>Strings are surrounded by double quotes (in which case they are interpolating), or with single quotes. Backslash escapes work just like in Perl 5.</p>
+<p><a href="http://doc.perl6.org/type/Str" class="podlinkurl"
+>String</a> literals are surrounded by double quotes (in which case they are interpolating), or with single quotes. Basic backslash escapes like <code>\n</code> work just like in Perl 5.</p>
 
 <p>However the interpolation rules have changed a bit. The following things interpolate</p>
 
@@ -62,7 +69,8 @@ name="Strings"
 name="Arrays"
 >Arrays</a></h4>
 
-<p>Array variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
+<p><a href="http://doc.perl6.org/type/Array" class="podlinkurl"
+>Array</a> variables still begin with the <code>@</code> sigil. And they always do, even when accessing stored items, ie. when an index is present.</p>
 
 <pre>    my @a = 5, 1, 2;            # no parens needed anymore
     say @a[0];                  # yes, it starts with @
@@ -86,7 +94,8 @@ name="Arrays"
 name="Hashes"
 >Hashes</a></h4>
 
-<p>While Perl 5 hashes are even sized lists when viewed in list context, Perl 6 hashes are lists of pairs in that context. Pairs are also used for other things, like named arguments for subroutines, but more on that later.</p>
+<p>While Perl 5 hashes are even sized lists when viewed in list context, <a href="http://doc.perl6.org/type/Hash" class="podlinkurl"
+>Perl 6 hashes</a> are lists of pairs in that context. Pairs are also used for other things, like named arguments for subroutines, but more on that later.</p>
 
 <p>Just like with arrays the sigil stays invariant when you index it. And hashes also have methods that you can call on them.</p>
 
@@ -121,6 +130,9 @@ name="SEE_ALSO"
 
 <p><a href="http://design.perl6.org/S02.html" class="podlinkurl"
 >http://design.perl6.org/S02.html</a>, <a href="http://design.perl6.org/S29.html" class="podlinkurl"
->http://design.perl6.org/S29.html</a></p>
+>http://design.perl6.org/S29.html</a>, <a href="http://doc.perl6.org/type/Str" class="podlinkurl"
+>http://doc.perl6.org/type/Str</a>, <a href="http://doc.perl6.org/type/Array" class="podlinkurl"
+>http://doc.perl6.org/type/Array</a>, <a href="http://doc.perl6.org/type/Hash" class="podlinkurl"
+>http://doc.perl6.org/type/Hash</a></p>
 
 [% option no-header %] [% option no-footer %]

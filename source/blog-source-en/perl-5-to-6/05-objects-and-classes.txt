@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 05 - Objects and Classes</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-25</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -155,7 +161,7 @@ name="Roles_and_Composition"
 
 <p>In general the world isn&#39;t hierarchical, and thus sometimes it&#39;s hard to press everything into an inheritance hierarchy. Which is one of the reasons why Perl 6 has Roles. Roles are quite similar to classes, except you can&#39;t create objects directly from them, and that composition of multiple roles with the same method names generate conflicts, instead of silently resolving to one of them, like multiple inheritance would do.</p>
 
-<p>While classes are intended primarily for type conformance, roles are the primary means for code reuse in Perl 6.</p>
+<p>While classes are intended primarily for type conformance and instance management, roles are the primary means for code reuse in Perl 6.</p>
 
 <pre>    role Paintable {
         has $.colour is rw;
@@ -184,7 +190,8 @@ name="Roles_and_Composition"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
-<p><a href="http://design.perl6.org/S12.html" class="podlinkurl"
+<p><a href="http://doc.perl6.org/language/objects" class="podlinkurl"
+>http://doc.perl6.org/language/objects</a> <a href="http://design.perl6.org/S12.html" class="podlinkurl"
 >http://design.perl6.org/S12.html</a> <a href="http://design.perl6.org/S14.html" class="podlinkurl"
 >http://design.perl6.org/S14.html</a> <a href="http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf" class="podlinkurl"
 >http://www.jnthn.net/papers/2009-yapc-eu-roles-slides.pdf</a> <a href="http://en.wikipedia.org/wiki/Perl_6#Roles" class="podlinkurl"

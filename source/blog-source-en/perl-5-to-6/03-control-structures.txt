@@ -7,6 +7,12 @@ name="NAME"
 
 <p>&#34;Perl 5 to 6&#34; Lesson 03 - Basic Control Structures</p>
 
+<h4><a class='u'
+name="LAST_UPDATE"
+>LAST UPDATE</a></h4>
+
+<p>2015-02-25</p>
+
 <h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
