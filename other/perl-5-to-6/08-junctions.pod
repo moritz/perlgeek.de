@@ -14,7 +14,8 @@
 
 =head1 DESCRIPTION
 
-Junctions are superpositions of unordered values. Operations on junctions are
+L<Junctions|http://doc.perl6.org/type/Junction> are superpositions of unordered values.
+Operations on junctions are
 executed for each item of the junction separately (and maybe even in
 parallel), and the results are assembled in a junction of the same type.
 
@@ -56,26 +57,13 @@ bit):
             All other types
 
 If you want to write a sub that takes a junction and doesn't autothread over
-it, you have to declare the type of the parameter either as C<Mu> or
-C<Junction>
+it, you have to declare the type of the parameter either as
+L<Mu|http://doc.perl6.org/type/Mu> or C<Junction>
 
     sub dump_yaml(Junction $stuff) {
         # we hope that YAML can represent junctions ;-)
         ....
     }
-
-A word of warning: junctions can behave counter-intuitive sometimes. With
-non-junction types C<$a != $b> and C<!($a == $b)> always mean the same thing.
-If one of these variables is a junction, that might be different:
-
-    my Junction $b = 3 | 2;
-    my $a = 2; 
-    say "Yes" if   $a != $b ;       # Yes
-    say "Yes" if !($a == $b);       # no output
-
-C<2 != 3> is true, thus C<$a != 2|3> is also true. On the other hand the
-C<$a == $b> comparison returns a single Bool value (C<True>), and the negation
-of that is C<False>.
 
 =head1 MOTIVATION
 
@@ -102,7 +90,7 @@ them are non-negative. In Perl 5 you'd write something like this:
     }
     if ($all_non_neg) { ... }
 
-Or if you happen to know about C<List::MoreUtils>
+Or if you happen to know about L<List::MoreUtils|https://metacpan.org/pod/List::MoreUtils>
 
     use List::MoreUtils qw(all);
     my @items = get_data;
@@ -118,7 +106,7 @@ In Perl 6 that is short and sweet:
 Many people get all excited about junctions, and try to do too much with them.
 
 Junctions are not sets; if you try to extract items from a junction, you are
-doing it wrong, and should be using a C<Set> instead.
+doing it wrong, and should be using a L<Set|http://doc.perl6.org/type/Set> instead.
 
 It is a good idea to use junctions as smart conditions, but trying to build a
 solver for equations based on the junction autothreading rules is on
@@ -127,6 +115,8 @@ over-extortion and usually results in frustration.
 =head1 SEE ALSO
 
 L<http://design.perl6.org/S03.html#Junctive_operators>
+
+L<Possible alternatives to Junctions|http://doc.perl6.org/language/setbagmix>.
 
 =for time 1222467600
 =for editor vim: spell

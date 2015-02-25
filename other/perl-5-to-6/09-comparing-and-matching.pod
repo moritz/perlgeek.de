@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 09 - Comparing and Matching
 
+=head1 LAST UPDATED
+
+2015-02-25
+
 =head1 SYNOPSIS
 
     "ab"    eq      "ab"    True
@@ -34,13 +38,15 @@ string context. Similarly all the numeric operators from Perl 5 are still
 there.
 
 Since objects are more than blessed references, a new way for comparing them
-is needed. C<===> returns only true for identical values. For immutable types
+is needed. L<===|http://doc.perl6.org/routine/%3D%3D%3D> returns only true for
+identical values. For immutable types
 like numbers or Strings that is a normal equality tests, for other objects it
 only returns C<True> if both variables refer to the same object (like
 comparing memory addresses in C++).
 
-C<eqv> tests if two things are equivalent, ie if they are of the same type and
-have the same value. In the case of containers (like C<Array> or C<Hash>), the
+L<eqv|http://doc.perl6.org/routine/eqv> tests if two things are equivalent, ie
+if they are of the same type and have the same value. In the case of containers
+(like L<Array|http://doc.perl6.org/type/Array> or L<Hash|http://doc.perl6.org/type/Hash>), the
 contents are compared with C<eqv>. Two identically constructed data structures are
 equivalent.
 
@@ -52,11 +58,12 @@ determines the kind of comparison that is made.
 
 For immutable types it is a simple equality comparison. A smart match against
 a type object checks for type conformance. A smart match against a regex matches the
-regex. Matching a scalar against a C<Range> object checks if that scalar is
-included in the range.
+regex. Matching a scalar against a L<Range|http://doc.perl6.org/type/Range> object
+checks if that scalar is included in the range.
 
 There are other, more advanced forms of matching: for example you can check if
-an argument list (C<Capture>) fits to the parameter list (C<Signature>) of a
+an argument list (L<Capture|http://doc.perl6.org/type/Capture>) fits to the
+parameter list (L<Signature|http://doc.perl6.org/type/Signature>) of a
 subroutine, or apply file test operators (like C<-e> in Perl 5).
 
 What you should remember is that any "does $x fit to $y?"-Question will be
