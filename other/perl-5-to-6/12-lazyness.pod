@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 12 - Laziness
 
+=head2 LAST UPDATED
+
+2015-02-26
+
 =head1 SYNOPSIS
 
     my @integers = 0..*;
@@ -101,14 +105,11 @@ Note that C<gather> can act on a single statement instead of a block too:
 Laziness has its problems (and when you try to learn Haskell you'll notice how
 weird their IO system is because Haskell is both lazy and free of side
 effects), and sometimes you don't want stuff to be lazy. In this case you can
-just prefix it with C<eager>.
+just prefix it with L<eager|http://doc.perl6.org/type/List#routine%20eager>.
 
     my @list = eager map { $block_with_side_effects }, @list;
 
-On the other hand only lists are lazy by default. But you can also make lazy
-scalars (though none of our compilers implement that feature yet):
-
-    my $ls = lazy { $expansive_computation };
+On the other hand only lists are lazy by default.
 
 =head1 MOTIVATION
 

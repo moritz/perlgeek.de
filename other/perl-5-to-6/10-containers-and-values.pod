@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 10 - Containers and Values
 
+=head1 LAST UPDATED
+
+2015-02-26
+
 =head1 Synopsis
 
     my ($x, $y);
@@ -24,14 +28,15 @@ type constraints, access constraints (for example it can be read only), and
 finally it can be aliased to other containers.
 
 Putting a value into a container is called I<assignment>, and aliasing two
-containers is called C<binding>.
+containers is called I<binding>.
 
     my @a = 1, 2, 3;
     my Int $x = 4;
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = 'Foo';   # Error 'Type check failed'
 
-Types like C<Int> and C<Str> are immutable, ie the objects of these types can't
+Types like L<Int|http://doc.perl6.org/type/Int> and
+L<Str|http://doc.perl6.org/type/Str> are immutable, ie the objects of these types can't
 be changed; but you can still change the variables (the containers, that is)
 which hold these values:
 
@@ -50,6 +55,8 @@ Instead of some hard-to-grasp typeglob aliasing magic, Perl 6 offers a simple
 operator.
 
 =head1 SEE ALSO
+
+L<http://doc.perl6.org/language/containers>
 
 L<http://design.perl6.org/S03.html#Item_assignment_precedence>
 

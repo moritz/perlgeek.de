@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 11 - Changes to Perl 5 Operators
 
+=head1 LAST UPDATED
+
+2015-02-26
+
 =head1 SYNOPSIS
 
     # bitwise operators
@@ -65,6 +69,10 @@ more natural, and allowing things that are commonly used in mathematical
 notation.
 
 =head1 SEE ALSO
+
+L<doc.perl6.org/language/operators>
+
+L<doc.perl6.org/language/5to6#Operators>
 
 L<http://design.perl6.org/S03.html#Changes_to_Perl_5_operators>
 
