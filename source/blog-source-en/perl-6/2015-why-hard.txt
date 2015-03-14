@@ -1,0 +1,109 @@
+Why is it hard to write a compiler for Perl 6?
+<!-- 1426365013 -->
+<p>Today's deceptively simple question on #perl6: is it harder to write a
+compiler for <a href="http://perl6.org/">Perl 6</a> than for any other
+programming language?</p>
+
+<p>The answer is simple: yes, it's harder (and more work) than for many other
+languages. The more involved question is: <em>why?</em></p>
+
+<p>So, let's take a look. The first point is organizational: Perl 6 isn't yet
+fully explored and formally specified; it's much more stable than it used to
+be, but less stable than, say, targeting C89.</p>
+
+<p>But even if you disregard this point, and target the subset that for
+example <a href="http://rakudo.org/">the Rakudo Perl 6 compiler</a> implements
+right now, or the wait a year and target the first Perl 6 language release,
+the point remains valid.</p>
+
+<p>So let's look at some technical aspects.</p>
+
+<h2>Static vs. Dynamic</h2>
+
+<p>Perl 6 has both static and dynamic corners. For example, lexical lookups
+are statical, in the sense that they can be resolved at compile time. But
+that's not optional. For a compiler to properly support native types, it must
+resolve them at compile time. We also expect the compiler to notify us of
+certain errors at compile time, so there must be a fair amount of static
+analysis.</p>
+
+<p>On the other hand, type annotations are optional pretty much anywhere, and
+methods are lated bound. So the compiler must also support features typically
+found in dynamic languages.</p>
+
+<p>And even though method calls are late bound, composing roles into classes
+is a compile time operation, with mandatory compile time analysis.</p>
+
+<h2>Mutable grammar</h2>
+
+<p>The Perl 6 grammar can <a
+href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6">change
+during a parse</a>, for example by newly defined operators, but also through
+more invasive operations such as defining slangs or macros. Speaking of slags:
+Perl 6 doesn't have a single grammar, it switches back and forth between the
+"main" language, regexes, character classes inside regexes, quotes, and all
+the other dialects you might think of.</p>
+
+<p>Since the grammar extensions are done with, well, Perl 6 grammars, it
+forces the parser to be interoperable with Perl 6 regexes and grammars. At
+which point you might just as well use them for parsing the whole thing, and
+you get some level of minimally required self-hosting.</p>
+
+<h2>Meta-Object Programming</h2>
+
+<p>In a language like C++, the behavior of the object system is hard-coded
+into the language, and so the compiler can work under this assumption, and
+optimize the heck out of it.</p>
+
+<p>In Perl 6, the object system is defined by other objects and classes, the
+<a href="http://doc.perl6.org/language/mop">meta objects</a>. So there is
+another layer of indirection that must be handled.</p>
+
+<h2>Mixing of compilation and run time</h2>
+
+<p>Declarations like classes, but also <code>BEGIN</code> blocks and the
+right-hand side of <code>constant</code> declarations are run as soon as they
+are parsed. Which means the compiler must be able to run Perl 6 code while
+compiling Perl 6 code. And also the other way round, through
+<code>EVAL</code>.</p>
+
+<p>More importantly, it must be able to run Perl 6 code before it has finished
+compiling the whole compilation unit. That means it hasn't even fully
+constructed the lexical pads, and hasn't initialized all the variables. So it
+needs special "static lexpads" to which compile-time usages of variables can
+fall back to. Also the object system has to be able to work with types that
+haven't been fully declared yet.</p>
+
+<p>So, lots of trickiness involved.</p>
+
+<h2>Serialization, Repossession</h2>
+
+<p>Types are objects defined through their meta objects. That means that when
+you precompile a module (or even just the setting, that is, the mass of
+built-ins), the compiler has to serialize the types and their meta
+objects. Including closures. Do you have any idea how hard it is to correctly
+serialize closures?</p>
+
+<p>But, classes are mutable. So another module might load a precompiled
+module, and add another method to it, or otherwise mess with it. Now the
+compiler has to serialize the fact that, if the second module is loaded, the
+object from the first module is modified. We say that the serialization
+context from the second module repossesses the type.</p>
+
+<p>And there are so many ways in which this can go wrong.</p>
+
+<h2>General Featuritis</h2>
+
+<p>One of the many Perl 6 mottos is "torture the implementor on behalf of the
+user". So it demands not only both static and dynamic typing, but also
+functional features, continuations, exceptions, lazy lists, a powerful grammar
+engine, named arguments, variadic arguments, introspection of call frames,
+closures, lexical and dynamic variables, packed types (for direct interfacing
+with C libraries, for example), and phasers (code that is automatically run at
+different phases of the program).</p>
+
+<p>All of these features aren't too hard to implement in isolation, but in
+combination they are a real killer. And you want it to be fast, right?</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
