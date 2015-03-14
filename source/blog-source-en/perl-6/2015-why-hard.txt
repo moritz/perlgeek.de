@@ -28,7 +28,7 @@ certain errors at compile time, so there must be a fair amount of static
 analysis.</p>
 
 <p>On the other hand, type annotations are optional pretty much anywhere, and
-methods are lated bound. So the compiler must also support features typically
+methods are late bound. So the compiler must also support features typically
 found in dynamic languages.</p>
 
 <p>And even though method calls are late bound, composing roles into classes
