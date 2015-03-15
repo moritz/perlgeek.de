@@ -39,7 +39,7 @@ is a compile time operation, with mandatory compile time analysis.</p>
 <p>The Perl 6 grammar can <a
 href="http://perlgeek.de/en/article/mutable-grammar-for-perl-6">change
 during a parse</a>, for example by newly defined operators, but also through
-more invasive operations such as defining slangs or macros. Speaking of slags:
+more invasive operations such as defining slangs or macros. Speaking of slangs:
 Perl 6 doesn't have a single grammar, it switches back and forth between the
 "main" language, regexes, character classes inside regexes, quotes, and all
 the other dialects you might think of.</p>
