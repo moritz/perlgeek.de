@@ -4,6 +4,10 @@
 
 "Perl 5 to 6" Lesson 13 - Custom Operators
 
+=head2 LAST UPDATED
+
+2015-02-26
+
 =head1 SYNOPSIS
 
     multi sub postfix:<!>(Int $x) {
@@ -78,7 +82,7 @@ C<< $a < $b < $c >> translates to C<($a < $b) && ($b < $c)>.
 
 =head2 "Overload" existing operators
 
-Most (if not all) existing operators are multi subs or methods, and can
+Most (if not all) existing operators are multi subs, and can
 therefore be customized for new types. Adding a multi sub is the way of
 "overloading" operators.
 
@@ -98,6 +102,8 @@ better fit your situation, without changing anything in the compiler.
 It also removes the gap between using a language and modifying the language.
 
 =head1 SEE ALSO
+
+L<doc.perl6.org/language/functions#Defining%20Operators>
 
 L<http://design.perl6.org/S06.html#Operator_overloading>
 
