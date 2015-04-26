@@ -27,7 +27,7 @@ development</a> in the past, dismissing it as part of the outdated (or at
 least for software not suitable) <a
 href="http://en.wikipedia.org/wiki/Waterfall_model">waterfall model</a>, or as
 "no plan survives contact with the enemy".
-But now that I'm writing more docs, I kinda see the value of writing docs
+But now that I'm writing more docs, I see the value of writing docs
 early (of course with the provision that if things turn out to be impractical
 a documented, the docs may still be revised). Because it's very easy as a
 developer to lose the user's perspective, and writing docs makes it easier (at
