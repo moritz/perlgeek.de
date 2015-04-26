@@ -1,0 +1,145 @@
+Writing docs helps you take the user's perspective
+<!-- 1430038759 -->
+<p>This year, most of my contributions to <a href="http://perl6.org/">Perl 6</a>
+have been to <a href="http://doc.perl6.org/">the documentation</a>, or were
+directly inspired by writing the documentation.</p>
+
+<p>Quite often when I write documentation, I start thinking things like
+<em>this is a bit awkward to explain, wouldn't it be more consistent if ...</em>
+or <em>what happens when I use a negative number here? The implementation
+disallows it, but does it actually need to?</em> or <a
+href="https://github.com/rakudo/rakudo/commit/e9a972437d8d94d5be7d2c6a9080a978051b4da1"><em>if
+I tell people to just pass this particular value most of the time, why not
+make it the default?</em></a>.</p>
+
+<p>Like most people who aspires to be a good programmer, <a
+href="http://threevirtues.com/">I'm lazy</a>. In particular, I hate doing
+pointless work. And documenting inconsistencies or missing default values or
+arbitrary restrictions definitively feels like doing work that shouldn't be
+necessary. So with a sigh I overcome my laziness, and try to fix stuff in the
+code, the tests, and sometimes the design docs so I can be more lazy in
+documenting the features. And of course, to make the overall experience more
+pleasant for the end user.</p>
+
+<p>I've been skeptical of <a
+href="http://tom.preston-werner.com/2010/08/23/readme-driven-development.html">README-driven
+development</a> in the past, dismissing it as part of the outdated (or at
+least for software not suitable) <a
+href="http://en.wikipedia.org/wiki/Waterfall_model">waterfall model</a>, or as
+"no plan survives contact with the enemy".
+But now that I'm writing more docs, I kinda see the value of writing docs
+early (of course with the provision that if things turn out to be impractical
+a documented, the docs may still be revised). Because it's very easy as a
+developer to lose the user's perspective, and writing docs makes it easier (at
+least for me) to look at the project from that perspective again.</p>
+
+<h3>Examples</h3>
+
+<p>With the philosophy part done, I'd like to bring some examples.</p>
+
+<h4>The missing default value</h4>
+
+<p>In Perl 6 land, we distinguish meta classes, which control behavior of a
+type, and representations, which control memory layout of objects.</p>
+
+<p>Most Perl 6 objects have the representation <code>P6opaque</code>, which
+provides opaque, efficient storage for objects with attributes, properties,
+slots, or however you call per-object storage in your favorite language.
+Special representations exists for interfacing with C libraries, concurrency
+control and so on.</p>
+
+<p>The class <a
+href="http://doc.perl6.org/type/Metamodel::Primitives">Metamodel::Primitives</a>
+provides primitives for writing meta classes, with this method:
+
+<pre>[% syntax perl6 %]
+method create_type(Mu $how, $repr) { ... }
+[% endsyntax %]</pre>
+
+<p><code>$how</code> is our standard name for Meta stuff (from "Higher Order
+Workings", or simply from controlling <em>how</em> stuff works), and
+<code>$repr</code> is the name of the representation.</p>
+
+<p>Somebody new to meta object stuff doesn't need to much about
+representations (except when they want to very low-level stuff), so the docs
+for <code>create_type</code> could have said <em>if you don't know what
+representation to use, use <code>P6opaque</code></em>. Or I could just
+establish <code>P6opaque</code> as a default:</p>
+
+<pre>[% syntax perl6 %]
+method create_type(Mu $how, $repr = 'P6opaque') { ... }
+[% endsyntax %]</pre>
+
+<p>There, less to document, and somebody new to this stuff can ignore the
+whole representations business for a while longer.</p>
+
+<h4>Arbitrary restrictions</h4>
+
+<p>The method <code>rotor</code> on the <a
+href="http://doc.perl6.org/type/List">List</a> was intended to create a list
+of sublists with fixed number of elements from the original list, potentially
+with overlap. So the old API was:</p>
+
+<pre>[% syntax perl6 %]
+method rotor($elems = 2, $overlap = 1) { ... }
+[% endsyntax %]</pre>
+
+<p>And one would use it a</p>
+
+<pre>[% syntax perl6 %]
+.say for (1..7).rotor(3, 1);
+# 1 2 3
+# 3 4 5
+# 5 6 7
+</pre>
+
+<p>Again I had an issue with default values: It wasn't clear to me why
+<code>$elems</code> defaulted to 2 (so I removed that default), or whe
+<code>$overlap</code> defaulted to 1. Wouldn't 0 be a more intuitive
+default?</p>
+
+<p>But my main issue was that the implementation disallowed negative overlaps,
+and the design docs were silent on the issue. If you visualize how
+<code>rotor</code> works (take <code>$elems</code> elements from the list,
+then step back <code>$overlap</code> elements, then rinse and repeat), it's
+clear what negative overlaps mean: they are steps forward instead of
+backwards, and create gaps (that is, some list elements aren't included in the
+sublists).</p>
+
+<p>And once you allow negative steps backwards, why not go work with steps
+forward in the first place, which are more intuitive to the user, and
+explicitly allow negative steps to create overlaps?</p>
+
+<p>So that's what we did, though the end result <a
+href="http://doc.perl6.org/type/List#method_rotor">is even more
+general</a>.</p>
+
+<p>The crucial question here was <em>why disallow negative overlaps?</em>, or
+recognizing that a restriction was arbitrary. And then lifting it.</p>
+
+<h4>Wording of error messages</h4>
+
+<p>Error messages are important to communicate why something went wrong.</p>
+
+<p>We used to have the error message <code>Could not find an appropriate
+parametric role variant for $role</code>. A test for a good error message is:
+ask <em>why?</em>, and if the piece of code that threw the error can know the
+answer, the error message needs improving.</p>
+
+<p>In this case: why can't the runtime environment find an appropriate
+variant? Because it didn't try hard enough? No. Because it's buggy? I hope
+not. It can't find the candidate because it's not there. So, include that
+answer in the error message: <code>No appropriate parametric role variant
+available for $role</code>.</p>
+
+<p>(Uninformative/lazy error messages are one of my favorite topics for rants;
+consider the good old <code>SIOCADDRT: No such process</code> that <a
+href="http://linux.die.net/man/8/route">route(8)</a> sometimes emits, or
+python's <code>Cannot import name X</code> -- why not? ...)</p>
+
+<p>So, write those docs. Write them at a time where you can still change
+semantics. Keep asking yourself what you could change so the documentation
+becomes shorter, sweeter, easier understandable.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
