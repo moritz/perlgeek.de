@@ -60,7 +60,7 @@ method create_type(Mu $how, $repr) { ... }
 Workings", or simply from controlling <em>how</em> stuff works), and
 <code>$repr</code> is the name of the representation.</p>
 
-<p>Somebody new to meta object stuff doesn't need to much about
+<p>Somebody new to meta object stuff doesn't need to know much about
 representations (except when they want to very low-level stuff), so the docs
 for <code>create_type</code> could have said <em>if you don't know what
 representation to use, use <code>P6opaque</code></em>. Or I could just
