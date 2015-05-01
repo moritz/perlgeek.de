@@ -1,5 +1,11 @@
 Why is it hard to write a compiler for Perl 6?
 <!-- 1426365013 -->
+
+<p class="notice">Russian translation available;
+Пост доступен на сайте softdroid.net: <a  
+href="http://softdroid.net/pochemu-tak-trudno-napisat-kompilyator-dlya-perl-6">Почему  
+так трудно написать компилятор для Perl 6?</a>.</p>
+
 <p>Today's deceptively simple question on #perl6: is it harder to write a
 compiler for <a href="http://perl6.org/">Perl 6</a> than for any other
 programming language?</p>
