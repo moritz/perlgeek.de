@@ -53,7 +53,7 @@ make t/spec/S05-substitution/subst.t
 <h2>Submission</h2>
 
 <p>Please submit your patches to the <a
-href="perl6-compiler@perl.org">perl6-compiler</a> mailing list, and CC' me
+href="mailto:perl6-compiler@perl.org">perl6-compiler</a> mailing list, and CC' me
 (moritz.lenz@gmail.com). As always, feel free to ask any questions about this
 question either on that mailing list, or on <a
 href="http://perl6.org/community/irc">our IRC channel</a>.</p> 
