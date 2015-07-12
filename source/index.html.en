@@ -9,7 +9,7 @@
     <link rel="openid.server" href="https://id.perlgeek.de/login/"/>
     <link rel="openid.delegate" href="https://id.perlgeek.de/user/moritz"/>
     <meta http-equiv="X-XRDS-Location" content="https://id.perlgeek.de/xrds/moritz" />
-
+    <link rel="canonical" href="http://perlgeek.de/en/" />
 %]
 
 <h1>Welcome to Perlgeek.de</h1>
