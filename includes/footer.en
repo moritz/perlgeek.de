@@ -15,6 +15,7 @@
         Layout based on <a href="http://www.yaml.de/">YAML</a>, powered by <a
         href="/en/software/mowyw">mowyw</a>[% ifvar is_blog %] and <a
         href="http://www.blosxom.com/">blosxom</a>[% endifvar %]
+		[% ifvar more_footer %] [% readvar more_footer %] [%endifvar%]
         </div>
 		<!-- end: #footer -->
 	</div>
