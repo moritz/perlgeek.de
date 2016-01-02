@@ -6,6 +6,7 @@
                         [% item home     <li{{ id="current"}}><a href="/en/">Home</a></li>             %]
                         [% item article  <li{{ id="current"}}><a href="/en/article/">Articles</a></li> %]
                         [% item blog     <li{{ id="current"}}><a href="/blog-en/">Blog</a></li>        %]
+                        [% item book     <li{{ id="current"}}><a href="/en/book/automating-deployments">Book</a></li>        %]
                         [% item service  <li{{ id="current"}}><a href="/en/service/">Services</a></li> %]
                         [% item software <li{{ id="current"}}><a href="/en/software/">Software</a></li> %]
                     </ul>
@@ -62,6 +63,7 @@
                     </div>
                 </div>
             }} %]
+
             [% item blog {{
             <div id="col1">
                 <div id="col1_content" class="clearfix">
@@ -70,6 +72,18 @@
                 $cat_index::cat_index
                 </div>
             </div>
+            }} %]
+
+            [% item book {{
+                <div id="col1">
+                    <div id="col1_content" class="clearfix">
+					<h3>Books</h3>
+                    <ul>
+                        [% item ad <li><a {{class="selected"}}href="/en/book/automating-deployments">Automating Deployments</a>
+                         </li> %]
+                    </ul>
+                    </div>
+                </div>
             }} %]
 
 

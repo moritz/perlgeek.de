@@ -1,0 +1,36 @@
+[% setvar section book %]
+[% setvar title Automating Deployments, a practical approach (WIP) %]
+[% menu main book ad %]
+
+<!-- INDEX BEGIN -->
+
+<h1>[%readvar title%]</h1>
+
+<p>You've developed your software, and now it's time to bring it into the
+production environment, and it's a big effort. And each time you have a new
+version (which happens a lot in the initial phase of the project), you have to
+go through the same hassle again.</p>
+
+<p>If the deployment process becomes too much work, you start doing fewer
+releases and deployments, it takes longer to get feedback; the users start
+getting frustrated because they don't see results from their feedback
+soon.</p>
+
+<p>Do you know this scenario, or parts of it? If yes, you might be interested
+in the solution: <strong>automating deployments</strong>. That's what
+programmers are good at, right? Once deployments are
+automated, they are less work, so you can do them much more often; you gain
+experience with them, and they stop being a big deal, and a big risk.</p>
+
+<p>As a result, you can spend more time doing what you do best, and what you
+love: programming.</p>
+
+<p>To help you get started with automating deployments, I am writing an ebook
+about it. It showcases practical examples using a certain set of technologies
+(Debian GNU/Linux, deploying software as Debian packages, git for version
+control, ansible for deployment, and Go CD for coordinating it all), along
+with notes on alternatives for each.</p>
+
+[% comment vim: spell ft=html
+%]
+
