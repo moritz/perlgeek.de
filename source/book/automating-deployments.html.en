@@ -26,10 +26,13 @@ experience with them, and they stop being a big deal, and a big risk.</p>
 love: programming.</p>
 
 <p>To help you get started with automating deployments, I am writing an ebook
-about it. It showcases practical examples using a certain set of technologies
-(Debian GNU/Linux, deploying software as Debian packages, git for version
-control, ansible for deployment, and Go CD for coordinating it all), along
-with notes on alternatives for each.</p>
+about it. It showcases practical examples using a certain set of technologies:
+<a href="https://www.debian.org/">Debian GNU/Linux</a> as the operating
+system, where software is deployed as Debian packages, <a
+href="https://git-scm.com/">git</a> for version control,
+<a href="http://www.ansible.com/">ansible</a> for installing new version of
+packages (and more), and <a href="https://www.go.cd/">Go CD</a> for coordinating it all.
+There will also be notes on alternatives for some of these technologies.</p>
 
 [% comment vim: spell ft=html
 %]
