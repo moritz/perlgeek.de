@@ -34,9 +34,24 @@ href="https://git-scm.com/">git</a> for version control,
 packages (and more), and <a href="https://www.go.cd/">Go CD</a> for coordinating it all.
 There will also be notes on alternatives for some of these technologies.</p>
 
+<h2>Process: Blog first, then distill</h2>
+
+<p>I am blogging about the topics that I want to be in the book, and then
+distill the blog posts into book chapters, enriching and editing them in the
+process.</p>
+
+<p>Blog posts so far:</p>
+
+<ul>
+    <li><a href="/blog-en/automating-deployments/2016-001-a-new-project.html">A
+        New Year and a Plan</a></li>
+</ul>
+
+<h2>Your interest and input matters!</h2>
+
 <p>If this sounds interesting, please sign up for the email list below. You
 will get occasional updates on the progress, as well as motivate me by signing
-up.</p>
+up, and proving that the target audience for this book exists.</p>
 
 <!-- Begin MailChimp Signup Form -->
 <link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
