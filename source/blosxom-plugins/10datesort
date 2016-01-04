@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use File::stat;
 use Carp qw(confess);
+use Time::Local qw(timelocal);
 
 use Memoize;
 #memoize('dateforfile');
@@ -17,7 +18,10 @@ sub dateforfile {
     $date = <$h>;
     close $h or warn $!;
     no warnings 'uninitialized';
-    if ($date =~ m/(\d{4,})/) {
+    if ( $date =~ /\b(\d{4})-(\d\d)-(\d\d)\b/ ) {
+        return timelocal( 0, 0, 0, $3, $2 - 1, $1 - 1900 );
+    }
+    elsif ( $date =~ m/(\d{4,})/ ) {
         return $1;
     } else {
 #        warn "No date found for file `$fn'";
