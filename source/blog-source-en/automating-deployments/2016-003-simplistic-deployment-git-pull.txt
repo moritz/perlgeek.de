@@ -1,0 +1,162 @@
+Automating Deployments: Simplistic Deployment with Git and B
+<!-- 2015-01-05 -->
+
+<p> One motto of the <em>Extreme Programming</em> movement is to do the simplest
+thing that can possibly work, and only get more fancy when it is
+necessary.</p>
+
+<p>In this spirit, the simplest deployment option for some projects is to change
+the working directory in a clone of the project's git repository, and run</p>
+
+<pre>git pull</pre>
+
+<p>If this works, it has a certain beauty of mirroring pretty much exactly what
+developers do in their development environment.</p>
+
+<h3>Reality kicks in</h3>
+
+<p>But it only works if all of these conditions are met:</p>
+
+<ul>
+    <li>There is already a checkout of the git repository, and it's configured
+    correctly.</li>
+    <li>There are no local changes in the git repository.</li>
+    <li>There were no forced updates in the remote repository.</li>
+    <li>No additional build or test step is required.</li>
+    <li>The target machine has git installed, and both network connection to
+        and credentials for the git repository server.</li>
+    <li>The presence of the <code>.git</code> directory poses no problem.</li>
+    <li>No server process needs to be restarted.</li>
+    <li>No additional dependencies need to be installed.</li>
+</ul>
+
+<p>As an illustration on how to attack some of these problems, let's consider
+just the second point: local modifications in the git repository. It happens,
+for example when people try out things, or do emergency fixes etc.
+<code>git pull</code> does a <code>fetch</code> (which is fine), and a
+<code>merge</code>. Merging is an operation that can fail (for example if
+local uncommitted changes or local commits exists) and that requires manual
+intervention.</p>
+
+<p>Manual changes are a rather bad thing to have in an environment where you
+want to deploy automatically. Their presence leave you two options: discard
+them, or refuse to deploy. If you chose the latter approach, <code>git pull
+--ff-only</code> is a big improvement; this will only do the merge if it is a
+trivial <em>fast-forward</em> merge, that is a merge where the local side
+didn't change at all. If that's not the case (that is, a local commit exists),
+the command exits with a non-zero return value, which the caller should
+interpret as a failure, and report the error somehow. If it's called as part
+of a cron job, the standard approach is to send an email containing the
+error message.</p>
+
+<p>If you chose to discard the changes instead, you could do a <code>git
+stash</code> for getting rid of uncommitted changes (and at the same time
+preserving them for a time in the deps of the <code>.git</code> directory for
+later inspection), and doing a <code>reset</code> or <code>checkout</code>
+instead of the merge, so that the command sequence would read:</p>
+
+<pre>
+set -e
+git fetch origin
+git checkout --force origin/master
+</pre>
+
+<p>(This puts the local repository in a <a
+href="http://gitolite.com/detached-head.html">detached head</a> state, which
+tends make manual working with it unpleasant; but at this point we have
+reserve this copy of the git repository for deployment only; manual work
+should be done elsewhere).</p>
+
+<h3>More Headaches</h3>
+
+<p>For very simple projects, using the <code>git pull</code> approach is fine.
+For more complex software, you have to tackle each of these problems, for
+example:</p>
+
+<ul>
+    <li>Clone the git repo first if no local copy exists</li>
+    <li>Discard local changes as discussed above (or remove the old copy, and
+        always clone anew)</li>
+    <li>Have a separate checkout location (possibly on a different server),
+        build and test there.</li>
+    <li>Copy the result over to the destination machine (but exclude the .git
+        dir).</li>
+    <li>Provide a way to declare dependencies, and install them before doing
+        the final copy step.</li>
+    <li>Provide a way to restart services after the copying</li>
+</ul>
+
+<p>So you could build all these solutions -- or realize that they exist.
+Having a dedicated build server is an established pattern, and there are lot
+of software solutions for dealing with that. As is building a distributable
+software package (like .deb or .rpm packages), for which distribution systems
+exist -- the operating system vendors use it all the time.</p>
+
+<p>Once you build Debian packages, the package manager ensure that
+dependencies are installed for you, and the <code>postinst</code> scripts
+provide a convenient location for restarting services.</p>
+
+<p>If you chose that road, you gets lots of established tooling that wasn't
+explicitly mentioned above, but which often makes live much easier: Querying
+the database of existing packages, listing installed versions, finding which
+package a file comes from, extra security through package signing and
+signature verification, the ability to create meta packages, linter that warn
+about common packaging mistakes, and so on.</p>
+
+<p>I'm a big fan of reusing existing solutions where it makes sense, and I
+feel this is a space where reusing can save huge amounts of time. Many of
+these tools have hundreds of corner cases already ironed out, and if you tried
+to tackle them yourself, you'd be stuck in a nearly endless exercise of <a
+href="https://en.wiktionary.org/wiki/yak_shaving">yak shaving</a>.</p>
+
+<p>Thus I want to talk about the key steps in more detail: Building Debian packages,
+distributing them and installing them. And some notes on how to put them all
+together with existing tooling.</p>
+
+<hr />
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
