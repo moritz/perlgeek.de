@@ -1,5 +1,5 @@
 Automating Deployments: Simplistic Deployment with Git and B
-<!-- 2015-01-05 -->
+<!-- 2016-01-05 -->
 
 <p> One motto of the <em>Extreme Programming</em> movement is to do the simplest
 thing that can possibly work, and only get more fancy when it is
