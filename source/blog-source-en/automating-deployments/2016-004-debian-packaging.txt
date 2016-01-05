@@ -1,0 +1,177 @@
+Automating Deployments: Building Debian Packages
+<!-- 2016-01-06 -->
+
+<p>I have <a
+href="http://perlgeek.de/blog-en/automating-deployments/2016-003-simplistic-deployment-git-pull.html">argued
+before that it is a good idea to build packages from software you want to
+automatically deploy</a>. The package manager gives you dependency management
+as well as the option to execute code at defined points in the installation
+process, which is very handy for restarting services after installation,
+creating necessary OS-level users and so on.</p>
+
+<h3>Which package format to use?</h3>
+
+<p>There are many possible package formats and managers for them out there.
+Many ecosystems and programming languages come with their own, for example
+Perl uses CPAN.pm or cpanminus to install Perl modules, the NodeJS community
+uses npm, ruby has the gem installer, python pip and easyinstall, and so
+on.</p>
+
+<p>One of the disadvantages is that they only work well for one language. If
+you or your company uses applications uses software in multiple programming
+languages, and you chose to use the language-specific packaging formats and
+tools for each, you burden yourself and the operators with having to know (and
+being aware of) these technologies.</p>
+
+<p>Operating teams are usually familiar with the operating system's package
+manager, so using that seems like an obvious choice. Especially if the same
+operating system family is used throughout the whole organization. In specialized
+environments, other solutions might be preferable.</p>
+
+<h3>What's in a Debian package, and how do I build one?</h3>
+
+<p>A <code>.deb</code> file is an <code>ar</code> archive with meta data about
+the archive format version, meta data for the package (name, version,
+installation scripts) and the files that are to be installed.</p>
+
+<p>While it is possible to build such a package directly, the easier and much
+more common route is to use the tooling provided by the <a
+href="http://man.he.net/man1/devscripts">devscripts</a> package. These tools
+expect the existence of a <code>debian/<code> directory with various files in
+them.</p>
+
+<p><code>debian/control</code> contains information such as the package
+name, dependencies, maintainer and description. <code>debian/rules</code> is a
+makefile that controls the build process of the debian package.
+<code>debian/changelog</code> contains a human-readable summary of changes to
+the package. The top-most changelog entry determines the resulting version of
+the package.</p>
+
+<p>You can use <code>dh_make</code> from the <code>dh-make</code> package to
+generate a skeleton of files for the <code>debian/</code> directory, which you
+can then edit to your liking. This will ask your for the architecture of the
+package. You can use a specific one like <code>amd64</code>, or the word
+<code>any</code> for packages that can be build on any architecture. If
+resulting package is architecture independent (as as is the case for many
+scripting languages), using <code>all</code> as the architecture is
+appropriate.</p>
+
+<h3>Build process of a Debian package</h3>
+
+<p>If you use <code>dh_make</code> to create a skeleton,
+<code>debian/rules</code> mostly consists of a catch-all rule that calls
+<code>dh $@</code>. This is tool that tries to do the right thing for each
+build step automatically, and usually it succeeds. If there is a
+<code>Makefile</code> in your top-level directory, it will call the
+<code>configure</code>, <code>build</code>, <code>check</code> and
+<code>install</code> make targets for you. If your build system installs into
+the <code>DESTDIR</code> prefix (which is set to
+<code>debian/your-package-name</code>), it should pretty much work out of the
+box.</p>
+
+<p>If you want to copy additional files into the Debian package, listing the
+file names, one on each line, in <code>debian/install</code>, that is done
+automatically for you.</p>
+
+<h3>Shortcuts</h3>
+
+<p>If you have already packaged your code for distribution through
+language-specific tools, such as CPAN (Perl) or pip (Python), there are
+shortcuts to creating Debian Packages.</p>
+
+<h4>Perl</h4>
+
+<p>The tool <code>dh-make-perl</code> (installable via the package of the same
+name) can automatically create a <code>debian</code> directory based on the
+perl-specific packaging. Calling <code>dh-make-perl .</code> inside the root
+directory of your perl source tree is often enough to create a functional
+Debian package. It sticks to the naming convention that a Perl package
+Awesome::Module becomes libawesome-module-perl in Debian land.</p>
+
+<h4>Python</h4>
+
+<p><code>py2dsc</code> from the <code>python-stdeb</code>package generates a
+<code>debian/</code> directory from an existing python tarball.</p>
+
+<p>Another approach is to use <a
+    href="http://dh-virtualenv.readthedocs.org/en/0.10/usage.html">dh-virtualenv</a>.
+This copies all of the python dependencies into a virtualenv, so the resulting
+packages only depends on the system python and possible C libraries that the
+python packages use; all python-level dependencies are baked in. This tends to
+produce bigger packages with fewer dependencies, and allows you to run several
+python programs on a single server, even if they depend on different versions
+of the same python library.</p>
+
+<p>dh-virtualenv has an unfortunate choice of default installation prefix that
+clashes with some assumptions that Debian's python packages make. You can
+override that choice in <code>debian/rules</code>:
+
+<pre>
+#!/usr/bin/make -f
+export DH_VIRTUALENV_INSTALL_ROOT=/usr/share/nnis
+%:
+        dh $@ --with python-virtualenv --with systemd
+</pre>
+
+<p>It also assumes Pyhton 2 by default. For a Python 3 based project, add
+these lines:</p>
+
+<pre>
+override_dh_virtualenv:
+        dh_virtualenv --python=/usr/bin/python3
+</pre>
+
+<p>(As always with Makefiles, be sure to indent with hard tabulator
+characters, not with spaces).</p>
+
+<hr />
+
+<p>What is your favorite tool for package? Please let me know at
+<code>moritz.lenz@gmail.com</code>.</p>
+
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
