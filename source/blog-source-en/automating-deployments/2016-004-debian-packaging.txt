@@ -108,7 +108,7 @@ override that choice in <code>debian/rules</code>:
 
 <pre>
 #!/usr/bin/make -f
-export DH_VIRTUALENV_INSTALL_ROOT=/usr/share/nnis
+export DH_VIRTUALENV_INSTALL_ROOT=/usr/share/yourcompany
 %:
         dh $@ --with python-virtualenv --with systemd
 </pre>
