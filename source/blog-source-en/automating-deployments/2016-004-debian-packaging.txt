@@ -90,7 +90,7 @@ Awesome::Module becomes libawesome-module-perl in Debian land.</p>
 
 <h4>Python</h4>
 
-<p><code>py2dsc</code> from the <code>python-stdeb</code>package generates a
+<p><code>py2dsc</code> from the <code>python-stdeb</code> package generates a
 <code>debian/</code> directory from an existing python tarball.</p>
 
 <p>Another approach is to use <a
