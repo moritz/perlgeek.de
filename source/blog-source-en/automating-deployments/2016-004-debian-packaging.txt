@@ -37,7 +37,7 @@ installation scripts) and the files that are to be installed.</p>
 <p>While it is possible to build such a package directly, the easier and much
 more common route is to use the tooling provided by the <a
 href="http://man.he.net/man1/devscripts">devscripts</a> package. These tools
-expect the existence of a <code>debian/<code> directory with various files in
+expect the existence of a <code>debian/</code> directory with various files in
 them.</p>
 
 <p><code>debian/control</code> contains information such as the package
