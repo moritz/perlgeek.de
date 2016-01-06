@@ -8,6 +8,8 @@
                     [% item software <li{{ id="current"}}><a href="/de/software/">Software</a></li> %]
                     [% item service  <li{{ id="current"}}><a href="/de/service/">Services</a></li>  %]
                     [% item blog     <li{{ id="current"}}><a href="/blog-en/">Blog</a></li>         %]
+                    [% item book     <li{{ id="current"}}><a href="/en/book/automating-deployments">Book</a></li> %]
+
                 </ul>
             </div>
         </div>
