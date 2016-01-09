@@ -247,6 +247,12 @@ files are already installed.</p>
 PID file is created, so that when <code>hypnotoad</code> is invoked as the
 <code>package-info</code> user, it can still create the PID file.</p>
 
+<p>Please note the presence of the <code>#DEBHELPER#</code> tag, which the
+build system replaces with extra actions. Some of these come from
+<code>dh-systemd</code>, and take care of restarting the service after
+installation, and enabling it for starting after a reboot on first
+installation.</p>
+
 <p>To set the user under which the service runs, adding the line
 <code>User=package-info</code> to the <code>[UNIT]</code> section of
 <code>debian/package-info.service</code>.</p>
