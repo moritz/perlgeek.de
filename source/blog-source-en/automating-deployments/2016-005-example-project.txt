@@ -1,4 +1,4 @@
-Automating Deployments: Building Debian Packages
+Automating Deployments: Debian Packaging for an Example Project
 <!-- 2016-01-09 -->
 
 <p>After <a href="http://perlgeek.de/blog-en/automating-deployments/2016-004-debian-packaging.html">general

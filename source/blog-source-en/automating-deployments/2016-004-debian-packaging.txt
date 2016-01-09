@@ -126,7 +126,7 @@ characters, not with spaces).</p>
 
 <hr />
 
-<p>What is your favorite tool for package? Please let me know at
+<p>What is your favorite tool for packaging? Please let me know at
 <code>moritz.lenz@gmail.com</code>.</p>
 
 
