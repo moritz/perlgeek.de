@@ -128,7 +128,7 @@ files to copy into the debian package.</p>
 <p>This is a enough for a building a Debian package. To trigger the build,
 this command suffices:</p>
 
-<pre>debuild -b -us -uc</code>
+<pre>debuild -b -us -uc</pre>
 
 <p>The <code>-b</code> instructs debuild to only create a binary package, and
 the two <code>-u*</code> options skips the steps where debuild
