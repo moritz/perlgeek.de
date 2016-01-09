@@ -1,0 +1,330 @@
+Automating Deployments: Building Debian Packages
+<!-- 2016-01-09 -->
+
+<p>After <a href="http://perlgeek.de/blog-en/automating-deployments/2016-004-debian-packaging.html">general
+notes on Debian packaging</a>, I want to introduce an example project, and how
+it's packaged.</p>
+
+<h3>The Project</h3>
+
+<p><a href="https://github.com/moritz/package-info">package-info</a> is a
+minimalistic web project, written solely for demonstrating packaging and
+deployment. When called in the browser, it produces a text document containing
+the output of <code>dpkg -l</code>, which gives an overview of installed (and
+potentially previously installed) packages, their version, installation state
+and a one-line description.</p>
+
+<p>It is written in Perl using the <a
+href="http://mojolicious.org/">Mojolicious</a> web framework.</p>
+
+<p>The actual code resides in the file
+<code>usr/lib/package-info/package-info</code> and is delightfully short:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/perl
+use Mojolicious::Lite;
+
+plugin 'Config';
+
+get '/' => sub {
+    my $c = shift;
+
+    $c->render(text => scalar qx/dpkg -l/, format => 'text');
+};
+
+app->start;
+[% endsyntax %]</pre>
+
+<p>It loads the "Lite" version of the framework, registers a route for the URL
+<code>/</code>, which renders as plain text the output of the system command
+<code>dpkg -l</code>, and finally starts the application.</p>
+
+<p>It also loads the <a
+href="https://metacpan.org/pod/Mojolicious::Plugin::Config">Config-Plugin</a>,
+which is used to specify the PID file for the server process.</p>
+
+<p>The corresponding config file in <code>etc/package-info.conf</code> looks
+like this:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/perl
+{
+    hypnotoad => {
+        pid_file => '/var/run/package-info/package-info.pid',
+    },
+}
+[% endsyntax %]</pre>
+
+<p>which again is perl code, and  specifies the location of the PID file when
+run under hypnotoad, the application server recommended for use with
+Mojolicious.</p>
+
+<p>To test it, you can install the <code>libmojolicious-perl</code> package,
+and run <code>MOJO_CONFIG=$PWD/etc/package-info.conf morbo
+usr/lib/package-info/package-info</code>. This starts a development server on
+port 3000. Pointing your browser at http://127.0.0.1:3000/, you should see a
+list like this:</p>
+
+<pre>[% syntax escape %]
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                                  Version                              Architecture Description
++++-=====================================-====================================-============-===============================================================================
+ii  ack-grep                              2.14-4                               all          grep-like program specifically for large source trees
+ii  acl                                   2.2.52-2                             amd64        Access control list utilities
+rc  acroread-debian-files                 0.2.5                                amd64        Debian specific parts of Adobe Acrobat Reader
+ii  adduser                               3.113+nmu3                           all          add and remove users and groups
+ii  adwaita-icon-theme                    3.14.0-2                             all          default icon theme of GNOME
+[% endsyntax %]</pre>
+
+<p>though much longer.</p>
+
+<h3>Initial Packaging</h3>
+
+<p>Installing <code>dh-make</code> and running <code>dh_make --createorig -p
+package-info_0.1</code> gives us a <code>debian</code> directory along
+with several files.</p>
+
+<p>I started by editing <code>debian/control</code> to look like this:</p>
+
+<pre>
+Source: package-info
+Section: main
+Priority: optional
+Maintainer: Moritz Lenz <moritz.lenz@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+
+Package: package-info
+Architecture: all
+Depends: ${misc:Depends}, libmojolicious-perl
+Description: Web service for getting a list of installed packages
+</pre>
+
+<p>Debian packages support the notion of <em>source package</em>, which a
+maintainer uploads to the Debian build servers, and from which one or more
+<em>binary package</em> are built. The <code>control</code> reflects this
+structure, with the first half being about the source package and its build
+dependencies, and the second half being about the binary package.</p>
+
+<p>Next I deleted the file <code>debian/source/format</code>, which by default
+indicates the use of the <a
+href="https://en.wikipedia.org/wiki/Quilt_%28software%29">quilt patch
+management</a> system, which isn't typically used in git based workflows.</p>
+
+<p>I leave <code>debian/rules</code>, <code>debian/compat</code> and
+<code>debian/changelog</code> untouched, and create a file
+<code>debian/install</code> with two lines:</p>
+
+<pre>
+etc/package-info.conf
+usr/lib/package-info/package-info
+</pre>
+
+<p>In lieu of a proper build system, this tells <code>dh_install</code> which
+files to copy into the debian package.</p>
+
+<p>This is a enough for a building a Debian package. To trigger the build,
+this command suffices:</p>
+
+<pre>debuild -b -us -uc</code>
+
+<p>The <code>-b</code> instructs debuild to only create a binary package, and
+the two <code>-u*</code> options skips the steps where debuild
+cryptographically signs the generated files.</p>
+
+<p>This command creates three files in the directory above the source tree:
+<code>package-info_0.1-1_all.deb</code>,
+<code>package-info_0.1-1_amd64.changes</code> and
+<code>package-info_0.1-1_amd64.build</code>. The .deb file contains the actual
+program code and meta data, the .changes file meta data about the package as
+well as the last changelog entry, and the .build file a transcript of the
+build process.</p>
+
+<h3>A Little Daemonology</h3>
+
+<p>Installing the .deb file from the previous step would install a working
+software, but you'd have to start it manually.</p>
+
+<p>Instead, it is useful to provide means to automatically start the server
+process at system boot time. Traditionally, this has been done by shipping
+init scripts. Since Debian transitioned to systemd as its init system with the
+"Jessie"  / 8 version, systemd service files are the new way to go, and
+luckily much shorter than a robust init script.</p>
+
+<p>The service file goes into <code>debian/package-info.service</code>:</p>
+
+<pre>
+[Unit]
+Description=Package installation information via http
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+SyslogIdentifier=package-info
+PIDFile=/var/run/package-info/package-info.pid
+Environment=MOJO_CONFIG=/etc/package-info.conf
+ExecStart=/usr/bin/hypnotoad /usr/lib/package-info/package-info -f
+ExecStop=/usr/bin/hypnotoad -s /usr/lib/package-info/package-info
+ExecReload=/usr/bin/hypnotoad /usr/lib/package-info/package-info
+</pre>
+
+<p>The <code>[Unit]</code> section contains the service description, as well
+as the specification when it starts. The <code>[Service]</code> section
+describes the service type, where <code>simple</code> means that systemd
+expects the start command to not terminate as long as the process is running.
+With <code>Environment</code>, environment variables can be set for all three
+of the ExecStart, ExecStop and ExecReload commands.</p>
+
+<p>Another debhelper, <code>dh-systemd</code> takes care of installing the
+service file, as well as making sure the service file is read  and the service
+started or restarted after a package installation. To enable it,
+<code>dh-systemd</code> must be added to the <code>Build-Depends</code> line
+in file <code>debian/control</code>, and the catch-all build rule in
+<code>debian/rules</code> be changed to:</p>
+
+<pre>
+%:
+        dh $@ --with systemd
+</pre>
+
+<p>To enable hypnotoad to write the PID file, the containing directory must
+exists. Writing <code>/var/run/package-info/</code> into a new
+<code>debian/dirs</code> file ensures this directory is created at package
+installation.</p>
+
+<p>To test the changes, again invoke <code>debuild -b -us -uc</code> and
+install the resulting .deb file with <code>sudo dpkg -i
+    ../package-info_0.1-1_all.deb</code>.</p>
+
+<p>The server process should now listen on port 8080, so you can test it with
+<code>curl http://127.0.0.1:8080/ | head</code>.</p>
+
+<h3>A Bit More Security</h3>
+
+<p>As it is now, the application server and the application run as the root
+user, which violates the <a
+href="https://en.wikipedia.org/wiki/Principle_of_least_privilege">Principle of
+least privilege</a>. Instead it should run as a separate user,
+<code>package-info</code> that isn't allowed to do much else.</p>
+
+<p>To make the installation as smooth as possible, the package should create
+the user itself if it doesn't exist. The <code>debian/postinst</code> script
+is run at package installation time, and is well suited for such tasks:</p>
+
+<pre>[% syntax sh %]
+#!/bin/sh
+
+set -e
+test $DEBIAN_SCRIPT_DEBUG && set -v -x
+
+export PATH=$PATH:/sbin:/usr/sbin:/bin:/usr/bin
+
+USER="package-info"
+
+case "$1" in
+    configure)
+        if ! getent passwd $USER >/dev/null ; then
+            adduser --system $USER
+        fi
+        chown -R $USER /var/run/package-info/
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
+[% endsyntax %]</pre>
+
+<p>There are several actions that a postinst script can execute, and
+<code>configure</code> is the right one for creating users. At this time, the
+files are already installed.</p>
+
+<p>Note that it also changes the permissions for the directory in which the
+PID file is created, so that when <code>hypnotoad</code> is invoked as the
+<code>package-info</code> user, it can still create the PID file.</p>
+
+<p>To set the user under which the service runs, adding the line
+<code>User=package-info</code> to the <code>[UNIT]</code> section of
+<code>debian/package-info.service</code>.</p>
+
+<p>Linux offers more security features that can be enabled in a declarative
+way in the systemd service file in the <code>[Unit]</code> section. Here are a few
+that protect the rest of the system from the server process, should it be
+exploited:</p>
+
+<pre>
+PrivateTmp=yes
+InaccessibleDirectories=/home
+ReadOnlyDirectories=/bin /sbin /usr /lib /etc
+</pre>
+
+<p>Additional precautions can be taken by limiting the number of processes
+that can be spawned and the available memory through the
+<code>LimitNPROC</code> and <code>MemoryLimit</code> options.</p>
+
+<h3>The importance of good packaging</h3>
+
+<p>If you tune your packages so that they do as much configuration and
+environment setup themselves, you benefit two-fold. It makes it easy to the
+package in any context, regardless of whether it is embedded in a deployment
+system. But even if it is part of a deployment system, putting the package
+specific bits into the package itself helps you keep the deployment system
+generic, and thus easy to extend to other packages.</p>
+
+<p>For example configuration management systems such as Ansible, Chef and Puppet
+allow you to create users and to restart services when a new package version
+is available, but if you rely on that, you have to treat each package
+separately in the configuration management system.</p>
+
+<hr />
+
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
