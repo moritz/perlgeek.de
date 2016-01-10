@@ -1,0 +1,273 @@
+Automating Deployments: Distributing Debian Packages with Aptly
+<!-- 2016-01-13 -->
+
+<p>Once a Debian package is built, it must be distributed to the servers it is
+to be installed on.</p>
+
+<p>Debian, as well as all other operating systems I know of, use a pull model
+for that. That is, the package and its meta data are stored on a server that
+the client can contact, and request the meta data and the package.</p>
+
+<p>The sum of meta data and packages is called a <em>repository</em>. In order
+to distribution packages to the servers that need them, we must set up and
+maintain such a repository.</p>
+
+<h3>Signatures</h3>
+
+<p>In Debian land, packages are also signed cryptographically, to ensure
+packages aren't tampered with on the server or during transmission.</p>
+
+<p>So the first step is to create a key pair that is used to sign this
+particular repository. (If you already have a PGP key for signing packages,
+you can skip this step).</p>
+
+<p>The following assumes that you are working with a pristine system user that
+does not have a gnupg keyring yet, and which will be used to maintain the
+debian repository. It also assumes you have the <code>gnupg</code> package
+installed.</p>
+
+<pre>
+$ gpg --gen-key
+
+<p>This asks a bunch of questions, like your name and email address, key type
+and bit width, and finally a pass phrase. I left the pass phrase empty to make
+it easier to automate updating the repository, but that's not a
+requirement.</p>
+
+<pre>[% syntax escape %]
+$ gpg --gen-key
+gpg (GnuPG) 1.4.18; Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: directory `/home/aptly/.gnupg' created
+gpg: new configuration file `/home/aptly/.gnupg/gpg.conf' created
+gpg: WARNING: options in `/home/aptly/.gnupg/gpg.conf' are not yet active during this run
+gpg: keyring `/home/aptly/.gnupg/secring.gpg' created
+gpg: keyring `/home/aptly/.gnupg/pubring.gpg' created
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 
+Requested keysize is 2048 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 
+Key does not expire at all
+Is this correct? (y/N) y
+You need a user ID to identify your key; the software constructs the user ID
+from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: Aptly Signing Key
+Email address: automatingdeployments@gmail.com
+You selected this USER-ID:
+    "Moritz Lenz <automatingdeployments@gmail.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key.
+
+You don't want a passphrase - this is probably a *bad* idea!
+I will do it anyway.  You can change your passphrase at any time,
+using this program with the option "--edit-key".
+
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+..........+++++
+.......+++++
+
+Not enough random bytes available.  Please do some other work to give
+the OS a chance to collect more entropy! (Need 99 more bytes)
+..+++++
+gpg: /home/aptly/.gnupg/trustdb.gpg: trustdb created
+gpg: key 071B4856 marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+pub   2048R/071B4856 2016-01-10
+      Key fingerprint = E80A D275 BAE1 DEDE C191  196D 078E 8ED8 071B 4856
+uid                  Moritz Lenz <automatingdeployments@gmail.com>
+sub   2048R/FFF787F6 2016-01-10
+[% endsyntax %]</pre>
+
+<p>Near the bottom the line starting with <code>pub</code> contains the key
+ID:</p>
+
+<pre>
+pub   2048R/<strong>071B4856</strong> 2016-01-10
+</pre>
+
+<p>We'll need the public key later, so it's best to export it:</p>
+
+<pre>[% syntax escape %]
+$ gpg --export --armor 071B4856 > pubkey.asc
+[% endsyntax %]</pre>
+
+<h3>Preparing the Repository</h3>
+
+<p>There are <a
+href="https://wiki.debian.org/HowToSetupADebianRepository">several options
+for managing Debian repositories</a>. My experience with debarchiver is mixed:
+Once set up, it works, but it does not give immediate feedback on upload;
+rather it communicates the success or failure by email, which isn't very
+well-suited for automation.</p>
+
+<p>Instead I use <a href="http://www.aptly.info/">aptly</a>, which works fine
+from the command line, and additionally supports several versions of the
+package in one repository.</p>
+
+<p>To initialize a repo, we first have to come up with a name. Here I call it
+<code>internal</code>.</p>
+
+<pre>
+$ aptly repo create -distribution=jessie -architectures=amd64,i386,all -component=main internal
+
+Local repo [internal] successfully added.
+You can run 'aptly repo add internal ...' to add packages to repository.
+
+$ aptly publish repo -architectures=amd64,i386,all internal
+Warning: publishing from empty source, architectures list should be complete, it can't be changed after publishing (use -architectures flag)
+Loading packages...
+Generating metadata files and linking package files...
+Finalizing metadata files...
+Signing file 'Release' with gpg, please enter your passphrase when prompted:
+Clearsigning file 'Release' with gpg, please enter your passphrase when prompted:
+
+Local repo internal has been successfully published.
+Please setup your webserver to serve directory '/home/aptly/.aptly/public' with autoindexing.
+Now you can add following line to apt sources:
+  deb http://your-server/ jessie main
+Don't forget to add your GPG key to apt with apt-key.
+
+You can also use `aptly serve` to publish your repositories over HTTP quickly.
+[% endsyntax %]</pre>
+
+<p>As the message says, there needs to be a HTTP server that makes these files
+available. For example an Apache virtual host config for serving these files
+could look like this:
+
+<pre>[% syntax escape %]
+<VirtualHost *:80>
+        ServerName apt.example.com
+        ServerAdmin moritz@example.com
+
+        DocumentRoot /home/aptly/.aptly/public/
+        <Directory /home/aptly/.aptly/public/>
+                Options +Indexes +FollowSymLinks
+
+                Require all granted
+        </Directory>
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel notice
+        CustomLog /var/log/apache2/apt/access.log combined
+        ErrorLog /var/log/apache2/apt/error.log
+        ServerSignature On
+</VirtualHost>
+[% endsyntax %]</pre>
+
+<p>After creating the logging directory (<code>mkdir -p
+/var/log/apache2/apt/</code>), enabling the the virtual host
+(<code>a2ensite apt.conf</code>) and restarting Apache, the Debian repository
+is ready.</p>
+
+<h3>Adding Packages to the Repository</h3>
+
+<p>Now that the repository is set up, you can add a package by running</p>
+
+<pre>
+$ aptly repo add internal package-info_0.1-1_all.deb
+$ aptly publish update internal
+</pre>
+
+<h3>Configuring a Host to use the Repository</h3>
+
+<p>Copy the PGP public key with which the repository is signed
+(<code>pubkey.asc</code>) to the host which shall use the repository, and
+import it:</p>
+
+<pre>$ apt-key add pubkey.asc</pre>
+
+<p>Then add the actual package source:</p>
+
+<pre>$ echo "deb http://apt.example.com/ jessie main" &gt; /etc/apt/source.list.d/internal</pre>
+
+<p>After an <code>apt-get update</code>, the contents of the repository are
+available, and an <code>apt-cache policy package-info</code> shows the
+repository as a possible source for this package:</p>
+
+<pre>
+$ apt-cache policy package-info
+package-info:
+  Installed: (none)
+  Candidate: 0.1-1
+  Version table:
+ *** 0.1-1 0
+        990 http://apt.example.com/ jessie/main amd64 Packages
+        100 /var/lib/dpkg/status
+</pre>
+
+<p>This concludes the whirlwind tour through debian repository management and
+thus package distribution. Next up will be the actual package
+installation.</p>
+
+<hr />
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
