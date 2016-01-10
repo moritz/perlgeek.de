@@ -26,8 +26,7 @@ does not have a gnupg keyring yet, and which will be used to maintain the
 debian repository. It also assumes you have the <code>gnupg</code> package
 installed.</p>
 
-<pre>
-$ gpg --gen-key
+<pre>$ gpg --gen-key</pre>
 
 <p>This asks a bunch of questions, like your name and email address, key type
 and bit width, and finally a pass phrase. I left the pass phrase empty to make
@@ -131,7 +130,7 @@ package in one repository.</p>
 <p>To initialize a repo, we first have to come up with a name. Here I call it
 <code>internal</code>.</p>
 
-<pre>
+<pre>[% syntax escape %]
 $ aptly repo create -distribution=jessie -architectures=amd64,i386,all -component=main internal
 
 Local repo [internal] successfully added.
