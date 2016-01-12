@@ -1,0 +1,145 @@
+Automating Deployments: Installing Packages
+<!-- 2016-01-16 -->
+
+<p>After the long build-up of <a
+    href="//perlgeek.de/blog-en/automating-deployments/2016-005-example-project.html">building</a>
+and <a
+href="//perlgeek.de/blog-en/automating-deployments/2016-006-distributing-packages.html">distributing
+and authenticating packages</a>, actually installing them is easy. On the
+target system, run</p>
+
+<code>
+$ apt-get update
+$ apt-get install package-info
+</code>
+
+<p>(replace <code>package-info</code> with the package you want to install, if
+that deviates from the example used previously).</p>
+
+<p>If the package is of high quality, it takes care of restarting services
+where necessary, so no additional actions are necessary afterwards.</p>
+
+<h3>Coordination with Ansible</h3>
+
+<p>If several hosts are needed to provide a service, it can be beneficial to
+coordinate the update, for example only updating one or two hosts at a time,
+or doing a small integration test which one after moving on the next.</p>
+
+<p>A nice tool for doing that is <a
+href="http://www.ansible.com/">Ansible</a>, an open source IT automation
+system.</p>
+
+<p>Ansibles starting point is an <em>inventory</em> file, which lists that
+hosts that Ansible works with, optionally in groups, and how to access
+them.</p>
+
+<p>It is best practice to have one inventory file for each environment
+(production, staging, development, load testing etc.) with the same group
+names, so that you can deploy to a different environment simply by using
+a different inventory file.</p>
+
+<p>Here is an example for an inventory file with two web servers and a
+database server:</p>
+
+<pre>
+# production
+[web]
+www01.yourorg.com
+www02.yourorg.com
+
+[database]
+db01.yourorg.com
+
+[all:vars]
+ansible_ssh_user=root
+</pre>
+
+<p>Maybe the staging environment needs only a single web server:</p>
+
+<pre>
+# staging
+[web]
+www01.staging.yourorg.com
+
+[database]
+db01.stagingyourorg.com
+
+[all:vars]
+ansible_ssh_user=root
+</pre>
+
+<p>Ansible is organized in modules for separate tasks. Managing Debian
+packages is done with the <a
+href="http://docs.ansible.com/ansible/apt_module.html">apt</a> module:</p>
+
+<pre>$ ansible -i staging web -m apt -a 'name=package-info update_cache=yes state=latest'</pre>
+
+<p>The <code>-i</code> option specifies the path to the inventory file, here
+<code>staging</code>. The next argument is the group of hosts (or a single
+host, if desired), and <code>-m apt</code> tells Ansible to use the apt
+module.</p>
+
+<p>What comes after the <code>-a</code> is a module-specific command.
+<code>name</code> specifies a Debian package, <code>update_cache=yes</code>
+forces Ansible to run <code>apt-get update</code> before installing the latest
+version, and <code>state=latest</code> says that that's what we want to
+do.</p>
+
+<p>If instead of the latest version we want a specific version,
+<code>-a 'name=package-info=0.1 update_cache=yes state=present
+force=yes'</code> is the way to go. Without <code>force=yes</code>, apt
+wouldn't downgrade the module to actually get the desired version.</p>
+
+<p>This uses the <em>ad-hoc</em> mode of Ansible. More sophisticated
+deployments use <a
+href="http://docs.ansible.com/ansible/playbooks.html">playbooks</a>, of which
+I hope to write more later. Those also allow you to do configuration tasks
+such as adding repository URLs and GPG keys for package authentication.</p>
+
+<hr />
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
