@@ -50,6 +50,8 @@ process.</p>
     <li><a href="/blog-en/automating-deployments/2016-003-simplistic-deployment-git-pull.html">Simplistic Deployment with Git and Bash</a></li>
     <li><a href="/blog-en/automating-deployments/2016-004-debian-packaging.html">Build Debian packages</a></li>
     <li><a href="/blog-en/automating-deployments/2016-005-example-project.html">Debian Packaging for an Example Project</a></li>
+    <li><a href="/blog-en/automating-deployments/2016-006-distributing-packages.html">Distributing Packages with Aptly</a></li>
+    <li><a href="/blog-en/automating-deployments/2016-007-installing-packages.html">Installing Packages</a></li>
 </ul>
 
 <h2>Your interest and input matters!</h2>
