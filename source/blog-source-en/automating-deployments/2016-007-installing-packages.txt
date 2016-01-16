@@ -23,7 +23,7 @@ where necessary, so no additional actions are necessary afterwards.</p>
 
 <p>If several hosts are needed to provide a service, it can be beneficial to
 coordinate the update, for example only updating one or two hosts at a time,
-or doing a small integration test which one after moving on the next.</p>
+or doing a small integration test on each after moving on to the next.</p>
 
 <p>A nice tool for doing that is <a
 href="http://www.ansible.com/">Ansible</a>, an open source IT automation
