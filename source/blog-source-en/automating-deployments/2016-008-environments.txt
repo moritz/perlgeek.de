@@ -1,0 +1,139 @@
+Automating Deployments: 3+ Environments
+<!-- 2016-01-19 -->
+
+<p>Software is written to run in a <em>production</em> environment.
+This is where the goal of the business is achieved: making money for the
+business, or reaching and educating people, or whatever the reason for writing
+the software is. For websites, this is the typically the Internet-facing
+public servers.</p>
+
+<p>But the production environment is not where you want to develop software.
+Developing is an iterative process, and comes with its own share of mistakes
+and corrections. You don't want your customers to see all those mistakes as
+you make them, so you develop in a different environment, maybe on your PC or
+laptop instead of a server, with a different database (though hopefully using
+the same database software as in the production environment), possibly
+using a different authentication mechanism, and far less data than the
+production environment has.</p>
+
+<p>You'll likely want to prevent certain interactions in the development
+environment that are desirable in production: Sending notifications (email,
+SMS, voice, you name it), charging credit cards, provisioning virtual
+machines, opening rack doors in your data center and so on. How that is done
+very much depends on the interaction. You can configure a mail transfer agent
+to deliver all mails to a local file or mail box. Some APIs have dedicated
+testing modes or installations; in the worst case, you might have to write a
+mock implementation that answers similarly to the original API, but doesn't
+carry out the action that the original API does.</p>
+
+<p>Deploying software straight to production if it has only been tested on the
+developer's machine is a rather bad practice. Often the environments are too
+different, and the developer unknowingly relied on a feature of his
+environment that isn't the same in the production environment. Thus it is quite
+common to have one or more environments in between where the software is
+deployed and tested, and only propagated to the next deployment environment
+when all the tests in the previous one were successful.</p>
+
+<img src="//perlgeek.de/images/blog/ad/environments-testing.png"
+alt="After a software is modified in the development environment, it is
+deployed to the testing environment (with its own database), and if all tests
+were successful, propagated to the production environment." width="393" height="207" />
+
+<p>One of these stages is often called <em>testing</em>. This is where the
+software is shown to the stakeholders to gather feedback, and if manual QA
+steps are required, they are often carried out in this environment (unless
+there is a separate environment for that).</p>
+
+<p>A reason to have another non-production environment is test service
+dependencies. If several different software components are deployed to the
+testing environment, and you decide to deploy one or two at a time to
+production, things might break in production. The component you deployed might
+have a dependency on a newer version of another component, and since the
+testing environment contained that newer version, nobody noticed. Or maybe a
+database upgrade in the testing environment failed, and had to be repaired
+manually; you don't want the same to happen in a production setting, so you
+decide to test in another environment first.</p>
+
+<img src="//perlgeek.de/images/blog/ad/environments-staging.png"
+alt="After a software is modified in the development environment, it is
+deployed to the testing environment (with its own database), and if all tests
+were successful, propagated to the staging  environment. Only if this works is
+the deployment to production carried out" width="513" height="207" />
+
+<p>Thus many companies have another <em>staging</em> environment that mirrors
+the production environment as closely as possible. A planned production
+deployment is first carried out in the staging environment, and on success
+done in production too, or rolled back on error.</p>
+
+<p>There are valid reasons to have more environments even. If automated
+performance testing is performed, it should be done in an separate environment
+where no manual usage is possible to avoid distorting results. Other tests
+such as automated acceptance or penetration testings are best done in their
+own environment.</p>
+
+<img src="//perlgeek.de/images/blog/ad/environments-staging.png"
+     alt="One can add more environments for automated acceptance, penetration
+     and performance testing for example; those typically come before the
+     staging environment." width="710" height="160" />
+
+<p>In addition, dedicated environment for testing and evaluating explorative
+features are possible.</p>
+
+<p>It should be noted that while these environment all serve valid purposes,
+they also come at a cost. Machines, either virtual or native, on which all
+those environments run must be available, and they consume resources. They
+must be set up initially and maintained. License costs must be considered (for
+example for proprietary databases). Also the time for deploying code increases
+as the number of environment increases. With more environments, automating
+deployments and maybe even management and configuration of the infrastructure
+becomes mandatory.</p>
+
+<p>
+
+<hr />
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
