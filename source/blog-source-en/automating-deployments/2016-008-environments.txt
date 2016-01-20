@@ -71,7 +71,7 @@ where no manual usage is possible to avoid distorting results. Other tests
 such as automated acceptance or penetration testings are best done in their
 own environment.</p>
 
-<img src="//perlgeek.de/images/blog/ad/environments-staging.png"
+<img src="//perlgeek.de/images/blog/ad/fancy-environments.png"
      alt="One can add more environments for automated acceptance, penetration
      and performance testing for example; those typically come before the
      staging environment." width="710" height="160" />
