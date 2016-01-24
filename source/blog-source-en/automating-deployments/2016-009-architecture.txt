@@ -1,5 +1,5 @@
 Architecture of a Deployment System
-<!-- 2016-01-19 -->
+<!-- 2016-01-24 -->
 
 <p>An automated build and deployment system is structured as a pipeline.</p>
 <p>A new commit or branch in a version control system triggers the
