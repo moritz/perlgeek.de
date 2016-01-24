@@ -1,0 +1,112 @@
+Architecture of a Deployment System
+<!-- 2016-01-19 -->
+
+<p>An automated build and deployment system is structured as a pipeline.</p>
+<p>A new commit or branch in a version control system triggers the
+instantiation of the pipeline, and starts executing the first of a series of
+stages. When a stage succeeds, it triggers the next one. If it fails, the
+entire pipeline instance stops.</p>
+<p>Then manual intervention is necessary,
+typically by adding a new commit that fixes code or tests, or by fixing things
+with the environment or the pipeline configuration. A new instance of the
+pipeline then has a chance to succeed.</p>
+<p>Deviations from the strict pipeline model are possible: branches, potentially
+executed in parallel, for example allow running different tests in different
+environments, and waiting with the next step until both are completed
+successfully.</p>
+<p><img src="//perlgeek.de/images/blog/ad/pipeline-theory.png" width="1002"
+height="62" alt="" /></p>
+<p>The typical stages are building, running the unit tests, deployment to a first
+test environment, running integration tests there, potentially deployment to
+and tests in various test environments, and finally deployment to production.</p>
+<p><img src="//perlgeek.de/images/blog/ad/pipeline-actual.png" width="1280" height="263" alt="" /></p>
+<p>Sometimes, these stages blur a bit. For example, a typical build of
+Debian packages also runs the unit tests, which alleviates the need for a
+separate unit testing stage. Likewise if the deployment to an environment runs
+integration tests for each host it deploys to, there is no need for a separate
+integration test stage.</p>
+<p>Typically there is a piece of software that controls the flow of the whole
+pipeline. It prepares the environment for a stage, runs the code associated with the stage, collects its output and <em>artifacts</em> (that is, files
+that the stage produces and that are worth keeping, like binaries or test
+output), determines whether the stage was successful, and then proceeds to the
+next.</p>
+<p>From an architectural standpoint, it relieves the stages of having to know
+what stage comes next, and even how to reach the machine on which it runs. So
+it decouples the stages.</p>
+<h2>Anti-Pattern: Separate Builds per Environment</h2>
+<p>If you use a branch model like <a href="http://nvie.com/posts/a-successful-git-branching-model/">git
+flow</a> for your source
+code, it is tempting to automatically deploy the <code>develop</code> branch to the
+testing environment, and then make releases, merge them into the <code>master</code>
+branch, and deploy that to the production environment.</p>
+<p>It is tempting because it is a straight-forward extension of an existing,
+proven workflow.</p>
+<p>Don't do it.</p>
+<p>The big problem with this approach is that you don't actually test what's
+going to be deployed, and on the flip side, deploy something untested to
+production. Even if you have a staging environment before deploying to
+production, you are invalidating all the testing you did the testing
+environment if you don't actually ship the binary or package that you tested
+there.</p>
+<p>If you build "testing" and "release" packages from different sources (like
+different branches), the resulting binaries will differ. Even if you use the
+exact same source, building twice is still a bad idea, because many builds
+aren't reproducible. Non-deterministic compiler behavior, differences in
+environments and dependencies all can lead to packages that worked fine in one
+build, and failed in another.</p>
+<p>It is best to avoid such potential differences and errors by deploying to
+production exactly the same build that you tested in the testing environment.</p>
+<p>Differences in behavior between the environments, where they are desirable,
+should be implemented by configuration that is not part of the build.
+(It should be self-evident that the configuration should still be under
+version control, and also automatically deployed. There are tools that
+specialize in deploying configuration, like Puppet, Chef and Ansible.)</p>
+
+
+<hr />
+
+<p>I'm writing <a href="/en/book/automating-deployments">a book on automating
+deployments.</a> If this topic interests you, please sign up for the Automating Deployments
+newsletter. It will keep you informed about automating and continuous
+deployments. It also helps me to gauge interest in this project, and your
+feedback can shape the course it takes.</p>
+
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//perlgeek.us12.list-manage.com/subscribe/post?u=ea4954d15b6283987b9d1b161&amp;id=de38e7e44f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Subscribe to the Automating Deployments mailing list</h2>
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+</div>
+<div class="mc-field-group">
+	<label for="mce-LNAME">Last Name </label>
+	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ea4954d15b6283987b9d1b161_de38e7e44f" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
