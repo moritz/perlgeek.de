@@ -1,0 +1,177 @@
+Introducing Go Continuous Delivery
+<!-- 2016-01-27 -->
+
+<p><a href="https://www.go.cd/">Go Continuous Delivery</a> (short GoCD or simply Go) is an open source tool that controls an automated build or deployment process.</p>
+<p>It consists of a server component that holds the pipeline configuration, polls
+source code repositories for changes, schedules and distributes work, collects
+artifacts, and presents a web interface to visualize and control it all, and
+offers a mechanism for manual approval of steps. One or more <em>agents</em> can
+connect to the server, and carry out the actual jobs in the build pipeline.</p>
+
+<h3>Pipeline Organization</h3>
+<p>Every build, deployment or test jobs that GoCD executes must be part of a
+<em>pipeline</em>. A pipeline consists of one or more linearly arranged <em>stages</em>. Within
+a stage, <em>jobs</em> run potentially in parallel, and are individually distributed
+to agents. <em>Tasks</em> are again linearly executed within a job. The most general
+task is the execution of an external program. Other tasks include the
+retrieval of artifacts, or specialized things such as running a Maven build.</p>
+
+<h3>Matching of Jobs to Agents</h3>
+<p>When an agent is idle, it polls the server for work. If the server has jobs to
+run, it uses two criteria to decide if the agent is fit for carrying out the
+job: environments and resources.</p>
+<p>Each job is part of a pipeline, and a pipeline is part of an environment. On
+the other hand, each agent is configured to be part of one or more
+environments. An agent only accepts jobs from pipelines from one of its
+environments.</p>
+<p><em>Resources</em> are user-defined labels that describe what an agent has to offer,
+and inside a pipeline configuration, you can specify what resources a job
+needs. For example you can define that job requires the <code>phantomjs</code> resource
+to test a web application, then only agents that you assign this resource will
+execute that job. It is also a good idea to add the operating system and
+version as a resources. In the example above, the agent might have the
+<code>phantomjs</code>, <code>debian</code> and <code>debian-jessie</code> resources, offering the author of
+the job some choice of granularity for specifying the required operating
+system.</p>
+
+<h3>Installing the Go Server on Debian</h3>
+<p>To install the Go server on a Debian or Debian-based operating system, first
+you have to make sure you can download Debian packages via HTTPS:</p>
+<pre><code>$ apt-get install -y apt-transport-https
+</code></pre>
+<p>Then you need to configure the package sourcs:</p>
+<pre><code>$ echo 'deb http://dl.bintray.com/gocd/gocd-deb/ /' &gt; /etc/apt/sources.list.d/gocd.list
+$ curl https://bintray.com/user/downloadSubjectPublicKey?username=gocd | apt-key add -
+</code></pre>
+<p>And finally install it:</p>
+<pre><code>$ apt-get update &amp;&amp; apt-get install -y go-server
+</code></pre>
+<p>When you now point your browser at port 8154 of the go server for HTTPS
+(ignore the SSL security warnings) or port 8153 for HTTP, you should see to go
+server's web interface:</p>
+<p><img src="//perlgeek.de/images/blog/ad/gocd-screenshot-startup.png"
+width="737" height="634" alt="" /></p>
+<p>To prevent unauthenticated access, create a password file (you need to have
+the <code>apache2-utils</code> package installed to have the <code>htpasswd</code> command
+available) on the command line:</p>
+<pre><code>$ htpasswd -c -s /etc/go-server-passwd go-admin
+New password:
+Re-type new password:
+Adding password for user go-admin
+$ chown go: /etc/go-server-passwd
+$ chmod 600 /etc/go-server-passwd
+</code></pre>
+<p>In the go web interface, click on the Admin menu and then "Server
+Configuration". In the "User Management", enter the path <code>/etc/go-server-passwd</code>
+in the field "Password File Path" and click on "Save" at the bottom of the
+form.</p>
+<p>Immediately afterwards, the go server asks you for username and password.</p>
+<p>You can <a href="https://github.com/gocd/documentation/blob/master/user/configuration/dev_authentication.md">also use LDAP or Active Directory for
+authentication</a>.</p>
+
+<h3>Installing a Go Worker on Debian</h3>
+<p>On one or more servers where you want to execute the automated build and
+deployment steps, you need to install a go agent, which will connect to the
+server and poll it for work. On each server, you need to do the first same
+three steps as when installing the server, to ensure that you can install
+packages from the go package repository. And then, of course, install the go
+agent:</p>
+<pre><code>$ apt-get install -y apt-transport-https
+$ echo 'deb http://dl.bintray.com/gocd/gocd-deb/ /' &gt; /etc/apt/sources.list.d/gocd.list
+$ curl https://bintray.com/user/downloadSubjectPublicKey?username=gocd | apt-key add -
+$ apt-get update &amp;&amp; apt-get install -y go-agent
+</code></pre>
+<p>Then edit the file <code>/etd/default/go-agent</code>. The first line should read</p>
+<pre><code>GO_SERVER=127.0.0.1
+</code></pre>
+<p>Change the right-hand side to the hostname or IP address of your go server,
+and then start the agent:</p>
+<pre><code>$ service go-agent start
+</code></pre>
+<p>After a few seconds, the agent has contacted the server, and when you click on
+the "Agents" menu in the server's web frontend, you should see the agent:</p>
+<p><img src="//perlgeek.de/images/blog/ad/gocd-screenshot-agent-bare.png" width="737" height="615" alt="" /></p>
+<p>("lara" is the host name of the agent here).</p>
+
+<h3>A Word on Environments</h3>
+<p>Go makes it possible to run agents in specific environments, and for example
+run a go agent on each testing and on each production machine, and use the
+matching of pipelines to agent environments to ensure that for example an
+installation step happens on the right machine in the right environment. If
+you go with this model, you can also use Go to copy the build artifacts to the
+machines where they are needed.</p>
+<p>I chose not to do this, because I didn't want to have to install a go agent on
+each machine that I want to deploy to. Instead I use Ansible, executed on a Go
+worker, to control all machines in an environment. This requires managing the
+SSH keys that Ansible uses, and distributing packages through a Debian
+repository. But since Debian seems to require a repository anyway to be able
+to resolve dependencies, this is not much of an extra hurdle.</p>
+<p>So don't be surprised when the example project here only uses a single
+environment in Go, which I call <code>Control</code>.</p>
+
+<h2>First Contact with Go's XML Configuration</h2>
+<p>There are two ways to configure your Go server: through the web interface, and
+through a configuration file in XML. You can also edit the XML config through
+the web interface.</p>
+<p>While the web interface is a good way to explore go's capabilities, it quickly
+becomes annoying to use due to too much clicking. Using an editor with good
+XML support get things done much faster, and it lends itself better to
+compact explanation, so that's the route I'm going here.</p>
+<p>In the Admin menu, the "Config XML" item lets you see and edit the server
+config. This is what a pristine XML config looks like, with one agent already
+registered:</p>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="77"&gt;
+&lt;server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="b2ce4653-b333-4b74-8ee6-8670be479df9"&gt;
+    &lt;security&gt;
+    &lt;passwordFile path="/etc/go-server-passwd" /&gt;
+    &lt;/security&gt;
+&lt;/server&gt;
+&lt;agents&gt;
+    &lt;agent hostname="lara" ipaddress="192.168.2.43" uuid="19e70088-927f-49cc-980f-2b1002048e09" /&gt;
+&lt;/agents&gt;
+&lt;/cruise&gt;
+</code></pre>
+<p>The ServerId and the data of the agent will differ in your installation, even
+if you followed the same steps.</p>
+<p>To create an environment and put the agent in, add the following section
+somewhere within <code>&lt;cruise&gt;...&lt;/cruise&gt;</code>:</p>
+<pre><code>&lt;environments&gt;
+    &lt;environment name="Control"&gt;
+    &lt;agents&gt;
+        &lt;physical uuid="19e70088-927f-49cc-980f-2b1002048e09" /&gt;
+    &lt;/agents&gt;
+    &lt;/environment&gt;
+&lt;/environments&gt;
+</code></pre>
+<p>(The agent UUID must be that of your agent, not of mine).</p>
+<p>To give the agent some resources, you can change the <code>&lt;agent .../&gt;</code> tag in the
+<code>&lt;agents&gt;</code> section to read:</p>
+<pre><code>&lt;agent hostname="lara" ipaddress="192.168.2.43" uuid="19e70088-927f-49cc-980f-2b1002048e09"&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;debian-jessie&lt;/resource&gt;
+    &lt;resource&gt;build&lt;/resource&gt;
+    &lt;resource&gt;debian-repository&lt;/resource&gt;
+  &lt;/resources&gt;
+&lt;/agent&gt;
+</code></pre>
+
+<h3>Creating an SSH key</h3>
+<p>It is convenient for Go to have an SSH key without password, to be able to
+clone git repositories via SSH, for example.</p>
+<p>To create one, run the following commands on the server:</p>
+<p>$ su - go
+ $ ssh-keygen -t rsa -b 2048 -N '' -f ~/.ssh/id_rsa</p>
+<p>And either copy the resulting <code>.ssh</code> directory and the files therein onto each
+agent into the <code>/var/go</code> directory (and remember to set owner and permissions
+as they were created originally), or create a new key pair on each agent.</p>
+
+<h3>Ready to Go</h3>
+<p>Now that the server and an agent has some basic configuration, it is ready for
+its first pipeline configuration. Which we'll get to soon :-).</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
