@@ -1,0 +1,107 @@
+Technology for automating deployments: the agony of choice
+<!-- 2016-02-21 -->
+
+<p>As an interlude I'd like to look at alternative technology stacks that you
+could use in your deployment project. I'm using to a certain stack because
+it makes sense in the context of the bigger environment.</p>
+
+<p>This is a mostly Debian-based infrastructure with its own operations team,
+and software written in various (mostly dynamic) programming languages.</p>
+
+<p>If your organization writes only Java code (or code in programming languages
+that are based on the JVM), and your operations folks are used to that, it
+might be a good idea to ship .jar files instead. Then you need a tool that can
+deploy them, and a repository to store them.</p>
+
+<h2>Package format</h2>
+
+<p>I'm a big fan of operating system packages, for three reasons: The operators are
+famiilar with them, they are language agnostic, and configuration management
+software typically supports them out of the box.</p>
+
+<p>If you develop
+applications in several different programming languages, say perl, python and
+ruby, it doesn't make sense to build a deployment pipeline around three
+different software stacks and educate everybody involved about how to use and
+debug each of the language-specific package managers. It is much more
+economical to have the maintainer of each application build a system package,
+and then use one toolchain to deploy that.</p>
+
+<p>That doesn't necessarily imply building a system package for each upstream
+package. Fat-packaging is a valid way to avoid an explosion of packaging
+tasks, and also of avoiding clashes when dependencies on conflicting version of the
+same package exists. <a href="https://github.com/spotify/dh-virtualenv">dh-virtualenv</a>
+works well for python software and all its python dependencies into a single
+Debian package; only the python interpreter itself needs to be installed on
+the target machine.</p>
+
+<p>If you need to deploy to multiple operating system families and want to build
+only one package, <a href="https://nixos.org/nix/">nix</a> is an interesting approach,
+with the additional benefit of allowing parallel installation of several
+versions of the same package. That can be useful for running two versions in
+parallel, and only switching over to the new one for good when you're
+convinced that there are no regressions.</p>
+
+<h2>Repository</h2>
+
+<p>The choice of package format dictates the repository format. Debian packages
+are stored in a different structure than Pypi packages, for example. For each
+repository format there is tooling available to help you create and update the
+repository.</p>
+
+<p>For Debian, <a href="http://www.aptly.info/">aptly</a> is my go-to solution for
+repository management.
+<a href="https://wiki.debian.org/SettingUpSignedAptRepositoryWithReprepro">Reprepro</a>
+seems to be a decent alternative.</p>
+
+<p><a href="http://www.pulpproject.org/">Pulp</a> is a rather general and scalable
+repository management software that was originally written for RPM packages,
+but now also supports Debian packages, Python (pypi) packages and more.
+Compared to the other solutions mentioned so far (which are just command line
+programs you run when you need something, and file system as storage), it comes
+with some administrative
+overhead, because there's at least a MongoDB database and a RabbitMQ message
+broker required to run it. But when you need such a solution, it's worth it.</p>
+
+<p>A smaller repository management for Python is
+<a href="https://github.com/wolever/pip2pi">pip2pi</a>. In its simplest form you just
+copy a few .tar.gz files into a directory and run <code>dir2pi .</code> in that
+directory, and make it accessible through a web server.</p>
+
+<p><a href="https://metacpan.org/release/CPAN-Mini">CPAN-Mini</a> is a good and simple tool
+for providing a CPAN mirror, and
+<a href="https://metacpan.org/release/CPAN-Mini-Inject">CPAN-Mini-Inject</a> lets you add
+your own Perl modules, in the simplest case through the
+<a href="https://metacpan.org/pod/distribution/CPAN-Mini-Inject/bin/mcpani">mcpani</a>
+script.</p>
+
+<h2>Installation</h2>
+
+<p>Installing a package and its dependencies often looks easy on the surface,
+something like <code>apt-get update &amp;&amp; apt-get install $package</code>. But that is
+deceptive, because many installers are interactive by nature, or require
+special flags to force installation of an older version, or other potential
+pitfalls.</p>
+
+<p><a href="https://www.ansible.com/">Ansible</a> provides modules for <a href="http://docs.ansible.com/ansible/apt_module.html">installing .deb
+packages</a>, <a href="http://docs.ansible.com/ansible/pip_module.html">python
+modules</a>,
+<a href="http://docs.ansible.com/ansible/cpanm_module.html">perl</a>, <a href="http://docs.ansible.com/ansible/yum_module.html">RPM through
+yum</a>, <a href="https://github.com/ktosiek/ansible-nix">nix
+packages</a> and many others. It also
+requires little up-front configuration on the destination system and is very
+friendly for beginners, but still offers enough power for more complex
+deployment tasks. It can also handle configuration management.</p>
+
+<p>An alternative is <a href="http://rexify.org/">Rex</a>, with which I have no practical
+experience.</p>
+
+<p>Not all configuration management systems are good fits for managing
+deployments. For example Puppet doesn't seem to have a good way to provide an
+order for package upgrades ("first update the backend on servers bck01 and
+bck02, and then frontend on www01, and the rest of the backend servers").</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
