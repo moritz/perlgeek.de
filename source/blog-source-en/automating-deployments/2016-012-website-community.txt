@@ -1,0 +1,29 @@
+Automating Deployments: New Website, Community
+<!-- 2016-03-05 -->
+
+<p>No IT project would be complete without its own website, so my project of
+writing a book on automated deployments now has one too. Please visit <a
+href="https://deploybook.com/">deploybook.com</a> and tell me what you think
+about. The plan is to gradually add some content, and maybe also a bit of
+color. When the book finally comes out (don't hold your breath here, it'll
+take some more months), it'll also be for sale there.</p>
+
+<p>Quite a few readers have emailed me, sharing their own thoughts on the
+topic of building and deploying software, and often asking for feedback. There
+seems to be a need for a place to share these things, so I created one. <a
+href="http://community.deploybook.com/">The deployment community</a> is a
+discourse forum dedicated to discussing such things. I expect to see a low
+volume of posts, but valuables to those involved.</p>
+
+<p>To conclude the news roundup for this week, I'd like to mention that next
+week I'll be giving a talk on continuous delivery at the <a
+href="http://act.yapc.eu/gpw2016/">German Perl Workshop 2016</a>, where I'm
+also one of the organizers. After the workshop is over, slides will be
+available online, and I'll likely have more time again for blogging. So stay
+tuned!</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
