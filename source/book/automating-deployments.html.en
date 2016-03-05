@@ -6,6 +6,13 @@
 
 <h1>[%readvar title%]</h1>
 
+<p><b>Please visit the new website, <a
+href="https://deploybook.com/">deploybook.com</a>.</b> The contents of this
+page will likely not be updated, and/or slowly be migrated to the new
+page. Thanks!</p>
+
+<hr />
+
 <p>You've developed your software, and now it's time to bring it into the
 production environment, and it's a big effort. And each time you have a new
 version (which happens a lot in the initial phase of the project), you have to
