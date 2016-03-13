@@ -19,7 +19,7 @@ download the newest version of the library, and include it in its build
 result (fat-packaging). The application build step now has two triggers:
 commtis from its own version control repository, and library uploads.</p>
 
-<a width="825" height="264" src="/images/blog/ad/library-continuous-delivery.png" alt="" />
+<img width="825" height="264" src="/images/blog/ad/library-continuous-delivery.png" alt="" />
 
 <p>Then the rest of the delivery pipeline for the application serves as
 quality gating for the library as well. If the pipeline includes integration
