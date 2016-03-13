@@ -1,0 +1,32 @@
+Continuous Delivery for Libraries?
+<!-- 2016-03-13 -->
+
+<p>Past Thursday I gave a <a
+href="https://deploybook.com/talks/gpw2016-continuous-delivery.pdf">talk on
+Continuous Delivery (slides)</a> at the <a
+href="http://act.yapc.eu/gpw2016/">German Perl Workshop 2016</a> (video
+recordings have been made, but aren't available yet). One of the questions from the audience was something along the lines of: <em>would I use Continuous Delivery for a software library?</em></p>
+
+<p>My take on this is that you typically develop a library driven by the needs
+of one or more applications, not just for the sake of developing a library. So
+you have some kind of pilot application which makes use of the new library
+features.</p>
+
+<p>You can integrate the library into the application's build pipeline.
+Automatically build and unit test the library, and once it succeeds, upload
+the library into a repository. The build pipeline for the application can then
+download the newest version of the library, and include it in its build
+result (fat-packaging). The application build step now has two triggers:
+commtis from its own version control repository, and library uploads.</p>
+
+<a width="825" height="264" src="/images/blog/ad/library-continuous-delivery.png" alt="" />
+
+<p>Then the rest of the delivery pipeline for the application serves as
+quality gating for the library as well. If the pipeline includes integration
+tests and functional tests for the whole software stack, it will catch errors
+of the library, and deploy the library along with the application.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
