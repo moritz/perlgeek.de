@@ -21,7 +21,7 @@
 				<a class="skip" href="#content" title="skip link">Skip to
                 content</a><span class="hideme">.</span>
 				<!-- end: skip link navigation -->
-				<span><a href="/en/imprint">Imprint</a></span> </div>
+				<span><a href="/en/imprint">Imprint / Contact</a></span> </div>
 <!--			<h1>[%readvar section%]</h1> -->
 			<span>Perl Programming | [%readvar section%][% ifvar de %] -- <a
             href="[% readvar de %]">Diese Seite auf Deutsch</a>[% endifvar %]</span></div>
