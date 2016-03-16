@@ -17,7 +17,7 @@ Automatically build and unit test the library, and once it succeeds, upload
 the library into a repository. The build pipeline for the application can then
 download the newest version of the library, and include it in its build
 result (fat-packaging). The application build step now has two triggers:
-commtis from its own version control repository, and library uploads.</p>
+commits from its own version control repository, and library uploads.</p>
 
 <img width="825" height="264" src="/images/blog/ad/library-continuous-delivery.png" alt="" />
 
