@@ -9,7 +9,7 @@
     <link rel="openid.server" href="https://id.perlgeek.de/login/"/>
     <link rel="openid.delegate" href="https://id.perlgeek.de/user/moritz"/>
     <meta http-equiv="X-XRDS-Location" content="https://id.perlgeek.de/xrds/moritz" />
-    <link rel="canonical" href="http://perlgeek.de/de/" />
+    <link rel="canonical" href="https://perlgeek.de/de/" />
 %]
 
 <h1>Willkommen auf Perlgeek.de</h1>
@@ -26,7 +26,7 @@
 <p>
     Ausserdem gibt es hier <a href="/de/service/">Services</a>, die ich hier
     kostenlos zur Verfügung stelle, wie z.B. <a
-    href="http://irclog.perlgeek.de/">öffentliche IRC Logs</a>, sowie <a
+    href="https://irclog.perlgeek.de/">öffentliche IRC Logs</a>, sowie <a
     href="/de/software/">Open-Source-Software</a> zum Download.
 </p>
 
@@ -35,7 +35,8 @@
 <p>
     Mich interessiert das meiste, was mit Perl und Programmieren
     zusammenhängt. Besonders interessant finde <a
-    href="http://perl-6.de/">Perl 6</a>, <a
+    href="https://perl6.org/">Perl 6</a>, <a href="https://deploybook.com/">Software Deployments</a>,
+    <a
     href="/de/artikel/charsets-unicode">Unicode und Zeichenkodierungen</a>
     sowie Sicherheitsaspekte von Webanwendungen und diverser anderer
     Technologien.
@@ -51,13 +52,6 @@
 </p>
 
 <ul>
-    <li>
-        Bei den <a href="http://www.perlmonks.org/">Perl-Mönchen</a> bekommt
-        man Hilfe zu allen Perl-Themen, und kann sich auch sonst sehr gut
-        mit gleichgesinnten unterhalten. Ich bin dort <a
-        href="http://www.perlmonks.org/?node_id=6364;user=moritz">auch 
-        sehr aktiv</a>.
-    </li>
     <li>
         Die Seiten der <a href="http://de.perl.org/">deutschen
         Perl-Community</a> sind die erste Anlaufstelle für Perlprogrammierer,
@@ -80,11 +74,11 @@
     </li>
     <li>
         Die zentrale Anlaufstelle für Perl 6 ist
-        <a href="http://perl6.org/">perl6.org, die offizielle Perl 6
+        <a href="https://perl6.org/">perl6.org, die offizielle Perl 6
         homepage</a>.
     </li>
     <li>
-        Mein neues Projekt, <a href="http://konzertgeek.de/">konzertgeek.de
+        Mein neues Projekt, <a href="https://konzertgeek.de/">konzertgeek.de
         bietet RSS/Atom-Feeds für Umkreissuche nach Konzerten.</a> Noch im
         Aufbau, und mit relativ wenigen Künstlern.
     </li>

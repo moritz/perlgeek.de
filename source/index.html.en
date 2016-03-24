@@ -35,27 +35,30 @@ programming and surrounding communities and concepts.</p>
 me, and which are covered on this site are:</p>
 
 <ul>
-    <li><a href="http://perl6.org/">Perl 6</a>, a novel programming
+    <li><a href="https://perl6.org/">Perl 6</a>, a novel programming
     language to which I contribute quite a lot, and about which I  <a
-    href="http://perlgeek.de/blog-en/perl-6/">blog</a>.</li>
+    href="https://perlgeek.de/blog-en/perl-6/">blog</a>.</li>
     <li><a href="/en/article/encodings-and-unicode">Unicode and character
     encodings</a>, a topic often neglected and sometimes even hated by
     programmers, which is nonetheless fundamental to text processing.</li>
     <li><a
-    href="http://perlgeek.de/blog-en/perl-tips/magic-argv.html">security
+    href="https://perlgeek.de/blog-en/perl-tips/magic-argv.html">security
     aspects</a> of various technologies.</li>
-    <li>The <a href="http://perlgeek.de/de/">German part of this site</a>
-    also contains a few <a href="http://perlgeek.de/artikel/">illustrated
+    <li>The <a href="https://perlgeek.de/de/">German part of this site</a>
+    also contains a few <a href="https://perlgeek.de/artikel/">illustrated
     articles about algorithms, data structures and general programming
     concepts</a>.</li>
+    <li><a href="https://deploybook.com/">Deployments, getting software into
+    production</a> is a current special interest of mine, and covered on its
+    own site.</li>
 </ul>
 
 <h2>Open Source</h2>
 
 <p>Most of my programs end up being Open Source software. You can follow my <a
-href="http://github.com/moritz/">github account</a> to see what I'm working
+href="https://github.com/moritz/">github account</a> to see what I'm working
 on, although many of my commits go to repositories under the <a
-href="http://github.com/perl6/">perl6 account</a>.</p>
+href="https://github.com/perl6/">perl6 account</a>.</p>
 
 [% setvar more_footer 
     <p>Our sponsor: <a href="http://www.chameleonjohn.com/">ChameleonJohn</a></p>
