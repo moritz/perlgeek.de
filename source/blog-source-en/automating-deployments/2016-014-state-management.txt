@@ -1,0 +1,131 @@
+Managing State in a Continuous Delivery Pipeline
+<!-- 2016-04-19 -->
+
+<p>Continuous Delivery is all nice and fluffy for a stateless application.
+Installing a new application is a simple task, which just needs installing of
+the new binaries (or sources, in case of a language that's not compiled), stop
+the old instance, and start a new instance. Bonus points for reversing the
+order of the last two steps, to avoid downtimes.</p>
+
+<p>But as soon as there is persistent state to consider, things become more
+complicated.</p>
+
+<p>Here I will consider traditional, relational databases with schemas. You can
+avoid some of the problems by using a schemaless "noSQL" database, but you
+don't always have that luxury, and it doesn't solve all of the problems
+anyway.</p>
+
+<p>Along with the schema changes you have to consider data migrations, but they
+aren't generally harder to manage than schema changes, so I'm not going to
+consider them in detail.</p>
+
+<h3>Synchronization Between Code and Database Versions</h3>
+
+<p>State management is hard because code is usually tied to a version of the
+database schema. There are several cases where this can cause problems:</p>
+
+<ul>
+<li>Database changes are often slower than application updates. In version 1 of
+your application can only deal with version 1 of the schema, and version 2
+of the application can only deal with version 2 of the schema, you have to
+stop the application in version 1, do the database upgrade, and start up the
+application only after the database migration has finished.</li>
+<li>Stepbacks become painful. Typically either a database change or its rollback
+can lose data, so you cannot easily do an automated release and stepback
+over these boundaries.</li>
+</ul>
+
+<p>To elaborate on the last point, consider the case where a column is added to a
+table in the database. In this case the rollback of the change (deleting the
+column again) loses data. On the other side, if the original change is to
+delete a column, that step usually cannot be reversed; you can recreate a
+column of the same type, but the data is lost. Even if you archive the deleted
+column data, new rows might have been added to the table, and there is no
+restore data for these new rows.</p>
+
+<h3>Do It In Multiple Steps</h3>
+
+<p>There is no tooling that can solve these problems for you. The only practical
+approach is to collaborate with the application developers, and break up the
+changes into multiple steps (where necessary).</p>
+
+<p>Suppose your desired change is to drop a column that has a <code>NOT NULL</code>
+constraint. Simply dropping the column in one step comes with the problems
+outlined above. In a simple scenario, you might be able to do the following
+steps instead:</p>
+
+<ul>
+<li>Deploy a database change that makes the column nullable (or give it a
+default value)</li>
+<li>Wait until you're sure you don't want to roll back to a version where this
+column is <code>NOT NULL</code></li>
+<li>Deploy a new version of the application that doesn't you the column anymore</li>
+<li>Wait until you're sure you don't want to roll back to a version of your
+application that uses this column</li>
+<li>Deploy a database change that drops the column entirely.</li>
+</ul>
+
+<p>In a more complicated scenario, you might first need to a deploy a version of
+your application that can deal with reading NULL values from this column, even
+if no code writes NULL values yet.</p>
+
+<p>Adding a column to a table works in a similar way:</p>
+
+<ul>
+<li>Deploy a database change that adds the new column with a default value (or
+NULLable)</li>
+<li>Deploy a version of the application that writes to the new column</li>
+<li>optionally run some migrations that fills the column for old rows</li>
+<li>optionally deploy a database change that adds constraints (like NOT NULL)
+that weren't possible at the start</li>
+</ul>
+
+<p>... with the appropriate waits between the steps.</p>
+
+<h3>Prerequisites</h3>
+
+<p>If you deploy a single logical database change in several steps, you need to
+do maybe three or four separate deployments, instead of one big deployment
+that introduces both code and schema changes at once. That's only practical if
+the deployments are (at least mostly) automated, and if the organization
+offers enough continuity that you can actually actually finish the change
+process.</p>
+
+<p>If the developers are constantly putting out fires, chances are they
+never get around to add that final, desired NOT NULL constraint, and some
+undiscovered bug will lead to missing information later down the roud.</p>
+
+<h3>Tooling</h3>
+
+<p>Unfortunately, I know of no tooling that supports the inter-related database
+and application release cycle that I outlined above.</p>
+
+<p>But there are tools that
+manage schema changes in general. For example <a href="https://sqitch.org/">sqitch</a> is a rather
+general framework for managing database changes and rollbacks.</p>
+
+<p>On the lower level, there are tools like
+<a href="http://pgdiff.sourceforge.net/">pgdiff</a> that compare the old and new schema,
+and use that to generate DDL statements that bring you from one version to the
+next. Such automatically generated DDLs can form the basis of the upgrade
+scripts that sqitch then manages.</p>
+
+<p>Some ORMs also come with frameworks that promise to manage schema migrations
+for you. Carefully evaluate whether they allow rollbacks without losing data.</p>
+
+<h3>No Silver Bullet</h3>
+
+<p>There is no single solution that manages all your data migrations
+automatically for your during your deployments. You have to carefully engineer
+the application and database changes to decouple them a bit. This is typically
+more work on the application development side, but it buys you the ability to
+deploy and rollback without being blocked by database changes.</p>
+
+<p>Tooling is available for some pieces, but typically not for the big picture.
+Somebody has to keep track of the application and schema versions, or automate
+that.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
