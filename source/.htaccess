@@ -33,7 +33,7 @@ RewriteRule ^(de|en)/(.*/)$     /$2/index.html.$1 [L]
 
 # removed .writeback URLs
 
-RewriteRule ^(.*)\.writeback$ /$1.html [R,L]
+RewriteRule ^(.*)\.writeback$ /$1.html [R=301,L]
 
 #
 ## first level
