@@ -31,6 +31,10 @@ RewriteRule ^(de|en)/?$         /index.html.$1    [L]
 RewriteRule ^(de|en)/(.*[^/])$  /$2.html.$1       [L]
 RewriteRule ^(de|en)/(.*/)$     /$2/index.html.$1 [L]
 
+# removed .writeback URLs
+
+RewriteRule ^(.*)\.writeback$ /$1.html [R,L]
+
 #
 ## first level
 #RewriteRule ^(de|en)/(.*)/$     /$2/index.html.$1 [L]
