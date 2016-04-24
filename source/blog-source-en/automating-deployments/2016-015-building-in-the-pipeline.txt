@@ -1,0 +1,147 @@
+Automating Deployments: Building in the Pipeline
+<!-- 2016-04-24 -->
+
+<p>The first step of an automated deployment system is always the build. (For a software that doesn't need a build to be tested, the test might come first, but stay with me nonetheless).</p>
+
+<p>At this point, I assume that <a href="https://perlgeek.de/blog-en/automating-deployments/2016-005-example-project.html">there is already a build
+system</a>
+in place that produces packages in the desired format, here .deb files. Here I
+will talk about integrating this build step into a pipeline that automatically
+polls new versions from a git repository, runs the build, and records the
+resulting .deb package as a build artifact.</p>
+
+<h2>A GoCD Build Pipeline</h2>
+
+<p>As <a href="https://perlgeek.de/blog-en/automating-deployments/2016-010-introducing-gocd.html">mentioned earlier</a>, my tool of choice of controlling the pipeline is <a href="https://go.cd/">Go
+Continuous Delivery</a>. Once you have it installed and
+configured and agent, you can start to create a pipeline.</p>
+
+<p>GoCD let's you build pipelines in its web interface, which is great for
+exploring the available options. But for a blog entry, it's easier to look at
+the resulting XML configuration, which you can also enter directly ("Admin" →
+"Config XML").</p>
+
+<p>So without further ado, here's the first draft:</p>
+
+<p><pipelines group="deployment">
+    <pipeline name="package-info">
+      <materials>
+        <git url="https://github.com/moritz/package-info.git" dest="package-info" />
+      </materials>
+      <stage name="build" cleanWorkingDir="true">
+        <jobs>
+          <job name="build-deb" timeout="5">
+            <tasks>
+              <exec command="/bin/bash" workingdir="package-info">
+                <arg>-c</arg>
+                <arg>debuild -b -us -uc</arg>
+              </exec>
+            </tasks>
+            <artifacts>
+              <artifact src="package-info*_*" dest="package-info/" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines></p>
+
+<p>The outer-most group is a pipeline group, which has a name. It can be used to
+make it easier to get an overview of available pipelines, and also to manage
+permissions. Not very interesting for now.</p>
+
+<p>The second level is the <code>&lt;pipeline&gt;</code> with a name, and it contains a list of
+materials and one or more stages.</p>
+
+<h3>Materials</h3>
+
+<p>A material is anything that can trigger a
+pipeline, and/or provide files that commands in a pipeline can work with. Here
+the only material is a git repository, which GoCD happily polls for us. When
+it detects a new commit, it triggers the first stage in the pipeline.</p>
+
+<h3>Directory Layout</h3>
+
+<p>Each time a job within a stage is run, the go agent (think worker) which runs
+it prepares a directory in which it makes the materials available. On linux,
+this directory defaults to <code>/var/lib/go-agent/pipelines/$pipline_name</code>.
+Paths in the GoCD configuration are typically relative to this path.</p>
+
+<p>For example the material definition above contains the attribute
+<code>dest="package-info"</code>, so the absolute path to this git repository is
+<code>/var/lib/go-agent/pipelines/package-info/package-info</code>. Leaving out the
+<code>dest="..."</code> works, and gives on less level of directory, but only works for a
+single material. It is a rather shaky assumption that you won't need a second
+material, so don't do that.</p>
+
+<p>See the <a href="https://docs.go.cd/current/configuration/configuration_reference.html#materials">config
+references</a>
+for a list of available material types and options. <a href="https://www.go.cd/plugins/">Plugins are
+available</a> that add further material types.</p>
+
+<h3>Stages</h3>
+
+<p>All the stages in a pipeline run serially, and each one only if the previous
+stage succeed. A stage has a name, which is used both in the front end, and
+for fetching artifacts.</p>
+
+<p>In the example above, I gave the stage the attribute
+<code>cleanWorkingDir="true"</code>, which makes GoCD delete files created during the
+previous build, and discard changes to files under version control. This tends
+to be a good option to use, otherwise you might unknowingly slide into a
+situation where a previous build affects the current build, which can be
+really painful to debug.</p>
+
+<h3>Jobs, Tasks and Artifacts</h3>
+
+<p>Jobs are potentially executed in parallel within a stage, and have names for
+the same reasons that stages do.</p>
+
+<p>Inside a job there can be one or more tasks. Tasks are executed serially
+within a job. I tend to mostly use <code>&lt;exec&gt;</code> tasks (and <code>&lt;fetchartifact&gt;</code>,
+which I will cover in a later blog post), which invoke system commands. They
+follow the UNIX convention of treating an exit status of zero as success, and
+everything else as a failure.</p>
+
+<p>For more complex commands, I create shell or Perl scripts inside a git
+repository, and add repository as a material to the pipeline, which makes them
+available during the build process with no extra effort.</p>
+
+<p>The <code>&lt;exec&gt;</code> task in our example invokes <code>/bin/bash -c 'debuild -b -us -uc'</code>.
+Which is a case of <a href="https://en.wikipedia.org/wiki/Cargo_cult_programming">Cargo Cult
+Programming</a>, because
+invoking <code>debuild</code> directly works just as well. Ah well, will revise later.</p>
+
+<p><code>debuild -b -us -uc</code> builds the Debian package, and is executed inside the git
+checkout of the source. It produces a .deb file, a .changes file and possibly
+a few other files with meta data. They are created one level above the git
+checkout, so in the root directory of the pipeline run.</p>
+
+<p>These are the files that we want to work with later on, we let GoCD store them
+in an internal database. That's what the <code>&lt;artifact&gt;</code> instructs GoCD to do.</p>
+
+<p>Since the name of the generated files depends on the version number of the
+built Debian package (which comes from the <code>debian/changelog</code> file in the git
+repo), it's not easy to reference them by name later on. That's where the
+<code>dest="package-info/"</code> comes in play: it makes GoCD store the artifacts in a
+directory with a fixed name. Later stages then can retrieve all artifact files
+from this directory by the fixed name.</p>
+
+<h2>The Pipeline in Action</h2>
+
+<p>If nothing goes wrong (and nothing ever does, right?), this is roughly what
+the web interface looks like after running the new pipeline:</p>
+
+<p><img src="https://perlgeek.de/images/blog/ad/gocd-screenshot-build-stage.png" alt="" /></p>
+
+<p>So, whenever there is a new commit in the git repository, GoCD happily builds
+a Debian pacckage and stores it for further use. Automated builds, yay!</p>
+
+<p>But there is a slight snag: It recycles version numbers, which other Debian
+tools are very unhappy about. In the next blog post, I'll discuss a way to
+deal with that.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
