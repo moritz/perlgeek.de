@@ -79,7 +79,7 @@ which might serve as a starting point for such documentation.</p>
 which were not covered by this grant report:</p>
 
 <ul>
-    <li><a href="http://perlgeek.de/blog-en/perl-6/2011-02-exceptions.writeback">greatly improved backtrace printer</a></li>
+    <li><a href="http://perlgeek.de/blog-en/perl-6/2011-02-exceptions.html">greatly improved backtrace printer</a></li>
     <li>Many exceptions from within the compilation process (such as parse
     errors, redeclarations etc.) are now typed.</li>
     <li>I enabled typed exceptions thrown from C code, and as a proof of

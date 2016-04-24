@@ -54,7 +54,7 @@ and better than PGE.</p>
 <h3>Sprixel</h3>
 
 <p>Mathew Wilson aka diakopter started <a
-href="http://perlgeek.de/blog-en/perl-6/announcing-sprixel.writeback">sprixel</a>,
+href="http://perlgeek.de/blog-en/perl-6/announcing-sprixel.html">sprixel</a>,
 a Perl 6 to Javascript compiler.</p>
 
 <h3>Mildew</h3>
@@ -66,7 +66,7 @@ a Perl 6 to Javascript compiler.</p>
 spanning multiple pages, thus allowing much more stuff to be linked there.</p>
 
 <p>Four Perl 6 and Rakudo hackers <a
-href="http://perlgeek.de/blog-en/perl-6/we-write-a-perl-6-book-for-you.writeback">announced
+href="http://perlgeek.de/blog-en/perl-6/we-write-a-perl-6-book-for-you.html">announced
 that they are writing a Perl 6 book</a>, the print release of which shall
 coincide with the release of Rakudo Star.</p>
 

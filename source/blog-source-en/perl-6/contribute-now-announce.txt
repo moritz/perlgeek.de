@@ -48,7 +48,7 @@ For future challenges, you have to be motivated on your own :-).</p>
     out, please improve one of them instead of writing your own from
     scratch.</li>
     <li><a
-        href="http://perlgeek.de/blog-en/perl-6/contribute-now-samecase-for-subst.writeback">Week
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-samecase-for-subst.html">Week
         4: implement :samecase option for string substitution</a>. Status:
         We have a working patch and some tests;; more tests are always welcome.</li>
     <li><a
@@ -58,7 +58,7 @@ For future challenges, you have to be motivated on your own :-).</p>
     <li><a href="http://use.perl.org/~masak/journal/40385">Week 6: Improve
         book markup</a>. Status: two submissions, challenge closed.</li>
     <li><a
-        href="http://perlgeek.de/blog-en/perl-6/contribute-now-try.rakudo.org.writeback">Week
+        href="http://perlgeek.de/blog-en/perl-6/contribute-now-try.rakudo.org.html">Week
         7: try.rakudo.org</a>. Status: One submission in the git repository,
         improvements and further implementations are always welcome.</li>
     <li><a
