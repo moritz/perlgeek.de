@@ -1,6 +1,0 @@
-[% option no-footer %]
-[% setvar title $blog_title :: $title::t %]
-[% setvar section blog %]
-[% setvar more_header <link rel="alternate" type="application/rss+xml" title="RSS" href="$url/index.rss" /> %]
-
-[% menu main blog %]
