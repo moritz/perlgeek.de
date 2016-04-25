@@ -13,12 +13,22 @@ AddHandler cgi-script .cgi
 
 # referrer spam from bing.com
 # see http://www.the-art-of-web.com/system/logs-bing/ for an explanation
+RewriteEngine on
 RewriteCond %{REMOTE_ADDR} ^65\.55\.(104|107|109|110|165|232)
 RewriteCond %{HTTP_REFERER} (www\.bing|search\.live)\.com
 RewriteCond %{HTTP_REFERER} !\&
 RewriteRule .* - [F]
 
-RewriteEngine on
+# Redirect to HTTPS
+RewriteCond %{HTTPS} "off"
+RewriteCond %{REQUEST_URI} !well-known
+RewriteRule ^/(.*)$ https://perlgeek.de/$1 [R,L]
+
+RewriteCond %{HTTPS} "off"
+RewriteCond %{REQUEST_URI} !well-known
+RewriteRule ^(.*)$ https://perlgeek.de/$1 [R,L]
+
+
 SetEnvIf Request_URI ^(de|en) prefer-language=$1
 
 # somehow automatica links suck, and add punctuation at the end
