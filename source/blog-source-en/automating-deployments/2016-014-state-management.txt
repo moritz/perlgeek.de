@@ -93,7 +93,7 @@ process.</p>
 
 <p>If the developers are constantly putting out fires, chances are they
 never get around to add that final, desired NOT NULL constraint, and some
-undiscovered bug will lead to missing information later down the roud.</p>
+undiscovered bug will lead to missing information later down the road.</p>
 
 <h3>Tooling</h3>
 
