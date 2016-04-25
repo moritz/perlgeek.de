@@ -59,7 +59,7 @@ steps instead:</p>
 default value)</li>
 <li>Wait until you're sure you don't want to roll back to a version where this
 column is <code>NOT NULL</code></li>
-<li>Deploy a new version of the application that doesn't you the column anymore</li>
+<li>Deploy a new version of the application that doesn't use the column anymore</li>
 <li>Wait until you're sure you don't want to roll back to a version of your
 application that uses this column</li>
 <li>Deploy a database change that drops the column entirely.</li>
