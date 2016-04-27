@@ -1,0 +1,146 @@
+Automating Deployments: Version Recycling Considered Harmful
+<!-- 2016-04-24 -->
+
+<p>In the <a href="https://perlgeek.de/blog-en/automating-deployments/2016-015-building-in-the-pipeline.html">previous
+installment</a>
+we saw a GoCD configuration that automatically built a Debian package from a
+git repository whenever somebody pushes a new commit to the git repo.</p>
+
+<p>The version of the generated Debian package comes from the <code>debian/changelog</code>
+file of the git repository. Which means that whenever somebody pushes code or
+doc changes without a new changelog entry, the resulting Debian package has
+the same version number as the previous one.</p>
+
+<p>The problem with this version recycling is that most Debian tooling assumes
+that the tuple of package name, version and architecture uniquely identifies a
+revision of a package. So stuffing a new version of a package with an old
+version number into a repository is bound to cause trouble; most repository
+management software simply refuses to accept that. On the target machine,
+upgrade the package won't do anything if the version number stays the same.</p>
+
+<p>So, its a good idea to put a bit more thought into the version string of the
+automatically built Debian package.</p>
+
+<h3>Constructing Unique Version Numbers</h3>
+
+<p>There are several source that you can tap to generate unique version numbers:</p>
+
+<ul>
+<li>Randomness (for example in the form of UUIDs)</li>
+<li>The current date and time</li>
+<li>The git repository itself</li>
+<li>GoCD exposes <a href="https://docs.go.cd/current/faq/dev_use_current_revision_in_build.html">several environment
+variables</a>
+that can be of use</li>
+</ul>
+
+<p>The latter is quite promising: <code>GO_PIPELINE_COUNTER</code> is a monotonic counter
+that increases each time GoCD runs the pipeline, so a good source for a
+version number. GoCD allows manual re-running of stages, so it's best to
+combine it with <code>GO_STAGE_COUNTER</code>. In terms of shell scripting, using
+<code>$GO_PIPELINE_COUNTER.$GO_STAGE_COUNTER</code> as a version string sounds like a
+decent approach.</p>
+
+<p>But, there's more. GoCD allows you to trigger a pipeline with a specific
+version of a material, so you can have a new pipeline run to build an old
+version of the software. If you do that, using <code>GO_PIPELINE_COUNTER</code> as the
+first part of the version string doesn't reflect the use of an old code base.</p>
+
+<p>To construct a version string that primarily reflects the version of the git
+repository, and only secondarily the build iteration, the first part of the
+version string has to come from git. As a distributed version control system,
+git doesn't supply a single, numeric version counter. But if you limit
+yourself to a single repository and branch, you can simply count commits.</p>
+
+<p><code>git describe</code> is an established way to count commits. By default it prints
+the last tag in the repo, and if <code>HEAD</code> does not resolve to the same commit as
+the tag, it adds the number of commits since that tag, and the abbreviated
+sha1 hash prefixed by <code>g</code>, so for example <code>2016.04-32-g4232204</code> for the commit
+<code>4232204</code>, which is 32 commits after the tag <code>2016.04</code>. The option <code>--long</code>
+forces it to always print the number of commits and the hash, even when HEAD
+points to a tag.</p>
+
+<p>We don't need the commit hash for the version number, so a shell script to
+construct a good version number looks like this:</p>
+
+<pre><code>#!/bin/bash
+
+set -e
+set -o pipefail
+version=$(git describe --long |sed 's/-g[A-Fa-f0-9]*$//')
+version="$version.${GO_PIPELINE_COUNTER:-0}.${GO_STAGE_COUNTER:-0}"
+</code></pre>
+
+<p>Bash's <code>${VARIABLE:-default}</code> syntax is a good way to make the script work
+outside a GoCD agent environment.</p>
+
+<p>This script requires a tag to be set in the git repository. If there is none,
+it fails with this message from <code>git describe</code>:</p>
+
+<pre><code>fatal: No names found, cannot describe anything.
+</code></pre>
+
+<h3>Other Bits and Pieces Around the Build</h3>
+
+<p>Now that we have a version string, we need to instruct the build system to use
+this version string. This works by writing a new entry in <code>debian/changelog</code>
+with the desired version number. The <code>debchange</code> tool automates this for us.
+A few options are necessary to make it work reliably:</p>
+
+<pre><code>export DEBFULLNAME='Go Debian Build Agent'
+export DEBEMAIL='go-noreply@example.com'
+debchange --newversion=$version  --force-distribution -b  \
+    --distribution="${DISTRIBUTION:-jessie}" 'New Version'
+</code></pre>
+
+<p>When we want to reference this version number in later stages in the pipeline
+(yes, there will be more), it's handy to have it available in a file. It is
+also handy to have it in the output, so two more lines to the script:</p>
+
+<pre><code>echo $version
+echo $version &gt; ../version
+</code></pre>
+
+<p>And of course, trigger the actual build:</p>
+
+<pre><code>debuild -b -us -uc
+</code></pre>
+
+<h3>Plugging It Into GoCD</h3>
+
+<p>To make the script accessible to GoCD, and also have it under version control,
+I put it into a git repository under the name <code>debian-autobuild</code> and added the 
+repo as a material to the pipeline:</p>
+
+<pre><code>&lt;pipeline name="package-info"&gt;
+  &lt;materials&gt;
+    &lt;git url="https://github.com/moritz/package-info.git" dest="package-info" /&gt;
+    &lt;git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" /&gt;
+  &lt;/materials&gt;
+  &lt;stage name="build" cleanWorkingDir="true"&gt;
+    &lt;jobs&gt;
+      &lt;job name="build-deb" timeout="5"&gt;
+        &lt;tasks&gt;
+          &lt;exec command="../deployment-utils/debian-autobuild" workingdir="#{package}" /&gt;
+        &lt;/tasks&gt;
+        &lt;artifacts&gt;
+          &lt;artifact src="version" /&gt;
+          &lt;artifact src="package-info*_*" dest="package-info/" /&gt;
+        &lt;/artifacts&gt;
+      &lt;/job&gt;
+    &lt;/jobs&gt;
+  &lt;/stage&gt;
+&lt;/pipeline&gt;
+</code></pre>
+
+<p>Now GoCD automatically builds Debian packages on each commit to the git
+repository, and gives each a distinct version string.</p>
+
+<p>The next step is to add it to a repository, so that it can be installed on a
+target machine with a simple <code>apt-get</code> command.</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
