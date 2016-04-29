@@ -23,7 +23,9 @@ the resulting XML configuration, which you can also enter directly ("Admin" →
 
 <p>So without further ado, here's the first draft:</p>
 
-<p><pipelines group="deployment">
+<pre>
+[% syntax xml %]
+  <pipelines group="deployment">
     <pipeline name="package-info">
       <materials>
         <git url="https://github.com/moritz/package-info.git" dest="package-info" />
@@ -44,7 +46,9 @@ the resulting XML configuration, which you can also enter directly ("Admin" →
         </jobs>
       </stage>
     </pipeline>
-  </pipelines></p>
+  </pipelines>
+[% endsyntax %]
+</pre>
 
 <p>The outer-most group is a pipeline group, which has a name. It can be used to
 make it easier to get an overview of available pipelines, and also to manage
