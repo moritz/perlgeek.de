@@ -1,0 +1,212 @@
+Automating Deployments: Installation in the Pipeline
+<!-- 2016-05-02 -->
+
+<p>As [mentioned before](perlgeek.de/blog-en/automating-deployments/2016-007-installing-packages.html), my tool of choice for automating package
+installation is [ansible](https://deploybook.com/resources).</p>
+
+<p>The first step is to create an inventory file for ansible. In a real
+deployment setting, this would contain the hostnames to deploy to. For the
+sake of this project I just have a test setup consisting of virtual machines
+managed by vagrant, which leads to a somewhat unusual ansible configuration.</p>
+
+<p>That's the <code>ansible.cfg</code>:</p>
+
+<pre><code>[defaults]
+remote_user = vagrant
+host_key_checking = False
+</code></pre>
+
+<p>And the inventory file called <code>testing</code> for the testing environment:</p>
+
+<pre><code>[web]
+testserver ansible_ssh_host=127.0.0.1 ansible_ssh_port=2345 
+</code></pre>
+
+<p>(The host is localhost here, because I run a vagrant setup to test the
+pipeline; In a real setting, it would just be the hostname of your test
+machine).</p>
+
+<p>All code and configuration goes to version control, I created an <code>ansible</code>
+directory in the <a href="https://github.com/moritz/deployment-utils">deployment-utils
+repo</a> and dumped the files there.</p>
+
+<p>Finally I copied the ssh private key (from <code>vagrant ssh-config</code>) to
+<code>/var/go/.ssh/id_rsa</code>, adjusted the owner to user <code>go</code>, and was ready to go.</p>
+
+<h2>Plugging it into GoCD</h2>
+
+<p>Automatically installing a newly built package through GoCD in the testing
+environment is just another stage away:</p>
+
+<pre><code>  &lt;stage name="deploy-testing"&gt;
+    &lt;jobs&gt;
+      &lt;job name="deploy-testing"&gt;
+        &lt;tasks&gt;
+          &lt;exec command="ansible" workingdir="deployment-utils/ansible/"&gt;
+            &lt;arg&gt;--sudo&lt;/arg&gt;
+            &lt;arg&gt;--inventory-file=testing&lt;/arg&gt;
+            &lt;arg&gt;web&lt;/arg&gt;
+            &lt;arg&gt;-m&lt;/arg&gt;
+            &lt;arg&gt;apt&lt;/arg&gt;
+            &lt;arg&gt;-a&lt;/arg&gt;
+            &lt;arg&gt;name=package-info state=latest update_cache=yes&lt;/arg&gt;
+            &lt;runif status="passed" /&gt;
+          &lt;/exec&gt;
+        &lt;/tasks&gt;
+      &lt;/job&gt;
+    &lt;/jobs&gt;
+  &lt;/stage&gt;
+</code></pre>
+
+<p>The central part is an invocation of <code>ansible</code> in the newly created directory
+of the <code>deployment--utils</code> repository.</p>
+
+<h2>Results</h2>
+
+<p>To run the new stage, either trigger a complete run of the pipeline by hitting
+the "play" triangle in the pipeline overview in web frontend, or do a manual
+trigger of that one stage in the pipe history view.</p>
+
+<p>You can log in on the target machine to check if the package was successfully
+installed:</p>
+
+<pre><code>vagrant@debian-jessie:~$ dpkg -l package-info
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name           Version      Architecture Description
++++-==============-============-============-=================================
+ii  package-info   0.1-0.7.1    all          Web service for getting a list of
+</code></pre>
+
+<p>and verify that the service is running:</p>
+
+<pre><code>vagrant@debian-jessie:~$ systemctl status package-info
+● package-info.service - Package installation information via http
+   Loaded: loaded (/lib/systemd/system/package-info.service; static)
+   Active: active (running) since Sun 2016-03-27 13:15:41 GMT; 4h 6min ago
+  Process: 4439 ExecStop=/usr/bin/hypnotoad -s /usr/lib/package-info/package-info (code=exited, status=0/SUCCESS)
+ Main PID: 4442 (/usr/lib/packag)
+   CGroup: /system.slice/package-info.service
+           ├─4442 /usr/lib/package-info/package-info
+           ├─4445 /usr/lib/package-info/package-info
+           ├─4446 /usr/lib/package-info/package-info
+           ├─4447 /usr/lib/package-info/package-info
+           └─4448 /usr/lib/package-info/package-info
+</code></pre>
+
+<p>and check that it responds on port 8080, as it's supposed to:</p>
+
+<pre><code>    vagrant@debian-jessie:~$ curl http://127.0.0.1:8080/|head -n 7
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+      0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0Desired=Unknown/Install/Remove/Purge/Hold
+    | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+    |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+    ||/ Name                           Version                     Architecture Description
+    +++-==============================-===========================-============-===============================================================================
+    ii  acl                            2.2.52-2                    amd64        Access control list utilities
+    ii  acpi                           1.7-1                       amd64        displays information on ACPI devices
+    curl: (23) Failed writing body (2877 != 16384)
+</code></pre>
+
+<p>The last line is simply curl complaining that it can't write the full output,
+due to the pipe to <code>head</code> exiting too early to receive all the contents. We can safely ignore that.</p>
+
+<h2>Going All the Way to Production</h2>
+
+<p>Uploading and deploying to production works the same as with the testing
+environment. So all that's needed is to duplicate the configuration of the
+last two pipelines, replace every occurrence of <code>testing</code> with <code>pproduction</code>,
+and add a manual approval button, so that production deployment remains a
+conscious decision:</p>
+
+<pre><code>  &lt;stage name="upload-production"&gt;
+    &lt;approval type="manual" /&gt;
+    &lt;jobs&gt;
+      &lt;job name="upload-production"&gt;
+        &lt;tasks&gt;
+          &lt;fetchartifact pipeline="" stage="build" job="build-deb" srcdir="package-info"&gt;
+            &lt;runif status="passed" /&gt;
+          &lt;/fetchartifact&gt;
+          &lt;exec command="/bin/bash"&gt;
+            &lt;arg&gt;-c&lt;/arg&gt;
+            &lt;arg&gt;deployment-utils/add-package production jessie package-info_*.deb&lt;/arg&gt;
+          &lt;/exec&gt;
+        &lt;/tasks&gt;
+        &lt;resources&gt;
+          &lt;resource&gt;aptly&lt;/resource&gt;
+        &lt;/resources&gt;
+      &lt;/job&gt;
+    &lt;/jobs&gt;
+  &lt;/stage&gt;
+  &lt;stage name="deploy-production"&gt;
+    &lt;jobs&gt;
+      &lt;job name="deploy-production"&gt;
+        &lt;tasks&gt;
+          &lt;exec command="ansible" workingdir="deployment-utils/ansible/"&gt;
+            &lt;arg&gt;--sudo&lt;/arg&gt;
+            &lt;arg&gt;--inventory-file=production&lt;/arg&gt;
+            &lt;arg&gt;web&lt;/arg&gt;
+            &lt;arg&gt;-m&lt;/arg&gt;
+            &lt;arg&gt;apt&lt;/arg&gt;
+            &lt;arg&gt;-a&lt;/arg&gt;
+            &lt;arg&gt;name=package-info state=latest update_cache=yes&lt;/arg&gt;
+            &lt;runif status="passed" /&gt;
+          &lt;/exec&gt;
+        &lt;/tasks&gt;
+      &lt;/job&gt;
+    &lt;/jobs&gt;
+  &lt;/stage&gt;
+</code></pre>
+
+<p>The only real news here is the second line:</p>
+
+<pre><code>    &lt;approval type="manual" /&gt;
+</code></pre>
+
+<p>which makes GoCD only proceed to this stage when somebody clicks the approval
+arrow in the web interface.</p>
+
+<p>You also need to fill out the inventory file called <code>production</code> with the list
+of your server or servers.</p>
+
+<h2>Achievement Unlocked: Basic Continuous Delivery</h2>
+
+<p>Let's recap, the pipeline</p>
+
+<ul>
+<li>is triggered automatically from commits in the source code</li>
+<li>automatically builds a Debian package from each commit</li>
+<li>uploads it to a repository for the testing environment</li>
+<li>automatically installs it in the testing environment</li>
+<li>upon manual approval, uploads it to a repository for the production environment</li>
+<li>... and automatically installs the new version in production.</li>
+</ul>
+
+<p>So the basic framework for Continuous Delivery is in place.</p>
+
+<p>Wow, that escalated quickly.</p>
+
+<h2>Missing Pieces</h2>
+
+<p>Of course, there's lots to be done before we can call this a fully-fledged
+Continuous Delivery pipeline:</p>
+
+<ul>
+<li>Automatic testing</li>
+<li>Generalization to other software</li>
+<li>version pinning (always installing the correct version, not the newest one).</li>
+<li>Rollbacks</li>
+<li>Data migration</li>
+</ul>
+
+<p>But even as is, the pipeline can provide quite some time savings and shortened
+feedback cycles. The manual approval before production deployment is a good
+hook for manual tasks, such as manual tests.</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
