@@ -1,144 +1,180 @@
-Automating Deployments: 
+Automating Deployments: Stage 2: Uploading
 <!-- 2016-04-30 -->
 
-<p>In a <a href="https://perlgeek.de/blog-en/automating-deployments/2016-015-building-in-the-pipeline.html">previous
-installment</a>
-we saw a GoCD configuration that automatically built a Debian package from a
-git repository whenever somebody pushes a new commit to the git repo.</p>
+<p>Once you have the <a href="https://perlgeek.de/blog-en/automating-deployments/2016-015-building-in-the-pipeline.html">pipeline for building a package</a>, it's time to
+distribute the freshly built package to the machines where it's going to be
+installed on.</p>
 
-<p>The version of the generated Debian package comes from the <code>debian/changelog</code>
-file of the git repository. Which means that whenever somebody pushes code or
-doc changes without a new changelog entry, the resulting Debian package has
-the same version number as the previous one.</p>
+<p>I've previously explained the nuts and bolts of getting a Debian package into
+<a href="http://perlgeek.de/blog-en/automating-deployments/2016-006-distributing-packages.html">a repository managed by
+aptly</a>
+so it's time to automate that.</p>
 
-<p>The problem with this version recycling is that most Debian tooling assumes
-that the tuple of package name, version and architecture uniquely identifies a
-revision of a package. So stuffing a new version of a package with an old
-version number into a repository is bound to cause trouble; most repository
-management software simply refuses to accept that. On the target machine,
-upgrade the package won't do anything if the version number stays the same.</p>
+<h2>Some Assumptions</h2>
 
-<p>So, its a good idea to put a bit more thought into the version string of the
-automatically built Debian package.</p>
+<p>We are going to need a separate repository for each
+<a href="http://perlgeek.de/blog-en/automating-deployments/2016-008-environments.html">environment</a>
+we want to deploy to (or maybe group of environments; it might be OK and even
+desirable to share a repository between various testing environments that can
+be used in parallel, for example for security, performance and functional
+testing).</p>
 
-<h3>Constructing Unique Version Numbers</h3>
+<p>At some point in the future, when a new version of the operating system is
+released, we'll also need to build packages for another major version, so for
+example for Debian <code>stretch</code> instead of <code>jessie</code>. So it's best to plan for
+that case. Based on these assumptions, the path to each repository will be
+<code>$HOME/aptly/$environment/$distribution</code>.</p>
 
-<p>There are several source that you can tap to generate unique version numbers:</p>
+<p>For the sake of simplicity, I'm going to assume a single host on which both
+testing and production repositories will be hosted on from separate
+directories. If you need those repos on separate servers, it's easy to reverse
+that decision (or make a different one in the first place).</p>
 
-<ul>
-<li>Randomness (for example in the form of UUIDs)</li>
-<li>The current date and time</li>
-<li>The git repository itself</li>
-<li>GoCD exposes <a href="https://docs.go.cd/current/faq/dev_use_current_revision_in_build.html">several environment
-variables</a>
-that can be of use</li>
-</ul>
+<p>To easy the transportation and management of the repository, a GoCD agent
+should be running on the repo server. It can copy the packages from the GoCD
+server's artifact repository with built-in commands.</p>
 
-<p>The latter is quite promising: <code>GO_PIPELINE_COUNTER</code> is a monotonic counter
-that increases each time GoCD runs the pipeline, so a good source for a
-version number. GoCD allows manual re-running of stages, so it's best to
-combine it with <code>GO_STAGE_COUNTER</code>. In terms of shell scripting, using
-<code>$GO_PIPELINE_COUNTER.$GO_STAGE_COUNTER</code> as a version string sounds like a
-decent approach.</p>
+<h2>Scripting the Repository Management</h2>
 
-<p>But, there's more. GoCD allows you to trigger a pipeline with a specific
-version of a material, so you can have a new pipeline run to build an old
-version of the software. If you do that, using <code>GO_PIPELINE_COUNTER</code> as the
-first part of the version string doesn't reflect the use of an old code base.</p>
+<p>It would be possible to manually initialize each repository, and only automate
+the process of adding a package. But since it's not hard to do, taking the
+opposite route of creating automatically on the fly is more reliable. The next
+time you need a new environment or need to support a new distribution you will
+benefit from this decision.</p>
 
-<p>To construct a version string that primarily reflects the version of the git
-repository, and only secondarily the build iteration, the first part of the
-version string has to come from git. As a distributed version control system,
-git doesn't supply a single, numeric version counter. But if you limit
-yourself to a single repository and branch, you can simply count commits.</p>
+<p>So here is a small Perl program that, given an environment, distribution and a
+package file name, creates the aptly repo if it doesn't exist yet, writes the
+config file for the repo, and adds the package.</p>
 
-<p><code>git describe</code> is an established way to count commits. By default it prints
-the last tag in the repo, and if <code>HEAD</code> does not resolve to the same commit as
-the tag, it adds the number of commits since that tag, and the abbreviated
-sha1 hash prefixed by <code>g</code>, so for example <code>2016.04-32-g4232204</code> for the commit
-<code>4232204</code>, which is 32 commits after the tag <code>2016.04</code>. The option <code>--long</code>
-forces it to always print the number of commits and the hash, even when HEAD
-points to a tag.</p>
+<pre><code>#!/usr/bin/perl
+use strict;
+use warnings;
+use 5.014;
+use JSON qw(encode_json);
+use File::Path qw(mkpath);
+use autodie;
 
-<p>We don't need the commit hash for the version number, so a shell script to
-construct a good version number looks like this:</p>
+unless ( @ARGV == 3) {
+    die "Usage: $0 &lt;environment&gt; &lt;distribution&gt; &lt;.deb file&gt;\n";
+}
+my ( $env, $distribution, $package ) = @ARGV;
 
-<pre><code>#!/bin/bash
+my $base_path   = "$ENV{HOME}/aptly";
+my $repo_path   = "$base_path/$env/$distribution";
+my $config_file = "$base_path/$env-$distribution.conf";
+my @aptly_cmd   = ("aptly", "-config=$config_file");
 
-set -e
-set -o pipefail
-version=$(git describe --long |sed 's/-g[A-Fa-f0-9]*$//')
-version="$version.${GO_PIPELINE_COUNTER:-0}.${GO_STAGE_COUNTER:-0}"
+init_config();
+init_repo();
+add_package();
+
+
+sub init_config {
+    mkpath $base_path;
+    open my $CONF, '&gt;:encoding(UTF-8)', $config_file;
+    say $CONF encode_json( {
+    rootDir =&gt; $repo_path,
+    architectures =&gt; [qw( i386 amd64 all )],
+    });
+    close $CONF;
+}
+
+sub init_repo {
+    return if -d "$repo_path/db";
+    mkpath $repo_path;
+    system @aptly_cmd, "repo", "create", "-distribution=$distribution", "myrepo";
+    system @aptly_cmd, "publish", "repo", "myrepo";
+}
+
+sub add_package {
+    system @aptly_cmd,  "repo", "add", "myrepo", $package;
+    system @aptly_cmd,  "publish", "update", $distribution;
+}
 </code></pre>
 
-<p>Bash's <code>${VARIABLE:-default}</code> syntax is a good way to make the script work
-outside a GoCD agent environment.</p>
+<p>As always, I've developed and tested this script interactively, and only
+started to plug it into the automated pipeline once I was confident that it
+did what I wanted.</p>
 
-<p>This script requires a tag to be set in the git repository. If there is none,
-it fails with this message from <code>git describe</code>:</p>
+<p>And as all software, it's meant to be under version control, so <a href="https://github.com/moritz/deployment-utils/blob/master/add-package">it's now part
+of the deployment-utils git
+repo</a>.</p>
 
-<pre><code>fatal: No names found, cannot describe anything.
-</code></pre>
+<h2>More Preparations: GPG Key</h2>
 
-<h3>Other Bits and Pieces Around the Build</h3>
+<p>Before GoCD can upload the debian packages into a repository, the go agent
+needs to have a GPG key that's not protected by a password. You can either log
+into the <code>go</code> system user account and create it there with <code>gpg --gen-key</code>, or
+copy an existing <code>.gnupg</code> directory over to <code>~go</code> (don't forget to adjust the
+ownership of the directory and the files in there).</p>
 
-<p>Now that we have a version string, we need to instruct the build system to use
-this version string. This works by writing a new entry in <code>debian/changelog</code>
-with the desired version number. The <code>debchange</code> tool automates this for us.
-A few options are necessary to make it work reliably:</p>
+<h2>Integrating the Upload into the Pipeline</h2>
 
-<pre><code>export DEBFULLNAME='Go Debian Build Agent'
-export DEBEMAIL='go-noreply@example.com'
-debchange --newversion=$version  --force-distribution -b  \
-    --distribution="${DISTRIBUTION:-jessie}" 'New Version'
-</code></pre>
+<p>The first stage of the pipeline builds the Debian package, and
+records the resulting file as an artifact. The upload step needs to retrieve
+this artifact with a <code>fetchartifact</code> task. This is the config for the second
+stage, to be inserted directly after the first one:</p>
 
-<p>When we want to reference this version number in later stages in the pipeline
-(yes, there will be more), it's handy to have it available in a file. It is
-also handy to have it in the output, so two more lines to the script:</p>
-
-<pre><code>echo $version
-echo $version &gt; ../version
-</code></pre>
-
-<p>And of course, trigger the actual build:</p>
-
-<pre><code>debuild -b -us -uc
-</code></pre>
-
-<h3>Plugging It Into GoCD</h3>
-
-<p>To make the script accessible to GoCD, and also have it under version control,
-I put it into a git repository under the name <code>debian-autobuild</code> and added the 
-repo as a material to the pipeline:</p>
-
-<pre><code>&lt;pipeline name="package-info"&gt;
-  &lt;materials&gt;
-    &lt;git url="https://github.com/moritz/package-info.git" dest="package-info" /&gt;
-    &lt;git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" /&gt;
-  &lt;/materials&gt;
-  &lt;stage name="build" cleanWorkingDir="true"&gt;
+<pre><code>  &lt;stage name="upload-testing"&gt;
     &lt;jobs&gt;
-      &lt;job name="build-deb" timeout="5"&gt;
+      &lt;job name="upload-testing"&gt;
         &lt;tasks&gt;
-          &lt;exec command="../deployment-utils/debian-autobuild" workingdir="#{package}" /&gt;
+          &lt;fetchartifact pipeline="" stage="build" job="build-deb" srcdir="package-info"&gt;
+            &lt;runif status="passed" /&gt;
+          &lt;/fetchartifact&gt;
+          &lt;exec command="/bin/bash"&gt;
+            &lt;arg&gt;-c&lt;/arg&gt;
+            &lt;arg&gt;deployment-utils/add-package testing jessie package-info_*.deb&lt;/arg&gt;
+          &lt;/exec&gt;
         &lt;/tasks&gt;
-        &lt;artifacts&gt;
-          &lt;artifact src="version" /&gt;
-          &lt;artifact src="package-info*_*" dest="package-info/" /&gt;
-        &lt;/artifacts&gt;
+        &lt;resources&gt;
+          &lt;resource&gt;aptly&lt;/resource&gt;
+        &lt;/resources&gt;
       &lt;/job&gt;
     &lt;/jobs&gt;
   &lt;/stage&gt;
-&lt;/pipeline&gt;
 </code></pre>
 
-<p>Now GoCD automatically builds Debian packages on each commit to the git
-repository, and gives each a distinct version string.</p>
+<p>Note that <code>testing</code> here refers to the name of the environment (which you can
+chose freely, as long as you are consistent), not the testing distribution of
+the Debian project.</p>
 
-<p>The next step is to add it to a repository, so that it can be installed on a
-target machine with a simple <code>apt-get</code> command.</p>
+<p>There is a <code>aptly</code> resource, which you must assign to the agent running on the
+repo server. If you want separate servers for testing and production
+repositories, you'd come up with a more specific resource name here (for
+example `aptly-testing^) and a separate one for the production repository.</p>
 
+<h2>Make the Repository Available through HTTP</h2>
+
+<p>To make the repository reachable from other servers, it needs to be exposed to
+the network. The most convenient way is over HTTP. Since only static files
+need to be served (and a directory index), pretty much any web server will do.</p>
+
+<p>An example config for <a href="http://www.lighttpd.net/">lighttpd</a>:</p>
+
+<pre><code>dir-listing.encoding = "utf-8"
+server.dir-listing   = "enable"
+alias.url = ( 
+    "/debian/testing/jessie/"    =&gt; "/var/go/aptly/testing/jessie/public/",
+    "/debian/production/jessie/" =&gt; "/var/go/aptly/production/jessie/public/",
+    # more repos here
+)
+</code></pre>
+
+<p>And for the <a href="https://httpd.apache.org/">Apache HTTP server</a>, once you've
+configured a virtual host:</p>
+
+<pre><code>Options +Indexes
+Alias /debian/testing/jessie/     /var/go/aptly/testing/jessie/public/
+Alias /debian/production/jessie/  /var/go/aptly/production/jessie/public/
+# more repos here
+</code></pre>
+
+<h2>Achievement Unlocked: Automatic Build and Distribution</h2>
+
+<p>With theses steps done, there is automatic building and upload of
+packages in place. Since client machines can pull from that repository at
+will, we can tick off the distribution of packages to the client machines.</p>
 
 [% include ad-mailing %]
 
