@@ -1,0 +1,242 @@
+Automating Deployments: Pipeline Templates in GoCD
+<!-- 2016-05-07 -->
+
+<p>In the last few blog post, you've seen the development of a GoCD pipeline for building a package, uploading it into repository for a testing environment, installing it in that environment, and then repeating the upload and installation cycle for a production environment.</p>
+
+<p>To recap, this the XML config for GoCD so far:</p>
+
+<pre>[% syntax xml %]
+<pipeline name="package-info">
+  <materials>
+    <git url="https://github.com/moritz/package-info.git" dest="package-info" materialName="package-info" />
+    <git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" />
+  </materials>
+  <stage name="build" cleanWorkingDir="true">
+    <jobs>
+      <job name="build-deb" timeout="5">
+        <tasks>
+          <exec command="../deployment-utils/debian-autobuild" workingdir="#{package}" />
+        </tasks>
+        <artifacts>
+          <artifact src="version" />
+          <artifact src="package-info*_*" dest="package-info/" />
+        </artifacts>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="upload-testing">
+    <jobs>
+      <job name="upload-testing">
+        <tasks>
+          <fetchartifact pipeline="" stage="build" job="build-deb" srcdir="package-info">
+            <runif status="passed" />
+          </fetchartifact>
+          <exec command="/bin/bash">
+            <arg>-c</arg>
+            <arg>deployment-utils/add-package testing jessie package-info_*.deb</arg>
+          </exec>
+        </tasks>
+        <resources>
+          <resource>aptly</resource>
+        </resources>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="deploy-testing">
+    <jobs>
+      <job name="deploy-testing">
+        <tasks>
+          <exec command="ansible" workingdir="deployment-utils/ansible/">
+            <arg>--sudo</arg>
+            <arg>--inventory-file=testing</arg>
+            <arg>web</arg>
+            <arg>-m</arg>
+            <arg>apt</arg>
+            <arg>-a</arg>
+            <arg>name=package-info state=latest update_cache=yes</arg>
+            <runif status="passed" />
+          </exec>
+        </tasks>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="upload-production">
+    <approval type="manual" />
+    <jobs>
+      <job name="upload-production">
+        <tasks>
+          <fetchartifact pipeline="" stage="build" job="build-deb" srcdir="package-info">
+            <runif status="passed" />
+          </fetchartifact>
+          <exec command="/bin/bash">
+            <arg>-c</arg>
+            <arg>deployment-utils/add-package production jessie package-info_*.deb</arg>
+          </exec>
+        </tasks>
+        <resources>
+          <resource>aptly</resource>
+        </resources>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="deploy-production">
+    <jobs>
+      <job name="deploy-production">
+        <tasks>
+          <exec command="ansible" workingdir="deployment-utils/ansible/">
+            <arg>--sudo</arg>
+            <arg>--inventory-file=production</arg>
+            <arg>web</arg>
+            <arg>-m</arg>
+            <arg>apt</arg>
+            <arg>-a</arg>
+            <arg>name=package-info state=latest update_cache=yes</arg>
+            <runif status="passed" />
+          </exec>
+        </tasks>
+      </job>
+    </jobs>
+  </stage>
+</pipeline>
+[% endsyntax %]</pre>
+
+<p>The interesting thing here is that the pipeline isn't very specific to this project. Apart from the package name, the Debian distribution and the group of hosts to which to deploy, everything in here can be reused to any software that's Debian packaged.</p>
+
+<p>To make the pipeline more generic, we can define <em>paramaters</em>, short <em>params</em></p>
+
+<pre>[% syntax xml %]
+  <params>
+    <param name="distribution">jessie</param>
+    <param name="package">package-info</param>
+    <param name="target">web</param>
+  </params>
+[% endsyntax %]</pre>
+
+<p>And then replace all the occurrences of <code>package-info</code> inside the stages definition with <code>#{package}</code>and so on:</p>
+
+<pre>[% syntax xml %]
+  <stage name="build" cleanWorkingDir="true">
+    <jobs>
+      <job name="build-deb" timeout="5">
+        <tasks>
+          <exec command="../deployment-utils/debian-autobuild" workingdir="#{package}" />
+        </tasks>
+        <artifacts>
+          <artifact src="version" />
+          <artifact src="#{package}*_*" dest="#{package}/" />
+        </artifacts>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="upload-testing">
+    <jobs>
+      <job name="upload-testing">
+        <tasks>
+          <fetchartifact pipeline="" stage="build" job="build-deb" srcdir="#{package}">
+            <runif status="passed" />
+          </fetchartifact>
+          <exec command="/bin/bash">
+            <arg>-c</arg>
+            <arg>deployment-utils/add-package testing #{distribution} #{package}_*.deb</arg>
+          </exec>
+        </tasks>
+        <resources>
+          <resource>aptly</resource>
+        </resources>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="deploy-testing">
+    <jobs>
+      <job name="deploy-testing">
+        <tasks>
+          <exec command="ansible" workingdir="deployment-utils/ansible/">
+            <arg>--sudo</arg>
+            <arg>--inventory-file=testing</arg>
+            <arg>#{target}</arg>
+            <arg>-m</arg>
+            <arg>apt</arg>
+            <arg>-a</arg>
+            <arg>name=#{package} state=latest update_cache=yes</arg>
+            <runif status="passed" />
+          </exec>
+        </tasks>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="upload-production">
+    <approval type="manual" />
+    <jobs>
+      <job name="upload-production">
+        <tasks>
+          <fetchartifact pipeline="" stage="build" job="build-deb" srcdir="#{package}">
+            <runif status="passed" />
+          </fetchartifact>
+          <exec command="/bin/bash">
+            <arg>-c</arg>
+            <arg>deployment-utils/add-package production #{distribution} #{package}_*.deb</arg>
+          </exec>
+        </tasks>
+        <resources>
+          <resource>aptly</resource>
+        </resources>
+      </job>
+    </jobs>
+  </stage>
+  <stage name="deploy-production">
+    <jobs>
+      <job name="deploy-production">
+        <tasks>
+          <exec command="ansible" workingdir="deployment-utils/ansible/">
+            <arg>--sudo</arg>
+            <arg>--inventory-file=production</arg>
+            <arg>#{target}</arg>
+            <arg>-m</arg>
+            <arg>apt</arg>
+            <arg>-a</arg>
+            <arg>name=#{package} state=latest update_cache=yes</arg>
+            <runif status="passed" />
+          </exec>
+        </tasks>
+      </job>
+    </jobs>
+  </stage>
+[% endsyntax %]</pre>
+
+<p>The next step towards generalization is to move the stages to a <em>template</em>.
+This can either be done again by editing the XML config, or in the web frontend with <em>Admin</em> → <em>Pipelines</em> and then clicking the <em>Extract Template</em> link next to the pipeline called package-info.</p>
+
+<p>Either way, the result in the XML looks like this:</p>
+
+<pre>[% syntax xml %]
+<pipelines group="deployment">
+  <pipeline name="package-info" template="debian-base">
+    <params>
+      <param name="distribution">jessie</param>
+      <param name="package">package-info</param>
+      <param name="target">web</param>
+    </params>
+    <materials>
+      <git url="https://github.com/moritz/package-info.git" dest="package-info" materialName="package-info" />
+      <git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" />
+    </materials>
+  </pipeline>
+</pipelines>
+<templates>
+  <pipeline name="debian-base">
+      <!-- stages definitions go here -->
+  </pipeline>
+</templates>
+[% endsyntax %]</pre>
+
+<p>Everything that's specific to this one software is now in the pipeline definition, and the reusable parts are in the template.
+With the sole exception of the deployment-utils repo, which must be added for software that is being automatically deployed, since GoCD has no way to move a material to a template.</p>
+
+<p>Adding a deployment pipeline for another piece of software is now just a matter of specifying the URL, package name, target (that is, name of a group in the Ansible inventory file) and distribution.
+So about a minute of work once you're used to the tooling.</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
