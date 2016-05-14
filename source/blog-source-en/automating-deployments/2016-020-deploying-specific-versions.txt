@@ -1,0 +1,150 @@
+Automatically Deploying Specific Versions
+<!-- 2016-05-14 -->
+
+<p>Versions. <a href="https://perlgeek.de/blog-en/automating-deployments/2016-016-version-recycling.html">Always talking about versions</a>. So, more talk about versions.</p>
+
+<p>The <a href="https://perlgeek.de/blog-en/automating-deployments/2016-018-installation.html">installation pipeline from a previous installment</a>  always installs the newest version available. In a normal, simple, linear development flow, this is fine, and even in other workflows, it's a good first step.</p>
+
+<p>But we really want the pipeline to deploy the exact versions that was built
+inside the same instance of the pipeline. The obvious benefit is that it
+allows you to rerun older versions of the pipeline to install older versions,
+effectively giving you a rollback.</p>
+
+<p>Or you can build a second pipeline for hotfixes, based on the same git
+repository but a different branch, and when you do want a hotfix, you simply
+pause the regular pipeline, and trigger the hotfix pipeline. In this scenario,
+if you always installed the newest version, finding a proper version string
+for the hotfix is nearly impossible, because it needs to be higher than the
+currently installed one, but also lower than the next regular build. Oh, and
+all of that automatically please.</p>
+
+<p>A less obvious benefit to installing a very specific version is that it
+detects error in the package source configuration of the target machines. If
+the deployment script just installs the newest version that's available, and
+through an error the repository isn't configured on the target machine, the
+installation process becomes a silent no-op if the package is already
+installed in an older version.</p>
+
+<h2>Implementation</h2>
+
+<p>There are two things to do: figure out version to install of the package, and
+and then do it.</p>
+
+<p>The latter step is fairly easy, because <a href="http://docs.ansible.com/ansible/apt_module.html">the ansible "apt"
+module</a> that I use for
+installation supports, and even has an example in the documentation:</p>
+
+<pre><code># Install the version '1.00' of package "foo"
+- apt: name=foo=1.00 state=present
+</code></pre>
+
+<p>Experimenting with this feature shows that in case this is a downgrade, you
+also need to add <code>force=yes</code>.</p>
+
+<p>Knowing the version number to install also has a simple, though maybe not
+obvious solution: write the version number to a file, collect this file as an
+artifact in GoCD, and then when it's time to install, fetch the artifact, and
+read the version number from it.</p>
+
+<p>When I <a href="https://perlgeek.de/blog-en/automating-deployments/2016-016-version-recycling.html">last talked about the build
+step</a>,
+I silently introduced configuration that collects the <code>version</code> file that the
+<a href="https://github.com/moritz/deployment-utils/blob/master/debian-autobuild">debian-autobuild
+script</a>
+writes:</p>
+
+<pre><code>  &lt;job name="build-deb" timeout="5"&gt;
+    &lt;tasks&gt;
+      &lt;exec command="../deployment-utils/debian-autobuild" workingdir="#{package}" /&gt;
+    &lt;/tasks&gt;
+    &lt;artifacts&gt;
+      &lt;artifact src="version" /&gt;
+      &lt;artifact src="package-info*_*" dest="package-info/" /&gt;
+    &lt;/artifacts&gt;
+  &lt;/job&gt;
+</code></pre>
+
+<p>So only the actual installation step needs adjusting. This is what the
+configuration looked like:</p>
+
+<pre><code>  &lt;job name="deploy-testing"&gt;
+    &lt;tasks&gt;
+      &lt;exec command="ansible" workingdir="deployment-utils/ansible/"&gt;
+        &lt;arg&gt;--sudo&lt;/arg&gt;
+        &lt;arg&gt;--inventory-file=testing&lt;/arg&gt;
+        &lt;arg&gt;web&lt;/arg&gt;
+        &lt;arg&gt;-m&lt;/arg&gt;
+        &lt;arg&gt;apt&lt;/arg&gt;
+        &lt;arg&gt;-a&lt;/arg&gt;
+        &lt;arg&gt;name=package-info state=latest update_cache=yes&lt;/arg&gt;
+        &lt;runif status="passed" /&gt;
+      &lt;/exec&gt;
+    &lt;/tasks&gt;
+  &lt;/job&gt;
+</code></pre>
+
+<p>So, first fetch the <code>version</code> file:</p>
+
+<pre><code>      &lt;job name="deploy-testing"&gt;
+        &lt;tasks&gt;
+          &lt;fetchartifact pipeline="" stage="build" job="build-deb" srcfile="version" /&gt;
+          ...
+</code></pre>
+
+<p>Then, how to get the version from the file to ansible? One could either use
+ansible's <a href="http://docs.ansible.com/ansible/playbooks_lookups.html"><code>lookup('file',
+path)</code></a> function, or
+write a small script. I decided to the latter, since I was originally more
+aware of bash's capabilities than of ansible's, and it's only a one-liner
+anyway:</p>
+
+<pre><code>          ...
+          &lt;exec command="/bin/bash" workingdir="deployment-utils/ansible/"&gt;
+            &lt;arg&gt;-c&lt;/arg&gt;
+            &lt;arg&gt;ansible --sudo --inventory-file=testing #{target} -m apt -a "name=#{package}=$(&amp;lt; ../../version) state=present update_cache=yes force=yes"&lt;/arg&gt;
+          &lt;/exec&gt;
+        &lt;/tasks&gt;
+      &lt;/job&gt;
+</code></pre>
+
+<p>Bash's <code>$(...)</code> opens a sub-process (which again is a bash instance), and
+inserts the output from that sub-process into the command line. <code>&lt;
+../../version</code> is a short way of reading the file. And, this being XML, the
+less-than sign needs to be escaped.</p>
+
+<p>The production deployment configuration looks pretty much the same, just with
+<code>--inventory-file=production</code>.</p>
+
+<h2>Try it!</h2>
+
+<p>To test the version-specific package installation, you need to have at least
+two runs of the pipeline that captured the <code>version</code> artifact. If you don't
+have that yet, you can push commits to the source repository, and GoCD picks
+them up automatically.</p>
+
+<p>You can query the installed version on the target machine with
+<code>dpkg -l package-info</code>. After the last run, the version built in that pipeline
+instance should be installed.</p>
+
+<p>Then you can rerun the deployment stage from a previous pipeline, for example
+in the history view of the pipeline by hovering with the mouse over the stage,
+and then clicking on the circle with the arrow on it that triggers the rerun.</p>
+
+<p><img src="https://perlgeek.de/images/blog/ad/gocd-screenshot-rerun-stage.png" alt="" /></p>
+
+<p>After the stage rerun has completed, checking the  installed version again
+should yield the version built in the pipeline instance that you selected.</p>
+
+<h2>Conclusions</h2>
+
+<p>Once you know how to set up your pipeline to deploy exactly the version that
+was built in the same pipeline instance, it is fairly easy to implement.</p>
+
+<p>Once you've done that, you can easily deploy older versions of your software
+as a step back scenario, and use the same mechanism to automatically build and
+deploy hotfixes.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
