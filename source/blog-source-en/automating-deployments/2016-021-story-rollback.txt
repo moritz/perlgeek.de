@@ -1,0 +1,54 @@
+Story Time: Rollbacks Saved the Day
+<!-- 2016-06-02 -->
+
+<p>At <a href="https://www.noris.de/">work</a> we develop, among other things, an internally
+used web application based on AngularJS. Last Friday, we received a rather
+urgent bug report that in a co-worker's browser, a rather important page
+wouldn't load at all, and show three empty error notifications.</p>
+
+<p>Only one of our two frontend developers was present, and she didn't
+immediately know what was wrong or how to fix it. And what's worse, she
+couldn't reproduce the problem in her own browser.</p>
+
+<p>A quick look into our <a href="https://www.go.cd/">Go CD</a> instance showed that the
+previous production deployment of this web application was on the previous
+day, and we had no report of similar errors previous to that, so we decided to
+do a rollback to the previous version.</p>
+
+<p>I recently blogged about <a href="https://perlgeek.de/blog-en/automating-deployments/2016-020-deploying-specific-versions.html">deploying specific
+versions</a>,
+which allows you to do rollbacks easily. And in fact I had implemented that
+technique just two weeks before this incident. To make the rollback happen, I
+just had to click on the "rerun" button of the installation stage of the last
+good deployment, and wait for a short while (about a minute).</p>
+
+<p>Since I had a browser where I could reproduce the problem, I could verify that
+the rollback had indeed solved the problem, and our co-worker was able to
+continue his work. This took the stress off the frontend developers, who
+didn't have to hurry to fix the bug in a haste. Instead, they just had to fix
+it before the next production deployment. Which, in this case, meant it was
+possible to wait to the next working day, when the second developer was
+present again.</p>
+
+<p>For me, this episode was a good validation of the rollback mechanism in the
+deployment pipeline.</p>
+
+<h3>Postskriptum: The Bug</h3>
+
+<p>In case you wonder, the actual bug that triggered the incident was related to
+caching. The web application just introduced caching of data in the browser's
+local storage. In Firefox on Debian Jessie and some Mint versions, writing to
+the local storage raised an exception, which the web application failed to
+catch. Firefox on Ubuntu and Mac OS X didn't produce the same problem.</p>
+
+<p>Curiously, Firefox was configured to allow the usage of local storage for this
+domain, the default of allowing around 5MB was unchanged, and both existing
+local storage and the new-to-be-written on was in the low kilobyte range. A
+<a href="https://arty.name/localstorage.html">Website that experimentally determines the local storage
+size</a> confirmed it to be 5200 kb. So I
+suspect that there is a Firefox bug involved on these platforms as well.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
