@@ -1,0 +1,208 @@
+Automated Deployments: Unit Testing
+<!-- 2016-06-14 -->
+
+<p>Automated testing is absolutely essential for automated deployments. When you
+automate deployments, you automatically do them more often than before, which
+means that manual testing becomes more effort, more annoying, and is usually
+skipped sooner or later.</p>
+
+<p>So to maintain a high degree of confidence that a deployment won't break the
+application, automated tests are the way to go.</p>
+
+<p>And yet, I've written twenty blog posts about automating deployments, and this
+is the first about testing. Why did I drag my feet like this?</p>
+
+<p>For one, testing is hard to generalize. But more importantly, the <a href="https://perlgeek.de/blog-en/automating-deployments/2016-005-example-project.html">example
+project used so
+far</a>
+doesn't play well with my usual approach to testing.</p>
+
+<p>Of course one can still test it, but it's not an idiomatic approach that
+scales to real applications.</p>
+
+<p>The easy way out is to consider a second example project. This also provides a
+good excuse to test the GoCD configuration template, and explore another way
+to build Debian packages.</p>
+
+<h2>Meet python-matheval</h2>
+
+<p><a href="https://github.com/moritz/python-matheval">python-matheval</a> is a stupid
+little web service that accepts a tree of mathematical expressions encoded in
+JSON format, evaluates it, and returns the result in the response. And as the
+name implies, it's written in python. Python3, to be precise.</p>
+
+<p>The actual evaluation logic is quite compact:</p>
+
+<pre><code># file src/matheval/evaluator.py
+from functools import reduce
+import operator
+
+ops = {
+    '+': operator.add,
+    '-': operator.add,
+    '*': operator.mul,
+    '/': operator.truediv,
+}
+
+def math_eval(tree):
+    if not isinstance(tree, list):
+        return tree
+    op = ops[tree.pop(0)]
+    return reduce(op, map(math_eval, tree))
+</code></pre>
+
+<p>Exposing it to the web isn't much effort either, using the Flask library:</p>
+
+<pre><code># file src/matheval/frontend.py
+#!/usr/bin/python3
+
+from flask import Flask, request
+
+from matheval.evaluator import math_eval
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    tree = request.get_json(force=True)
+    result = math_eval(tree);
+    return str(result) + "\n"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+
+<p>The rest of the code is part of the build system. As a python package, it
+should have a <code>setup.py</code> in the root directory</p>
+
+<pre><code># file setup.py
+!/usr/bin/env python
+
+from setuptools import setup
+
+setup(name='matheval',
+      version='1.0',
+      description='Evaluation of expression trees',
+      author='Moritz Lenz',
+      author_email='moritz.lenz@gmail.com',
+      url='https://deploybook.com/',
+      package_dir={'': 'src'},
+      requires=['flask', 'gunicorn'],
+      packages=['matheval']
+     )
+</code></pre>
+
+<p>Once a working setup script is in place, the tool
+<a href="https://github.com/spotify/dh-virtualenv">dh-virtualenv</a> can be used to
+create a Debian package containing the project itself and all of the
+python-level dependencies.</p>
+
+<p>This creates rather large Debian packages (in this case, around 4 MB for less
+than a kilobyte of actual application code), but on
+the upside it allows several applications on the same machine that depend on
+different versions of the same python library. The simple usage of the
+resulting Debian packages makes it well worth in many use cases.</p>
+
+<p>Using <code>dh-virtualenv</code> is quite easy:</p>
+
+<pre><code># file debian/rules
+#!/usr/bin/make -f
+export DH_VIRTUALENV_INSTALL_ROOT=/usr/share/python-custom
+
+%:
+    dh $@ --with python-virtualenv --with systemd
+
+override_dh_virtualenv:
+    dh_virtualenv --python=/usr/bin/python3
+</code></pre>
+
+<p>See <a href="https://github.com/moritz/python-matheval">the github repository</a> for all
+the other boring details, like the systemd service files and the control file.</p>
+
+<p>The integration into the GoCD pipeline is easy, using <a href="https://perlgeek.de/blog-en/automating-deployments/2016-019-gocd-template.html">the previously
+developed configuration
+template</a>:</p>
+
+<pre><code>&lt;pipeline name="python-matheval" template="debian-base"&gt;
+  &lt;params&gt;
+    &lt;param name="distribution"&gt;jessie&lt;/param&gt;
+    &lt;param name="package"&gt;python-matheval&lt;/param&gt;
+    &lt;param name="target"&gt;web&lt;/param&gt;
+  &lt;/params&gt;
+  &lt;materials&gt;
+    &lt;git url="https://github.com/moritz/python-matheval.git" dest="python-matheval" materialName="python-matheval" /&gt;
+    &lt;git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" /&gt;
+  &lt;/materials&gt;
+&lt;/pipeline&gt;
+</code></pre>
+
+<h2>Getting Started with Testing, Finally</h2>
+
+<p>It is good practise and a good idea to cover business logic with unit tests.</p>
+
+<p>The way that evaluation logic is split into a separate function makes it easy
+to test said function in isolation.
+A typical way is to feed some example inputs into the function, and check that
+the return value is as expected.</p>
+
+<pre><code># file test/test-evaluator.py
+import unittest
+from matheval.evaluator import math_eval
+
+class EvaluatorTest(unittest.TestCase):
+    def _check(self, tree, expected):
+        self.assertEqual(math_eval(tree), expected)
+
+    def test_basic(self):
+        self._check(5, 5)
+        self._check(['+', 5], 5)
+        self._check(['+', 5, 7], 12)
+        self._check(['*', ['+', 5, 4], 2], 18)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p>One can execute the test suite (here just one test file so far) with the
+<code>nosetests</code> command from the <code>nose</code> python package:</p>
+
+<pre><code>$ nosetests
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+</code></pre>
+
+<p>The python way of exposing the test suite is to implement
+the <code>test</code> command in <code>setup.py</code>, which can be done with the line</p>
+
+<pre><code>test_suite='nose.collector',
+</code></pre>
+
+<p>in the <code>setup()</code> call in <code>setup.py</code>. And of course one needs to add <code>nose</code> to
+the list passed to the <code>requires</code> argument.</p>
+
+<p>With these measures in place, the debhelper and dh-virtualenv tooling takes
+care of executing the test suite as part of the Debian package build. If any
+of the tests fail, so does the build.</p>
+
+<p>Running the test suite in this way is advantageous, because it runs the tests
+with exactly the same versions of all involved python libraries as end up in
+Debian package, and thus make up the runtime environment of the application.
+It is possible to achieve this through other means, but other approaches
+usually take much more work.</p>
+
+<h2>Conclusions</h2>
+
+<p>You should have enough unit tests to make you confident that the core logic of
+your application works correctly. It is a very easy and pragmatic solution to
+run the unit tests as part of the package build, ensuring that only "good"
+versions of your software are ever packaged and installed.</p>
+
+<p>In future blog posts, other forms of testing will be explored.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
