@@ -2,12 +2,12 @@ Automating Deployments: Smoke Testing and Rolling Upgrades
 <!-- 2016-06-21 -->
 
 <p>In the last installment I talked about <a href="https://perlgeek.de/blog-en/automating-deployments/2016-022-unit-testing.html">unit testing that covers the logic
-of your application</a>. Unit testing is a good and efficient way to ensure the quality of the business logic, but they tend to test components in isolation.</p>
+of your application</a>. Unit testing is a good and efficient way to ensure the quality of the business logic, however unit tests tend to test components in isolation.</p>
 
 <p>You should also check that several components work together well, which can be
-done with integration tests or smoke tests. The distinction between those two
+done with integration tests or smoke tests. The distinction between these two
 is a bit murky at times, but typically integration tests are still done
-somewhat in isolation, whereas smoke tests are run against an installed copied
+somewhat in isolation, whereas smoke tests are run against an installed copy
 of the software in a complete environment, with all external services
 available.</p>
 
@@ -19,23 +19,23 @@ sign-on (SSO) or external data sources.</p>
 <h2>When to Smoke?</h2>
 
 <p>Smoke tests cover a lot of ground at once. A single test might require a
-working network, correctly configured firewall,  web server, application
-server, database and so on to work. This is an advantage, because it means
+working network, correctly configured firewall, web server, application
+server, database, and so on to work. This is an advantage, because it means
 that it can detect a big class of errors, but it is also a disadvantage,
 because it means the diagnostic capabilities are low. When it fails, you don't
 know which component is to blame, and have to investigate each failure anew.</p>
 
-<p>Smoke tests are also much more expensive than unit test; they tend to take
+<p>Smoke tests are also much more expensive than unit tests; they tend to take
 more time to write, take longer to execute, and are more fragile in the face
-of configuration or data change.</p>
+of configuration or data changes.</p>
 
-<p>So a typical advise is to have a low number of smoke tests, maybe one to 20,
+<p>So typical advice is to have a low number of smoke tests, maybe one to 20,
 or maybe around one percent of the unit tests you have.</p>
 
 <p>As an example, if you were to develop a flight search and recommendation
 engine for the web, your unit tests would cover different scenarios that the
 user might encounter, and that the engine produces the best possible
-suggestions. In smoke tests, you would just check that you can enter starting
+suggestions. In smoke tests, you would just check that you can enter the starting
 point, destination and date of travel, and that you get a list of flight
 suggestions at all. If there is a membership area on that website, you would
 test that you cannot access it without credentials, and that you can access it
@@ -52,13 +52,13 @@ care about your user's experience.</p>
 break often enough to warrant automated smoke tests. A practical solution is
 to offer some kind of self diagnosis, for example a web page where the
 application tests its own configuration for consistency, checks that all the
-necessary database tables exists, and that external services are reachable.</p>
+necessary database tables exist, and that external services are reachable.</p>
 
 <p>Then a single smoke test can call the status page, and throw an error whenever
 either the status page is not reachable, or reports an error. This is a white
 box smoke test.</p>
 
-<p>Status pages for white box smoking tests can be reused in monitoring checks,
+<p>Status pages for white box smoke tests can be reused in monitoring checks,
 but it is still a good idea to explicitly check it as part of the deployment
 process.</p>
 
@@ -85,8 +85,8 @@ complement it.</p>
 
 <h2>Integration the Smoke Testing Into the Pipeline</h2>
 
-<p>One could add a msoke test stage after each deployment stage (that is, one
-after the test deployment, one after the production deployment). </p>
+<p>One could add a smoke test stage after each deployment stage (that is, one
+after the test deployment, one after the production deployment).</p>
 
 <p>This setup
 would prevent a version of your application from reaching the production
@@ -96,7 +96,7 @@ status, adding it as a command in your deployment system should be trivial.</p>
 
 <p>If you have just one instance of your application running, this is the best
 you can do. But if you have a farm of servers, and several instances of the
-application running behind some kind of load balancer, it is possible to 
+application running behind some kind of load balancer, it is possible to
 smoke test each instance separately during an upgrade, and abort the upgrade
 if too many instances fail the smoke test.</p>
 
@@ -127,7 +127,7 @@ curl  --silent -H "Accept: application/json" --data '["+", 37, 5]' -XPOST  http:
 the ansible playbook, and doing that also limits reusability. Instead here
 they are in a separate file in the <a href="https://github.com/moritz/deployment-utils">deployments utils
 repository</a>. Another option would
-be to build a package from the smoke tests, and install them on the machine
+be to build a package from the smoke tests and install them on the machine
 that ansible runs on.</p>
 
 <p>While it would be easy to execute the smoke tests command on the machine on
@@ -151,7 +151,7 @@ testing deployment job in the template to:</p>
 
 <p>And the same for production, except that it uses the <code>production</code> inventory
 file. This change to the template also changes the parameters that need to be
-defined in the pipeline definition, for example for python-matheval it becomes</p>
+defined in the pipeline definition.  In the python-matheval example it becomes</p>
 
 <pre><code>  &lt;params&gt;
     &lt;param name="distribution"&gt;jessie&lt;/param&gt;
@@ -162,7 +162,7 @@ defined in the pipeline definition, for example for python-matheval it becomes</
 
 <p>Since there are two pipelines that share the same template, the second pipeline
 (for package <code>package-info</code>) also needs a deployment playbook. It is very
-similar to the one for <code>python-matheval</code>, just lacks the smoke test for now.</p>
+similar to the one for <code>python-matheval</code>, it just lacks the smoke test for now.</p>
 
 <h2>Conclusion</h2>
 
@@ -171,7 +171,7 @@ your applications.</p>
 
 <p>Rolling updates with integrated smoke tests for each system involved are
 pretty easy to do with ansible, and can be integrated into the GoCD pipeline
-with small effort. They mitigate the damage of deploying a bad version or a bad
+with little effort. They mitigate the damage of deploying a bad version or a bad
 configuration by limiting it to one system, or a small number of systems in a
 bigger cluster.</p>
 
