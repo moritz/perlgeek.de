@@ -1,0 +1,166 @@
+Automating Deployments and Configuration Management
+<!-- 2016-06-28 -->
+
+<p>New software versions often need new configuration as well. How do you make
+sure that the necessary configuration arrives on a target machine at the
+same time (or before) the software release that introduces them?</p>
+
+<p>The obvious approach is to put the configuration in version control too and
+deploy it alongside the software.</p>
+
+<p>Taking configuration from a source repository and applying it to running
+machines is what configuration management software does.</p>
+
+<p>Since Ansible has been used for deployment in the examples so far -- and
+it's a good configuration management system as well -- it is an obvious
+choice to use here.</p>
+
+<h2>Benefits of Configuration Management</h2>
+
+<p>When your infrastructure scales to many machines, and you don't want your time
+and effort to scale linearly with them, you need to automate things. Keeping
+configuration consistent across different machines is a requirement, and
+configuration management software helps you achieve that.</p>
+
+<p>Furthermore, once the configuration comes from a canonical source with version
+control, tracking and rolling back configuration changes becomes trivial. If
+there is an outage, you don't need to ask all potentially relevant colleagues
+whether they changed anything -- your version control system can easily tell
+you. And if you suspect that a recent change caused the outage, reverting it
+to see if the revert works is a matter of seconds or minutes.</p>
+
+<p>Once configuration and deployment are automated, building new environments, for
+example for penetration testing, becomes a much more manageable task.</p>
+
+<h2>Capabilities of a Configuration Management System</h2>
+
+<p>Typical tasks and capabilities of configuration management software include
+things like connecting to the remote host, copying files to the host (and
+often adjusting parameters and filling out templates in the process), ensuring
+that operating system packages are installed or absent, creating users and
+groups, controlling services, and even executing arbitrary commands on the
+remote host.</p>
+
+<p>With Ansible, the connection to the remote host is provided by the core, and
+the actual steps to be executed are provided by <em>modules</em>. For example the
+<code>apt_repository</code> module can be used to manage repository configuration (i.e.
+files in <code>/etc/apt/sources.list.d/</code>), the <code>apt</code> module installs, upgrades,
+downgrades or removes packages, and the <code>template</code> module typically generates
+configuration files from variables that the user defined, and from facts that
+Ansible itself gathered.</p>
+
+<p>There are also higher-level Ansible modules available, for example for
+managing Docker images, or load balancers from the Amazon cloud.</p>
+
+<p>A complete introduction to Ansible is out of scope here, but I can recommend
+the <a href="http://docs.ansible.com/ansible/index.html">online documentation</a>, as
+well as the excellent book <a href="http://amzn.to/1V1QBEN"><em>Ansible: Up and Running</em> by Lorin Hochstein</a>.</p>
+
+<p>To get a feeling for what you can do with Ansible, see the <a href="https://github.com/ansible/ansible-examples">ansible-examples
+git repository</a>.</p>
+
+<p>Assuming that you will find your way around configuration management with
+Ansible through other resources, I want to talk about how you can integrate it
+into the deployment pipeline instead.</p>
+
+<h2>Integrating Configuration Management with Continuous Delivery</h2>
+
+<p>The <a href="https://perlgeek.de/blog-en/automating-deployments/2016-023-smoke-testing-rolling-upgrades.html">previous approach of writing one deployment playbook for each
+application</a>
+can serve as a starting point for configuration management. You can simply
+add more tasks to the playbook, for example for creating the configuration
+files that the application needs. Then each deployment automatically ensures
+the correct configuration.</p>
+
+<p>Since most modules in Ansible are idempotent, that is, repeated execution
+doesn't change the state of the system after the first time, adding additional
+tasks to the deployment playbook only becomes problematic when performance
+suffers. If that happens, you could start to extract some slow steps out into
+a separate playbook that doesn't run on each deployment.</p>
+
+<p>If you provision and configure a new machine, you typically don't want
+to manually trigger the deploy step of each application, but rather have a
+single command that deploys and configures all of the relevant applications
+for that machine. So it makes sense to also have a playbook for deploying all
+relevant applications. This can be as simple as a list of <code>include</code> statements
+that pull in the individual application's playbooks.</p>
+
+<p>You can add another pipeline that applies this "global" configuration to the
+testing environment, and after manual approval, in the production environment
+as well.</p>
+
+<p><img src="https://perlgeek.de/images/blog/ad/config-management-in-pipeline.png" alt="" /></p>
+
+<h2>Stampedes and Synchronization</h2>
+
+<p>In the scenario outlined above, the configuration for all related applications
+lives in the same git repository, and is used a material in the build and
+deployment pipelines for all these applications.</p>
+
+<p>A new commit in the configuration repository then triggers a rebuild of all
+the applications. For a small number of applications, that's usually not a
+problem, but if you have a dozen or a few dozen applications, this starts to
+suck up resources unnecessarily, and also means no build workers are available
+for some time to build changes triggered by actual code changes.</p>
+
+<p>To avoid these build stampedes, a pragmatic approach is to use <a href="https://docs.go.cd/16.1.0/configuration/configuration_reference.html#filter">ignore
+filters</a>
+in the git materials. Ignore filters are typically used to avoid rebuilds
+when only documentation changes, but can also be used to prevent any changes
+in a repository to trigger a rebuild.</p>
+
+<p>If, in the <code>&lt;materials&gt;</code> section of your GoCD pipeline, you replace</p>
+
+<pre><code>&lt;git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils" /&gt;
+</code></pre>
+
+<p>With</p>
+
+<pre><code>&lt;git url="https://github.com/moritz/deployment-utils.git" dest="deployment-utils" materialName="deployment-utils"&gt;
+  &lt;filter&gt;
+    &lt;ignore pattern="**/*" /&gt;
+    &lt;ignore pattern="*" /&gt;
+  &lt;/filter&gt;
+&lt;/git&gt;
+</code></pre>
+
+<p>then a newly pushed commit to the <code>deployment-utils</code> repo won't trigger this
+pipeline. A new build, triggered either manually or from a new commit in the
+application's git repository, still picks up the newest version of the
+<code>deployment-utils</code> repository.</p>
+
+<p>In the pipeline that deploys all of the configuration, you wouldn't
+add such a filter.</p>
+
+<p>Now if you change some playbooks, the pipeline for the global configuration
+runs and rolls out these changes, and you promote the newest version to
+production. When you then deploy one of your applications to production, and
+the build happened before the changes to the playbook, it actually uses an
+older version of the playbook.</p>
+
+<p>This sounds like a very unfortunate constellation, but it turns out not to
+be so bad. The combination of playbook version and application version
+worked in testing, so it should work in production as well.</p>
+
+<p>To avoid using an older playbook, you can trigger a rebuild of the application,
+which automatically uses the newest playbook version.</p>
+
+<p>Finally, in practice it is a good idea to bring most changes to production
+pretty quickly anyway. If you don't do that, you lose overview of what
+changed, which leads to growing uncertainty about whether a production release
+is safe. If you follow this ideal of going quickly to production, the version
+mismatches between the configuration and application pipelines should never
+become big enough to worry about.</p>
+
+<h2>Conclusion</h2>
+
+<p>The deployment playbooks that you write for your applications can be extended
+to do full configuration management for these applications. You can create a
+"global" Ansible playbook that includes those deployment playbooks, and
+possibly other configuration, such as basic configuration of the system.</p>
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
