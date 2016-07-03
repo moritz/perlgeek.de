@@ -1,0 +1,533 @@
+Ansible: A Primer
+<!-- 2016-07-05 -->
+
+<p>Ansible is a very pragmatic and powerful configuration management system that
+is easy to get started with.</p>
+
+<h2>Connections and Inventory</h2>
+
+<p>Ansible is typically used to connect to one or more remote hosts
+via <code>ssh</code> and bring them into a desired state. The connection method is
+pluggable: other methods include <code>local</code>, which simply invokes the commands on
+the local host instead, and <code>docker</code>, which connects through the Docker daemon
+to configure a running container.</p>
+
+<p>To tell Ansible where and how to connect, you write an <em>inventory</em> file,
+called <code>hosts</code> by default. In the inventory file, you can define hosts and
+groups of hosts, and also set variables that control how to connect to them.</p>
+
+<pre><code># file myinventory
+# example inventory file
+[all:vars]
+# variables set here apply to all hosts
+ansible_user=root
+
+[web]
+# a group of webservers
+www01.example.com
+www02.example.com
+
+[app]
+# a group of 5 application servers,
+# all following the same naming scheme:
+app[01:05].example.com
+
+[frontend:children]
+# a group that combines the two previous groups
+app
+web
+
+[database]
+# here we override ansible_user for just one host
+db01.example.com ansible_user=postgres
+</code></pre>
+
+<p>(In versions prior to Ansible 2.0, you have to use <code>ansible_ssh_user</code> instead
+of <code>ansible_user</code>). See the <a href="http://docs.ansible.com/ansible/intro_inventory.html">introduction to inventory
+files</a> for more
+information.</p>
+
+<p>To test the connection, you can use the <code>ping</code> module on the command line:</p>
+
+<pre><code>$ ansible -i myinventory web -m ping
+www01.example.com | success &gt;&gt; {
+    "changed": false,
+    "ping": "pong"
+}
+
+www02.example.com | success &gt;&gt; {
+    "changed": false,
+    "ping": "pong"
+}
+</code></pre>
+
+<p>Let's break the command line down into its components: <code>-i myinventory</code>
+tells Ansible to use the <code>myinventory</code> file as inventory. <code>web</code> tells
+Ansible which hosts to work on.  It can be a group, as in this example, or a
+single host, or several such things separated by a colon. For example,
+<code>www01.example.com:database</code> would select one of the web servers and all of
+the database servers.  Finally, <code>-m ping</code> tells Ansible which module to
+execute. <code>ping</code> is probably the simplest module, it simply sends the
+response <code>"pong"</code> and that the remote host hasn't changed.</p>
+
+<p>These commands run in parallel on the different hosts, so the order in which
+these responses are printed can vary.</p>
+
+<p>If there is a problem with connecting to a host, add the option <code>-vvv</code> to get
+more output.</p>
+
+<p>Ansible implicitly gives you the group <code>all</code> which -- you guessed it --
+contains all the hosts configured in the inventory file.</p>
+
+<h2>Modules</h2>
+
+<p>Whenever you want to do something on a host through Ansible, you invoke a
+module to do that. Modules usually take arguments that specify what exactly
+should happen. On the command line, you can add those arguments with `ansible
+-m module -a 'arguments', for example</p>
+
+<pre><code>$ ansible -i myinventory database -m shell -a 'echo "hi there"'
+db01.exapmle.com | success | rc=0 &gt;&gt;
+hi there
+</code></pre>
+
+<p>Ansible comes with a wealth of built-in modules and an ecosystem of
+third-party modules as well. Here I want to present just a few, commonly-used
+modules.</p>
+
+<h3>The <code>shell</code> Module</h3>
+
+<p>The <a href="http://docs.ansible.com/ansible/shell_module.html"><code>shell</code> module</a>
+executes a shell command on the host and accepts some options such as <code>chdir</code>
+to change into another working directory first:</p>
+
+<pre><code>$ ansible -i myinventory database -m shell -e 'pwd chdir=/tmp'
+db01.exapmle.com | success | rc=0 &gt;&gt;
+/tmp
+</code></pre>
+
+<p>It is pretty generic, but also an option of last resort. If there is a more
+specific module for the task at hand, you should prefer the more specific
+module. For example you could ensure that system users exist using the <code>shell</code>
+module, but the more specialized <a href="http://docs.ansible.com/ansible/user_module.html">user
+module</a> is much easier to
+use for that, and likely does a better job than an improvised shell script.</p>
+
+<h3>The <code>copy</code> Module</h3>
+
+<p>With <a href="http://docs.ansible.com/ansible/copy_module.html"><code>copy</code></a> you can
+copy files verbatim from the local to the remote machine:</p>
+
+<pre><code>$ ansible -i myinventory database -m copy -a 'src=README.md dest=/etc/motd mode=644
+db01.example.com | success &gt;&gt; {
+    "changed": true,
+    "dest": "/etc/motd",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/root/.ansible/tmp/ansible-tmp-1467144445.16-156283272674661/source",
+    "state": "file",
+    "uid": 0
+}
+</code></pre>
+
+<h3>The <code>template</code> Module</h3>
+
+<p><a href="http://docs.ansible.com/ansible/template_module.html"><code>template</code></a> mostly
+works like <code>copy</code>, but it interprets the source file as a <a href="http://jinja.pocoo.org/docs/dev/">Jinja2
+template</a> before transferring it to the
+remote host.</p>
+
+<p>This is commonly used to create configuration files and to incorporate
+information from variables (more on that later).</p>
+
+<p>Templates cannot be used directly from the command line, but rather in
+playbooks, so here is an example of a simple playbook.</p>
+
+<pre><code># file motd.j2
+This machine is managed by {{team}}.
+
+
+# file template-example.yml
+---
+- hosts: all
+  vars:
+    team: Slackers
+  tasks:
+   - template: src=motd.j2 dest=/etc/motd mode=0644
+</code></pre>
+
+<p>More on playbooks later, but what you can see is that this defines a variable
+<code>team</code>, sets it to the value <code>Slacker</code>, and the template interpolates this
+variable.</p>
+
+<p>When you run the playbook with</p>
+
+<pre><code>$ ansible-playbook -i myinventory --limit database template-example.yml
+</code></pre>
+
+<p>It creates a file <code>/etc/motd</code> on the database server with the contents</p>
+
+<pre><code>This machine is manged by Slackers.
+</code></pre>
+
+<h3>The <code>file</code> Module</h3>
+
+<p>The <a href="http://docs.ansible.com/ansible/file_module.html"><code>file</code> module</a> manages
+attributes of file names, such as permissions, but also allows you create
+directories, soft and hard links.</p>
+
+<pre><code>$ ansible -i myinventory database -m file -a 'path=/etc/apt/sources.list.d state=directory mode=0755'
+db01.example.com | success &gt;&gt; {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/etc/apt/sources.list.d",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+</code></pre>
+
+<h3>The <code>apt</code> Module</h3>
+
+<p>On Debian and derived distributions, such as Ubuntu, installing and removing
+packages is generally done with package managers from the <code>apt</code> family, such
+as <code>apt-get</code>, <code>aptitude</code>, and in newer versions, the <code>apt</code> binary directly.</p>
+
+<p>The <a href="http://docs.ansible.com/ansible/apt_module.html">apt module</a> manages
+this from within Ansible:</p>
+
+<pre><code>$ ansible -i myinventory database -m apt -a 'name=screen state=installed update_cache=yes'
+db01.example.com | success &gt;&gt; {
+    "changed": false
+}
+</code></pre>
+
+<p>Here the <code>screen</code> package was already installed, so the module didn't change
+the state of the system.</p>
+
+<p>Separate modules are available for <a href="http://docs.ansible.com/ansible/apt_key_module.html">managing
+apt-keys</a> with which
+repositories are cryptographically verified, and for <a href="http://docs.ansible.com/ansible/apt_repository_module.html">managing the
+repositories themselves</a>.</p>
+
+<h3>The <code>yum</code> and <code>zypper</code> Modules</h3>
+
+<p>For RPM-based Linux distributions, the <a href="http://docs.ansible.com/ansible/yum_module.html">yum
+module</a> (core) and <a href="http://docs.ansible.com/ansible/zypper_module.html">zypper
+module</a> (not in core, so
+must be installed separately) are available. They manage package installation
+via the package managers of the same name.</p>
+
+<h3>The <code>package</code> Module</h3>
+
+<p>The <a href="http://docs.ansible.com/ansible/package_module.html"><code>package</code> module</a>
+tries to use whatever package manager it detects. It is thus more generic than
+the <code>apt</code> and <code>yum</code> modules, but supports far fewer features. For example in
+the case of <code>apt</code>, it does not provide any control over whether to run <code>apt-get
+update</code> before doing anything else.</p>
+
+<h3>Application-Specific Modules</h3>
+
+<p>The modules presented so far are fairly close to the system, but there are
+also modules for achieving common, application specific tasks. Examples
+include <a href="http://docs.ansible.com/ansible/list_of_database_modules.html">dealing with
+databases</a>,
+<a href="http://docs.ansible.com/ansible/list_of_network_modules.html">network related things such as
+proxies</a>,
+<a href="http://docs.ansible.com/ansible/list_of_source_control_modules.html">version control
+systems</a>,
+<a href="http://docs.ansible.com/ansible/kubernetes_module.html">clustering solutions such as
+Kubernetes</a>, and so on.</p>
+
+<h2>Playbooks</h2>
+
+<p>Playbooks can contain multiple calls to modules in a defined order and limit
+their execution to individual or group of hosts.</p>
+
+<p>They are written in the <a href="http://yaml.org/">YAML file format</a>, a data
+serialization file format that is optimized for human readability.</p>
+
+<p>Here is an example playbook that installs the newest version of the <code>go-agent</code>
+Debian package, the worker for <a href="https://www.go.cd/">Go Continuous Delivery</a>:</p>
+
+<pre><code>---
+- hosts: go-agent
+  vars:
+    go_server: hack.p6c.org
+  tasks:
+  - apt: package=apt-transport-https state=installed
+  - apt_key: url=https://download.go.cd/GOCD-GPG-KEY.asc state=present validate_certs=no
+  - apt_repository: repo='deb https://download.go.cd /' state=present
+  - apt: update_cache=yes package={{item}} state=installed
+    with_items:
+     - go-agent
+     - git
+     - build-essential
+  - lineinfile: dest=/etc/default/go-agent regexp=^GO_SERVER= line=GO_SERVER={{ go_server }}
+  - service: name=go-agent enabled=yes state=started
+</code></pre>
+
+<p>The top level element in this file is a one-element list. The single element
+starts with <code>hosts: go-agent</code>, which limits execution to hosts in the group
+<code>go-agent</code>. This is the relevant part of the inventory file that goes with it:</p>
+
+<pre><code>[go-agent]
+go-worker01.p6c.org
+go-worker02.p6c.org
+</code></pre>
+
+<p>Then it sets the variable <code>go_server</code> to a string, here this is the hostname
+where a GoCD server runs.</p>
+
+<p>Finally, the meat of the playbook: the list of tasks to execute.</p>
+
+<p>Each task is a call to a module, some of which have already been discussed.
+A quick overview:</p>
+
+<ul>
+<li>First, the Debian package <code>apt-transport-https</code> is installed, to make sure
+that the system can fetch meta data and files from Debian repositories
+through HTTPS</li>
+<li>The next two tasks use the
+<a href="http://docs.ansible.com/ansible/apt_repository_module.html">apt_repository</a>
+and <a href="http://docs.ansible.com/ansible/apt_key_module.html">apt_key</a> modules
+to configure the repository from which the actual <code>go-agent</code> package shall
+be installed</li>
+<li>Another call to <code>apt</code> installs the desired package. Also, some more
+packages are installed with a <a href="http://docs.ansible.com/ansible/playbooks_loops.html">loop
+construct</a></li>
+<li>The <a href="http://docs.ansible.com/ansible/lineinfile_module.html">lineinfile module</a>
+searches by regex for a line in a text file, and replaces the appropriat line
+with pre-defined content. Here we use that to configure the GoCD server that
+the agent connects to.</li>
+<li>Finally, the <a href="http://docs.ansible.com/ansible/service_module.html">service</a>
+module starts the agent if it's not yet running (<code>state=started</code>), and
+ensures that it is automatically started on reboot (<code>enabled=yes</code>).</li>
+</ul>
+
+<p>Playbooks are invoked with the <code>ansible-playbook</code> command.</p>
+
+<p>There can be more than one list of tasks in a playbook, which is a common
+use-case when they affect different groups of hosts:</p>
+
+<pre><code>---
+- hosts: go-agent:go-server
+  tasks:
+  - apt: package=apt-transport-https state=installed
+  - apt_key: url=https://download.go.cd/GOCD-GPG-KEY.asc state=present validate_certs=no
+  - apt_repository: repo='deb https://download.go.cd /' state=present
+
+- hosts: go-agent
+  - apt: update_cache=yes package={{item}} state=installed
+    with_items:
+     - go-agent
+     - git
+     - build-essential
+   - ...
+
+- hosts: go-server
+  - apt: update_cache=yes package=go-server state=installed
+  - ...
+</code></pre>
+
+<h2>Variables</h2>
+
+<p>Variables are useful both for controlling flow inside a playbook, and for
+filling out spots in templates to generate configuration files.</p>
+
+<p>There are several ways to set variables. One is directly in playbooks, via
+<code>vars: ...</code>, as seen before. Another is to specify them at the command line:</p>
+
+<pre><code>ansible-playbook --extra-vars=variable=value theplaybook.yml
+</code></pre>
+
+<p>Another, very flexible way is to use the <code>group_vars</code> feature. For each group
+that a host is in, Ansible looks for a file <code>group_vars/thegroup.yml</code> and
+for files matching `group_vars/thegroup/*.yml. A host can be in several
+groups at once, which gives you quite some flexibility.</p>
+
+<p>For example, you can put each host into two groups, one for the role the
+host is playing (like webserver, database server, DNS server etc.), and one
+for the environment it is in (test, staging, prod). Here is a small example
+that uses this layout:</p>
+
+<pre><code># environments
+[prod]
+www[01:02].example.com
+db01.example.com
+
+[test]
+db01.test.example.com
+www01.test.example.com
+
+
+# functional roles
+[web]
+www[01:02].example.com
+www01.test.example.com
+
+[db]
+db01.example.com
+db01.test.example.com
+</code></pre>
+
+<p>To roll out only the test hosts, you can run</p>
+
+<pre><code>ansible-playbook --limit test theplaybook.yml
+</code></pre>
+
+<p>and put environment-specific variables in <code>group_vars/test.yml</code> and
+<code>group_vars/prod.yml</code>, and web server specific variables in
+<code>group_vars/web.yml</code> etc.</p>
+
+<p>You can use nested data structures in your variables, and if you do, you can
+configure Ansible to merge those data structures for you. You can configure it
+by creating a file called <code>ansible.cfg</code> with this content:</p>
+
+<pre><code>[defaults]
+hash_behavior=merge
+</code></pre>
+
+<p>That way, you can have a file <code>group_vars/all.yml</code> that sets the default
+values:</p>
+
+<pre><code># file group_vars/all.yml
+myapp:
+    domain: example.com
+    db:
+        host: db.example.com
+        username: myappuser
+        instance. myapp
+</code></pre>
+
+<p>And then override individual elements of that nested data structure, for
+example in <code>group_vars/test.yml</code>:</p>
+
+<pre><code># file group_vars/test.yml
+myapp:
+    domain: text.example.com
+    db:
+        hostname: db.test.example.com
+</code></pre>
+
+<p>The keys that the <code>test</code> group vars file didn't touch, for example
+<code>myapp.db.username</code>, are inherited from the file <code>all.yml</code>.</p>
+
+<h2>Roles</h2>
+
+<p>Roles are a way to encapsulate parts of a playbook into a reusable component.</p>
+
+<p>Let's consider a real world example that leads to a simple role definition.</p>
+
+<p>For deploying software, you <a href="https://perlgeek.de/blog-en/automating-deployments/2016-020-deploying-specific-versions.html">always want to deploy the exact
+version you want to
+build</a>,
+so the relevant part of the playbook is</p>
+
+<pre><code>- apt: name=thepackage={{package_version}} state=present update_cache=yes force=yes
+</code></pre>
+
+<p>But this requires you to supply the <code>package_version</code> variable whenever you
+run the playbook, which will not be practical when you instead configure a new
+machine and need to install several software packages, each with their own
+playbook.</p>
+
+<p>Hence, we generalize the code to deal with the case that the version number is
+absent:</p>
+
+<pre><code>- apt: name=thepackage={{package_version}} state=present update_cache=yes force=yes
+  when: package_version is defined
+- apt: name=thepackage state=present update_cache=yes
+  when: package_version is undefined
+</code></pre>
+
+<p>If you run several such playbooks on the same host, you'll notice that it
+likely spends most of its time running <code>apt-get update</code> for each playbook. This
+is necessary the first time, because you might have just uploaded a new
+package on your local Debian mirror prior to the deployment, but subsequent
+runs are unnecessary. So you can store the information that a host has already
+updated its cache <a href="http://docs.ansible.com/ansible/set_fact_module.html">in a <em>fact</em></a>,
+which is a per-host kind of variable in Ansible.</p>
+
+<pre><code>- apt: update_cache=yes
+  when: apt_cache_updated is undefined
+
+- set_fact:
+    apt_cache_updated: true
+</code></pre>
+
+<p>As you can see, the code base for sensibly installing a package has grown a
+bit, and it's time to factor it out into a <em>role</em>.</p>
+
+<p>Roles are collections of YAML files, with pre-defined names. The commands</p>
+
+<pre><code>$ mkdir roles
+$ cd roles
+$ ansible-galaxy init custom_package_installation
+</code></pre>
+
+<p>create an empty skeleton for a role named <code>custom_package_installation</code>.
+The tasks that previously went into all the playbooks now go into the file
+<code>tasks/main.yml</code> below the role's main directory:</p>
+
+<pre><code># file roles/custom_package_installation/tasks/main.yml
+- apt: update_cache=yes
+  when: apt_cache_updated is undefined
+- set_fact:
+    apt_cache_updated: true
+
+- apt: name={{package}={{package_version}} state=present update_cache=yes force=yes
+  when: package_version is defined
+- apt: name={{package} state=present update_cache=yes
+  when: package_version is undefined
+</code></pre>
+
+<p>To use the role, first add the line <code>roles_path = roles</code> in the file
+<code>ansible.cfg</code> in the <code>[default]</code> section, and then in a playbook, include it
+like this:</p>
+
+<pre><code>---
+- hosts: web
+  pre_tasks:
+     - # tasks that are execute before the role(s)
+  roles: { role: custom_package_installation, package: python-matheval }
+  tasks:
+    - # tasks that are executed after the role(s)
+</code></pre>
+
+<p><code>pre_tasks</code> and <code>tasks</code> are optional; a playbook consisting of only roles
+being included is totally fine.</p>
+
+<h2>Summary</h2>
+
+<p>Ansible offers a pragmatic approach to configuration management, and is easy
+to get started with.</p>
+
+<p>It offers <em>modules</em> for low-level tasks such as transferring files and
+executing shell commands, but also higher-level task like managing packages and
+system users, and even application-specific tasks such as managing PostgreSQL
+and MySQL users.</p>
+
+<p><em>Playbooks</em> can contain multiple calls to modules, and also use and set
+<em>variables</em> and consume <em>roles</em>.</p>
+
+<p>Ansible has many more features, like handlers, which allow you to restart
+services only once after any changes, dynamic inventories for more flexible
+server landscapes, <a href="http://docs.ansible.com/ansible/playbooks_vault.html">vault for encrypting
+variables</a>, and a rich
+ecosystem of existing roles for managing common applications and middleware.</p>
+
+<p>For learning more about Ansible, I highly recommend <a href="http://amzn.to/1V1QBEN">the excellent book
+<em>Ansible: Up and Running</em> by Lorin Hochstein</a>.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
