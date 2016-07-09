@@ -2,6 +2,115 @@ Continuous Delivery and Security
 <!-- 2016-07-12 -->
 
 
+<h1>Continuous Delivery and Security</h1>
+
+<p>What's the impact of automated deployment on the security of your applications
+and infrastructure?</p>
+
+<p>It turns out there are both security advantages, and things to be wary of.</p>
+
+<h2>The Dangers of Centralization</h2>
+
+<p>In a deployment pipeline, the machine that controls the deployment needs to
+have access to the target machines where the software is deployed.</p>
+
+<p>In the simplest case, there is private SSH key on the deployment machine, and
+the target machines grant access to the owner of that key.</p>
+
+<p>This is an obvious risk, since an attacker gaining access to the deployment
+machine (or in the <a href="https://perlgeek.de/blog-en/automating-deployments/2016-015-building-in-the-pipeline.html">examples discussed
+previously</a>,
+the GoCD server controlling the machine) can use this key to connect to all
+of the target machines.</p>
+
+<p>Some possible mitigations include:</p>
+
+<ul>
+<li>hardened setup of the deployment machine</li>
+<li>password-protect the SSH key and supply the password through the same
+channel that triggers the deployment</li>
+<li>have separate deployment and build hosts. Build hosts tend to need far more
+software installed, which imply a bigger attack surface</li>
+<li>on the target machines, only allow unprivileged access through said SSH
+key, and use something like <code>sudo</code> to allow only certain privileged
+operations</li>
+</ul>
+
+<p>Each of these mitigations have their own costs and weaknesses. For example
+password-protecting SSH keys helps if the attacker only manages to obtain a
+copy of the file system, but not if the attacker gains root privileges on
+the machine, and thus can obtain a memory dump that includes the decrypted
+SSH key.</p>
+
+<p>The sudo approach is very effective at limiting the spread of an attack, but
+it requires extensive configuration on the target machine, and you need a
+secure way to deploy that. So you run into a chicken-and-egg problem and
+have quite some extra effort.</p>
+
+<p>On the flip side, if you don't have a delivery pipeline, deployments have to
+happen manually, so you have the same problem of needing to give humans
+access to the target machines. Most organizations offer some kind of secured
+host on which the operator's SSH keys are stored, and you face the same risk
+with that host as the deployment host.</p>
+
+<h2>Time to Market for Security Fixes</h2>
+
+<p>Compared to manual deployments, even a relatively slow deployment pipeline is
+still quite fast. When a vulnerability is identified, this quick and automated
+rollout process can make a big difference in reducing the time until the fix
+is deployed.</p>
+
+<p>Equally important is the fact that a clunky manual release process seduces
+the operators into taking shortcuts around security fixes, skipping some
+steps of the quality assurance process. When that process is automated and
+fast, it is easier to adhere to the process than to skip it, so it will
+actually be carried out even in stressful situations.</p>
+
+<h2>Audits and Software Bill of Materials</h2>
+
+<p>A good deployment pipeline tracks when which version of a software was built
+and deployed. This allows one to answer questions such as "For how long did
+we have this security hole?", "How soon after the report was the
+vulnerability patched in production?" and maybe even "Who approved the
+change that introduced the vulnerability?".</p>
+
+<p>If you also use configuration management based on files that are stored in a
+version control system, you can answer these questions even for configuration,
+not just for software versions.</p>
+
+<p>In short, the deployment pipeline provides enough data for an audit.</p>
+
+<p>Some legislations require you to record a <a href="https://en.wikipedia.org/wiki/Software_Bill_of_Materials">Software Bill of
+Materials</a>. This is
+a record of which components are contained in some software, for example a
+list of libraries and their versions. While this is important for assessing
+the impact of a license violation, it is also important for figuring out which
+applications are affected by a vulnerability in a particular version of a
+library.</p>
+
+<p>For example, a <a href="http://www8.hp.com/us/en/hp-news/press-release.html?id=1915228&amp;pageTitle=Security-Threat-Landscape-Still-Plagued-by-Known-Issues,-says-HP#.VOtW4fnF_Aw">2015 report by HP
+Security</a>
+found that 44% of the investigated breaches were made possible by
+vulnerabilities that have been known (and presumably patched) for at least two
+years. Which in turn means that you can nearly halve your security risk by
+tracking which software version you use where, subscribe to a newsletter or
+feed of known vulnerabilities, and rebuild and redeploy your software with
+patched versions.</p>
+
+<p>A Continuous Delivery system doesn't automatically create such a Software
+Bill of Materials for you, but it gives you a place where you can plug in a
+system that does for you.</p>
+
+<h2>Conclusions</h2>
+
+<p>Continuous Delivery gives the ability to react quickly and predictably to
+newly discovered vulnerabilities. At the same time, the deployment pipeline
+itself is an attack surface, which, if not properly secured, can be quite an
+attractive target for an intruder.</p>
+
+<p>Finally, the deployment pipeline can help you to collect data that can give
+insight into the usage of software with known vulnerabilities, allowing
+you to be thorough when patching these security holes.</p>
 
 [% include ad-mailing %]
 
