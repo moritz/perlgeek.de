@@ -1,0 +1,9 @@
+Continuous Delivery and Security
+<!-- 2016-07-12 -->
+
+
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
