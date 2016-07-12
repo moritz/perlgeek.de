@@ -1,9 +1,6 @@
 Continuous Delivery and Security
 <!-- 2016-07-12 -->
 
-
-<h1>Continuous Delivery and Security</h1>
-
 <p>What's the impact of automated deployment on the security of your applications
 and infrastructure?</p>
 
