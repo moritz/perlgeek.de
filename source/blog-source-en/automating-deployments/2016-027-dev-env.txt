@@ -1,0 +1,479 @@
+Continuous Delivery on your Laptop
+<!-- 2016-07-19 -->
+
+<p>An automated deployment system, or delivery pipeline, builds software, and
+moves it through the various environments, like development, testing staging
+and production.</p>
+
+<p>But what about testing and developing the delivery system itself? In which
+environment do you develop new features for the pipeline?</p>
+
+<h2>Start Small</h2>
+
+<p>When you are starting out, you can likely get away with having just one
+environment for the delivery pipeline: the production environment.</p>
+
+<p>It might shock you that you're supposed to develop anything in the production
+environment, but you should also be aware that the delivery system is not
+crucial for running your production applications, "just" for updating it. If
+the pipeline is down, your services still work. And you structure the pipeline
+to do the same jobs both in the testing and in the production environment, so
+you do test the deployments in a test environment first.</p>
+
+<h2>A Testing Environment for the Delivery Pipeline?</h2>
+
+<p>If those arguments don't convince you, or you're at a point where developer
+productivity suffers immensely from an outage of the deployment system, you
+can consider creating a testing environment for the pipeline itself.</p>
+
+<p>But pipelines in this testing environment should not be allowed to deploy to
+the actual production environment, and ideally shouldn't interfere with the
+application testing environment either. So you have to create at least a
+partial copy of your usual environments, just for testing the delivery
+pipeline.</p>
+
+<p>This is only practical if you have automated basically all of the
+configuration and provisioning, and have access to some kind of cloud solution
+to provide you with the resources you need for this endeavour.</p>
+
+<h2>Creating a Playground</h2>
+
+<p>If you do decide that you do need some playground or testing environment for
+your delivery pipeline, there are a few options at your disposal. But before
+you build one, you should be aware of how much (or little) resources such an
+environment consumes.</p>
+
+<h3>Resource Usage of a Continuous Delivery Playground</h3>
+
+<p>For a minimal playground that builds a system similar to the one discussed in
+earlier blog posts, you need</p>
+
+<ul>
+<li>a machine on which you run the GoCD server</li>
+<li>a machine on which you run a GoCD agent.</li>
+<li>a machine that acts as the testing environment</li>
+<li>a machine that acts as the production enviornment</li>
+</ul>
+
+<p>You can run the GoCD server and agent on the same machine if you wish, which
+reduces the footprint down to three machines.</p>
+
+<p>The machine on which the GoCD server runs should have between one and two
+gigabytes  of memory, and one or two (virtual) CPUs. The agent machine should have about
+half a GB of memory, and one CPU. If you run both server and agent on the same
+machine, two GB of RAM and two virtual CPUs should do nicely.</p>
+
+<p>The specs of the remaining two machines mostly depends on the type of
+applications you deploy to and run on them. For the deployment itself you
+just need an SSH server running, which is very modest in terms of memory and
+CPU usage. If you stick to the example applications discussed in this blog
+series, or similarly lightweight applications, half a GB of RAM and a single
+CPU per machine should be enough easily. You might get away with less RAM.</p>
+
+<p>So in summary, the minimal specs are</p>
+
+<ul>
+<li>One VM with 2GB RAM and 2 CPUs, for go-server and go-agent</li>
+<li>Two VMs with 0.5GB RAM and 1 CPU each, for the "testing" and the "production"
+environment.</li>
+</ul>
+
+<p>In the idle state, the GoCD server periodically polls the git repos, and
+the GoCD agent polls the server for work.</p>
+
+<p>When you are not using the playground, you can shut off those processes, or
+even the whole machines.</p>
+
+<h3>Approaches to Virtualisation</h3>
+
+<p>These days, nearly nobody buys server hardware and directly runs such test
+machines directly on them. Instead there is usually a layer of virtualisation
+involved, which both makes new operating system instances more readily
+available, and allows a denser resource utilization.</p>
+
+<h4>Private Cloud</h4>
+
+<p>If you work in a company that has its own private cloud, for example an
+OpenStack installation, you could use that to create a few virtual machines.</p>
+
+<h4>Public Cloud</h4>
+
+<p>Public cloud compute solutions, such as Amazaon's EC2, Google's Compute and
+Microsoft's Azure cloud offerings, allow you to create VM instances on demand,
+and be billed at an hourly rate. On all three services, you pay less than 10
+US Dollar Cents per hour for an instance that can run the GoCD
+server[^pricedate].</p>
+
+<p>[^pricedate]: Prices from July 2016, though I expect prices to only go
+downwards. Though resource usage of the software might increase in future as
+well.</p>
+
+<p>Google Compute Engine even offers heavily discounted <em>preemtible</em> VMs. Those
+VMs are only available when the provider has excess resources, and come with
+the option to be shut down on relatively short notice (a few minutes). While
+this is generally nod a good idea for an always-on production system, it can
+be a good fit for a cheap testing environment for a delivery pipeline.</p>
+
+<h4>Local Virtualisation Solutions</h4>
+
+<p>If you have a somewhat decent workstation of laptop, you likely have enough
+resources to run some kind of virtualisation software directly on it.</p>
+
+<p>Instead of classical virtualisation solutions, you could also use a
+containerisation solution such as Docker, which provides enough isolation for
+testing a Continuous Delivery pipeline. The downside is that Docker is not
+meant for running several services in one container, and here you need at
+least an SSH server and the actual services that is being deployed. You could
+work around this by using Ansible's Docker connector instead of SSH, but then
+you make the testing playground quite dissimilar from the actual use case.</p>
+
+<p>So let's go with a more typical virtualisation environment such as KVM or
+Virtualbox, and Vagrant as a layer above them to automate the networking and
+initial provisioning. For more on this approach, see the next section</p>
+
+<h2>Continuous Delivery on your Laptop</h2>
+
+<p>My development setup looks like this: I have the GoCD server installed on my
+Laptop running under Ubuntu, though running it under Windows or MacOS would
+certainly also work.</p>
+
+<p>Then I have Vagrant installed, using the virtualbox backend. I configure it to
+run three VMs for me: one for the GoCD agent, and one each as a testing and
+production machine. Finally there's an Ansible playbook that configures the
+three latter machines.</p>
+
+<p>While running the Ansible playbook for configuring these three virtual
+machines requires Internet connectivity, developing and testing the Continuous
+Delivery process does not.</p>
+
+<p>If you want to use the same test setup, consider using the files from the
+<a href="https://github.com/moritz/deployment-utils/tree/master/playground"><code>playground</code>
+directory</a>
+of the <a href="https://github.com/moritz/deployment-utils">deployment-utils
+repository</a>, which will likely be
+kept more up-to-date than this blog post.</p>
+
+<h3>Network and Vagrant setup</h3>
+
+<p>We'll use Vagrant with a private network, which allows you to talk to each of
+the virtual machines from your laptop or workstation, and vice versa.</p>
+
+<p>Ive added these lines to my <code>/etc/hosts</code> file. This isn't strictly necessary,
+but it makes it easier to talk to the VMs:</p>
+
+<pre><code># Vagrant
+172.28.128.1 go-server.local
+172.28.128.3 testing.local
+172.28.128.4 production.local
+172.28.128.5 go-agent.local
+</code></pre>
+
+<p>And a few lines to my <code>~/.ssh/config</code> file:</p>
+
+<pre><code>Host 172.28.128.* *.local
+    User root
+    StrictHostKeyChecking no
+    IdentityFile /dev/null
+    LogLevel ERROR
+</code></pre>
+
+<p><strong><em>Don't do this for production machines</em></strong>. This is only safe on a virtual
+network on a single machine, where you can be sure that no attacker is
+present, unless they already compromised your machine.</p>
+
+<p>That said, creating and destroy VMs is common in Vagrant land, and each time
+you create them anew, the will have new host keys.
+Without such a configuration, you'd spend a lot of time updating SSH key
+fingerprints.</p>
+
+<p>Then let's get Vagrant:</p>
+
+<pre><code>$ apt-get install -y vagrant virtualbox
+</code></pre>
+
+<p>To configure Vagrant, you need a ruby script called <code>Vagrantfile</code>:</p>
+
+<pre><code># -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "debian/contrib-jessie64"
+
+  {
+    'testing'    =&gt; "172.28.128.3",
+    'production' =&gt; "172.28.128.4",
+    'agent'      =&gt; "172.28.128.5",
+  }.each do |name, ip|
+    config.vm.define name do |instance|
+        instance.vm.network "private_network", ip: ip
+        instance.vm.hostname = name + '.local'
+    end
+  end
+
+  config.vm.synced_folder '/datadisk/git', '/datadisk/git'
+
+  config.vm.provision "shell" do |s|
+    ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+    s.inline = &lt;&lt;-SHELL
+      mkdir -p /root/.ssh
+      echo #{ssh_pub_key} &gt;&gt; /root/.ssh/authorized_keys
+    SHELL
+  end
+end
+</code></pre>
+
+<p>This builds three vagrant VMs based on the <code>debian/contrib-jessie64</code> box,
+which is mostly a pristine Debian Jessie VM, but also includes a file system
+driver that allows Vagrant to make directories from the host system available
+to the guest system.</p>
+
+<p>I have a local directory <code>/datadisk/git</code> in which I keep a mirror of my git
+repositories, so that both the GoCD server and agent can access the git
+repositories without Internet access, and without needing another layer of
+authentication anywhere. The <code>config.vm.synced_folder</code> call in the Vagrant
+file above replicates this folder into the guest machines.</p>
+
+<p>Finally the code reads an SSH public key from the file <code>~/.ssh/config</code> and
+adds it to the <code>root</code> account on the guest machines. In the next step, an
+Ansible playbook will use this access to configure the VMs to make them ready
+for the Delivery pipeline.</p>
+
+<p>To spin up the VMs, type</p>
+
+<pre><code>$ vagrant up
+</code></pre>
+
+<p>in the folder in which the <code>Vagrantfile</code> is. The first time you run this, it
+takes a bit longer because Vagrant needs to download the base image first.</p>
+
+<p>Once that's finished, you can call the command <code>vagrant status</code> to see if
+everything work, it should look like this:</p>
+
+<pre><code>$ vagrant status
+Current machine states:
+
+testing                   running (virtualbox)
+production                running (virtualbox)
+agent                     running (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+</code></pre>
+
+<p>And (on Debian-based Linux systems) you should be able to see the newly
+created, private network:</p>
+
+<pre><code>$ ip route | grep vboxnet
+172.28.128.0/24 dev vboxnet1  proto kernel  scope link  src 172.28.128.1 
+</code></pre>
+
+<p>You should now be able to log into the VMs with <code>ssh root@go-agent.local</code>, and
+the same with <code>testing.local</code> and <code>production.local</code> as host names.</p>
+
+<h3>Ansible Configuration for the VMs</h3>
+
+<p>It's time to configure the Vagrant VMs. Here's an Ansible playbook that does
+it:</p>
+
+<pre><code>---
+ - hosts: go-agent
+   vars:
+     go_server: 172.28.128.1
+   tasks:
+   - group: name=go system=yes
+   - name: Make sure the go user has an SSH key
+     user: name=go system=yes group=go generate_ssh_key=yes home=/var/go
+   - name: Fetch the ssh public key, so we can later distribute it.
+     fetch: src=/var/go/.ssh/id_rsa.pub dest=go-rsa.pub fail_on_missing=yes flat=yes
+   - apt: package=apt-transport-https state=installed
+   - apt_key: url=https://download.go.cd/GOCD-GPG-KEY.asc state=present validate_certs=no
+   - apt_repository: repo='deb https://download.go.cd /' state=present
+   - apt: update_cache=yes package={{item}} state=installed
+     with_items:
+      - go-agent
+      - git
+
+   - copy:
+       src: files/guid.txt
+       dest: /var/lib/go-agent/config/guid.txt
+       owner: go
+       group: go
+   - lineinfile: dest=/etc/default/go-agent regexp=^GO_SERVER= line=GO_SERVER={{ go_server }}
+   - service: name=go-agent enabled=yes state=started
+
+ - hosts: aptly
+   handlers:
+    - name: restart lighttpd
+      service: name=lighttpd state=restarted
+   tasks:
+     - apt: package={{item}} state=installed
+       with_items:
+        - ansible
+        - aptly
+        - build-essential
+        - curl
+        - devscripts
+        - dh-systemd
+        - dh-virtualenv
+        - gnupg2
+        - libjson-perl
+        - python-setuptools
+        - lighttpd
+        - rng-tools
+     - copy: src=files/key-control-file dest=/var/go/key-control-file
+     - command: killall rngd
+       ignore_errors: yes
+       changed_when: False
+     - command: rngd -r /dev/urandom
+       changed_when: False
+     - command: gpg --gen-key --batch /var/go/key-control-file
+       args:
+         creates: /var/go/.gnupg/pubring.gpg
+       become_user: go
+       become: true
+       changed_when: False
+     - shell: gpg --export --armor &gt; /var/go/pubring.asc
+       args:
+         creates: /var/go/pubring.asc
+       become_user: go
+       become: true
+     - fetch:
+         src: /var/go/pubring.asc
+         dest: =deb-key.asc
+         fail_on_missing: yes
+         flat: yes
+     - name: Bootstrap the aptly repos that will be configured on the `target` machines
+       copy:
+        src: ../add-package
+        dest: /usr/local/bin/add-package
+        mode: 0755
+     - name: Download an example package to fill the repo with
+       get_url:
+        url: http://ftp.de.debian.org/debian/pool/main/b/bash/bash_4.3-11+b1_amd64.deb
+        dest: /tmp/bash_4.3-11+b1_amd64.deb
+     - command: /usr/local/bin/add-package {{item}} jessie /tmp/bash_4.3-11+b1_amd64.deb
+       args:
+           creates: /var/go/aptly/{{ item }}-jessie.conf
+       with_items: 
+         - testing
+         - production
+       become_user: go
+       become: true
+
+     - name: Configure lighttpd to serve the aptly directories
+       copy: src=files/lighttpd.conf dest=/etc/lighttpd/conf-enabled/30-aptly.conf
+       notify:
+         - restart lighttpd
+     - service: name=lighttpd state=started enabled=yes
+
+ - hosts: target
+   tasks:
+     - authorized_key:
+        user: root
+        key: "{{ lookup('file', 'go-rsa.pub') }}"
+     - apt_key: data="{{ lookup('file', 'deb-key.asc') }}" state=present
+
+ - hosts: production
+   tasks:
+     - apt_repository:
+         repo: "deb http://{{hostvars['agent.local']['ansible_ssh_host'] }}/debian/production/jessie jessie main"
+         state: present
+
+ - hosts: testing
+   tasks:
+     - apt_repository:
+         repo: "deb http://{{hostvars['agent.local']['ansible_ssh_host'] }}/debian/testing/jessie jessie main"
+         state: present
+
+ - hosts: go-agent
+   tasks:
+     - name: 'Checking SSH connectivity to {{item}}'
+       become: True
+       become_user: go
+       command: ssh -o StrictHostkeyChecking=No root@"{{ hostvars[item]['ansible_ssh_host'] }}" true
+       changed_when: false
+       with_items: groups['target']
+</code></pre>
+
+<p>You also need a <code>hosts</code> or inventory file:</p>
+
+<pre><code>[all:vars]
+ansible_ssh_user=root
+
+[go-agent]
+agent.local ansible_ssh_host=172.28.128.5
+
+[aptly]
+agent.local
+
+[target]
+testing.local ansible_ssh_host=172.28.128.3
+production.local ansible_ssh_host=172.28.128.4
+
+[testing]
+testing.local
+
+[production]
+production.local
+</code></pre>
+
+<p>... and a small <code>ansible.cfg</code> file:</p>
+
+<pre><code>[defaults]
+host_key_checking = False
+inventory = hosts
+pipelining=True
+</code></pre>
+
+<p>This does a whole lot of stuff:</p>
+
+<ul>
+<li>Install and configure the GoCD agent
+<ul>
+<li>copies a file with a fixed UID to the configuration directory
+of the go agent, so that when you tear down the machine and create
+it anew, the Go server will identify it as the same agent as before.</li>
+</ul></li>
+<li>Gives the <code>go</code> user on the <code>go-agent</code> machine SSH access on the target hosts
+by
+<ul>
+<li>first making sure the <code>go</code> user has an SSH key</li>
+<li>copying the public SSH key to the host machine</li>
+<li>later distributing it to the target machine using the <code>authorized_key</code> module</li>
+</ul></li>
+<li>Creates a GPG key pair for the <code>go</code> user
+<ul>
+<li>since GPG key creation uses lots of entropy for random numbers, and
+VMs typically don't have that much entropy, first install <code>rng-tools</code>
+and use that convince the system to use lower-quality randomness.
+Again, this is something you shouldn't do on a production setting.</li>
+</ul></li>
+<li>Copies the public key of said GPG key pair to the host machine, and
+then distribute it to the target machines using the <code>apt_key</code> module</li>
+<li>Creates some <code>aptly</code>-based Debian repositories on the <code>go-agent</code> machine by
+<ul>
+<li>copying the <code>add-package</code> script from the same repository to the <code>go-agent</code>
+machine</li>
+<li>running it with a dummy package, here <code>bash</code>, to actually create the repos</li>
+<li>installing and configuring <code>lighttpd</code> to serve these packages by HTTP</li>
+<li>configuring the <code>target</code> machines to use these repositories as a package
+source</li>
+</ul></li>
+<li>Checks that the <code>go</code> user on the <code>go-agent</code> machine can indeed reach the
+other VMs via SSH</li>
+</ul>
+
+<p>After running it <code>ansible-playbook setup.yml</code>, your local GoCD server should
+have a new agent, which you have to activate in the web configuration and
+assign the appropriate resources (<code>debian-jessie</code> and <code>aptly</code> if you follow
+the examples from this blog series).</p>
+
+<p>Now when you close your git repos to <code>/datadisk/git/</code> (be sure to <code>git clone
+--mirror</code>) and configure the pipelines on the GoCD server, you have a complete
+Continuous Delivery-system running on one physical machine.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
