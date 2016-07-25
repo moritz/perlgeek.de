@@ -14,9 +14,9 @@ resulting .deb package as a build artifact.</p>
 
 <p>As <a href="https://perlgeek.de/blog-en/automating-deployments/2016-010-introducing-gocd.html">mentioned earlier</a>, my tool of choice of controlling the pipeline is <a href="https://go.cd/">Go
 Continuous Delivery</a>. Once you have it installed and
-configured and agent, you can start to create a pipeline.</p>
+configured an agent, you can start to create a pipeline.</p>
 
-<p>GoCD let's you build pipelines in its web interface, which is great for
+<p>GoCD lets you build pipelines in its web interface, which is great for
 exploring the available options. But for a blog entry, it's easier to look at
 the resulting XML configuration, which you can also enter directly ("Admin" →
 "Config XML").</p>
