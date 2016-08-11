@@ -1,0 +1,19 @@
+Moritz on Continuous Discussions (#c9d9)
+<!-- 2016-08-11 -->
+
+<p>On Tuesday I was a panelist on the <a href="http://electric-cloud.com/blog/2016/08/continuous-discussions-c9d9-podcast-episode-47-open-source-and-devops/">Continuous Discussions Episode
+47 – Open Source and
+DevOps</a>.
+It was quite some fun!</p>
+
+<p>Much of the discussion applied to Open Source in general software development,
+not just DevOps.</p>
+
+<p>You can watch <a href="https://www.youtube.com/watch?v=344WBN1sPI8">the full session</a>
+on Youtube, or on the <a href="http://electric-cloud.com/blog/2016/08/continuous-discussions-c9d9-podcast-episode-47-open-source-and-devops/">Electric Cloud
+blog</a>.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
