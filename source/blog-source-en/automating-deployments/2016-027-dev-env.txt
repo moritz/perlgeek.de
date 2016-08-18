@@ -2,15 +2,15 @@ Continuous Delivery on your Laptop
 <!-- 2016-07-19 -->
 
 <p>An automated deployment system, or delivery pipeline, builds software, and
-moves it through the various environments, like development, testing staging
-and production.</p>
+moves it through the various environments, like development, testing,
+staging, and production.</p>
 
 <p>But what about testing and developing the delivery system itself? In which
 environment do you develop new features for the pipeline?</p>
 
 <h2>Start Small</h2>
 
-<p>When you are starting out, you can likely get away with having just one
+<p>When you are starting out you can likely get away with having just one
 environment for the delivery pipeline: the production environment.</p>
 
 <p>It might shock you that you're supposed to develop anything in the production
@@ -18,7 +18,7 @@ environment, but you should also be aware that the delivery system is not
 crucial for running your production applications, "just" for updating it. If
 the pipeline is down, your services still work. And you structure the pipeline
 to do the same jobs both in the testing and in the production environment, so
-you do test the deployments in a test environment first.</p>
+you test the deployments in a test environment first.</p>
 
 <h2>A Testing Environment for the Delivery Pipeline?</h2>
 
@@ -33,14 +33,14 @@ partial copy of your usual environments, just for testing the delivery
 pipeline.</p>
 
 <p>This is only practical if you have automated basically all of the
-configuration and provisioning, and have access to some kind of cloud solution
-to provide you with the resources you need for this endeavour.</p>
+configuration and provisioning, and have access to some kind of cloud
+solution to provide you with the resources you need for this endeavour.</p>
 
 <h2>Creating a Playground</h2>
 
 <p>If you do decide that you do need some playground or testing environment for
 your delivery pipeline, there are a few options at your disposal. But before
-you build one, you should be aware of how much (or little) resources such an
+you build one, you should be aware of how many (or few) resources such an
 environment consumes.</p>
 
 <h3>Resource Usage of a Continuous Delivery Playground</h3>
@@ -50,32 +50,33 @@ earlier blog posts, you need</p>
 
 <ul>
 <li>a machine on which you run the GoCD server</li>
-<li>a machine on which you run a GoCD agent.</li>
+<li>a machine on which you run a GoCD agent</li>
 <li>a machine that acts as the testing environment</li>
-<li>a machine that acts as the production enviornment</li>
+<li>a machine that acts as the production environment</li>
 </ul>
 
 <p>You can run the GoCD server and agent on the same machine if you wish, which
-reduces the footprint down to three machines.</p>
+reduces the footprint to three machines.</p>
 
 <p>The machine on which the GoCD server runs should have between one and two
-gigabytes  of memory, and one or two (virtual) CPUs. The agent machine should have about
-half a GB of memory, and one CPU. If you run both server and agent on the same
-machine, two GB of RAM and two virtual CPUs should do nicely.</p>
+gigabytes of memory, and one or two (virtual) CPUs. The agent machine
+should have about half a GB of memory, and one CPU. If you run both server
+and agent on the same machine, two GB of RAM and two virtual CPUs should do
+nicely.</p>
 
-<p>The specs of the remaining two machines mostly depends on the type of
-applications you deploy to and run on them. For the deployment itself you
+<p>The specifications of the remaining two machines mostly depend on the type of
+applications you deploy and run on them. For the deployment itself you
 just need an SSH server running, which is very modest in terms of memory and
 CPU usage. If you stick to the example applications discussed in this blog
 series, or similarly lightweight applications, half a GB of RAM and a single
-CPU per machine should be enough easily. You might get away with less RAM.</p>
+CPU per machine should be sufficient. You might get away with less RAM.</p>
 
-<p>So in summary, the minimal specs are</p>
+<p>So in summary, the minimal specs are:</p>
 
 <ul>
-<li>One VM with 2GB RAM and 2 CPUs, for go-server and go-agent</li>
-<li>Two VMs with 0.5GB RAM and 1 CPU each, for the "testing" and the "production"
-environment.</li>
+<li>One VM with 2 GB RAM and 2 CPUs, for <code>go-server</code> and <code>go-agent</code></li>
+<li>Two VMs with 0.5 GB RAM and 1 CPU each, for the "testing" and the
+"production" environments.</li>
 </ul>
 
 <p>In the idle state, the GoCD server periodically polls the git repos, and
@@ -84,25 +85,28 @@ the GoCD agent polls the server for work.</p>
 <p>When you are not using the playground, you can shut off those processes, or
 even the whole machines.</p>
 
-<h3>Approaches to Virtualisation</h3>
+<h3>Approaches to Virtualization</h3>
 
-<p>These days, nearly nobody buys server hardware and directly runs such test
-machines directly on them. Instead there is usually a layer of virtualisation
+<p>These days, almost nobody buys server hardware and runs such test machines
+directly on them. Instead there is usually a layer of virtualization
 involved, which both makes new operating system instances more readily
 available, and allows a denser resource utilization.</p>
 
 <h4>Private Cloud</h4>
 
 <p>If you work in a company that has its own private cloud, for example an
-OpenStack installation, you could use that to create a few virtual machines.</p>
+<a href="https://www.openstack.org/">OpenStack</a> installation, you could use that to
+create a few virtual machines.</p>
 
 <h4>Public Cloud</h4>
 
-<p>Public cloud compute solutions, such as Amazaon's EC2, Google's Compute and
-Microsoft's Azure cloud offerings, allow you to create VM instances on demand,
-and be billed at an hourly rate. On all three services, you pay less than 10
-US Dollar Cents per hour for an instance that can run the GoCD
-server[^pricedate].</p>
+<p>Public cloud compute solutions, such as <a href="https://aws.amazon.com/ec2/">Amazon's
+EC2</a>, <a href="https://cloud.google.com/compute/">Google's Compute
+Engine</a> and <a href="https://azure.microsoft.com/en-us/">Microsoft's
+Azure</a> cloud offerings, allow you to
+create VM instances on demand, and be billed at an hourly rate. On all three
+services, you pay less than 0.10 USD per hour for an instance that can run
+the GoCD server[^pricedate].</p>
 
 <p>[^pricedate]: Prices from July 2016, though I expect prices to only go
 downwards. Though resource usage of the software might increase in future as
@@ -111,25 +115,26 @@ well.</p>
 <p>Google Compute Engine even offers heavily discounted <em>preemtible</em> VMs. Those
 VMs are only available when the provider has excess resources, and come with
 the option to be shut down on relatively short notice (a few minutes). While
-this is generally nod a good idea for an always-on production system, it can
+this is generally not a good idea for an always-on production system, it can
 be a good fit for a cheap testing environment for a delivery pipeline.</p>
 
-<h4>Local Virtualisation Solutions</h4>
+<h4>Local Virtualization Solutions</h4>
 
-<p>If you have a somewhat decent workstation of laptop, you likely have enough
-resources to run some kind of virtualisation software directly on it.</p>
+<p>If you have a somewhat decent workstation or laptop, you likely have
+sufficient resources to run some kind of virtualization software directly on
+it.</p>
 
-<p>Instead of classical virtualisation solutions, you could also use a
-containerisation solution such as Docker, which provides enough isolation for
+<p>Instead of classical virtualization solutions, you could also use a
+containerization solution such as Docker, which provides enough isolation for
 testing a Continuous Delivery pipeline. The downside is that Docker is not
 meant for running several services in one container, and here you need at
-least an SSH server and the actual services that is being deployed. You could
+least an SSH server and the actual services that are being deployed. You could
 work around this by using Ansible's Docker connector instead of SSH, but then
 you make the testing playground quite dissimilar from the actual use case.</p>
 
-<p>So let's go with a more typical virtualisation environment such as KVM or
-Virtualbox, and Vagrant as a layer above them to automate the networking and
-initial provisioning. For more on this approach, see the next section</p>
+<p>So let's go with a more typical virtualization environment such as KVM or
+VirtualBox, and Vagrant as a layer above them to automate the networking and
+initial provisioning. For more on this approach, see the next section.</p>
 
 <h2>Continuous Delivery on your Laptop</h2>
 
@@ -137,13 +142,13 @@ initial provisioning. For more on this approach, see the next section</p>
 Laptop running under Ubuntu, though running it under Windows or MacOS would
 certainly also work.</p>
 
-<p>Then I have Vagrant installed, using the virtualbox backend. I configure it to
-run three VMs for me: one for the GoCD agent, and one each as a testing and
-production machine. Finally there's an Ansible playbook that configures the
-three latter machines.</p>
+<p>Then I have Vagrant installed, using the VirtualBox backend. I configure it
+to run three VMs for me: one for the GoCD agent, and one each as a testing
+and production machine. Finally there's an Ansible playbook that configures
+the three latter machines.</p>
 
 <p>While running the Ansible playbook for configuring these three virtual
-machines requires Internet connectivity, developing and testing the Continuous
+machines requires internet connectivity, developing and testing the Continuous
 Delivery process does not.</p>
 
 <p>If you want to use the same test setup, consider using the files from the
@@ -153,12 +158,12 @@ of the <a href="https://github.com/moritz/deployment-utils">deployment-utils
 repository</a>, which will likely be
 kept more up-to-date than this blog post.</p>
 
-<h3>Network and Vagrant setup</h3>
+<h3>Network and Vagrant Setup</h3>
 
 <p>We'll use Vagrant with a private network, which allows you to talk to each of
 the virtual machines from your laptop or workstation, and vice versa.</p>
 
-<p>Ive added these lines to my <code>/etc/hosts</code> file. This isn't strictly necessary,
+<p>I've added these lines to my <code>/etc/hosts</code> file. This isn't strictly necessary,
 but it makes it easier to talk to the VMs:</p>
 
 <pre><code># Vagrant
@@ -177,21 +182,20 @@ but it makes it easier to talk to the VMs:</p>
     LogLevel ERROR
 </code></pre>
 
-<p><strong><em>Don't do this for production machines</em></strong>. This is only safe on a virtual
+<p><strong><em>Do not do this for production machines</em></strong>. This is only safe on a virtual
 network on a single machine, where you can be sure that no attacker is
 present, unless they already compromised your machine.</p>
 
-<p>That said, creating and destroy VMs is common in Vagrant land, and each time
-you create them anew, the will have new host keys.
-Without such a configuration, you'd spend a lot of time updating SSH key
-fingerprints.</p>
+<p>That said, creating and destroying VMs is common in Vagrant land, and each time
+you create them anew, the will have new host keys.  Without such a
+configuration, you'd spend a lot of time updating SSH key fingerprints.</p>
 
 <p>Then let's get Vagrant:</p>
 
 <pre><code>$ apt-get install -y vagrant virtualbox
 </code></pre>
 
-<p>To configure Vagrant, you need a ruby script called <code>Vagrantfile</code>:</p>
+<p>To configure Vagrant, you need a Ruby script called <code>Vagrantfile</code>:</p>
 
 <pre><code># -*- mode: ruby -*-
 # vi: set ft=ruby :
@@ -202,7 +206,7 @@ Vagrant.configure(2) do |config|
   {
     'testing'    =&gt; "172.28.128.3",
     'production' =&gt; "172.28.128.4",
-    'agent'      =&gt; "172.28.128.5",
+    'go-agent'   =&gt; "172.28.128.5",
   }.each do |name, ip|
     config.vm.define name do |instance|
         instance.vm.network "private_network", ip: ip
@@ -222,39 +226,39 @@ Vagrant.configure(2) do |config|
 end
 </code></pre>
 
-<p>This builds three vagrant VMs based on the <code>debian/contrib-jessie64</code> box,
+<p>This builds three Vagrant VMs based on the <code>debian/contrib-jessie64</code> box,
 which is mostly a pristine Debian Jessie VM, but also includes a file system
 driver that allows Vagrant to make directories from the host system available
 to the guest system.</p>
 
 <p>I have a local directory <code>/datadisk/git</code> in which I keep a mirror of my git
 repositories, so that both the GoCD server and agent can access the git
-repositories without Internet access, and without needing another layer of
-authentication anywhere. The <code>config.vm.synced_folder</code> call in the Vagrant
+repositories without requiring internet access, and without needing another
+layer of authentication. The <code>config.vm.synced_folder</code> call in the Vagrant
 file above replicates this folder into the guest machines.</p>
 
 <p>Finally the code reads an SSH public key from the file <code>~/.ssh/config</code> and
 adds it to the <code>root</code> account on the guest machines. In the next step, an
 Ansible playbook will use this access to configure the VMs to make them ready
-for the Delivery pipeline.</p>
+for the delivery pipeline.</p>
 
 <p>To spin up the VMs, type</p>
 
 <pre><code>$ vagrant up
 </code></pre>
 
-<p>in the folder in which the <code>Vagrantfile</code> is. The first time you run this, it
+<p>in the folder containing the <code>Vagrantfile</code>. The first time you run this, it
 takes a bit longer because Vagrant needs to download the base image first.</p>
 
 <p>Once that's finished, you can call the command <code>vagrant status</code> to see if
-everything work, it should look like this:</p>
+everything works, it should look like this:</p>
 
 <pre><code>$ vagrant status
 Current machine states:
 
 testing                   running (virtualbox)
 production                running (virtualbox)
-agent                     running (virtualbox)
+go-agent                  running (virtualbox)
 
 This environment represents multiple VMs. The VMs are all listed
 above with their current state. For more information about a specific
@@ -265,16 +269,16 @@ VM, run `vagrant status NAME`.
 created, private network:</p>
 
 <pre><code>$ ip route | grep vboxnet
-172.28.128.0/24 dev vboxnet1  proto kernel  scope link  src 172.28.128.1 
+172.28.128.0/24 dev vboxnet1  proto kernel  scope link  src 172.28.128.1
 </code></pre>
 
-<p>You should now be able to log into the VMs with <code>ssh root@go-agent.local</code>, and
+<p>You should now be able to log in to the VMs with <code>ssh root@go-agent.local</code>, and
 the same with <code>testing.local</code> and <code>production.local</code> as host names.</p>
 
 <h3>Ansible Configuration for the VMs</h3>
 
 <p>It's time to configure the Vagrant VMs. Here's an Ansible playbook that does
-it:</p>
+this:</p>
 
 <pre><code>---
  - hosts: go-agent
@@ -355,7 +359,7 @@ it:</p>
      - command: /usr/local/bin/add-package {{item}} jessie /tmp/bash_4.3-11+b1_amd64.deb
        args:
            creates: /var/go/aptly/{{ item }}-jessie.conf
-       with_items: 
+       with_items:
          - testing
          - production
        become_user: go
@@ -432,8 +436,8 @@ pipelining=True
 <li>Install and configure the GoCD agent
 <ul>
 <li>copies a file with a fixed UID to the configuration directory
-of the go agent, so that when you tear down the machine and create
-it anew, the Go server will identify it as the same agent as before.</li>
+of the <code>go-agent</code>, so that when you tear down the machine and create
+it anew, the GoCD server will identify it as the same agent as before.</li>
 </ul></li>
 <li>Gives the <code>go</code> user on the <code>go-agent</code> machine SSH access on the target hosts
 by
@@ -446,8 +450,8 @@ by
 <ul>
 <li>since GPG key creation uses lots of entropy for random numbers, and
 VMs typically don't have that much entropy, first install <code>rng-tools</code>
-and use that convince the system to use lower-quality randomness.
-Again, this is something you shouldn't do on a production setting.</li>
+and use that to convince the system to use lower-quality randomness.
+Again, this is something you <strong>shouldn't</strong> do on a production setting.</li>
 </ul></li>
 <li>Copies the public key of said GPG key pair to the host machine, and
 then distribute it to the target machines using the <code>apt_key</code> module</li>
@@ -464,12 +468,12 @@ source</li>
 other VMs via SSH</li>
 </ul>
 
-<p>After running it <code>ansible-playbook setup.yml</code>, your local GoCD server should
+<p>After running <code>ansible-playbook setup.yml</code>, your local GoCD server should
 have a new agent, which you have to activate in the web configuration and
 assign the appropriate resources (<code>debian-jessie</code> and <code>aptly</code> if you follow
 the examples from this blog series).</p>
 
-<p>Now when you close your git repos to <code>/datadisk/git/</code> (be sure to <code>git clone
+<p>Now when you clone your git repos to <code>/datadisk/git/</code> (be sure to <code>git clone
 --mirror</code>) and configure the pipelines on the GoCD server, you have a complete
 Continuous Delivery-system running on one physical machine.</p>
 
