@@ -121,6 +121,8 @@ $ source ~/.bashrc
 
 <p>All newly started interactive bash processes will respect these settings.</p>
 
+<p><strong>You must restart long-running programs for these changes to take effect.</strong></p>
+
 <h3 id="non-interactive">A Warning about Non-Interactive Processes</h3>
 
 <p>There are certain processes that don't get those environment variables,
