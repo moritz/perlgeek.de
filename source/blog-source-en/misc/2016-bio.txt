@@ -1,0 +1,79 @@
+You Write Your Own Bio<
+<!-- 2016-09-17 -->
+
+<p>I love how children ask the hard questions. My daughter of 2.5 years tend to
+ask people out of the blue: "who are you?". Most answer with their names, and
+possibly with their relation to my daughter.</p>
+
+<p>The nagging philosopher's voice in my head quietly comments, "OK, that's your
+name, but <strong>who are you</strong>?" And for that matter, who am I? My name is part of my
+identity, but there's more to me than my name. I hope :-).</p>
+
+<p>Identity is hard to pin down, and shifts in time. Being a father, a husband
+and a part of a family is a big part of my identity. So is my work, software
+engineering and architecture. My personality traits, like being an introvert,
+and hopefully a kind person, are important too. As are the things that I
+do in my spare time. Like writing a book.</p>
+
+<p>Speaking of books, please join me on a tangent.</p>
+
+<p>You've read a technical book, and liked it. And the book case contained a blurb
+about the author: "Mr X is a successful software engineer and has worked for
+X, Y and Z. He has written several books on programming topics.". Plus a few
+sentences about his origins, family and hobbies, maybe.</p>
+
+<p>Who writes these blurbs?</p>
+
+<p>As a kid, I thought that the publisher hired journalists who did research on
+the author, to come up with a short bio that is both flattering and accurate.</p>
+
+<p>Maybe the really big publishers do that. But mostly, the publishers just ask
+the author to provide a bio themselves.</p>
+
+<p>I've written several articles in for technical print magazines, and that is
+exactly what happened. It's no secret either; it's right in the submission
+guidelines.</p>
+
+<p>For my own book, which is self-published in digital form (and a print version
+being worked on by a small, independent publisher), I wrote my own bio, which
+was weird, because I had to talk about myself in the third person. And
+because I had to emphasize my strengths, which I'm typically not comfortable
+with.</p>
+
+<p>You see where this is going, don't you?</p>
+
+<p>The blurb, short bio, however you call it,
+is meant to shine a bit of light on the author's identity. This is to make the
+author more relatable, but also to serve as an endorsement. Which means that,
+depending of the topic of the publication it is attached to, it shines light
+on different parts of the identity. In the context of a book on software
+deployments, nobody cares that I kinda like cooking, but not enough to become
+really good at it.</p>
+
+<p>So, should I call myself a successful software engineer, in the three-sentence
+autobiography? It sounds good, doesn't it? Am I comfortable with that
+description? I've had my share of successes in my professional career, and
+also some failures. If somebody else calls me successful, I take it as a
+compliment. If I put that moniker up myself, I cringe a bit. Should I? If
+others call me successful, it might just be my imposter syndrome kicking in.</p>
+
+<p>But those adjectives are a small matter in comparison to other matters.
+Obviously, I write. Rambling stuff like what you're reading now.
+Articles. Blog posts. A book. Now, do I call myself a writer? Or an author?
+Do I want my gainful employment to become part of my identity?</p>
+
+<p>There are no rules to do decide that. It's a choice. It's my choice.</p>
+
+<p>And likely, it's a significant choice. If I consider myself a writer, the next
+project I'll be taking on is more likely to be another article, or a even
+book. If I consider myself a programmer, it's likely to be a small tool or a
+web app. I could decide I am an or even "the" maintainer of some Open Source
+projects I'm involved in. I can decide that I want to be something that I'm
+not yet, and make it happen.</p>
+
+<p>I don't know what exactly I'll decide, but I love that I have a choice.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
