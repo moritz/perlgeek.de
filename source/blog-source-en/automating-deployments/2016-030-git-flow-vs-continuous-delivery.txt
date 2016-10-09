@@ -1,0 +1,69 @@
+Git Flow vs. Continuous Delivery
+<!-- 2016-10-09 -->
+
+<p>I've often read the recommendation to use <a
+href="http://nvie.com/posts/a-successful-git-branching-model/">git flow</a>
+as a branching model for software development projects, and I've even
+introduced it at some projects at work.</p>
+
+<p>But when we adopted Continuous Delivery, it became pretty clear that git
+flow and Continuous Integration and Continuous Delivery don't mix well.</p>
+
+<p>So you develop features and bug fixes in branches, and merge them into the
+develop branch. This means the develop branch needs to be the focus of your
+testing efforts, it needs to be automatically deployed to a testing
+environment and so on.</p>
+
+<p>And then, git flow recommends that for going to production, you build
+packages from the master branch, and release them. The problem is that by
+building a new package or binary from the master branch, you invalidate all
+the testing you did in the develop branch.</p>
+
+<p>Even if the code in the master
+branch is identical to that in the develop branch, you might get a different
+binary due to non-reproducible builds, changes in the versions of build tools
+and compilers, or even cosmic rays or other sources of random bit flips in
+RAM or on disk. And if you always get an identical binary, why bother to do a
+second build at all?</p>
+
+<p>The spirit of Continuous Delivery is very much to test the heck out of one
+build artifact, and if it proves to be of high quality, bring it to
+production.</p>
+
+<h2>An Alternative: Trunk-Based Development</h2>
+
+<p>A workflow that fits better with Continuous Delivery is to do most
+development in the same branch. This branch is automatically tested and
+deployed to a testing environment, and if all the tests are successful, either
+deployed to production automatically, or after manual approval.</p>
+
+<p>If there are features that you don't yet want your end users to see, you
+can hide them behind feature flags. Of course, feature flags come with their
+own complexity, and should be kept to a minimum.</p>
+
+<p>Keeping your software releasable all the time is a core principle of
+Continuous Delivery, so if you practise that, and encounter a bug that needs
+an immediate fix, chances are high that you can apply the fix in the main
+development branch, and deploy it using the same automation that you use for
+your usual feature development.</p>
+
+<p>If that doesn't work, you can always pause your deployment pipeline for the
+regular development branch, create a hotfix branch, and use the regular
+deployment code, but based on the hotfix branch, and bring your changes to
+your testing and production environments.</p>
+
+<h2>Does That Mean I Should Abandon Git Flow?</h2>
+
+<p>My experience is limited to pretty small development teams, and to certain
+kinds of software. For example, I've never developed software for embedded
+devices. So I certainly can't talk about all the different modes of
+operations.</p>
+
+<p>My main point is that git flow doesn't mix well with Continuous Delivery,
+and that you shouldn't recommend it blindly without understanding the context
+in which it is used.</p>
+
+[% include ad-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
