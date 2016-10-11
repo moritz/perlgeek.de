@@ -98,7 +98,7 @@ be done servers hosting sensitive applications.</p>
 then log in again. In any case you can configure your per-user environment
 with environment variables.</p>
 
-<p>The following variables can effect programs: LANG, LANGUAGE, LC_CTYPE, 
+<p>The following variables can affect programs: LANG, LANGUAGE, LC_CTYPE, 
 LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES, LC_PAPER, LC_NAME,
 LC_ADDRESS, LC_TELEPHONE, LC_MEASUREMENT, LC_IDENTIFICATION.</p>
 
