@@ -12,7 +12,7 @@ and if you don't yet have a login on the advent blog, please tell me your
 email address so that I can send you an invitation.</p>
 
 <p>Perl 6 advent blog posts should be finished the day before they are
-due, and published with midnight of the due date as publishing date.</p>
+due, and published with midnight (UTC) of the due date as publishing date.</p>
 
 <p>If you have any questions, or want to discuss blog post ideas, please join
 on the #perl6 IRC channel on irc.freenode.org, or drop me an email at
