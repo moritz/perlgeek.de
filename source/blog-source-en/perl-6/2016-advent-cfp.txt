@@ -1,0 +1,22 @@
+Perl 6 Advent Calendar 2016 -- Call for Authors
+<!-- 2016-11-01 -->
+<p>Every year since 2009, the Perl 6 community publishes a Perl 6 advent
+calendar, in the form of blog posts on <a
+href="https://perl6advent.wordpress.com/">perl6advent.wordpress.com</a>.</p>
+
+<p>To keep up this great tradition, we need 24 blog posts, and volunteers who
+write them. If you want to contribute a blog post about anything related to
+Perl 6, please add your name (and potentially also a topic already) to the <a
+href="https://github.com/perl6/mu/blob/master/misc/perl6advent-2016/schedule">schedule</a>,
+and if you don't yet have a login on the advent blog, please tell me your
+email address so that I can send you an invitation.</p>
+
+<p>Perl 6 advent blog posts should be finished the day before they are
+due, and published with midnight of the due date as publishing date.</p>
+
+<p>If you have any questions, or want to discuss blog post ideas, please join
+on the #perl6 IRC channel on irc.freenode.org, or drop me an email at
+moritz.lenz@gmail.com.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
