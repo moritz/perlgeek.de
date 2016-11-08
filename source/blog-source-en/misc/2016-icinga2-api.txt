@@ -1,0 +1,208 @@
+Icinga2, the Monitoring System with the API from He
+<-- 2016-11-08 -->
+
+<p>At my <a href="https://noris.net/">employer</a>, we have a project to switch some
+monitoring infrastructure from Nagios to
+<a href="https://www.icinga.org/products/icinga-2/">Icinga2</a>. As part of this project,
+we also change the way the store monitoring configuration. Instead of the
+previous assortment of manually maintained and generated config files, all
+monitoring configuration should now come from the
+<a href="https://en.wikipedia.org/wiki/Configuration_management_database">CMDB</a>, and
+changes are propagated to the monitoring through the <a href="http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/icinga2-api">Icinga2 REST
+API</a>.</p>
+
+<p>Well, that was the plan. And as you know, no plan survives contact with the
+enemy.</p>
+
+<h2>Call Me, Maybe?</h2>
+
+<p>We created our synchronization to Icinga2, and used in our staging environment
+for a while. And soon got some reports that it wasn't working. Some hosts had
+monitoring configuration in our CMDB, but Icinga's web interface wouldn't show
+them. Normally, the web interface immediately shows changes to objects you're
+viewing, but in this case, not even a reload showed them.</p>
+
+<p>So, we reported that as a bug to the team that operates our Icinga instances,
+but by the time they got to look at it, the web interface did show the missing
+hosts.</p>
+
+<p>For a time, we tried to dismiss it as an unfortunate timing accident, but in
+later testing, it showed up again and again. The logs clearly showed that
+creating the host objects through the REST API produce a status code of 200,
+and a subsequent GET listed the object. Just the web interface (which happens
+to be the primary interface for our users) stubbornly refused to show them,
+until somebody restarted Icinga.</p>
+
+<p>Turns out, it's a <a href="https://dev.icinga.org/issues/11731">known bug</a>.</p>
+
+<p>I know, distributed systems are hard. Maybe talk <a href="https://aphyr.com/tags/jepsen">to
+Kyle aka Aphyr</a> some day?</p>
+
+<h2>CREATE + UPDATE != CREATE</h2>
+
+<p>If you create an object through the Icinga API, and then update it to a
+different state, you <a href="https://dev.icinga.org/issues/11501">get a different result than if you created it like
+that in the first place</a>. Or in other
+words, the update operation is incomplete. Or to put it plainly, you cannot
+rely on it.</p>
+
+<p>Which means you cannot rely on updates. You have to delete the resource and
+recreate it. Unfortunately, that implies you lose history, and downtimes
+scheduled for the host or service.</p>
+
+<h2>API Quirks</h2>
+
+<p>Desiging APIs is hard. I guess that's why the Icinga2 REST API has some
+quirks. For example, if a PUT request fails, sometimes the response isn't
+JSON, but plain text. If the error response is indeed JSON, it duplicates the
+HTTP status code, but as a float. No real harm, but really,
+<a href="https://www.destroyallsoftware.com/talks/wat">WAT</a>?</p>
+
+<p>The next is probably debatable, but we use Python, specifically the
+<a href="http://docs.python-requests.org/en/master/">requests</a> library, to talk to
+Icinga. And requests insists on URL-encoding a space as a <code>+</code> instead of
+<code>%20</code>, and Icinga insists on not decoding a <code>+</code> as a space. You can probably
+dig up RFCs to support both points of view, so I won't assign any blame. It's
+just annoying, OK?</p>
+
+<p>In the same category of annoying, but not a show-stopper, is the fact that the
+API distinguishes between singular and plural. You can filter for a single
+host with <code>host=thename</code>, but if you filter by multiple hosts, it's
+<code>hosts=name1&amp;host2=name2</code>. I understand the desire to support cool, human-like
+names, but it forces the user to maintain a list of both singular and plural
+names of each API object they work with. And not every plural can be built by
+appending an <code>s</code> to the singular. (Oh, and in case you were wondering, you
+can't always use the plural either. For example when referring to an attribute
+of an object, you need to use the singular).</p>
+
+<p>Another puzzling fact is that when the API returns a list of services, the
+response might look like this:</p>
+
+<pre><code>{
+    "results": [
+        {
+            "attrs": {
+                "check_command": "ping4",
+                "name": "ping4"
+            },
+            "joins": {},
+            "meta": {},
+            "name": "example.localdomain!ping4",
+            "type": "Service"
+        },
+    ]
+}
+</code></pre>
+
+<p>Notice how the <code>"name"</code> and <code>attrs["name"]</code> attribute are different?
+A service is always attached to the host, so the <code>"name"</code> attribute seems to be
+the fully qualified name in the format <code>&lt;hostname&gt;!&lt;servicename&gt;</code>, and
+<code>attrs["name"]</code> is just service name.</p>
+
+<p>So, where can I use which? What's the philosophy behind having "name" twice,
+but with different meaning? Sadly, the docs are quiet about it. I remain
+unenlightened.</p>
+
+<h2>State Your Case!</h2>
+
+<p>Behind the scene, Icinga stores its configuration in files that are named
+after the object name. So when your run Icinga on a case sensitive file
+system, you can have both a service <code>example.com!ssh</code> and <code>example.com!SSH</code> at
+the same time. As a programmer, I'm used to case sensitivity, and don't have
+an issue with it.</p>
+
+<p>What I have an issue with is when parts of the system are case sensitive, and
+others aren't. Like the <code>match()</code> function that the API docs like to use. Is
+there a way to make it case sensitive? I don't know. Which brings me to my
+next point.</p>
+
+<h2>Documentation (or the Lack Thereof)</h2>
+
+<p>I wasn't <a href="https://dev.icinga.org/issues/13053">able to find actual documentation for the <code>match()</code>
+function</a>. Possibly because there is
+none. Who knows?</p>
+
+<h2>Selection Is Hard</h2>
+
+<p>For our use case, we have some tags in the our CMDB, and a host can have zero,
+one or more tags. And we want to provide the user with the ability to create a
+downtime for all hosts that have tag.</p>
+
+<p>Sounds simple, eh? The API supports creating a downtime for the result of an
+arbitrary filter. But that pre-supposes that you actually <em>can</em> create an
+appropriate filter. <a href="https://dev.icinga.org/issues/13054">I have my doubts</a>.
+In several hours of experimenting, I haven't found a reliable way to filter
+by membership of array variables.</p>
+
+<p>Maybe I'm just too dumb, or maybe the documentation is lacking. No, not maybe.
+The documentation <em>is</em> lacking. I made a point about the <code>match()</code> function
+earlier. Are there more functions like <code>match()</code>? Are there more operators
+than the <code>==</code>, <code>in</code>, <code>&amp;&amp;</code>, <code>||</code> and <code>!</code> that the examples use? </p>
+
+<h2>Templates</h2>
+
+<p>We want to have some standards for monitoring certain types of hosts. For
+example Debian and RHEL machines have slightly different defaults and probes.</p>
+
+<p>That's where templates comes in. You define a template for each case, and
+simply assign this template to the host.</p>
+
+<p>By now, you should have realized that every "simply" comes with a "but". But
+it doesn't work.</p>
+
+<p>That's right. Icinga has templates, but you can't create or update them
+through the API. When we wanted to implement templating support, API support
+for templates was on the roadmap for the next Icinga2 release, so we waited.
+And got read-only support.</p>
+
+<p>Which means we had to reimplement templating outside of Icinga, with all the
+scaling problems that come with it. If you update a template that's emulated
+outside of Icinga, you need to update each instance, of which there can be
+many. Aside from this unfortunate scaling issue, it makes a correct
+implementation much harder. What do you do if the first 50 hosts updated
+correctly, and the 51st didn't? You can try to undo the previous changes, but
+that could also fail. Tough luck.</p>
+
+<h2>Dealing with Bug Reports</h2>
+
+<p>As the result of my negative experiences, I've submitted two bug reports.
+Both have been rejected the next morning. Let's look into it.</p>
+
+<p>In <a href="https://dev.icinga.org/issues/13053">No API documentation for match()</a>
+I complained about the lack of discoverable documentation for the <code>match()</code>
+function. The rejection pointed to <a href="http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/library-reference#global-functions">this</a>, which is half a line:</p>
+
+<pre><code>match(pattern, text)    Returns true if the wildcard pattern matches the text, false otherwise.
+</code></pre>
+
+<p>What is a "wildcard pattern"? What happens if the second argument isn't a
+string, but an array or a dictionary? What about the case sensitivity
+question? Not answered.</p>
+
+<p>Also, the lack of discoverability hasn't been addressed. The situation could
+easily be improved by linking to this section from the API docs.</p>
+
+<p>So, somebody's incentive seems to be the number of closed or rejected issues,
+not making Icinga better usable.</p>
+
+<h2>To Be Or Not To Be</h2>
+
+<p>After experiencing the glitches described above, I feel an intense dislike
+whenever I have to work with the Icinga API. And after we discovered the
+consistency problem, my dislike spread to all of Icinga.</p>
+
+<p>Not all of it was Icinga's fault. We had some stability issues with our own
+software and integration (for example using HTTP keep-alive for talking to a
+cluster behind a load balancer turned out to be a bad idea). Having both our
+own instability and the weirdness and bugs from Icinga made hard and work
+intensive to isolate the bugs. It was much less straight forward than the
+listing of issues in this rant might suggest.</p>
+
+<p>While I've worked with Icinga for a while now, from your perspective, the
+sample size is still one. Giving advice is hard in that situation. Maybe the
+takeaway is that, should you consider to use Icinga, you would do well to
+evaluate extra carefully whether it can actually do what you need. And if
+using it is worth the pain.</p>
+
+[% option no-footer %][% option no-header %]
+
