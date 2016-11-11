@@ -1,5 +1,5 @@
 Icinga2, the Monitoring System with the API from He
-<-- 2016-11-08 -->
+<!-- 2016-11-08 -->
 
 <p>At my <a href="https://noris.net/">employer</a>, we have a project to switch some
 monitoring infrastructure from Nagios to
