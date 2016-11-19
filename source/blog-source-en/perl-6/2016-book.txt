@@ -1,0 +1,92 @@
+Perl 6 By Example, Another Perl 6 Book
+<!-- 2016-11-19 -->
+
+<img src="https://perlgeek.de/images/blog/p6/book-cover-scaled.png" alt="proposed book cover, starring a Butterfly, by Sebastian Riedl" />
+
+<p>I'm taking a shot a writing a Perl 6 book. Let's see how this goes.</p>
+
+<p>My working title is <em>Perl 6 by Example</em>, and I want to recycle the
+approach taken in <a href="https://github.com/perl6/book">Using Perl 6</a> to introduce
+topics by example. Contrary to the now abandoned previous effort, I want to
+introduce the examples in small chunks, developing and explaining them bit by
+bit.</p>
+
+<p>I expect the result to be rather limited in size (maybe 70 to 100 pages), and
+not a comprehensive guide to the Perl 6 language, but enough to get you
+started.</p>
+
+<h2>Target Audience</h2>
+
+<p>The reader should have previous programming experience. I assume familiarity
+with conditionals, variables, loops and basic data types such as various
+numbers, strings and lists. Some OO concepts such as classes, instances and
+methods will also be assumed, but I will drop some clarifying words about how
+I use the terminology.</p>
+
+<h2>Process</h2>
+
+<p>I will follow roughly the same process as in <a href="https://deploybook.com/">my previous
+book</a>: First I write blog posts about the topics I
+intend to cover, and later distill them into chapters.</p>
+
+<p>When I have some significant portion of the manuscript available, I will
+<a href="https://leanpub.com/perl6">pre-publish it  on  Leanpub</a>, and start to sell
+it.</p>
+
+<p>If there is a lot of interest, I might investigate options to publish it in
+print form.</p>
+
+<h2>The Team</h2>
+
+<p>Luckily, several people have offered to help in some form or another,
+typically by writing or proof-reading (in no particular order):</p>
+
+<ul>
+<li>[ptc]</li>
+<li>DrForr</li>
+<li>Coke</li>
+<li>tbowder</li>
+<li>AlexDaniel</li>
+<li>seatek</li>
+</ul>
+
+<p>Knowing the warm and helpful nature of the Perl 6 community, it is likely that
+more folks will step up to help. Any help, as well co-authors, will be highly
+appreciated.</p>
+
+<h2>Other Perl 6 Books</h2>
+
+<p>Information on other Perl 6 book projects is rather sparse and vague. I try my
+best to keep informed about these projects.</p>
+
+<ul>
+<li>Laurent Rosenfeld <a href="https://www.reddit.com/r/perl/comments/557m4k/any_new_perl_6_books/d8aokjq/">is working on a
+book</a>
+which is basically a Perl 6 version of <a href="http://greenteapress.com/wp/think-python-2e/">Think
+Python</a>. It is targeted at
+programming beginners, and has been accepted by a well-respected publisher.</li>
+<li>There are rumors that Larry Wall is writing a <em>Programming Perl 6</em> book,
+and I wish that to be true. I know nothing about the progress or time
+horizon of that project.</li>
+<li>brian d foy has started a <a href="https://www.kickstarter.com/projects/1422827986/learning-perl-6">kickstarter to fund his project to write "Learning
+Perl 6"</a>.
+Since "Learning Perl" is book focused on beginners with no prior programming
+experience, I assume the same is true for the Perl 6 version of this book,
+so I don't see much competition between his and mind project, and wish him
+luck and success.</li>
+</ul>
+
+<h2>Interested?</h2>
+
+<p>If you are interested in progress updates or milestones about my book project,
+please sign up for the mailing list below. It will be low volume (probably
+less than one email per month). I will also try
+my best to inform you about news of the other Perl 6 book projects.</p>
+
+<p>Numerous signups will also boost my motivation to work on the book.</p>
+
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
