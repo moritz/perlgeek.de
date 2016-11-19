@@ -70,7 +70,7 @@ and I wish that to be true. I know nothing about the progress or time
 horizon of that project.</li>
 <li>brian d foy has started a <a href="https://www.kickstarter.com/projects/1422827986/learning-perl-6">kickstarter to fund his project to write "Learning
 Perl 6"</a>.
-Since "Learning Perl" is book focused on beginners with no prior programming
+Since "Learning Perl" is a book focused on beginners with no prior programming
 experience, I assume the same is true for the Perl 6 version of this book,
 so I don't see much competition between his and mind project, and wish him
 luck and success.</li>
