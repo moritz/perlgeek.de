@@ -72,7 +72,7 @@ horizon of that project.</li>
 Perl 6"</a>.
 Since "Learning Perl" is a book focused on beginners with no prior programming
 experience, I assume the same is true for the Perl 6 version of this book,
-so I don't see much competition between his and mind project, and wish him
+so I don't see much competition between his and mine project, and wish him
 luck and success.</li>
 <li>Ken Youens-Clark has written <a href="https://www.gitbook.com/book/kyclark/metagenomics/details">about metagenomics, a subset of bioinformatics</a>, using Perl 6 example code.</li>
 </ul>
