@@ -74,6 +74,7 @@ Since "Learning Perl" is book focused on beginners with no prior programming
 experience, I assume the same is true for the Perl 6 version of this book,
 so I don't see much competition between his and mind project, and wish him
 luck and success.</li>
+<li>Ken Youens-Clark has written <a href="https://www.gitbook.com/book/kyclark/metagenomics/details">about metagenomics, a subset of bioinformatics</a>, using Perl 6 example code.</li>
 </ul>
 
 <h2>Interested?</h2>
