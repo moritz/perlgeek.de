@@ -1,0 +1,109 @@
+What is Perl 6?
+<!-- 2016-11-20 -->
+
+[% include p6-intro %]
+
+<p>Perl 6 is a programming language. It is designed to be easily learned, read
+and written by humans, and it is inspired by natural language. It allows the
+beginner to write in "baby Perl", while giving the experienced programmer
+freedom of expression, from concise to poetic.</p>
+
+<p>Perl 6 is gradually typed. It mostly follows the paradigm of dynamically typed
+languages in that it accepts programs whose type safety it can't guarantee
+during compilation. Unlike many dynamic languages, it accepts and enforces
+type constraints. Where possible, the compiler uses type annotations to make
+decisions at compile time that would otherwise only be possible at run time.</p>
+
+<p>Many programming paradigms have influenced Perl 6. You can write imperative,
+object-oriented and functional programs in Perl 6. Declarative programming is
+supported through the regex and grammar engine.</p>
+
+<p>Most lookups in Perl 6 are lexical, and the language avoids global state. This
+makes parallel and concurrent execution of programs easier, as does Perl 6's
+focus on high-level concurrency primitives. Instead of threads and locks, you
+tend to think about promises and message queues when you don't want to be limited
+to one CPU core.</p>
+
+<p>Perl 6 as a language is not opinionated about whether Perl 6 programs should
+be compiled or interpreted. Rakudo Perl 6, the main implementation,
+precompiles modules on the fly, and interprets scripts.</p>
+
+<h2>Perl 5, the Older Sister</h2>
+
+<p>Around the year 2000, Perl 5 development faced major strain from the
+conflicting desires to evolve and to keep backwards compatibility.</p>
+
+<p>Perl 6 was the valve to release this tension. All the extension proposals that
+required a break in backwards compatibility were channeled into Perl 6,
+leaving it in a dreamlike state where everything was possible and nothing as
+fixed. It took several years of hard work to get into a more solid state.</p>
+
+<p>During this time, Perl 5 also evolved, and the two languages are different
+enough that most Perl 5 developers don't consider Perl 6 a natural upgrade
+path anymore, to the point that Perl 6 does not try to obsolete Perl 5 (at
+least not more than it tries to obsolete any other programming language :-),
+and the first stable release of Perl 6 in 2015 does not indicate any lapse in
+support for Perl 5.</p>
+
+<h2>Library Availability</h2>
+
+<p>Being a relatively young language, Perl 6 lacks the mature module ecosystem that
+languages such as Perl 5 and Python provide.</p>
+
+<p>To bridge this gap, interfaces exist that allow you to call into libraries
+written in C, Python, Perl 5 and Ruby. The Perl 5 and Python interfaces are
+sophisticated enough that you can write a Perl 6 class that subclasses one
+written in either language, and the other way around.</p>
+
+<p>So if you like a particular Python library, for example, you can simply load
+it into your Perl 6 program through the <code>Inline::Python</code> module.</p>
+
+<h2>Why Should I Use Perl 6?</h2>
+
+<p>If you like the quick prototyping experience from dynamically typed programming
+languages, but you also want enough safety features to build big, reliable
+applications, Perl 6 is a good fit for you. Its gradual typing allows you to
+write code without having a full picture of the types involved, and later
+introduce type constraints to guard against future misuse of your internal
+and external APIs.</p>
+
+<p>Perl has a long history of making text processing via regular expressions
+(<em>regexes</em>) very easy, but more complicated regexes have acquired a
+reputation of being hard to read and maintain. Perl 6 solves this by putting
+regexes on the same level as code, allowing you to name it like subroutines,
+and even to use object orientated features such as class inheritance and role
+composition to manage code and regex reuse. The resulting grammars are very
+powerful, and easy to read. In fact, the Rakudo Perl 6 compiler parses
+Perl 6 source code with a Perl 6 grammar!</p>
+
+<p>Speaking of text, Perl 6 has amazing Unicode support. If you ask your user for
+a number, and they enter it with digits that don't happen to be the Arabic
+digits from the ASCII range, Perl 6 still has you covered. And if you deal
+with graphemes that cannot be expressed as a single Unicode code point, Perl
+6 still presents it as a single character.</p>
+
+<p>There are more technical benefits that I could list, but more importantly, the
+language is designed to be fun to use. An important aspect of that is good
+error messages. Have you ever been annoyed at Python for typically giving just
+<code>SyntaxError: invalid syntax</code> when something's wrong? This error could come
+from forgetting a closing parenthesis, for example. In this case, a Perl 6
+compiler says</p>
+
+<pre><code>Unable to parse expression in argument list; couldn't find final ')'
+</code></pre>
+
+<p>which actually tells you what's wrong. But this is just the tip of the
+iceberg. The compiler catches common mistakes and points out possible
+solutions, and even suggests fixes for spelling mistakes.</p>
+
+<p>Finally, Perl 6 gives you the freedom to express your problem domain and
+solution in different ways and with different programming paradigms. And if
+the options provided by the core language are not enough, Perl 6 is designed
+with extensibility in mind, allowing you to introduce both new semantics for
+object oriented code and new syntax.</p>
+
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
