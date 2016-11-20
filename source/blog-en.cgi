@@ -77,6 +77,7 @@ use FileHandle;
 use File::Find;
 use File::stat;
 use Time::localtime;
+use POSIX qw(strftime);
 use CGI qw/:standard :netscape/;
 
 $version = "2.0";
@@ -348,14 +349,12 @@ sub generate {
       # Prepend a slash for use in templates only if a path exists
       $path &&= "/$path";
 
-      $rssDate = ctime($f{$path_file});
-      $rssDate =~ s/(\w+) /$1, /;
-      $rssDate .= " +0100";
       {
-          my ($sec, $min, $hour, $mday, $mon, $year) = gmtime($f{$path_file});
 
+          my ($sec, $min, $hour, $mday, $mon, $year) = gmtime($f{$path_file});
           $dcDate = sprintf "%04d-%02d-%02dT%02d:%02d:%02d+00:00",
                     $year + 1900, $mon+1, $mday, $hour, $min, $sec;
+          $rssDate = strftime("%a, %d %b %Y %H:%M:%S %z", $sec, $min, $hour, $mday, $mon, $year);
       }
 
       # Date fiddling for by-{year,month,day} archive views
