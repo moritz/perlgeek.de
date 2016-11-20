@@ -19,7 +19,7 @@ sub dateforfile {
     close $h or warn $!;
     no warnings 'uninitialized';
     if ( $date =~ /\b(\d{4})-(\d\d)-(\d\d)\b/ ) {
-        return timelocal( 0, 0, 0, $3, $2 - 1, $1 - 1900 );
+        return timelocal( 0, 0, 0, $3, $2 - 1, $1 - 1900 ) + 1;
     }
     elsif ( $date =~ m/(\d{4,})/ ) {
         return $1;
