@@ -350,6 +350,7 @@ sub generate {
 
       $rssDate = ctime($f{$path_file});
       $rssDate =~ s/(\w+) /$1, /;
+      $rssDate .= " CET";
       {
           my ($sec, $min, $hour, $mday, $mon, $year) = gmtime($f{$path_file});
 
