@@ -450,10 +450,10 @@ html story <p><a name="$fn"><b>$title</b></a><br />$body<br /><br />posted at: $
 html date <h3>$dw, $da $mo $yr</h3>\n
 html foot <p /><center><a href="http://www.blosxom.com/"><img src="http://www.blosxom.com/images/pb_blosxom.gif" border="0" /></a></body></html>
 rss content_type text/xml
-rss head <?xml version="1.0"?>\n<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/">\n<!-- name="generator" content="blosxom/$version" -->\n<channel  rdf:about="http://perlgeek.de$url$path/">\n    <title>$blog_title $path_info_da $path_info_mo $path_info_yr</title>\n    <link>http://perlgeek.de$url/</link>\n    <description>$blog_description</description>\n
+rss head <?xml version="1.0"?>\n<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/">\n<!-- name="generator" content="blosxom/$version" -->\n<channel  rdf:about="http://perlgeek.de$url$path/">\n    <title>$blog_title $path_info_da $path_info_mo $path_info_yr</title>\n    <link>http://perlgeek.de$url/</link>\n    <description>$blog_description</description>\n</channel>\n
 rss story   <item rdf:about="http://perlgeek.de$url$path/$fn.html">\n <title>$title</title>\n  <link>http://perlgeek.de$url$path/$fn.html</link>\n <author>Moritz Lenz</author>\n   <pubDate>$rssDate</pubDate>\n    <description>$body</description>\n  </item>\n
 rss date \n
-rss foot  \n</channel>\n</rdf:RDF>
+rss foot  \n</rdf:RDF>
 error content_type text/html
 error head <html><body><p><font color="red">Error: I'm afraid this is the first I've heard of a "$flavour" flavoured Blosxom.  Try dropping the "/+$flavour" bit from the end of the URL.</font>\n\n
 error story <p><b>$title</b><br />$body <a href="$url/$yr/$mo_num/$da#fn.$default_flavour">#</a></p>\n
