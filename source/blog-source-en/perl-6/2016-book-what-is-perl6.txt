@@ -35,7 +35,7 @@ conflicting desires to evolve and to keep backwards compatibility.</p>
 
 <p>Perl 6 was the valve to release this tension. All the extension proposals that
 required a break in backwards compatibility were channeled into Perl 6,
-leaving it in a dreamlike state where everything was possible and nothing as
+leaving it in a dreamlike state where everything was possible and nothing was
 fixed. It took several years of hard work to get into a more solid state.</p>
 
 <p>During this time, Perl 5 also evolved, and the two languages are different
