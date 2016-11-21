@@ -71,7 +71,7 @@ and external APIs.</p>
 (<em>regexes</em>) very easy, but more complicated regexes have acquired a
 reputation of being hard to read and maintain. Perl 6 solves this by putting
 regexes on the same level as code, allowing you to name it like subroutines,
-and even to use object orientated features such as class inheritance and role
+and even to use object oriented features such as class inheritance and role
 composition to manage code and regex reuse. The resulting grammars are very
 powerful, and easy to read. In fact, the Rakudo Perl 6 compiler parses
 Perl 6 source code with a Perl 6 grammar!</p>
