@@ -4,8 +4,6 @@ Perl 6 By Example: Running Rakudo
 [% include p6-intro %]
 
 
-<h1>Running Perl 6</h1>
-
 <p>Before we start exploring Perl 6, you should have an environment where you
 can run Perl 6 code. So you need to install Rakudo Perl 6, currently
 the only actively developed Perl 6 compiler. Or even better, install Rakudo
