@@ -1,0 +1,127 @@
+Perl 6 By Example: Running Rakudo
+<!-- 2016-11-27 -->
+
+[% include p6-intro %]
+
+
+<h1>Running Perl 6</h1>
+
+<p>Before we start exploring Perl 6, you should have an environment where you
+can run Perl 6 code. So you need to install Rakudo Perl 6, currently
+the only actively developed Perl 6 compiler. Or even better, install Rakudo
+Star, which is a distribution that includes Rakudo itself, a few useful
+modules, and an installer that can help you install more modules.</p>
+
+<p>Below a few options for getting Rakudo Star installed are discussed. Chose
+whatever works for you.</p>
+
+<p>The examples here use Rakudo Star 2016.10.</p>
+
+<h2>Installers</h2>
+
+<p>You can download installers from <a href="http://rakudo.org/downloads/star/">http://rakudo.org/downloads/star/</a> for Mac
+OS (.dmg) and Windows (.msi). After download, you can launch them, and they
+walk you through the installation process.</p>
+
+<p>Note that Rakudo is not relocatable, which means you have to install to a fix
+location that was decided by the creator of the installer. Moving the
+installation to a different directory.</p>
+
+<p>On Windows, the installer offers you need to add <code>C:\rakudo\bin</code> and
+<code>C:\rakudo\share\perl6\site\bin</code> to your <code>PATH</code> environment.
+You should chose that option, as it allows you to call rakudo (and programs
+that the module installer installs on your behalf) without specifying full
+paths.</p>
+
+<h2>Docker</h2>
+
+<p>On platforms that support Docker, you can pull an existing Docker container
+from the docker hub:</p>
+
+<pre><code>$ docker pull mj41/perl6-star
+</code></pre>
+
+<p>Then you can get an interactive Rakudo shell with this command:</p>
+
+<pre><code>$ docker run -it mj41/perl6-star perl6
+</code></pre>
+
+<p>But that won't work for executing scripts, because the container has its own,
+separate file system. To make scripts available inside the container, you
+need to tell Docker to make the current directory available to the container:</p>
+
+<pre><code>$ docker run -v $PWD:/perl6 -w /perl6 -it mj41/perl6-star perl6
+</code></pre>
+
+<p>The option <code>-v $PWD:/perl6</code> instructs Docker to mount the current working
+directory (<code>$PWD</code>) into the container, where it'll be available as <code>/perl6</code>.
+To make relative paths work, <code>-w /perl6</code> instructs Docker to set the working
+directory of the rakudo process to <code>/perl6</code>.</p>
+
+<p>Since this command line starts to get unwieldy, I created an alias (this is
+Bash syntax; other shells might have slightly different alias mechanisms):</p>
+
+<pre><code>alias p6d='docker run -v $PWD:/perl6 -w /perl6 -it mj41/perl6-star perl6'
+</code></pre>
+
+<p>I put this line into my <code>~/.bashrc</code> files, so new bash instances have a <code>p6d</code>
+command, short for "Perl 6 docker".</p>
+
+<p>As a short test to see if it works, you can run</p>
+
+<pre><code>$ p6d -e 'say "hi"'
+hi
+</code></pre>
+
+<p>If you go the Docker route, just the <code>p6d</code> alias instead of <code>perl6</code> to run
+scripts.</p>
+
+<h2>Building from Source</h2>
+
+<p>To build Rakudo Star from source, you need make, gcc or clang and perl 5
+installed. This example installs into <code>$HOME/opt/rakudo-star</code>:</p>
+
+<pre><code>$ wget http://rakudo.org/downloads/star/rakudo-star-2016.10.tar.gz
+$ tar xzf rakudo-star-2016.10.tar.gz
+$ cd rakudo-star-2016.10/
+$ perl Configure.pl --prefix=$HOME/opt/rakudo-star --gen-moar
+$ make install
+</code></pre>
+
+<p>You should have about 2GB of RAM available for the last step; building a
+compiler is a resource intensive task.</p>
+
+<p>You need to add paths to two directories to your <code>PATH</code> environment variable,
+one for Rakudo itself, one for programs installed by the module installer:</p>
+
+<pre><code>PATH=$PATH:$HOME/opt/rakudo-star/bin/:$HOME/opt/rakudo-star/share/perl6/site/bin
+</code></pre>
+
+<p>If you are a Bash user, you can put that line into your <code>~/.bashrc</code> file
+to make it available in new Bash processes.</p>
+
+<h2>Testing your Rakudo Star Installation</h2>
+
+<p>You should now be able to run Perl 6 programs from the command line, and ask
+Rakudo for its version:</p>
+
+<pre><code>$ perl6 --version
+This is Rakudo version 2016.10-2-gb744de3 built on MoarVM version 2016.09-39-g688796b
+implementing Perl 6.c.
+
+$ perl6 -e "say &lt;hi&gt;"
+hi
+</code></pre>
+
+<p>If, against all odds, all of these approaches have failed you to produce a
+usable Rakudo installation, you should describe your problem to the friendly
+Perl 6 community, which can usually provide some help.
+<a href="http://perl6.org/community/">http://perl6.org/community/</a> describes ways to interact with the community.</p>
+
+
+<p>Next week we'll take a look at the first proper Perl 6 example, so stay tuned for updates!</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
