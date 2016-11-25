@@ -8,7 +8,7 @@ recently encountered while pursuing one of my hobbies.</p>
 
 <img src="https://perlgeek.de/images/blog/p6/sudoku.png" />
 
-<p><a href="https://sudokugarden.de/en/info/">Sudoku</a> is a number-placement puzzle played on a grid of 9x9 cells, subdivided into
+<p><a href="https://sudokugarden.de/en/info/rules">Sudoku</a> is a number-placement puzzle played on a grid of 9x9 cells, subdivided into
 blocks of 3x3. Some of the cells are filled out with numbers from 1 to 9, some
 are empty. The objective of the game is to fill out the empty cells so that in
 each row, column and 3x3 block, each digit from 1 to 9 occurs exactly once.</p>

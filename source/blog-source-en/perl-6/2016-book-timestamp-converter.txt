@@ -1,5 +1,5 @@
 Perl 6 By Example: Datetime Conversion for the Command Line
-<!-- 2016-12-18 -->
+<!-- 2016-12-11 -->
 
 [% include p6-intro %]
 
