@@ -1,0 +1,516 @@
+Perl 6 By Example: Formatting a Sudoku Puzzle
+<!-- 2016-11-04 -->
+
+[% include p6-intro %]
+
+<p>As a gentle introduction to Perl 6, let's consider a small task that I
+recently encountered while pursuing one of my hobbies.</p>
+
+<img src="https://perlgeek.de/images/blog/p6/sudoku.png" />
+
+<p><a href="https://sudokugarden.de/en/info/">Sudoku</a> is a number-placement puzzle played on a grid of 9x9 cells, subdivided into
+blocks of 3x3. Some of the cells are filled out with numbers from 1 to 9, some
+are empty. The objective of the game is to fill out the empty cells so that in
+each row, column and 3x3 block, each digit from 1 to 9 occurs exactly once.</p>
+
+<p>An efficient storage format for a Sudoku is simply a string of 81 characters,
+with 0 for empty cells and the digits 1 to 9 for pre-filled cells. The task
+I want to solve is to bring this into a friendlier format.</p>
+
+<p>The input could be:</p>
+
+<pre><code>000000075000080094000500600010000200000900057006003040001000023080000006063240000
+</code></pre>
+
+<p>On to our first Perl 6 program:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+my $sudoku = '000000075000080094000500600010000200000900057006003040001000023080000006063240000';
+for 0..8 -&gt; $line-number {
+    say substr $sudoku, $line-number * 9, 9;
+}
+</code></pre>
+
+<p>You can run it like this:</p>
+
+<pre><code>$ perl6 sudoku.p6
+000000075
+000080094
+000500600
+010000200
+000900057
+006003040
+001000023
+080000006
+063240000
+</code></pre>
+
+<p>There's not much magic in there, but let's go through the code one line at a
+time.</p>
+
+<p>The first line, starting with a <code>#</code> is a comment that extends to the end of
+the line.</p>
+
+<pre><code>use v6;
+</code></pre>
+
+<p>This line is not strictly necessary, but good practice anyway. It declares the
+Perl version you are using, here v6, so any version of the Perl 6 language. We
+could be more specific and say <code>use v6.c;</code> to require exactly the version
+discussed here. If you ever accidentally run a Perl 6 program through Perl 5,
+you'll be glad you included this line, because it'll tell you:</p>
+
+<pre><code>$ perl sudoku.p6
+Perl v6.0.0 required--this is only v5.22.1, stopped at sudoku.p6 line 1.
+BEGIN failed--compilation aborted at sudoku.p6 line 1.
+</code></pre>
+
+<p>instead of the much more cryptic</p>
+
+<pre><code>syntax error at sudoku.p6 line 4, near "for 0"
+Execution of sudoku.p6 aborted due to compilation errors.
+</code></pre>
+
+<p>The first interesting line is</p>
+
+<pre><code>my $sudoku = '00000007500...';
+</code></pre>
+
+<p><code>my</code> declares a lexical variable. It is visible from the point of the
+declaration to the end of the current scope, which means either to the end of
+the current block delimited by curly braces, or to the end of the file if it's
+outside any block. As it is in this example.</p>
+
+<p>Variables start with a <em>sigil</em>, here a '$'. Sigils are what gave Perl the
+reputation of being line noise, but there is signal in the noise. The <code>$</code>
+looks like an <code>S</code>, which stands for <em>scalar</em>. If you know some math, you know
+that a scalar is just a single value, as opposed to a vector or even a matrix.</p>
+
+<p>The variable doesn't start its life empty, because there's an initialization
+right next to it. The value it starts with is a string literal, as indicated
+by the quotes.</p>
+
+<p>Note that there is no need to declare the type of the variable beyond the very
+vague "it's a scalar" implied by the sigil. If we wanted, we could add a type
+constraint:</p>
+
+<pre><code>my Str $sudoku = '00000007500...';
+</code></pre>
+
+<p>But when quickly prototyping, I tend to forego type constraints, because I
+often don't know yet how exactly the code will work out.</p>
+
+<p>The actual logic happens in the next lines, by iterating over the line numbers
+0 to 8:</p>
+
+<pre><code>for 0..8 -&gt; $line-number {
+    ...
+}
+</code></pre>
+
+<p>The <code>for</code> loop has the general structure <code>for ITERABLE BLOCK</code>. Here the
+iterable is a <a href="https://docs.perl6.org/type/Range.html">range</a>, and the block
+is a <em>pointy block</em>. The block starts with <code>-&gt;</code>, which introduces a
+<em>signature</em>. The signature tells the compiler what arguments the blocks
+expects, here a single scalar called <code>$line-number</code>.</p>
+
+<p>Perl 6 allows to use a dash <code>-</code> or a single quote <code>'</code> inside identifier, as
+long as there is a letter on both sides (to disambiguate it from subtraction).</p>
+
+<p>Again, type constraints are optional. If you chose to include them, it would
+be <code>for 0..9 -&gt; Int $line-number { ... }</code>.</p>
+
+<p><code>$line-number</code> is again a lexical variable, and visible inside the block that comes
+after the signature. Blocks are delimited by curly braces.</p>
+
+<pre><code>say substr $sudoku, $line-number * 9, 9;
+</code></pre>
+
+<p>Both <a href="https://docs.perl6.org/routine/say#(IO)_sub_say">say</a> and
+<a href="https://docs.perl6.org/type/Str#routine_substr">substr</a> are functions
+provided by the Perl 6 standard library. <code>substr($string, $start, $chars)</code>
+extracts a substring of (up to) <code>$chars</code> characters length from <code>$string</code>,
+starting from index <code>$start</code>. Oh, and indexes are zero-based in Perl 6.</p>
+
+<p><code>say</code> then prints this substring, followed by a line break.</p>
+
+<p>As you can see from the example, function invocations don't need parenthesis,
+though you can add them if you want:</p>
+
+<pre><code>say substr($sudoku, $line-number * 9, 9);
+</code></pre>
+
+<p>or even</p>
+
+<pre><code>say(substr($sudoku, $line-number * 9, 9));
+</code></pre>
+
+<h2>Making the Sudoku playable</h2>
+
+<p>As the output of our script stands now, you can't play the resulting Sudoku
+even if you printed it, because all those pesky zeros get in your way of
+actually entering the numbers you carefully deduce while solving the puzzle.</p>
+
+<p>So, let's substitute each <code>0</code> with a blank:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+
+my $sudoku = '000000075000080094000500600010000200000900057006003040001000023080000006063240000';
+$sudoku = $sudoku.trans('0' =&gt; ' ');
+
+for 0..8 -&gt; $line-number {
+    say substr $sudoku, $line-number * 9, 9;
+}
+</code></pre>
+
+<p><a href="https://docs.perl6.org/type/Str.html#method_trans">trans</a> is a method of the
+<code>Str</code> class. Its argument is a <a href="https://docs.perl6.org/type/Pair">Pair</a>. The
+boring way to create a Pair would be <code>Pair.new('0', ' ')</code>, but since it's so
+commonly used, there is a shortcut in the form of the <em>fat arrow</em>, <code>=&gt;</code>. The
+method <code>trans</code> replaces each occurrence of they pair's key with the pair's
+value, and returns the resulting string.</p>
+
+<p>Speaking of shortcuts, you can also shorten <code>$sudoku =
+$sudoku.trans(...)</code> to <code>$sudoku.=trans(...)</code>. This is a general pattern that
+turns methods that return a result into mutators.</p>
+
+<p>With the new string substitution, the result is playable, but ugly:</p>
+
+<pre><code>$ perl6 sudoku.p6
+       75
+    8  94
+   5  6  
+ 1    2  
+   9   57
+  6  3 4 
+  1    23
+ 8      6
+ 6324    
+</code></pre>
+
+<p>A bit ASCII art makes it bearable:</p>
+
+<pre><code>+---+---+---+
+|   | 1 |   |
+|   |   |79 |
+| 9 |   | 4 |
++---+---+---+
+|   |  4|  5|
+|   |   | 2 |
+|3  | 29|18 |
++---+---+---+
+|  4| 87|2  |
+|  7|  2|95 |
+| 5 |  3|  8|
++---+---+---+
+</code></pre>
+
+<p>To get the vertical dividing lines, we need to sub-divide the lines into
+smaller chunks. And since we already have one occurrence of dividing a string
+into smaller strings of a fixed size, it's time to encapsulate it into a
+function:</p>
+
+<pre><code>sub chunks(Str $s, Int $chars) {
+    gather for 0 .. $s.chars / $chars - 1 -&gt; $idx {
+        take substr($s, $idx * $chars, $chars);
+    }
+}
+
+for chunks($sudoku, 9) -&gt; $line {
+    say chunks($line, 3).join('|');
+}
+</code></pre>
+
+<p>The output is:</p>
+
+<pre><code>$ perl6 sudoku.p6
+   |   | 75
+   | 8 | 94
+   |5  |6  
+ 1 |   |2  
+   |9  | 57
+  6|  3| 4 
+  1|   | 23
+ 8 |   |  6
+ 63|24 |   
+</code></pre>
+
+<p>But how did it work? Well, <code>sub (SIGNATURE) BLOCK</code> declares a subroutine,
+short sub. Here I declare it to take two arguments, and since I tend to
+confuse the order of arguments to functions I call, I've added type
+constraints that make it very likely that Perl 6 catches the error for me.</p>
+
+<p><code>gather</code> and <code>take</code> work together to create a list. <code>gather</code> is the entry
+point, and each execution of <code>take</code> adds one element to the list. So</p>
+
+<pre><code>gather {
+    take 1;
+    take 2;
+}
+</code></pre>
+
+<p>would return the list <code>1, 2</code>. Here <code>gather</code> acts as a statement prefix, which
+means it collects all <code>take</code>s from within the <code>for</code> loop.</p>
+
+<p>A subroutine returns the value from the last expression, which here is the
+<code>gather for ...</code> thing discussed above.</p>
+
+<p>Coming back to the program, the for-loop now looks like this:</p>
+
+<pre><code>for chunks($sudoku, 9) -&gt; $line {
+    say chunks($line, 3).join('|');
+}
+</code></pre>
+
+<p>So first the program chops up the full Sudoku string into lines of nine characters,
+and then for each line, again into a list of three strings of three characters
+length. The <a href="https://docs.perl6.org/type/List#routine_join">join method</a> turns
+it back into a string, but with pipe symbols inserted between the chunks.</p>
+
+<p>There are still vertical bars missing at the start and end of the line, which
+can easily be hard-coded by changing the last line:</p>
+
+<pre><code>    say '|', chunks($line, 3).join('|'), '|';
+</code></pre>
+
+<p>Now the output is</p>
+
+<pre><code>|   |   | 75|
+|   | 8 | 94|
+|   |5  |6  |
+| 1 |   |2  |
+|   |9  | 57|
+|  6|  3| 4 |
+|  1|   | 23|
+| 8 |   |  6|
+| 63|24 |   |
+</code></pre>
+
+<p>Only the horizontal lines are missing, which aren't too hard to add:</p>
+
+<pre><code>my $separator = '+---+---+---+';
+my $index = 0;
+for chunks($sudoku, 9) -&gt; $line {
+    if $index++ %% 3 {
+        say $separator;
+    }
+    say '|', chunks($line, 3).join('|'), '|';
+}
+say $separator;
+</code></pre>
+
+<p>Et voila:</p>
+
+<pre><code>+---+---+---+
+|   |   | 75|
+|   | 8 | 94|
+|   |5  |6  |
++---+---+---+
+| 1 |   |2  |
+|   |9  | 57|
+|  6|  3| 4 |
++---+---+---+
+|  1|   | 23|
+| 8 |   |  6|
+| 63|24 |   |
++---+---+---+
+</code></pre>
+
+<p>There are two new aspects here: the <code>if</code> conditional, which structurally very
+much resembles the <code>for</code> loop. The second new aspect is the divisibility
+operator, <code>%%</code>. From other programming languages you probably know <code>%</code> for
+modulo, but since <code>$number % $divisor == 0</code> is such a common pattern,
+<code>$number %% $divisor</code> is Perl 6's shortcut for it.</p>
+
+<h2>Shortcuts, Constants, and more Shortcuts</h2>
+
+<p>Perl 6 is modeled after human languages, which have some kind of compression
+scheme built in, where commonly used words tend to be short, and common
+constructs have shortcuts.</p>
+
+<p>As such, there are lots of ways to write the code more succinctly. The first
+is basically cheating, because the sub <code>chunks</code> can be replaced by a built-in
+method in the <code>Str</code> class,
+<a href="https://docs.perl6.org/type/Str#routine_comb">comb</a>:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+
+my $sudoku = '000000075000080094000500600010000200000900057006003040001000023080000006063240000';
+$sudoku = $sudoku.trans: '0' =&gt; ' ';
+
+my $separator = '+---+---+---+';
+my $index = 0;
+for $sudoku.comb(9) -&gt; $line {
+    if $index++ %% 3 {
+        say $separator;
+    }
+    say '|', $line.comb(3).join('|'), '|';
+}
+say $separator;
+</code></pre>
+
+<p>The <code>if</code> conditional can be applied as a statement postfix:</p>
+
+<pre><code>say $separator if $index++ %% 3;
+</code></pre>
+
+<p>Except for the initialization, the variable <code>$index</code> is used only once, so
+there's no need to give it name. Yes, Perl 6 has anonymous variables:</p>
+
+<pre><code>my $separator = '+---+---+---+';
+for $sudoku.comb(9) -&gt; $line {
+    say $separator if $++ %% 3;
+    say '|', $line.comb(3).join('|'), '|';
+}
+say $separator;
+</code></pre>
+
+<p>Since <code>$separator</code> is a constant, we can declare it as one:</p>
+
+<pre><code>`constant $separator = '+---+---+---+';
+</code></pre>
+
+<p>If you want to reduce the line noise factor, you can also forego the sigil, so
+<code>constant separator = '...'</code>.</p>
+
+<p>Finally there is a another syntax for method calls with arguments: instead of
+<code>$obj.method(args)</code> you can say <code>$obj.method: args</code>, which brings us to the
+idiomatic form of the small Sudoku formatter:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+
+my $sudoku = '000000075000080094000500600010000200000900057006003040001000023080000006063240000';
+$sudoku = $sudoku.trans: '0' =&gt; ' ';
+
+constant separator = '+---+---+---+';
+for $sudoku.comb(9) -&gt; $line {
+    say separator if $++ %% 3;
+    say '|', $line.comb(3).join('|'), '|';
+}
+say separator;
+</code></pre>
+
+<h2>IO and other Tragedies</h2>
+
+<p>A practical script doesn't contain its input as a hard-coded string literal,
+but reads it from the command line, standard input or a file.</p>
+
+<p>If you want to read the Sudoku from the command line, you can declare a
+subroutine called <code>MAIN</code>, which gets all command line arguments passed in:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+
+constant separator = '+---+---+---+';
+
+sub MAIN($sudoku) {
+    my $substituted = $sudoku.trans: '0' =&gt; ' ';
+
+    for $substituted.comb(9) -&gt; $line {
+        say separator if $++ %% 3;
+        say '|', $line.comb(3).join('|'), '|';
+    }
+    say separator;
+}
+</code></pre>
+
+<p>This is how it's called:</p>
+
+<pre><code>$ perl6-m sudoku-format-08.p6 000000075000080094000500600010000200000900057006003040001000023080000006063240000
++---+---+---+
+|   |   | 75|
+|   | 8 | 94|
+|   |5  |6  |
++---+---+---+
+| 1 |   |2  |
+|   |9  | 57|
+|  6|  3| 4 |
++---+---+---+
+|  1|   | 23|
+| 8 |   |  6|
+| 63|24 |   |
++---+---+---+
+</code></pre>
+
+<p>And you even get a usage message for free if you use it wrongly, for example
+by omitting the argument:</p>
+
+<pre><code>$ perl6-m sudoku.p6 
+Usage:
+  sudoku.p6 &lt;sudoku&gt; 
+</code></pre>
+
+<p>You might have noticed that the last example uses a separate variable for the
+substituted Sudoku string.This is because function parameters (aka variables
+declared in a signature) are read-only by default. Instead of creating a new
+variable, I could have also written <code>sub MAIN($sudoku is copy) { ... }</code>.</p>
+
+<p>Classic UNIX programs such as <code>cat</code> and <code>wc</code>, follow the convention of reading
+their input from file names given on the command line, or from the standard
+input if no file names are given on the command line.</p>
+
+<p>If you want your program to follow this convention, <code>lines()</code> provides a
+stream of lines from either of these source:</p>
+
+<pre><code># file sudoku.p6
+use v6;
+
+constant separator = '+---+---+---+';
+
+for lines() -&gt; $sudoku {
+    my $substituted = $sudoku.trans: '0' =&gt; ' ';
+
+    for $substituted.comb(9) -&gt; $line {
+        say separator if $++ %% 3;
+        say '|', $line.comb(3).join('|'), '|';
+    }
+    say separator;
+}
+</code></pre>
+
+<h2>Get Creative!</h2>
+
+<p>You won't learn a programming language from reading a blog, you have to
+actually use it, tinker with it. If you want to expand on the examples
+discussed earlier, I'd encourage you to try to produce Sudokus in different
+output formats.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
+offers a good ratio of result to effort. This is the rough skeleton of an SVG
+file for a Sudoku:</p>
+
+<pre><code>&lt;?xml version="1.0" standalone="no"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg width="304" height="304" version="1.1"
+xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;line x1="0" x2="300" y1="33.3333" y2="33.3333" style="stroke:grey" /&gt;
+    &lt;line x1="0" x2="300" y1="66.6667" y2="66.6667" style="stroke:grey" /&gt;
+    &lt;line x1="0" x2="303" y1="100" y2="100" style="stroke:black;stroke-width:2" /&gt;
+    &lt;line x1="0" x2="300" y1="133.333" y2="133.333" style="stroke:grey" /&gt;
+    &lt;!-- more horizontal lines here --&gt;
+
+    &lt;line y1="0" y2="300" x1="33.3333" x2="33.3333" style="stroke:grey" /&gt;
+    &lt;!-- more vertical lines here --&gt;
+
+
+    &lt;text x="43.7333" y="124.5"&gt; 1 &lt;/text&gt;
+    &lt;text x="43.7333" y="257.833"&gt; 8 &lt;/text&gt;
+    &lt;!-- more cells go here --&gt;
+    &lt;rect width="304" height="304" style="fill:none;stroke-width:1;stroke:black;stroke-width:6"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+<p>If you have a Firefox or Chrome browser, you can use it to open the SVG file.</p>
+
+<p>If you are adventurous, you could also write a Perl 6 program that renders the
+Sudoku as a Postscript (PS) or Embedded Postscript document. It's also a
+text-based format.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]

@@ -1,0 +1,529 @@
+Perl 6 By Example: Datetime Conversion for the Command Line
+<!-- 2016-12-18 -->
+
+[% include p6-intro %]
+
+<p>Occasionally I work with a database that stores dates and datetimes as UNIX
+timestamps, aka the number of seconds since midnight 1970-01-01. Unlike the
+original author of the database and surrounding code, I cannot convert between
+UNIX timestamps and human readable date formats in my head, so I write tools
+for that.</p>
+
+<p>Our goal here is to write a small tool that converts back and forth between
+UNIX timestamps and dates/times:</p>
+
+<pre><code>$ autotime 2015-12-24
+1450915200
+$ autotime 2015-12-24 11:23:00
+1450956180
+$ autotime 1450915200
+2015-12-24
+$ autotime 1450956180
+2015-12-24 11:23:00
+</code></pre>
+
+<h2>Libraries To The Rescue</h2>
+
+<p>Date and Time arithmetics are surprisingly hard to get right, and at the same
+time rather boring, hence I'm happy to delegate that part to libraries.</p>
+
+<p>Perl 6 ships with <a href="https://docs.perl6.org/type/DateTime">DateTime</a> (somewhat
+inspired by the Perl 5 module of the same name) and
+<a href="https://docs.perl6.org/type/Date">Date</a> (mostly blatantly stolen from Perl
+5's <code>Date::Simple</code> module) in the core library. Those two will do the actual
+conversion, so we can focus on the input and output, and detecting the
+formats to decide in which direction to convert.</p>
+
+<p>For the conversion from a UNIX timestamp to a date or datetime, the
+<code>DateTime.new</code> constructor comes in handy.  It has a variant that accepts a
+single integer as a UNIX timestamp:</p>
+
+<pre><code>$ perl6 -e "say DateTime.new(1450915200)"
+2015-12-24T00:00:00Z
+</code></pre>
+
+<p>Looks like we're almost done with one direction, right?</p>
+
+<pre><code>#!/usr/bin/env perl6
+sub MAIN(Int $timestamp) {
+    say DateTime.new($timestamp)
+}
+</code></pre>
+
+<p>Let's run it:</p>
+
+<pre><code>$ autotime 1450915200
+Invalid DateTime string '1450915200'; use an ISO 8601 timestamp (yyyy-mm-ddThh:mm:ssZ or yyyy-mm-ddThh:mm:ss+01:00) instead
+  in sub MAIN at autotime line 2
+  in block &lt;unit&gt; at autotime line 2
+</code></pre>
+
+<p>Oh my, what happened? It seems that the <code>DateTime</code> constructor seems to view the
+argument as a string, even though the parameter to <code>sub MAIN</code> is declared as
+an <code>Int</code>. How can that be? Let's add some debugging output:</p>
+
+<pre><code>#!/usr/bin/env perl6
+sub MAIN(Int $timestamp) {
+    say $timestamp.^name;
+    say DateTime.new($timestamp)
+}
+</code></pre>
+
+<p>Running it now with the same invocation as before, there's an extra line of
+output before the error:</p>
+
+<pre><code>IntStr
+</code></pre>
+
+<p><code>$thing.^name</code> is a call to a method of the meta class of <code>$thing</code>, and
+<code>name</code> asks it for its name. In other words, the name of the class.
+<a href="https://docs.perl6.org/type/IntStr">IntStr</a> is a subclass of both <code>Int</code> and
+<code>Str</code>, which is why the <code>DateTime</code> constructor legitimately considers it a
+<code>Str</code>.  The mechanism that parses command line arguments before they are
+passed on to <code>MAIN</code> converts the string from the command line to <code>IntStr</code>
+instead of <code>Str</code>, in order to not lose information in case we do want to
+treat it as a string.</p>
+
+<p>Cutting a long story short, we can force the argument into a "real" integer
+by adding a <code>+</code> prefix, which is the general mechanism for conversion to a
+numeric value:</p>
+
+<pre><code>#!/usr/bin/env perl6
+sub MAIN(Int $timestamp) {
+    say DateTime.new(+$timestamp)
+}
+</code></pre>
+
+<p>A quick test shows that it now works:</p>
+
+<pre><code>$ ./autotime-01.p6 1450915200
+2015-12-24T00:00:00Z
+</code></pre>
+
+<p>The output is in the ISO 8601 timestamp format, which might not be the easiest
+on the eye. For a date (when hour, minute and second are zero), we really want
+just the date:</p>
+
+<pre><code>#!/usr/bin/env perl6
+sub MAIN(Int $timestamp) {
+    my $dt = DateTime.new(+$timestamp);
+    if $dt.hour == 0 &amp;&amp; $dt.minute == 0 &amp;&amp; $dt.second == 0 {
+        say $dt.Date;
+    }
+    else {
+        say $dt;
+    }
+}
+</code></pre>
+
+<p>Better:</p>
+
+<pre><code>$ ./autotime 1450915200
+2015-12-24
+</code></pre>
+
+<p>But the conditional is a bit clunky. Really, three comparisons to 0?</p>
+
+<p>Perl 6 has a neat little feature that lets you write this more compactly:</p>
+
+<pre><code>if all($dt.hour, $dt.minute, $dt.second) == 0 {
+    say $dt.Date;
+}
+</code></pre>
+
+<p><code>all(...)</code> creates a <em><a href="https://docs.perl6.org/type/Junction">Junction</a></em>, a
+composite value of several other values, that also stores a logical mode.
+When you compare a junction to another value, that comparison automatically
+applies to all the values in the junction. The <code>if</code> statement evaluates the
+junction in a boolean context, and in this case only returns <code>True</code> if all
+comparisons returned <code>True</code> as well.</p>
+
+<p>Other types of junctions exist: <code>any</code>, <code>all</code>, <code>none</code> and <code>one</code>. Considering
+that 0 is the only integer that is false in a boolean context, we could even
+write the statement above as:</p>
+
+<pre><code>if none($dt.hour, $dt.minute, $dt.second) {
+    say $dt.Date;
+}
+</code></pre>
+
+<p>Neat, right?</p>
+
+<p>But you don't always need fancy language constructs to write concise programs.
+In this case, approaching the problem from a slightly different angle yields
+even shorter and clearer code. If the <code>DateTime</code> object round-trips a
+conversion to <code>Date</code> and back to <code>DateTime</code> without loss of information, it's
+clearly a <code>Date</code>:</p>
+
+<pre><code>if $dt.Date.DateTime == $dt {
+    say $dt.Date;
+}
+else {
+    say $dt;
+}
+</code></pre>
+
+<h2>DateTime Formatting</h2>
+
+<p>For a timestamp that doesn't resolve to a full day, the output from our script
+currently looks like this:</p>
+
+<pre><code>2015-12-24T00:00:01Z
+</code></pre>
+
+<p>where "Z" indicates the UTC or "Zulu" timezone.</p>
+
+<p>Instead I'd like it to be</p>
+
+<pre><code>2015-12-24 00:00:01
+</code></pre>
+
+<p>The <code>DateTime</code> class supports custom formatters, so let's write one:</p>
+
+<pre><code>sub MAIN(Int $timestamp) {
+    my $dt = DateTime.new(+$timestamp, formatter =&gt; sub ($o) {
+            sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                    $o.year, $o.month,  $o.day,
+                    $o.hour, $o.minute, $o.second,
+    });
+    if $dt.Date.DateTime == $dt {
+        say $dt.Date;
+    }
+    else {
+        say $dt.Str;
+    }
+}
+</code></pre>
+
+<p>Now the output looks better:</p>
+
+<pre><code> ./autotime 1450915201
+2015-12-24 00:00:01
+</code></pre>
+
+<p>The syntax <code>formatter =&gt; ...</code> in the context of an argument denotes a named
+argument, which means the name and not position in the argument list decides
+which parameter to bind to. This is very handy if there are a bunch of
+parameters.</p>
+
+<p>I don't like the code anymore, because the formatter is inline in
+the <code>DateTime.new(...)</code> call, which I find unclear.</p>
+
+<p>Let's make this a separate routine:</p>
+
+<pre><code>#!/usr/bin/env perl6
+sub MAIN(Int $timestamp) {
+    sub formatter($o) {
+        sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                $o.year, $o.month,  $o.day,
+                $o.hour, $o.minute, $o.second,
+    }
+    my $dt = DateTime.new(+$timestamp, formatter =&gt; &amp;formatter);
+    if $dt.Date.DateTime == $dt {
+        say $dt.Date;
+    }
+    else {
+        say $dt.Str;
+    }
+}
+</code></pre>
+
+<p>Yes, you can put a subroutine declaration inside the body of another
+subroutine declaration; a subroutine is just an ordinary lexical symbol, like
+a variable declared with <code>my</code>.</p>
+
+<p>In the line <code>my $dt = DateTime.new(+$timestamp, formatter =&gt; &amp;formatter);</code>,
+the syntax <code>&amp;formatter</code> refers to the subroutine as an object, without calling
+it.</p>
+
+<p>This being Perl 6, <code>formatter =&gt; &amp;formatter</code> has a shortcut: <code>:&amp;formatter</code>.
+As a general rule, if you want to fill a named parameter whose name is the
+name of a variable, and whose value is the value of the variable, you can
+create it by writing <code>:$variable</code>. And as an extension, <code>:thing</code> is short
+for <code>thing =&gt; True</code>.</p>
+
+<h2>Looking the Other Way</h2>
+
+<p>Now that the conversion from timestamps to dates and times works fine, let's
+look in the other direction. Our small tool needs to parse the input, and
+decide whether the input is a timestamp, or a date and optionally a time.</p>
+
+<p>The boring way would be to use a conditional:</p>
+
+<pre><code>sub MAIN($input) {
+    if $input ~~ / ^ \d+ $ / {
+        # convert from timestamp to date/datetime
+    }
+    else {
+        # convert from date to timestamp
+
+    }
+}
+</code></pre>
+
+<p>But I hate boring, so I want to look at a more exciting (end extensible)
+approach.</p>
+
+<p>Perl 6 supports multiple dispatch. That means you can have multiple
+subroutines with the same name, but different signatures. And Perl 6
+automatically decides which one to call. You have to explicitly enable this
+feature by writing <code>multi sub</code> instead of <code>sub</code>, so that Perl 6 can catch
+accidental redeclaration for you.</p>
+
+<p>Let's see it in action:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+multi sub MAIN(Int $timestamp) {
+    sub formatter($o) {
+        sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                $o.year, $o.month,  $o.day,
+                $o.hour, $o.minute, $o.second,
+    }
+    my $dt = DateTime.new(+$timestamp, :&amp;formatter);
+    if $dt.Date.DateTime == $dt {
+        say $dt.Date;
+    }
+    else {
+        say $dt.Str;
+    }
+}
+
+
+multi sub MAIN(Str $date) {
+    say Date.new($date).DateTime.posix
+}
+</code></pre>
+
+<p>Let's see it in action:</p>
+
+<pre><code>$ ./autotime 2015-12-24
+1450915200
+$ ./autotime 1450915200
+Ambiguous call to 'MAIN'; these signatures all match:
+:(Int $timestamp)
+:(Str $date)
+  in block &lt;unit&gt; at ./autotime line 17
+</code></pre>
+
+<p>Not quite what I had envisioned. The problem is again that the integer
+argument is converted automatically to <code>IntStr</code>, and both the <code>Int</code> and the
+<code>Str</code> <code>multi</code> (or <em>candidate</em>) accept that as an argument.</p>
+
+<p>The easiest approach to avoiding this error is narrowing down the kinds of
+strings that the <code>Str</code> candidate accepts. The classical approach would be
+to have a regex that roughly validates the incoming argument:</p>
+
+<pre><code>multi sub MAIN(Str $date where /^ \d+ \- \d+ \- \d+ $ /) {
+    say Date.new($date).DateTime.posix
+}
+</code></pre>
+
+<p>And indeed it works, but why duplicate the logic that <code>Date.new</code> already has
+for validating date strings? If you pass a string argument that doesn't look
+like a date, you get such an error:</p>
+
+<pre><code>Invalid Date string 'foobar'; use yyyy-mm-dd instead
+</code></pre>
+
+<p>We can use this behavior in constraining the string parameter of the <code>MAIN</code>
+<code>multi</code> candidate:</p>
+
+<pre><code>multi sub MAIN(Str $date where { try Date.new($_) }) {
+    say Date.new($date).DateTime.posix
+}
+</code></pre>
+
+<p>The additional <code>try</code> in here is because subtype constraints behind a <code>where</code>
+are not supposed to throw an exception, just return a false value.</p>
+
+<p>And now it works as intended:</p>
+
+<pre><code>$ ./autotime 2015-12-24;
+1450915200
+$ ./autotime 1450915200
+2015-12-24
+</code></pre>
+
+<h2>Dealing With Time</h2>
+
+<p>The only feature left to implement is conversion of date and time to a
+timestamp.  In other words, we want to handle calls like <code>autotime
+2015-12-24 11:23:00</code>:</p>
+
+<pre><code>multi sub MAIN(Str $date where { try Date.new($_) }, Str $time?) {
+    my $d = Date.new($date);
+    if $time {
+        my ( $hour, $minute, $second ) = $time.split(':');
+        say DateTime.new(date =&gt; $d, :$hour, :$minute, :$second).posix;
+    }
+    else {
+        say $d.DateTime.posix;
+    }
+}
+</code></pre>
+
+<p>The new second argument is optional by virtue of the trailing <code>?</code>.  If it is
+present, we split the time string on the colon to get hour, minute and
+second. My first instinct while writing this code was to use shorter
+variable names, <code>my ($h, $m, $s) = $time.split(':')</code>, but then the call to
+the <code>DateTime</code> constructor would have looked like this:</p>
+
+<pre><code>DateTime.new(date =&gt; $d, hour =&gt; $h, minute =&gt; $m, second =&gt; $s);
+</code></pre>
+
+<p>So the named arguments to the constructor made me choose more self-explanatory
+variable names.</p>
+
+<p>So, this works:</p>
+
+<pre><code>./autotime 2015-12-24 11:23:00
+1450956180
+</code></pre>
+
+<p>And we can check that it round-trips:</p>
+
+<pre><code>$ ./autotime 1450956180
+2015-12-24 11:23:00
+</code></pre>
+
+<h2>Tighten Your Seat Belt</h2>
+
+<p>Now that the program is feature complete, we should strive to remove some
+clutter, and explore a few more awesome Perl 6 features.</p>
+
+<p>The first feature that I want to exploit is that of an <em>implicit variable</em>
+or <em>topic</em>. A quick demonstration:</p>
+
+<pre><code>for 1..3 {
+    .say
+}
+</code></pre>
+
+<p>produces the output</p>
+
+<pre><code>1
+2
+3
+</code></pre>
+
+<p>There is no explicit iteration variable, so Perl implicitly binds the current
+value of the loop to a variable called <code>$_</code>. The method call <code>.say</code> is a
+shortcut for <code>$_.say</code>. And since there is a subroutine that calls six methods
+on the same variable, using <code>$_</code> here is a nice visual optimization:</p>
+
+<pre><code>sub formatter($_) {
+    sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+            .year, .month,  .day,
+            .hour, .minute, .second,
+}
+</code></pre>
+
+<p>If you want to set <code>$_</code> in a lexical scope without resorting to a function
+definition, you can use the <code>given VALUE BLOCK</code> construct:</p>
+
+<pre><code>given DateTime.new(+$timestamp, :&amp;formatter) {
+    if .Date.DateTime == $_ {
+        say .Date;
+    }
+    else {
+        .say;
+    }
+}
+</code></pre>
+
+<p>And Perl 6 also offers a shortcut for conditionals on the <code>$_</code> variable,
+which can be used as a generalized switch statement:</p>
+
+<pre><code>given DateTime.new(+$timestamp, :&amp;formatter) {
+    when .Date.DateTime == $_ { say .Date }
+    default { .say }
+}
+</code></pre>
+
+<p>If you have a read-only variable or parameter, you can do without the <code>$</code>
+sigil, though you have to use a backslash at declaration time:</p>
+
+<pre><code>multi sub MAIN(Int \timestamp) {
+    ...
+    given DateTime.new(+timestamp, :&amp;formatter) {
+    ...
+    }
+}
+</code></pre>
+
+<p>So now the full code looks like this:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+multi sub MAIN(Int \timestamp) {
+    sub formatter($_) {
+        sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                .year, .month,  .day,
+                .hour, .minute, .second,
+    }
+    given DateTime.new(+timestamp, :&amp;formatter) {
+        when .Date.DateTime == $_ { say .Date }
+        default { .say }
+    }
+}
+
+multi sub MAIN(Str $date where { try Date.new($_) }, Str $time?) {
+    my $d = Date.new($date);
+    if $time {
+        my ( $hour, $minute, $second ) = $time.split(':');
+        say DateTime.new(date =&gt; $d, :$hour, :$minute, :$second).posix;
+    }
+    else {
+        say $d.DateTime.posix;
+    }
+}
+</code></pre>
+
+<h2>MAIN magic</h2>
+
+<p>The magic that calls <code>sub MAIN</code> for us also provides us with an automagic
+usage message if we call it with arguments that don't fit any <code>multi</code>, for
+example with no arguments at all:</p>
+
+<pre><code>$ ./autotime
+Usage:
+  ./autotime &lt;timestamp&gt;
+  ./autotime &lt;date&gt; [&lt;time&gt;]
+</code></pre>
+
+<p>We can add a short description to these usage lines by adding semantic
+comments before the MAIN subs:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+#| Convert timestamp to ISO date
+multi sub MAIN(Int \timestamp) {
+    ...
+}
+
+#| Convert ISO date to timestamp
+multi sub MAIN(Str $date where { try Date.new($_) }, Str $time?) {
+    ...
+}
+</code></pre>
+
+<p>Now the usage message becomes:</p>
+
+<pre><code>$ ./autotime
+Usage:
+  ./autotime &lt;timestamp&gt; -- Convert timestamp to ISO date
+  ./autotime &lt;date&gt; [&lt;time&gt;] -- Convert ISO date to timestamp
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>We've seen a bit of <code>Date</code> and <code>DateTime</code> arithmetic, but the exciting part
+is multiple dispatch, named arguments, subtype constraints with <code>where</code>
+clauses, <code>given</code>/<code>when</code> and the implicit <code>$_</code> variable, and some serious
+magic when it comes to <code>MAIN</code> subs.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
