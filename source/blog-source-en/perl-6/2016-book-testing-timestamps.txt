@@ -1,0 +1,323 @@
+Perl 6 By Example: Testing the Timestamp Converter
+<!-- 2016-12-18 -->
+
+[% include p6-intro %]
+
+<h1>Testing the Timestamp Converter</h1>
+
+<p>In the <a href="https://perlgeek.de/blog-en/perl-6/2016-book-timestamp-converter.html">previous installment</a>, we've seen some code go through
+several iterations of refactoring. Refactoring without automated tests
+tends to make me uneasy, so I actually had a small shell script that called
+the script under development with several different argument combinations
+and compared it to an expected result.</p>
+
+<p>Let's now look at a way to write test code in Perl 6 itself.</p>
+
+<p>As a reminder, this is what the code looked like when we left it:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+#| Convert timestamp to ISO date
+multi sub MAIN(Int \timestamp) {
+    sub formatter($_) {
+        sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                .year, .month,  .day,
+                .hour, .minute, .second,
+    }
+    given DateTime.new(+timestamp, :&amp;formatter) {
+        when .Date.DateTime == $_ { say .Date }
+        default { .say }
+    }
+}
+
+#| Convert ISO date to timestamp
+multi sub MAIN(Str $date where { try Date.new($_) }, Str $time?) {
+    my $d = Date.new($date);
+    if $time {
+        my ( $hour, $minute, $second ) = $time.split(':');
+        say DateTime.new(date =&gt; $d, :$hour, :$minute, :$second).posix;
+    }
+    else {
+        say $d.DateTime.posix;
+    }
+}
+</code></pre>
+
+<p>In the Perl community it's common to move logic into modules to make it
+easier to test with external test scripts. In Perl 6, that's still common,
+but for small tools such as this, I prefer to stick with a single file
+containing code and tests, and to run the tests via a separate test command.</p>
+
+<p>To make testing easier, let's first separate I/O from the application
+logic:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+sub from-timestamp(Int \timestamp) {
+    sub formatter($_) {
+        sprintf '%04d-%02d-%02d %02d:%02d:%02d',
+                .year, .month,  .day,
+                .hour, .minute, .second,
+    }
+    given DateTime.new(+timestamp, :&amp;formatter) {
+        when .Date.DateTime == $_ { return .Date }
+        default { return $_ }
+    }
+}
+
+sub from-date-string(Str $date, Str $time?) {
+    my $d = Date.new($date);
+    if $time {
+        my ( $hour, $minute, $second ) = $time.split(':');
+        return DateTime.new(date =&gt; $d, :$hour, :$minute, :$second);
+    }
+    else {
+        return $d.DateTime;
+    }
+}
+
+#| Convert timestamp to ISO date
+multi sub MAIN(Int \timestamp) {
+    say from-timestamp(+timestamp);
+}
+
+#| Convert ISO date to timestamp
+multi sub MAIN(Str $date where { try Date.new($_) }, Str $time?) {
+    say from-date-string($date, $time).posix;
+}
+</code></pre>
+
+<p>With this small refactoring out of the way, let's add some tests:</p>
+
+<pre><code>#| Run internal tests
+multi sub MAIN('test') {
+    use Test;
+    plan 4;
+    is-deeply from-timestamp(1450915200), Date.new('2015-12-24'),
+        'Timestamp to Date';;
+
+    my $dt = from-timestamp(1450915201);
+    is $dt, "2015-12-24 00:00:01",
+        'Timestamp to DateTime with string formatting';
+
+    is from-date-string('2015-12-24').posix, 1450915200,
+        'from-date-string, one argument';
+    is from-date-string('2015-12-24', '00:00:01').posix, 1450915201,
+        'from-date-string, two arguments';
+}
+</code></pre>
+
+<p>And you can run it:</p>
+
+<pre><code>./autotime test
+1..4
+ok 1 - Timestamp to Date
+ok 2 - Timestamp to DateTime with string formatting
+ok 3 - from-date-string, one argument
+ok 4 - from-date-string, two arguments
+</code></pre>
+
+<p>The output format is that of the <a href="https://testanything.org/">Test Anything Protocol
+(TAP)</a>, which is the de facto standard in the
+Perl community, but is now also used in other communities. For larger output
+strings it is a good idea to run the tests through a test harness. For our
+four lines of test output, this isn't yet necessary, but if want to do
+that anyway, you can use the <code>prove</code> program that's shipped with Perl 5:</p>
+
+<pre><code>$ prove -e "" "./autotime test"
+./autotime-tested.p6 test .. ok
+All tests successful.
+Files=1, Tests=4,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.23 cusr  0.02 csys =  0.28 CPU)
+Result: PASS
+</code></pre>
+
+<p>In a terminal, this even colors the "All tests successful" output in green,
+to make it easier to spot. Test failures are marked up in red.</p>
+
+<p>How does the testing work? The first line of code uses a new feature we haven't
+seen yet:</p>
+
+<pre><code>multi sub MAIN('test') {
+</code></pre>
+
+<p>What's that, a literal instead of a parameter in the subroutine signature?
+That's right. And it's a shortcut for</p>
+
+<pre><code>multi sub MAIN(Str $anon where {$anon eq 'test'}) {
+</code></pre>
+
+<p>except that it does not declare the variable <code>$anon</code>. So it's a <code>multi</code>
+candidate that you can only call by supplying the string <code>'test'</code> as the
+sole argument.</p>
+
+<p>The next line, <code>use Test;</code>, loads the <a href="https://doc.perl6.org/language/testing">test
+module</a> that's shipped with Rakudo
+Perl 6. It also imports into the current lexical scope all the symbols that
+<code>Test</code> exports by default. This includes the functions <code>plan</code>, <code>is</code> and
+<code>is-deeply</code> that are used later on.</p>
+
+<p><code>plan 4</code> declares that we want to run four tests. This is useful for
+detecting unplanned, early exits from the test code, or errors in looping
+logic in the test code that leads to running fewer tests than planned.
+If you can't be bothered to count your tests in advance, you can leave out
+the <code>plan</code> call, and instead call <code>done-testing</code> after your tests are done.</p>
+
+<p>Both <code>is-deeply</code> and <code>is</code> expect the value to be tested as the first
+argument, the expected value as the second argument, and an optional test
+label string as the third argument. The difference is that <code>is()</code> compares
+the first two arguments as strings, whereas <code>is-deeply</code> uses a deep equality
+comparison logic using the <a href="https://docs.perl6.org/routine/eqv"><code>eqv</code>
+operator</a>. Such tests only pass if the
+two arguments are of the same type, and recursively are or contain the same
+values.</p>
+
+<p>More testing functions are available, like <code>ok()</code>, which succeeds for a
+true argument, and <code>nok()</code>, which expects a false argument. You can also
+nest tests with <code>subtest</code>:</p>
+
+<pre><code>#| Run internal tests
+multi sub MAIN('test') {
+    use Test;
+    plan 2;
+    subtest 'timestamp', {
+        plan 2;
+        is-deeply from-timestamp(1450915200), Date.new('2015-12-24'),
+            'Date';;
+
+        my $dt = from-timestamp(1450915201);
+        is $dt, "2015-12-24 00:00:01",
+            'DateTime with string formatting';
+    };
+
+    subtest 'from-date-string', {
+        plan 2;
+        is from-date-string('2015-12-24').posix, 1450915200,
+            'one argument';
+        is from-date-string('2015-12-24', '00:00:01').posix, 1450915201,
+            'two arguments';
+    };
+}
+</code></pre>
+
+<p>Each call to <code>subtest</code> counts as a single test to the outer test run, so
+<code>plan 4;</code> has become <code>plan 2;</code>. The subtest call has a test label itself,
+and then inside a subtest, you have a plan again, and calls to test
+functions as below. This is very useful when writing custom test functions
+that execute a variable number of individual tests.</p>
+
+<p>The output from the nested tests looks like this:</p>
+
+<pre><code>1..2
+    1..2
+    ok 1 - Date
+    ok 2 - DateTime with string formatting
+ok 1 - timestamp
+    1..2
+    ok 1 - one argument
+    ok 2 - two arguments
+ok 2 - from-date-string
+</code></pre>
+
+<p>The test harness now reports just the two top-level tests as the number of
+run (and passed) tests.</p>
+
+<p>And yes, you can nest subtests within subtests, should you really feel the
+urge to do so.</p>
+
+<h2>Testing <code>say()</code></h2>
+
+<p>Earlier I changed some code so that it wouldn't produce output, and
+instead did the output in the <code>MAIN</code> sub, which conveniently went untested.</p>
+
+<p>If you do have to test code that produces output by calling <code>say</code>, there's a
+small trick to that. <code>say</code> works on a file handle, and you can swap out the
+default file handle, which is connected to the standard output. You can put a
+dummy file handle in its place that captures the lower-level commands issued
+to it, and record the for testing.</p>
+
+<p>There's a ready-made module for that,
+<a href="http://modules.perl6.org/dist/IO::String">IO::String</a>, but for the sake of
+learning we'll look at how it works:</p>
+
+<pre><code>use v6;
+
+# function to be tested
+sub doublespeak($x) {
+    say $x ~ $x;
+}
+
+use Test;
+plan 1;
+
+my class OutputCapture {
+    has @!lines;
+    method print(\s) {
+        @!lines.push(s);
+    }   
+    method captured() {
+        @!lines.join;
+    }
+}
+
+my $output = do {
+    my $*OUT = OutputCapture.new;
+    doublespeak(42);
+    $*OUT.captured;
+};
+
+is $output, "4242\n", 'doublespeak works';
+</code></pre>
+
+<p>First comes the function we want to test, <code>sub doublespeak</code>. It concatenates
+its argument with itself using the <code>~</code> string concatenation operator. The
+result is passed to <code>say</code>.</p>
+
+<p>Under the hood, <code>say</code> does a bit of formatting, and then looks up the variable
+<code>$*OUT</code>. The <code>*</code> after the sigil marks it as a dynamic variable. The lookup
+for the dynamic variable goes through the call stack, and in each stack frame
+looks for a declaration of the variable, taking the first it finds. <code>say</code> then
+calls the method <code>print</code> on that object.</p>
+
+<p>Normally, <code>$*OUT</code> contains an object of type
+<a href="https://doc.perl6.org/type/IO::Handle">IO::Handle</a>, but the <code>say</code> function
+doesn't really care about that, as long as it can call a <code>print</code> method on
+that object. That's called duck typing: we don't really care about the type of
+the object, as long as it can quack like a duck. Or in this case, print like a
+duck.</p>
+
+<p>The next part of the example is the declaration of type which we can use to
+emulate the <code>IO::Handle</code>:</p>
+
+<pre><code>my class OutputCapture {
+    has @!lines;
+    method print(\s) {
+        @!lines.append(s);
+    }   
+    method captured() {
+        @!lines.join;
+    }
+}
+</code></pre>
+
+<p><code>class</code> introduces a class, and the <code>my</code> prefix makes the name lexically
+scoped, just like in a <code>my $var</code> declaration.</p>
+
+<p><code>has @!lines</code> declares an attribute, that is, a variable that exists
+separately for each instance of class <code>OutputCapture</code>. The <code>!</code> mark it as an
+attribute. We could leave it output, but having it right there means you
+always know where the name comes from when reading a larger class.</p>
+
+<p>The attribute <code>@!lines</code> starts with a <code>@</code>, not a <code>$</code> as other variables we
+have seen so far. The <code>@</code> is the sigil for an array variable.</p>
+
+<p>You might be seeing a trend now: the first letter of a variable or attribute
+name denotes its rough type (scalar, array, <code>&amp;</code> for routines, and later we'll
+learn about <code>%</code> for hashes), and if the second letter is not a letter, it
+specifies its scope. We call this second letter a <em>twigil</em>. So far
+we've seen <code>*</code> for dynamic variables, and <code>!</code> for attributes. Stay tuned for
+more.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
