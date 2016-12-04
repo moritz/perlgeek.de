@@ -1,5 +1,5 @@
 Perl 6 By Example: Formatting a Sudoku Puzzle
-<!-- 2016-11-04 -->
+<!-- 2016-12-04 -->
 
 [% include p6-intro %]
 
