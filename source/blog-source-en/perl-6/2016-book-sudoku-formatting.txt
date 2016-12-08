@@ -115,8 +115,9 @@ is a <em>pointy block</em>. The block starts with <code>-&gt;</code>, which intr
 <em>signature</em>. The signature tells the compiler what arguments the blocks
 expects, here a single scalar called <code>$line-number</code>.</p>
 
-<p>Perl 6 allows to use a dash <code>-</code> or a single quote <code>'</code> inside identifier, as
-long as there is a letter on both sides (to disambiguate it from subtraction).</p>
+<p>Perl 6 allows to use a dash <code>-</code> or a single quote <code>'</code> to join multiple
+simple identifiers into a larger identifier. That means you can use them inside
+an identifier as long as the following letter is a letter or the underscore.</p>
 
 <p>Again, type constraints are optional. If you chose to include them, it would
 be <code>for 0..9 -&gt; Int $line-number { ... }</code>.</p>

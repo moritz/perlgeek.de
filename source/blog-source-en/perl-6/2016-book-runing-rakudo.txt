@@ -36,19 +36,19 @@ paths.</p>
 <p>On platforms that support Docker, you can pull an existing Docker container
 from the docker hub:</p>
 
-<pre><code>$ docker pull mj41/perl6-star
+<pre><code>$ docker pull rakudo-star
 </code></pre>
 
 <p>Then you can get an interactive Rakudo shell with this command:</p>
 
-<pre><code>$ docker run -it mj41/perl6-star perl6
+<pre><code>$ docker run -it rakudo-star perl6
 </code></pre>
 
 <p>But that won't work for executing scripts, because the container has its own,
 separate file system. To make scripts available inside the container, you
 need to tell Docker to make the current directory available to the container:</p>
 
-<pre><code>$ docker run -v $PWD:/perl6 -w /perl6 -it mj41/perl6-star perl6
+<pre><code>$ docker run -v $PWD:/perl6 -w /perl6 -it rakudo-star perl6
 </code></pre>
 
 <p>The option <code>-v $PWD:/perl6</code> instructs Docker to mount the current working
@@ -59,7 +59,7 @@ directory of the rakudo process to <code>/perl6</code>.</p>
 <p>Since this command line starts to get unwieldy, I created an alias (this is
 Bash syntax; other shells might have slightly different alias mechanisms):</p>
 
-<pre><code>alias p6d='docker run -v $PWD:/perl6 -w /perl6 -it mj41/perl6-star perl6'
+<pre><code>alias p6d='docker run -v $PWD:/perl6 -w /perl6 -it rakudo-star perl6'
 </code></pre>
 
 <p>I put this line into my <code>~/.bashrc</code> files, so new bash instances have a <code>p6d</code>
