@@ -1,5 +1,5 @@
 Perl 6 By Example: Testing the Say Function
-<!-- 2016-12-24 -->
+<!-- 2016-12-25 -->
 
 [% include p6-intro %]
 
