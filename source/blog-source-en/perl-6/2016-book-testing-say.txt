@@ -1,0 +1,163 @@
+Perl 6 By Example: Testing the Say Function
+<!-- 2016-12-24 -->
+
+[% include p6-intro %]
+
+<h1>Testing <code>say()</code></h1>
+
+<p>In the <a href="https://perlgeek.de/blog-en/perl-6/2016-book-testing-timestamps.html">previous installment</a> I changed some code so that it wouldn't produce
+output, and instead did the output in the <code>MAIN</code> sub, which conveniently went untested.</p>
+
+<p>Changing code to make it easier to test is a legitimate practice.
+But if you do have to test code that produces output by calling <code>say</code>, there's a
+small trick you can use. <code>say</code> works on a file handle, and you can swap out the
+default file handle, which is connected to standard output. Instead, you can put a
+dummy file handle in its place that captures the lower-level commands issued
+to it, and record this for testing.</p>
+
+<p>There's a ready-made module for that,
+<a href="http://modules.perl6.org/dist/IO::String">IO::String</a>, but for the sake of
+learning we'll look at how it works:</p>
+
+<pre><code>use v6;
+
+# function to be tested
+sub doublespeak($x) {
+    say $x ~ $x;
+}
+
+use Test;
+plan 1;
+
+my class OutputCapture {
+    has @!lines;
+    method print(\s) {
+        @!lines.push(s);
+    }
+    method captured() {
+        @!lines.join;
+    }
+}
+
+my $output = do {
+    my $*OUT = OutputCapture.new;
+    doublespeak(42);
+    $*OUT.captured;
+};
+
+is $output, "4242\n", 'doublespeak works';
+</code></pre>
+
+<p>The first part of the code is the function we want to test, <code>sub
+doublespeak</code>. It concatenates its argument with itself using the <code>~</code> string
+concatenation operator. The result is passed to <code>say</code>.</p>
+
+<p>Under the hood, <code>say</code> does a bit of formatting, and then looks up the variable
+<code>$*OUT</code>. The <code>*</code> after the sigil marks it as a dynamic variable. The lookup
+for the dynamic variable goes through the call stack, and in each stack frame
+looks for a declaration of the variable, taking the first it finds. <code>say</code> then
+calls the method <code>print</code> on that object.</p>
+
+<p>Normally, <code>$*OUT</code> contains an object of type
+<a href="https://doc.perl6.org/type/IO::Handle">IO::Handle</a>, but the <code>say</code> function
+doesn't really care about that, as long as it can call a <code>print</code> method on
+that object. That's called duck typing: we don't really care about the type of
+the object, as long as it can quack like a duck. Or in this case, print like a
+duck.</p>
+
+<p>Then comes the loading of the <a href="https://docs.perl6.org/language/testing.html">test
+module</a>, followed by the
+declaration of how many tests to run:</p>
+
+<pre><code>use Test;
+plan 1;
+</code></pre>
+
+<p>You can leave out the second line, and instead call <code>done-testing</code> after your
+tests. But if there's a chance that the test code itself might be buggy, and
+not run tests it's supposed to, it's good to have an up-front declaration of
+the number of expected tests, so that the <code>Test</code> module or the test harness
+can catch such errors.</p>
+
+<p>The next part of the example is the declaration of type which we can use to
+emulate the <code>IO::Handle</code>:</p>
+
+<pre><code>my class OutputCapture {
+    has @!lines;
+    method print(\s) {
+        @!lines.append(s);
+    }
+    method captured() {
+        @!lines.join;
+    }
+}
+</code></pre>
+
+<p><code>class</code> introduces a class, and the <code>my</code> prefix makes the name lexically
+scoped, just like in a <code>my $var</code> declaration.</p>
+
+<p><code>has @!lines</code> declares an attribute, that is, a variable that exists
+separately for each instance of class <code>OutputCapture</code>. The <code>!</code> marks it as an
+attribute. We could leave it out, but having it right there means you
+always know where the name comes from when reading a larger class.</p>
+
+<p>The attribute <code>@!lines</code> starts with an <code>@</code>, not a <code>$</code> as other variables we
+have seen so far. The <code>@</code> is the sigil for an array variable.</p>
+
+<p>You might be seeing a trend now: the first letter of a variable or attribute
+name denotes its rough type (scalar, array, <code>&amp;</code> for routines, and later we'll
+learn about <code>%</code> for hashes), and if the second letter is not a letter, it
+specifies its scope. We call this second letter a <em>twigil</em>. So far
+we've seen <code>*</code> for dynamic variables, and <code>!</code> for attributes. Stay tuned for
+more.</p>
+
+<p>Then penultimate block of our example is this:</p>
+
+<pre><code>my $output = do {
+    my $*OUT = OutputCapture.new;
+    doublespeak(42);
+    $*OUT.captured;
+};
+</code></pre>
+
+<p><code>do { ... }</code> just executes the code inside the curly braces and returns the
+value of the last statement. Like all code blocks in Perl 6, it also
+introduces a new lexical scope.</p>
+
+<p>The new scope comes in handy in the next line, where <code>my $*OUT</code> declares a new dynamic
+variable <code>$*OUT</code>, which is however only valid in the scope of the block. It is
+initialized with <code>OutputCapture.new</code>, a new instance of the class declared
+earlier. <code>new</code> isn't magic, it's simply inherited from <code>OutputCapture</code>'s
+superclass. We didn't declare one, but by default, classes get <a href="https://docs.perl6.org/type/Any">type
+<code>Any</code></a> as a superclass, which provides (among
+other things) the method <code>new</code> as a constructor.</p>
+
+<p>The call to <code>doublespeak</code> calls <code>say</code>, which in turn calls <code>$*OUT.print</code>. And
+since <code>$*OUT</code> is an instance of <code>OutputCapture</code> in this dynamic scope, the
+string passed to <code>say</code> lands in <code>OutputCapture</code>'s attribute <code>@!lines</code>, where
+<code>$*OUT.captured</code> can access it again.</p>
+
+<p>The final line,</p>
+
+<pre><code>is $output, "4242\n", 'doublespeak works';
+</code></pre>
+
+<p>calls the <code>is</code> function from the <code>Test</code> module.</p>
+
+<p>In good old testing tradition, this produces output in the TAP format:</p>
+
+<pre><code>1..1
+ok 1 - doublespeak works
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>We've seen that <code>say()</code> uses a dynamically scoped variable, <code>$*OUT</code>, as its
+output file handle. For testing purposes, we can substitute that with an
+object of our making. Which made us stumble upon the first glimpses of how
+classes are written in Perl 6.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
