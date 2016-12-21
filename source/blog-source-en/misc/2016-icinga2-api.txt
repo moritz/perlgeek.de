@@ -1,5 +1,9 @@
-Icinga2, the Monitoring System with the API from He
+Icinga2, the Monitoring System with the API from Hell
 <!-- 2016-11-08 -->
+
+<p><strong>Update 2016-12: We've met the Icinga2 developers, and talked
+through some of the issues. While not all could be resolved, the outlook
+seems much more positive after this. Please see <a href="https://perlgeek.de/blog-en/misc/2016-icinga2-progress.html">my update</a> for more information on the status quo.</strong></p>
 
 <p>At my <a href="https://noris.net/">employer</a>, we have a project to switch some
 monitoring infrastructure from Nagios to
@@ -15,6 +19,8 @@ API</a>.</p>
 enemy.</p>
 
 <h2>Call Me, Maybe?</h2>
+
+<p>Update 2016-12: <strong>This bug has been fixed in Version 2.6</strong></p>
 
 <p>We created our synchronization to Icinga2, and used in our staging environment
 for a while. And soon got some reports that it wasn't working. Some hosts had
@@ -123,6 +129,9 @@ function</a>. Possibly because there is
 none. Who knows?</p>
 
 <h2>Selection Is Hard</h2>
+
+<p>Update 2016.12: <strong>The <code>in</code> operator works after all</strong>, if
+you get it right. Using <a href="https://docs.icinga.com/icinga2/latest/doc/module/icinga2/chapter/script-debugger">the script debugger</a> in combination with an API request with <code>filter=debugger</code> is a neat way to debug such issues.</p>
 
 <p>For our use case, we have some tags in the our CMDB, and a host can have zero,
 one or more tags. And we want to provide the user with the ability to create a
