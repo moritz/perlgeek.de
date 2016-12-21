@@ -1,0 +1,36 @@
+Progress in Icinga2 Land
+<!-- 2016-12-21 -->
+
+<p>Last month I <a href="https://perlgeek.de/blog-en/misc/2016-icinga2-api.html">blogged about my negative experiences with the Icinga2 API</a>. Since then, stuff has happened in Icinga2 land,
+including a very productive and friendly meeting with the Icinga2 product manager and
+two of the core developers.</p>
+
+<p>My first issue was that <a href="https://dev.icinga.com/issues/11731">objects created through the API sometimes don't show up
+in the web interface</a>. We learned that this can be avoided by explicitly specifying the <code>zone</code> attribute, and that Icinga 2.6 doesn't require this anymore.</p>
+
+<p>The second issue, <code>CREATE + UPDATE != CREATE</code> isn't easy to fix in Icinga2.
+Apply rules can contain basically arbitrary code, and tracking which ones to run,
+possibly run in reverse etc. for an update is not easy, and while the Icinga2 developers
+want to fix this eventually, the fix isn't yet in sight. The <a href="https://github.com/Icinga/icingaweb2-module-director">Icinga
+Director</a> has a
+workaround, but it involves restarting the Icinga daemon for each change or
+batch of changes, an operational characteristic we'd like to avoid.
+The inability to write templates through the API stems from the same
+underlying problem, so we won't see write support for templates soon.</p>
+
+<p>The API quirks will likely remain. With support from the Icinga2 developers, I was
+able to get selection by element of an array variable working, though the
+process did involve finding at least one more bug in Icinga. The developers
+are working on that one, though :-).</p>
+
+<p>Even though my bug report requesting more documentation has been closed, the
+Netways folks <em>have</em> improved the documentation thoroughly, and there are
+plans for even more improvements, for example making it easier to find the
+relevant docs by more cross-linking.</p>
+
+<p>All in all, there is a definitive upwards trend in Icinga2's quality, and in
+my perception of it. I'd like to thank the Icinga2 folks at Netways for their
+work, and for taking the time to talk to a very vocal critic.</p>
+
+[% option no-footer %][% option no-header %]
+
