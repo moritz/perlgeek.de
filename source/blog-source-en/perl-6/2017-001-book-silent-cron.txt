@@ -3,17 +3,14 @@ Perl 6 By Example: Silent Cron
 
 [% include p6-intro %]
 
-
-<h1>Silent Cron, a Cron Wrapper</h1>
-
 <p>On Linux and UNIX-Like systems, a program called
 <a href="https://en.wikipedia.org/wiki/Cron">cron</a> periodically executes
-user-defined commands in the background. It used for system maintenance
+user-defined commands in the background. It is used for system maintenance
 tasks such as refreshing or removing caches, rotating and deleting old log
 files and so on.</p>
 
 <p>If such a command produces any output, cron typically sends an email
-containing the output, so that an operator can look at it and judge if some
+containing the output so that an operator can look at it and judge if some
 action is required.</p>
 
 <p>But not all command line programs are written for usage with cron. For
@@ -22,23 +19,23 @@ indicate failure through a non-zero exit code. Or they might hang, or
 otherwise misbehave.</p>
 
 <p>To deal with such commands, we'll develop a small program called
-<code>silent-cron</code>, which wraps such commands, and suppresses output when the
-exit code is zero. And it allows you to specify a timeout that kills the
-wrapped program if it takes longer than that:</p>
+<code>silent-cron</code>, which wraps such commands and suppresses output when the
+exit code is zero. It also allows you to specify a timeout that kills the
+wrapped program if it takes too long:</p>
 
 <pre><code>$ silent-cron -- command-that-might-fail args
 $ silent-cron --timeout=5 -- command-that-might-hang
 </code></pre>
 
-<h2>Running Command Asynchronously</h2>
+<h2>Running Commands Asynchronously</h2>
 
 <p>When you want to run external commands, Perl 6 gives you basically two
 choices: <a href="https://doc.perl6.org/routine/run">run</a>, a simple, synchronous
 interface, and
 <a href="https://docs.perl6.org/type/Proc$COLON$COLONAsync">Proc::Async</a>, an
-asynchronous and slightly more complex option. Even though we should leave
-out the timeout in the first iteration, we should be aware that
-implementing the timeout is easier in the asynchronous interface, so that
+asynchronous and slightly more complex option. Even though we will omit
+the timeout in the first iteration, we need to be aware that
+implementing the timeout is easier in the asynchronous interface, so that's
 what we'll use:</p>
 
 <pre><code>#!/usr/bin/env perl6
@@ -75,11 +72,11 @@ elements are arguments passed to this command.
 The second line creates a new <code>Proc::Async</code> instance, but doesn't yet run
 the command.</p>
 
-<p>We need to capture the output from the command, both the output to the
-STDOUT and to the STDERR stream (file handles 1 and 2 on Linux), and
+<p>We need to capture all output from the command; thus we capture the output
+of the STDOUT and STDERR streams (file handles 1 and 2 on Linux), and
 combine it into a single string. In the asynchronous API, STDOUT and STDERR
 are modeled as objects of type <a href="https://doc.perl6.org/type/Supply">Supply</a>,
-so a stream of events. Since supplies can emit events in parallel, we need
+and hence are streams of events. Since supplies can emit events in parallel, we need
 a thread-safe data structure for collecting the result, and Perl 6
 conveniently provides a <code>Channel</code> for that:</p>
 
@@ -96,35 +93,35 @@ and STDERR streams:</p>
 
 <p>Each supply executes the block <code>{ $collector.send($_) }</code> for each string it
 receives. The string can be a character, a line or something larger if the
-stream is buffered. All we do with it is putting the string is into the
+stream is buffered. All we do with it is put the string into the
 channel <code>$collector</code> via the <code>send</code> method.</p>
 
-<p>Now that the streams are tapped, we can start the program, and wait for it
+<p>Now that the streams are tapped, we can start the program and wait for it
 to finish:</p>
 
 <pre><code>my $result = $proc.start.result;
 </code></pre>
 
-<p><code>Proc::Async.start</code> executes the external process, and returns a
+<p><code>Proc::Async.start</code> executes the external process and returns a
 <a href="https://doc.perl6.org/">Promise</a>. A promise wraps a piece of code that
-potentially runs on another thread, and has a status (<code>Planned</code>, <code>Kept</code> or
+potentially runs on another thread, has a status (<code>Planned</code>, <code>Kept</code> or
 <code>Broken</code>), and once it's finished, a result. Accessing the result
 automatically waits for the wrapped code to finish. Here the code is the
-one that runs the external program, and the result is an object of type
+one that runs the external program and the result is an object of type
 <a href="https://doc.perl6.org/type/Proc">Proc</a> (which happens to be the same as
-the <code>run()</code> function from the synchronous interface returns).</p>
+the <code>run()</code> function from the synchronous interface).</p>
 
 <p>After this line, we can be sure that the external command has terminated,
 and thus no more output will come from <code>$proc.stdout</code> and <code>$proc.stderr</code>.
-So we can safely close the channel, and access all its element through
+Hence we can safely close the channel and access all its elements through
 <code>Channel.list</code>:</p>
 
 <pre><code>$collector.close;
 my $output = $collector.list.join;
 </code></pre>
 
-<p>Finally it's time to check if the external command was successful, by
-checking its exit code, and finally exiting with the same exit code:</p>
+<p>Finally it's time to check if the external command was successful -- by
+checking its exit code -- and to exit the wrapper with the command's exit code:</p>
 
 <pre><code>my $exitcode = $result.exitcode;
 if $exitcode != 0 {
@@ -136,7 +133,7 @@ exit $exitcode;
 
 <h2>Implementing Timeouts</h2>
 
-<p>The idiomatic way to implement timeouts in Perl 6 is by using the
+<p>The idiomatic way to implement timeouts in Perl 6 is to use the
 <code>Promise.anyof</code> combinator together with a timer:</p>
 
 <pre><code>sub MAIN(*@cmd, :$timeout) {
@@ -165,15 +162,15 @@ but the scheduler can be a bit smarter about not allocating a whole thread
 just for sleeping.</p>
 
 <p><code>Promise.anyof($p1, $p2)</code> returns a promise that is fulfilled as soon as
-one of the arguments (which should also be promises) is fulfilled. So here
-either until the external program finished, or until the sleep promise is
+one of the arguments (which should also be promises) is fulfilled. So we
+wait either until the external program finished, or until the sleep promise is
 fulfilled.</p>
 
 <p>With <code>await $waitfor;</code> the program waits for the promise to be fulfilled
 (or broken). When that is the case, we can't simply access
 <code>$promise.result</code> as before, because <code>$promise</code> (which is the promise for
 the external program) might not be fulfilled in the case of a timeout. So
-we have to check the status of the promise first, and only then can we
+we have to check the status of the promise first and only then can we
 safely access <code>$promise.result</code>:</p>
 
 <pre><code>if !$timeout || $promise.status ~~ Kept {
@@ -192,7 +189,7 @@ else {
 <p>In the <code>else { ... }</code> branch, we need to handle the timeout case. This
 might be as simple as printing a statement that a timeout has occurred, and
 when <code>silent-cron</code> exits immediately afterwards, that might be acceptable.
-But we might want to do more in future, so we should kill the external
+But we might want to do more in the future, so we should kill the external
 program. And if the program doesn't terminate after the friendly kill
 signal, it should receive a <code>kill(9)</code>, which on UNIX systems forcefully
 terminates the program:</p>
@@ -210,21 +207,21 @@ terminates the program:</p>
 <h2>More on Promises</h2>
 
 <p>If you have worked with concurrent or parallel programs in other languages,
-you might have come across threads, locks, mutexes and other low-level
-constructs. Those exist in Perl 6 too, but their direct usage is
+you might have come across threads, locks, mutexes, and other low-level
+constructs. These exist in Perl 6 too, but their direct usage is
 discouraged.</p>
 
-<p>The problem with those low-level primitives is that they don't compose
-well. You can how two libraries that use threads and work fine on their
-own, but lead to deadlocks when combined into the same program. Or
+<p>The problem with such low-level primitives is that they don't compose
+well. You can have two libraries that use threads and work fine on their
+own, but lead to deadlocks when combined within the same program. Or
 different components might launch threads on their own, which can lead to
 too many threads and high memory consumption when several such components
 come together in the same process.</p>
 
 <p>Perl 6 provides higher-level primitives. Instead of spawning a thread, you
-can use <code>start</code> to run some code asynchronously, and the scheduler in the
-background decides which thread to run this on. If more <code>start</code> calls
-happen that threads to schedule things on, some will run serially.</p>
+use <code>start</code> to run code asynchronously and the scheduler
+decides which thread to run this on. If more <code>start</code> calls
+happen that ask for threads to schedule things on, some will run serially.</p>
 
 <p>Here is a very simple example of running a computation in the background:</p>
 
@@ -259,7 +256,7 @@ my $p2 = $p1.then({ say .result });
 await $p2;
 </code></pre>
 
-<p>If an exception is thrown inside asynchronously execute code, the status of
+<p>If an exception is thrown inside asynchronously executing code, the status of
 the promise becomes <code>Broken</code>, and calling its <code>.result</code> method re-throws
 the exception.</p>
 
@@ -268,7 +265,7 @@ small Monte Carlo simulation to calculate an approximation for π. We
 generate a pair of random numbers between zero and one, and interpret them
 as dots in a square. A quarter circle with radius one covers the area of
 π/4, so the ratio of randomly placed dots within the quarter circle to the
-total number of dots approaches π/4, if we just use enough dots.</p>
+total number of dots approaches π/4, if we use enough dots.</p>
 
 <pre><code>sub pi-approx($iterations) {
     my $inside = 0;
@@ -299,10 +296,19 @@ limit the number of threads roughly to the number of (possibly virtual) CPU
 cores; if many threads are stuck waiting for IO, a higher number of threads
 can yield better performance.</p>
 
+<h2>Possible Extensions</h2>
+
+<p>If you want to play with <code>silent-cron</code>, you could add a retry mechanism.
+If a command fails because of an external dependency (like an API or an NFS
+share), it might take time for that external dependency to recover.
+Hence you should add a quadratic or exponential backoff, that is, the wait
+time between retries should increase quadratically (1, 2, 4, 9, 16, ...) or
+exponentially (1, 2, 4, 8, 16, 32, ...).</p>
+
 <h2>Summary</h2>
 
-<p>We've seen an asynchronous API for running external programs, and how to
-use Promises to implement timeouts. We've also discussed that promises are
+<p>We've seen an asynchronous API for running external programs and how to
+use Promises to implement timeouts. We've also discussed how promises are
 distributed to threads by a scheduler, allowing you to start an arbitrary
 number of promises without overloading your computer.</p>
 
