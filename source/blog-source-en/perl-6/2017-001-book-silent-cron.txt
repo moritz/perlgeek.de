@@ -1,4 +1,4 @@
-Perl 6 By Example: Silent Cron
+Perl 6 By Example: Silent Cron, a Cron Wrapper
 <!-- 2017-01-01 -->
 
 [% include p6-intro %]
@@ -202,6 +202,23 @@ terminates the program:</p>
     await $promise;
     exit 2;
 }
+</code></pre>
+
+<p><code>await $promise</code> returns the result of the promise, so here a <code>Proc</code> object.
+<code>Proc</code> has a safety feature built in that if the command returned with a
+non-zero exit code, evaluating the object in void context throws an exception.</p>
+
+<p>Since we explicitly handle the non-zero exit code in the code, we can suppress
+the generation of this exception by assigning the return value from <code>await</code> to
+a dummy variable:</p>
+
+<pre><code>my $dummy = await $promise
+</code></pre>
+
+<p>Since we don't need the value, we can also assign it to an anonymous variable
+instead:</p>
+
+<pre><code>$ = await $promise
 </code></pre>
 
 <h2>More on Promises</h2>
