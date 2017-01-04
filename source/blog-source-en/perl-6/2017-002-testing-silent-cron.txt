@@ -1,0 +1,380 @@
+Perl 6 By Example: Testing Silent Cron
+<!-- 2017-01-08 -->
+
+[% include p6-intro %]
+
+
+<p>The previous blog post left us <a href="https://perlgeek.de/blog-en/perl-6/2017-001-book-silent-cron.html">with a bare-bones silent-cron
+implementation</a>,
+but without tests. I probably sound like a broken record for bringing this up
+time and again, but I really want some tests when I start refactoring or
+extending my programs. And this time, getting the tests in is a bit harder, so
+I think it's worth discussing how to do it.</p>
+
+<h2>Refactoring</h2>
+
+<p>As a short reminder, this is what the program looks like:</p>
+
+<pre><code>#!/usr/bin/env perl6
+
+sub MAIN(*@cmd, :$timeout) {
+    my $proc = Proc::Async.new(|@cmd);
+    my $collector = Channel.new;
+    for $proc.stdout, $proc.stderr -&gt; $supply {
+        $supply.tap: { $collector.send($_) }
+    }
+    my $promise = $proc.start;
+    my $waitfor = $promise;
+    $waitfor = Promise.anyof(Promise.in($timeout), $promise)
+        if $timeout;
+    $ = await $waitfor;
+
+    $collector.close;
+    my $output = $collector.list.join;
+
+    if !$timeout || $promise.status ~~ Kept {
+        my $exitcode = $promise.result.exitcode;
+        if $exitcode != 0 {
+            say "Program @cmd[] exited with code $exitcode";
+            print "Output:\n", $output if $output;
+        }
+        exit $exitcode;
+    }
+    else {
+        $proc.kill;
+        say "Program @cmd[] did not finish after $timeout seconds";
+        sleep 1 if $promise.status ~~ Planned;
+        $proc.kill(9);
+        $ = await $promise;
+        exit 2;
+    }
+}
+</code></pre>
+
+<p>There's logic in there for executing external programs with a timeout,
+and then there's logic for dealing with two possible outcomes. In terms of both
+testability and for future extensions it makes sense to factor out the
+execution of external programs into a subroutine. The result of
+this code is not a single value, we're potentially interested in the
+output it produced, the exit code, and whether it ran into a timeout.
+We could write a subroutine that returns a list or a hash of these values,
+but here I chose to write a small class instead:</p>
+
+<pre><code>class ExecutionResult {
+    has Int $.exitcode = -1;
+    has Str $.output is required;
+    has Bool $.timed-out = False;
+    method is-success {
+        !$.timed-out &amp;&amp; $.exitcode == 0;
+    }
+}
+</code></pre>
+
+<p>We've seen classes before, but this one has a few new features. Attributes
+declared with the <code>.</code> twigil automatically get an accessor method, so</p>
+
+<pre><code>has Int $.exitcode;
+</code></pre>
+
+<p>is roughly the same as</p>
+
+<pre><code>has Int $!exitcode;
+method exitcode() { $!exitcode }
+</code></pre>
+
+<p>So it allows a user of the class to access the value in the attribute from the
+outside. As a bonus, you can also initialize it from the standard constructor
+as a named argument, <code>ExecutionResult.new( exitcode =&gt; 42 )</code>. The exit code is
+not a required attribute, because we can't know the exit code of a program
+that has timed out. So with <code>has Int $.exitcode = -1</code> we give it a default
+value that applies if the attribute hasn't been initialized.</p>
+
+<p>The output <em>is</em> a required attribute, so we mark it as such with <code>is
+required</code>. That's a trait. Traits are pieces of code that modify the behavior
+of other things, here of an attribute. They crop up in several places, for
+example in subroutine signatures (<code>is copy</code> on a parameter), variable
+declarations and classes. If you try to call <code>ExecutionResult.new()</code> without
+specifying an <code>output</code>, you get such an error:</p>
+
+<pre><code>The attribute '$!output' is required, but you did not provide a value for it.
+</code></pre>
+
+<h2>Mocking and Testing</h2>
+
+<p>Now that we have a convenient way to return more than one value from a
+hypothetical subroutine, let's look at what this subroutine might look like:</p>
+
+<pre><code>sub run-with-timeout(@cmd, :$timeout) {
+    my $proc = Proc::Async.new(|@cmd);
+    my $collector = Channel.new;
+    for $proc.stdout, $proc.stderr -&gt; $supply {
+        $supply.tap: { $collector.send($_) }
+    }
+    my $promise = $proc.start;
+    my $waitfor = $promise;
+    $waitfor = Promise.anyof(Promise.in($timeout), $promise)
+        if $timeout;
+    $ = await $waitfor;
+
+    $collector.close;
+    my $output = $collector.list.join;
+
+    if !$timeout || $promise.status ~~ Kept {
+        say "No timeout";
+        return ExecutionResult.new(
+            :$output,
+            :exitcode($promise.result.exitcode),
+        );
+    }
+    else {
+        $proc.kill;
+        sleep 1 if $promise.status ~~ Planned;
+        $proc.kill(9);
+        $ = await $promise;
+        return ExecutionResult.new(
+            :$output,
+            :timed-out,
+        );
+    }
+}
+</code></pre>
+
+<p>The usage of <a href="https://docs.perl6.org/type/Proc$COLON$COLONAsync">Proc::Async</a>
+has remained the same, but instead of printing this when an error occurs, the
+routine now returns <code>ExecutionResult</code> objects.</p>
+
+<p>This simplifies the <code>MAIN</code> sub quite a bit:</p>
+
+<pre><code>multi sub MAIN(*@cmd, :$timeout) {
+    my $result = run-with-timeout(@cmd, :$timeout);
+    unless $result.is-success {
+        say "Program @cmd[] ",
+            $result.timed-out ?? "ran into a timeout"
+                              !! "exited with code $result.exitcode()";
+
+        print "Output:\n", $result.output if $result.output;
+    }
+    exit $result.exitcode // 2;
+}
+</code></pre>
+
+<p>A new syntactic feature here is the ternary operator, <code>CONDITION ??
+TRUE-BRANCH !! FALSE-BRANCH</code>, which you might know from other programming
+languages such as C or Perl 5 as <code>CONDITION ? TRUE-BRANCH : FALSE-BRANCH</code>.</p>
+
+<p>Finally, the logical defined-or operator <code>LEFT // RIGHT</code> returns the <code>LEFT</code>
+side if it's defined, and if not, runs the <code>RIGHT</code> side and returns its
+value. It works like the <code>||</code> and <code>or</code> infix operators, except that those
+check for the boolean value of the left, not whether they are defined.</p>
+
+<p>I> In Perl 6, we distinguish between <em>defined</em> and <em>true</em> values. By
+I> default, all instances are true and defined, and all type objects
+I> are false and undefined.
+I>
+I> Several built-in types override what they consider to be true. Numbers
+I> that equal 0 evaluate to <code>False</code> in a boolean context, as do
+I> empty strings and empty containers such as arrays, hashes and sets.
+I>
+I> On the other hand, only the built-in type <a href="https://doc.perl6.org/type/Failure">Failure</a> overrides definedness.
+I>
+I> You can override the truth value of a custom type by implementing
+I> a method <code>Bool</code> (which should return <code>True</code> or <code>False</code>), and the
+I> definedness with a method <code>defined</code>.</p>
+
+<p>Now we could start testing the sub <code>run-with-timeout</code> by writing custom external
+commands with defined characteristics (output, run time, exit code), but
+that's rather fiddly to do so in a reliable, cross-platform way. So instead I
+want to replace <code>Proc::Async</code> with a mock implementation, and give the sub a
+way to inject that:</p>
+
+<pre><code>sub run-with-timeout(@cmd, :$timeout, :$executer = Proc::Async) {
+    my $proc = $executer.defined ?? $executer !! $executer.new(|@cmd);
+    # rest as before
+</code></pre>
+
+<p>Looking through sub <code>run-with-timeout</code>, we can make a quick list of methods
+that the stub <code>Proc::Async</code> implementation needs: <code>stdout</code>, <code>stderr</code>, <code>start</code>
+and <code>kill</code>. Both <code>stdout</code> and <code>stderr</code> need to return a
+<a href="https://doc.perl6.org/type/Supply">Supply</a>. The simplest thing that could
+possibly work is to return a Supply that will emit just a single value:</p>
+
+<pre><code>my class Mock::Proc::Async {
+    has $.out = '';
+    has $.err = '';
+    method stdout {
+        Supply.from-list($.out);
+    }
+    method stderr {
+        Supply.from-list($.err);
+    }
+</code></pre>
+
+<p><a href="https://docs.perl6.org/type/Supply#method_from-list">Supply.from-list</a>
+returns a Supply that will emit all the arguments passed to it; in this case
+just a single string.</p>
+
+<p>The simplest possible implementation of <code>kill</code> just does nothing:</p>
+
+<pre><code>    method kill($?) {}
+</code></pre>
+
+<p><code>$?</code> in a signature is an optional argument (<code>$foo?</code>) without a name.</p>
+
+<p>Only one method remains that needs to be stubbed: <code>start</code>. It's supposed to
+return a Promise that, after a defined number of seconds, returns a <code>Proc</code>
+object or a mock thereof. Since the code only calls the <code>exitcode</code> method on
+it, writing a stub for it is easy:</p>
+
+<pre><code>has $.exitcode = 0;
+has $.execution-time = 1;
+method start {
+    Promise.in($.execution-time).then({
+        (class {
+            has $.exitcode;
+        }).new(:$.exitcode);
+    });
+}
+</code></pre>
+
+<p>Since we don't need the class for the mock <code>Proc</code> anywhere else, we don't even
+need to give it a name. <code>class { ... }</code> creates an anonymous class, and the
+<code>.new</code> call on it creates a new object from it.</p>
+
+<p>As mentioned before, a <code>Proc</code> with a non-zero exit code throws an exception
+when evaluated in void context, or <em>sink context</em> as we call it in Perl 6. We
+can emulate this behavior by extending the anonymous class a bit:</p>
+
+<pre><code>class {
+    has $.exitcode;
+    method sink() {
+        die "mock Proc used in sink context";
+    }
+}
+</code></pre>
+
+<p>With all this preparation in place, we can finally write some tests:</p>
+
+<pre><code>multi sub MAIN('test') {
+    use Test;
+
+    my class Mock::Proc::Async {
+        has $.exitcode = 0;
+        has $.execution-time = 0;
+        has $.out = '';
+        has $.err = '';
+        method kill($?) {}
+        method stdout {
+            Supply.from-list($.out);
+        }
+        method stderr {
+            Supply.from-list($.err);
+        }
+        method start {
+            Promise.in($.execution-time).then({
+                (class {
+                    has $.exitcode;
+                    method sink() {
+                        die "mock Proc used in sink context";
+                    }
+                }).new(:$.exitcode);
+            });
+        }
+    }
+
+    # no timeout, success
+    my $result = run-with-timeout([],
+        timeout =&gt; 2,
+        executer =&gt; Mock::Proc::Async.new(
+            out =&gt; 'mocked output',
+        ),
+    );
+    isa-ok $result, ExecutionResult;
+    is $result.exitcode, 0, 'exit code';
+    is $result.output, 'mocked output', 'output';
+    ok $result.is-success, 'success';
+
+    # timeout
+    $result = run-with-timeout([],
+        timeout =&gt; 0.1,
+        executer =&gt; Mock::Proc::Async.new(
+            execution-time =&gt; 1,
+            out =&gt; 'mocked output',
+        ),
+    );
+    isa-ok $result, ExecutionResult;
+    is $result.output, 'mocked output', 'output';
+    ok $result.timed-out, 'timeout reported';
+    nok $result.is-success, 'success';
+}
+</code></pre>
+
+<p>This runs through two scenarios, one where a timeout is configured but not
+used (because the mocked external program exits first), and one where the
+timeout takes effect.</p>
+
+<h2>Improving Reliability and Timing</h2>
+
+<p>Relying on timing in tests is always unattractive. If the times
+are too short (or too slow together), you risk sporadic test failures on slow
+or heavily loaded machines. If you use more conservative temporal spacing of
+tests, the tests can become very slow.</p>
+
+<p>There's a module (not distributed with Rakudo) to alleviate this pain:
+<a href="https://github.com/jnthn/p6-test-scheduler">Test::Scheduler</a> provides a
+thread scheduler with virtualized time, allowing you to write the tests like
+this:</p>
+
+<pre><code>use Test::Scheduler;
+my $*SCHEDULER = Test::Scheduler.new;
+my $result = start run-with-timeout([],
+    timeout =&gt; 5,
+    executer =&gt; Mock::Proc::Async.new(
+        execution-time =&gt; 2,
+        out =&gt; 'mocked output',
+    ),
+);
+$*SCHEDULER.advance-by(5);
+$result = $result.result;
+isa-ok $result, ExecutionResult;
+# more tests here
+</code></pre>
+
+<p>This installs the custom scheduler, and <code>$*SCHEDULER.advance-by(5)</code> instructs
+it to advance the virtual time by 5 seconds, without having to wait five
+actual seconds. At the time of writing (December 2016), <code>Test::Scheduler</code> is
+rather new module, and <a href="https://github.com/jnthn/p6-test-scheduler/issues/1">has a bug that prevents the second test case from
+working this way</a>.</p>
+
+<h3>Installing a Module</h3>
+
+<p>If you want to try out <code>Test::Scheduler</code>, you need to install it first. If you
+run Rakudo Star, it has already provided you with the <code>panda</code> module installer. You can
+use that to download and install the module for you:</p>
+
+<pre><code>$ panda install Test::Scheduler
+</code></pre>
+
+<p>If you don't have panda available, you can instead bootstrap <code>zef</code>, an
+alternative module installer:</p>
+
+<pre><code>$ git clone https://github.com/ugexe/zef.git
+$ cd zef
+$ perl6 -Ilib bin/zef install .
+</code></pre>
+
+<p>and then use <code>zef</code> to install the module:</p>
+
+<pre><code>$ zef install Test::Scheduler
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>In this installment, we've seen attributes with accessors, the ternary
+operator and anonymous classes. Testing of threaded code has been discussed,
+and how a third-party module can help. Finally we had a very small glimpse
+at the two module installers, <code>panda</code> and <code>zef</code>.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
