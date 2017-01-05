@@ -1,7 +1,7 @@
 Introducing Go Continuous Delivery
 <!-- 2016-01-28 -->
 
-<p><a href="https://www.go.cd/">Go Continuous Delivery</a> (short GoCD or simply Go) is an open source tool that controls an automated build or deployment process.</p>
+<p><a href="https://www.gocd.io/">Go Continuous Delivery</a> (short GoCD or simply Go) is an open source tool that controls an automated build or deployment process.</p>
 <p>It consists of a server component that holds the pipeline configuration, polls
 source code repositories for changes, schedules and distributes work, collects
 artifacts, and presents a web interface to visualize and control it all, and

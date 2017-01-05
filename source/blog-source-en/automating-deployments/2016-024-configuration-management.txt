@@ -103,7 +103,7 @@ problem, but if you have a dozen or a few dozen applications, this starts to
 suck up resources unnecessarily, and also means no build workers are available
 for some time to build changes triggered by actual code changes.</p>
 
-<p>To avoid these build stampedes, a pragmatic approach is to use <a href="https://docs.go.cd/16.1.0/configuration/configuration_reference.html#filter">ignore
+<p>To avoid these build stampedes, a pragmatic approach is to use <a href="https://docs.gocd.io/16.1.0/configuration/configuration_reference.html#filter">ignore
 filters</a>
 in the git materials. Ignore filters are typically used to avoid rebuilds
 when only documentation changes, but can also be used to prevent any changes

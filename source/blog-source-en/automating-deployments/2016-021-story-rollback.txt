@@ -10,7 +10,7 @@ wouldn't load at all, and show three empty error notifications.</p>
 immediately know what was wrong or how to fix it. And what's worse, she
 couldn't reproduce the problem in her own browser.</p>
 
-<p>A quick look into our <a href="https://www.go.cd/">Go CD</a> instance showed that the
+<p>A quick look into our <a href="https://www.gocd.io/">Go CD</a> instance showed that the
 previous production deployment of this web application was on the previous
 day, and we had no report of similar errors previous to that, so we decided to
 do a rollback to the previous version.</p>

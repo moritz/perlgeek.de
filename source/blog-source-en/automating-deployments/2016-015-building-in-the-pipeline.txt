@@ -12,7 +12,7 @@ resulting .deb package as a build artifact.</p>
 
 <h2>A GoCD Build Pipeline</h2>
 
-<p>As <a href="https://perlgeek.de/blog-en/automating-deployments/2016-010-introducing-gocd.html">mentioned earlier</a>, my tool of choice of controlling the pipeline is <a href="https://go.cd/">Go
+<p>As <a href="https://perlgeek.de/blog-en/automating-deployments/2016-010-introducing-gocd.html">mentioned earlier</a>, my tool of choice of controlling the pipeline is <a href="https://gocd.io/">Go
 Continuous Delivery</a>. Once you have it installed and
 configured an agent, you can start to create a pipeline.</p>
 
@@ -78,9 +78,9 @@ Paths in the GoCD configuration are typically relative to this path.</p>
 single material. It is a rather shaky assumption that you won't need a second
 material, so don't do that.</p>
 
-<p>See the <a href="https://docs.go.cd/current/configuration/configuration_reference.html#materials">config
+<p>See the <a href="https://docs.gocd.io/current/configuration/configuration_reference.html#materials">config
 references</a>
-for a list of available material types and options. <a href="https://www.go.cd/plugins/">Plugins are
+for a list of available material types and options. <a href="https://www.gocd.io/plugins/">Plugins are
 available</a> that add further material types.</p>
 
 <h3>Stages</h3>

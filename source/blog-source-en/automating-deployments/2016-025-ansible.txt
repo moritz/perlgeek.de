@@ -255,7 +255,7 @@ their execution to individual or group of hosts.</p>
 serialization file format that is optimized for human readability.</p>
 
 <p>Here is an example playbook that installs the newest version of the <code>go-agent</code>
-Debian package, the worker for <a href="https://www.go.cd/">Go Continuous Delivery</a>:</p>
+Debian package, the worker for <a href="https://www.gocd.io/">Go Continuous Delivery</a>:</p>
 
 <pre><code>---
 - hosts: go-agent
@@ -263,8 +263,8 @@ Debian package, the worker for <a href="https://www.go.cd/">Go Continuous Delive
     go_server: hack.p6c.org
   tasks:
   - apt: package=apt-transport-https state=installed
-  - apt_key: url=https://download.go.cd/GOCD-GPG-KEY.asc state=present validate_certs=no
-  - apt_repository: repo='deb https://download.go.cd /' state=present
+  - apt_key: url=https://download.gocd.io/GOCD-GPG-KEY.asc state=present validate_certs=no
+  - apt_repository: repo='deb https://download.gocd.io /' state=present
   - apt: update_cache=yes package={{item}} state=installed
     with_items:
      - go-agent
@@ -321,8 +321,8 @@ use-case when they affect different groups of hosts:</p>
 - hosts: go-agent:go-server
   tasks:
   - apt: package=apt-transport-https state=installed
-  - apt_key: url=https://download.go.cd/GOCD-GPG-KEY.asc state=present validate_certs=no
-  - apt_repository: repo='deb https://download.go.cd /' state=present
+  - apt_key: url=https://download.gocd.io/GOCD-GPG-KEY.asc state=present validate_certs=no
+  - apt_repository: repo='deb https://download.gocd.io /' state=present
 
 - hosts: go-agent
   - apt: update_cache=yes package={{item}} state=installed

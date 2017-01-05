@@ -29,7 +29,7 @@ automatically built Debian package.</p>
 <li>Randomness (for example in the form of UUIDs)</li>
 <li>The current date and time</li>
 <li>The git repository itself</li>
-<li>GoCD exposes <a href="https://docs.go.cd/current/faq/dev_use_current_revision_in_build.html">several environment
+<li>GoCD exposes <a href="https://docs.gocd.io/current/faq/dev_use_current_revision_in_build.html">several environment
 variables</a>
 that can be of use</li>
 </ul>
