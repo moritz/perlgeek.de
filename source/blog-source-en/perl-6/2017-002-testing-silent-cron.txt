@@ -167,19 +167,19 @@ side if it's defined, and if not, runs the <code>RIGHT</code> side and returns i
 value. It works like the <code>||</code> and <code>or</code> infix operators, except that those
 check for the boolean value of the left, not whether they are defined.</p>
 
-<p>I> In Perl 6, we distinguish between <em>defined</em> and <em>true</em> values. By
-I> default, all instances are true and defined, and all type objects
-I> are false and undefined.
-I>
-I> Several built-in types override what they consider to be true. Numbers
-I> that equal 0 evaluate to <code>False</code> in a boolean context, as do
-I> empty strings and empty containers such as arrays, hashes and sets.
-I>
-I> On the other hand, only the built-in type <a href="https://doc.perl6.org/type/Failure">Failure</a> overrides definedness.
-I>
-I> You can override the truth value of a custom type by implementing
-I> a method <code>Bool</code> (which should return <code>True</code> or <code>False</code>), and the
-I> definedness with a method <code>defined</code>.</p>
+<p> In Perl 6, we distinguish between <em>defined</em> and <em>true</em> values. By
+default, all instances are true and defined, and all type objects
+are false and undefined.
+
+Several built-in types override what they consider to be true. Numbers
+that equal 0 evaluate to <code>False</code> in a boolean context, as do
+empty strings and empty containers such as arrays, hashes and sets.
+
+On the other hand, only the built-in type <a href="https://doc.perl6.org/type/Failure">Failure</a> overrides definedness.
+
+You can override the truth value of a custom type by implementing
+a method <code>Bool</code> (which should return <code>True</code> or <code>False</code>), and the
+definedness with a method <code>defined</code>.</p>
 
 <p>Now we could start testing the sub <code>run-with-timeout</code> by writing custom external
 commands with defined characteristics (output, run time, exit code), but
