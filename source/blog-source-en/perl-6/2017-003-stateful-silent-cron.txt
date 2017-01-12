@@ -1,0 +1,256 @@
+Perl 6 By Example: Stateful Silent Cron
+<!-- 2017-01-15 -->
+
+[% include p6-intro %]
+
+
+<p>In the last <a href="https://perlgeek.de/blog-en/perl-6/2017-001-book-silent-cron.html">two</a> <a href="https://perlgeek.de/blog-en.cgi/perl-6/2017-002-testing-silent-cron.html">installments</a> we've looked at <code>silent-cron</code>, a wrapper around
+external programs that silences them in case their exit status is zero. But
+to make it really practical, it should also silence occasional failures.</p>
+
+<p>External APIs fail, networks become congested, and other things happen that
+prevent a job from succeeding, so some kind of retry mechanism is desirable.
+In case of a cron job, cron already takes care of retrying a job on a regular
+basis, so <code>silent-cron</code> should just suppress occasional errors. On the other
+hand, if a job fails consistently, this is usually something that an operator
+or developer should look into, so it's a problem worth reporting.</p>
+
+<p>To implement this functionality, <code>silent-cron</code> needs to store persistent
+state between separate runs. It needs to record the results from the current
+run and then analyze if the failure history qualifies as "occasional".</p>
+
+<h2>Persistent Storage</h2>
+
+<p>The storage backend needs to write and retrieve structured data, and protect
+concurrent access to the state file with locking. A good library for such a
+storage backend is <a href="https://www.sqlite.org/">SQLite</a>, a zero-maintenance SQL
+engine that's available as a C library. It's public domain software and in
+use in most major browsers, operating systems and <a href="http://www.sqlite.org/famous.html">even some
+airliners</a>.</p>
+
+<p>Perl 6 gives you access to SQLite's functionality through
+<a href="https://github.com/perl6/DBIish/">DBIish</a>, a generic database interface with
+backend drivers for SQLite, MySQL, PostgreSQL and Oracle DB. To use it, first
+make sure that SQLite3 is installed, including its header files. On a Debian-based
+Linux system, for example, you can achieve this with <code>apt-get install
+libsqlite3-dev</code>. If you are using the Rakudo Star distribution, DBIish is
+already available. If not, you can use one of the module installers to
+retrieve and install it: <code>panda install DBIish</code> or <code>zef install DBIish</code>.</p>
+
+<p>To use the DBIish's SQLite backend, you first have to create a <em>database
+handle</em> by selecting the backend and supplying connection information:</p>
+
+<pre><code>use DBIish;
+my $dbh = DBIish.connect('SQLite', :database('database-file.sqlite3'));
+</code></pre>
+
+<p>Connecting to a database file that does not yet exist creates that file.</p>
+
+<p>One-off SQL statements can be executed directly on the database handle:</p>
+
+<pre><code>$dbh.do('INSERT INTO player (name) VALUES ?', 'John');
+</code></pre>
+
+<p>The <code>?</code> in the SQL is a placeholder that is passed out-of-band as a separate
+argument to the <code>do</code> method, which avoids potential errors such as SQL
+injection vulnerabilities.</p>
+
+<p>Queries tend to work by first preparing a statement which returns a
+<em>statement handle</em>. You can execute a statement once or multiple times, and
+retrieve result rows after each <code>execute</code> call:</p>
+
+<pre><code>my $sth = $dbh.prepare('SELECT id FROM player WHERE name = ?');
+
+my %ids;
+for &lt;John Jack&gt; -&gt; $name {
+    $sth.execute($name);
+    %ids{ $name } = $sth.row[0];
+}
+$sth.finish;
+</code></pre>
+
+<h2>Developing the Storage Backend</h2>
+
+<p>We shouldn't just stuff all the storage handling code into sub <code>MAIN</code>, we
+should instead carefully consider the creation of a useful API for the storage backend. At
+first, we need only two pieces of functionality: insert the result of a job
+execution; and retrieve the most recent results.</p>
+
+<p>Since <code>silent-cron</code> can be used to guard multiple cron jobs on the same
+machine, we might need something to distinguish the different jobs so that
+one of them succeeding doesn't prevent error reporting for one that is constantly
+failing. For that we introduce a <em>job name</em>, which can default to the
+command (including arguments) being executed but which can be set explicitly
+on the command line.</p>
+
+<p>The API for the storage backend could look something like this:</p>
+
+<pre><code>my $repo = ExecutionResultRepository.new(
+    jobname   =&gt; 'refresh cache',
+    statefile =&gt; 'silent-cron.sqlite3',
+);
+$repo.insert($result);
+my @last-results = $repo.tail(5);
+</code></pre>
+
+<p>This API isn't specific to the SQLite backend at all; a storage backend that
+works with plain text files could have the exact same API.</p>
+
+<p>Let's implement this API. First we need the class and the two attributes
+that should be obvious from the usage example above:</p>
+
+<pre><code>class ExecutionResultRepository {
+    has $.jobname   is required;
+    has $.statefile is required;
+    # ... more code
+</code></pre>
+
+<p>To implement the <code>insert</code> method, we need to connect to the database
+and create the relevant table if it doesn't exist yet.</p>
+
+<pre><code>has $!db;
+method !db() {
+    return $!db if $!db;
+    $!db = DBIish.connect('SQLite', :database($.statefile));
+    self!create-schema();
+    return $!db;
+}
+</code></pre>
+
+<p>This code uses a private attribute <code>$!db</code> to cache the database handle and a
+private method <code>!db</code> to create the handle if it doesn't exist yet.</p>
+
+<p>Private methods are declared like ordinary methods, except that the name
+starts with an exclamation mark. To call one, substitute the method call dot
+for the exclamation mark, in other words, use <code>self!db()</code> instead of <code>self.db()</code>.</p>
+
+<p>The <code>!db</code> method also calls the next private method, <code>!create-schema</code>, which
+creates the storage table and some indexes:</p>
+
+<pre><code>method !create-schema() {
+    $!db.do(qq:to/SCHEMA/);
+        CREATE TABLE IF NOT EXISTS $table (
+            id          INTEGER PRIMARY KEY,
+            jobname     VARCHAR NOT NULL,
+            exitcode    INTEGER NOT NULL,
+            timed_out   INTEGER NOT NULL,
+            output      VARCHAR NOT NULL,
+            executed    TIMESTAMP NOT NULL DEFAULT (DATETIME('NOW'))
+        );
+    SCHEMA
+    $!db.do(qq:to/INDEX/);
+        CREATE INDEX IF NOT EXISTS {$table}_jobname_exitcode ON $table ( jobname, exitcode );
+    INDEX
+    $!db.do(qq:to/INDEX/);
+        CREATE INDEX IF NOT EXISTS {$table}_jobname_executed ON $table ( jobname, executed );
+    INDEX
+}
+</code></pre>
+
+<p>Multi-line string literals are best written with the <em>heredoc</em>
+syntax. <code>qq:to/DELIMITER/</code> tells Perl 6 to finish parsing the current
+statement so that you can still close the method call parenthesis and add the
+statement-ending semicolon. The next line starts the string literal, which
+goes on until Perl 6 finds the delimiter on a line on its own. Leading
+whitespace is stripped from each line of the string literal by as much as the
+closing delimiter is indented.</p>
+
+<p>For example</p>
+
+<pre><code>print q:to/EOS/;
+    Not indented
+        Indented four spaces
+    EOS
+</code></pre>
+
+<p>Produces the output</p>
+
+<pre><code>Not indented
+    Indented four spaces
+</code></pre>
+
+<p>Now that we have a working database connection and know that the database
+table exists, inserting a new record becomes easy:</p>
+
+<pre><code>method insert(ExecutionResult $r) {
+    self!db.do(qq:to/INSERT/, $.jobname, $r.exitcode, $r.timed-out, $r.output);
+        INSERT INTO $table (jobname, exitcode, timed_out, output)
+        VALUES(?, ?, ?, ?)
+    INSERT
+}
+</code></pre>
+
+<p>Selecting the most recent records is a bit more work, partially because we need to
+convert the table rows into objects:</p>
+
+<pre><code>method tail(Int $count) {
+    my $sth = self!db.prepare(qq:to/SELECT/);
+        SELECT exitcode, timed_out, output
+          FROM $table
+         WHERE jobname = ?
+      ORDER BY executed DESC
+         LIMIT $count
+    SELECT
+    $sth.execute($.jobname);
+    $sth.allrows(:array-of-hash).map: -&gt; %h {
+        ExecutionResult.new(
+            exitcode  =&gt; %h&lt;exitcode&gt;,
+            timed-out =&gt; ?%h&lt;timed_out&gt;,
+            output    =&gt; %h&lt;output&gt;,
+        );
+    }
+}
+</code></pre>
+
+<p>The last statement in the <code>tail</code> method deserves a bit of extra attention.
+<code>$sth.allrows(:array-of-hash)</code> produces the database rows as a list of hashes.
+This list is <em>lazy</em>, that is, it's generated on-demand. Lazy lists are a very
+convenient feature because they allow you to use iterators and lists with the
+same API. For example when reading lines from a file, you can write <code>for
+$handle.lines -&gt; $line { ... }</code>, and the <code>lines</code> method doesn't have to load
+the whole file into memory; instead it can read a line whenever it is
+accessed.</p>
+
+<p><code>$sth.allrows(...)</code> is lazy, and so is the <code>.map</code> call that comes after it.
+<code>map</code> transforms a list one element at a time by calling the code object
+that's passed to it. And that is done lazily as well. So SQLite only retrieves
+rows from the database file when elements of the resulting list are actually
+accessed.</p>
+
+<h2>Using the Storage Backend</h2>
+
+<p>With the storage API in place, it's time to use it:</p>
+
+<pre><code>multi sub MAIN(*@cmd, :$timeout, :$jobname is copy,
+               :$statefile='silent-cron.sqlite3', Int :$tries = 3) {
+    $jobname //= @cmd.Str;
+    my $result = run-with-timeout(@cmd, :$timeout);
+    my $repo = ExecutionResultRepository.new(:$jobname, :$statefile);
+    $repo.insert($result);
+
+    my @runs = $repo.tail($tries);
+
+    unless $result.is-success or @runs.grep({.is-success}) {
+        say "The last @runs.elems() runs of @cmd[] all failed, the last execution ",
+            $result.timed-out ?? "ran into a timeout"
+                              !! "exited with code $result.exitcode()";
+
+        print "Output:\n", $result.output if $result.output;
+    }
+    exit $result.exitcode // 2;
+}
+</code></pre>
+
+<p>Now a job that succeeds a few times, and then fails up to two times in a row
+doesn't produce any error output, and only the third failed execution in a row
+produces output. You can override that on the command line with <code>--tries=5</code>.</p>
+
+<h2>Summary</h2>
+
+<p>We've discussed <code>DBIish</code>, a database API with pluggable backend, and explored
+using it with SQLite to store persistent data. In the process we also came
+across lazy lists and a new form of string literals called <em>heredocs</em>.</p>
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
