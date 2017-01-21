@@ -1,0 +1,216 @@
+Perl 6 By Example: Perl 6 Review
+<!-- 2017-01-22 -->
+
+[% include p6-intro %]
+
+<p>In the previous "Perl 6 by Example" blog posts we've discussed some examples
+interleaved with the Perl 6 mechanics that make them work. Here I want to
+summarize and deepen the Perl 6 knowledge that we've touched on so far,
+removed from the original examples.</p>
+
+<h2>Variables and Scoping</h2>
+
+<p>In Perl 6, variable names are made of a <em>sigil</em>, <code>$</code>, <code>@</code>, <code>%</code> or <code>&amp;</code>,
+followed by an identifier. The sigil implies a type constraint, where <code>$</code> is
+the most general one (no restriction by default), <code>@</code> is for arrays, <code>%</code> for
+hashes (associative arrays/maps), and <code>&amp;</code> for code objects.</p>
+
+<p>Identifiers can contain <code>-</code> and <code>'</code> characters, as long as the character after
+it is a letter.  Identifiers must start with a letter or underscore.</p>
+
+<p>Subroutines and variables declared with <code>my</code> are lexically scoped. They are
+visible from the point of the declaration to the end of the current
+<code>{}</code>-enclosed block (or the current file, in case the declaration is outside a
+block). Subroutine parameters are visible in the signature and block of the
+subroutine.</p>
+
+<p>An optional <em>twigil</em> between the sigil and identifier can influence the
+scoping. The <code>*</code> twigil marks a dynamically scoped variable, thus lookup is
+performed in the current call stack. <code>!</code> marks attributes, that is,
+a per-instance variable that's attached on object.</p>
+
+<h2>Subroutines</h2>
+
+<p>A subroutine, or short <em>sub</em>, is a piece of code with its own scope and
+usually also a name. It has a <em>signature</em> which specifies what kind of values
+you have to pass in when you call it:</p>
+
+<pre><code>sub chunks(Str $s, Int $chars) {
+#         ^^^^^^^^^^^^^^^^^^^^ signature
+#   ^^^^^^ name
+    gather for 0 .. $s.chars / $chars - 1 -&gt; $idx {
+        take substr($s, $idx * $chars, $chars);
+    }
+}
+</code></pre>
+
+<p>The variables used in the signature are called <em>paramaters</em>, whereas we
+call the values that you pass in <em>arguments</em>.</p>
+
+<p>To refer to a subroutine without calling it, put an ampersand character in
+front of it, for example</p>
+
+<pre><code>say &amp;chunks.^name;      # Sub
+</code></pre>
+
+<p>to call it, simply use its name, followed by the list of arguments, which can
+optionally be in parentheses:</p>
+
+<pre><code>say chunks 'abcd', 2;   # (ab cd)
+say chunks('abcd', 2);  # (ab cd)
+</code></pre>
+
+<p>You only need the parentheses if some other construct would otherwise
+interfere with the subroutine call. For example if you intend to write</p>
+
+<pre><code>say chunks(join('x', 'ab', 'c'), 2);
+</code></pre>
+
+<p>and you leave out the inner pair of parentheses:</p>
+
+<pre><code>say chunks(join 'x', 'ab', 'c', 2);
+</code></pre>
+
+<p>then all the arguments go to the <code>join</code> function, leaving only one argument to the
+<code>chunks</code> function. On the other hand it is fine to leave out the outer pair of
+parentheses and write</p>
+
+<pre><code>say chunks join('x', 'ab', 'c'), 2;
+</code></pre>
+
+<p>because there's no ambiguity here.</p>
+
+<p>One case worth noting is that if you call a subroutine without arguments as the
+block of an <code>if</code> condition or a <code>for</code> loop (or similar constructs), you have
+to include the parentheses, because otherwise the block is parsed as an
+argument to the function.</p>
+
+<pre><code>sub random-choice() {
+    Bool.pick;
+}
+
+# right way:
+if random-choice() {
+    say 'You were lucky.';
+}
+
+# wrong way:
+if random-choice {
+    say 'You were lucky.';
+}
+</code></pre>
+
+<p>If you do happen to make this mistake, the Perl 6 compiler tries very hard to detect it. In
+the example above, it says</p>
+
+<pre><code>Function 'random-choice' needs parens to avoid gobbling block
+</code></pre>
+
+<p>and when it tries to parse the block for the <code>if</code>-statement, it doesn't find
+one:</p>
+
+<pre><code>Missing block (apparently claimed by 'random-choice')
+</code></pre>
+
+<p>When you have a sub called <code>MAIN</code>, Perl 6 uses its signature to parse the
+command line arguments and pass those command line arguments to <code>MAIN</code>.</p>
+
+<p><em>multi</em> subs are several subroutines with the same name but different
+signatures. The compiler decides at run time which of the candidates it calls
+based on the best match between arguments and parameters.</p>
+
+<h2>Classes and Objects</h2>
+
+<p>Class declarations follow the same syntactic schema as subroutine
+declarations: the keyword <code>class</code>, followed by the name, followed by the body
+in curly braces:</p>
+
+<pre><code>class OutputCapture {
+    has @!lines;
+    method print(\s) {
+        @!lines.push(s);
+    }
+    method captured() {
+        @!lines.join;
+    }
+}
+</code></pre>
+
+<p>By default, type names are scoped to the current namespace, however you can make
+it lexically scoped by adding a <code>my</code> in front of <code>class</code>:</p>
+
+<pre><code>my class OutputCapture { ... }
+</code></pre>
+
+<p>Creating a new instance generally works by calling the <code>new</code> method on the
+type object. The <code>new</code> method is inherited from the implicit parent class
+<code>Any</code> that all types get:</p>
+
+<pre><code>my $c = OutputCapture.new;
+</code></pre>
+
+<p>Per-instance state is stored in <em>attributes</em>, which are declared with the
+<code>has</code> keyword, as seen above in <code>has @!lines</code>. Attributes are always private,
+as indicated by the <code>!</code> twigil. If you use the dot <code>.</code> twigil in the
+declaration instead, you have both the private attribute <code>@!lines</code> and a
+public, read-only accessor method:</p>
+
+<pre><code>my class OutputCapture {
+    has @.lines;
+    method print(\s) {
+        # the private name with ! still works
+        @!lines.push(s);
+    }
+    method captured() {
+        @!lines.join;
+    }
+}
+my $c = OutputCapture.new;
+$c.print('42');
+# use the `lines` accessor method:
+say $c.lines;       # [42]
+</code></pre>
+
+<p>When you declare attributes with the dot twigil, you can also initialize the
+attributes from the constructor through named arguments, as in
+<code>OutputCapture.new( lines =&gt; [42] )</code>.</p>
+
+<p>Private methods start with a <code>!</code> and can only be called from inside the class
+body as <code>self!private-method</code>.</p>
+
+<p>Methods are basically just subroutines, with two differences. The first is
+that they get an implicit parameter called <code>self</code>, which contains the object
+the method is called on (which we call the <em>invocant</em>).  The second is that
+if you call a subroutine, the compiler searches for this subroutine in the
+current lexical scope, and outer scopes. On the other hand, the methods for
+a method calls are looked up in the class of the object and its
+superclasses.</p>
+
+<h2>Concurrency</h2>
+
+<p>Perl 6 provides high-level primitives for concurrency and parallel execution.
+Instead of explicitly spawning new threads, you are encouraged to run a
+computation with <code>start</code>, which returns a
+<a href="https://docs.perl6.org/type/Promise">Promise</a>. This is an object that
+promises that in the future the computation will yield a result. The status
+can thus be <code>Planned</code>, <code>Kept</code> or <code>Broken</code>. You can chain promises, combine
+them, and wait for them.</p>
+
+<p>In the background, a scheduler distributes such computations to operating
+system level threads. The default scheduler is a thread pool scheduler with an
+upper limit to the number of threads to use.</p>
+
+<p>Communication between parallel computations should happen through thread-safe
+data structures. Foremost among them are the
+<a href="https://docs.perl6.org/type/Channel">Channel</a>, a thread-safe queue, and
+<a href="https://docs.perl6.org/type/Supply">Supply</a>, Perl 6's implementation of the
+<a href="https://en.wikipedia.org/wiki/Observer_pattern">Observer Pattern</a>. Supplies
+are very powerful, because you can transform them with methods such as <code>map</code>,
+<code>grep</code>, <code>throttle</code> or <code>delayed</code>, and <a href="https://docs.perl6.org/type/Supply#method_act">use their actor
+semantic</a> to ensure that a
+consumer is run in only one thread at a time.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
