@@ -27,7 +27,7 @@ subroutine.</p>
 <p>An optional <em>twigil</em> between the sigil and identifier can influence the
 scoping. The <code>*</code> twigil marks a dynamically scoped variable, thus lookup is
 performed in the current call stack. <code>!</code> marks attributes, that is,
-a per-instance variable that's attached on object.</p>
+a per-instance variable that's attached to an object.</p>
 
 <h2>Subroutines</h2>
 
