@@ -102,7 +102,7 @@ Automating Deployments: Pipeline Templates in GoCD
 
 <p>The interesting thing here is that the pipeline isn't very specific to this project. Apart from the package name, the Debian distribution and the group of hosts to which to deploy, everything in here can be reused to any software that's Debian packaged.</p>
 
-<p>To make the pipeline more generic, we can define <em>paramaters</em>, short <em>params</em></p>
+<p>To make the pipeline more generic, we can define <em>parameters</em>, short <em>params</em></p>
 
 <pre>[% syntax xml %]
   <params>

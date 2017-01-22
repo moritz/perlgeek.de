@@ -44,7 +44,7 @@ you have to pass in when you call it:</p>
 }
 </code></pre>
 
-<p>The variables used in the signature are called <em>paramaters</em>, whereas we
+<p>The variables used in the signature are called <em>parameters</em>, whereas we
 call the values that you pass in <em>arguments</em>.</p>
 
 <p>To refer to a subroutine without calling it, put an ampersand character in
