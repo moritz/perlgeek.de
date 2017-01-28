@@ -1,0 +1,369 @@
+Perl 6 By Example: Parsing INI files
+<!-- 2017-01-29 -->
+
+[% include p6-intro %]
+
+<p>You've probably seen <code>.ini</code> files before; they are quite common as
+configuration files on the Microsoft Windows platform, but are also in many
+other places like ODBC configuration files, Ansible's <a href="http://docs.ansible.com/ansible/intro_inventory.html">inventory
+files</a> and so on.</p>
+
+<p>This is what they look like:</p>
+
+<pre><code>key1=value2
+
+[section1]
+key2=value2
+key3 = with spaces
+; comment lines start with a semicolon, and are
+; ignored by the parser
+
+[section2]
+more=stuff
+</code></pre>
+
+<p>Perl 6 offers regexes for parsing, and grammars for structuring and reusing
+regexes.</p>
+
+<h2>Regex Basics</h2>
+
+<p>A <em>regex</em> is a piece of code that acts as a pattern for strings with a common
+structure. It's derived from the computer science concept of a <a href="https://en.wikipedia.org/wiki/Regular_expression"><em>regular
+expression</em></a>, but adopted to
+allow more constructs than pure regular expressions allow, and with some added
+features that make them easier to use.</p>
+
+<p>We'll use named regexes to match the primitives, and then use regexes that
+call these named regexes to build a parser for the INI files. Since INI files
+have no universally accepted, formal grammar, we have to make stuff up a we
+go.</p>
+
+<p>Let's start with parsing value pairs, like <code>key1=value1</code>. First the key.
+It may contain letters, digits and the underscore <code>_</code>. There's a shortcut for
+match such characters, <code>\w</code>, and matching more at least one works by appending
+a <code>+</code> character:</p>
+
+<pre><code>use v6;
+
+my regex key { \w+ }
+
+multi sub MAIN('test') {
+    use Test;
+    ok 'abc'    ~~ /^ &lt;key&gt; $/, '&lt;key&gt; matches a simple identifier';
+    ok '[abc]' !~~ /^ &lt;key&gt; $/, '&lt;key&gt; does not match a section header';
+    done-testing;
+}
+</code></pre>
+
+<p><code>my regex key { \w+ }</code> declares a lexically (<em>my</em>) scoped regex called <code>key</code>
+that matches one or more word character.</p>
+
+<p>There is a long tradition in programming languages to support so-called <em>Perl
+Compatible Regular Expressions</em>, short PCRE. Many programming languages
+support some deviations from PCRE, including Perl itself, but common syntax
+elements remain throughout most implementations. Perl 6 still supports some of
+these elements, but deviates substantially in others.</p>
+
+<p>Here <code>\w+</code> is the same as in PCRE, but the fact that white space around the
+<code>\w+</code> is ignored is not. In the testing routine, the slashes in <code>'abc' ~~ /^
+&lt;key&gt; $/</code> delimit an anonymous regex. In this regex, <code>^</code> and <code>$</code> stand for the
+start and the end of the matched string, respectively, which is familiar from
+PCRE. But then  <code>&lt;key&gt;</code> calls the named regex <code>key</code> from earlier. This again
+is a Perl 6 extension. In PCRE, the <code>&lt;</code> in a regex matches a literal <code>&lt;</code>. In
+Perl 6 regexes, it introduces a subrule call.</p>
+
+<p>In general, all non-word characters are reserved for "special" syntax, and you
+have to quote or backslash them to get the literal meaning. For example <code>\&lt;</code>
+or <code>'&lt;'</code> in a regex match a less-then sign. Word characters (letters, digits
+and the underscore) always match literally.</p>
+
+<h2>Parsing the INI primitives</h2>
+
+<p>Coming back the INI parsing, we have to think about what characters are
+allowed inside a value. Listing allowed characters seems to be like a futile
+exercise, since we are very likely to forget some. Instead, we should think
+about what's <em>not</em> allowed in a value. Newlines certainly aren't, because they
+introduce the next key/value pair or a section heading. Neither are
+semicolons, because they introduce a comment.</p>
+
+<p>We can formulate this exclusion as a negated character class: <code>&lt;-[ \n ; ]&gt;</code>
+matches any single character that is neither a newline nor a semicolon. Note
+that inside a character class, nearly all characters lose their special
+meaning. Only backslash, whitespace and the closing bracket stand for anything
+other than themselves. Inside and outside of character classes alike, <code>\n</code>
+matches a single newline character, and <code>\s</code> and whitespace. The upper-case
+inverts that, so that for example <code>\S</code> matches any single character that is
+not whitespace.</p>
+
+<p>This leads us to a version version of a regex for match a value in an ini
+file:</p>
+
+<pre><code>my regex value { &lt;-[ \n ; ]&gt;+ }
+</code></pre>
+
+<p>There is one problem with this regex: it also matches leading and trailing
+whitespace, which we don't want to consider as part of the value:</p>
+
+<pre><code>my regex value { &lt;-[ \n ; ]&gt;+ }
+if ' abc ' ~~ /&lt;value&gt;/ {
+    say "matched '$/'";         # matched ' abc '
+}
+</code></pre>
+
+<p>If Perl 6 regexes were limited to a regular language in the Computer Science
+sense, we'd have to something like this:</p>
+
+<pre><code>my regex value { 
+    # match a first non-whitespace character
+    &lt;-[ \s ; ]&gt; 
+    [
+        # then arbitrarily many that can contain whitespace
+        &lt;-[ \n ; ]&gt;* 
+        # ... terminated by one non-whitespace 
+        &lt;-[ \s ; ]&gt; 
+    ]?  # and make it optional, in case the value is only
+        # only one non-whitespace character
+}
+</code></pre>
+
+<p>And now you know why people respond with "And now you have <em>two</em> problems"
+when proposing to solve problems with regexes. A simpler solution is to match
+a value as introduced first, and then introduce a constraint that neither the
+first nor the last character may be whitespace:</p>
+
+<pre><code>my regex value { &lt;!before \s&gt; &lt;-[ \s ; ]&gt;+ &lt;!after \s&gt; }
+</code></pre>
+
+<p>along with accompanying tests:</p>
+
+<pre><code>is ' abc ' ~~ /&lt;value&gt;/, 'abc', '&lt;value&gt; does not match leading or trailing whitespace';
+is ' a' ~~ /&lt;value&gt;/, 'a', '&lt;value&gt; watches single non-whitespace too';
+ok "a\nb" !~~ /^ &lt;value&gt; $/, '&lt;valuee&gt; does not match \n';
+</code></pre>
+
+<p><code>&lt;!before regex&gt;</code> is a negated look-ahead, that is, the following text must
+not match the regex, and the text isn't consumed while matching.
+Unsurprisingly, <code>&lt;!after regex&gt;</code> is the negated look-behind, which tries to
+match text that's already been matched, and must not succeed in doing so for
+the whole match to be successful.</p>
+
+<p>This being Perl 6, there is of course yet another way to approach this
+problem. If you formulate the requirements as "a value must not contain a
+newline or semicolon <em>and</em> start with a non-whitepsace <em>and</em> end with a
+non-whitespace", it become obvious that if we just had an AND operator in
+regexes, this could be easy. And it is:</p>
+
+<pre><code>my regex value { &lt;-[ \s ; ]&gt;+ &amp; \S.* &amp; .*\S }
+</code></pre>
+
+<p>The <code>&amp;</code> operator delimits two or more smaller regex expressions that must all
+match the same string successfully for the whole match to succeed. <code>\S.*</code>
+matches any string that starts with a non-whitesspace character (<code>\S</code>), followed
+by any character (<code>.</code>) any number of times <code>*</code>. Likewise <code>.*\S</code> matches any
+string that ends with non-whitespace character.</p>
+
+<p>Who would have thought that matching something as seemingly simple as a value
+in a configuration file could be so involved? Luckily, matching a pair of key
+and value is much simpler, now that we know how to match each on their own:</p>
+
+<pre><code>my regex pair { &lt;key&gt; '=' &lt;value&gt; }
+</code></pre>
+
+<p>And this works great, as long as there are no blanks surrounding the equality
+sign. If there is, we have to match it separately:</p>
+
+<pre><code>my regex pair { &lt;key&gt; \h* '=' \h* &lt;value&gt; }
+</code></pre>
+
+<p><code>\h</code> matches a horizontal whitespace, that is, a blank, a tabulator character,
+or any other fancy space-like thing that Unicode has in store for us (for
+example also the non-breaking space), but not a newline.</p>
+
+<p>Speaking of newlines, it's a good idea to match a newline at the end of regex
+<code>pair</code>, and since we ignore empty lines, let's match more than one too:</p>
+
+<pre><code>my regex pair { &lt;key&gt; \h* '=' \h* &lt;value&gt; \n+ }
+</code></pre>
+
+<p>Time to write some tests as well:</p>
+
+<pre><code>ok "key=vaule\n" ~~ /&lt;pair&gt;/, 'simple pair';
+ok "key = value\n\n" ~~ /&lt;pair&gt;/, 'pair with blanks';
+ok "key\n= value\n" !~~ /&lt;pair&gt;/, 'pair with newline before assignment';
+</code></pre>
+
+<p>A section header is a string in brackets, so the string itself shouldn't
+contain brackets or a newline:</p>
+
+<pre><code>my regex header { '[' &lt;-[ \[ \] \n ]&gt;+ ']' \n+ }
+
+# and in multi sub MAIN('test'):
+ok "[abc]\n"    ~~ /^ &lt;header&gt; $/, 'simple header';
+ok "[a c]\n"    ~~ /^ &lt;header&gt; $/, 'header with spaces';
+ok "[a [b]]\n" !~~ /^ &lt;header&gt; $/, 'cannot nest headers';
+ok "[a\nb]\n"  !~~ /^ &lt;header&gt; $/, 'No newlines inside headers';
+</code></pre>
+
+<p>The last remaining primitive is the comment:</p>
+
+<pre><code>my regex comment { ';' \N*\n+ }
+</code></pre>
+
+<p><code>\N</code> matches any character that's not a newline, so the comment is just a
+semicolon, and then anything until the end of the line.</p>
+
+<h2>Putting Things Together</h2>
+
+<p>A <em>section</em> of an INI file is a header followed by some key-value pairs or
+comment lines:</p>
+
+<pre><code>my regex section {
+    &lt;header&gt;
+    [ &lt;pair&gt; | &lt;comment&gt; ]*
+}
+</code></pre>
+
+<p><code>[...]</code> groups a part of a regex, so that the quantifier <code>*</code> after it
+applies to the whole group, not just to the last term. </p>
+
+<p>The whole INI file consists of potentially some initial key/value pairs or
+comments followed by some sections:</p>
+
+<pre><code>my regex inifile {
+    [ &lt;pair&gt; | &lt;comment&gt; ]*
+    &lt;section&gt;*
+}
+</code></pre>
+
+<p>The avid reader has noticed that the <code>[ &lt;pair&gt; | &lt;comment&gt; ]*</code> part of a regex
+has been used twice, so it's a good idea to extract it into a standalone
+regex:</p>
+
+<pre><code>my regex block   { [ &lt;pair&gt; | &lt;comment&gt; ]* }
+my regex section { &lt;header&gt; &lt;block&gt; }
+my regex inifile { &lt;block&gt; &lt;section&gt;* }
+</code></pre>
+
+<p>It's time for the "ultimate" test:</p>
+
+<pre><code>my $ini = q:to/EOI/;
+key1=value2
+
+[section1]
+key2=value2
+key3 = with spaces
+; comment lines start with a semicolon, and are
+; ignored by the parser
+
+[section2]
+more=stuff
+EOI
+
+ok $ini ~~ /^&lt;inifile&gt;$/, 'Can parse a full ini file';
+</code></pre>
+
+<h2>Backtracking</h2>
+
+<p>Regex matching seems magical to many programmers. You just state the pattern,
+and the regex engine determines for you whether a string matches the pattern
+or not. While implementing a regex engine is a tricky business, the basics
+aren't too hard to understand.</p>
+
+<p>The regex engine goes through the parts of a regex from left to right, trying
+to match each part of the regex. It keeps track of what part of the string
+it matched so far in a <em>cursor</em>. If a part of a regex can't find a match, the
+regex engine tries to alter the previous match to take up fewer characters,
+and the retry the failed match at the new position.</p>
+
+<p>For example if you execute the regex match</p>
+
+<pre><code>'abc' ~~ /.* b/
+</code></pre>
+
+<p>the regex engine first evaluates the <code>.*</code>. The <code>.</code> matches any character.
+The <code>*</code> quantifier is
+<em>greedy</em>, which means it tries to match as many characters as it can. It ends
+up matching the whole string, <code>abc</code>. Then the regex engine tries to match the
+<code>b</code>, which is a literal. Since the previous match gobbled up the whole string,
+matching <code>c</code> against the remaining empty string fails. So the previous regex
+part, <code>.*</code>, must give up a character. It now matches <code>ab</code>, and the literal
+matcher for the <code>b</code> compares <code>b</code> and <code>c</code>, and fails again. So there is a final
+iteration where the <code>.*</code> once again gives up one character it matched, and now
+the <code>b</code> literal can match the second character in the string.</p>
+
+<p>This back and forth between the parts of a regex is called <em>backtracking</em>.
+It's great feature when you search for a pattern in a string. But in a parser,
+it is usually not desirable. If for example the regex <code>key</code> matched the
+substring <code>"key2" in the input</code>"key2=value2`, you don't want it to match a
+shorter substring just because the next part of the regex can't match.</p>
+
+<p>There are three major reasons why you don't want that. The first is that it makes
+debugging harder. When humans think about how a text is structured, they
+usually commit pretty quickly to basic tokenization, such as where a word or a
+sentence ends. Thus backtracking can be very uninuitive. If you generate error
+messages based on which regexes failed to match, backtracking basically always
+leads to the error message being pretty useless.</p>
+
+<p>The second reason is that backtracking can lead to unexpected regex matches.
+For example you want to match two words, optionally separated by whitespaces,
+and you try to translate this directly to a regex:</p>
+
+<pre><code>say "two words" ~~ /\w+\s*\w+/;     # ｢two words｣
+</code></pre>
+
+<p>This seems to work: the first <code>\w+</code> matches the first word, the seccond oen
+matches the second word, all fine and good. Until you find that it actually
+matches a single word too:</p>
+
+<pre><code>say "two" ~~ /\w+\s*\w+/;           # ｢two｣
+</code></pre>
+
+<p>How did that happen? Well, the first <code>\w+</code> matched the whole word, <code>\s*</code>
+successfully matched the empty string, and then the second <code>\w+</code> failed,
+forcing the previous to parts of the regex to match differently. So in the
+second iteration, the first \w+<code>only matches</code>tw<code>, and the second</code>\w+<code>
+matches</code>o`. And then you realize that if two words aren't delimtied by
+whitespace, how do you even tell where one word ends and the next one starts?
+With backtracking disabled, the regex fails to match instead of matching in an
+unintended way.</p>
+
+<p>The third reason is performance. When you disable backtracking, the regex
+engine has to look at each character only once, or once for each branch it can
+take in the case of alternatives. With backtracking, the regex engine can be
+stuck in backtracking loops that take over-proportionally longer with
+increasing length of the input string.</p>
+
+<p>To disable backtracking, you simply have to replace the word <code>regex</code> by
+<code>token</code> in the declaration, or by using the <code>:ratchet</code> modifier inside the
+regex.</p>
+
+<p>In the INI file parser, only regex <code>value</code> needs backtracking (though other
+formualtions discussed above don't need it), all the other regexes can be
+switched over to tokens safely:</p>
+
+<pre><code>my token key     { \w+ }
+my regex value   {  &lt;!before \s&gt; &lt;-[\n;]&gt;+ &lt;!after \s&gt; }
+my token pair    { &lt;key&gt; \h* '=' \h* &lt;value&gt; \n+ }
+my token header  { '[' &lt;-[ \[ \] \n ]&gt;+ ']' \n+ }
+my token comment { ';' \N*\n+  }
+my token block { [ &lt;pair&gt; | &lt;comment&gt; ]* }
+my token section { &lt;header&gt; &lt;block&gt; }
+my token inifile { &lt;block&gt; &lt;section&gt;* }
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>Perl 6 allows regex reuse by treating them as first-class citizens,
+allowing them to be named and called like normal routines.
+Further clutter is removed by allowing whitespace inside regexes.</p>
+
+<p>These features allows you to write regexes to parse proper file formats and
+even programming languages. So far we have only seen a binary decision about
+whether a string matches a regex or not. In the future, we'll explore ways to
+improve code reuse even more, extract structured data from the match, and give
+better error messages when the parse fails.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
