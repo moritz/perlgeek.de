@@ -1,0 +1,211 @@
+Perl 6 By Example: Generating Good Parse Errors from a Parser
+<!-- 2017-02-12 -->
+
+[% include p6-intro %]
+
+
+<p>Good error messages are paramount to the user experience of any product.
+Parsers are no exception to this. Consider the difference between the message
+"Square bracket [ on line 5 closed by curly bracket } on line 5", in contrast
+to Python's lazy and generic "SyntaxError: invalid syntax".</p>
+
+<p>In addition to the textual message, knowing the location of the parse error
+helps tremendously in figuring out what's wrong.</p>
+
+<p>We'll explore how to generate better parsing error messages from
+<a href="https://perlgeek.de/blog-en/perl-6/2017-006-book-grammar.html">a Perl 6
+grammar, using the INI file parse from the previous blog posts as an example</a>.</p>
+
+<h2>Failure is Normal</h2>
+
+<p>Before we start, it's important to realize that in a grammar-based parser,
+it's normal for regex to fail to match. Even in an overall successful parse.</p>
+
+<p>Let's recall a part of the parser:</p>
+
+<pre><code>token block { [&lt;pair&gt; | &lt;comment&gt;]* }
+token section { &lt;header&gt; &lt;block&gt; }
+token TOP { &lt;block&gt; &lt;section&gt;* }
+</code></pre>
+
+<p>When this grammar matches against the string</p>
+
+<pre><code>key=value
+[header]
+other=stuff
+</code></pre>
+
+<p>then <code>TOP</code> calls <code>block</code>, which calls both <code>pair</code> and <code>comment</code>. The <code>pair</code>
+match succeeds, the <code>comment</code> match fails. No big deal. But since there is a
+<code>*</code> quantifier in token <code>block</code>, it tries again to match <code>pair</code> or <code>comment</code>.
+neither succeeds, but the overall match of token <code>block</code> still succeeds.</p>
+
+<p>A nice way to visualize passed and failed submatches is to install the
+<code>Grammar::Tracer</code> module (<code>zef install Grammar::Tracer</code> or <code>panda install
+Grammar::Tracer</code>), and simple add the statement <code>use Grammar::Tracer</code> before
+the grammar definition. This produces debug output showing which rules matched
+and which didn't:</p>
+
+<pre><code>TOP
+|  block
+|  |  pair
+|  |  |  key
+|  |  |  * MATCH "key"
+|  |  |  ws
+|  |  |  * MATCH ""
+|  |  |  ws
+|  |  |  * MATCH ""
+|  |  |  value
+|  |  |  * MATCH "value"
+|  |  |  ws
+|  |  |  * MATCH ""
+|  |  |  ws
+|  |  |  * MATCH ""
+|  |  * MATCH "key=value\n"
+|  |  pair
+|  |  |  key
+|  |  |  * FAIL
+|  |  * FAIL
+|  |  comment
+|  |  * FAIL
+|  * MATCH "key=value\n"
+|  section
+...
+</code></pre>
+
+<h2>Detecting Harmful Failure</h2>
+
+<p>To produce good parsing error messages, you must distinguish between expected
+and unexpected parse failures. As explained above, a match failure of a single
+regex or token is not generally an indication of a malformed input. But you
+can identify points where you know that once the regex engine got this far,
+the rest of the match must succeed.</p>
+
+<p>If you recall <code>pair</code>:</p>
+
+<pre><code>rule pair { &lt;key&gt;  '='  &lt;value&gt; \n+ }
+</code></pre>
+
+<p>we know that if a key was parsed, we really expect the next character to be an
+equals sign. If not, the input is malformed.</p>
+
+<p>In code, this looks like this:</p>
+
+<pre><code>rule pair {
+    &lt;key&gt; 
+    [ '=' || &lt;expect('=')&gt; ]
+     &lt;value&gt; \n+
+}
+</code></pre>
+
+<p><code>||</code> is a sequential alternative, which first tries to match the subregex on
+the left-hand side, and only executes the right-hand side if that failed. On
+the other hand, <code>|</code> executes all alternatives notionally in parallel, and
+takes the long match.</p>
+
+<p>So now we have to define <code>expect</code>:</p>
+
+<pre><code>method expect($what) {
+    die "Cannot parse input as INI file: Expected $what";
+}
+</code></pre>
+
+<p>Yes, you can call methods just like regexes, because regexes really <em>are</em>
+methods under the hood. <code>die</code> throws an exception, so now the malformed input
+<code>justakey</code> produces the error</p>
+
+<pre><code>Cannot parse input as INI file: Expected =
+</code></pre>
+
+<p>followed by a backtrace. That's already better than "invalid syntax", though
+the position is still missing. Inside method <code>expect</code>, we can find the current
+parsing position through method <code>pos</code>, a method supplied by the implicit
+parent class <a href="https://docs.perl6.org/type/Grammar">Grammar</a> that the <code>grammar</code>
+declaration brings with it.</p>
+
+<p>We can use that to improve the error message a bit:</p>
+
+<pre><code>method expect($what) {
+    die "Cannot parse input as INI file: Expected $what at character {self.pos}";
+}
+</code></pre>
+
+<h2>Providing Context</h2>
+
+<p>For larger inputs, we really want to print the line number. To calculate that,
+we need to get hold of the target string, which is available as method
+<code>target</code>:</p>
+
+<pre><code>method expect($what) {
+    my $parsed-so-far = self.target.substr(0, self.pos);
+    my @lines = $parsed-so-far.lines;
+    die "Cannot parse input as INI file: Expected $what at line @lines.elems(), after '@lines[*-1]'";
+}
+</code></pre>
+
+<p>This brings us from the "meh" realm of error messages to quite good.</p>
+
+<pre><code>IniFile.parse(q:to/EOI/);
+key=value
+[section]
+key_without_value
+more=key
+EOI
+</code></pre>
+
+<p>now dies with</p>
+
+<pre><code>Cannot parse input as INI file: Expected = at line 3, after 'key_without_value'
+</code></pre>
+
+<p>You can refine method <code>expect</code> more, for example by providing context both before
+and after the position of the parse failure. </p>
+
+<p>And of course you have to apply the <code>[ thing || &lt;expect('thing')&gt; ]</code> pattern
+at more places inside the regex to get better error messages.</p>
+
+<p>Finally you can provide different kinds of error messages too. For example
+when parsing a section header, once the initial <code>[</code> is parsed, you likely
+don't want an error message "expected rest of section header", but rather
+"malformed section header, at line ...":</p>
+
+<pre><code>rule pair {
+    &lt;key&gt; 
+    [ '=' || &lt;expect('=')&gt; ] 
+    [ &lt;value&gt; || &lt;expect('value')&gt;]
+     \n+
+}
+token header { 
+     '[' 
+     [ ( &lt;-[ \[ \] \n ]&gt;+ )  ']'
+         || &lt;error("malformed section header")&gt; ]
+}
+...
+
+method expect($what) {
+    self.error("expected $what");
+}
+
+method error($msg) {
+    my $parsed-so-far = self.target.substr(0, self.pos);
+    my @lines = $parsed-so-far.lines;
+    die "Cannot parse input as INI file: $msg at line @lines.elems(), after '@lines[*-1]'";
+}
+</code></pre>
+
+<p>Since Rakudo Perl 6 uses grammars to parse Perl 6 input, you can use
+<a href="https://github.com/rakudo/rakudo/blob/nom/src/Perl6/Grammar.nqp">Rakudo's own
+grammar</a> as
+source of inspiration for more ways to make error reporting even better.</p>
+
+<h2>Summary</h2>
+
+<p>To generate good error messages from a parser, you need to distinguish between
+expected and unexpected match failures. The sequential alternative <code>||</code> is a
+tool you can use to turn unexpected match failures into error messages by
+raising an exception from the second branch of the alternative.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
