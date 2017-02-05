@@ -1,4 +1,4 @@
-Perl 6 By Example: Imrpoved INI Parsing with Grammars
+Perl 6 By Example: Improved INI Parsing with Grammars
 <!-- 2017-02-05 -->
 
 [% include p6-intro %]
