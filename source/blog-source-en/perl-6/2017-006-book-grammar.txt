@@ -1,0 +1,300 @@
+Perl 6 By Example: Imrpoved INI Parsing with Grammars
+<!-- 2017-02-05 -->
+
+[% include p6-intro %]
+
+
+<p>Last week <a href="https://perlgeek.de/blog-en/perl-6/2017-005-book-regexes-ini-parsing.html"> we've seen a collection of regexes that can parse a
+configuration file in the INI format</a> that's popular in world of
+Microsoft Windows applications.</p>
+
+<p>Here we'll explore <em>grammars</em>, a feature that groups regexes into a class-like
+structure, and how to extract structured data from a successful match.</p>
+
+<h2>Grammars</h2>
+
+<p>A <em>grammar</em> is class with some extra features that makes it suitable for
+parsing text. Along with methods and attributes you can put regexes into a
+grammar.</p>
+
+<p>This is what the INI file parser looks like when formulated as a grammar:</p>
+
+<pre><code>grammar IniFile {
+    token key     { \w+ }
+    token value   { &lt;!before \s&gt; &lt;-[\n;]&gt;+ &lt;!after \s&gt; }
+    token pair    { &lt;key&gt; \h* '=' \h* &lt;value&gt; \n+ }
+    token header  { '[' &lt;-[ \[ \] \n ]&gt;+ ']' \n+ }
+    token comment { ';' \N*\n+  }
+    token block   { [&lt;pair&gt; | &lt;comment&gt;]* }
+    token section { &lt;header&gt; &lt;block&gt; }
+    token TOP     { &lt;block&gt; &lt;section&gt;* }
+}
+</code></pre>
+
+<p>You can use it to parse some text by calling the <code>parse</code> method, which uses
+regex or token <code>TOP</code> as the entry point:</p>
+
+<pre><code>my $result = IniFile.parse($text);
+</code></pre>
+
+<p>Besides the standardized entry point, a grammar offers more advantages.
+You can inherit from it like from a normal class, thus bringing even
+more reusability to regexes. You can group extra functionality together with
+the regexes by adding methods to the grammar. And then there are some
+mechanisms in grammars that can make your life as a developer easier.</p>
+
+<p>One of them is dealing with whitespace. In INI files, horizontal whitespace is
+generally considered to be insignificant, in that <code>key=value</code> and <code>key =
+value</code> lead to the same configuration of the application. So far we've dealt
+with that explicitly by adding <code>\h*</code> to token <code>pair</code>. But there are place we
+haven't actually considered. For example it's OK to have a comment that's not
+at start of the line.</p>
+
+<p>The mechanism that grammars offer is that you can define a rule called <code>ws</code>,
+and when you declare a token with <code>rule</code> instead of <code>token</code> (or enable this
+feature in regex through the <code>:sigspace</code> modifier), Perl 6 inserts implicit
+<code>&lt;ws&gt;</code> calls for you where there is whitespace in the regex definition:</p>
+
+<pre><code>grammar IniFile {
+    token ws { \h* }
+    rule pair { &lt;key&gt;  '='  &lt;value&gt; \n+ }
+    # rest as before
+}
+</code></pre>
+
+<p>This might not be worth the effort for a single rule that needs to parse
+whitespace, but when there are more, this really pays off by keeping
+whitespace parsing in a singles space.</p>
+
+<p>Note that you should only parse insignificant whitespace in token <code>ws</code>. For
+example for INI files, newlines are significant, so <code>ws</code> shouldn't match
+them.</p>
+
+<h2>Extracting Data from the Match</h2>
+
+<p>So far the <code>IniFile</code> grammar only checks whether a given input matches the
+grammar or not. But when it does match, we really want the result of the parse
+in a data structure that's easy to use. For example we could translate this
+example INI file:</p>
+
+<pre><code>key1=value2
+
+[section1]
+key2=value2
+key3 = with spaces
+; comment lines start with a semicolon, and are
+; ignored by the parser
+
+[section2]
+more=stuff
+</code></pre>
+
+<p>Into this data structure of nested hashes:</p>
+
+<pre><code>{
+    _ =&gt; {
+        key1 =&gt; "value2"
+    },
+    section1 =&gt; {
+        key2 =&gt; "value2",
+        key3 =&gt; "with spaces"
+    },
+    section2 =&gt; {
+        more =&gt; "stuff"
+    }
+}
+</code></pre>
+
+<p>Key-value pairs from outside of any section show up in the <code>_</code> top-level
+key.</p>
+
+<p>The result from the <code>IniFile.parse</code> call is a
+<a href="https://docs.perl6.org/type/Match">Match</a> object that has (nearly) all the
+information necessary to extract the desired match. If you turn a Match object
+into a string, it becomes the matched string. But there's more. You can use it
+like a hash to extract the matches from named submatches. For example if the
+top-level match from</p>
+
+<pre><code>token TOP { &lt;block&gt; &lt;section&gt;* }
+</code></pre>
+
+<p>produces a <code>Match</code> object <code>$m</code>, then <code>$m&lt;block&gt;</code> is again a Match object, this
+one from the match of the call of token <code>block´. And</code>$m<section><code>is a list
+of</code>Match<code>objects from the repeated calls to token</code>section<code>. So a</code>Match` is
+really a tree of matches.</p>
+
+<p>We can walk this data structure to extract the nested hashes.
+Token <code>header</code> matches a string like <code>"[section1]\n", and we're only
+interested in</code>"section1"<code>. To get to the inner part, we can modify token
+</code>header` by inserting a pair of round parenthesis around the subregex whose
+match we're interested in:</p>
+
+<pre><code>token header { '[' ( &lt;-[ \[ \] \n ]&gt;+ ) ']' \n+ }
+#                  ^^^^^^^^^^^^^^^^^^^^  a capturing group
+</code></pre>
+
+<p>That's a <em>capturing group</em>, and we can get its match by using the top-level
+match for <code>header</code> as an array, and accessing its first element. This leads us
+to the full INI parser:</p>
+
+<pre><code>sub parse-ini(Str $input) {
+    my $m = IniFile.parse($input);
+    unless $m {
+        die "The input is not a valid INI file.";
+    }
+
+    sub block(Match $m) {
+        my %result;
+        for $m&lt;block&gt;&lt;pair&gt; -&gt; $pair {
+            %result{ $pair&lt;key&gt;.Str } = $pair&lt;value&gt;.Str;
+        }
+        return %result;
+    }
+
+    my %result;
+    %result&lt;_&gt; = hash-from-block($m);
+    for $m&lt;section&gt; -&gt; $section {
+        %result{ $section&lt;header&gt;[0].Str } = hash-from-block($section);
+    }
+    return %result;
+}
+</code></pre>
+
+<p>This top-down approach works, but it requires a very intimate understanding of
+the grammar's structure. Which means that if you change the structure during
+maintenance, you'll have a hard time figuring out how to change the data
+extraction code.</p>
+
+<p>So Perl 6 offers a bottom-up approach as well. It allows you to write a data
+extraction or <em>action</em> method for each regex, token or rule. The grammar engine
+passes in the match object as the single argument, and the action method can
+call the routine <code>make</code> to attach a result to the match object. The result is
+available through the <code>.made</code> method on the match object.</p>
+
+<p>This execution of action methods happens as soon as a regex matches
+successfully, which means that an action method for a regex can rely on the
+fact that the action methods for subregex calls have already run. For example
+when the <code>rule pair { &lt;key&gt;  '='  &lt;value&gt; \n+ }</code> is being executed, first
+token <code>key</code> matches successfully, and its action method runs immediately
+afterwards. Then token <code>value</code> matches, and its action method runs too. Then
+finally rule <code>pair</code> itself can match successfully, so its action method can
+rely on <code>$m&lt;key&gt;.made</code> and <code>$m&lt;value&gt;.made</code> being available, assuming that the
+match result is stored in variable <code>$m</code>.</p>
+
+<p>Speaking of variables, a regex match implicitly stores its result in the
+special variable <code>$/</code>, and it is custom to use <code>$/</code> as parameter in action
+methods. And there is a shortcut for accessing named submatches: instead of
+writing <code>$/&lt;key&gt;</code>, you can write <code>$&lt;key&gt;</code>. With this convention in mind, the
+action class becomes:</p>
+
+<pre><code>class IniFile::Actions {
+    method key($/)     { make $/.Str }
+    method value($/)   { make $/.Str }
+    method header($/)  { make $/[0].Str }
+    method pair($/)    { make $&lt;key&gt;.made =&gt; $&lt;value&gt;.made }
+    method block($/)   { make $&lt;pair&gt;.map({ .made }).hash }
+    method section($/) { make $&lt;header&gt;.made =&gt; $&lt;block&gt;.made }
+    method TOP($/)     {
+        make {
+            _ =&gt; $&lt;block&gt;.made,
+            $&lt;section&gt;.map: { .made },
+        }
+    }
+}
+</code></pre>
+
+<p>The first two action methods are really simple. The result of a <code>key</code> or
+<code>value</code> match is simply the string that matched. For a <code>header</code>, it's just the
+substring inside the brackets. Fittingly, a <code>pair</code> returns a
+<a href="https://docs.perl6.org/type/Pair">Pair</a> object, composed from key and value.
+Method <code>block</code> constructs a hash from all the lines in the block by iterating
+over each <code>pair</code> submatch, extracting the already attached <code>Pair</code> object.
+One level above that in the match tree, <code>section</code> takes that hash and pairs it
+with the name of section, extracted from <code>$&lt;header&gt;.made</code>. Finally the
+top-level action method gathers the sectionless key-value pairs under they key
+<code>_</code> as well as all the sections, and returns them in a hash.</p>
+
+<p>In each method of the action class, we only rely on the knowledge of the
+first level of regexes called directly from the regex that corresponds to the
+action method, and the data types that they <code>.made</code>. Thus when you refactor one
+regex, you also have to change only the corresponding action method. Nobody
+needs to be aware of the global structure of the grammar.</p>
+
+<p>Now we just have to tell Perl 6 to actually use the action class:</p>
+
+<pre><code>sub parse-ini(Str $input) {
+    my $m = IniFile.parse($input, :actions(IniFile::Actions));
+    unless $m {
+        die "The input is not a valid INI file.";
+    }
+
+    return $m.made
+}
+</code></pre>
+
+<p>If you want to start parsing with a different rule than <code>TOP</code> (which you might
+want to do in a test, for example), you can pass a named argument <code>rule</code> to
+method <code>parse</code>:</p>
+
+<pre><code>sub parse-ini(Str $input, :$rule = 'TOP') {
+    my $m = IniFile.parse($input,
+        :actions(IniFile::Actions),
+        :$rule,
+    );
+    unless $m {
+        die "The input is not a valid INI file.";
+    }
+
+    return $m.made
+}
+
+say parse-ini($ini).perl;
+
+use Test;
+
+is-deeply parse-ini("k = v\n", :rule&lt;pair&gt;), 'k' =&gt; 'v',
+    'can parse a simple pair';
+done-testing;
+</code></pre>
+
+<p>To better encapsulate all the parsing functionality within the grammar, we can
+turn <code>parse-ini</code> into a method:</p>
+
+<pre><code>grammar IniFile {
+    # regexes/tokens unchanged as before
+
+    method parse-ini(Str $input, :$rule = 'TOP') {
+        my $m = self.parse($input,
+            :actions(IniFile::Actions),
+            :$rule,
+        );
+        unless $m {
+            die "The input is not a valid INI file.";
+        }
+
+        return $m.made
+    }
+}
+
+# Usage:
+
+my $result = IniFile.parse-ini($text);
+</code></pre>
+
+<p>To make this work, the class <code>IniFile::Actions</code> either has to be declared before the
+grammar, or it needs to be pre-declared with <code>class IniFile::Action { ... }</code>
+at the top of the file (with literal three dots to mark it as a forward
+declaration).</p>
+
+<h2>Summary</h2>
+
+<p>Match objects are really a tree of matches, with nodes for each named submatch
+and for each capturing group. Action methods make it easy to decouple parsing
+from data extraction.</p>
+
+<p>Next we'll explore how to generate better error messages from a failed parse.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
