@@ -1,0 +1,366 @@
+Perl 6 By Example: A File and Directory Usage Graph
+<!-- 2017-02-19 -->
+[% include p6-intro %]
+
+<h1>A File and Directory Usage Graph</h1>
+
+<p>You bought a shiny new 2TB disk just a short while ago, and you're already
+getting low disk space warnings. What's taking up all that space?</p>
+
+<p>To answer this question, and experiment a bit with data visualization,
+let's write a small tool that visualizes which files use up how much disk
+space.</p>
+
+<p>To do that, we must first recursively read all directories and files in a
+given directory, and record their sizes. To get a listing of all elements in a
+directory, we can use the <a href="https://docs.perl6.org/routine/dir">dir</a> function,
+which returns a lazy list of
+<a href="https://docs.perl6.org/type/IO$COLON$COLONPath">IO::Path</a> objects.</p>
+
+<p>We distinguish between directories, which can have child entries, and files,
+which don't. Both can have a direct size, and in the case of directories also
+a total size, which includes files and subdirectories, recursively:</p>
+
+<pre><code>class File {
+    has $.name;
+    has $.size;
+    method total-size() { $.size }
+}
+
+class Directory {
+    has $.name;
+    has $.size;
+    has @.children;
+    has $!total-size;
+    method total-size() {
+        $!total-size //= $.size + @.children.map({.total-size}).sum;
+    }
+}
+
+sub tree(IO::Path $path) {
+    if $path.d {
+        return Directory.new(
+            name     =&gt; $path.basename,
+            size     =&gt; $path.s,
+            children =&gt; dir($path).map(&amp;tree),
+        );
+    }
+    else {
+        return File.new(
+            name =&gt; $path.Str,
+            size =&gt; $path.s,
+        );
+    }
+}
+</code></pre>
+
+<p>Method <code>total-size</code> in class <code>Directory</code> uses the construct <code>$var //= EXPR´.
+The</code>//<code>stands for *defined-OR*, so it returns the left-hand side if it has a
+defined value. Otherwise, it evalutes and returns the value of</code>EXPR`.
+Combined with the assignment operator, it evaluates the right-hand side only
+if the variable is undefined, and then stores the value of the expression in
+the variable. That's a short way to write a cache.</p>
+
+<p>The code for reading a file tree recursively uses the <code>d</code> and <code>s</code> methods on
+<code>IO::Path</code>. <code>d</code> returns True for directories, and false for files. <code>s</code> returns
+the size. (Note that <code>.s</code> on directories used to throw an exception in older
+Rakudo versions. You must use Rakudo 2017.01-169 or newer for this to work; if
+you are stuck on an older version of Rakudo, you could hard code the size of a
+directory to a typical block size, like 4096 bytes. It typically won't skew
+your results too much).</p>
+
+<p>Just to check that we've got a sensible data structure, we can write a short
+routine that prints it recursively, with indention to indicate nesting of
+directory entries:</p>
+
+<pre><code>sub print-tree($tree, Int $indent = 0) {
+    say ' ' x $indent, format-size($tree.total-size), '  ', $tree.name;
+    if $tree ~~ Directory {
+        print-tree($_, $indent + 2) for $tree.children
+    }
+}
+
+sub format-size(Int $bytes) {
+    my @units = flat '', &lt;k M G T P&gt;;
+    my @steps = (1, { $_ * 1024 } ... *).head(6);
+    for @steps.kv -&gt; $idx, $step {
+        my $in-unit = $bytes / $step;
+        if $in-unit &lt; 1024 {
+            return sprintf '%.1f%s', $in-unit, @units[$idx];
+        }
+    }
+}
+
+sub MAIN($dir = '.') {
+    print-tree(tree($dir.IO));
+}
+</code></pre>
+
+<p>The subroutine <code>print-tree</code> is pretty boring, if you're used to recursion. It
+prins out the name and size of the current node, and if the current node is a
+directory, recurses into each children with an increased indention. The
+indention is applied through the <code>x</code> string repetition operator, which when
+called as <code>$string x $count</code> repeates the <code>$string</code> for <code>$count</code> times.</p>
+
+<p>To get a human-readable repretation of the size of a number, <code>format-size</code>
+knows a list of six units: the empty string for one, <code>k</code> (kilo) for 1024, <code>M</code>
+(mega) for 1024*1024 and so on. This list is stored in the array <code>@units</code>. The
+multiplies assoziated with each unit is stored in <code>@steps</code>, which is
+iniitliazed through the <em>series</em> operator. <code>...</code>. Its structure is
+<code>INITIAL, CALLABLE ... LIMIT</code>, and repeatedly applies <code>CALLABLE</code> first to the
+initial value, and then to next value generated and so on, until it hits
+<code>LIMIT</code>. The limit here is <code>*</code>, a special term called <em>Whatever</em>, which in
+this means it's unlimited. So the sequence operator returns a lazy,
+potentially infinite list, and the tailing <code>.head(6)</code> call limits it to 6
+values.</p>
+
+<p>To find the most appropriate unit to print the size in, we have to iterate
+over both the values and in the indexes of the array, which <code>for @steps.kv -&gt;
+$idx, $step { .. }</code> accomplishes. <code>sprintf</code>, known from other programming
+languages, does the actual formatting to one digit after the dot, and appends
+the unit.</p>
+
+<h2>Generating a Tree Map</h2>
+
+<p>One possible visualization of file and directory sizes is a <em>tree map</em>, which
+represents each directory as a rectangle, and a each file inside it as a
+rectangle inside directory's rectangle. The size of each rectangle is
+proportional to the size of the file or directory it represents.</p>
+
+<p>We'll generate an SVG file containing all those rectangles. Modern browsers
+support displaying those files, and also show mouse-over texts for each
+rectangle. This alleviates the burden to actually label the rectangnles, which
+can be quite a hassle.</p>
+
+<p>To generate the SVG, we'll use the <code>SVG</code> module, which you can install with</p>
+
+<pre><code>$ zef install SVG
+</code></pre>
+
+<p>or</p>
+
+<pre><code>$ panda install SVG
+</code></pre>
+
+<p>depending on the module installer you have available.</p>
+
+<p>This module provides a single static method, to which you pass
+nested pairs. Pairs whose values are arrays are turned into XML tags, and
+other pairs are turned into attributes. For example this Perl 6 script</p>
+
+<pre><code>use SVG;
+print SVG.serialize(
+    :svg[
+        width =&gt; 100,
+        height =&gt; 20,
+        title =&gt; [
+            'example',
+        ]
+    ],
+);
+</code></pre>
+
+<p>produces this output:</p>
+
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="100"
+     height="20"&gt;
+        &lt;title&gt;example&lt;/title&gt;
+&lt;/svg&gt;
+</code></pre>
+
+<p>(without the indention). The <code>xmlns</code>-tags are helpfully added by the <code>SVG</code>
+module, and are necessary for programs to recognize the file as SVG.</p>
+
+<p>To return to the tree maps, a very simple way to lay out the rectangle is to
+recurse into areas, and for each area subdivide it either horizontally or
+vertically, depending on which axis is longer:</p>
+
+<pre><code>sub tree-map($tree, :$x1!, :$x2!, :$y1!, :$y2) {
+    # do not produce rectangles for small files/dirs
+    return if ($x2 - $x1) * ($y2 - $y1) &lt; 20;
+
+    # produce a rectangle for the current file or dir
+    take 'rect' =&gt; [
+        x      =&gt; $x1,
+        y      =&gt; $y1,
+        width  =&gt; $x2 - $x1,
+        height =&gt; $y2 - $y1,
+        style  =&gt; "fill:" ~ random-color(),
+        title  =&gt; [$tree.name],
+    ];
+    return if $tree ~~ File;
+
+    if $x2 - $x1 &gt; $y2 - $y1 {
+        # split along the x axis
+        my $base = ($x2 - $x1) / $tree.total-size;
+        my $new-x = $x1;
+        for $tree.children -&gt; $child {
+            my $increment = $base * $child.total-size;
+            tree-map(
+                $child,
+                x1 =&gt; $new-x,
+                x2 =&gt; $new-x + $increment,
+                :$y1,
+                :$y2,
+            );
+            $new-x += $increment;
+        }
+    }
+    else {
+        # split along the y axis
+        my $base = ($y2 - $y1) / $tree.total-size;
+        my $new-y = $y1;
+        for $tree.children -&gt; $child {
+            my $increment = $base * $child.total-size;
+            tree-map(
+                $child,
+                :$x1,
+                :$x2,
+                y1 =&gt; $new-y,
+                y2 =&gt; $new-y + $increment,
+            );
+            $new-y += $increment;
+        }
+    }
+}
+
+sub random-color {
+    return 'rgb(' ~ (1..3).map({ (^256).pick }).join(',') ~ ')';
+}
+
+sub MAIN($dir = '.', :$type="flame") {
+    my $tree = tree($dir.IO);
+    use SVG;
+    my $width = 1024;
+    my $height = 768;
+    say SVG.serialize(
+        :svg[
+            :$width,
+            :$height,
+            | gather tree-map $tree, x1 =&gt; 0, x2 =&gt; $width, y1 =&gt; 0, y2 =&gt; $height
+        ]
+    );
+}
+</code></pre>
+
+<p>![Tree map of an example directory, with a mouse-over hover identifying one of
+the files](images/box-hover.png]</p>
+
+<p>The generated file is not pretty, due to the random colors, and due to some
+files being identified as very narrow rectangles. But it does make it obvious
+that there are a few big files, and many mostly small files in a directory
+(which happens to be the <code>.git</code> directory of a repository). Viewing a file in
+a browser shows the name of the file on mouse over.</p>
+
+<p>How did we generate this file?</p>
+
+<p>Sub <code>tree-map</code> calls <code>take</code> to adds elements to a result list, so it must be
+called in the context of a <code>gather</code> statement. <code>gather { take 1; take 2 }</code>
+returns a lazy list of two elements, <code>1, 2</code>. But the <code>take</code> calls don't have
+to occur in the lexical scope of the <code>gather</code>, they can be in any code
+that's directly or indirectly called from the <code>gather</code>. We call that the
+<em>dynamic scope</em>.</p>
+
+<p>The rest of sub <code>tree-map</code> is mostly straight-forward. For each direction in
+which the remaining rectangle can be split, we calculate a base unit that
+signifies how many pixels a byte should take up. This is used to split up the
+current canvas into smaller ones, and use those to recurse into <code>tree-map</code>.</p>
+
+<p>The random color generation uses <code>^256</code> to create a range from 0 to 256
+(exclusive), and <code>.pick</code> returns a random element from this range. The result
+is a random CSS color string like <code>rgb(120,240,5)</code>.</p>
+
+<p>In sub MAIN, the <code>gather</code> returns a list, which would normally be
+nested inside the outer array. The pipe symbol <code>|</code> in <code>:svg[ ..., | gather
+... ]</code> before the gather prevents the normal nesting, and flattens the list
+into the outer array.</p>
+
+<h2>Flame Graphs</h2>
+
+<p>The disadvantage of tree maps as generated before is that the human brain
+isn't very good at comparing rectangle sizes of different aspect ratios, so if
+their ratio of width to height is very different. Flame graphs prevent this
+perception errors by showing file sizes as horizontal bars. The vertical
+arrangement indicates the nesting of directories and files inside other
+directories. The disadvantage is that less of the available space is used for
+visualizing the file sizes.</p>
+
+<p>Generating flame graphs is easier than tree maps, because you only need to
+subdivide in one direction, whereas the height of each bar is fixed, here to
+15 pixel:</p>
+
+<pre><code>sub flame-graph($tree, :$x1!, :$x2!, :$y!, :$height!) {
+    return if $y &gt;= $height;
+    take 'rect' =&gt; [
+        x      =&gt; $x1,
+        y      =&gt; $y,
+        width  =&gt; $x2 - $x1,
+        height =&gt; 15,
+        style  =&gt; "fill:" ~ random-color(),
+        title  =&gt; [$tree.name ~ ', ' ~ format-size($tree.total-size)],
+    ];
+    return if $tree ~~ File;
+
+    my $base = ($x2 - $x1) / $tree.total-size;
+    my $new-x = $x1;
+
+    for $tree.children -&gt; $child {
+        my $increment = $base * $child.total-size;
+        flame-graph(
+            $child,
+            x1 =&gt; $new-x,
+            x2 =&gt; $new-x + $increment,
+            y =&gt; $y + 15,
+            :$height,
+        );
+        $new-x += $increment;
+    }
+}
+</code></pre>
+
+<p>We can add a switch to sub <code>MAIN</code> to call either <code>tree-map</code> or <code>flame-graph</code>,
+depending on a command line option:</p>
+
+<pre><code>sub MAIN($dir = '.', :$type="flame") {
+    my $tree = tree($dir.IO);
+    print-tree($tree);
+exit;
+    use SVG;
+    my $width = 1024;
+    my $height = 768;
+    my &amp;grapher = $type eq 'flame'
+            ?? { flame-graph $tree, x1 =&gt; 0, x2 =&gt; $width, y =&gt; 0, :$height }
+            !! { tree-map    $tree, x1 =&gt; 0, x2 =&gt; $width, y1 =&gt; 0, y2 =&gt; $height }
+    say SVG.serialize(
+        :svg[
+            :$width,
+            :$height,
+            | gather grapher()
+        ]
+    );
+}
+</code></pre>
+
+<p>Since SVG's coordinate system places the zero of the vertical axis at the top,
+this actually produces an inverted flame graph, sometimes called icicle graph:</p>
+
+<p>![images/flame-hover.png](Inverted flame graph, where the width of each bar
+represents a file/directory size, and the vertical position the nesting inside
+a directory)</p>
+
+<h2>Summary</h2>
+
+<p>We've explored tree maps and flame graphs to visualize which files and
+directories use up how much disk space.</p>
+
+<p>But the code contains quite some duplications. Next week we'll explore
+techniques from functional programming to reduce code duplication. We'll also
+try to make the resulting files a bit prettier.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
