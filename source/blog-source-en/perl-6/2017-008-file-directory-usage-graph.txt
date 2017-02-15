@@ -246,7 +246,7 @@ sub MAIN($dir = '.', :$type="flame") {
 }
 </code></pre>
 
-<p><img src="/images/blog/perl-6/box-hover.png"><br />
+<p><img src="https://perlgeek.de/images/blog/perl-6/box-hover.png"><br />
 Tree map of an example directory, with random colors and a mouse-over hover identifying one of the files.</p>
 
 <p>The generated file is not pretty, due to the random colors, and due to some
@@ -348,7 +348,7 @@ exit;
 this actually produces an inverted flame graph, sometimes called icicle graph:</p>
 
 
-<p><img src="/images/blog/perl-6/flame-hover.png"><br />
+<p><img src="https://perlgeek.de/images/blog/perl-6/flame-hover.png"><br />
 Inverted flame graph with random colors, where the width of each bar
 represents a file/directory size, and the vertical position the nesting inside
 a directory.</p>
