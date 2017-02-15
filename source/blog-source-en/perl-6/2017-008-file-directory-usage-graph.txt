@@ -246,8 +246,8 @@ sub MAIN($dir = '.', :$type="flame") {
 }
 </code></pre>
 
-<p>![Tree map of an example directory, with a mouse-over hover identifying one of
-the files](images/box-hover.png]</p>
+<p><img src="/images/blog/perl-6/box-hover.png"><br />
+Tree map of an example directory, with random colors and a mouse-over hover identifying one of the files.</p>
 
 <p>The generated file is not pretty, due to the random colors, and due to some
 files being identified as very narrow rectangles. But it does make it obvious
@@ -347,9 +347,11 @@ exit;
 <p>Since SVG's coordinate system places the zero of the vertical axis at the top,
 this actually produces an inverted flame graph, sometimes called icicle graph:</p>
 
-<p>![images/flame-hover.png](Inverted flame graph, where the width of each bar
+
+<p><img src="/images/blog/perl-6/flame-hover.png"><br />
+Inverted flame graph with random colors, where the width of each bar
 represents a file/directory size, and the vertical position the nesting inside
-a directory)</p>
+a directory.</p>
 
 <h2>Summary</h2>
 
