@@ -326,8 +326,6 @@ depending on a command line option:</p>
 
 <pre><code>sub MAIN($dir = '.', :$type="flame") {
     my $tree = tree($dir.IO);
-    print-tree($tree);
-exit;
     use SVG;
     my $width = 1024;
     my $height = 768;
