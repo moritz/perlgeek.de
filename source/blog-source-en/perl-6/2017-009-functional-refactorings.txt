@@ -1,0 +1,282 @@
+Perl 6 By Example: Functional Refactorings for Directory Visualization Code
+<!-- 2017-02-26 -->
+[% include p6-intro %]
+
+<p>In the <a href="https://perlgeek.de/blog-en/perl-6/2017-008-file-directory-usage-graph.html">last installment</a> we've seen some code that generated tree maps
+and flame graphs from a tree of directory and file sizes.</p>
+
+<p>There's a pattern that occurs three times in that: dividing an area
+based on the size of the files and directories in the tree associated with the
+area.</p>
+
+<p>Extracting such common code into a function is a good idea, but it's slightly
+hindered by the fact that there is custom code inside the loop that's part of
+the common code. Functional programming offers a solution: Put the custom code
+inside a separate function, and have the common code call it.</p>
+
+<p>Applying this technique to the tree graph flame graph looks like this:</p>
+
+<pre><code>sub subdivide($tree, $lower, $upper, &amp;todo) {
+    my $base = ($upper - $lower ) / $tree.total-size;
+    my $var  = $lower;
+    for $tree.children -&gt; $child {
+        my $incremented = $var + $base * $child.total-size;
+        todo($child, $var, $incremented);
+        $var = $incremented,
+    }
+}
+
+sub flame-graph($tree, :$x1!, :$x2!, :$y!, :$height!) {
+    return if $y &gt;= $height;
+    take 'rect' =&gt; [
+        x      =&gt; $x1,
+        y      =&gt; $y,
+        width  =&gt; $x2 - $x1,
+        height =&gt; 15,
+        style  =&gt; "fill:" ~ random-color(),
+        title  =&gt; [$tree.name ~ ', ' ~ format-size($tree.total-size)],
+    ];
+    return if $tree ~~ File;
+    subdivide( $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
+        flame-graph( $child, :$x1, :$x2, :y($y + 15), :$height );
+    });
+}
+
+sub tree-map($tree, :$x1!, :$x2!, :$y1!, :$y2) {
+    return if ($x2 - $x1) * ($y2 - $y1) &lt; 20;
+    take 'rect' =&gt; [
+        x      =&gt; $x1,
+        y      =&gt; $y1,
+        width  =&gt; $x2 - $x1,
+        height =&gt; $y2 - $y1,
+        style  =&gt; "fill:" ~ random-color(),
+        title  =&gt; [$tree.name],
+    ];
+    return if $tree ~~ File;
+
+    if $x2 - $x1 &gt; $y2 - $y1 {
+        # split along the x axis
+        subdivide $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
+            tree-map $child, :$x1, :$x2, :$y1, :$y2;
+        }
+    }
+    else {
+        # split along the y axis
+        subdivide $tree, $y1, $y2, -&gt; $child, $y1, $y2 {
+            tree-map $child, :$x1, :$x2, :$y1, :$y2;
+        }
+    }
+}
+</code></pre>
+
+<p>The newly introduced subroutine <code>subdivide</code> takes a directory tree, a start
+point and an end point, and finally a code object <code>&amp;todo</code>. For each child of
+the directory tree it calculates the new coordinates, and then calls the
+<code>&amp;todo</code> function.</p>
+
+<p>The usage in subroutine <code>flame-graph</code> looks like this:</p>
+
+<pre><code>    subdivide( $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
+        flame-graph( $child, :$x1, :$x2, :y($y + 15), :$height );
+    });
+</code></pre>
+
+<p>The code object that is being passed to <code>subdivide</code> starts with the <code>-&gt;</code>,
+which introduces the signature of a block. The code block recurses into
+<code>flame-graph</code>, adding some extra arguments, and turning two positional
+arguments into named arguments along the way.</p>
+
+<p>This refactoring shortened the code, and made it overall more pleasant to work
+with. But there's still quite a bit of duplication between <code>tree-map</code> and
+<code>flame-graph</code>: both have an initial termination condition, a <code>take</code> of a
+rectangle, and then a call or two to <code>subdivide</code>. If we're willing to put all
+the small differences into small, separate functions, we can unify it further.</p>
+
+<p>If we pass all those new functions as arguments to each call, we create an
+unpleasantly long argument list. Instead, we can use those functions to
+generate the previous functions <code>flame-graph</code> and <code>tree-map</code>:</p>
+
+<pre><code>sub svg-tree-gen(:&amp;terminate!, :&amp;base-height!, :&amp;subdivide-x!, :&amp;other!) {
+    sub inner($tree, :$x1!, :$x2!, :$y1!, :$y2!) {
+        return if terminate(:$x1, :$x2, :$y1, :$y2);
+        take 'rect' =&gt; [
+            x      =&gt; $x1,
+            y      =&gt; $y1,
+            width  =&gt; $x2 - $x1,
+            height =&gt; base-height(:$y1, :$y2),
+            style  =&gt; "fill:" ~ random-color(),
+            title  =&gt; [$tree.name ~ ', ' ~ format-size($tree.total-size)],
+        ];
+        return if $tree ~~ File;
+        if subdivide-x(:$x1, :$y1, :$x2, :$y2) {
+            # split along the x axis
+            subdivide $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
+                inner($child, :$x1, :$x2, :y1(other($y1)), :$y2);
+            }
+        }
+        else {
+            # split along the y axis
+            subdivide $tree, $y1, $y2, -&gt; $child, $y1, $y2 {
+                inner($child, :x1(other($x1)), :$x2, :$y1, :$y2);
+            }
+        }
+    }
+}
+
+my &amp;flame-graph = svg-tree-gen 
+    terminate   =&gt; -&gt; :$y1, :$y2, | { $y1 &gt; $y2 },
+    base-height =&gt; -&gt; | { 15 },
+    subdivide-x =&gt; -&gt; | { True },
+    other       =&gt; -&gt; $y1 { $y1 + 15 },
+
+my &amp;tree-map = svg-tree-gen
+    terminate   =&gt; -&gt; :$x1, :$y1, :$x2, :$y2 { ($x2 - $x1) * ($y2 - $y1) &lt; 20 },
+    base-height =&gt; -&gt; :$y1, :$y2 {  $y2 - $y1 },
+    subdivide-x =&gt; -&gt; :$x1, :$x2, :$y1, :$y2 { $x2 - $x1 &gt; $y2 - $y1 },
+    other       =&gt; -&gt; $a { $a },
+    ;
+</code></pre>
+
+<p>So there's a new function <code>svg-tree-gen</code>, which returns a function. The
+behavior of the returned function depends on the four small functions that
+<code>svg-tree-gen</code> receives as arguments.</p>
+
+<p>The first one, <code>terminate</code>, determines
+under what condition the inner function should terminate early. For <code>tree-map</code>
+that's when the area is below 20 pixels, for <code>flame-graph</code> when current y
+coordinate <code>$y1</code> exceeds the height of the whole image, which is stored in
+<code>$y2</code>. <code>svg-tree-gen</code> always calls this function with the four named arguments
+<code>x1</code>, <code>x2</code>, <code>y1</code> and <code>y2</code>, so the <code>terminate</code> function must ignore the <code>x1</code>
+and <code>x2</code> values. It does this by adding <code>|</code> as an parameter, which is an
+anonymous capture. Such a parameter can bind arbitrary positional and named
+arguments, and since it's an anonymous parameter, it discards all the values.</p>
+
+<p>The second configuration function, <code>base-height</code>, determines the height of the
+rectangle in the base case. For <code>flame-graph</code> it's a constant, so the
+configuration function must discard all arguments, again with a <code>|</code>. For
+<code>tree-graph</code>, it must return the difference between <code>$y2</code> and <code>$y1</code>, as before
+the refactoring.</p>
+
+<p>The third function determines when to subdivide along the x axis. Flame graphs
+always divide along the x axis, so <code>-&gt; | { True }</code> accomplishes that. Our
+simplistic approach to tree graphs divides along the longer axis, so only
+along the x axis if <code>$x2 - $x1 &gt; $y2 - $y1</code>.</p>
+
+<p>The fourth and final function we pass to <code>svg-tree-gen</code> calculates the
+coordinate of the axis that isn't being subdivided. In the case of
+<code>flame-graph</code> that's increasing over the previous value by the height of the
+bars, and for <code>tree-map</code> its the coordinate unchanged, so we pass in the
+identity function <code>-&gt; $a { $a }</code>.</p>
+
+<p>The inner function only needs a name because we need to call it from itself
+recursively; otherwise an anonymous function <code>sub ($tree,  :$x1!, :$x2!,
+:$y1!, :$y2!) { ... }</code> would have worked fine.</p>
+
+<p>Now that we have very compact definitions of <code>flame-graph</code> and <code>tree-map</code>,
+it's a good time to play with some of the parameters. For example we can
+introduce a bit of margin in the flame graph by having the increment in
+<code>other</code> greater than the bar height in <code>base-height</code>:</p>
+
+<pre><code>my &amp;flame-graph = svg-tree-gen 
+    base-height =&gt; -&gt; | { 15 },
+    other       =&gt; -&gt; $y1 { $y1 + 16 },
+    # rest as before
+</code></pre>
+
+<p>Another knob to turn is to change the color generation to something more
+deterministic, and make it configurable from the outside:</p>
+
+<pre><code>sub svg-tree-gen(:&amp;terminate!, :&amp;base-height!, :&amp;subdivide-x!, :&amp;other!,
+                 :&amp;color=&amp;random-color) {
+    sub inner($tree, :$x1!, :$x2!, :$y1!, :$y2!) {
+        return if terminate(:$x1, :$x2, :$y1, :$y2);
+        take 'rect' =&gt; [
+            x      =&gt; $x1,
+            y      =&gt; $y1,
+            width  =&gt; $x2 - $x1,
+            height =&gt; base-height(:$y1, :$y2),
+            style  =&gt; "fill:" ~ color(:$x1, :$x2, :$y1, :$y2),
+            title  =&gt; [$tree.name ~ ', ' ~ format-size($tree.total-size)],
+        ];
+        # rest as before
+}
+</code></pre>
+
+<p>We can for example keep state within the color generator, and return a
+slightly different color during each iteration:</p>
+
+<pre><code>sub color-range(|) {
+    state ($r, $g, $b) = (0, 240, 120);
+    $r = ($r + 5) % 256;
+    $g = ($g + 10) % 256;
+    $b = ($b + 15) % 256;
+    return "rgb($r,$g,$b)";
+}
+</code></pre>
+
+<p><code>state</code> variables keep their values between calls to the same subroutine, and
+their initialization runs only on the first call. So this function slightly
+increases the lightness in each color channel for each invocation, exception
+when it reaches 256, where the modulo operator <code>%</code> resets it back to a small
+value.</p>
+
+<p>If we plug this into our functions by passing <code>color =&gt; &amp;color-range</code> to the
+calls to <code>svg-tree-gen</code>, we get much less chaotic looking output:</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/images/box-color.png" alt="Tree map with deterministic color generation" /></p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/images/flame-color.png" alt="Flame graph with deterministic color generation and one pixel margin between
+bars" /></p>
+
+<h2>More Language Support for Functional Programming</h2>
+
+<p>As you've seen in the examples above, functional programming typically
+involves writing lots of small functions. Perl 6 has some language features
+that make it very easy to write such small functions.</p>
+
+<p>A common task is to write a function that calls a particular method on its
+argument, as we've seen here:</p>
+
+<pre><code>method total-size() {
+    $!total-size //= $.size + @.children.map({.total-size}).sum;
+    #                                        ^^^^^^^^^^^^^
+}
+</code></pre>
+
+<p>This can be abbreviated to <code>*.total-size</code>:</p>
+
+<pre><code>method total-size() {
+    $!total-size //= $.size + @.children.map(*.total-size).sum;
+}
+</code></pre>
+
+<p>This works for chains of method calls too, so you could write
+<code>@.children.map(*.total-size.round)</code> if <code>total-size</code> returned a fractional
+number, and you wanted to the call <code>.round</code> method on the result.</p>
+
+<p>There are more cases where you can replace an expression with the Whatever
+star <code>*</code> to create a small function. To create a function that adds 15 to its
+argument, you can write <code>* + 15</code> instead of <code>-&gt; $a { $a + 15 }</code>.</p>
+
+<p>If you need to write a function just call another function, but pass more
+arguments to the second function, you can use the method
+<a href="https://docs.perl6.org/routine/assuming">assuming</a>. For example <code>-&gt; $x {
+f(42, $x }</code> can be replaced with <code>&amp;f.assuming(42)</code>. This works also for named
+arguments, so <code>-&gt; $x { f($x, height =&gt; 42 ) }</code> can be replaced with
+<code>&amp;f.assuming(height =&gt; 42)</code>.</p>
+
+<h2>Summary</h2>
+
+<p>Functional programming offers techniques for extracting common logic into
+separate functions. The desired differences in behavior can be encoded in more
+functions that you pass in as arguments to other functions.</p>
+
+<p>Perl 6 supports functional programming by making functions first class, so you
+can pass them around as ordinary objects. It also offers closures (access to
+outer lexical variables from functions), and various shortcuts that make it
+more pleasant to write short functions.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
