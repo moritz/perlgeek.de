@@ -5,14 +5,14 @@ Perl 6 By Example: Functional Refactorings for Directory Visualization Code
 <p>In the <a href="https://perlgeek.de/blog-en/perl-6/2017-008-file-directory-usage-graph.html">last installment</a> we've seen some code that generated tree maps
 and flame graphs from a tree of directory and file sizes.</p>
 
-<p>There's a pattern that occurs three times in that: dividing an area
+<p>There's a pattern that occurs three times in that code: dividing an area
 based on the size of the files and directories in the tree associated with the
 area.</p>
 
 <p>Extracting such common code into a function is a good idea, but it's slightly
 hindered by the fact that there is custom code inside the loop that's part of
 the common code. Functional programming offers a solution: Put the custom code
-inside a separate function, and have the common code call it.</p>
+inside a separate function and have the common code call it.</p>
 
 <p>Applying this technique to the tree graph flame graph looks like this:</p>
 
@@ -55,13 +55,13 @@ sub tree-map($tree, :$x1!, :$x2!, :$y1!, :$y2) {
     return if $tree ~~ File;
 
     if $x2 - $x1 &gt; $y2 - $y1 {
-        # split along the x axis
+        # split along the x-axis
         subdivide $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
             tree-map $child, :$x1, :$x2, :$y1, :$y2;
         }
     }
     else {
-        # split along the y axis
+        # split along the y-axis
         subdivide $tree, $y1, $y2, -&gt; $child, $y1, $y2 {
             tree-map $child, :$x1, :$x2, :$y1, :$y2;
         }
@@ -71,22 +71,22 @@ sub tree-map($tree, :$x1!, :$x2!, :$y1!, :$y2) {
 
 <p>The newly introduced subroutine <code>subdivide</code> takes a directory tree, a start
 point and an end point, and finally a code object <code>&amp;todo</code>. For each child of
-the directory tree it calculates the new coordinates, and then calls the
+the directory tree it calculates the new coordinates and then calls the
 <code>&amp;todo</code> function.</p>
 
 <p>The usage in subroutine <code>flame-graph</code> looks like this:</p>
 
-<pre><code>    subdivide( $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
-        flame-graph( $child, :$x1, :$x2, :y($y + 15), :$height );
-    });
+<pre><code>subdivide( $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
+flame-graph( $child, :$x1, :$x2, :y($y + 15), :$height );
+});
 </code></pre>
 
-<p>The code object that is being passed to <code>subdivide</code> starts with the <code>-&gt;</code>,
+<p>The code object being passed to <code>subdivide</code> starts with <code>-&gt;</code>,
 which introduces the signature of a block. The code block recurses into
 <code>flame-graph</code>, adding some extra arguments, and turning two positional
 arguments into named arguments along the way.</p>
 
-<p>This refactoring shortened the code, and made it overall more pleasant to work
+<p>This refactoring shortened the code and made it overall more pleasant to work
 with. But there's still quite a bit of duplication between <code>tree-map</code> and
 <code>flame-graph</code>: both have an initial termination condition, a <code>take</code> of a
 rectangle, and then a call or two to <code>subdivide</code>. If we're willing to put all
@@ -109,13 +109,13 @@ generate the previous functions <code>flame-graph</code> and <code>tree-map</cod
         ];
         return if $tree ~~ File;
         if subdivide-x(:$x1, :$y1, :$x2, :$y2) {
-            # split along the x axis
+            # split along the x-axis
             subdivide $tree, $x1, $x2, -&gt; $child, $x1, $x2 {
                 inner($child, :$x1, :$x2, :y1(other($y1)), :$y2);
             }
         }
         else {
-            # split along the y axis
+            # split along the y-axis
             subdivide $tree, $y1, $y2, -&gt; $child, $y1, $y2 {
                 inner($child, :x1(other($x1)), :$x2, :$y1, :$y2);
             }
@@ -123,7 +123,7 @@ generate the previous functions <code>flame-graph</code> and <code>tree-map</cod
     }
 }
 
-my &amp;flame-graph = svg-tree-gen 
+my &amp;flame-graph = svg-tree-gen
     terminate   =&gt; -&gt; :$y1, :$y2, | { $y1 &gt; $y2 },
     base-height =&gt; -&gt; | { 15 },
     subdivide-x =&gt; -&gt; | { True },
@@ -141,13 +141,13 @@ my &amp;tree-map = svg-tree-gen
 behavior of the returned function depends on the four small functions that
 <code>svg-tree-gen</code> receives as arguments.</p>
 
-<p>The first one, <code>terminate</code>, determines
+<p>The first argument, <code>terminate</code>, determines
 under what condition the inner function should terminate early. For <code>tree-map</code>
-that's when the area is below 20 pixels, for <code>flame-graph</code> when current y
-coordinate <code>$y1</code> exceeds the height of the whole image, which is stored in
+that's when the area is below 20 pixels, for <code>flame-graph</code> when the current
+y-coordinate <code>$y1</code> exceeds the height of the whole image, which is stored in
 <code>$y2</code>. <code>svg-tree-gen</code> always calls this function with the four named arguments
 <code>x1</code>, <code>x2</code>, <code>y1</code> and <code>y2</code>, so the <code>terminate</code> function must ignore the <code>x1</code>
-and <code>x2</code> values. It does this by adding <code>|</code> as an parameter, which is an
+and <code>x2</code> values. It does this by adding <code>|</code> as a parameter, which is an
 anonymous capture. Such a parameter can bind arbitrary positional and named
 arguments, and since it's an anonymous parameter, it discards all the values.</p>
 
@@ -157,15 +157,15 @@ configuration function must discard all arguments, again with a <code>|</code>. 
 <code>tree-graph</code>, it must return the difference between <code>$y2</code> and <code>$y1</code>, as before
 the refactoring.</p>
 
-<p>The third function determines when to subdivide along the x axis. Flame graphs
-always divide along the x axis, so <code>-&gt; | { True }</code> accomplishes that. Our
+<p>The third function determines when to subdivide along the x-axis. Flame graphs
+always divide along the x-axis, so <code>-&gt; | { True }</code> accomplishes that. Our
 simplistic approach to tree graphs divides along the longer axis, so only
-along the x axis if <code>$x2 - $x1 &gt; $y2 - $y1</code>.</p>
+along the x-axis if <code>$x2 - $x1 &gt; $y2 - $y1</code>.</p>
 
 <p>The fourth and final function we pass to <code>svg-tree-gen</code> calculates the
 coordinate of the axis that isn't being subdivided. In the case of
 <code>flame-graph</code> that's increasing over the previous value by the height of the
-bars, and for <code>tree-map</code> its the coordinate unchanged, so we pass in the
+bars, and for <code>tree-map</code> it's the unchanged coordinate, so we pass the
 identity function <code>-&gt; $a { $a }</code>.</p>
 
 <p>The inner function only needs a name because we need to call it from itself
@@ -177,7 +177,7 @@ it's a good time to play with some of the parameters. For example we can
 introduce a bit of margin in the flame graph by having the increment in
 <code>other</code> greater than the bar height in <code>base-height</code>:</p>
 
-<pre><code>my &amp;flame-graph = svg-tree-gen 
+<pre><code>my &amp;flame-graph = svg-tree-gen
     base-height =&gt; -&gt; | { 15 },
     other       =&gt; -&gt; $y1 { $y1 + 16 },
     # rest as before
@@ -202,7 +202,7 @@ deterministic, and make it configurable from the outside:</p>
 }
 </code></pre>
 
-<p>We can for example keep state within the color generator, and return a
+<p>We can, for example, keep state within the color generator and return a
 slightly different color during each iteration:</p>
 
 <pre><code>sub color-range(|) {
@@ -214,9 +214,9 @@ slightly different color during each iteration:</p>
 }
 </code></pre>
 
-<p><code>state</code> variables keep their values between calls to the same subroutine, and
+<p><code>state</code> variables keep their values between calls to the same subroutine and
 their initialization runs only on the first call. So this function slightly
-increases the lightness in each color channel for each invocation, exception
+increases the lightness in each color channel for each invocation, except
 when it reaches 256, where the modulo operator <code>%</code> resets it back to a small
 value.</p>
 
@@ -252,13 +252,13 @@ argument, as we've seen here:</p>
 
 <p>This works for chains of method calls too, so you could write
 <code>@.children.map(*.total-size.round)</code> if <code>total-size</code> returned a fractional
-number, and you wanted to the call <code>.round</code> method on the result.</p>
+number and you wanted to the call <code>.round</code> method on the result.</p>
 
-<p>There are more cases where you can replace an expression with the Whatever
+<p>There are more cases where you can replace an expression with the "Whatever"
 star <code>*</code> to create a small function. To create a function that adds 15 to its
 argument, you can write <code>* + 15</code> instead of <code>-&gt; $a { $a + 15 }</code>.</p>
 
-<p>If you need to write a function just call another function, but pass more
+<p>If you need to write a function to just call another function, but pass more
 arguments to the second function, you can use the method
 <a href="https://docs.perl6.org/routine/assuming">assuming</a>. For example <code>-&gt; $x {
 f(42, $x }</code> can be replaced with <code>&amp;f.assuming(42)</code>. This works also for named
