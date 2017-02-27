@@ -225,7 +225,7 @@ calls to <code>svg-tree-gen</code>, we get much less chaotic looking output:</p>
 
 <p><img src="https://perlgeek.de/images/blog/perl-6/box-color.png" alt="Tree map with deterministic color generation" /></p>
 
-<p><img src="https://perlgeek.de/images/blog/perl-6/images/flame-color.png" alt="Flame graph with deterministic color generation and one pixel margin between
+<p><img src="https://perlgeek.de/images/blog/perl-6/flame-color.png" alt="Flame graph with deterministic color generation and one pixel margin between
 bars" /></p>
 
 <h2>More Language Support for Functional Programming</h2>
