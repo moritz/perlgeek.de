@@ -108,7 +108,7 @@
     #col1 { width: 20% }
     #col1_content { 
         padding: 10px 10px 10px 20px; 
-        border: solid #9eff9e 4px;
+        border: solid #9e9eff 4px;
 
     }
 
@@ -160,7 +160,7 @@
     #nav_main ul li a:hover,
     #nav_main ul li a:active  {
 /*        background: #85ff85; */
-        background: #00e200; 
+        background: #0000e2; 
 /*        color: #830000  */
         color: #ffffff 
     }
@@ -175,7 +175,7 @@
     #nav_main ul li#current a:hover,
     #nav_main ul li#current a:active {
 /*        color: #4D87C7; font-weight: bold */
-        color: #008300; font-weight: bold
+        color: #000083; font-weight: bold
     }
 
     ul li .selected {
