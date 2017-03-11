@@ -1,0 +1,223 @@
+What's a Variable, Exactly?
+<!-- 2017-03-12 -->
+
+<h1>What's a Variable?</h1>
+
+<p>When you learn programming, you typically first learn about basic expressions,
+like <code>2 * 21</code>, and then the next topic is control structures or variables. (If
+you start with functional programming, maybe it takes you a bit longer to get
+to variables).</p>
+
+<p>So, every programmer knows what a variable is, right?</p>
+
+<p>Turns out, it might not be that easy.</p>
+
+<p>Some people like to say that in ruby, everything is an object. Well, a
+variable isn't really an object. The same holds true for other languages.</p>
+
+<p>But let's start from the bottom up. In a low-level programming language like
+C, a local variable is a name that the compiler knows, with a type attached.
+When the compiler generates code for the function that the variable is in, the
+name resolves to an address on the stack. Unless the compiler optimizes the
+variable away entirely, or manages it through a CPU register.</p>
+
+<p>So in C, the variable only exists as such while the compiler is running. When
+the compiler is finished, and the resulting executable runs, there might be
+some stack offset or memory location that corresponds to our understanding of
+the variable. (And there might be debugging symbols that allows some mapping
+back to the variable name, but that's really a special case).</p>
+
+<p>In case of recursion, a local variable can exist once for each time the
+function is called.</p>
+
+<h2>Closures</h2>
+
+<p>In programming languages with closures, local variables can be referenced from
+inner functions. They can't generally live on the stack, because the reference
+keeps them alive. Consider this piece of Perl 6 code (though we could write
+the same in Javascript, Ruby, Perl 5, Python or most other dynamic languages):</p>
+
+<pre><code>sub outer() {
+    my $x = 42;
+    return sub inner() {
+        say $x;
+    }
+}
+
+my &amp;callback = outer();
+callback();
+</code></pre>
+
+<p>The <code>outer</code> function has a local (<em>lexical</em>) variable <code>$x</code>, and the <code>inner</code>
+function uses it. So once <code>outer</code> has finished running, there's still an
+indirect reference to the value stored in this variable.</p>
+
+<p>They say you can solve any problem in computer science through another layer
+of indirection, and that's true for the implementation of closures. The
+<code>&amp;callback</code> variable, which points to a closure, actually stores two pointers
+under the hood. One goes to the static byte code representation of the code,
+and the second goes to a run-time data structure called a <em>lexical pad</em>, or
+short <em>lexpad</em>. Each time you invoke the outer function, a new instance of the
+lexpad is created, and the closure points to the new instance, and the always
+the same static code.</p>
+
+<p>But even in dynamic languages with closures, variables themselves don't need
+to be objects. If a language forbids the creation of variables at run time,
+the compiler knows what variables exist in each scope, and can for example map
+each of them to an array index, so the lexpad becomes a compact array, and an
+access to a variable becomes an indexing operation into that array. Lexpads
+generally live on the heap, and are garbage collected (or reference counted)
+just like other objects.</p>
+
+<p>Lexpads are mostly performance optimizations. You could have separate runtime
+representations of each variable, but then you'd have to have an allocation for
+each variable in each function call you perform, whereas which are generally
+much slower than a single allocation of the lexpad.</p>
+
+<h2>The Plot Thickens</h2>
+
+<p>To summarize, a variable has a name, a scope, and in languages that support
+it, a type. Those are properties known to the compiler, but not necessarily
+present at run time. At run time, a variable typically resolves to a stack
+offset in low-level languages, or to an index into a lexpad in dynamic
+languages.</p>
+
+<p>Even in languages that boldly claim that "everything is an object", a variable
+often isn't. The value inside a variable may be, but the variable itself
+typically not.</p>
+
+<h2>Perl 6 Intricacies</h2>
+
+<p>The things I've written above generalize pretty neatly to many programming
+languages. I am a Perl 6 developer, so I have some insight into how
+Perl 6 implements variables. If you don't resist, I'll it with you :-).</p>
+
+<p>Variables in Perl 6 typically come with one more level of indirection, we
+which call a <em>container</em>. This allows two types of write operations:
+<em>assignment</em> stores a value inside a container (which again might be
+referenced to by a variable), and <em>binding</em>, which places either a value or a
+container directly into variable.</p>
+
+<p>Here's an example of assignment and binding in action:</p>
+
+<pre><code>my $x;
+my $y;
+# assignment:
+$x = 42;
+$y = 'a string';
+
+say $x;     # =&gt; 42
+say $y;     # =&gt; a string
+
+# binding:
+$x := $y;
+
+# now $x and $y point to the same container, so that assigning to one
+# changes the other:
+$y = 21;
+say $x;     # =&gt; 21
+</code></pre>
+
+<p>Why, I hear you cry?</p>
+
+<p>There are three major reasons.</p>
+
+<p>The first is that makes assignment something
+that's not special. For example in python, if you assign to anything other
+than a plain variable, the compiler translates it to some special method call
+(<code>obj.attr = x</code> to <code>setattr(obj, 'attr', x)</code>, <code>obj[idx] = x</code> to a
+<code>__setitem__</code> call etc.). In Perl 6, if you want to implement something you
+can assign to, you simply return a container from that expression, and then
+assignment works naturally.</p>
+
+<p>For example an array is basically just a list in which the elements are
+containers. This makes <code>@array[$index] = $value</code> work without any special
+cases, and allows you to assign to the return value of methods, functions, or
+anything else you can think of, as long as the expression returns a container.</p>
+
+<p>The second reason for having both binding and assignment is that it makes it
+pretty easy to make things read-only. If you bind a non-container into a
+variable, you can't assign to it anymore:</p>
+
+<pre><code>my $a := 42;
+$a = "hordor";  # =&gt; Cannot assign to an immutable value
+</code></pre>
+
+<p>Perl 6 uses this mechanism to make function parameters read-only by default.</p>
+
+<p>Likewise, returning from a function or method by default strips the container,
+which avoids accidental action-at-a-distance (though an <code>is rw</code> annotation can
+prevent that, if you really want it).</p>
+
+<p>This automatic stripping of containers also makes expressions like <code>$a + 2</code> work,
+independently of whether <code>$a</code> holds an integer directly, or a container that
+holds an integer. (In the implementation of Perl 6's core types, sometimes
+this has to be done manually. If you ever wondered what <code>nqp::decont</code> does in
+Rakudo's source code, that's what).</p>
+
+<p>The third reason relates to types.</p>
+
+<p>Perl 6 supports gradual typing, which means you can optionally annotate your
+variables (and other things) with types, and Perl 6 enforces them for you. It
+detects type errors at compile time where possible, and falls back to run-time
+checking types.</p>
+
+<p>The type of a variable only applies to binding, but it inherits this type to
+its default container. And the container type is enforced at run time. You can
+observe this difference by binding a container with a different constraint:</p>
+
+<pre><code>my Any $x;
+my Int $i;
+$x := $i;
+$x = "foo";     # =&gt; Type check failed in assignment to $i; expected Int but got Str ("foo")
+</code></pre>
+
+<p><code>Int</code> is a subtype of <code>Any</code>, which is why the binding of <code>$i</code> to <code>$x</code>
+succeeds. Now <code>$x</code> and <code>$i</code> share a container that is type-constrained to
+<code>Int</code>, so assigning a string to it fails.</p>
+
+<p>Did you notice how the error message mentions <code>$i</code> as the variable name, even though
+we've tried to assign to <code>$x</code>? The variable name in the error message is really
+a heuristic, which works often enough, but sometimes fails. The container
+that's shared between <code>$x</code> and <code>$i</code> has no idea which variable you used to
+access it, it just knows the name of the variable that created it, here <code>$i</code>.</p>
+
+<p>Binding checks the variable type, not the container type, so this code doesn't
+complain:</p>
+
+<pre><code>my Any $x;
+my Int $i;
+$x := $i;
+$x := "a string";
+</code></pre>
+
+<p>This distinction between variable type and container type might seem weird for
+scalar variables, but it really starts to make sense for arrays, hashes and
+other compound data structures that might want to enforce a type constraint on
+its elements:</p>
+
+<pre><code>sub f($x) {
+    $x[0] = 7;
+}
+my Str @s;
+f(@s);
+</code></pre>
+
+<p>This code declares an array whose element all must be of type <code>Str</code> (or
+subtypes thereof). When you pass it to a function, that function has no
+compile-time knowledge of the type. But since <code>$x[0]</code> returns a container with
+type constraint <code>Str</code>, assigning an integer to it can produce the error you
+expect from it.</p>
+
+<h2>Summary</h2>
+
+<p>Variables typically only exists as objects at compile time. At run time, they
+are just some memory location, either on the stack or in a lexical pad.</p>
+
+<p>Perl 6 makes the understanding of the exact nature of variables a bit more
+involved by introducing a layer of containers between variables and values.
+This offers great flexibility when writing libraries that behaves like
+built-in classes, but comes with the burden of additional complexity.</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
