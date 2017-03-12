@@ -88,7 +88,7 @@ typically not.</p>
 
 <p>The things I've written above generalize pretty neatly to many programming
 languages. I am a Perl 6 developer, so I have some insight into how
-Perl 6 implements variables. If you don't resist, I'll it with you :-).</p>
+Perl 6 implements variables. If you don't resist, I'll share it with you :-).</p>
 
 <p>Variables in Perl 6 typically come with one more level of indirection, we
 which call a <em>container</em>. This allows two types of write operations:
