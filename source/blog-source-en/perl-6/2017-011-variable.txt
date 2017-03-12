@@ -1,8 +1,6 @@
 What's a Variable, Exactly?
 <!-- 2017-03-12 -->
 
-<h1>What's a Variable?</h1>
-
 <p>When you learn programming, you typically first learn about basic expressions,
 like <code>2 * 21</code>, and then the next topic is control structures or variables. (If
 you start with functional programming, maybe it takes you a bit longer to get
