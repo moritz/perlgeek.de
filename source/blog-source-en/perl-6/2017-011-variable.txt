@@ -16,8 +16,8 @@ variable isn't really an object. The same holds true for other languages.</p>
 <p>But let's start from the bottom up. In a low-level programming language like
 C, a local variable is a name that the compiler knows, with a type attached.
 When the compiler generates code for the function that the variable is in, the
-name resolves to an address on the stack. Unless the compiler optimizes the
-variable away entirely, or manages it through a CPU register.</p>
+name resolves to an address on the stack (unless the compiler optimizes the
+variable away entirely, or manages it through a CPU register).</p>
 
 <p>So in C, the variable only exists as such while the compiler is running. When
 the compiler is finished, and the resulting executable runs, there might be
