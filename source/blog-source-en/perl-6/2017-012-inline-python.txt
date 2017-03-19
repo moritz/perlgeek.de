@@ -1,0 +1,252 @@
+Perl 6 By Example: Plotting with Matplotlib and Inline::Python
+<!-- 2017-03-19 -->
+[% include p6-intro %]
+
+
+<h1>Plotting using Inline::Python and Matplotlib</h1>
+
+<p>Occasionally I come across git repositories, and want to know how active
+they are, and who the main developers are.</p>
+
+<p>Let's develop a script that plots the commit history, and explore how to
+use Python modules in Perl 6.</p>
+
+<h2>Extracting the Stats</h2>
+
+<p>We want to plot the number of commits by author and date.
+Git makes it easy for us to get to this information by giving some options
+to <code>git log</code>:</p>
+
+<pre><code>my $proc = run :out, &lt;git log --date=short --pretty=format:%ad!%an&gt;;
+my (%total, %by-author, %dates);
+for $proc.out.lines -&gt; $line {
+    my ( $date, $author ) = $line.split: '!', 2;
+    %total{$author}++;
+    %by-author{$author}{$date}++;
+    %dates{$date}++;
+}
+</code></pre>
+
+<p><code>run</code> executes an external command, and <code>:out</code> tells it to capture the
+command's output, and makes it available as <code>$proc.out</code>. The command is
+a list, with the first element being the actual executable, and the rest of
+the elements are command line arguments to this executable.</p>
+
+<p>Here <code>git log</code> gets the options <code>--date short --pretty=format:%ad!%an</code>, which
+instructs it to print produce lines like <code>2017-03-01!John Doe</code>. This line
+can be parsed with a simple call to <code>$line.split: '!', 2</code>, which splits
+on the <code>!</code>, and limits the result to two elements. Assigning it to a
+two-element list <code>( $date, $author )</code> unpacks it. We then use hashes to
+count commits by author (in <code>%total</code>), by author and date (<code>%by-author</code>)
+and finally by date. In the second case, <code>%by-author{$author}</code> isn't
+even a hash yet, and we can still hash-index it. This is due to a feature
+called <em>autovivification</em>, which automatically creates ("vivifies") objects
+where we need them. The use of <code>++</code> creates integers, <code>{...}</code> indexing creates
+hashes, <code>[...]</code> indexing and <code>.push</code> creates arrays, and so on.</p>
+
+<p>To get from these hashes to the top contributors by commit count, we can
+sort <code>%total</code> by value. Since this sorts in ascending order, sorting
+by the negative value gives the list in descending order. The list contains
+<a href="https://docs.perl6.org/types/Pair">Pair</a> objects, and we only want the
+first five of these, and only their keys:</p>
+
+<pre><code>my @top-authors = %total.sort(-*.value).head(5).map(*.key);
+</code></pre>
+
+<p>For each author, we can extract the dates of their activity and their
+commit counts like this:</p>
+
+<pre><code>my @dates  = %by-author{$author}.keys.sort;
+my @counts = %by-author{$author}{@dates};
+</code></pre>
+
+<p>The last line uses <em>slicing</em>, that is, indexing an array with list to return a
+list elements.</p>
+
+<h2>Plotting with Python</h2>
+
+<p>Matplotlib is a very versatile library for all sorts of plotting and
+visualization. It's written in Python and for Python programs, but that
+won't stop us from using it in a Perl 6 program.</p>
+
+<p>But first, let's take a look at a basic plotting example that uses dates
+on the <code>x</code> axis:</p>
+
+<pre><code>import datetime
+import matplotlib.pyplot as plt
+
+fig, subplots = plt.subplots()
+subplots.plot(
+    [datetime.date(2017, 1, 5), datetime.date(2017, 3, 5), datetime.date(2017, 5, 5)],
+    [ 42, 23, 42 ],
+    label='An example',
+)
+subplots.legend(loc='upper center', shadow=True)
+fig.autofmt_xdate()
+plt.show()
+</code></pre>
+
+<p>To make this run, you have to install python 2.7 and matplotlib. You can do
+this on Debian-based Linux systems with <code>apt-get install -y python-matplotlib</code>.
+The package name is the same on RPM-based distributions such as CentOS or SUSE
+Linux. MacOS users are advised to install a python 2.7 through homebrew and
+macports, and then use <code>pip2 install matplotlib</code> or <code>pip2.7 install
+matplotlib</code> to get the library. Windows installation is probably easiest
+through the <a href="https://conda.io/docs/">conda</a> package manager, which offers
+pre-built binaries of both python and matplotlib.</p>
+
+<p>When you run this scripts with <code>python2.7 dates.py</code>, it opens a GUI window, showing
+the plot and some controls, which allow you to zoom, scroll, and write the
+plot graphic to a file:</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/matplotlib-window.png" alt="Basic matplotlib plotting window" /></p>
+
+<h2>Bridging the Gap</h2>
+
+<p>The Rakudo Perl 6 compiler comes with a handy <a href="https://docs.perl6.org/language/nativecall">library for calling foreign
+functions</a>, which allows you to
+call functions written in C, or anything with a compatible binary interface.</p>
+
+<p>The <a href="https://github.com/niner/Inline-Python">Inline::Python</a> library uses
+the native call functionality to talk to python's C API, and offers
+interoperability between Perl 6 and Python code. At the time of writing, this
+interoperability is still fragile in places, but can be worth using for
+some of the great libraries that Python has to offer.</p>
+
+<p>To install <code>Inline::Python</code>, you must have a C compiler available, and then
+run</p>
+
+<pre><code>$ zef install Inline::Python
+</code></pre>
+
+<p>(or the same with <code>panda</code> instead of <code>zef</code>, if that's your module installer).</p>
+
+<p>Now you can start to run Python 2 code in your Perl 6 programs:</p>
+
+<pre><code>use Inline::Python;
+
+my $py = Inline::Python.new;
+$py.run: 'print("Hello, Pyerl 6")';
+</code></pre>
+
+<p>Besides the <code>run</code> method, which takes a string of Python code and execute it,
+you can also use <code>call</code> to call Python routines by specifying the namespace,
+the routine to call, and a list of arguments:</p>
+
+<pre><code>use Inline::Python;
+
+my $py = Inline::Python.new;
+$py.run('import datetime');
+my $date = $py.call('datetime', 'date', 2017, 1, 31);
+$py.call('__builtin__', 'print', $date);    # 2017-01-31
+</code></pre>
+
+<p>The arguments that you pass to <code>call</code> are Perl 6 objects, like three <code>Int</code>
+objects in this example. <code>Inline::Python</code> automatically translates them to
+the corresponding Python built-in data structure. It translate numbers,
+strings, arrays and hashes. Return values are also translated in opposite
+direction, though since Python 2 does not distinguish properly between
+byte and Unicode strings, Python strings end up as buffers in Perl 6.</p>
+
+<p>Object that <code>Inline::Python</code> cannot translate are handled as opaque objects
+on the Perl 6 side. You can pass them back into python routines (as shown
+with the <code>print</code> call above), or you can also call methods on them:</p>
+
+<pre><code>say $date.isoformat().decode;               # 2017-01-31
+</code></pre>
+
+<p>Perl 6 exposes attributes through methods, so Perl 6 has no syntax for
+accessing attributes from foreign objects directly. If you try to access
+for example the <code>year</code> attribute of <code>datetime.date</code> through the normal method call syntax, you get an error.</p>
+
+<pre><code>say $date.year;
+</code></pre>
+
+<p>Dies with</p>
+
+<pre><code>'int' object is not callable
+</code></pre>
+
+<p>Instead, you have to use the <code>getattr</code> builtin:</p>
+
+<pre><code>say $py.call('__builtin__', 'getattr', $date, 'year');
+</code></pre>
+
+<h2>Using the Bridge to Plot</h2>
+
+<p>We need access to two namespaces in python, <code>datetime</code> and <code>matplotlib.pyplot</code>,
+so let's start by importing them, and write some short helpers:</p>
+
+<pre><code>my $py = Inline::Python.new;
+$py.run('import datetime');
+$py.run('import matplotlib.pyplot');
+sub plot(Str $name, |c) {
+    $py.call('matplotlib.pyplot', $name, |c);
+}
+
+sub pydate(Str $d) {
+    $py.call('datetime', 'date', $d.split('-').map(*.Int));
+}
+</code></pre>
+
+<p>We can now call <code>pydate('2017-03-01')</code> to create a python <code>datetime.date</code>
+object from an ISO-formatted string, and call the <code>plot</code> function to access
+functionality from matplotlib:</p>
+
+<pre><code>my ($figure, $subplots) = plot('subplots');
+$figure.autofmt_xdate();
+
+my @dates = %dates.keys.sort;
+$subplots.plot:
+    $[@dates.map(&amp;pydate)],
+    $[ %dates{@dates} ],
+    label     =&gt; 'Total',
+    marker    =&gt; '.',
+    linestyle =&gt; '';
+</code></pre>
+
+<p>The Perl 6 call <code>plot('subplots')</code> corresponds to the python code
+<code>fig, subplots = plt.subplots()</code>. Passing arrays to python function needs
+a bit extra work, because <code>Inline::Python</code> flattens arrays. Using an extra <code>$</code>
+sigil in front of an array puts it into an extra scalar, and thus prevents
+the flattening.</p>
+
+<p>Now we can actually plot the number of commits by author, add a legend, and
+plot the result:</p>
+
+<pre><code>for @top-authors -&gt; $author {
+    my @dates = %by-author{$author}.keys.sort;
+    my @counts = %by-author{$author}{@dates};
+    $subplots.plot:
+        $[ @dates.map(&amp;pydate) ],
+        $@counts,
+        label     =&gt; $author,
+        marker    =&gt;'.',
+        linestyle =&gt; '';
+}
+
+
+$subplots.legend(loc=&gt;'upper center', shadow=&gt;True);
+
+plot('title', 'Contributions per day');
+plot('show');
+</code></pre>
+
+<p>When run in the <a href="https://github.com/ugexe/zef">zef git repository</a>, it produces
+this plot:</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/zef-contributors.png" alt="Contributions to zef, a Perl 6 module installer" /></p>
+
+<h2>Summary</h2>
+
+<p>We've explored how to use the python library matplotlib to generate a plot
+from git contribution statistics. <code>Inline::Python</code> provides convenient
+functionality for accessing python libraries from Perl 6 code.</p>
+
+<p>In the next installment, we'll explore ways to improve both the graphics
+and the glue code between Python and Perl 6.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
