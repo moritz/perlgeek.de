@@ -1,9 +1,6 @@
-Perl 6 By Example: Plotting with Matplotlib and Inline::Python
+Perl 6 By Example: Plotting using Matplotlib and Inline::Python
 <!-- 2017-03-19 -->
 [% include p6-intro %]
-
-
-<h1>Plotting using Inline::Python and Matplotlib</h1>
 
 <p>Occasionally I come across git repositories, and want to know how active
 they are, and who the main developers are.</p>
