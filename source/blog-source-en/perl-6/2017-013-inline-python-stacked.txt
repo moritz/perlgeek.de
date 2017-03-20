@@ -1,0 +1,173 @@
+Perl 6 By Example: Stacked Plots with Matplotlib
+<!-- 2017-03-26 -->
+[% include p6-intro %]
+
+<p>In a previous episode, we've <a href="https://perlgeek.de/blog-en/perl-6/2017-012-inline-python.html">explored plotting git statistics in Perl 6 using
+matplotlib</a>.</p>
+
+<p>Since I wasn't quite happy with the result, I want to explore using stacked
+plots for presenting the same information. In a regular plot, the y
+coordiante of each plotted value is proportional to its value. In a
+stacked plot, it is the distance to the previous value that is
+proportional to its value. This is nice for values that add up to a
+total that is also interesting.</p>
+
+<p>Matplotlib offers a <a href="http://matplotlib.org/devdocs/api/_as_gen/matplotlib.axes.Axes.stackplot.html">method called
+<code>stackplot</code></a>
+for that. Contrary to multiple <code>plot</code> calls on subplot object, it
+requires a shared x axis for all data series. So we must construct
+one array for each author of git commits, where dates with no value come
+out as zero.</p>
+
+<p>As a reminder, this is what the logic for extracting the stats looked
+like in the first place:</p>
+
+<pre><code>my $proc = run :out, &lt;git log --date=short --pretty=format:%ad!%an&gt;;
+my (%total, %by-author, %dates);
+for $proc.out.lines -&gt; $line {
+    my ( $date, $author ) = $line.split: '!', 2;
+    %total{$author}++;
+    %by-author{$author}{$date}++;
+    %dates{$date}++;
+}
+my @top-authors = %total.sort(-*.value).head(5)&gt;&gt;.key;
+</code></pre>
+
+<p>And some infrastructure for plotting with matplotlib:</p>
+
+<pre><code>my $py = Inline::Python.new;
+$py.run('import datetime');
+$py.run('import matplotlib.pyplot');
+sub plot(Str $name, |c) {
+    $py.call('matplotlib.pyplot', $name, |c);
+}
+sub pydate(Str $d) {
+    $py.call('datetime', 'date', $d.split('-').map(*.Int));
+}
+
+my ($figure, $subplots) = plot('subplots');
+$figure.autofmt_xdate();
+</code></pre>
+
+<p>So now we have to construct an array of arrays, where each inner array
+has the values for one author:</p>
+
+<pre><code>my @dates = %dates.keys.sort;
+my @stack = $[] xx @top-authors;
+
+for @dates -&gt; $d {
+    for @top-authors.kv -&gt; $idx, $author {
+        @stack[$idx].push: %by-author{$author}{$d} // 0;
+    }
+}
+</code></pre>
+
+<p>Now plotting becomes a simple matter of a method call, followed by the
+usual commands adding a title and showing the plot:</p>
+
+<pre><code>$subplots.stackplot($[@dates.map(&amp;pydate)], @stack);
+plot('title', 'Contributions per day');
+plot('show');
+</code></pre>
+
+<p>The result (again run on the zef source repository) is this:</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/zef-contributors-stacked-1.png" alt="Stacked plot of zef contributions over time" /></p>
+
+<p>Comparing this to the previous visualization reveals a discrepancy:
+There were no commits in 2014, and yet the stacked plot makes it appear
+this way. In fact, the previous plots would have shown the same
+"alternative facts" if we had chosen lines instead of points. It comes
+from matplotlib (like nearly all plotting libraries) interpolates
+linearly between data points. But in our case, a date with no data
+points means zero commits happened on that date.</p>
+
+<p>To communicate this to matplotlib, we must explicitly insert zero values
+for missing dates. This can be achieved by replacing</p>
+
+<pre><code>my @dates = %dates.keys.sort;
+</code></pre>
+
+<p>with the line</p>
+
+<pre><code>my @dates = %dates.keys.minmax;
+</code></pre>
+
+<p>The <a href="https://docs.perl6.org/routine/minmax#class_Any"><code>minmax</code> method</a>
+finds the minimal and maximal values, and returns them in a
+<a href="https://docs.perl6.org/type/Range">Range</a>. Assigning the range to an
+array turns it into an array of all values between the minimal and the
+maximal value. The logic for assembling the <code>@stack</code> variable already
+maps missing values to zero.</p>
+
+<p>The result looks a bit better, but still far from perfect:</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/zef-contributors-stacked-2.png" alt="Stacked plot of zef contributions over time, with missing dates mapped to zero" /></p>
+
+<p>Thinking more about the problem, contributions from separate days should
+not be joined together, because it produces misleading results.
+Matplotlib doesn't support adding a legend automatically to stacked
+plots, so this seems to be to be a dead end.</p>
+
+<p>Since a dot plot didn't work very well, let's try a different kind of
+plot that represents each data point separately: a bar chart, or more
+specifically, a stacked bar chart. Matplotlib offers the <code>bar</code> plotting
+method, and a named parameter <code>bottom</code> can be used to generate the
+stacking:</p>
+
+<pre><code>my @dates = %dates.keys.sort;
+my @stack = $[] xx @top-authors;
+my @bottom = $[] xx @top-authors;
+
+for @dates -&gt; $d {
+    my $bottom = 0;
+    for @top-authors.kv -&gt; $idx, $author {
+        @bottom[$idx].push: $bottom;
+        my $value = %by-author{$author}{$d} // 0;
+        @stack[$idx].push: $value;
+        $bottom += $value;
+    }
+}
+</code></pre>
+
+<p>We need to supply color names ourselves, and set the edge color of the
+bars to the same color, otherwise the black edge color dominates the
+result:</p>
+
+<pre><code>my $width = 1.0;
+my @colors = &lt;red green blue yellow black&gt;;
+my @plots;
+
+for @top-authors.kv -&gt; $idx, $author {
+    @plots.push: plot(
+        'bar',
+        $[@dates.map(&amp;pydate)],
+        @stack[$idx],
+        $width,
+        bottom =&gt; @bottom[$idx],
+        color =&gt; @colors[$idx],
+        edgecolor =&gt; @colors[$idx],
+    );
+}
+plot('legend', $@plots, $@top-authors);
+
+plot('title', 'Contributions per day');
+plot('show');
+</code></pre>
+
+<p>This produces the first plot that's actually informative and not
+misleading (provided you're not color blind):</p>
+
+<p><img src="https://perlgeek.de/images/blog/perl-6/zef-contributors-bars.png" alt="Stacked bar plot of zef contributions over time" /></p>
+
+<p>If you want to improve the result further, you could experiment with
+limiting the number of bars by lumping together contributions by week or
+month (or maybe <code>$n</code>-day period).</p>
+
+<p>Next, we'll investigate ways to make the matplotlib API more idiomatic
+to use from Perl 6 code.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
