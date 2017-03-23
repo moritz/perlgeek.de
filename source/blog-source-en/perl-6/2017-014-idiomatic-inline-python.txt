@@ -1,0 +1,229 @@
+Perl 6 By Example: Idiomatic User of Inline::Python
+<!-- 2017-04-02 -->
+[% include p6-intro %]
+
+<p>In the two
+<a href="https://perlgeek.de/blog-en/perl-6/2017-012-inline-python.html">previous</a>
+<a href="https://perlgeek.de/blog-en/perl-6/2017-013-inline-python-stacked.html">installments</a>,
+we've seen Python libraries being used in Perl 6 code through the
+<a href="https://github.com/niner/Inline-Python">Inline::Python</a> module. Here
+we will explore some options to make the Perl 6 code more idiomatic, and
+closer to the documentation of the Python modules.</p>
+
+<h2>Types of Python APIs</h2>
+
+<p>Python is an object-oriented language, so many APIs involve method
+calls, which <code>Inline::Python</code> helpfully automatically translate for us.</p>
+
+<p>But the objects most come from somewhere, and typically this is by
+calling a function that returns an object, or by instantiating a class.
+In Python, those two are really the same under the hood, since
+instantiating a class is the same as calling the class as if it were a
+function. </p>
+
+<p>An example of this (in Python) would be</p>
+
+<pre><code>from matplotlib.pyplot import subplots
+result = subplots()
+</code></pre>
+
+<p>But the matplotlib documentation tends to use another, equivalent
+syntax:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+result = plt.subplots()
+</code></pre>
+
+<p>This uses the <code>subplots</code> symbol (class or function) as a method on the
+module <code>matplotlib.pyplot</code>, which the import statement aliases to <code>plt</code>.
+This is a more object-oriented syntax for the same API.</p>
+
+<h2>Mapping the Function API</h2>
+
+<p>The previous code examples used this Perl 6 code to call the <code>subplots</code>
+symbol:</p>
+
+<pre><code>my $py = Inline::Python.new;
+$py.run('import matplotlib.pyplot');
+sub plot(Str $name, |c) {
+    $py.call('matplotlib.pyplot', $name, |c);
+}
+
+my ($figure, $subplots) = plot('subplots');
+</code></pre>
+
+<p>If want to call <code>subplots()</code> instead of <code>plot('subplots')</code>, and
+<code>bar(args)</code> instead of `plot('bar', args), we can use a function to
+generate wrapper functions: </p>
+
+<pre><code>my $py = Inline::Python.new;
+
+sub gen(Str $namespace, *@names) {
+    $py.run("import $namespace");
+
+    return @names.map: -&gt; $name {
+        sub (|args) {
+            $py.call($namespace, $name, |args);
+        }
+    }
+}
+
+my (&amp;subplots, &amp;bar, &amp;legend, &amp;title, &amp;show)
+    = gen('matplotlib.pyplot', &lt;subplots bar legend title show&gt;);
+
+my ($figure, $subplots) = subplots();
+
+# more code here
+
+legend($@plots, $@top-authors);
+title('Contributions per day');
+show();
+</code></pre>
+
+<p>This makes the usage of the functions quite nice, but comes at the cost
+of duplicating the names of the functions. You can view this as a
+features, because it allows you to create different aliases, or as a
+source for bugs when you mess up the order, or misspell a name once.</p>
+
+<p>How could we avoid the duplication, should we chose to do so?</p>
+
+<p>This is where Perl 6's flexibility and introspection abilities pay off.
+There are two key components that allow a nicer solution: the fact that
+declarations are expressions, and that you can introspect variables for
+their names.</p>
+
+<p>The first part means you can write <code>mysub my ($a, $b)</code>, which
+declares the variables <code>$a</code> and <code>$b</code>, and calls a function with those
+variables as arguments. The second part means that <code>$a.VAR.name</code> returns
+a string <code>'$a'</code>, the name of the variable.</p>
+
+<p>Let's combine this to create a wrapper that initializes subroutines for
+us:</p>
+
+<pre><code>sub pysub(Str $namespace, |args) {
+    $py.run("import $namespace");
+
+    for args[0] &lt;-&gt; $sub {
+        my $name = $sub.VAR.name.substr(1);
+        $sub = sub (|args) {
+            $py.call($namespace, $name, |args);
+        }
+    }
+}
+
+pysub 'matplotlib.pyplot',
+    my (&amp;subplots, &amp;bar, &amp;legend, &amp;title, &amp;show);
+</code></pre>
+
+<p>This avoids duplicating the name, but forces us to use some lower-level
+Perl 6 features in sub <code>pysub</code>. Using ordinary variables means that accessing their
+<code>.VAR.name</code> results in the name of the variable, not the name of the
+variable that's used on the caller side. So we can't use slurpy
+arguments as in <code>sub pysub(Str $namespace, *@subs)</code>.</p>
+
+<p>Instead we must use
+<code>|args</code> to obtain the rest of the arguments in a
+<a href="https://docs.perl6.org/type/Capture.html">Capture</a>. This doesn't
+flatten the list of variables passed to the function, so when we iterate
+over them, we must do so by accessing <code>args[0]</code>. By default, loop
+variables are read-only, which we can avoid by using <code>&lt;-&gt;</code> instead of
+<code>-&gt;</code> to introduce the signature. Fortunately, that also preserves the
+name of the caller side variable.</p>
+
+<h2>An Object-Oriented Interface</h2>
+
+<p>Instead of exposing the functions, we can also create types that emulates
+the method calls on python modules. For that we can implement a class with a
+method <code>FALLBACK</code>, which Perl 6 calls for us when calling a method that is not
+implemented in the class:</p>
+
+<pre><code>class PyPlot is Mu {
+    has $.py;
+    submethod TWEAK {
+        $!py.run('import matplotlib.pyplot');
+    }
+    method FALLBACK($name, |args) {
+        $!py.call('matplotlib.pyplot', $name, |args);
+    }
+}
+
+my $pyplot = PyPlot.new(:$py);
+my ($figure, $subplots) = $pyplot.subplots;
+# plotting code goes here
+$pyplot.legend($@plots, $@top-authors);
+
+$pyplot.title('Contributions per day');
+$pyplot.show;
+</code></pre>
+
+<p>Class <code>PyPlot</code> inherits directly from <code>Mu</code>, the root of the Perl 6 type
+hierarchy, instead of <code>Any</code>, the default parent class (which in turn inherits
+from <code>Mu</code>). <code>Any</code> introduces a large number of methods that Perl 6 objects
+get by default, and since <code>FALLBACK</code> is only invoked when a method is not
+present, this is something to avoid.</p>
+
+<p>The method <code>TWEAK</code> is another method that
+Perl 6 calls automatically for us, after the object has been fully
+instantiated. All-caps method names are reserved for such special purposes.
+It is marked as a <code>submethod</code>, which means it is not inherited to subclasses.
+Since <code>TWEAK</code> is called at the level of each class, if it were a regular
+method, a subclass would call it twice implicitly. Note that <code>TWEAK</code> is only
+supported in Rakudo version 2016.11 and later.</p>
+
+<p>There's nothing specific to the Python package <code>matplotlib.pyplot</code> in class
+<code>PyPlot</code>, except the namespace name. We could easily generalize it to any
+namespace:</p>
+
+<pre><code>class PythonModule is Mu {
+    has $.py;
+    has $.namespace;
+    submethod TWEAK {
+        $!py.run("import $!namespace");
+    }
+    method FALLBACK($name, |args) {
+        $!py.call($!namespace, $name, |args);
+    }
+}
+
+my $pyplot = PythonModule.new(:$py, :namespace&lt;matplotlib.pyplot&gt;);
+</code></pre>
+
+<p>This is one Perl 6 type that can represent any Python module. If instead we
+want a separate Perl 6 type for each Python module, we could use roles, which
+are optionally parameterized:</p>
+
+<pre><code>role PythonModule[Str $namespace] is Mu {
+    has $.py;
+    submethod TWEAK {
+        $!py.run("import $namespace");
+    }
+    method FALLBACK($name, |args) {
+        $!py.call($namespace, $name, |args);
+    }
+}
+
+my $pyplot = PythonModule['matplotlib.pyplot'].new(:$py);
+</code></pre>
+
+<p>Using this approach, we can create type constraints for Python modules in
+Perl 6 space:</p>
+
+<pre><code>sub plot-histogram(PythonModule['matplotlib.pyplot'], @data) {
+    # implementation here
+}
+</code></pre>
+
+<p>Passing in any other wrapped Python module than <code>matplotlib.pyplot</code> results
+in a type error.</p>
+
+<h2>Summary</h2>
+
+<p>Perl 6 offers enough flexibility to create function and method call APIs
+around Python modules. With a bit of meta programming, we can emulate the
+typical Python APIs close enough that translating from the Python
+documentation to Perl 6 code becomes very easy.</p>
+
+[% include p6-mailing %]
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
