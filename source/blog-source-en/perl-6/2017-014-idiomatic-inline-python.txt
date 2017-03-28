@@ -7,19 +7,19 @@ Perl 6 By Example: Idiomatic User of Inline::Python
 <a href="https://perlgeek.de/blog-en/perl-6/2017-013-inline-python-stacked.html">installments</a>,
 we've seen Python libraries being used in Perl 6 code through the
 <a href="https://github.com/niner/Inline-Python">Inline::Python</a> module. Here
-we will explore some options to make the Perl 6 code more idiomatic, and
+we will explore some options to make the Perl 6 code more idiomatic and
 closer to the documentation of the Python modules.</p>
 
 <h2>Types of Python APIs</h2>
 
 <p>Python is an object-oriented language, so many APIs involve method
-calls, which <code>Inline::Python</code> helpfully automatically translate for us.</p>
+calls, which <code>Inline::Python</code> helpfully automatically translates for us.</p>
 
-<p>But the objects most come from somewhere, and typically this is by
+<p>But the objects must come from somewhere and typically this is by
 calling a function that returns an object, or by instantiating a class.
 In Python, those two are really the same under the hood, since
 instantiating a class is the same as calling the class as if it were a
-function. </p>
+function.</p>
 
 <p>An example of this (in Python) would be</p>
 
@@ -52,9 +52,9 @@ sub plot(Str $name, |c) {
 my ($figure, $subplots) = plot('subplots');
 </code></pre>
 
-<p>If want to call <code>subplots()</code> instead of <code>plot('subplots')</code>, and
+<p>If we want to call <code>subplots()</code> instead of <code>plot('subplots')</code>, and
 <code>bar(args)</code> instead of `plot('bar', args), we can use a function to
-generate wrapper functions: </p>
+generate wrapper functions:</p>
 
 <pre><code>my $py = Inline::Python.new;
 
@@ -80,16 +80,17 @@ title('Contributions per day');
 show();
 </code></pre>
 
-<p>This makes the usage of the functions quite nice, but comes at the cost
-of duplicating the names of the functions. You can view this as a
-features, because it allows you to create different aliases, or as a
-source for bugs when you mess up the order, or misspell a name once.</p>
+<p>This makes the functions' usage quite nice, but comes at the cost
+of duplicating their names. One can view this as a
+feature, because it allows the creation of different aliases, or as a
+source for bugs when the order is messed up, or a name misspelled.</p>
 
-<p>How could we avoid the duplication, should we chose to do so?</p>
+<p>How could we avoid the duplication should we choose to create wrapper
+functions?</p>
 
 <p>This is where Perl 6's flexibility and introspection abilities pay off.
 There are two key components that allow a nicer solution: the fact that
-declarations are expressions, and that you can introspect variables for
+declarations are expressions and that you can introspect variables for
 their names.</p>
 
 <p>The first part means you can write <code>mysub my ($a, $b)</code>, which
@@ -119,7 +120,10 @@ pysub 'matplotlib.pyplot',
 Perl 6 features in sub <code>pysub</code>. Using ordinary variables means that accessing their
 <code>.VAR.name</code> results in the name of the variable, not the name of the
 variable that's used on the caller side. So we can't use slurpy
-arguments as in <code>sub pysub(Str $namespace, *@subs)</code>.</p>
+arguments as in</p>
+
+<pre><code>sub pysub(Str $namespace, *@subs)
+</code></pre>
 
 <p>Instead we must use
 <code>|args</code> to obtain the rest of the arguments in a
@@ -132,8 +136,8 @@ name of the caller side variable.</p>
 
 <h2>An Object-Oriented Interface</h2>
 
-<p>Instead of exposing the functions, we can also create types that emulates
-the method calls on python modules. For that we can implement a class with a
+<p>Instead of exposing the functions, we can also create types that emulate
+the method calls on Python modules. For that we can implement a class with a
 method <code>FALLBACK</code>, which Perl 6 calls for us when calling a method that is not
 implemented in the class:</p>
 
@@ -159,13 +163,13 @@ $pyplot.show;
 <p>Class <code>PyPlot</code> inherits directly from <code>Mu</code>, the root of the Perl 6 type
 hierarchy, instead of <code>Any</code>, the default parent class (which in turn inherits
 from <code>Mu</code>). <code>Any</code> introduces a large number of methods that Perl 6 objects
-get by default, and since <code>FALLBACK</code> is only invoked when a method is not
+get by default and since <code>FALLBACK</code> is only invoked when a method is not
 present, this is something to avoid.</p>
 
 <p>The method <code>TWEAK</code> is another method that
 Perl 6 calls automatically for us, after the object has been fully
 instantiated. All-caps method names are reserved for such special purposes.
-It is marked as a <code>submethod</code>, which means it is not inherited to subclasses.
+It is marked as a <code>submethod</code>, which means it is not inherited into subclasses.
 Since <code>TWEAK</code> is called at the level of each class, if it were a regular
 method, a subclass would call it twice implicitly. Note that <code>TWEAK</code> is only
 supported in Rakudo version 2016.11 and later.</p>
@@ -221,7 +225,7 @@ in a type error.</p>
 <p>Perl 6 offers enough flexibility to create function and method call APIs
 around Python modules. With a bit of meta programming, we can emulate the
 typical Python APIs close enough that translating from the Python
-documentation to Perl 6 code becomes very easy.</p>
+documentation to Perl 6 code becomes easy.</p>
 
 [% include p6-mailing %]
 
