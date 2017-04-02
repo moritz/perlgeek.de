@@ -1,4 +1,4 @@
-Perl 6 By Example: Idiomatic User of Inline::Python
+Perl 6 By Example: Idiomatic Use of Inline::Python
 <!-- 2017-04-02 -->
 [% include p6-intro %]
 
