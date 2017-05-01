@@ -6,7 +6,8 @@ Perl 6 By Example: Now "Perl 6 Fundamentals"
 some exciting news about the book project. <a href="https://www.apress.com/">Apress</a>
 has agreed to publish the book, both as print and electronic book.</p>
 
-<p>The title is <em>Perl 6 Fundamentals</em>, with <em>A Primer with Examples, 
+<p>The title is <a href="http://www.apress.com/gp/book/9781484228982"><em>Perl 6
+Fundamentals</em></a>, with <em>A Primer with Examples, 
 Projects, and Case Studies</em> as subtitle. The editorial process is happening
 right now. I've received some great feedback on my initial manuscript, so there's
 a lot to do for me.</p>
