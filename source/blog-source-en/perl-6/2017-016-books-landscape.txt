@@ -1,0 +1,20 @@
+Perl 6 Books Landscape in June 2017
+<!-- 2017-06-08 -->
+
+<p>There are lots of news around Perl 6 books to share these days. If you follow the community very closely, you might be aware of most of it. If not, read on :-).</p>
+
+<p><a href="http://shop.oreilly.com/product/0636920065883.do">Think Perl 6</a> is now available for purchase, and als for download as a <a href="http://greenteapress.com/wp/think-perl-6/">as a free ebook</a>. Heck, it's even <a href="https://github.com/LaurentRosenfeld/thinkperl6/">Open Source, with the LaTeX sources on GitHub!</a></p>
+
+<p><a href="https://deeptext.media/perl6-at-a-glance">Perl 6 at a Glance</a>, previously only available in print form, is now available as an ebook. Save paper and shipping costs!</a></p>
+
+<p>My own book, <a href="https://www.apress.com/us/book/9781484228982">Perl 6 Fundamentals</a>, is now in the "production" phase: copyediting, indexing, layout. And just before the manuscript submission deadline, Larry Wall has contributed a foreword. How awesome is that?</p>
+
+<p>I've revamped <a href="https://perl6book.com/">perl6book.com</a> to provide a short overview of the current and future Perl 6 books. As a small gimmick, it contains a flow chart explaining which book to chose. And I even got input from two other Perl 6 book authors (Laurent Rosenfeld of "Think Perl 6", Andrew Shitov of "Perl 6 at a Glance", "Migrating to Perl 6".</p>
+
+<p>From a <a href="https://github.com/moritz/perl6book-web/pull/2/files">pull request to perl6book.com</a>, it looks like Andrew Shitov is working on two more Perl 6 books. Keep 'em coming!</p>
+
+<p>And as always, if you want to keep informed about Perl 6 books, you can sign up at <a href="https://perl6book.com/">perl6book.com for my Perl 6 books mailing list</a> (low volume, typically less than one email per month).</p> 
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
