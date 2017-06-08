@@ -3,7 +3,7 @@ Perl 6 Books Landscape in June 2017
 
 <p>There are lots of news around Perl 6 books to share these days. If you follow the community very closely, you might be aware of most of it. If not, read on :-).</p>
 
-<p><a href="http://shop.oreilly.com/product/0636920065883.do">Think Perl 6</a> is now available for purchase, and als for download as a <a href="http://greenteapress.com/wp/think-perl-6/">as a free ebook</a>. Heck, it's even <a href="https://github.com/LaurentRosenfeld/thinkperl6/">Open Source, with the LaTeX sources on GitHub!</a></p>
+<p><a href="http://shop.oreilly.com/product/0636920065883.do">Think Perl 6</a> is now available for purchase, and also for download as a <a href="http://greenteapress.com/wp/think-perl-6/">free ebook</a>. Heck, it's even <a href="https://github.com/LaurentRosenfeld/thinkperl6/">Open Source, with the LaTeX sources on GitHub!</a></p>
 
 <p><a href="https://deeptext.media/perl6-at-a-glance">Perl 6 at a Glance</a>, previously only available in print form, is now available as an ebook. Save paper and shipping costs!</a></p>
 
