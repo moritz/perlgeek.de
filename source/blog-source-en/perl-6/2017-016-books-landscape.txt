@@ -13,6 +13,8 @@ Perl 6 Books Landscape in June 2017
 
 <p>From a <a href="https://github.com/moritz/perl6book-web/pull/2/files">pull request to perl6book.com</a>, it looks like Andrew Shitov is working on two more Perl 6 books. Keep 'em coming!</p>
 
+<p>Last but not least, Gabor Szabo has started a <a href="https://www.indiegogo.com/projects/book-web-application-development-in-perl-6-website--2/x/16699245#/">crowd funding campaign for a Perl 6 book on web app development</a>. There are still a few day left, so you can help it succeed!</p>
+
 <p>And as always, if you want to keep informed about Perl 6 books, you can sign up at <a href="https://perl6book.com/">perl6book.com for my Perl 6 books mailing list</a> (low volume, typically less than one email per month).</p> 
 
 
