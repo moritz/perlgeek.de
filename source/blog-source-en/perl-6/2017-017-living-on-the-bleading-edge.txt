@@ -40,7 +40,7 @@ missing from the monospace font.</p>
 <p>The toolchain allows control over the font used for displaying code,
 so I tried all the monospace fonts that were available. I tried them in
 alphabetical order. Among the earlier fonts I tried was Deja Vu Sans
-Mono, wich I use in my terminal, and which hasn't let me down yet. No
+Mono, which I use in my terminal, and which hasn't let me down yet. No
 dice. I arrived at <a
 href"https://www.google.com/get/noto/">Noto</a>, a font designed to
 cover all Unicode codepoints. And it didn't work either. So it turns out
@@ -57,7 +57,7 @@ helpful:</a> if I could recommend an Open Source mono space font that
 fit my needs, they'd likely include it in their toolchain.</p>
 
 <p>So I searched and searched, learning more about fonts than I wanted
-to know. My circle of geek friends cam up with several suggestions, one
+to know. My circle of geek friends came up with several suggestions, one
 of them being <a href="https://github.com/be5invis/Iosevka">Iosevka</a>,
 which actually contains those characters. So now I wait for others to
 step up, either for LeanPub to include that font, or for <a
@@ -66,7 +66,7 @@ maintainers to create a monospace variant of those characters</a> (and
 then LeanPub updating their version of the font).</p>
 
 <p>And all of that because Perl 6 was being innovative, and used two
-otherwise little-used characters as delimiters, in an attempt to avod
+otherwise little-used characters as delimiters, in an attempt to avoid
 collisions between delimiters and content.</p>
 
 <p>(In the mean time I've replaced the two offending characters with
