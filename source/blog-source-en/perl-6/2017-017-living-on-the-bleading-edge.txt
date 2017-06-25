@@ -1,0 +1,77 @@
+Living on the (b)leading edge
+<!-- 2017-06-25 -->
+
+<p>Perl 6 is innovative in many ways, and sometimes we don't fully
+appreciate all the implications, for good or for bad.</p>
+
+<p>There's one I stumbled upon recently: The use of fancy Unicode
+symbols for built-in stuff. In this case: the `.gist` output of Match
+objects. For example</p>
+
+<pre>[% syntax perl6 %]
+my token word { \w+ }
+say 'abc=def' ~~ /<word> '=' <word>/;
+[% endsyntax %]</pre>
+
+produces this output:
+
+<pre>[% syntax escape %]
+｢abc=def｣
+ word => ｢abc｣
+ word => ｢def｣
+[% endsyntax %]</pre>
+
+<p>And that's where the problems start. In my current <a
+href="https://leanpub.com/perl6regex">quest to write a book on Perl 6
+regexes</a>, I noticed that the PDF that LeanPub generates from my
+Markdown sources don't correctly display those pesky ｢｣ characters,
+which are
+
+<pre>
+$ uni -c ｢｣
+｢ - U+0FF62 - HALFWIDTH LEFT CORNER BRACKET
+｣ - U+0FF63 - HALFWIDTH RIGHT CORNER BRACKET
+</pre>
+
+<p>When I copied the text from the PDF and pasted into my editor, they
+showed up correctly, which indicates that the characters are likely
+missing from the monospace font.</p>
+
+<p>The toolchain allows control over the font used for displaying code,
+so I tried all the monospace fonts that were available. I tried them in
+alphabetical order. Among the earlier fonts I tried was Deja Vu Sans
+Mono, wich I use in my terminal, and which hasn't let me down yet. No
+dice. I arrived at <a
+href"https://www.google.com/get/noto/">Noto</a>, a font designed to
+cover all Unicode codepoints. And it didn't work either. So it turns out
+these two characters are part of some Noto Sans variants, but not of the
+monospace font.</p>
+
+<p>My terminal, and even some font viewers, use some kind of fallback
+where they use glyphs from other fonts to render missing characters. The
+book generation toolchain does not.</p>
+
+<p>The Google Group for Leanpub was <a
+href="https://groups.google.com/forum/#!topic/leanpub/bqVazrui-O4">somewhat
+helpful:</a> if I could recommend an Open Source mono space font that
+fit my needs, they'd likely include it in their toolchain.</p>
+
+<p>So I searched and searched, learning more about fonts than I wanted
+to know. My circle of geek friends cam up with several suggestions, one
+of them being <a href="https://github.com/be5invis/Iosevka">Iosevka</a>,
+which actually contains those characters. So now I wait for others to
+step up, either for LeanPub to include that font, or for <a
+href="https://github.com/googlei18n/noto-fonts/issues/939">the Noto
+maintainers to create a monospace variant of those characters</a> (and
+then LeanPub updating their version of the font).</p>
+
+<p>And all of that because Perl 6 was being innovative, and used two
+otherwise little-used characters as delimiters, in an attempt to avod
+collisions between delimiters and content.</p>
+
+<p>(In the mean time I've replaced the two offending characters with
+ones that look similar. It means the example output is technically
+incorrect, but at least it's readable).</p>
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
