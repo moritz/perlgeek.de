@@ -3,9 +3,9 @@ The Loss of Name and Orientation
 
 <p>The <a href="https://perl6.party/post/The-Hot-New-Language-Named-Rakudo">Perl 6 naming debate has started again</a>. And I guess with good reason. Teaching people that Perl 6 is <i>a</i> Perl, but not <i>the</i> Perl requires too much effort. Two years ago, I didn't believe. Now you're reading a tired man's words.</p>
 
-<p>I'm glad that this time, we're not discussing giving up the "Perl" brand, which still has very positiv connotations in my mind, and in many other minds as well.</p>
+<p>I'm glad that this time, we're not discussing giving up the "Perl" brand, which still has very positive connotations in my mind, and in many other minds as well.</p>
 
-<p>And yet, I can't bring myself to like "Rakudo Perl 6" as a name. There are two vary shallow reasons for that: Going from two syllables, "Perl six", to five of them, seems a step in the wrong direction. And two, I remember the ays was when the name was pretty young, and people would misspell it all the time. That seems to have abated, though I don't know why.</p>
+<p>And yet, I can't bring myself to like "Rakudo Perl 6" as a name. There are two vary shallow reasons for that: Going from two syllables, "Perl six", to five of them, seems a step in the wrong direction. And two, I remember the days when the name was pretty young, and people would misspell it all the time. That seems to have abated, though I don't know why.</p>
 
 <p>But there's also a deeper reason, probably sentimental old man's reason. I remember the days when Pugs was actively developed, and formed the center of a vibrant community. When kp6 and SMOP and all those weird projects were around. And then, just when it looked like there was only a single compiler was around, Stefan O'Rear conjured up niecza, almost single-handedly, and out of thin air. Within months, it was a viable Perl 6 compiler, that people on #perl6 readily recommended.</p>
 
