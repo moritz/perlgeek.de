@@ -1,0 +1,32 @@
+Perl 6 Fundamentals Now Available for Purchase
+<!-- 2017-07-22 -->
+<p>After about nine months of work, my book
+<a href="https://www.apress.com/us/book/9781484228982">Perl 6 Fundamentals</a> is now available for purchase on <a href="https://www.apress.com/us/book/9781484228982">apress.com</a> and <a href="http://www.springer.com/us/book/9781484228982">springer.com</a>.</p>
+
+<p>The ebook can be purchased right now, and comes in the epub and PDF formats (with watermarks, but DRM free). The print form can be pre-ordered from <a href="https://www.amazon.com/dp/1484228987">Amazon</a>, and will become ready for shipping in about a week or two.</p>
+
+<p>I will make a copy of the ebook available for free for everybody who purchased an earlier version, "Perl 6 by Example", from LeanPub.</p>
+
+<p>The book is aimed at people familiar with the basics of programming; prior
+Perl 6 knowledge is not required. It features a practical example in most chapters (no mammal hierarchies or <code>class Rectangle</code> inheriting from <code>class Shape</code>), ranging from simple input/output and text formatting to plotting with python's matplotlib libraries. Other examples include date and time conversion, a Unicode search tool and a directory size visualization.</p>
+
+<p>I use these examples to explain subset of Perl 6, with many pointers to more
+documentation where relevant. Perl 6 topics include the basic lexicographic
+structure, testing, input and output, multi dispatch, object orientation, regexes and grammars, usage of modules, functional programming and interaction
+with python libraries through <code>Inline::Python</code>.</p>
+
+<p>Let me finish with Larry Wall's description of this book, quoted from his foreword:</p>
+
+<blockquote>
+It's not just a reference, since you can always find such
+materials online.  Nor is it just a cookbook.  I like to think of it as an
+extended invitation, from a well-liked and well-informed member of our circle,
+to people like you who might want to join in on the fun.  Because joy is
+what's fundamental to Perl.  The essence of Perl is an invitation to
+love, and to be loved by, the Perl community.  It's an invitation to be a
+participant of the gift economy, on both the receiving and the giving end.
+</blockquote>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
