@@ -8,7 +8,7 @@ Perl 6 Fundamentals Now Available for Purchase
 <p>I will make a copy of the ebook available for free for everybody who purchased an earlier version, "Perl 6 by Example", from LeanPub.</p>
 
 <p>The book is aimed at people familiar with the basics of programming; prior
-Perl 6 knowledge is not required. It features a practical example in most chapters (no mammal hierarchies or <code>class Rectangle</code> inheriting from <code>class Shape</code>), ranging from simple input/output and text formatting to plotting with python's matplotlib libraries. Other examples include date and time conversion, a Unicode search tool and a directory size visualization.</p>
+Perl 5 or Perl 6 knowledge is not required. It features a practical example in most chapters (no mammal hierarchies or <code>class Rectangle</code> inheriting from <code>class Shape</code>), ranging from simple input/output and text formatting to plotting with python's matplotlib libraries. Other examples include date and time conversion, a Unicode search tool and a directory size visualization.</p>
 
 <p>I use these examples to explain subset of Perl 6, with many pointers to more
 documentation where relevant. Perl 6 topics include the basic lexicographic
