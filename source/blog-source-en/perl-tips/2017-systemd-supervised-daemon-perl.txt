@@ -1,0 +1,163 @@
+Writing a Systemd Supervised Service with Perl
+<!-- 2017-07-25 -->
+<p>There are many ways in which server software can fail.
+There are crashes, where the server process exits with an
+error. Program supervisors can catch those easily, and you
+can monitor for the presence of a server process.</p>
+
+<p>But recently I had to deal with some processes that
+didn't just crash; they got stuck. It happens only rarely,
+which makes debugging harder. It involves AnyEvent, forking,
+the boundaries between synchronous and asynchronous code,
+and runloops getting stuck. I know the problem needs a much
+deeper solution, which will take weeks to implement.</p>
+
+<p>So, there was a need for a much faster approach for at
+least detecting the stuck service, and possibly even restart
+it. And even if the problem was fixed, some monitoring
+wouldn't hurt.</p>
+
+<h2>Heartbeats</h2>
+
+<p>The standard approach to checking the aliveness of a
+process (or a connection) is a heartbeat. A heartbeat is a
+periodic action that a process performs; if the process
+fails to perform that action, a supervisor can pick up on
+that cue, and do an appropriate action. The action can be
+restarting the process, closing a TCP connection or so.</p>
+
+<p>So, for a server process, what's a good heartbeat? The
+most basic approach is writing to a log file, or touching a
+file. The supervisor can then check for the
+up-to-dateness.</p>
+
+<h2>Systemd and Heartbeats</h2>
+
+<p>Since I already used Systemd for managing the service, I
+wanted to see if systemd supported any heartbeats. It does,
+and <a
+href="https://superuser.com/questions/689017/can-systemd-detect-and-kill-hung-processes">this
+superuser post gives a great overview</a>. In the context of
+systemd, a watchdog needs to call the <a
+href="https://freedesktop.org/software/systemd/man/sd_notify.html">sd_notify</a>
+C function, which seems to live in the libsystemd.so
+library. This communicates through some mysterious,
+unknowable mechanism (actually just a UNIX socket) with systemd. To allow that 
+communication channel, the systemd unit file must include
+the line <a
+href="https://freedesktop.org/software/systemd/man/systemd.service.html#NotifyAccess=">NotifyAccess=main</a>,
+which allows the main process of the server to communicate
+with systemd, or <code>NotifyAccess=all</code>, which allows
+subprocesses to also use <code>sd_notify</code>.</p>
+
+
+<p>The module <a
+href="https://metacpan.org/pod/Systemd::Daemon">Systemd::Daemon</a>
+module gives you access to <code>sd_notify</code> in Perl.</p>
+
+<p>A minimal Perl program that can be watchdog'ed looks like
+this:</p>
+
+<pre>[% syntax perl %]
+#!/usr/bin/env perl
+use 5.020;
+use warnings;
+use strict;
+use Time::HiRes qw(usleep);
+use Systemd::Daemon qw( -hard notify );
+
+my $sleep = ($ENV{WATCHDOG_USEC} // 2_000_000) / 2;
+$| = 1;
+notify( READY => 1 );
+
+while (1) {
+    usleep $sleep;
+    say "watchdog";
+    notify( WATCHDOG => 1 );
+}
+[% endsyntax %]</pre>
+
+<p>If you forget the <code>READY</code> notification, a
+<code>systemctl start $service</code> hangs (until it runs
+into a timeout), and <code>systemctl status $service</code>
+says <code>Active: activating (start) since ...</code>. The
+normal state is <code>Active: active (running)
+since</code>.</p>
+
+<p>If the service misses its heartbeat, it looks like this
+in the log (<code>journalctl -u $service</code>; timestamps
+and hostname stripped):</p>
+
+<pre>
+systemd[1]: testdaemon.service: Watchdog timeout (limit 10s)!
+systemd[1]: testdaemon.service: Main process exited, code=dumped, status=6/ABRT
+systemd[1]: testdaemon.service: Unit entered failed state.
+systemd[1]: testdaemon.service: Failed with result 'core-dump'.
+systemd[1]: testdaemon.service: Service hold-off time over, scheduling restart.
+systemd[1]: Stopped Testdaemon.
+systemd[1]: Starting Testdaemon...
+systemd[1]: Started Testdaemon.
+</pre>
+
+<p>And this is the corresponding unit file:</p>
+
+<pre>
+[Unit]
+Description=Testdaemon
+After=syslog.target network.target
+
+[Service]
+Type=notify
+NotifyAccess=main
+Restart=always
+WatchdogSec=10
+
+User=moritz
+Group=moritz
+ExecStart=/home/moritz/testdaemon.pl
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+<p>Relevant here are <code>Type=notify</code>, which enables the
+watchdog, <code>Restart=always</code> as the restart policy,
+and <code>WatchdogSec=10</code> for 10 second period after
+which the service restarts if no <code>sd_notify</code> of
+type <code>WATCHDOG</code> occurred.</p>
+
+<p>Systemd makes the <code>WatchdogSec</code> setting
+available as the environment variable
+<code>WATCHDOG_USEC</code>, converted to microseconds (so
+multiplied by one million). If the server process aims to
+report heartbeats twice as often as that wait period, small
+timing errors should not lead to a missed heartbeat.</p>
+
+<p>In my case, the WATCHDOG notification happens in an
+<code>AnyEvent-&gt;timer</code> callback, so if this doesn't
+happen, either the event loop got stuck, or a blocking
+operation prevents the event loop from running. The latter
+should not happen (blocking operations are meant to run in
+forked processes), so this adequately detects the error I
+want to detect.</p>
+
+<p>For the little functionality that I use, Systemd::Daemon
+is a pretty heavy dependency (using XS and quite a few build
+dependencies). After looking a <a
+href="https://github.com/bb4242/sdnotify/blob/master/sdnotify/__init__.py">reimplementation
+of the notify() protocol in python</a>, I wonder if talking
+to the socket directly would have been less work than
+packaging Systemd::Daemon.</p>
+
+<h2>Summary</h2>
+
+<p>Systemd offers a heartbeat supervisor for processes that
+manage it. It can automatically restart processes that fail
+to check in regularly via calls to <code>sd_notify</code>,
+or doing the equivalent action on a socket. Perl's
+Systemd::Daemon module gives you access to sd_notify in a
+Perl server process.</p>
+
+[% option no-header %] [% option no-footer %] 
+[% comment vim: ft=html tw=72 spell spelllang=en_us
+%]
