@@ -49,7 +49,7 @@ protocol.</p>
 
 <p>Despite some half-hearted attempts, I didn't really make inroads into
 compiler developments. Having worked with neither Haskell nor compilers
-before proofed to be a pretty steep step. Instead I focused on some
+before proved to be a pretty steep step. Instead I focused on some
 early modules, documentation, tests, and asking and answering questions.
 When the IRC logger went offline for a while, I wrote my own, which is
 still in use today.</p>

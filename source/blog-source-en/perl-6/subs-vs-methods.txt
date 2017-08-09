@@ -70,7 +70,7 @@ to everybody else.</p>
 
 <p>It also uses the same keyword for subs and methods, because in Perl 5
 there's no difference between the two, only the invocation makes the
-difference. That proofed rather difficult for introspection and static code
+difference. That proved rather difficult for introspection and static code
 analysis.</p>
 
 <p>The proposal to automatically promote subs to methods inside classes brings
