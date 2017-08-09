@@ -1,0 +1,170 @@
+My Ten Years of Perl 6
+<!-- 2017-08-09 -->
+
+<p>Time for some old man's reminiscence. Or so it feels when I realize that
+I've spent more than 10 years involved with the Perl 6 community.</p>
+
+<h2>How I Joined the Perl 6 Community</h2>
+
+<p>It was February 2007.</p>
+
+<p>I was bored. I had lots of free time (crazy to imagine that now...), and I spent some of that answering
+(Perl 5) questions on perlmonks. There was a category of questions where
+I routinely had no good answers, and those were related to threads. So I
+decided to play with threads, and got frustrated pretty quickly.</p>
+
+<p>And then I remember that a friend in school had told me (about four
+years earlier) that there was this
+Perl 6 project that wanted to do concurrency <em>really</em> well, and even
+automatically parallelize some stuff. And this was some time ago, maybe
+they had gotten anywhere?</p>
+
+<p>So I searched the Internet, and found out about Pugs, a Perl 6 compiler
+written in Haskell. And I wanted to learn more, but some of the links to
+the presentations were dead. I <a href="https://irclog.perlgeek.de/perl6/2007-02-04#i_-55445">joined the #perl6 IRC channel to report
+the broken link</a>.</p>
+
+<p>And within three minutes I got a "thank you" for the report, the broken
+links were gone, <em>and</em> I had an invitation for a commit bit to the
+underlying SVN repo.</p>
+
+<p>I stayed.</p>
+
+<h2>The Early Days</h2>
+
+<p>Those were they wild young days of Perl 6 and Pugs. Audrey Tang was
+pushing Pugs (and Haskell) very hard, and often implemented a feature
+within 20 minutes after somebody mentioned it. Things were unstable,
+broken often, and usually fixed quickly. No idea was too crazy to be
+considered or even implemented.</p>
+
+<p>We had bots that evaluated Perl 6 and Haskell code, and gave the result
+directly on IRC. There were lots of cool (and sometimes somewhat
+frightening) automations, for example for inviting others to the SVN
+repo, to the shared hosting system (called feather), for searching SVN logs
+and so on. Since git was still an obscure and very unusable, people
+tried to use <a href="https://en.wikipedia.org/wiki/SVK">SVK</a>, an attempt to
+implement a decentralized version control system on top of of the SVN
+protocol.</p>
+
+<p>Despite some half-hearted attempts, I didn't really make inroads into
+compiler developments. Having worked with neither Haskell nor compilers
+before proofed to be a pretty steep step. Instead I focused on some
+early modules, documentation, tests, and asking and answering questions.
+When the IRC logger went offline for a while, I wrote my own, which is
+still in use today.</p>
+
+<p>I felt at home in that IRC channel and the community. When the community
+asked for mentors for the Google Summer of Code project, I stepped up.
+The project was a revamp of the Perl 6 test suite, and to prepare for
+mentoring task, I decided to dive deeper. That made me the maintainer of
+the test suite.</p>
+
+<h2>Pet Projects</h2>
+
+<p>I can't recount a full history of Perl 6 projects during that time
+range, but I want to reflect on some projects that I considered my pet
+projects, at least for some time.</p>
+
+<ul>
+<li>In early 2008 I started to contribute some patches to
+<a href="https://perl6.org/">perl6.org</a>. Over time I became frustrated with
+the outdated content on many Perl 6 websites, so I created
+perl6-projects.org, which only contained links to up-to-date
+resources. Over time, people with an actual sense of design contribute
+a nice layout. Later we switched perl6.org over to the content from
+perl6-projects.org. Its structure today is still mostly that of a link
+collection.</li>
+<li>In September 2008 I started with the <a href="https://perlgeek.de/en/article/5-to-6">Perl 5 to
+6</a> blog series, which was the
+de facto resource for learning Perl 6 for some years.</li>
+<li>In 2009 I wrote <a href="https://github.com/moritz/json/">JSON::Tiny</a>, the
+first pure-Perl 6 JSON parser. I mostly did it to become familiar with
+grammars, and because the book "Real World Haskell" also developed a
+JSON module.</li>
+<li>May 2010 kicked off a program to make <a href="https://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">contributing to Perl 6 more
+accssible</a>.</li>
+<li>September 2010: the Pugs SVN repository became unmaintainable. It had
+accumulated the official Perl 6 test suite, some documentation,
+modules, at least one IRC bot and a proverbial metric ton of other
+stuff. In coordination with #perl6, I split it up into a collection of
+git repositories and put them on GitHub. A decision we haven't
+regretted yet. </li>
+<li>In 2012 and 2016 I was part of the organization team of the German
+Perl Workshop in Erlangen and Nürnberg, which both featured several
+Perl 6 talks.</li>
+<li>2012 saw the birth of <a href="https://docs.perl6.org/">the documentation
+project</a>. Initially I was nearly the sole
+contributor, and I'm very happy that, over time, others have taken over.</li>
+<li>Between 2014 and 2015, our community server "feather" EOLed, so the
+Perl 6 community <a href="https://perlgeek.de/blog-en/perl-6/2014-community-server-funding.html">funded a new
+server</a>,
+which my <a href="https://www.noris.de/">employer, noris network AG</a> kindly
+hosts for free in their data center in Nürnberg, Germany.</li>
+<li>In 2016 I started writing <a href="https://leanpub.com/perl6">Perl 6 by Example</a>,
+which Apress later adopted and published as <a href="https://www.apress.com/us/book/9781484228982">Perl 6
+Fundamentals</a>.</li>
+<li>Currently I'm working on a treatise on <a href="https://leanpub.com/perl6regex">Perl 6 Regexes and
+Grammars</a>, which Apress will also
+publish.</li>
+</ul>
+
+<p>It is not quite clear from this (very selected) timeline, but my Perl 6
+related activity dropped around 2009 or 2010. This is when I started to
+work full time, moved in with my girlfriend (now wife), and started to
+plan a family.</p>
+
+<h2>Relationships</h2>
+
+<p>The technologies and ideas in Perl 6 are fascinating, but that's not
+what kept me. I came for the technology, but stayed for the community.</p>
+
+<p>There were and are many great people in the Perl 6 community, some of
+whom I am happy to call my friends. Whenever I get the chance to attend
+a Perl conference, workshop or hackathon, I find a group of Perl 6
+hackers to hang out and discuss with, and generally have a good time.</p>
+
+<p>Four events stand out in my memory. In 2010 I was invited to the Open
+Source Days in Copenhagen. I missed most of the conference, but spent
+a day or two with (if memory serve right) Carl Mäsak, Patrick Michaud,
+Jonathan Worthington and Arne Skjærholt. We spent some fun time trying
+to wrap our minds around macros, the intricacies of human and computer
+language, and Japanese food. (Ok, the last one was easy). Later the same
+year, I attended my first YAPC::EU in Pisa, and met most of the same
+crowd again -- this time joined by Larry Wall, and over three or four
+days. I still fondly remember the Perl 6 hallway track from that
+conference. And 2012 I flew to Oslo for a Perl 6 hackathon, with a
+close-knit, fabulous group of Perl 6 hackers. Finally, the <a href="http://blogs.perl.org/users/liz/2012/08/as-some-of-you-may.html">Perl
+Reunification
+Summit</a>
+in the beautiful town of Perl in Germany, which brought together Perl 5
+and Perl 6 hackers in a very relaxed atmosphere.</p>
+
+<p>For three of these four events, different private sponsors from the Perl
+and Perl 6 community covered travel and/or hotel costs, with their only
+motivation being meeting folks they liked, and seeing the community
+and technology flourish.</p>
+
+<h2>The Now</h2>
+
+<p>The Perl 6 community has evolved a lot over the last ten years, but it is
+still a very friendly and welcoming place. There are lots of "new" folks
+(where "new" is everybody who joined after me, of course :D), and a
+surprising number of the old guard still hang around, some more
+involved, some less, all of them still very friendly and supportive</p>
+
+<h2>The Future</h2>
+
+<p>I anticipate that my family and other projects will continue to occupy
+much of my time, and it is unlikely that I'll be writing another Perl 6
+book (after the one about regexes) any time soon. But the Perl 6 community
+has become a second home for me, and I don't want to miss it.</p>
+
+<p>In the future, I see myself supporting the Perl 6 community through
+infrastructure (community servers, IRC logs, running IRC bots etc.),
+answering questions, writing a blog article here and there, but mostly
+empowering the "new" guard to do whatever they deem best.</p>
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
