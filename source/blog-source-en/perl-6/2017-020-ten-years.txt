@@ -83,7 +83,7 @@ first pure-Perl 6 JSON parser. I mostly did it to become familiar with
 grammars, and because the book "Real World Haskell" also developed a
 JSON module.</li>
 <li>May 2010 kicked off a program to make <a href="https://perlgeek.de/blog-en/perl-6/contribute-now-announce.html">contributing to Perl 6 more
-accssible</a>.</li>
+accessible</a>.</li>
 <li>September 2010: the Pugs SVN repository became unmaintainable. It had
 accumulated the official Perl 6 test suite, some documentation,
 modules, at least one IRC bot and a proverbial metric ton of other
