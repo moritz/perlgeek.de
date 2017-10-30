@@ -116,7 +116,7 @@
         </td><td> 0xc4    </td><td> 0xc4        </td><td> 0x00 0xc4</td>
     </tr>
     <tr>
-        <td>U+20AC    </td><td> €       </td><td>  -    </td><td> 0xe3 0x82 0xac
+        <td>U+20AC    </td><td> €       </td><td>  -    </td><td> 0xe2 0x82 0xac
         </td><td> -       </td><td> 0xa4        </td><td> 0x20 0xac</td>
     </tr>
     <tr>
