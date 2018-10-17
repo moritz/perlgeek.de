@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 11 - Changes to Perl 5 Operators</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-26</p>
+
+<h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
 
@@ -64,6 +70,12 @@ name="MOTIVATION"
 <h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
+
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2Foperators" class="podlinkpod"
+>&#34;language/operators&#34; in doc.perl6.org</a></p>
+
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2F5to6%23Operators" class="podlinkpod"
+>&#34;language/5to6#Operators&#34; in doc.perl6.org</a></p>
 
 <p><a href="http://design.perl6.org/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
 >http://design.perl6.org/S03.html#Changes_to_Perl_5_operators</a></p>

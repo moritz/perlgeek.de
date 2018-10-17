@@ -8,6 +8,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 10 - Containers and Values</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-26</p>
+
+<h3><a class='u'
 name="Synopsis"
 >Synopsis</a></h3>
 
@@ -27,14 +33,16 @@ name="DESCRIPTION"
 
 <p>A normal scalar variable is a container, and can have some properties like type constraints, access constraints (for example it can be read only), and finally it can be aliased to other containers.</p>
 
-<p>Putting a value into a container is called <i>assignment</i>, and aliasing two containers is called <code>binding</code>.</p>
+<p>Putting a value into a container is called <i>assignment</i>, and aliasing two containers is called <i>binding</i>.</p>
 
 <pre>    my @a = 1, 2, 3;
     my Int $x = 4;
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = &#39;Foo&#39;;   # Error &#39;Type check failed&#39;</pre>
 
-<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
+<p>Types like <a href="http://doc.perl6.org/type/Int" class="podlinkurl"
+>Int</a> and <a href="http://doc.perl6.org/type/Str" class="podlinkurl"
+>Str</a> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
 
 <pre>    my $a = 1;
     $a = 2;     # no surprise here</pre>
@@ -52,6 +60,9 @@ name="MOTIVATION"
 <h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
+
+<p><a href="http://doc.perl6.org/language/containers" class="podlinkurl"
+>http://doc.perl6.org/language/containers</a></p>
 
 <p><a href="http://design.perl6.org/S03.html#Item_assignment_precedence" class="podlinkurl"
 >http://design.perl6.org/S03.html#Item_assignment_precedence</a></p>

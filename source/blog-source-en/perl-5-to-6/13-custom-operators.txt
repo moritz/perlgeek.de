@@ -7,6 +7,12 @@ name="NAME"
 
 <p>&#34;Perl 5 to 6&#34; Lesson 13 - Custom Operators</p>
 
+<h4><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h4>
+
+<p>2015-02-26</p>
+
 <h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
@@ -72,7 +78,7 @@ name="Associativity"
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 
-<p>Most (if not all) existing operators are multi subs or methods, and can therefore be customized for new types. Adding a multi sub is the way of &#34;overloading&#34; operators.</p>
+<p>Most (if not all) existing operators are multi subs, and can therefore be customized for new types. Adding a multi sub is the way of &#34;overloading&#34; operators.</p>
 
 <pre>    class MyStr { ... }
     multi sub infix:&#60;~&#62;(MyStr $this, Str $other) { ... }</pre>
@@ -90,6 +96,9 @@ name="MOTIVATION"
 <h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
+
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2Ffunctions%23Defining%2520Operators" class="podlinkpod"
+>&#34;language/functions#Defining%20Operators&#34; in doc.perl6.org</a></p>
 
 <p><a href="http://design.perl6.org/S06.html#Operator_overloading" class="podlinkurl"
 >http://design.perl6.org/S06.html#Operator_overloading</a></p>

@@ -46,38 +46,30 @@ name="DESCRIPTION"
     -stuff       Numeric (also negates)
     $( stuff )   Generic item context
     @( stuff )   List context
-    %( stuff )   Hash context
-     stuff.tree  Tree context</pre>
+    %( stuff )   Hash context</pre>
 
 <h4><a class='u'
-name="Tree_Context"
->Tree Context</a></h4>
+name="Flattening"
+>Flattening</a></h4>
 
-<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
+<p>In Perl 5, list context always flattens out arrays (but not array references).</p>
 
-<p>Now this is solved by returning a list of <a href="http://doc.perl6.org/type/Parcel" class="podlinkurl"
->Parcel</a> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
+<p>In Perl 6, this is not always the case, and depends on the context:</p>
 
-<p>Consider the infix <code>Z</code> (short for <i>zip</i>) operator, which interleaves the elements from two lists:</p>
+<pre>    my @a = 1, 2;
+    my @b = 3, 4, 5;
+    my @c = @a, @b;     # preserves structure
+    say @c.perl;        # [[1, 2], [3, 4, 5]]
+    
+    @c = flat @a, @b;
+    say @c.perl;        # [1, 2, 3, 4, 5]</pre>
 
-<pre>    my @a = &#60;a b c&#62; Z &#60;1 2 3&#62;;
-    say @a.join;                # a1b2c3</pre>
+<p>You can force flattening list context yourself by using <code>*@a</code> in a signature:</p>
 
-<p>What happened here is that the right-hand side of the first statement returned <code>(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 3)</code>, and assignment to an array, which provides list context, flattened out the inner parcels. On the other hand if you write</p>
-
-<pre>    my @t = (&#60;a b c&#62; Z &#60;1 2 3&#62;).tree;</pre>
-
-<p>then <code>@t</code> now contains three elements, each of which are arrays that don&#39;t flatten out.</p>
-
-<pre>    for @t -&#62; @inner {
-        say &#34;first: @inner[0]  second: @inner[1]&#34;
-    }</pre>
-
-<p>Produces the output</p>
-
-<pre>    first: a  second: 1
-    first: b  second: 2
-    first: c  second: 3</pre>
+<pre>    sub flat-elems(*@a) {
+        return @a.elems
+    };
+    say flat-elems(@a, @b);     # 5</pre>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -87,7 +79,7 @@ name="MOTIVATION"
 
 <p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply evaluate the object a more specific context.</p>
 
-<p>For some things (like the <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+<p>For some things (like the <a href="https://docs.perl6.org/type/Match" class="podlinkurl"
 >Match</a> object), the different contexts really enhance their usefulness and beauty.</p>
 
 <h3><a class='u'

@@ -7,6 +7,12 @@ name="NAME"
 
 <p>&#34;Perl 5 to 6&#34; Lesson 12 - Laziness</p>
 
+<h4><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h4>
+
+<p>2015-02-26</p>
+
 <h3><a class='u'
 name="SYNOPSIS"
 >SYNOPSIS</a></h3>
@@ -88,13 +94,12 @@ name="gather/take"
 name="Controlling_Laziness"
 >Controlling Laziness</a></h4>
 
-<p>Laziness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <code>eager</code>.</p>
+<p>Laziness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <a href="http://doc.perl6.org/type/List#routine%20eager" class="podlinkurl"
+>eager</a>.</p>
 
 <pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
 
-<p>On the other hand only lists are lazy by default. But you can also make lazy scalars (though none of our compilers implement that feature yet):</p>
-
-<pre>    my $ls = lazy { $expansive_computation };</pre>
+<p>On the other hand only lists are lazy by default.</p>
 
 <h3><a class='u'
 name="MOTIVATION"

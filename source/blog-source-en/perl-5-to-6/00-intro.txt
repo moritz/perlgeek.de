@@ -11,7 +11,7 @@ name="NAME"
 name="LAST_UPDATED"
 >LAST UPDATED</a></h3>
 
-<p>2015-02-25</p>
+<p>2015-02-26</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -64,7 +64,7 @@ name="ROADMAP"
     09 Comparisons and Smartmatching
     10 Containers and Binding
     11 Basic Operators
-    12 Laziness (-)
+    12 Laziness
     13 Custom Operators
     14 the MAIN sub
     15 Twigils

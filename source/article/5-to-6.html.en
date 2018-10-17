@@ -64,7 +64,7 @@ name="NAME"
 name="LAST_UPDATED"
 >LAST UPDATED</a></h3>
 
-<p>2015-02-25</p>
+<p>2015-02-26</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -117,7 +117,7 @@ name="ROADMAP"
     09 Comparisons and Smartmatching
     10 Containers and Binding
     11 Basic Operators
-    12 Laziness (-)
+    12 Laziness
     13 Custom Operators
     14 the MAIN sub
     15 Twigils
@@ -995,38 +995,30 @@ name="DESCRIPTION"
     -stuff       Numeric (also negates)
     $( stuff )   Generic item context
     @( stuff )   List context
-    %( stuff )   Hash context
-     stuff.tree  Tree context</pre>
+    %( stuff )   Hash context</pre>
 
 <h4><a class='u'
-name="Tree_Context"
->Tree Context</a></h4>
+name="Flattening"
+>Flattening</a></h4>
 
-<p>In the early days of Perl 6, there were lots of builtins of which two versions existed, one that returned a flat list, one that returned a list of arrays.</p>
+<p>In Perl 5, list context always flattens out arrays (but not array references).</p>
 
-<p>Now this is solved by returning a list of <a href="http://doc.perl6.org/type/Parcel" class="podlinkurl"
->Parcel</a> objects, where the <code>Parcel</code> objects might or might not flatten out depending on the context.</p>
+<p>In Perl 6, this is not always the case, and depends on the context:</p>
 
-<p>Consider the infix <code>Z</code> (short for <i>zip</i>) operator, which interleaves the elements from two lists:</p>
+<pre>    my @a = 1, 2;
+    my @b = 3, 4, 5;
+    my @c = @a, @b;     # preserves structure
+    say @c.perl;        # [[1, 2], [3, 4, 5]]
+    
+    @c = flat @a, @b;
+    say @c.perl;        # [1, 2, 3, 4, 5]</pre>
 
-<pre>    my @a = &#60;a b c&#62; Z &#60;1 2 3&#62;;
-    say @a.join;                # a1b2c3</pre>
+<p>You can force flattening list context yourself by using <code>*@a</code> in a signature:</p>
 
-<p>What happened here is that the right-hand side of the first statement returned <code>(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 3)</code>, and assignment to an array, which provides list context, flattened out the inner parcels. On the other hand if you write</p>
-
-<pre>    my @t = (&#60;a b c&#62; Z &#60;1 2 3&#62;).tree;</pre>
-
-<p>then <code>@t</code> now contains three elements, each of which are arrays that don&#39;t flatten out.</p>
-
-<pre>    for @t -&#62; @inner {
-        say &#34;first: @inner[0]  second: @inner[1]&#34;
-    }</pre>
-
-<p>Produces the output</p>
-
-<pre>    first: a  second: 1
-    first: b  second: 2
-    first: c  second: 3</pre>
+<pre>    sub flat-elems(*@a) {
+        return @a.elems
+    };
+    say flat-elems(@a, @b);     # 5</pre>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -1036,7 +1028,7 @@ name="MOTIVATION"
 
 <p>With more specific context you don&#39;t need to make this choice - it returns some sensible default, and all operators that don&#39;t like this choice can simply evaluate the object a more specific context.</p>
 
-<p>For some things (like the <a href="http://doc.perl6.org/type/Match" class="podlinkurl"
+<p>For some things (like the <a href="https://docs.perl6.org/type/Match" class="podlinkurl"
 >Match</a> object), the different contexts really enhance their usefulness and beauty.</p>
 
 <h3><a class='u'
@@ -1453,6 +1445,12 @@ name="NAME"
 <p>&#34;Perl 5 to 6&#34; Lesson 10 - Containers and Values</p>
 
 <h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-26</p>
+
+<h3><a class='u'
 name="Synopsis"
 >Synopsis</a></h3>
 
@@ -1472,14 +1470,16 @@ name="DESCRIPTION"
 
 <p>A normal scalar variable is a container, and can have some properties like type constraints, access constraints (for example it can be read only), and finally it can be aliased to other containers.</p>
 
-<p>Putting a value into a container is called <i>assignment</i>, and aliasing two containers is called <code>binding</code>.</p>
+<p>Putting a value into a container is called <i>assignment</i>, and aliasing two containers is called <i>binding</i>.</p>
 
 <pre>    my @a = 1, 2, 3;
     my Int $x = 4;
     @a[0] := $x;     # now @a[0] and $x are the same variable
     @a[0] = &#39;Foo&#39;;   # Error &#39;Type check failed&#39;</pre>
 
-<p>Types like <code>Int</code> and <code>Str</code> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
+<p>Types like <a href="http://doc.perl6.org/type/Int" class="podlinkurl"
+>Int</a> and <a href="http://doc.perl6.org/type/Str" class="podlinkurl"
+>Str</a> are immutable, ie the objects of these types can&#39;t be changed; but you can still change the variables (the containers, that is) which hold these values:</p>
 
 <pre>    my $a = 1;
     $a = 2;     # no surprise here</pre>
@@ -1498,6 +1498,9 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
+<p><a href="http://doc.perl6.org/language/containers" class="podlinkurl"
+>http://doc.perl6.org/language/containers</a></p>
+
 <p><a href="http://design.perl6.org/S03.html#Item_assignment_precedence" class="podlinkurl"
 >http://design.perl6.org/S03.html#Item_assignment_precedence</a></p>
 
@@ -1510,6 +1513,12 @@ name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 11 - Changes to Perl 5 Operators</p>
+
+<h3><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h3>
+
+<p>2015-02-26</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -1569,6 +1578,12 @@ name="MOTIVATION"
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
 
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2Foperators" class="podlinkpod"
+>&#34;language/operators&#34; in doc.perl6.org</a></p>
+
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2F5to6%23Operators" class="podlinkpod"
+>&#34;language/5to6#Operators&#34; in doc.perl6.org</a></p>
+
 <p><a href="http://design.perl6.org/S03.html#Changes_to_Perl_5_operators" class="podlinkurl"
 >http://design.perl6.org/S03.html#Changes_to_Perl_5_operators</a></p>
 
@@ -1581,6 +1596,12 @@ name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 12 - Laziness</p>
+
+<h4><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h4>
+
+<p>2015-02-26</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -1663,13 +1684,12 @@ name="gather/take"
 name="Controlling_Laziness"
 >Controlling Laziness</a></h4>
 
-<p>Laziness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <code>eager</code>.</p>
+<p>Laziness has its problems (and when you try to learn Haskell you&#39;ll notice how weird their IO system is because Haskell is both lazy and free of side effects), and sometimes you don&#39;t want stuff to be lazy. In this case you can just prefix it with <a href="http://doc.perl6.org/type/List#routine%20eager" class="podlinkurl"
+>eager</a>.</p>
 
 <pre>    my @list = eager map { $block_with_side_effects }, @list;</pre>
 
-<p>On the other hand only lists are lazy by default. But you can also make lazy scalars (though none of our compilers implement that feature yet):</p>
-
-<pre>    my $ls = lazy { $expansive_computation };</pre>
+<p>On the other hand only lists are lazy by default.</p>
 
 <h3><a class='u'
 name="MOTIVATION"
@@ -1697,6 +1717,12 @@ name="NAME"
 >NAME</a></h3>
 
 <p>&#34;Perl 5 to 6&#34; Lesson 13 - Custom Operators</p>
+
+<h4><a class='u'
+name="LAST_UPDATED"
+>LAST UPDATED</a></h4>
+
+<p>2015-02-26</p>
 
 <h3><a class='u'
 name="SYNOPSIS"
@@ -1763,7 +1789,7 @@ name="Associativity"
 name="&#34;Overload&#34;_existing_operators"
 >&#34;Overload&#34; existing operators</a></h4>
 
-<p>Most (if not all) existing operators are multi subs or methods, and can therefore be customized for new types. Adding a multi sub is the way of &#34;overloading&#34; operators.</p>
+<p>Most (if not all) existing operators are multi subs, and can therefore be customized for new types. Adding a multi sub is the way of &#34;overloading&#34; operators.</p>
 
 <pre>    class MyStr { ... }
     multi sub infix:&#60;~&#62;(MyStr $this, Str $other) { ... }</pre>
@@ -1781,6 +1807,9 @@ name="MOTIVATION"
 <h3><a class='u'
 name="SEE_ALSO"
 >SEE ALSO</a></h3>
+
+<p><a href="http://search.cpan.org/perldoc?doc.perl6.org#language%2Ffunctions%23Defining%2520Operators" class="podlinkpod"
+>&#34;language/functions#Defining%20Operators&#34; in doc.perl6.org</a></p>
 
 <p><a href="http://design.perl6.org/S06.html#Operator_overloading" class="podlinkurl"
 >http://design.perl6.org/S06.html#Operator_overloading</a></p>
