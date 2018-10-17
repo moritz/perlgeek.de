@@ -44,41 +44,27 @@ You can force contexts with special syntax.
     $( stuff )   Generic item context
     @( stuff )   List context
     %( stuff )   Hash context
-     stuff.tree  Tree context
 
-=head2 Tree Context
+=head2 Flattening
 
-In the early days of Perl 6, there were lots of builtins of which two versions
-existed, one that returned a flat list, one that returned a list of arrays.
+In Perl 5, list context always flattens out arrays (but not array references).
 
-Now this is solved by returning a list of
-L<Parcel|http://doc.perl6.org/type/Parcel> objects, where the
-C<Parcel> objects might or might not flatten out depending on the context.
+In Perl 6, this is not always the case, and depends on the context:
 
-Consider the infix C<Z> (short for I<zip>) operator, which interleaves the
-elements from two lists:
+    my @a = 1, 2;
+    my @b = 3, 4, 5;
+    my @c = @a, @b;     # preserves structure
+    say @c.perl;        # [[1, 2], [3, 4, 5]]
+    
+    @c = flat @a, @b;
+    say @c.perl;        # [1, 2, 3, 4, 5]
 
-    my @a = <a b c> Z <1 2 3>;
-    say @a.join;                # a1b2c3
+You can force flattening list context yourself by using C<*@a> in a signature:
 
-What happened here is that the right-hand side of the first statement returned
-C<('a', 1), ('b', 2), ('c', 3)>, and assignment to an array, which provides
-list context, flattened out the inner parcels. On the other hand if you write
-
-    my @t = (<a b c> Z <1 2 3>).tree;
-
-then C<@t> now contains three elements, each of which are arrays that don't
-flatten out.
-
-    for @t -> @inner {
-        say "first: @inner[0]  second: @inner[1]"
-    }
-
-Produces the output
-
-    first: a  second: 1
-    first: b  second: 2
-    first: c  second: 3
+    sub flat-elems(*@a) {
+        return @a.elems
+    };
+    say flat-elems(@a, @b);     # 5
 
 =head1 MOTIVATION
 
@@ -92,7 +78,7 @@ With more specific context you don't need to make this choice - it returns some
 sensible default, and all operators that don't like this choice can simply
 evaluate the object a more specific context.
 
-For some things (like the L<Match|http://doc.perl6.org/type/Match> object), the
+For some things (like the L<Match|https://docs.perl6.org/type/Match> object), the
 different contexts really enhance
 their usefulness and beauty.
 
