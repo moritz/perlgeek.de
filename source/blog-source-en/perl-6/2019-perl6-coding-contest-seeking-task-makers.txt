@@ -1,0 +1,51 @@
+Perl 6 Coding Contest 2019: Seeking Task Makers
+<!-- 2019-11-11 -->
+
+<p>I want to revive <a href="http://strangelyconsistent.org/blog/masaks-perl-6-coding-contest">Carl Mäsak's Coding Contest</a>
+as a <a href="https://gist.github.com/moritz/6f06ec7153ce396ac2734c2616d8b075">crowd-sourced contest</a>.</p>
+
+<p>The contest will be in four phases:</p>
+
+<ul>
+<li>development of tasks</li>
+<li>public contest, where you can solve the tasks</li>
+<li>public commenting on solutions</li>
+<li>grading and awarding of prizes</li>
+</ul>
+
+<p>For the first phase, development of tasks, I am looking for volunteers who
+come up with coding tasks collaboratively. Sadly, these volunteers, including
+myself, will be excluded from participating in the second phase.</p>
+
+<p>I am looking for tasks that ...</p>
+
+<ul>
+<li>are well-worded</li>
+<li>have a (private) implementation that shows it is solvable, preferably
+in under 500 lines of code</li>
+<li>have a few public tests to help the participants, and a more tests
+tests that help the graders and commenters later on</li>
+</ul>
+
+<p>This is non-trivial, so I'd like to have others to discuss things with,
+and to come up with some more tasks.</p>
+
+<p>If you want to help with task creation, please send an email to <a href="mailto:moritz.lenz@gmail.com">moritz.lenz@gmail.com</a>, stating your intentions to help, and your freenode IRC handle (optional).</p>
+
+<p>There are other ways to help too:</p>
+
+<ul>
+<li>You can pledge a prize (some ideas: <a href="https://commaide.com/">Comma IDE</a> subscription,
+books, Camelia plushies, Amazon vouchers)</li>
+<li>You can help design a small website for the contest</li>
+<li>You can help iron out the exact rules for the contest</li>
+<li>... or any other way that I didn't think of :-)</li>
+</ul>
+
+<p>In these cases you can use the same email address to contact me,
+or use IRC (<code>moritz</code> on freenode) or <a href="https://twitter.com/nogoodnickleft">twitter</a>.</p>
+
+
+
+[% option no-header %][% option no-footer %]
+[% comment vim: set ft=html: %]
