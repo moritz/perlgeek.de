@@ -1,5 +1,5 @@
 Perl 6 Coding Contest 2019: Seeking Task Makers
-<!-- 2019-11-11 -->
+<!-- 2018-11-11 -->
 
 <p>I want to revive <a href="http://strangelyconsistent.org/blog/masaks-perl-6-coding-contest">Carl Mäsak's Coding Contest</a>
 as a <a href="https://gist.github.com/moritz/6f06ec7153ce396ac2734c2616d8b075">crowd-sourced contest</a>.</p>
