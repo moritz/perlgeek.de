@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Progmatic Debian Pacakging</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+      .remark-code{
+        background-color: rgba(100,100,100,.2);
+        border: 2px solid rgba(100,100,100,.6);
+        border-radius: 10px;
+        display: block;
+        margin: 1%;
+        padding: 2%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Pragamatic Debian Packaging
+
+Moritz Lenz
+
+<https://leanpub.com/debian/c/pm>
+
+---
+
+class: middle
+
+# What is a Debian package?
+
+* "Container" for an application
+* Meta data
+* Usable in a broad ecosystem of tools
+
+---
+class: middle
+
+# Why should I care?
+
+* You use Debian (or a derived distribution) and want to package an application for yourself
+* You develop an application and want to package it for Debian+ users
+* Great for packaging applications in any language
+* General Curiosity :-)
+---
+class: middle
+
+# Table of Contents
+
+* Context around Debian Packages
+* What's in a Debian package?
+* Quick building with `fpm`
+* *debhelper*-based packaging
+
+---
+class: middle
+
+# Debian Package in Context
+
+* *Upstream* developer codes application, e.g. inkscape
+* Debian Developer packages it, uploads source package
+* Build servers build binary package(s)
+* User runs `apt update` to get package list
+* User runs `apt install inkscape`
+* apt download package, dependencies
+* `dpkg` installs packages
+
+---
+class: middle
+
+# What's in a Debian package?
+
+## File Name
+
+<code><span style="color: red">bash</span>\_<span style="color: blue">4.4-5</span>\_<span style="color: green">amd64</span>.deb</code>
+
+* Package name: <span style="color: red">`bash`</span>
+* Version number:<span style="color: blue">`4.4-5`</span>
+* Architecture: <span style="color: green">`amd64`</span>
+* ... separated by underscore `_` extension `.deb`
+---
+
+class: middle
+
+# What's in a Debian package?
+
+## Contents
+
+`ar` archive:
+
+```
+$ ar xv bash_4.4-5_amd64.deb 
+x - debian-binary
+x - control.tar.gz
+x - data.tar.xz
+```
+
+```
+$ tar xvf control.tar.gz
+./
+./conffiles
+./control
+./md5sums
+./postinst
+./postrm
+./preinst
+./prerm
+```
+
+---
+
+class: middle
+
+# What's in a Debian package?
+
+## data.tar.xz
+
+```
+$ tar tf data.tar.xz |head
+./
+./bin/
+./bin/bash
+./etc/
+./etc/bash.bashrc
+./etc/skel/
+./etc/skel/.bash_logout
+./etc/skel/.bashrc
+./etc/skel/.profile
+./usr/
+```
+
+---
+class: middle
+
+# Enough Theory, let's build one
+
+[fpm](https://fpm.readthedocs.io/en/latest/intro.html)
+
+```
+$ wget https://updates.jenkins-ci.org/download/war/$(VERSION)/jenkins.war
+$ fpm -s dir -t deb -n jenkins -v $(VERSION) --prefix /opt/jenkins jenkins.war
+```
+
+* can convert directories and many existing packages (ruby gem / npm / python / ...) into `.deb`, `.rpm`
+* You can supply meta data (like `Depends:`) on the command line
+* Quick, easy, sometimes dirty
+
+---
+class: middle
+
+# The Big Gun: `debhelper`
+
+* That's what Debian Developers use
+* very flexible, very magic, bit confusing
+* Build in sequences + stages
+* Supports building multiple packages from single source package
+* Based on a `debian/` directory (initialize with `dh_make`)
+
+---
+
+class: middle
+
+## `debian/control`
+
+Meta data
+
+```
+Source: python-matheval
+Section: main
+Priority: optional
+Maintainer: Moritz Lenz <moritz.lenz@gmail.com>
+Build-Depends: debhelper (>=9), dh-virtualenv, dh-systemd, python-setuptools
+Standards-Version: 3.9.6
+
+Package: python-matheval
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3 (>= 3.4)
+Description: A web service that evaluates trees of mathematical expressions.
+```
+
+---
+class: middle
+
+## `debian/changelog`
+
+```
+python-matheval (0.1) stable; urgency=medium
+
+  * Initial Release.
+
+ -- Moritz Lenz <moritz.lenz@gmail.com>  Sun, 12 Jun 2016 13:29:12 +0200
+```
+
+* Version number is taken from here
+* Use `debchange` to create/manipulate file
+
+---
+class: middle
+
+
+## `debian/rules`
+
+### Build instructions
+
+```
+#!/usr/bin/make -f
+export DH_VIRTUALENV_INSTALL_ROOT=/usr/share/python-custom
+
+
+%:
+	dh $@ --with python-virtualenv --with systemd
+
+override_dh_virtualenv:
+	dh_virtualenv --python=/usr/bin/python3
+```
+
+---
+class: middle
+
+# Start the build
+
+```
+$ dpkg-buildpackage -b -us -uc
+[...]
+dpkg-deb: building package 'python-matheval' in '../python-matheval_0.1.42_amd64.deb'.
+[...]
+dpkg-buildpackage: info: binary-only upload (no source included)
+```
+
+---
+class: middle
+
+# Build Phases
+
+* clean
+* build
+* install
+* binary
+---
+class: middle
+
+# Build Phases
+
+* clean (cleans working directory)
+* build (builds application)
+* install (installs application into `debian/$package_name`)
+* binary (packs `debian/$package_name` + meta data into `.deb` file)
+
+
+---
+class: middle
+
+# Build Steps per phase
+
+```
+$ dh build --no-act
+   dh_testdir
+   dh_update_autotools_config
+   dh_autoreconf
+   dh_auto_configure
+   dh_auto_build
+   dh_auto_test
+   create-stamp debian/debhelper-build-stamp
+```
+
+---
+class: middle
+
+# Build Systems Supported
+
+... out of the box
+
+* [autoconf](https://www.gnu.org/software/autoconf/)
+* Perl's [ExtUtils::MakeMaker](https://perldoc.perl.org/ExtUtils/MakeMaker.html)
+* plain `Makefile`s that support `build` and `install` targets (with
+  `DESTDIR` for the installation step)
+* Python's [distutils](https://docs.python.org/3/library/distutils.html) and
+  [setuptools](https://pypi.org/project/setuptools/) installers
+* [cmake](https://cmake.org/)
+* [ant](https://ant.apache.org/)
+* [qmake](http://doc.qt.io/qt-5/qmake-manual.html)
+* [qmake_qt4](http://doc.qt.io/archives/qt-4.8/qmake-manual.html)
+* [meson](https://mesonbuild.com/)
+* [ninja](https://ninja-build.org/)
+
+---
+class: middle
+
+# Standard Hooks
+
+* `debian/$package.install`: install extra files (`man dh_install`)
+* `debian/$package.links`: create symlinks (`man dh_links`)
+* `debian/$package.dirs`: create directories (`man dh_installdirs`)
+* `debian/$package.docs`: install documentation (`man dh_installdocs`)
+* `debian/$package.cron.{d,daily,weekly,monthly,weekly}`
+* `debian/$package.service`: install systemd service file (needs `dh-systemd`)
+* `debian/$package.manpages`
+* ...
+
+---
+class: middle
+
+# `debian/rules`: add extra steps
+
+Standard:
+
+```
+#!/usr/bin/make -f
+
+%:
+	dh $@
+```
+
+With extra steps:
+
+```
+#!/usr/bin/make -f
+%:
+	dh $@ --with python-virtualenv --with systemd
+```
+
+---
+class: middle
+
+# `debian/rules`: Override steps
+
+```
+#!/usr/bin/make -f
+%:
+	dh $@ --with python-virtualenv --with systemd
+override_dh_md5sums:
+    # you could insert extra steps here
+	dh_md5sums --exclude=.snap
+```
+
+---
+class: middle
+
+# Building Multiple Packages from Single Source
+
+* Several `Package:` sections in `debian/control`
+* Use `debian/$package.files` to move files into separate subdirs (`man dh_movefiles`)
+
+---
+class: middle
+
+# Initialize `debian/` for Perl modules
+
+```
+$ dh-make-perl --cpan App::UNI
+$ dh-make-perl path/to/module
+```
+
+* Can use `--recursive --build --install` to create `.deb` of dependencies
+* Might need to delete `debian/source/format` (defaults to `3.0 (quilt)`, only works if you use quilt)
+
+---
+class: middle
+
+# Other Extensions
+
+... exists for everyone and their dog:
+
+```
+$ apt-cache search ^dh-|grep ^dh-|wc -l
+40
+$ apropos dh_|wc -l
+81
+```
+
+---
+class: middle
+
+# Pragamatic Debian Packaging: Summary
+
+* Debian package: File data + meta data (dependencies, version etc.)
+* Build quickly with `fpm`
+* Build with more fine control with debhelper + `debian/` dir
+* Lots of helpers available for common tasks
+
+## Your Questions?
+
+
+<!--
+
+Sources: https://www.pxfuel.com/en/free-photo-jrfvw
+
+-->
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
+
